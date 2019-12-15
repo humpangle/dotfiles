@@ -58,6 +58,7 @@ let g:coc_global_extensions = [
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
   \ 'svelte': 'html',
+  \ '.eslintrc': 'json',
 \}
 
 " syntax highlighting
@@ -254,6 +255,7 @@ colorscheme dracula
 " =============================== AUTOCMD ==================================
 au FocusGained * :checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
+au BufNewFile,BufRead *.eslintrc set filetype=json
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
