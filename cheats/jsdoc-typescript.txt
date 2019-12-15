@@ -1,6 +1,9 @@
 put this on first line of js file
 // @ts-check
 
+compile and type check
+tsc --noEmit --project ./src/fileName
+
 -------------------------------------------------------------------------------
                   variable
 -------------------------------------------------------------------------------
@@ -11,3 +14,59 @@ let amount = '12'; // 💥 does not work
 
 /** @type {number | string} */
 let amount = '12'; // ok
+
+
+-------------------------------------------------------------------------------
+                  importing types
+-------------------------------------------------------------------------------
+article.ts:
+  export type Article = {
+    title: string,
+    price: number,
+    vat: number,
+    sold?: boolean,
+  }
+
+main.js:
+  // The following line imports the Article type from article.ts and makes it available under Article
+
+  /** @typedef { import('./article').Article } Article */
+
+  /** @type {Article} */
+  const article = {
+    title: 'The best book in the world',
+    price: 10,
+    vat: 0.2
+  }
+
+  // import directly in @type annotation
+    /** @type {import('./article').Article} */
+    const article = {
+      title: 'The best book in the world',
+      price: 10,
+      vat: 0.2
+    }
+
+
+-------------------------------------------------------------------------------
+                  functions
+-------------------------------------------------------------------------------
+// Parameters may be declared in a variety of syntactic forms
+/**
+ * @param {string}  p1 - A string param.
+ * @param {string=} p2 - An optional param (Closure syntax)
+ * @param {string} [p3] - Another optional param (JSDoc syntax).
+ * @param {string} [p4="test"] - An optional param with a default value
+ * @return {string} This is the result
+ * @return {PromiseLike<string>}
+ * @returns {{ a: string, b: number }} - May use '@returns' as well as '@return'
+ */
+function stringsStringStrings(p1, p2, p3, p4){
+  // TODO
+}
+
+
+-------------------------------------------------------------------------------
+                  utility types
+-------------------------------------------------------------------------------
+type T0 = ReturnType<() => string>;  // string

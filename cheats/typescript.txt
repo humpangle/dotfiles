@@ -1,0 +1,17 @@
+tsc --noEmit --project .
+  typecheck project.
+
+tsc --noEmit fileName
+
+
+-------------------------------------------------------------------------------
+                  recipes
+-------------------------------------------------------------------------------
+[tsserver 5055] [E] Cannot write file because it would overwrite input file.
+
+// in tsconfg.json
+{
+  "compilerOptions": {
+    "outDir": "myOutDir"  // <--- Don't forget this
+  }
+}
