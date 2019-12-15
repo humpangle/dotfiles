@@ -1,0 +1,43 @@
+svg elements
+------------
+
+
+
+
+<path
+  d="
+     M 0 0
+     m 100 100
+     c 1,2 3,4 5,6
+  "
+/>
+
+<!--
+leftwards and upwards === -ve
+
+M 100 100 == position the pen at 100,100 from origin
+
+m 100 150 == position pen at x 100 and y 150 pixels relative to my current position
+
+L 20, 30 == draw line to position 20,30 from origin.
+
+h 25 == l 25 0 == draw horizontal line (rightwards).
+
+v 20 == l 0 20 == draw vertical line (downwards).
+
+Z === close the path = draw line from last pen position to start position.
+
+c 25,100 75,150 75, 100 == 3 points of a bezier curve.
+-->
+
+<!-- draws line with coordinates (x1, y1) (x2, y2) -->
+<line x1="1" x2="2" , y1="3" , y2="4" />
+
+<svg width='1' height='2' viewBox='x y innerWidth innerHeight' />
+<!--
+You may specify width and height or viewBox
+
+if viewBox, width = innerWidth + x, height = innerHeight + y.
+so x and y are like left and top margins
+-->
+

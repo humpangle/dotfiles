@@ -1,0 +1,17 @@
+change " to ':
+  cs"'
+
+change ' to ):
+  cs')
+
+change ' to <q>:
+  cs'<q>
+
+change <q> to ':
+  cst'
+
+surround word with ):
+  ysiw) (yes surround word with ')
+
+surround line with {}:
+  yss}

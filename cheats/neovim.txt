@@ -1,0 +1,145 @@
+vit
+  visually select texts in html tag
+
+Ctrl-]
+  go to symbol definition and use Ctrl-o to return
+
+shift >
+  move blocks of code to right/ indent blocks of codes
+
+~ (tilde)
+  capitalize/uncapitalize
+
+. (period)
+  re-run commands
+
+:tab split and later :tabc
+  make a split window fullscreen:
+  the idea is to split it off into a new tab, work on it and close tab.
+
+viw
+  highlight word under cursor
+
+type :on and hit enter
+  Close all split windows leaving only one
+  Place the cursor at the window you want to leave
+  command mode
+
+:w
+  save file
+
+:wq
+  leave neovim and save file
+
+w / e / b / W / E / b
+  move one word at a time
+
+:buffers, :l
+  list all buffers
+
+<C-g>
+  show full path of current buffer
+
+gb then number
+  go to buffer number
+
+:vertical resize -20
+  increase width of split window
+
+:resize -20 (but keep focus on other window?
+  increase the height of a split window.
+
+U (capital u)
+  undo all changes to line
+
+jump to end of 3rd word = 3e
+
+jump to beginning of 4th word = 3w
+
+jump to start of line = 0 zero
+
+Undo all changes to a line = capital U
+
+delete line of texts at line 1 and paste at line 5 = at line 1: dd, at line 4: p
+
+delete line and put text on clipboard = dd
+
+go the end of file = upper G
+
+See filename, total line number and your current line number = <c-g>
+
+go to start of the file = gg
+
+go to a line number 456 = 456 G
+
+find matching parentheses = % at a parentheses
+
+change replace all occurrences of "thee" to "the" =
+  :%s/thee/the/g
+  :200,230s/thee/the/g # between lines 200 and 230 instead of while file
+  :%s/thee/the/gc  # c means first show me all matches and Prompt to change
+
+Replace char/chars
+  At a char, r to type over the character, R to type over the rest of the chars
+  in the line
+
+delete beginning from the char where my cursor is to the end of the word so I can insert some texts
+  ce -> then type texts u wanna insert
+  cw
+
+search for text in open file
+  type: /text
+  then enter
+  then n to go to next match forward
+  N to go to previous match
+  If you did the search while on line 15 and the match is on line 25 and you are
+  on line 25, <C-o> to get back to line 15
+
+search for text in open file but backwards
+  :% text-to-search, enter
+
+cut/copy and paste
+  v/<C-V> to enter visual/select mode, select texts/lines, d/y cut/copy, p paste
+
+save as = :w file-name
+
+execute a shell command and append its output under the cursor in the current file (in a single command)
+ :r !ls -alh
+
+get the contents of a file and append it under the cursor in the current file (in a single command)
+ :r file-path
+
+insert line = o below, O above
+
+jump between vim windows = tab or <C-w> <C-w>
+
+default location of config file
+  ~/.config/nvim/init.vim
+  ~/AppData/Local/nvim/init.vim
+
+list vim modes
+  1. normal
+  2. visual
+  3. insert
+  4. append
+  5. operator pending = gg, d$, ce, 4w, 5e etc. d,c,g are operators, so when
+  you press g, you enter operator pending mode in which vim waits for the next
+  operator, so if you now type g, vim goes to beginning of file.
+
+
+--------------------------  TERMINAL ---------------------------
+open a terminal = :vnew term://bash or :vsplit term://htop or split
+leave append mode while in terminal: <C-\> <C-n>
+------------------------- END TERMINAL --------------------------
+
+create new file in new directory:
+  :e new_dir/new-file
+  :!mkdir -p %:h
+  % = current file path, :h = take everything except head = file name
+
+=============================================
+insert at beginning of line = I
+append at end of line = A
+make highlighted searches go away = :noh
+search by default in reverse = ?search-term
+highlight all instances of word under cursor = shift + 8 == *

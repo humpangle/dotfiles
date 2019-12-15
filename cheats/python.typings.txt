@@ -1,0 +1,233 @@
+"""
+FAQ
+===
+Common issues and solutions
+    https://mypy.readthedocs.io/en/latest/common_issues.html
+
+I don't know how to type something
+    just put some nonsense type and run mypy
+
+
+silence linter for untyped variables, ignore untyped
+    a = some_complex_thing()  # type: ignore  # noqa
+
+
+If you don't type the return value of a function, then mypy will not check the
+body of the function even if those have type. So if function returns nothing,
+then type the return value as 'None'
+  def fun() -> None:
+    pass
+
+
+stub files
+  $ export MYPYPATH=~/work/myproject/stubs
+  stubs/csv.pyi
+
+"""
+# -------------------------------------------------------------------
+
+from typing import List, Optional, Union, TypeVar, NewType, Type, cast
+
+# -------------------------------------------------------------------
+
+# takes string or None (and may be with default argument)
+
+def some2(x: Optional[str] = None) -> str:
+  pass
+
+# -------------------------------------------------------------------
+
+# -------------------------------------------------------------------
+
+# takes int or string Union
+
+def some3(x: Union[int, str]): -> str:
+  pass
+
+# -------------------------------------------------------------------
+
+# -------------------------------------------------------------------
+
+# python generic
+T = TypeVar('T')
+def some4(x: T) -> T:
+  pass
+
+# -------------------------------------------------------------------
+
+# -------------------------------------------------------------------
+
+# creating my own types
+
+UserId = NewType('UserId', int)
+def some5(x: UserId) -> UserClass:
+  pass
+user_id = UserId(1234)
+some5(user_id)
+
+# -------------------------------------------------------------------
+
+# -------------------------------------------------------------------
+
+# what if function accepts class and not instance of class (object)
+# first example we accept a class and return an instance
+# second example we accept a class or subclass
+
+def some6(x: Type[django.Model]) -> django.Model:
+  pass
+
+M = TypeVar('M', bound=django.Model) # bound === upper bound
+def some7(x: M) -> M:
+  pass
+
+# -------------------------------------------------------------------
+
+# anotating variables with no initialization
+# python 3.5
+x = [] # type: List[str]
+x = ... # type: str
+
+#python 3.6+
+x: List[str]
+x: str
+
+# -------------------------------------------------------------------
+
+# type casting
+x: List[str]
+y = cast(UserId, x) # tell type checker that type of x is UserId
+# cast(<type>, <expression>)
+# even though x was another type -> typescript: const x = 1 as number;
+
+# -------------------------------------------------------------------
+
+# used type before defined;
+from __future__ import annotations # python >= 3.7
+class A:
+	def x(self) -> 'B': # python <3.7
+		pass
+
+	def y(self) -> B: # python >= 3.7, but on top level: from __future__ import annotations
+		pass
+
+class B:
+	pass
+
+# -------------------------------------------------------------------
+
+# circular import (only for typechecking - will not work for regular code)
+from __future__ import annotations # python >= 3.7
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	# B can only used for type annotation
+	from module import B # noqa (only for python < 3.7 because B will be used as 'B' and linters will complain about unused import)
+
+class A:
+	def x(self) -> 'B': # python < 3.7
+		pass
+
+	def y(self) -> B: # python >= 3.7 but only if you had imported annotations from __future__
+		pass
+
+# -------------------------------------------------------------------
+
+# TypeError: 'type' object is not subscriptable
+use same technique as for circular import
+
+# -------------------------------------------------------------------
+
+typing using comment ( python 2.7 only support type comments)
+a = [] # type: List[int]
+
+# -------------------------------------------------------------------
+
+# Declaring multiple variable types at a time (I may only use type comments, even in python 3)
+
+i, found = 0, False # type: int, bool
+
+
+# -------------------------------------------------------------------
+
+# type tuple that can take any number of elements
+variable: Tuple[int, ...]
+
+# -------------------------------------------------------------------
+
+function takes a function argument.
+
+def func(func_arg: Callable[[int, str], str]) -> int:
+  pass
+
+# -------------------------------------------------------------------
+
+# alias complex types
+AliasType = Union[List[Dict[Tuple[int, str], Set[int]]], Tuple[str, List[str]]]
+
+# Now we can use AliasType in place of the full name:
+
+def f() -> AliasType:
+    pass
+
+# -------------------------------------------------------------------
+
+protocols: Iterable, Iterator, Sized, Container, Reversible
+
+Iterable
+def __iter__(self) -> Iterator[T]
+
+Iterator[T]
+def __next__(self) -> T
+def __iter__(self) -> Iterator[T]
+
+Sized
+def __len__(self) -> int
+
+Container[T]
+def __contains__(self, x: object) -> bool
+
+Collection[T]
+def __len__(self) -> int
+def __iter__(self) -> Iterator[T]
+def __contains__(self, x: object) -> bool
+
+Reversible[T]
+def __reversed__(self) -> Iterator[T]
+
+# ------------------------------------------------------
+# Mypy error codes
+Miscellaneous checks [misc]
+Check the return type of __exit__ [exit-return]
+
+Check the target of NewType [valid-newtype] (The target of a NewType definition must be a class type. It can’t be a union type, Any, or various other special types.)
+
+Check instantiation of abstract classes [abstract]
+Check that called function returns a value [func-returns-value]
+Check that each name is defined once [no-redef]
+Check that import target can be found [import]
+Check that type of target is known [has-type]
+Check TypedDict items [typeddict-item]
+Check dict items [dict-item]
+Check list items [list-item]
+Check indexing operations [index]
+Check uses of various operators [operator]
+Check type variable values [type-var]
+Check types in assignment statement [assignment]
+Check that return value is compatible [return-value]
+Check that function returns a value [return]
+Check validity of overrides [override]
+Require annotation if variable type is unclear [var-annotated]
+Check validity of types [valid-type]
+Check calls to overloaded functions [call-overload]
+Check argument types [arg-type]
+Check arguments in calls [call-arg]
+Check that name is defined [name-defined]
+Check that attribute exists in each union item [union-attr]
+Check that attribute exists [attr-defined]
+Check that type arguments exist [type-arg]
+Check that every function has an annotation [no-untyped-def]
+Check that cast is not redundant [redundant-cast]
+Check that comparisons are overlapping [comparison-overlap]
+Check that no untyped functions are called [no-untyped-call]
+Check that function does not return Any value [no-any-return]
+Check that types have no Any components due to missing imports [no-any-unimported]

@@ -1,0 +1,30 @@
+set up ssh for git (https://medium.freecodecamp.org/manage-multiple-github-accounts-the-ssh-way-2dadc30ccaca)
+
+1. command: ssh-keygen -t rsa -C "humpangle@gmail.com" -f "id_rsa_github_humpangle" # file name is id_rsa_github_humpangle
+
+2. copy content id_rsa_github_humpangle.pub to your github.com/userame account ( click settings -> ssh and gpg keys -> new ssh key)
+
+3. in ~/.ssh/config (create one if it does not exist) put the following on a new line:
+# humpangle github.com
+Host github.com-humpangle
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/id_rsa_github_humpangle
+
+4. in .git folder of your repo, go to .git/config and under url, put the ffg:
+url = git@github.com-humpangle:humpangle/hacker_rank.git
+the format is git@<ssh host = github.com-humpangle in this case>:<github userame = humpangle in this example>/<repo name on github - hacker_rank in this case>.git
+
+5. Registering the new SSH Keys with the ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa_github_humpangle
+
+6. git push github master
+  if you get error:
+      Bad owner or permissions on /home/userame/.ssh/config
+      fatal: Could not read from remote repository.
+
+      Please make sure you have the correct access rights
+      and the repository exists.
+execute : chmod 600 ~/.ssh/config and may be also chown $USER ~/.ssh/config
+

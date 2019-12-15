@@ -1,0 +1,3 @@
+Get project template
+npx degit sveltejs/template app_name
+

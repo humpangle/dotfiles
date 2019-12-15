@@ -1,0 +1,26 @@
+[alias]
+	br = branch
+	st = status
+	cm = commit
+	ps = push
+  psf = push --force
+	pl = pull
+	co = checkout
+[credential]
+	helper = cache --timeout 604800
+[core]
+	filemode = false
+	editor = nvim
+	excludesfile = ~/.gitignore
+[commit]
+	verbose = true
+[merge]
+  tool = nvim -d
+[mergetool]
+  prompt = true
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[difftool]
+  prompt = false
+[diff]
+  tool = nvim -d

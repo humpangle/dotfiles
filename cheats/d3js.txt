@@ -1,0 +1,146 @@
+Hooked on D3: Creating Animated Ch(art)s with D3 and React Hooks - Monica Wojciechowska
+=====
+https://github.com/monicawoj/hooked-on-d3-animation-deck/blob/master/presentation.mdx
+
+
+----------------------------------------------------------------------------
+domain and range and scale
+----------------------------------------------------------------------------
+const xScale = scaleLiner().domain([a, b]).range([x, y])
+xScale(dataValue) -> screenValue
+    maps from your data value to screen value in pixel
+xScale.invter(screenValue) -> dataValue
+    maps from screenValue to dataValue (e.g. find dataValue from mouse position on screen)
+
+domain == domain([min_val_of_your_data, max_val_of_your_data])
+
+range == range([lowest_x_axis_val, highest_x_axis_val])
+or
+range([highest_y_axis_val, lowest_y-axis_val]) -- because svg 0,0 is at top-left corner, but y-axis is from bottom-left corner.
+
+```javascript
+import {scaleLiner} from 'd3-scale'
+import {max as d3Max} from 'd3-array'
+import fetch
+
+const xScale = scaleLiner().range(0, 500);
+
+
+fetch('url')
+  .then(r => r.json())
+  .then(data => {
+    xScale.domain([0, d3Max(data, d => d.value)]) // [0, 100]
+    // this implies that every value from your data (domain) will be scaled times 5 when drawn to screen (range).
+  })
+```
+
+----------------------------------------------------------------------------
+clamping
+----------------------------------------------------------------------------
+if clamping is not specified, dataValue not in the domain given to scale (scale = scaleLinear()..) will produce screenValue not in the range and vice versa forinvert
+
+const x = d3.scaleLinear()
+    .domain([10, 130])
+    .range([0, 960]);
+no clamping
+==========
+
+x(-10); // -160, outside range
+x.invert(-160); // -10, outside domain
+
+with clamping
+=============
+x.clamp(true);
+x(-10); // 0, clamped to range
+x.invert(-160); // 10, clamped to domain
+
+----------------------------------------------------------------------------
+lines
+----------------------------------------------------------------------------
+import {line} from 'd3-shape'
+
+const lineGenFn = line()
+lineGenFn.x((current_data, index, all_data_array) => xScale(current_data.attribute_for_x))
+
+lineGenFn.x((current_data, index, all_data_array) => yScale(current_data.attribute_for_y))
+
+lineGenFn(all_data_array)
+
+----------------------------------------------------------------------------
+axes axis
+----------------------------------------------------------------------------
+import { axisBottom as d3AxisBottom, axisLeft as d3AxisLeft } from "d3-axis";
+import { select as d3Select } from "d3-selection";
+
+const xAxis = d3AxisBottom(xScale).tickFormat(timeFormat("%b"));
+const yAxis = d3AxisLeft(yScale).tickFormat(d => `${d}F`);
+
+// the intuition is like xAxis.render(d3Select(xAxisContainerDom))
+d3Select(xAxisContainerDom).call(xAxis);
+d3Select(yAxisContainerDom).call(yAxis);
+
+
+----------------------------------------------------------------------------
+selection select element/elements
+----------------------------------------------------------------------------
+const d3SelectedBody = d3.select("body");
+    [[domBody, parentNode: htmlElement]]
+
+const d3SelectedDiv = d3SelectedBody.append("div");
+d3SelectedDiv.html("Hello, world!");
+
+const d3SelectedAllSections = d3.selectAll("section");
+    [
+      [
+        s1,
+        s2,
+        s3,
+        ...,
+        parentNode: htmlElement
+      ]
+    ]
+
+const d3AppendedSpan = d3SelectedAllSections.append/insert('span')
+    [
+      [
+        spanOfS1, // binded to parent section element data.
+        spanOfS2,
+        ....,
+        spanOfSn,
+        parentNode: htmlElement
+      ]
+    ]
+
+
+const d3SelectedDivs = d3SelectedAllSections.select("div");
+    [
+      [
+        div1OfS1, // an entry may be null if selection does not exist.
+        div1OfS2,
+        ...,
+        div1OfSn,
+        parentNode: htmlElement
+      ]
+    ]
+    each div1OfSn element is binded to data of corresponding section element
+    div1OfSn.getAttribute('__data__') === s1.getAttribute('__data__')
+
+const d3SelectedAllDivs = d3SelectedAllSections.selectAll("div");
+    [
+      [d1, d2, ...., dn, parentNode: s1], // group 1
+      [d1, d2, divSomething, ...., dn, parentNode: s2], // group 2
+      ...,
+      [d1, d2, ...., dn, parentNode: sn], // group n
+    ]
+    selected elements are not binded to data (hence need for selection.join??)
+
+// iteration
+d3SelectedAllDivs.each((divNodeElement, indexOfDivWithinItsGroup) => {
+  // the iteration index is within the group and not withing the selection.
+  // e.g. for divSomething, group index is 2, but selection index is 1
+})
+      BINDING DATA
+const d3SelectedP = d3.select('p')
+d3SelectedP.datum(2) === document.querySelector('p').setAttribute('__data__',2)
+const d3InsertedDiv = d3SelectedP.insert('div')
+d3InsertedDiv.datum() === 2 // inserted,appended,selected child inherits parent's data

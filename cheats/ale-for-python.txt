@@ -1,0 +1,45 @@
+Plug 'dense-analysis/ale'
+let g:ale_enabled = 1
+let g:ale_completion_enabled = 1
+
+let g:ale_fix_on_save = 1
+let g:ale_linters_explicit = 1
+
+let g:ale_linter_aliases = {
+\   'svelte': ['javascript']
+\}
+
+let g:ale_linters = {
+  \ 'python': ['pyls', 'flake8'],
+  \ 'svelte': ['eslint']
+\}
+
+let g:ale_python_pyls_config =    {
+      \   'pyls': {
+      \     'plugins': {
+      \       'pycodestyle': {
+      \         'enabled': v:false
+      \       },
+      \       'pyflakes': {'enabled': v:false},
+      \       'rope': {'enabled': v:true},
+      \       'mypy': {'enabled': v:true},
+      \     }
+      \   },
+      \ }
+
+let g:ale_fixers = {
+  \ 'python': ['black'],
+  \ 'svelte': ['eslint']
+\}
+
+" ======================== ALE KEY MAPS ===============================
+"nmap <silent> grh <Plug>(ale_hover)
+"nmap <silent> grp <Plug>(ale_previous_wrap)
+"nmap <silent> grn <Plug>(ale_next_wrap)
+"nmap <silent> grf <Plug>(ale_fix)
+"nmap <silent> grb :!black %<cr><cr>
+"nmap <silent> grr <Plug>(ale_find_references)
+"nmap <silent> grt <Plug>(ale_reset)
+"nnoremap <silent> grd  :<C-u>ALEGoToDefinition<cr>
+"nnoremap <silent> grn  :<C-u>ALERename<cr>
+" ======================== END ALE KEY MAPS ===========================
