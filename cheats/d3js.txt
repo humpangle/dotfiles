@@ -48,7 +48,7 @@ import {scaleLinear as d3ScaleLinear, scaleBand as d3ScaleBand} from 'd3-scale'
 
 const labels = ['a', 'b', 'c'];
 
-export function setUpD3() {
+export function initD3() {
 
 
   const yScaleBand = d3ScaleBand()
@@ -91,9 +91,9 @@ export function computeBars(data, d3Helpers) {
 <script>
   import {select as d3Select} from 'd3-selection'
   import {onMount} from 'svelte'
-  import {setUpD3, computeBars} from './utils'
+  import {initD3, computeBars} from './utils'
 
-  const d3Helpers = setUpD3();
+  const d3Helpers = initD3();
 
   // remeber: category is on left axis.
   const barHeight = d3Helpers.yScaleBand.bandWidth();
