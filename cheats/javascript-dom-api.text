@@ -1,0 +1,85 @@
+<ul id='my-list'>
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+</ul>
+
+const list = document.getElementById('my-list')
+
+1. list.childNodes === 7
+because there are 4 text nodes in addition to the 3 li nodes
+a. 1 between opening ul and li1
+b. 1 between li1 and li2
+c. 1 between li2 and li3
+d. 1 between li3 and closing ul
+
+2. list.children === 3
+selects on nodes that are not text nodes
+
+list.firstChild
+list.firstElementChild
+list.lastChild
+list.lastElementChild
+list.nextSibling
+list.nextElementSibling
+list.nextSibling
+list.nextElementSibiling
+list.previousSibling
+list.previousElementSibling
+
+parentElement.contains(childElement)
+
+list.parentElement.preprend = list.insertAdjacentHTML('beforebegin', htmlString)
+
+list.preprend === list.insertAdjacentHTML('afterbegin', htmlString)
+list.append === list.insertAdjacentHTML('beforeend', htmlString)
+list.parentElement.append === list.insertAdjacentHTML('afterend', htmlString)
+
+
+differences between node.append vs node.appendChild
+===
+node.append(string/DOMString | node)
+  no return value
+  appends several nodes/strings
+
+node.appendChild(nodeOnly)
+  returns appended node
+  appends only one node
+  does not append DOMString
+
+
+parentElement vs parentNode
+=====
+parentElement = must be an html element e.g. ul > li, li.parentElement === ul
+
+parentNode does not have to be a node e.g html > body,
+  html.parentNode === HTMLDocument
+  html.parentElement === null;
+
+-------------------------------------------------------------------------------
+            ATTRIBUTES
+-------------------------------------------------------------------------------
+el.setAttribute(name, value)
+el.getAttribute(name)
+el.removeAttribute(name)
+
+const string = el.textContent // get text content
+el.textContent = string // set text content
+
+
+-------------------------------------------------------------------------------
+            ITERATIONS
+-------------------------------------------------------------------------------
+(el.childNodes /** NodeList type */).forEach(node => node)
+
+[].forEach.call(( el.children /** HTMLCollection type */ ), node => node)
+
+
+-------------------------------------------------------------------------------
+            CSS STYLES
+-------------------------------------------------------------------------------
+const styles = el.style.cssText; // 'color:red;font-size:10'
+
+el.style.cssText = `color:red;` // set many styles
+
+el.style.fontWeight = "bold"; // set individual style

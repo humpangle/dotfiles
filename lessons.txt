@@ -1245,55 +1245,6 @@ watchman watch-list
 watchman watch-del-all
 ==============================================================================
 
-javascript APIs
-====
-
-<ul id='my-list'>
-  <li>1</li>
-  <li>2</li>
-  <li>3</li>
-</ul>
-
-const list = document.getElementById('my-list')
-
-1. list.childNodes === 7
-because there are 4 text nodes in addition to the 3 li nodes
-a. 1 between opening ul and li1
-b. 1 between li1 and li2
-c. 1 between li2 and li3
-d. 1 between li3 and closing ul
-
-2. list.children === 3
-selects on nodes that are not text nodes
-
-list.firstChild
-list.firstElementChild
-list.lastChild
-list.lastElementChild
-list.nextSibling
-list.nextElementSibling
-list.nextSibling
-list.nextElementSibiling
-parentElement.contains(childElement)
-
-list.parentElement.preprend = list.insertAdjacentHTML('beforebegin', htmlString)
-list.preprend === list.insertAdjacentHTML('afterbegin', htmlString)
-list.append === list.insertAdjacentHTML('beforeend', htmlString)
-list.parentElement.append === list.insertAdjacentHTML('afterend', htmlString)
-
-
-differences between node.append vs node.appendChild
-===
-node.append(string | node) // append is a javascript function
-node.appendChild(nodeOnly) // appendChild is DOM function
-
-
-parentElement vs parentNode
-=====
-parentElement = must be an element e.g. ul > li, li.parentElement === ul
-parentNode does not have to be a node e.g html > body, html.parentNode === null
-
-==============================================================================
 backup heroku database
 ======================
 heroku pg:backups:capture

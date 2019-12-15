@@ -1,0 +1,13 @@
+put this on first line of js file
+// @ts-check
+
+-------------------------------------------------------------------------------
+                  variable
+-------------------------------------------------------------------------------
+
+/** @type {number} */
+let amount = '12'; // 💥 does not work
+
+
+/** @type {number | string} */
+let amount = '12'; // ok
