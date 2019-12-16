@@ -46,13 +46,16 @@ let g:coc_global_extensions = [
   \ 'coc-prettier'
 \]
 
-"  coc-snippets that I use
+"  plugins that I use
+"  coc-snippets
 "  coc-emmet
 "  coc-elixir
 "  coc-css
 "  coc-html
 "  coc-tsserver
 "  coc-python
+"  coc-svelte
+"  coc-eslint
 "  https://github.com/kanmii/coc-snippets
 
 let g:coc_filetype_map = {
@@ -93,29 +96,6 @@ Plug 'tpope/vim-fugitive'
 
 " syntax highlighting and indentation for Svelte 3 components.
 Plug 'evanleck/vim-svelte'
-
-Plug 'sbdchd/neoformat'
-let g:neoformat_try_formatprg = 1
-
-" Plug 'dense-analysis/ale'
-" let g:ale_enabled = 0
-" let g:ale_completion_enabled = 1
-" let g:ale_fix_on_save = 1
-" let g:ale_linters_explicit = 1
-
-" let g:ale_linter_aliases = {
-" \   'svelte': ['css', 'html', 'javascript', 'typescript']
-" \}
-
-" let g:ale_linters = {
-"   \ 'svelte': ['eslint', 'typecheck']
-" \}
-
-" let g:ale_fixers = {
-"   \ 'svelte': ['eslint']
-" \}
-
-Plug 'maximbaz/lightline-ale'
 
 call plug#end()
 " }}}
@@ -456,33 +436,11 @@ xmap <Leader>R
 
 " ========================== lightline settings ==================== "
 let g:lightline = {}
-" let g:lightline.colorscheme = 'darcula'
+
 let g:lightline.component_function = {
   \ 'fugitive': 'LightlineFugitive',
   \ 'cocstatus': 'coc#status'
   \ }
-
-" let g:lightline.component_expand = {
-"   \  'linter_checking': 'lightline#ale#checking',
-"   \  'linter_warnings': 'lightline#ale#warnings',
-"   \  'linter_errors': 'lightline#ale#errors',
-"   \  'linter_ok': 'lightline#ale#ok',
-" \}
-
-" let g:lightline.component_type = {
-"   \ 'linter_checking': 'left',
-"   \ 'linter_warnings': 'warning',
-"   \ 'linter_errors': 'error',
-"   \ 'linter_ok': 'left',
-" \}
-
-
-      " \[
-      "   \ 'linter_checking',
-      "   \ 'linter_errors',
-      "   \ 'linter_warnings',
-      "   \ 'linter_ok'
-      " \],
 
 let g:lightline.active = {
   \ 'left': [
@@ -500,8 +458,6 @@ let g:lightline.active = {
       \['fileformat', 'fileencoding', 'filetype']
     \]
   \ }
-
-" \['cocstatus'],
 
 function! LightlineFugitive()
 		if exists('*fugitive#head')
@@ -524,19 +480,3 @@ autocmd User fugitive
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
 " ========================== end fugitive =========================== "
-
-" ============================ Neoformat ===============================
-nnoremap fd :Neoformat<CR>
-" ============================ END Neoformat ===========================
-
-" ======================== ALE KEY MAPS ===============================
-" nmap <silent> grh <Plug>(ale_hover)
-" nmap <silent> grp <Plug>(ale_previous_wrap)
-" nmap <silent> grn <Plug>(ale_next_wrap)
-" nmap <silent> grf <Plug>(ale_fix)
-" nmap <silent> grb :!black %<cr><cr>
-" nmap <silent> grr <Plug>(ale_find_references)
-" nmap <silent> grt <Plug>(ale_reset)
-" nnoremap <silent> grd  :<C-u>ALEGoToDefinition<cr>
-" nnoremap <silent> grn  :<C-u>ALERename<cr>
-" ======================== END ALE KEY MAPS ===========================
