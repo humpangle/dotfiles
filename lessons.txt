@@ -309,47 +309,6 @@ const withMutation = graphql<OwnProps, TMutationData, TVariables, { create: Muta
 
 ==============================================================================
 
-Typescript
-
-1. using enum values as type
-enum Something {
-  A  = 'a',
-  B = 'b'
-}
-
-type FromEnum = {[k in Something]: JSX.Element }
-
-const fromEnum = {
-  [Something.A]: <head/>,
-  [Something.B]: <Tail/>
-}
-
-2. using enum keys (number) as type
-type FromEnum = {[k in keyof typeof Something]: JSX.Element }
-const fromEnum: FromEnum = {
-  0: <head/>,
-  1: <Tail/>
-}
-
-3. using interface keys as type
-
-interface Something {
-  a: string;
-  b: string;
-}
-
-type FromSomething {[k in keyof Something]: Something[k]}
-const fromSomething: FromSomething =  {
-  a: 'you',
-  b: 'me'
-}
-
-4. using object keys
-const object = {a: 1, b: 2, c: 3}
-type FromObject = {[k in keyof typeof object]: object[k]}
-
-==============================================================================
-
 deploy phoenix project to heroku
 
 > heroku apps:create {app_name} --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git" && heroku addons:create heroku-postgresql:hobby-dev && heroku config:set POOL_SIZE=18 && heroku config:set PORT=443
@@ -387,12 +346,6 @@ Canada
 
 ==============================================================================
 
-xpath
-
-y = document.evaluate("//button[text()=\"New entry\"]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-===============================================================================
-
 get IP address online
 
 https://api.ipify.org
@@ -417,18 +370,6 @@ Type Exit and press Enter
 
 design ideas to copy
 https://theme-fusion.com/documentation/avada/pages/anchor-scrolling/#iLightbox[a13dac47030eb199dc0]/0
-
-===============================================================================
-git credential
-
-git config --global credential.helper 'cache --timeout 28800'
-####Above command will tell git to cache your password for 8 hours.
-
-git credential-cache exit
-If you want to switch to another github account then u can run this command - Above command will flush any stored password from cache
-
-git config --global credential.helper wincred
-Windows User ?
 
 ===============================================================================
 
@@ -474,27 +415,6 @@ https://www.quora.com/Why-does-my-WiFi-get-disconnected-on-its-own-in-Ubuntu
 
 activate conda environment automatically
 https://stackoverflow.com/questions/28436769/how-to-change-default-anaconda-python-environment
-
-===============================================================================
-
-typescript Type error: Duplicate identifier 'YYYType'.  TS2300
-
-resolution
-====
-1. inside your tsconfig.json file, under compilerOptions, add key "types": [
-  ..."the types from your package.json that you need in this project"
-]
-
-if above not possible, say, because you have too many types and you'll have to
-explicitly list them all, then in package.json:
-
-"resolution": {
-  "@types/react": "0.16.5"
-}
-
-The reason is that more than one package requires the package type as
-dependency and causing the conflict. By pinning via the package.json resolution
-field, we ensure only one copy in our node_modules folder and therefore no
 
 ===============================================================================
 

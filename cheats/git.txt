@@ -1,0 +1,11 @@
+git credential
+
+git config --global credential.helper 'cache --timeout 28800'
+####Above command will tell git to cache your password for 8 hours.
+
+git credential-cache exit
+If you want to switch to another github account then u can run this command - Above command will flush any stored password from cache
+
+git config --global credential.helper wincred
+Windows User ?
+

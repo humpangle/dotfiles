@@ -2,6 +2,7 @@
   "typescript.suggestionActions.enabled": false,
   "javascript.suggestionActions.enabled": false,
   "typescript.showUnused": false,
+  "javascript.showUnused": false,
   "eslint.filetypes": [
     "javascript",
     "javascriptreact",
@@ -14,5 +15,7 @@
   "python.formatting.provider": "black",
   "python.pythonPath": "/home/kanmii/.cache/pypoetry/virtualenvs/resumemakr-py3.7/bin/python",
   "python.linting.flake8Enabled": true,
-  "python.jediEnabled": true
+  "python.jediEnabled": true,
+  // suppress coc-svelte typescript unused variables error until fixed in vscode
+  "svelte.plugin.typescript.diagnostics.enable": false
 }
