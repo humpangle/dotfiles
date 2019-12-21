@@ -1,3 +1,4 @@
+yarn-error.log
 report.*.*.*.json
 Session.vim
 # these work
@@ -18,12 +19,9 @@ build/
 build/*
 .vim/.ropeproject/*
 
-
-
 # Configuration file with private data:
 *.env
 .env
-
 
 #####=== Windows ===#####
 # Windows image file caches
@@ -70,7 +68,6 @@ var/
 .installed.cfg
 *.egg
 
-
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -83,7 +80,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 
-
 .elixir_ls/*
 node_modules/*
 .pnp/*
@@ -93,7 +89,6 @@ cover/*
 .netlify/*
 .cache/*
 .env-cmdrc
-public*/*
 _build/*
 deps/*
 doc/*

@@ -1,0 +1,8 @@
+function route(req, resp) {
+  // if route is defined as /blog/:slug and we request /blog/my-dd:
+  expect(req.params.slug).toBe("my-dd");
+
+  resp.writeHead(200, { "Content-Type": "application/json" });
+  // resp.setHeader("Content-Type", "application/json");
+  resp.end(JSON.stringify({ a: 1 }));
+}
