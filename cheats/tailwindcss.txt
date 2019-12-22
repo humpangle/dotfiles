@@ -20,7 +20,7 @@
   64
 
 # break points - uses min-width i.e greater than or equal
-  < 640px span[class="hidden"]
+  < 640px span[class="hidden"] //any class not prefixed with breakpoint modifier
   >= 640px span[class="sm:hidden"]
   >= 768px span[class="md:hidden"]
   >= 1024px span[class="lg:hidden"]
@@ -137,7 +137,7 @@
     .max-h-screen
 
 # Background
-  BG-ATTACHMENT
+  BG-ATTACHMENT // controls how a background image behaves when scrolling
     .bg-fixed
     .bg-local
     .bg-scroll
@@ -333,17 +333,17 @@
     .line-through
 
 # Spacing
-  PADDING
+  PADDING {-}p{side?}-{size}
     .p-px
     .p-{0-64}
     .p{x/y}-px
     .p{x/y}-{0-64}
     .p{t/r/b/l}-px
-    .p{t/r/b/l}-{0-64}
-  MARGIN
+    .p{t/r/b/l}-{0-64} // pt-2 == padding-top: 2px;
+  MARGIN {-}m{side?}-{size}
     .{-}m-px
-    .m-auto
-    .{-}m-{0-64}
+    .m{x/y}?-auto
+    .{-}m-{0-64} // {-} denotes negative margin
     .{-}m{x/y}-px
     .{-}m{x/y}-{0-64}
     .{-}m{t/r/b/l}-px
