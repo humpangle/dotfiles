@@ -20,11 +20,12 @@
   64
 
 # break points - uses min-width i.e greater than or equal
-  < 640px span[class="hidden"] //any class not prefixed with breakpoint modifier
+  < 640px span[class="hidden"] //any class not prefixed with screen modifier
   >= 640px span[class="sm:hidden"]
   >= 768px span[class="md:hidden"]
   >= 1024px span[class="lg:hidden"]
   >= 1280px span[class="xl:hidden"]
+      screen prefixes: sm, md, lg, xl
 
 # Pseudo-Class
   responsive
@@ -270,16 +271,16 @@
     .font-serif
     .font-mono
   SIZE
-    .text-xs
-    .text-sm
-    .text-base
-    .text-lg
+    .text-xs // font-size: .75rem;
+    .text-sm // font-size: .875rem;
+    .text-base // font-size: 1rem;
+    .text-lg // font-size: 1.125rem;
     .text-xl
     .text-2xl
     .text-3xl
     .text-4xl
-    .text-5xl
-    .text-6xl
+    .text-5xl // font-size: 3rem;
+    .text-6xl // font-size: 4rem;
   SMOOTHING
     .antialiased
     .subpixel-antialiased
