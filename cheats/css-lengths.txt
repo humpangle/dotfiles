@@ -1,4 +1,0 @@
-1 inch == 96px
-
-font-size = 10
-10 em = 10 * 10 = 100px;

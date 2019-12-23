@@ -1,5 +1,0 @@
-cat /etc/os-release
-	get debian version (ubuntu etc.)
-
-echo $?
-	get exit code of last exited program
