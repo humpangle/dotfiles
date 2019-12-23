@@ -58,6 +58,7 @@ let g:coc_global_extensions = [
 "  coc-eslint
 "  https://github.com/kanmii/coc-snippets
 "  coc-tailwindcss
+"  coc-svg
 
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
