@@ -38,26 +38,24 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'elixir-editors/vim-elixir'
 
 " typescript and other language server protocols - mimics VSCode.
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-let g:coc_force_debug = 1
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" let g:coc_force_debug = 1
 let g:coc_global_extensions = [
-  \ 'coc-json',
   \ 'coc-yank',
-  \ 'coc-prettier'
+  \ 'coc-json',
+  \ 'coc-prettier',
+  \ 'coc-snippets',
+  \ 'coc-emmet',
+  \ 'coc-elixir',
+  \ 'coc-css',
+  \ 'coc-html',
+  \ 'coc-tsserver',
+  \ 'coc-python',
+  \ 'coc-svelte',
+  \ 'coc-eslint',
+  \ 'coc-tailwindcss',
+  \ 'https://github.com/kanmii/coc-snippets',
 \]
-
-"  plugins that I use
-"  coc-snippets
-"  coc-emmet
-"  coc-elixir
-"  coc-css
-"  coc-html
-"  coc-tsserver
-"  coc-python
-"  coc-svelte
-"  coc-eslint
-"  https://github.com/kanmii/coc-snippets
-"  coc-tailwindcss
 
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
@@ -117,6 +115,7 @@ let maplocalleader=","
 " set termguicolors
 "endif
 
+set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
 set softtabstop=2
 set expandtab " converts tabs to white space
@@ -294,6 +293,13 @@ nmap <Leader>/ :Rg<CR>
 " =================== COC Plugin Vim settings ===========================
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+" Better display for messages
+set cmdheight=2
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -355,9 +361,13 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-" scroll floating windows
-nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+" enter floating window in order to scroll it
 nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
+" exit floating window
+nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " ===================== END COC PLUGIN SETTINGS =====================
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -393,7 +403,8 @@ inoremap <C-Q>     <esc>:q<cr>
 nnoremap <C-Q>     :q<cr>
 vnoremap <C-Q>     <esc>
 nnoremap <Leader>q :q<cr>
-nnoremap <Leader>mq :qa!<cr>
+nnoremap <Leader>mq :qa<cr>
+" nnoremap <Leader>mq :qa!<cr>
 
 " better code indentations in visual mode.
 vnoremap < <gv
