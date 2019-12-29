@@ -133,7 +133,6 @@ export EDITOR="nvim"
 export KERL_BUILD_DOCS=yes
 export KERL_INSTALL_MANPAGES=yes
 export KERL_INSTALL_HTMLDOCS=yes
-# npm config -g set python /home/kanmii/.asdf/installs/python/2.7.16/bin/python
 export PYTHON2="~/.pyenv/versions/2.7.17/bin/python"
 export PYTHON3="~/.pyenv/versions/3.7.5/bin/python"
 

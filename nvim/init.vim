@@ -147,7 +147,6 @@ set number " line numbering
 :setlocal spell spelllang=en
 
 " ================================== Folding ===============================
-
 set foldmethod=indent
 set foldnestmax=10
 set nofoldenable " don't fold by default when opening a file.
