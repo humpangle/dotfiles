@@ -32,7 +32,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'kassio/neoterm'
 
 " themes
-Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'mhartington/oceanic-next'
 
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
