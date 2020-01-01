@@ -33,7 +33,7 @@ Plug 'kassio/neoterm'
 
 " themes
 " Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'mhartington/oceanic-next'
+Plug 'mhartington/oceanic-next'
 
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
@@ -111,10 +111,16 @@ let mapleader=" "
 let maplocalleader=","
 
 " checkhealth suggested
-" checkhealth suggested
-"if (has("termguicolors"))
-" set termguicolors
-"endif
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+set background=dark
+syntax enable
+" colorscheme dracula
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
 
 set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
@@ -225,10 +231,6 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 " ================== end Mappings to move lines ==========================
 
-set background=dark
-syntax enable
-colorscheme dracula
-" colorscheme OceanicNext
 
 " =============================== AUTOCMD ==================================
 au FocusGained * :checktime
