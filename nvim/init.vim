@@ -110,13 +110,13 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
-" checkhealth suggested
+" checkhealth suggested - but does not seem to work with dracula on ubuntu
 if (has("termguicolors"))
  set termguicolors
 endif
 
-set background=dark
 syntax enable
+" set background=dark
 " colorscheme dracula
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
