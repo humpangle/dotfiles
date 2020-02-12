@@ -11,33 +11,24 @@ Plug 'mhinz/vim-grepper'
 let g:grepper={}
 let g:grepper.tools=["rg"]
 
-
 " Modify * to also work with visual selections.
 Plug 'nelstrom/vim-visual-star-search'
-
 " Toggle comments in various ways.
 Plug 'tpope/vim-commentary'
-
 " A number of useful motions for the quickfix list, pasting and more.
 Plug 'tpope/vim-unimpaired'
-
 " Better manage Vim sessions - prosession depends on obsession
 Plug 'tpope/vim-obsession' | Plug 'dhruvasagar/vim-prosession'
-
 " search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
 " Terminal wrapper
 Plug 'kassio/neoterm'
-
 " themes
-" Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'mhartington/oceanic-next'
-
+Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'mhartington/oceanic-next'
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
-
 " typescript and other language server protocols - mimics VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_force_debug = 1
@@ -57,7 +48,6 @@ let g:coc_global_extensions = [
   \ 'coc-tailwindcss',
   \ 'https://github.com/kanmii/coc-snippets',
 \]
-
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
   \ '.eslintrc': 'json',
@@ -66,6 +56,9 @@ let g:coc_filetype_map = {
 " syntax highlighting
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
+Plug 'cespare/vim-toml'
+" syntax highlighting and indentation for Svelte 3 components.
+Plug 'evanleck/vim-svelte'
 
 Plug 'ntpeters/vim-better-whitespace'
 let g:better_whitespace_enabled=1
@@ -74,9 +67,6 @@ let g:strip_whitespace_confirm=0
 let g:strip_only_modified_lines=0
 
 Plug 'airblade/vim-gitgutter'
-
-" syntax highlight toml file type
-Plug 'cespare/vim-toml'
 
 Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_generate_on_new = 1
@@ -88,15 +78,10 @@ let g:gutentags_generate_on_empty_buffer = 0
 set statusline+=%{gutentags#statusline()}
 
 Plug 'itchyny/lightline.vim' " cool status bar
-
 " Surround text with quotes, parenthesis, brackets, and more.
 Plug 'tpope/vim-surround'
 " A git wrapper so awesome it should be illegal.
 Plug 'tpope/vim-fugitive'
-
-" syntax highlighting and indentation for Svelte 3 components.
-Plug 'evanleck/vim-svelte'
-
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -110,17 +95,19 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
-" checkhealth suggested - but does not seem to work with dracula on ubuntu
-if (has("termguicolors"))
- set termguicolors
-endif
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " makes problem below go away
+" checkhealth suggested - on my ubuntu 18.4, some texts under cursor are not
+" visible.
+" if (has("termguicolors"))
+"  set termguicolors
+" endif
 
 syntax enable
 " set background=dark
-" colorscheme dracula
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
+colorscheme dracula
+" let g:oceanic_next_terminal_bold = 1
+" let g:oceanic_next_terminal_italic = 1
+" colorscheme OceanicNext
 
 set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
@@ -166,16 +153,11 @@ set autoread
 " Use Ripgrep for vimgrep
 " set grepprg=rg\ --vimgrep
 
-" ============================================================================
-" }}} END BASIC SETTINGS
-" ============================================================================
-
+" ===========================END BASIC SETTINGS=====================
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
-
 " Save file
 nnoremap <Leader>w :w<CR>
-
 " Copy and paste from system clipboard (Might require xsel/xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>d "+d
@@ -183,13 +165,10 @@ nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
-
 " go to buffer number - use like so gb34
 nnoremap gb :ls<CR>:b
-
 " Move between windows in a tab
 nmap <tab> <C-w>w
-
 " Go to tab by number
 noremap <leader>1 1gt
 noremap <leader>2 2gt
@@ -200,16 +179,14 @@ noremap <leader>6 6gt
 noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
-
 " split tabs bottom
 nnoremap <silent> <leader>_ :split<CR>
 " split right
-nnoremap <silent> <leader>\| :vnew<CR>
+nnoremap <silent> <leader>\| :vsp<CR>
 " remove all splt windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
 
-" set relativenumber
-" Relative numbering
+" Toggle between normal and relative numbering.
 function! NumberToggle()
   if(&relativenumber == 1)
     set nornu
@@ -218,10 +195,7 @@ function! NumberToggle()
     set rnu
   endif
 endfunc
-
-" Toggle between normal and relative numbering.
 nnoremap <leader>ln :call NumberToggle()<cr>
-
 " ================ Mappings to move lines =============================
 nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==
@@ -230,8 +204,6 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 " ================== end Mappings to move lines ==========================
-
-
 " =============================== AUTOCMD ==================================
 au FocusGained * :checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
@@ -240,7 +212,6 @@ au BufNewFile,BufRead *.eslintrc set filetype=json
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
 " ================================ /AUTOCMD ==============================
-
 " ============================== EMBEDED TERMINAL ======================
 :tnoremap <C-h> <C-\><C-N><C-w>h
 :tnoremap <C-j> <C-\><C-N><C-w>j
@@ -257,7 +228,6 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " Press escape twice to exit insert mode in embedded terminal
 tnoremap <Esc><Esc> <C-\><C-n>
 " ============================== /EMBEDED TERMINAL ======================
-
 " ========================== FUZZY FIND FILES WITH FZF ==============
 " https://medium.com/@jesseleite/its-dangerous-to-vim-alone-take-fzf-283bcff74d21
 " search files from root directory where vim opened.
@@ -284,14 +254,11 @@ nmap <Leader>: :History:<CR>
 " Fuzzy search vim key mappings - useful to find what has already been mapped
 " before defining new mappings
 nmap <Leader>M :Maps<CR>
-
 " Fuzzy search filetype syntaxes, and hit Enter on a result to set that syntax on the current buffer:
 nmap <Leader>ss :Filetypes<CR>
-
 " search in project
 nmap <Leader>/ :Rg<CR>
 " ==========================  END FUZZY FIND FILES WITH FZF ========
-
 " =================== COC Plugin Vim settings ===========================
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
@@ -302,27 +269,27 @@ set nowritebackup
 set cmdheight=2
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
-" Improve the completion experience
-" Use <Tab> and <S-Tab> to navigate the completion list:
-" Use <cr> to confirm completion
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" \Note: you have to remap <cr> to make sure it confirm completion when pum is visible.
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" To make coc.nvim format your code on <cr>, use keymap:
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " Remap to rename current word
 nmap <leader>rn <Plug>(coc-rename)
 " Show all diagnostics
@@ -494,3 +461,18 @@ autocmd User fugitive
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
 " ========================== end fugitive =========================== "
+
+function! DeleteEmptyBuffers()
+    let [i, n; empty] = [1, bufnr('$')]
+    while i <= n
+        if bufexists(i) && bufname(i) == ''
+            call add(empty, i)
+        endif
+        let i += 1
+    endwhile
+    if len(empty) > 0
+        exe 'bdelete' join(empty)
+    endif
+endfunction
+
+map <leader>db :call DeleteEmptyBuffers()<cr>

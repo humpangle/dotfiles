@@ -185,3 +185,8 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 source $HOME/.poetry/env
 alias poetry-shell='. "$(dirname $(poetry run which python))/activate"'
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
+# Do not use PHP PEAR when installing PHP with asdf
+export PHP_WITHOUT_PEAR='yes'

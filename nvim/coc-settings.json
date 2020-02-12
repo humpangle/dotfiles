@@ -17,5 +17,6 @@
   "python.linting.flake8Enabled": true,
   "python.jediEnabled": true,
   // suppress coc-svelte typescript unused variables error until fixed in vscode
-  "svelte.plugin.typescript.diagnostics.enable": false
+  "svelte.plugin.typescript.diagnostics.enable": false,
+  "css.validate": false
 }
