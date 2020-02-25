@@ -184,7 +184,7 @@ noremap <leader>9 9gt
 nnoremap <silent> <leader>- :split<CR>
 " split right
 nnoremap <silent> <leader>, :vsp<CR>
-" remove all splt windows leaving the one I am on
+" remove all split windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
 
 " Toggle between normal and relative numbering.
@@ -213,7 +213,7 @@ au BufNewFile,BufRead *.eslintrc set filetype=json
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
 " ================================ /AUTOCMD ==============================
-" ============================== EMBEDED TERMINAL ======================
+" ============================== EMBEDDED TERMINAL ======================
 :tnoremap <C-h> <C-\><C-N><C-w>h
 :tnoremap <C-j> <C-\><C-N><C-w>j
 :tnoremap <C-k> <C-\><C-N><C-w>k
@@ -228,7 +228,7 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 :nnoremap <C-l> <C-w>l
 " Press escape twice to exit insert mode in embedded terminal
 tnoremap <Esc><Esc> <C-\><C-n>
-" ============================== /EMBEDED TERMINAL ======================
+" ============================== /EMBEDDED TERMINAL ======================
 " ========================== FUZZY FIND FILES WITH FZF ==============
 " https://medium.com/@jesseleite/its-dangerous-to-vim-alone-take-fzf-283bcff74d21
 " search files from root directory where vim opened.
@@ -328,7 +328,7 @@ nmap <silent> <C-d> <Plug>(coc-cursors-word)
 xmap <silent> <C-d> <Plug>(coc-cursors-range)
 " use normal command like `<leader>xi(`
 nmap <leader>x  <Plug>(coc-cursors-operator)
-" Remap keys for gotos
+" Remap keys for goto's
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -451,7 +451,7 @@ function! LightlineFugitive()
 		return ''
 endfunction
 
-" Use auocmd to force lightline update with coc status - slows down vim
+" Use autocmd to force lightline update with coc status - slows down vim
 " autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 " ========================== end lightline settings ================ "
 
