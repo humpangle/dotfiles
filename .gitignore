@@ -18,6 +18,7 @@ build/
 .vscode/*
 build/*
 .vim/.ropeproject/*
+.vim/coc-settings.json
 
 # Configuration file with private data:
 *.env
