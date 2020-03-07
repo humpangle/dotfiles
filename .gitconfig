@@ -12,6 +12,7 @@
 	filemode = false
 	editor = nvim
 	excludesfile = ~/.gitignore
+	filemode = false
 [commit]
 	verbose = true
 [merge]
