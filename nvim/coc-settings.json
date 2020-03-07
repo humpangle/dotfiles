@@ -35,6 +35,7 @@
     "ebnis",
     "eval",
     "evanleck",
+    "filemode",
     "fuzzysort",
     "github",
     "gmail",
@@ -77,6 +78,7 @@
     "unmount",
     "upsert",
     "virtualenvs",
+    "wincred",
     "xclip",
     "xsel"
   ],
