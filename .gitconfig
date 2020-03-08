@@ -12,16 +12,15 @@
 	filemode = false
 	editor = nvim
 	excludesfile = ~/.gitignore
-	filemode = false
 [commit]
 	verbose = true
-[merge]
-  tool = nvim -d
-[mergetool]
-  prompt = true
-[mergetool "vimdiff"]
-  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [difftool]
   prompt = false
 [diff]
   tool = nvim -d
+[merge]
+	tool = fugitive
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+[mergetool]
+  prompt = false
