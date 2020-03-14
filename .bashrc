@@ -179,9 +179,13 @@ _fzf_compgen_path() {
 
 
 # Preprend asdf bin paths for programming executables
-export PATH="$HOME/.asdf/installs/elixir/1.9.1-otp-22/bin:$HOME/.asdf/installs/erlang/22.0.7/bin:$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.asdf/installs/elixir/1.9.1-otp-22/bin:$HOME/.asdf/installs/erlang/22.2.8/bin:$HOME/.pyenv/bin:$PATH"
 
-eval "$(pyenv init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 eval "$(pyenv virtualenv-init -)"
 source $HOME/.poetry/env
 alias poetry-shell='. "$(dirname $(poetry run which python))/activate"'

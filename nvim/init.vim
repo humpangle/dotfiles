@@ -83,6 +83,7 @@ Plug 'itchyny/lightline.vim' " cool status bar
 Plug 'tpope/vim-surround'
 " A git wrapper so awesome it should be illegal.
 Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -232,10 +233,10 @@ tnoremap <Esc><Esc> <C-\><C-n>
 " ========================== FUZZY FIND FILES WITH FZF ==============
 " https://medium.com/@jesseleite/its-dangerous-to-vim-alone-take-fzf-283bcff74d21
 " search files from root directory where vim opened.
-nnoremap <silent> <Leader><Space> :Files<CR>
+nmap <Leader>f :Files<CR>
 " search files only in directory of currently open file
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
-nmap <Leader>f :GFiles<CR>
+" nmap <Leader>f :GFiles<CR>
 nmap <Leader>b :Buffers<CR>
 " search buffer history
 nmap <Leader>h :History<CR>
@@ -479,3 +480,6 @@ function! DeleteEmptyBuffers()
 endfunction
 
 map <leader>db :call DeleteEmptyBuffers()<cr>
+" ========================== easymotion =========================== "
+nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
+" ========================== end easymotion =========================== "
