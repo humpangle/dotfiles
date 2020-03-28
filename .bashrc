@@ -174,10 +174,6 @@ _fzf_compgen_path() {
 #   find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
 #      sed s/^..//) 2> /dev/null'
 
-# darcula color scheme
-# eval 'dircolors ~/.dir_colors/dircolors'
-
-
 # Preprend asdf bin paths for programming executables
 export PATH="$HOME/.asdf/installs/elixir/1.9.1-otp-22/bin:$HOME/.asdf/installs/erlang/22.2.8/bin:$HOME/.pyenv/bin:$PATH"
 
