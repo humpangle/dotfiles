@@ -84,6 +84,7 @@ Plug 'tpope/vim-surround'
 " A git wrapper so awesome it should be illegal.
 Plug 'tpope/vim-fugitive'
 Plug 'easymotion/vim-easymotion'
+Plug 'will133/vim-dirdiff'
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
