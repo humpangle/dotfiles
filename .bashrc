@@ -123,20 +123,23 @@ alias md='mkdir -p'
 alias yarnw="yarn workspace "
 alias ff='fzf'
 alias vim="nvim"
-alias vi="nvim"
+alias vi="vim"
 alias vimdiff="nvim -d"
 
 # ENVIRONMENT VARIABLES
 
 export EDITOR="nvim"
 # build erlang docs when installing with asdf
-export KERL_BUILD_DOCS=yes
-export KERL_INSTALL_MANPAGES=yes
-export KERL_INSTALL_HTMLDOCS=yes
+# skip the java dependency during installation
+export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
+export KERL_BUILD_DOCS=
+export KERL_INSTALL_MANPAGES=
+export KERL_INSTALL_HTMLDOCS=
 export PYTHON2="~/.pyenv/versions/2.7.17/bin/python"
 export PYTHON3="~/.pyenv/versions/3.7.5/bin/python"
 
-# required to install erlang via asdf
+# required to install erlang via asdf (this is not required if java interface
+# is disabled)
 # https://www.geofis.org/en/install/install-on-linux/install-openjdk-8-on-ubuntu-trusty/
 # sudo add-apt-repository ppa:openjdk-r/ppa
 # sudo apt-get update
@@ -183,8 +186,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
-source $HOME/.poetry/env
-alias poetry-shell='. "$(dirname $(poetry run which python))/activate"'
+# source $HOME/.poetry/env
+# alias poetry-shell='. "$(dirname $(poetry run which python))/activate"'
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
