@@ -183,4 +183,5 @@ export PATH="$HOME/gems/bin:$PATH"
 export PHP_WITHOUT_PEAR='yes'
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # start cron job to reclaim WSL2 memory for windows OS re-use every minute
+# https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
 sudo /etc/init.d/cron start
