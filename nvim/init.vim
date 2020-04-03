@@ -48,6 +48,7 @@ let g:coc_global_extensions = [
   \ 'coc-tailwindcss',
   \ 'https://github.com/kanmii/coc-snippets',
   \ 'coc-spell-checker'
+  \ 'coc-docker'
 \]
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
