@@ -31,7 +31,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'kassio/neoterm'
 " themes
 Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'mhartington/oceanic-next'
+Plug 'mhartington/oceanic-next'
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
@@ -109,11 +109,11 @@ let maplocalleader=","
 " endif
 
 syntax enable
-" set background=dark
-colorscheme dracula
-" let g:oceanic_next_terminal_bold = 1
-" let g:oceanic_next_terminal_italic = 1
-" colorscheme OceanicNext
+ " set background=dark
+" colorscheme dracula
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
 
 set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
