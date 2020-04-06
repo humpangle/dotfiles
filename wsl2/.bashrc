@@ -136,7 +136,7 @@ export KERL_BUILD_DOCS=
 export KERL_INSTALL_MANPAGES=
 export KERL_INSTALL_HTMLDOCS=
 export PYTHON2="~/.pyenv/versions/2.7.17/bin/python"
-export PYTHON3="~/.pyenv/versions/3.7.5/bin/python"
+export PYTHON3="~/.pyenv/versions/3.8.2/bin/python"
 
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
@@ -185,3 +185,6 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # start cron job to reclaim WSL2 memory for windows OS re-use every minute
 # https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
 sudo /etc/init.d/cron start
+# following is needed so that cypress browser testing can work in WSL2
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+sudo /etc/init.d/dbus start &> /dev/null # Automatically start dbus

@@ -19,6 +19,9 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 " Better manage Vim sessions - prosession depends on obsession
 Plug 'tpope/vim-obsession' | Plug 'dhruvasagar/vim-prosession'
+Plug 'tpope/vim-surround'
+" A git wrapper so awesome it should be illegal.
+Plug 'tpope/vim-fugitive'
 " search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -81,9 +84,6 @@ set statusline+=%{gutentags#statusline()}
 
 Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
-Plug 'tpope/vim-surround'
-" A git wrapper so awesome it should be illegal.
-Plug 'tpope/vim-fugitive'
 Plug 'easymotion/vim-easymotion'
 Plug 'will133/vim-dirdiff'
 call plug#end()

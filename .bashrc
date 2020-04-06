@@ -138,18 +138,6 @@ export KERL_INSTALL_HTMLDOCS=
 export PYTHON2="~/.pyenv/versions/2.7.17/bin/python"
 export PYTHON3="~/.pyenv/versions/3.7.5/bin/python"
 
-# required to install erlang via asdf (this is not required if java interface
-# is disabled)
-# https://www.geofis.org/en/install/install-on-linux/install-openjdk-8-on-ubuntu-trusty/
-# sudo add-apt-repository ppa:openjdk-r/ppa
-# sudo apt-get update
-# sudo apt-get install openjdk-8-jdk
-# sudo update-java-alternatives --list
-# sudo update-alternatives --config java
-# sudo update-alternatives --config javac
-# Check with java -version and javac -version that version 8 is the default JDK.
-export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
-
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 
