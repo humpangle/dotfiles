@@ -136,7 +136,7 @@ export KERL_BUILD_DOCS=
 export KERL_INSTALL_MANPAGES=
 export KERL_INSTALL_HTMLDOCS=
 export PYTHON2="~/.pyenv/versions/2.7.17/bin/python"
-export PYTHON3="~/.pyenv/versions/3.7.5/bin/python"
+export PYTHON3="~/.pyenv/versions/3.8.2/bin/python"
 
 # required to install erlang via asdf (this is not required if java interface
 # is disabled)
