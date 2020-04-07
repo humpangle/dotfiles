@@ -129,7 +129,7 @@ alias vimdiff="nvim -d"
 # ENVIRONMENT VARIABLES
 
 export EDITOR="nvim"
-# build erlang docs when installing with asdf
+# Do not build erlang docs when installing with asdf cos it's slow and unstable
 # skip the java dependency during installation
 export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
 export KERL_BUILD_DOCS=
@@ -166,7 +166,7 @@ _fzf_compgen_path() {
 #      sed s/^..//) 2> /dev/null'
 
 # Preprend asdf bin paths for programming executables
-export PATH="$HOME/.asdf/installs/elixir/1.9.1-otp-22/bin:$HOME/.asdf/installs/erlang/22.2.8/bin:$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.asdf/installs/elixir/1.10.2-otp-22/bin:$HOME/.asdf/installs/erlang/22.3.1/bin:$HOME/.pyenv/bin:$PATH"
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -181,3 +181,12 @@ export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# start cron job to reclaim WSL2 memory for windows OS re-use every minute
+# https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
+sudo /etc/init.d/cron start
+# following 4 lines needed so that cypress browser testing can work in WSL2
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+ # Automatically start dbus
+sudo /etc/init.d/dbus start &> /dev/null
+# exec dbus-run-session -- bash # can't be ran from .bashrc, run from tty
