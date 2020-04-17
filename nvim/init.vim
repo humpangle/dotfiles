@@ -89,6 +89,8 @@ Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
 Plug 'easymotion/vim-easymotion'
 Plug 'will133/vim-dirdiff'
+" use vifm as a file picker: sudo apt install vifm
+Plug 'vifm/vifm.vim'
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -140,7 +142,7 @@ set splitright
 set number " line numbering
 
 " I disabled both because they were distracting and slow (according to docs)
-" set cursorline " highlight cursor positions
+set cursorline " highlight cursor positions
 " set cursorcolumn
 :nnoremap <Leader>mc :set cursorline! cursorcolumn!<CR>
 
@@ -161,6 +163,9 @@ set autoread
 " set grepprg=rg\ --vimgrep
 
 " ===========================END BASIC SETTINGS=====================
+" Format paragraph (selected or not) to 80 character lines.
+nnoremap <Leader>g gqap
+xnoremap <Leader>g gqa
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
 " Save file
@@ -268,7 +273,7 @@ nmap <Leader>/ :Rg<CR>
 " ==========================  END FUZZY FIND FILES WITH FZF ========
 " =================== COC Plugin Vim settings ===========================
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+set updatetime=200
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
@@ -291,7 +296,7 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
+" trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
@@ -488,3 +493,10 @@ map <leader>db :call DeleteEmptyBuffers()<cr>
 " ========================== easymotion =========================== "
 nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
 " ========================== end easymotion =========================== "
+" ========================== Start Vifm =================================== "
+map <leader>vv :Vifm<cr>
+map <leader>vs :VsplitVifm<cr>
+map <leader>sp :SplitVifm<cr>
+map <leader>tv :TabVifm<cr>
+map <leader>dv :DiffVifm<cr>
+" ========================== end Vifm =================================== "

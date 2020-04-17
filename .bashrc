@@ -129,7 +129,7 @@ alias vimdiff="nvim -d"
 # ENVIRONMENT VARIABLES
 
 export EDITOR="nvim"
-# build erlang docs when installing with asdf
+# Do not build erlang docs when installing with asdf cos it's slow and unstable
 # skip the java dependency during installation
 export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
 export KERL_BUILD_DOCS=
