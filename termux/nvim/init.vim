@@ -19,6 +19,8 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 " Better manage Vim sessions - prosession depends on obsession
 Plug 'tpope/vim-obsession' | Plug 'dhruvasagar/vim-prosession'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 " search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -48,6 +50,7 @@ let g:coc_global_extensions = [
   \ 'coc-tailwindcss',
   \ 'https://github.com/kanmii/coc-snippets',
   \ 'coc-spell-checker'
+  \ 'coc-pairs'
 \]
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
@@ -80,9 +83,10 @@ set statusline+=%{gutentags#statusline()}
 
 Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
-Plug 'tpope/vim-surround'
-" A git wrapper so awesome it should be illegal.
-Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
+Plug 'will133/vim-dirdiff'
+" use vifm as a file picker: sudo apt install vifm
+Plug 'vifm/vifm.vim'
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -98,10 +102,10 @@ let maplocalleader=","
 
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " makes problem below go away
 " checkhealth suggested - on my ubuntu 18.4, some texts under cursor are not
-" visible.
-" if (has("termguicolors"))
-"  set termguicolors
-" endif
+" visible when using dracula scheme
+if (has("termguicolors"))
+ set termguicolors
+endif
 
 syntax enable
 " set background=dark
@@ -134,7 +138,7 @@ set splitright
 set number " line numbering
 
 " I disabled both because they were distracting and slow (according to docs)
-" set cursorline " highlight cursor positions
+set cursorline " highlight cursor positions
 " set cursorcolumn
 :nnoremap <Leader>mc :set cursorline! cursorcolumn!<CR>
 
@@ -155,6 +159,9 @@ set autoread
 " set grepprg=rg\ --vimgrep
 
 " ===========================END BASIC SETTINGS=====================
+" Format paragraph (selected or not) to 80 character lines.
+nnoremap <Leader>g gqap
+xnoremap <Leader>g gqa
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
 " Save file
@@ -232,10 +239,9 @@ tnoremap <Esc><Esc> <C-\><C-n>
 " ========================== FUZZY FIND FILES WITH FZF ==============
 " https://medium.com/@jesseleite/its-dangerous-to-vim-alone-take-fzf-283bcff74d21
 " search files from root directory where vim opened.
-nnoremap <silent> <Leader><Space> :Files<CR>
+nmap <Leader>f :Files<CR>
 " search files only in directory of currently open file
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
-nmap <Leader>f :GFiles<CR>
 nmap <Leader>b :Buffers<CR>
 " search buffer history
 nmap <Leader>h :History<CR>
@@ -262,7 +268,7 @@ nmap <Leader>/ :Rg<CR>
 " ==========================  END FUZZY FIND FILES WITH FZF ========
 " =================== COC Plugin Vim settings ===========================
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+set updatetime=200
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
@@ -285,14 +291,14 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
+" trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Remap to rename current word
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>n <Plug>(coc-rename)
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>rs :<C-u>CocRestart<cr><cr>
@@ -355,7 +361,7 @@ function! RenameFile()
     endif
 endfunction
 
-map <leader>n :call RenameFile()<cr>
+map <leader>rn :call RenameFile()<cr>
 """"""""""""" END RENAME CURRENT FILE """""""""""""""""""""""""""""""""""
 
 " mappings with leader m
@@ -369,6 +375,8 @@ nnoremap <leader>ms :mksession! <space>
 nnoremap <leader>md :!mkdir -p %:h<cr><cr>
 nnoremap <leader>nt :tabnew<cr>
 nnoremap <leader>tt :tab split<cr>
+nnoremap <leader>dt :diffthis<cr>
+nnoremap <leader>do :diffoff<cr>
 
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
@@ -479,3 +487,20 @@ function! DeleteEmptyBuffers()
 endfunction
 
 map <leader>db :call DeleteEmptyBuffers()<cr>
+" ========================== easymotion =========================== "
+nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
+" ========================== end easymotion =========================== "
+" ========================== Start Vifm =================================== "
+map <leader>vv :Vifm<cr>
+map <leader>vs :VsplitVifm<cr>
+map <leader>sp :SplitVifm<cr>
+map <leader>tv :TabVifm<cr>
+map <leader>dv :DiffVifm<cr>
+" ========================== end Vifm =================================== "
+
+" ========================== copy file path ==============================
+nmap ,yap :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
+nmap ,yrp :let @+=expand("%")<CR>    " Mnemonic: yank relative File path
+nmap ,ap :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
+nmap ,rp :let @"=expand("%")<CR>      " Mnemonic: copy relative path
+" ========================== end copy file path ===========================

@@ -140,6 +140,7 @@ set wildignore+=*.zip,*.png,*.jpg,*.gif,*.pdf,*DS_Store*,*/.git/*,*/node_modules
 set splitbelow
 set splitright
 set number " line numbering
+set mouse=a
 
 " I disabled both because they were distracting and slow (according to docs)
 set cursorline " highlight cursor positions
@@ -380,6 +381,8 @@ nnoremap <leader>ms :mksession! <space>
 nnoremap <leader>md :!mkdir -p %:h<cr><cr>
 nnoremap <leader>nt :tabnew<cr>
 nnoremap <leader>tt :tab split<cr>
+nnoremap <leader>dt :diffthis<cr>
+nnoremap <leader>do :diffoff<cr>
 
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
@@ -500,3 +503,10 @@ map <leader>sp :SplitVifm<cr>
 map <leader>tv :TabVifm<cr>
 map <leader>dv :DiffVifm<cr>
 " ========================== end Vifm =================================== "
+
+" ========================== copy file path ==============================
+nmap ,yap :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
+nmap ,yrp :let @+=expand("%")<CR>    " Mnemonic: yank relative File path
+nmap ,ap :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
+nmap ,rp :let @"=expand("%")<CR>      " Mnemonic: copy relative path
+" ========================== end copy file path ===========================
