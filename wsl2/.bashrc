@@ -121,6 +121,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias md='mkdir -p'
 alias yarnw="yarn workspace "
+alias yarns="yarn start "
 alias ff='fzf'
 alias vim="nvim"
 alias vi="vim"
