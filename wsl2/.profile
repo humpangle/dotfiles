@@ -28,8 +28,7 @@ fi
 umask 022
 
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux new-session -d
-  tmux kill-session -t 0
+  tmux new-session -d -A -s 0
 fi
 
 # start cron job to reclaim WSL2 memory for windows OS re-use every minute
@@ -39,3 +38,4 @@ sudo /etc/init.d/cron start &> /dev/null
 # Automatically start dbus
 sudo /etc/init.d/dbus start &> /dev/null
 # exec dbus-run-session -- bash # can't be ran from .bashrc, run from tty
+
