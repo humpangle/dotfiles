@@ -127,6 +127,7 @@ alias vim="nvim"
 alias vi="vim"
 alias vimdiff="nvim -d"
 alias tmux-save="bash $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh"
+alias tmux-start="tmux new-session -d -A -s 0"
 
 # ENVIRONMENT VARIABLES
 
