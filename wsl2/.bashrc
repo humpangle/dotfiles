@@ -183,11 +183,5 @@ export PATH="$HOME/gems/bin:$PATH"
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-# start cron job to reclaim WSL2 memory for windows OS re-use every minute
-# https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
-sudo /etc/init.d/cron start
 # following 4 lines needed so that cypress browser testing can work in WSL2
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
- # Automatically start dbus
-sudo /etc/init.d/dbus start &> /dev/null
-# exec dbus-run-session -- bash # can't be ran from .bashrc, run from tty
