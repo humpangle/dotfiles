@@ -36,6 +36,6 @@ fi
 sudo /etc/init.d/cron start &> /dev/null
 
 # Automatically start dbus
-sudo /etc/init.d/dbus start &> /dev/null
+# sudo /etc/init.d/dbus start &> /dev/null
 # exec dbus-run-session -- bash # can't be ran from .bashrc, run from tty
 
