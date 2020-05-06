@@ -128,6 +128,7 @@ alias vi="vim"
 alias vimdiff="nvim -d"
 alias tmux-save="bash $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh"
 alias tmux-start="tmux new-session -d -A -s 0"
+alias wslexe='/c/WINDOWS/system32/wsl.exe '
 
 # ENVIRONMENT VARIABLES
 
