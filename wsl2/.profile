@@ -28,7 +28,7 @@ fi
 umask 022
 
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux new-session -d -A -s 0
+  tmux new-session -d -s wiki &> /dev/null
 fi
 
 # start cron job to reclaim WSL2 memory for windows OS re-use every minute
