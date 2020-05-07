@@ -126,6 +126,7 @@ alias ff='fzf'
 alias vim="nvim"
 alias vi="vim"
 alias vimdiff="nvim -d"
+# helpers to make WSL play nice
 alias tmux-save="bash $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh"
 alias tmux-start="tmux new-session -d -A -s 0"
 alias wslexe='/c/WINDOWS/system32/wsl.exe '
@@ -169,11 +170,10 @@ _fzf_compgen_path() {
 #   find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
 #      sed s/^..//) 2> /dev/null'
 
-# Preprend asdf bin paths for programming executables
-export PATH="$HOME/.asdf/installs/elixir/1.10.2-otp-22/bin:$HOME/.asdf/installs/erlang/22.3.1/bin:$HOME/.pyenv/bin:$PATH"
 
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+# Preprend asdf bin paths for programming executables - required to use VSCODE
+export PATH="$PYENV_ROOT/bin:$HOME/.asdf/installs/elixir/1.10.2-otp-22/bin:$HOME/.asdf/installs/erlang/22.3.1/bin:$HOME/.pyenv/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
@@ -185,6 +185,7 @@ export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # following 4 lines needed so that cypress browser testing can work in WSL2
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+# without the next line, linux executables randomly fail in TMUX in WSL
+export PATH="$PATH:/c/WINDOWS/system32"

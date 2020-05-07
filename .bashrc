@@ -166,11 +166,10 @@ _fzf_compgen_path() {
 #   find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
 #      sed s/^..//) 2> /dev/null'
 
-# Preprend asdf bin paths for programming executables
-export PATH="$HOME/.asdf/installs/elixir/1.9.1-otp-22/bin:$HOME/.asdf/installs/erlang/22.2.8/bin:$HOME/.pyenv/bin:$PATH"
 
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+# Preprend asdf bin paths for programming executables - required to use VSCODE
+export PATH="$PYENV_ROOT/bin:$HOME/.asdf/installs/elixir/1.10.2-otp-22/bin:$HOME/.asdf/installs/erlang/22.3.1/bin:$HOME/.pyenv/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
