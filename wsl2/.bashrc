@@ -188,4 +188,4 @@ export PHP_WITHOUT_PEAR='yes'
 # following 4 lines needed so that cypress browser testing can work in WSL2
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
 # without the next line, linux executables randomly fail in TMUX in WSL
-export PATH="$PATH:/c/WINDOWS:/c/WINDOWS/system32"
+export PATH="$PATH:/c/WINDOWS:/c/WINDOWS"
