@@ -34,8 +34,3 @@ fi
 # start cron job to reclaim WSL2 memory for windows OS re-use every minute
 # https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
 sudo /etc/init.d/cron start &> /dev/null
-
-# Automatically start dbus
-sudo /etc/init.d/dbus start &> /dev/null
-# exec dbus-run-session -- bash # can't be ran from .bashrc, run from tty
-
