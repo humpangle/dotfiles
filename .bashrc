@@ -126,6 +126,7 @@ alias ff='fzf'
 alias vim="nvim"
 alias vi="vim"
 alias vimdiff="nvim -d"
+alias cc=clear
 
 # ENVIRONMENT VARIABLES
 
