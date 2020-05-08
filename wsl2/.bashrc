@@ -173,7 +173,7 @@ _fzf_compgen_path() {
 
 export PYENV_ROOT="$HOME/.pyenv"
 # Preprend asdf bin paths for programming executables - required to use VSCODE
-export PATH="$PYENV_ROOT/bin:$HOME/.asdf/installs/elixir/1.10.2-otp-22/bin:$HOME/.asdf/installs/erlang/22.3.1/bin:$HOME/.pyenv/bin:$PATH"
+export PATH="$PYENV_ROOT/bin:$HOME/.asdf/installs/elixir/1.10.2-otp-22/bin:$HOME/.asdf/installs/erlang/22.3.1/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
@@ -188,4 +188,4 @@ export PHP_WITHOUT_PEAR='yes'
 # following 4 lines needed so that cypress browser testing can work in WSL2
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
 # without the next line, linux executables randomly fail in TMUX in WSL
-export PATH="$PATH:/c/WINDOWS/system32"
+export PATH="$PATH:/c/WINDOWS:/c/WINDOWS/system32"
