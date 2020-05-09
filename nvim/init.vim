@@ -2,6 +2,8 @@
 let g:python_host_prog = expand('$PYTHON2')
 let g:python3_host_prog = expand('$PYTHON3')
 " === /PYTHON ==========
+let g:loaded_netrw       = 0
+let g:loaded_netrwPlugin = 0
 
 " == VIM PLUG ==============================================================
 call plug#begin('~/.vim/plugged')
@@ -91,6 +93,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'will133/vim-dirdiff'
 " use vifm as a file picker: sudo apt install vifm
 Plug 'vifm/vifm.vim'
+" let g:vifm_replace_netrw = 1
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -223,6 +226,8 @@ au BufNewFile,BufRead *.html.django set filetype=htmldjango
 au BufNewFile,BufRead *.eslintrc set filetype=json
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
+" open help file in vertical split
+autocmd FileType help wincmd H
 " au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
 " ================================ /AUTOCMD ==============================
 " ============================== EMBEDDED TERMINAL ======================
