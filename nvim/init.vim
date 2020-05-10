@@ -477,11 +477,15 @@ endfunction
 " ========================== fugitive ============================= "
 " Auto-clean fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
-
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
+
+map gst :Git st<CR>
+map gcm :Gcommit<CR>
+map gvs :Gvdiffsplit<CR>
+map gss :Gstatus<CR>
 " ========================== end fugitive =========================== "
 
 function! DeleteEmptyBuffers()
