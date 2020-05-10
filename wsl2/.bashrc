@@ -147,30 +147,23 @@ export PYTHON3="~/.pyenv/versions/3.8.2/bin/python"
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 
+# ripgrep
+RG_OPTIONS="--hidden --follow --glob '!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}'"
+
 # fzf fuzzy finder
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
+export FZF_DEFAULT_OPTS="--layout=reverse --border --bind alt-j:down,alt-k:up $FZF_PREVIEW_APP"
+# Use git-ls-files inside git repo, otherwise rg
+export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
 
-# Use fd (https://github.com/sharkdp/fd) instead of the default find
-# - The first argument to the function ($1) is the base path to start traversal
-# Use fd to generate the list for directory completion
- _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
+_fzf_compgen_dir() {
+  rg --files $RG_OPTIONS
 }
-
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}' "
 
 _fzf_compgen_path() {
-  rg --files --hidden --follow --glob '!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}'
+  rg --files $RG_OPTIONS
 }
-
-# If you're running fzf in a large git repository, git ls-tree can boost up the speed of the traversal.
-# I found that if I create and save a new file, it does not pick it up.
-#export FZF_DEFAULT_COMMAND='
-#  (git ls-tree -r --name-only HEAD ||
-#   find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
-#      sed s/^..//) 2> /dev/null'
-
 
 export PYENV_ROOT="$HOME/.pyenv"
 # Preprend asdf bin paths for programming executables - required to use VSCODE
@@ -189,4 +182,4 @@ export PHP_WITHOUT_PEAR='yes'
 # following 4 lines needed so that cypress browser testing can work in WSL2
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
 # without the next line, linux executables randomly fail in TMUX in WSL
-export PATH="$PATH:/c/WINDOWS:/c/WINDOWS"
+export PATH="$PATH:/c/WINDOWS"
