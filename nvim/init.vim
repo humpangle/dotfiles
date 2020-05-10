@@ -91,9 +91,6 @@ Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
 Plug 'easymotion/vim-easymotion'
 Plug 'will133/vim-dirdiff'
-" use vifm as a file picker: sudo apt install vifm
-Plug 'vifm/vifm.vim'
-" let g:vifm_replace_netrw = 1
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -505,13 +502,6 @@ map <leader>db :call DeleteEmptyBuffers()<cr>
 " ========================== easymotion =========================== "
 nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
 " ========================== end easymotion =========================== "
-" ========================== Start Vifm =================================== "
-map <leader>vv :Vifm<cr>
-map <leader>vs :VsplitVifm<cr>
-map <leader>sp :SplitVifm<cr>
-map <leader>tv :TabVifm<cr>
-map <leader>dv :DiffVifm<cr>
-" ========================== end Vifm =================================== "
 
 " ========================== copy file path ==============================
 nmap ,yap :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
