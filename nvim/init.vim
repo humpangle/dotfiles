@@ -39,25 +39,8 @@ Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_force_debug = 1
-let g:coc_global_extensions = [
-  \ 'coc-yank',
-  \ 'coc-json',
-  \ 'coc-prettier',
-  \ 'coc-snippets',
-  \ 'coc-emmet',
-  \ 'coc-elixir',
-  \ 'coc-css',
-  \ 'coc-html',
-  \ 'coc-tsserver',
-  \ 'coc-python',
-  \ 'coc-svelte',
-  \ 'coc-eslint',
-  \ 'coc-tailwindcss',
-  \ 'https://github.com/kanmii/coc-snippets',
-  \ 'coc-spell-checker',
-  \ 'coc-docker',
-  \ 'coc-pairs'
-\]
+" CocInstall coc-yank coc-json coc-prettier coc-snippets coc-emmet coc-elixir coc-css coc-html coc-tsserver coc-python coc-svelte coc-eslint https://github.com/kanmii/coc-snippets coc-spell-checker coc-docker coc-pairs
+
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
   \ '.eslintrc': 'json',
@@ -91,6 +74,10 @@ Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
 Plug 'easymotion/vim-easymotion'
 Plug 'will133/vim-dirdiff'
+" python syntax highlighting
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+" modifies Vim’s indentation behavior to comply with PEP8
+Plug 'Vimjas/vim-python-pep8-indent'
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
