@@ -44,6 +44,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
   \ '.eslintrc': 'json',
+  \ 'jinja': 'html',
 \}
 
 " syntax highlighting
@@ -78,6 +79,7 @@ Plug 'will133/vim-dirdiff'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " modifies Vim’s indentation behavior to comply with PEP8
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'lepture/vim-jinja'
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -208,6 +210,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 au FocusGained * :checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
 au BufNewFile,BufRead *.eslintrc set filetype=json
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " open help file in vertical split
@@ -470,6 +473,7 @@ map gst :Git st<CR>
 map gcm :Gcommit<CR>
 map gvs :Gvdiffsplit<CR>
 map gss :Gstatus<CR>
+map ga. :Git add .<CR>
 " ========================== end fugitive =========================== "
 
 function! DeleteEmptyBuffers()
