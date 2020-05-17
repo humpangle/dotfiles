@@ -34,6 +34,7 @@ Plug 'kassio/neoterm'
 " themes
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'mhartington/oceanic-next'
+Plug 'NLKNguyen/papercolor-theme'
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
@@ -45,6 +46,7 @@ let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
   \ '.eslintrc': 'json',
   \ 'jinja': 'html',
+  \ 'eelixir': 'html',
 \}
 
 " syntax highlighting
@@ -102,10 +104,12 @@ endif
 
 syntax enable
 " set background=dark
+" set background=light
 " colorscheme dracula
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
 colorscheme OceanicNext
+" colorscheme PaperColor
 
 set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
@@ -211,6 +215,7 @@ au FocusGained * :checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
 au BufNewFile,BufRead *.eslintrc set filetype=json
 au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
+au BufNewFile,BufRead .env* set filetype=sh
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " open help file in vertical split
@@ -429,8 +434,11 @@ let g:lightline = {}
 
 let g:lightline.component_function = {
   \ 'fugitive': 'LightlineFugitive',
-  \ 'cocstatus': 'coc#status'
   \ }
+
+let g:lightline.component = {
+    \ 'filename': '%f',
+  \}
 
 let g:lightline.active = {
   \ 'left': [
@@ -456,9 +464,6 @@ function! LightlineFugitive()
 		endif
 		return ''
 endfunction
-
-" Use autocmd to force lightline update with coc status - slows down vim
-" autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 " ========================== end lightline settings ================ "
 
 " ========================== fugitive ============================= "
