@@ -77,11 +77,16 @@ Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
 Plug 'easymotion/vim-easymotion'
 Plug 'will133/vim-dirdiff'
-" python syntax highlighting
+" python syntax highlighting - adds highlighting to other file types too
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " modifies Vim’s indentation behavior to comply with PEP8
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'lepture/vim-jinja'
+
+Plug 'diepm/vim-rest-console'
+let g:vrc_elasticsearch_support = 1 " bulk upload and external data file
+let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
+
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
