@@ -87,6 +87,8 @@ Plug 'diepm/vim-rest-console'
 let g:vrc_elasticsearch_support = 1 " bulk upload and external data file
 let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
 
+Plug 'vifm/vifm.vim'
+
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -505,9 +507,22 @@ map <leader>db :call DeleteEmptyBuffers()<cr>
 nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
 " ========================== end easymotion =========================== "
 
+" ========================== Start Vifm =================================== "
+map <leader>vv :Vifm<cr>
+map <leader>vs :VsplitVifm<cr>
+map <leader>sp :SplitVifm<cr>
+map <leader>tv :TabVifm<cr>
+map <leader>dv :DiffVifm<cr>
+" ========================== end Vifm =================================== "
+
 " ========================== copy file path ==============================
 nmap ,yap :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
 nmap ,yrp :let @+=expand("%")<CR>    " Mnemonic: yank relative File path
 nmap ,ap :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
 nmap ,rp :let @"=expand("%")<CR>      " Mnemonic: copy relative path
 " ========================== end copy file path ===========================
+
+" make new rest
+nnoremap mnr :tabe .rest<Left><Left><Left><Left><Left>
+" map rest rest
+nnoremap mrr :let b:vrc_output_buffer_name = '__-Rest__'<Left><Left><Left><Left><Left><Left><Left><Left>
