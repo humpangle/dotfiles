@@ -128,7 +128,6 @@ alias vi="vim"
 alias vimdiff="nvim -d"
 # helpers to make WSL play nice
 alias tmux-save="bash $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh"
-alias tmux-start="tmux new-session -d -A -s 0"
 alias wslexe='/c/WINDOWS/system32/wsl.exe '
 alias cc=clear
 alias t="tmux"
@@ -137,6 +136,11 @@ alias tls="t ls"
 alias tn="t new -s"
 alias tks="t kill-session -t"
 alias py='python '
+# docker remove all containers
+alias drac='docker rm $(docker ps -a -q) '
+# docker remove all containers force
+alias dracf='docker rm $(docker ps -a -q) --force'
+alias drmi='docker rmi '
 
 # ENVIRONMENT VARIABLES
 
@@ -186,7 +190,7 @@ export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
-# following 4 lines needed so that cypress browser testing can work in WSL2
+# following needed so that cypress browser testing can work in WSL2
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
 # without the next line, linux executables randomly fail in TMUX in WSL
 export PATH="$PATH:/c/WINDOWS/system32"

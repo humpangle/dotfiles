@@ -7,6 +7,6 @@ if [ "$SHLVL" = 1 ]; then
 fi
 
 # save tmux sessions
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  . $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh
-fi
+# if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+#   . $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh
+# fi

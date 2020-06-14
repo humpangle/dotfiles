@@ -89,6 +89,12 @@ let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
 
 Plug 'vifm/vifm.vim'
 
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+let g:mkdp_refresh_slow = 1
+
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -112,11 +118,11 @@ endif
 syntax enable
 " set background=dark
 " set background=light
-" colorscheme dracula
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
 colorscheme OceanicNext
 " colorscheme PaperColor
+" colorscheme dracula
 
 set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
@@ -224,6 +230,8 @@ au BufNewFile,BufRead *.eslintrc set filetype=json
 au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
 au BufNewFile,BufRead .env* set filetype=sh
 au BufNewFile,BufRead *.psql set filetype=sql
+au BufNewFile,BufRead .env-cmdrc* set filetype=json
+au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " open help file in vertical split
@@ -526,3 +534,8 @@ nmap ,rp :let @"=expand("%")<CR>      " Mnemonic: copy relative path
 nnoremap mnr :tabe .rest<Left><Left><Left><Left><Left>
 " map rest rest
 nnoremap mrr :let b:vrc_output_buffer_name = '__-Rest__'<Left><Left><Left><Left><Left><Left><Left><Left>
+
+nmap ta :Tabularize /
+vmap ta :Tabularize /
+nmap tb :Tabularize /\zs<Left><Left><Left>
+vmap tb :Tabularize /\zs<Left><Left><Left>
