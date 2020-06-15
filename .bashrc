@@ -180,8 +180,6 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-export PATH="$HOME/.poetry/bin:$PATH"
-alias poetry-shell='. "$(dirname $(poetry run which python))/activate"'
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"

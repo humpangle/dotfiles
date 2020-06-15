@@ -25,7 +25,6 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-umask 022
 
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   cd $HOME/wiki
@@ -33,6 +32,14 @@ if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   cd $HOME
 fi
 
+if [ -d "$HOME/.poetry" ]; then
+  export PATH="$HOME/.poetry/bin:$PATH"
+  alias poetry-shell='. "$(dirname $(poetry run which python))/activate"'
+fi
+
 # start cron job to reclaim WSL2 memory for windows OS re-use every minute
 # https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
-sudo /etc/init.d/cron start &> /dev/null
+if [ -n "$WSL_DISTRO_NAME" ]; then
+  sudo /etc/init.d/cron start &> /dev/null
+  umask 022
+fi
