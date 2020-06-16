@@ -132,6 +132,7 @@ alias ta="t a -t"
 alias tls="t ls"
 alias tn="t new -s"
 alias tks="t kill-session -t"
+alias tkss="t kill-server"
 alias py='python '
 # docker remove all containers
 alias drac='docker rm $(docker ps -a -q) '

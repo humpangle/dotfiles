@@ -38,8 +38,6 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
   umask 022
 
   if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-    cd $HOME/wiki
-    tmux new-session -d -s wiki &> /dev/null
-    cd $HOME
+    tmux new-session -A -D -s wiki -c $HOME/wiki &> /dev/null
   fi
 fi
