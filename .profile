@@ -37,7 +37,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
   sudo /etc/init.d/cron start &> /dev/null
   umask 022
 
-  if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-    tmux new-session -A -D -s wiki -c $HOME/wiki &> /dev/null
-  fi
+  # if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+  #   tmux new-session -A -D -s wiki -c $HOME/wiki &> /dev/null
+  # fi
 fi
