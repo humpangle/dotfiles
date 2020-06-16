@@ -26,12 +26,6 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  cd $HOME/wiki
-  tmux new-session -d -s wiki &> /dev/null
-  cd $HOME
-fi
-
 if [ -d "$HOME/.poetry" ]; then
   export PATH="$HOME/.poetry/bin:$PATH"
   alias poetry-shell='. "$(dirname $(poetry run which python))/activate"'
@@ -42,4 +36,10 @@ fi
 if [ -n "$WSL_DISTRO_NAME" ]; then
   sudo /etc/init.d/cron start &> /dev/null
   umask 022
+
+  if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    cd $HOME/wiki
+    tmux new-session -d -s wiki &> /dev/null
+    cd $HOME
+  fi
 fi
