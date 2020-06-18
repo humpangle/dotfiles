@@ -40,7 +40,7 @@ Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_force_debug = 1
-" CocInstall coc-yank coc-json coc-prettier coc-snippets coc-emmet coc-elixir coc-css coc-html coc-tsserver coc-python coc-svelte coc-eslint https://github.com/kanmii/coc-snippets coc-spell-checker coc-docker coc-pairs coc-cspell-dicts
+" CocInstall coc-yank coc-json coc-prettier coc-snippets coc-emmet coc-elixir coc-css coc-html coc-tsserver coc-python https://github.com/kanmii/coc-svelte coc-eslint https://github.com/kanmii/coc-snippets coc-spell-checker coc-docker coc-pairs coc-cspell-dicts
 
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
@@ -99,6 +99,18 @@ call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
 
+syntax enable
+
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
+
+" colorscheme PaperColor
+" set background=light
+
+" colorscheme dracula
+" set background=dark
+
 " ============================================================================
 " BASIC SETTINGS {{{
 " ============================================================================
@@ -114,15 +126,6 @@ let maplocalleader=","
 if (has("termguicolors"))
  set termguicolors
 endif
-
-syntax enable
-" set background=dark
-" set background=light
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
-" colorscheme PaperColor
-" colorscheme dracula
 
 set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
@@ -177,9 +180,9 @@ xnoremap <Leader>g gqa
 nmap <Leader>H :Helptags!<CR>
 " Save file
 nnoremap <Leader>w :w<CR>
-" Copy and paste from system clipboard (Might require xsel/xclip install)
+" Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
-vmap <Leader>d "+d
+vmap <Leader>x "+x
 nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
