@@ -32,30 +32,8 @@ Plug 'mhartington/oceanic-next'
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_force_debug = 1
-let g:coc_global_extensions = [
-  \ 'coc-yank',
-  \ 'coc-json',
-  \ 'coc-prettier',
-  \ 'coc-snippets',
-  \ 'coc-emmet',
-  \ 'coc-elixir',
-  \ 'coc-css',
-  \ 'coc-html',
-  \ 'coc-tsserver',
-  \ 'coc-python',
-  \ 'coc-svelte',
-  \ 'coc-eslint',
-  \ 'coc-tailwindcss',
-  \ 'https://github.com/kanmii/coc-snippets',
-  \ 'coc-spell-checker'
-  \ 'coc-pairs'
-\]
-let g:coc_filetype_map = {
-  \ 'htmldjango': 'html',
-  \ '.eslintrc': 'json',
-\}
 
 " syntax highlighting
 Plug 'ianks/vim-tsx'
