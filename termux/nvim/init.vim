@@ -2,6 +2,8 @@
 let g:python_host_prog = expand('$PYTHON2')
 let g:python3_host_prog = expand('$PYTHON3')
 " === /PYTHON ==========
+let g:loaded_netrw       = 0
+let g:loaded_netrwPlugin = 0
 
 " == VIM PLUG ==============================================================
 call plug#begin('~/.vim/plugged')
@@ -20,6 +22,7 @@ Plug 'tpope/vim-unimpaired'
 " Better manage Vim sessions - prosession depends on obsession
 Plug 'tpope/vim-obsession' | Plug 'dhruvasagar/vim-prosession'
 Plug 'tpope/vim-surround'
+" A git wrapper so awesome it should be illegal.
 Plug 'tpope/vim-fugitive'
 " search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -29,11 +32,20 @@ Plug 'kassio/neoterm'
 " themes
 " Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'mhartington/oceanic-next'
+Plug 'NLKNguyen/papercolor-theme'
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_force_debug = 1
+" CocInstall coc-yank coc-json coc-prettier coc-snippets coc-emmet coc-elixir coc-css coc-html coc-tsserver coc-python https://github.com/kanmii/coc-svelte coc-eslint https://github.com/kanmii/coc-snippets coc-spell-checker coc-docker coc-pairs coc-cspell-dicts
+
+let g:coc_filetype_map = {
+  \ 'htmldjango': 'html',
+  \ '.eslintrc': 'json',
+  \ 'jinja': 'html',
+  \ 'eelixir': 'html',
+\}
 
 " syntax highlighting
 Plug 'ianks/vim-tsx'
@@ -63,11 +75,33 @@ Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
 Plug 'easymotion/vim-easymotion'
 Plug 'will133/vim-dirdiff'
-" use vifm as a file picker: sudo apt install vifm
+" python syntax highlighting - adds highlighting to other file types too
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+" modifies Vim’s indentation behavior to comply with PEP8
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'lepture/vim-jinja'
+
+Plug 'diepm/vim-rest-console'
+let g:vrc_elasticsearch_support = 1 " bulk upload and external data file
+let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
+
 Plug 'vifm/vifm.vim'
+Plug 'godlygeek/tabular'
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
+
+syntax enable
+
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
+
+" colorscheme PaperColor
+" set background=light
+
+" colorscheme dracula
+" set background=dark
 
 " ============================================================================
 " BASIC SETTINGS {{{
@@ -84,13 +118,6 @@ let maplocalleader=","
 if (has("termguicolors"))
  set termguicolors
 endif
-
-syntax enable
-" set background=dark
-" colorscheme dracula
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
 
 set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
@@ -146,7 +173,7 @@ nmap <Leader>H :Helptags!<CR>
 nnoremap <Leader>w :w<CR>
 " Copy and paste from system clipboard (Might require xsel/xclip install)
 vmap <Leader>Y "+y
-vmap <Leader>d "+d
+vmap <Leader>x "+x
 nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
@@ -194,6 +221,11 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 au FocusGained * :checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
 au BufNewFile,BufRead *.eslintrc set filetype=json
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
+au BufNewFile,BufRead .env* set filetype=sh
+au BufNewFile,BufRead *.psql set filetype=sql
+au BufNewFile,BufRead .env-cmdrc* set filetype=json
+au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
@@ -409,8 +441,11 @@ let g:lightline = {}
 
 let g:lightline.component_function = {
   \ 'fugitive': 'LightlineFugitive',
-  \ 'cocstatus': 'coc#status'
   \ }
+
+let g:lightline.component = {
+    \ 'filename': '%f',
+  \}
 
 let g:lightline.active = {
   \ 'left': [
@@ -436,19 +471,21 @@ function! LightlineFugitive()
 		endif
 		return ''
 endfunction
-
-" Use autocmd to force lightline update with coc status - slows down vim
-" autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 " ========================== end lightline settings ================ "
 
 " ========================== fugitive ============================= "
 " Auto-clean fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
-
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
+
+map gst :Git st<CR>
+map gcm :Gcommit<CR>
+map gvs :Gvdiffsplit<CR>
+map gss :Gstatus<CR>
+map ga. :Git add .<CR>
 " ========================== end fugitive =========================== "
 
 function! DeleteEmptyBuffers()
@@ -468,6 +505,7 @@ map <leader>db :call DeleteEmptyBuffers()<cr>
 " ========================== easymotion =========================== "
 nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
 " ========================== end easymotion =========================== "
+
 " ========================== Start Vifm =================================== "
 map <leader>vv :Vifm<cr>
 map <leader>vs :VsplitVifm<cr>
@@ -482,3 +520,13 @@ nmap ,yrp :let @+=expand("%")<CR>    " Mnemonic: yank relative File path
 nmap ,ap :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
 nmap ,rp :let @"=expand("%")<CR>      " Mnemonic: copy relative path
 " ========================== end copy file path ===========================
+
+" make new rest
+nnoremap mnr :tabe .rest<Left><Left><Left><Left><Left>
+" map rest rest
+nnoremap mrr :let b:vrc_output_buffer_name = '__-Rest__'<Left><Left><Left><Left><Left><Left><Left><Left>
+
+nmap ta :Tabularize /
+vmap ta :Tabularize /
+nmap tb :Tabularize /\zs<Left><Left><Left>
+vmap tb :Tabularize /\zs<Left><Left><Left>
