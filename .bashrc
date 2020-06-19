@@ -112,7 +112,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -173,12 +172,43 @@ _fzf_compgen_path() {
   rg --files --hidden --follow --glob '!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}'
 }
 
-export PYENV_ROOT="$HOME/.pyenv"
-# Preprend asdf bin paths for programming executables - required to use VSCODE
-export PATH="$PYENV_ROOT/bin:$HOME/.asdf/installs/elixir/1.10.2-otp-22/bin:$HOME/.asdf/installs/erlang/22.3.1/bin:$HOME/.pyenv/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
+
+
+if [ -d "$HOME/.pyenv" ]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+  fi
+fi
+
+if command -v asdf 1>/dev/null 2>&1; then
+  # Preprend asdf bin paths for programming executables
+  # required to use VSCODE for some programming languages
+
+  no_version_set="No version set"
+
+  add_asdf_plugins_to_path() {
+    plugin=$1
+    activated="$( asdf current $plugin )"
+
+    case "$no_version_set" in
+      *$activated*)
+        # echo "not activated"
+      ;;
+
+      *)
+        version="$(echo $activated | cut -d' ' -f1)"
+        bin_path="$HOME/.asdf/installs/$plugin/$version/bin"
+        export PATH="$bin_path:$PATH"
+      ;;
+    esac
+  }
+
+  # add_asdf_plugins_to_path elixir
+  # add_asdf_plugins_to_path erlang
 fi
 
 # Install Ruby Gems to ~/gems
