@@ -133,26 +133,89 @@ alias tn="t new -s"
 alias tks="t kill-session -t"
 alias tkss="t kill-server"
 alias py='python '
-# docker remove all containers
-alias drac='docker rm $(docker ps -a -q) '
-# docker remove all containers force
-alias dracf='docker rm $(docker ps -a -q) --force'
-alias drmi='docker rmi '
 
 # ENVIRONMENT VARIABLES
 
 export EDITOR="nvim"
-# Do not build erlang docs when installing with asdf cos it's slow and unstable
-# skip the java dependency during installation
-export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
-export KERL_BUILD_DOCS=
-export KERL_INSTALL_MANPAGES=
-export KERL_INSTALL_HTMLDOCS=
-export PYTHON2="~/.pyenv/versions/2.7.17/bin/python"
-export PYTHON3="~/.pyenv/versions/3.8.2/bin/python"
 
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+case "com.termux" in
+  *$SHELL*)
+    export PYTHON2="$PREFIX/bin/python2"
+    export PYTHON3="$PREFIX/bin/python"
+    export PGDATA=$PREFIX/var/lib/postgresql
+    alias python=python2
+  ;;
+
+  *)
+    # Do not build erlang docs when installing with
+    # asdf cos it's slow and unstable
+    # skip the java dependency during installation
+    export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
+    export KERL_BUILD_DOCS=
+    export KERL_INSTALL_MANPAGES=
+    export KERL_INSTALL_HTMLDOCS=
+    export PYTHON2="~/.pyenv/versions/2.7.17/bin/python"
+    export PYTHON3="~/.pyenv/versions/3.8.2/bin/python"
+    # docker remove all containers
+    alias drac='docker rm $(docker ps -a -q) '
+    # docker remove all containers force
+    alias dracf='docker rm $(docker ps -a -q) --force'
+    alias drmi='docker rmi '
+
+    if [ -d "$HOME/.pyenv" ]; then
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+
+      if command -v pyenv 1>/dev/null 2>&1; then
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+      fi
+    fi
+
+    if [ -n "$WSL_DISTRO_NAME" ]; then
+      # following needed so that cypress browser testing can work in WSL2
+      export DISPLAY="$(/sbin/ip route | awk '/default/ { print $3 }'):0"
+      # without the next line, linux executables randomly fail in TMUX in WSL
+      export PATH="$PATH:/c/WINDOWS/system32"
+
+      alias wslexe='/c/WINDOWS/system32/wsl.exe '
+      # helpers to make WSL play nice
+      alias tmux-save="bash $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh"
+    fi
+
+    if [ -d "$HOME/.asdf" ]; then
+      . $HOME/.asdf/asdf.sh
+      . $HOME/.asdf/completions/asdf.bash
+
+      if command -v asdf 1>/dev/null 2>&1; then
+        # Preprend asdf bin paths for programming executables
+        # required to use VSCODE for some programming languages
+
+        no_version_set="No version set"
+
+        add_asdf_plugins_to_path() {
+          plugin=$1
+          activated="$( asdf current $plugin )"
+
+          case "$no_version_set" in
+            *$activated*)
+              # echo "not activated"
+            ;;
+
+            *)
+              version="$(echo $activated | cut -d' ' -f1)"
+              bin_path="$HOME/.asdf/installs/$plugin/$version/bin"
+              export PATH="$bin_path:$PATH"
+            ;;
+          esac
+        }
+
+        # add_asdf_plugins_to_path elixir
+        # add_asdf_plugins_to_path erlang
+      fi
+    fi
+  ;;
+esac
 
 # ripgrep
 RG_OPTIONS="--hidden --follow --glob '!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}'"
@@ -172,58 +235,8 @@ _fzf_compgen_path() {
   rg --files --hidden --follow --glob '!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}'
 }
 
-
-
-if [ -d "$HOME/.pyenv" ]; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-
-  if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-  fi
-fi
-
-if command -v asdf 1>/dev/null 2>&1; then
-  # Preprend asdf bin paths for programming executables
-  # required to use VSCODE for some programming languages
-
-  no_version_set="No version set"
-
-  add_asdf_plugins_to_path() {
-    plugin=$1
-    activated="$( asdf current $plugin )"
-
-    case "$no_version_set" in
-      *$activated*)
-        # echo "not activated"
-      ;;
-
-      *)
-        version="$(echo $activated | cut -d' ' -f1)"
-        bin_path="$HOME/.asdf/installs/$plugin/$version/bin"
-        export PATH="$bin_path:$PATH"
-      ;;
-    esac
-  }
-
-  # add_asdf_plugins_to_path elixir
-  # add_asdf_plugins_to_path erlang
-fi
-
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
-
-if [ -n "$WSL_DISTRO_NAME" ]; then
-  # following needed so that cypress browser testing can work in WSL2
-  export DISPLAY="$(/sbin/ip route | awk '/default/ { print $3 }'):0"
-  # without the next line, linux executables randomly fail in TMUX in WSL
-  export PATH="$PATH:/c/WINDOWS/system32"
-
-  alias wslexe='/c/WINDOWS/system32/wsl.exe '
-  # helpers to make WSL play nice
-  alias tmux-save="bash $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh"
-fi
