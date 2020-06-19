@@ -138,8 +138,8 @@ alias py='python '
 
 export EDITOR="nvim"
 
-case "com.termux" in
-  *$SHELL*)
+case $SHELL in
+  *"com.termux"*)
     export PYTHON2="$PREFIX/bin/python2"
     export PYTHON3="$PREFIX/bin/python"
     export PGDATA=$PREFIX/var/lib/postgresql
