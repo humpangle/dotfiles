@@ -53,6 +53,7 @@ let g:coc_filetype_map = {
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/vim-toml'
+Plug 'davidroeca/coc-svelte', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 " syntax highlighting and indentation for Svelte 3 components.
 Plug 'evanleck/vim-svelte'
 
