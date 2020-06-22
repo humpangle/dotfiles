@@ -123,9 +123,9 @@ alias yarnw="yarn workspace "
 alias yarns="yarn start "
 alias ff='fzf'
 alias vim="nvim"
-alias vi="vim"
+alias vi="/usr/bin/vim"
 alias vimdiff="nvim -d"
-alias cc=clear
+alias c=clear
 alias t="tmux"
 alias ta="t a -t"
 alias tls="t ls"
@@ -133,6 +133,7 @@ alias tn="t new -s"
 alias tks="t kill-session -t"
 alias tkss="t kill-server"
 alias py='python '
+alias pw='prettier --write '
 
 # ENVIRONMENT VARIABLES
 
