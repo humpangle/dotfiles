@@ -39,8 +39,25 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-yank', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
+Plug 'iamcco/coc-cspell-dicts', {'do': 'yarn install --frozen-lockfile'}
+Plug 'kanmii/kanmii-coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'kanmii/kanmii-coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'coc-extensions/coc-svelte', { 'do': 'yarn install --frozen-lockfile && yarn build' }
+Plug 'josa42/coc-docker', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 " let g:coc_force_debug = 1
-" CocInstall coc-yank coc-json coc-prettier coc-snippets coc-emmet coc-elixir coc-css coc-html coc-tsserver coc-python coc-eslint https://github.com/kanmii/coc-snippets coc-spell-checker coc-docker coc-pairs coc-cspell-dicts
+" CocInstall coc-elixir
 
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
@@ -53,7 +70,6 @@ let g:coc_filetype_map = {
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/vim-toml'
-Plug 'davidroeca/coc-svelte', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 " syntax highlighting and indentation for Svelte 3 components.
 Plug 'evanleck/vim-svelte'
 
