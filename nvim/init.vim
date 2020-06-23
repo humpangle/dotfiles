@@ -51,13 +51,12 @@ Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
-Plug 'iamcco/coc-cspell-dicts', {'do': 'yarn install --frozen-lockfile'}
-Plug 'kanmii/kanmii-coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'iamcco/coc-cspell-dicts', {'do': 'yarn install --frozen-lockfile'}
 Plug 'kanmii/kanmii-coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 Plug 'coc-extensions/coc-svelte', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 Plug 'josa42/coc-docker', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 " let g:coc_force_debug = 1
-" CocInstall coc-elixir
+" CocInstall coc-elixir coc-cspell-dicts
 
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
