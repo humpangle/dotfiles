@@ -87,7 +87,7 @@ let g:gutentags_generate_on_write = 1
 let g:gutentags_generate_on_empty_buffer = 0
 "let g:gutentags_cache_dir = expand('~/.tags_cache')
 "let g:gutentags_trace = 1
-set statusline+=%{gutentags#statusline()}
+" set statusline+=%{gutentags#statusline()}
 
 Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
@@ -117,15 +117,15 @@ call plug#end()
 
 syntax enable
 
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
+" let g:oceanic_next_terminal_bold = 1
+" let g:oceanic_next_terminal_italic = 1
+" colorscheme OceanicNext
 
 " colorscheme PaperColor
 " set background=light
 
-" colorscheme dracula
-" set background=dark
+colorscheme dracula
+set background=dark
 
 " ============================================================================
 " BASIC SETTINGS {{{
@@ -165,6 +165,8 @@ set wildignore+=*.zip,*.png,*.jpg,*.gif,*.pdf,*DS_Store*,*/.git/*,*/node_modules
 set splitbelow
 set splitright
 set number " line numbering
+" remove line numbering
+nnoremap ln :set nonumber<CR>
 set mouse=a
 
 " I disabled both because they were distracting and slow (according to docs)
@@ -223,7 +225,6 @@ nnoremap <silent> <leader>_ :split<CR>
 nnoremap <silent> <leader>\| :vsp<CR>
 " remove all split windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
-
 " Toggle between normal and relative numbering.
 function! NumberToggle()
   if(&relativenumber == 1)
