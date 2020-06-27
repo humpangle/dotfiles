@@ -141,8 +141,6 @@ set wildignore+=*.zip,*.png,*.jpg,*.gif,*.pdf,*DS_Store*,*/.git/*,*/node_modules
 set splitbelow
 set splitright
 set number " line numbering
-" remove line numbering
-nnoremap ln :set nonumber<CR>
 
 " I disabled both because they were distracting and slow (according to docs)
 set cursorline " highlight cursor positions
@@ -200,6 +198,8 @@ nnoremap <silent> <leader>- :split<CR>
 nnoremap <silent> <leader>, :vsp<CR>
 " remove all split windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
+set number " line numbering
+
 " Toggle between normal and relative numbering.
 function! NumberToggle()
   if(&relativenumber == 1)
@@ -210,6 +210,9 @@ function! NumberToggle()
   endif
 endfunc
 nnoremap <leader>ln :call NumberToggle()<cr>
+
+" remove line numbering
+nnoremap ln :set nonumber<CR>
 " ================ Mappings to move lines =============================
 nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==
