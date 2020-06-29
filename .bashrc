@@ -134,6 +134,7 @@ alias tks="t kill-session -t"
 alias tkss="t kill-server"
 alias py='python '
 alias pw='prettier --write '
+alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 
 # ENVIRONMENT VARIABLES
 
