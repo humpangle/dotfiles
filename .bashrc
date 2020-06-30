@@ -134,10 +134,6 @@ alias tks="t kill-session -t"
 alias tkss="t kill-server"
 alias py='python '
 alias pw='prettier --write '
-alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
-alias tr='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
-
-# ENVIRONMENT VARIABLES
 
 export EDITOR="nvim"
 
@@ -147,6 +143,8 @@ case $SHELL in
     export PYTHON3="$PREFIX/bin/python"
     export PGDATA=$PREFIX/var/lib/postgresql
     alias python=python2
+    alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
+    alias tr='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
   ;;
 
   *)
