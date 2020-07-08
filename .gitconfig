@@ -7,6 +7,8 @@
 	pl = pull
 	co = checkout
   cam = commit -am
+  pgm = push github master
+  pgd = push github dev
 [credential]
 	helper = cache --timeout 604800
 [core]
