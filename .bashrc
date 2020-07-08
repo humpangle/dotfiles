@@ -162,6 +162,10 @@ case $SHELL in
     # docker remove all containers force
     alias dracf='docker rm $(docker ps -a -q) --force'
     alias drmi='docker rmi '
+    alias drim='docker rmi '
+    alias dim='docker images '
+    alias dps='docker ps '
+    alias dpsa='docker ps -a '
 
     . $HOME/dotfiles/.pyenv.sh
     . $HOME/dotfiles/.wsl.sh

@@ -117,15 +117,15 @@ call plug#end()
 
 syntax enable
 
-" let g:oceanic_next_terminal_bold = 1
-" let g:oceanic_next_terminal_italic = 1
-" colorscheme OceanicNext
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
 
 " colorscheme PaperColor
 " set background=light
 
-colorscheme dracula
-set background=dark
+" colorscheme dracula
+" set background=dark
 
 " ============================================================================
 " BASIC SETTINGS {{{
@@ -237,6 +237,7 @@ nnoremap <leader>ln :call NumberToggle()<cr>
 
 " remove line numbering
 nnoremap ln :set nonumber<CR>
+nnoremap eb :e %<CR>
 " ================ Mappings to move lines =============================
 nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==
