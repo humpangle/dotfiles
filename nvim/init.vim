@@ -254,7 +254,7 @@ au BufNewFile,BufRead *.eslintrc set filetype=json
 au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
 au BufNewFile,BufRead .env* set filetype=sh
 au BufNewFile,BufRead *.psql set filetype=sql
-au BufNewFile,BufRead .env-cmdrc* set filetype=json
+" au BufNewFile,BufRead .env-cmdrc* set filetype=json
 au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
