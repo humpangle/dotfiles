@@ -223,7 +223,6 @@ nnoremap <silent> <leader>_ :split<CR>
 nnoremap <silent> <leader>\| :vsp<CR>
 " remove all split windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
-set number " line numbering
 
 " Toggle between normal and relative numbering.
 function! NumberToggle()
@@ -236,9 +235,11 @@ function! NumberToggle()
 endfunc
 nnoremap <leader>ln :call NumberToggle()<cr>
 
-" remove line numbering
-nnoremap ln :set nonumber<CR>
+" toggle line numbering
+nnoremap ln :set nornu number<CR>
+nnoremap Ln :set nonumber nornu<CR>
 nnoremap eb :e %<CR>
+
 " ================ Mappings to move lines =============================
 nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==

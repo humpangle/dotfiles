@@ -166,6 +166,10 @@ case $SHELL in
     alias dim='docker images '
     alias dps='docker ps '
     alias dpsa='docker ps -a '
+    alias dc='docker-compose '
+    alias dce='docker-compose exec '
+    alias dcu='docker-compose up '
+    alias dcrs='docker-compose restart '
 
     . $HOME/dotfiles/.pyenv.sh
     . $HOME/dotfiles/.wsl.sh
