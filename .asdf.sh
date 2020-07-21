@@ -27,6 +27,8 @@ if [ -d "$HOME/.asdf" ]; then
       esac
     }
 
+    alias adf='asdf '
+
     # add_asdf_plugins_to_path elixir
     # add_asdf_plugins_to_path erlang
   fi

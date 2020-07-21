@@ -39,24 +39,8 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-yank', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'iamcco/coc-cspell-dicts', {'do': 'yarn install --frozen-lockfile'}
-Plug 'kanmii/kanmii-coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'coc-extensions/coc-svelte', { 'do': 'yarn install --frozen-lockfile && yarn build' }
-Plug 'josa42/coc-docker', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 " let g:coc_force_debug = 1
-" CocInstall coc-elixir coc-cspell-dicts
+" CocInstall coc-elixir coc-cspell-dicts coc-yank coc-json coc-python coc-emmet coc-tsserver coc-snippets coc-css coc-html coc-eslint coc-pairs coc-prettier coc-spell-checker coc-svelte coc-docker https://github.com/kanmii/kanmii-coc-snippets
 
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
