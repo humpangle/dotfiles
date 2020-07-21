@@ -13,7 +13,7 @@
 
 " share registers among instances. enables copy from one instance and paste
 " into another
-" set syncregs=general
+set syncregs=general
 
 set vicmd=nvim
 " set vicmd=elvis\ -G\ termcap
@@ -380,7 +380,7 @@ filextype */
 
 " What should be saved automatically between vifm sessions.  Drop "savedirs"
 " value if you don't want vifm to remember last visited directories for you.
-set vifminfo=dhistory,chistory,state,tui,shistory,
+set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
     \phistory,fhistory,dirstack,registers,bookmarks,bmarks
 
 " ------------------------------------------------------------------------------
@@ -425,7 +425,7 @@ if has('win')
     nnoremap yf :!echo %"c:gs!\!/! %i | clip<cr>
 
 elseif executable('xclip')
-    " yank current directory path into the clipboard
+    " Yank current directory path into the clipboard
     nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
     " yank current file path into the clipboard
     nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
