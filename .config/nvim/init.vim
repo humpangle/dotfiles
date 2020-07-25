@@ -89,11 +89,10 @@ let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
 
 Plug 'vifm/vifm.vim'
 
+Plug 'godlygeek/tabular'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 let g:mkdp_refresh_slow = 1
-
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 
 call plug#end()
 " }}}
