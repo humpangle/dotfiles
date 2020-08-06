@@ -136,6 +136,8 @@ alias py='python '
 alias pw='prettier --write '
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias tr='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+alias eshell='exec $SHELL'
+alias gst='git st '
 
 export EDITOR="nvim"
 
@@ -170,6 +172,7 @@ case $SHELL in
     alias dce='docker-compose exec '
     alias dcu='docker-compose up '
     alias dcrs='docker-compose restart '
+    alias dcd='docker-compose down '
 
     . $HOME/dotfiles/.pyenv.sh
     . $HOME/dotfiles/.wsl.sh
