@@ -7,4 +7,6 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
   export PATH="$PATH:/c/WINDOWS/system32"
 
   alias wslexe='/c/WINDOWS/system32/wsl.exe '
+  alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
+  alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
 fi
