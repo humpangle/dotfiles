@@ -92,14 +92,6 @@ fi
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -112,33 +104,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias ll='ls -alFh'
-alias la='ls -A'
-alias l='ls -CF'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias md='mkdir -p'
-alias yarnw="yarn workspace "
-alias yarns="yarn start "
-alias ff='fzf'
-alias vim="nvim"
-alias vi="/usr/bin/vim"
-alias vimdiff="nvim -d"
-alias c=clear
-alias t="tmux"
-alias ta="t a -t"
-alias tls="t ls"
-alias tn="t new -s"
-alias tks="t kill-session -t"
-alias tkss="t kill-server"
-alias py='python '
-alias pw='prettier --write '
-alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
-alias tr='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
-alias eshell='exec $SHELL'
-alias gst='git st '
-
+[ -f $HOME/dotfiles/.bash_aliases ] && source $HOME/dotfiles/.bash_aliases
+[ -f $HOME/dotfiles/.utils.sh ] && source $HOME/dotfiles/.utils.sh
 export EDITOR="nvim"
 
 case $SHELL in
@@ -174,9 +141,9 @@ case $SHELL in
     alias dcrs='docker-compose restart '
     alias dcd='docker-compose down '
 
-    . $HOME/dotfiles/.pyenv.sh
-    . $HOME/dotfiles/.wsl.sh
-    . $HOME/dotfiles/.asdf.sh
+    [ -f $HOME/dotfiles/.pyenv.sh ] && source $HOME/dotfiles/.pyenv.sh
+    [ -f $HOME/dotfiles/.wsl.sh ] && source $HOME/dotfiles/.wsl.sh
+    [ -f $HOME/dotfiles/.asdf.sh ] && source $HOME/dotfiles/.asdf.sh
 
     # Install Ruby Gems to ~/gems
     export GEM_HOME="$HOME/gems"
