@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 [ -f $HOME/dotfiles/.bash_aliases ] && source $HOME/dotfiles/.bash_aliases
 [ -f $HOME/dotfiles/.utils.sh ] && source $HOME/dotfiles/.utils.sh
@@ -17,4 +17,4 @@ case $SHELL in
   ;;
 esac
 
-[ -f $HOME/dotfiles/.utils.sh ] && source $HOME/dotfiles/.utils.sh
+[ -f $HOME/dotfiles/.fzf.sh ] && source $HOME/dotfiles/.fzf.sh

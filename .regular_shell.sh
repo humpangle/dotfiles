@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # skip the java dependency during installation
 export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"

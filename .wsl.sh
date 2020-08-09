@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
   # following needed so that cypress browser testing can work in WSL2
