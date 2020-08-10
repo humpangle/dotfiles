@@ -30,15 +30,13 @@ Plug 'junegunn/fzf.vim'
 " Terminal wrapper
 Plug 'kassio/neoterm'
 " themes
-" Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'mhartington/oceanic-next'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim', { 'as': 'dracula' }
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_force_debug = 1
-" CocInstall coc-yank coc-json coc-prettier coc-snippets coc-emmet coc-elixir coc-css coc-html coc-tsserver coc-python coc-eslint https://github.com/kanmii/coc-snippets coc-spell-checker coc-docker coc-pairs coc-cspell-dicts
+" CocInstall coc-elixir coc-cspell-dicts coc-yank coc-json coc-python coc-emmet coc-tsserver coc-snippets coc-css coc-html coc-eslint coc-pairs coc-prettier coc-spell-checker coc-svelte coc-docker https://github.com/kanmii/kanmii-coc-snippets
 
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
@@ -93,15 +91,8 @@ call plug#end()
 
 syntax enable
 
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
-
-" colorscheme PaperColor
-" set background=light
-
-" colorscheme dracula
-" set background=dark
+colorscheme dracula
+set background=dark
 
 " ============================================================================
 " BASIC SETTINGS {{{
@@ -140,7 +131,6 @@ set wildignore+=*.zip,*.png,*.jpg,*.gif,*.pdf,*DS_Store*,*/.git/*,*/node_modules
 " Tab Splits
 set splitbelow
 set splitright
-set number " line numbering
 
 " I disabled both because they were distracting and slow (according to docs)
 set cursorline " highlight cursor positions
@@ -171,7 +161,7 @@ xnoremap <Leader>g gqa
 nmap <Leader>H :Helptags!<CR>
 " Save file
 nnoremap <Leader>w :w<CR>
-" Copy and paste from system clipboard (Might require xsel/xclip install)
+" Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
 nmap <Leader>p "+p
@@ -198,7 +188,6 @@ nnoremap <silent> <leader>- :split<CR>
 nnoremap <silent> <leader>, :vsp<CR>
 " remove all split windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
-set number " line numbering
 
 " Toggle between normal and relative numbering.
 function! NumberToggle()
@@ -211,8 +200,11 @@ function! NumberToggle()
 endfunc
 nnoremap <leader>ln :call NumberToggle()<cr>
 
-" remove line numbering
-nnoremap ln :set nonumber<CR>
+" toggle line numbering
+nnoremap ln :set nornu number<CR>
+nnoremap Ln :set nonumber nornu<CR>
+nnoremap eb :e %<CR>
+
 " ================ Mappings to move lines =============================
 nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==
@@ -228,7 +220,6 @@ au BufNewFile,BufRead *.eslintrc set filetype=json
 au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
 au BufNewFile,BufRead .env* set filetype=sh
 au BufNewFile,BufRead *.psql set filetype=sql
-au BufNewFile,BufRead .env-cmdrc* set filetype=json
 au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
