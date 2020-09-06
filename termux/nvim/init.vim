@@ -84,6 +84,7 @@ let g:vrc_elasticsearch_support = 1 " bulk upload and external data file
 let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
 
 Plug 'vifm/vifm.vim'
+
 Plug 'godlygeek/tabular'
 call plug#end()
 " }}}
