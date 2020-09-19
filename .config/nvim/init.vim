@@ -34,7 +34,7 @@ Plug 'kassio/neoterm'
 " themes
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'mhartington/oceanic-next'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'rakr/vim-one'
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
@@ -104,12 +104,13 @@ syntax enable
 " let g:oceanic_next_terminal_italic = 1
 " colorscheme OceanicNext
 
-" colorscheme PaperColor
-" set background=light
-" set t_Co=256   " This is may or may not needed.
+" colorscheme dracula
+" set background=dark
 
-colorscheme dracula
-set background=dark
+colorscheme one
+set background=dark " for the light version
+let g:airline_theme='one'
+let g:one_allow_italics = 1 " I love italic for comments
 
 " ============================================================================
 " BASIC SETTINGS {{{
