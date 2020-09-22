@@ -32,8 +32,6 @@ Plug 'junegunn/fzf.vim'
 " Terminal wrapper
 Plug 'kassio/neoterm'
 " themes
-" Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'mhartington/oceanic-next'
 Plug 'rakr/vim-one'
 " elixir language syntax highlighting
 Plug 'elixir-editors/vim-elixir'
@@ -100,15 +98,9 @@ call plug#end()
 
 syntax enable
 
-" let g:oceanic_next_terminal_bold = 1
-" let g:oceanic_next_terminal_italic = 1
-" colorscheme OceanicNext
-
-" colorscheme dracula
-" set background=dark
-
 colorscheme one
 set background=dark " for the light version
+" set background=light " for the light version
 let g:airline_theme='one'
 let g:one_allow_italics = 1 " I love italic for comments
 
