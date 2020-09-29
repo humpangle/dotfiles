@@ -1,0 +1,21 @@
+{
+  "typescript.suggestionActions.enabled": false,
+  "javascript.suggestionActions.enabled": false,
+  "typescript.showUnused": false,
+  "javascript.showUnused": false,
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  // suppress coc-svelte typescript unused variables error until fixed in vscode
+  "svelte.plugin.typescript.diagnostics.enable": false,
+  "css.validate": false,
+  "cSpell.userWords": [
+    "entrypoint"
+  ],
+  "cSpell.ignoreWords": [],
+  "cSpellExt.enableDictionaries": ["german"],
+  "cSpell.language": "en,de"
+}
