@@ -104,3 +104,5 @@ tags*
 # pytest:
 .pytest_cache/
 .testmondata
+.tt
+.tts
