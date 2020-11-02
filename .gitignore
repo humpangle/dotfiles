@@ -105,4 +105,4 @@ tags*
 .pytest_cache/
 .testmondata
 .tt
-.tts
+.tts*
