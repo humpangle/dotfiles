@@ -288,7 +288,7 @@ nmap <Leader>/ :Rg<CR>
 " ==========================  END FUZZY FIND FILES WITH FZF ========
 " =================== COC Plugin Vim settings ===========================
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=200
+set updatetime=100
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
