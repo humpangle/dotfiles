@@ -87,7 +87,7 @@ node_modules/*
 .pnp.js
 coverage/*
 cover/*
-.netlify/*
+*.netlify*
 .cache/*
 .env-cmdrc
 _build/*
