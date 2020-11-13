@@ -32,6 +32,9 @@ if [ -d "$HOME/.poetry" ]; then
 fi
 
 # start cron job to reclaim WSL2 memory for windows OS re-use every minute
+# Do not forget to set:
+# `%sudo ALL=NOPASSWD: /etc/init.d/cron start`
+# via `sudo visudo` - see content of ./etc/sudoers.tmp
 # https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
 if [ -n "$WSL_DISTRO_NAME" ]; then
   sudo /etc/init.d/cron start &> /dev/null

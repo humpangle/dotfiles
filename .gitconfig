@@ -30,3 +30,6 @@
   prompt = false
 [push]
 	followTags = true
+[user]
+	email = you@example.com
+	name = Your Name
