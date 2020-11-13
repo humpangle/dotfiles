@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-export HISTCONTROL=ignoreboth:erasedups
-export PROMPT_COMMAND="history -n; history -w; history -c; history -r"
-tac "$HISTFILE" | awk '!x[$0]++' > /tmp/tmpfile  &&
-                tac /tmp/tmpfile > "$HISTFILE"
-rm /tmp/tmpfile
+# export HISTCONTROL=ignoreboth:erasedups
+# export PROMPT_COMMAND="history -n; history -w; history -c; history -r"
+# tac "$HISTFILE" | awk '!x[$0]++' > /tmp/tmpfile  &&
+#                 tac /tmp/tmpfile > "$HISTFILE"
+# rm /tmp/tmpfile
 
 [ -f $HOME/dotfiles/.bash_aliases ] && source $HOME/dotfiles/.bash_aliases
 [ -f $HOME/dotfiles/.utils.sh ] && source $HOME/dotfiles/.utils.sh
