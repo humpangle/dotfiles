@@ -12,9 +12,7 @@
   // suppress coc-svelte typescript unused variables error until fixed in vscode
   "svelte.plugin.typescript.diagnostics.enable": false,
   "css.validate": false,
-  "cSpell.userWords": [
-    "entrypoint"
-  ],
+  "cSpell.userWords": ["entrypoint"],
   "cSpell.ignoreWords": [],
   "cSpellExt.enableDictionaries": ["german"],
   "cSpell.language": "en,de"

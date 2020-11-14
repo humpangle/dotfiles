@@ -199,6 +199,7 @@ nnoremap <silent> <leader>_ :split<CR>
 nnoremap <silent> <leader>\| :vsp<CR>
 " remove all split windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
+set number
 
 " Toggle between normal and relative numbering.
 function! NumberToggle()
