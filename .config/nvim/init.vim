@@ -373,13 +373,13 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " RENAME CURRENT FILE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'), 'file')
-    if new_name != '' && new_name != old_name
-        exec ':saveas ' . new_name
-        exec ':silent !rm ' . old_name
-        redraw!
-    endif
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
 endfunction
 
 map <leader>rn :call RenameFile()<cr>
@@ -476,11 +476,11 @@ let g:lightline.active = {
   \ }
 
 function! LightlineFugitive()
-		if exists('*fugitive#head')
-			let branch = fugitive#head()
-			return branch !=# '' ? branch : ''
-		endif
-		return ''
+  if exists('*fugitive#head')
+    let branch = fugitive#head()
+    return branch !=# '' ? branch : ''
+  endif
+  return ''
 endfunction
 " ========================== end lightline settings ================ "
 
@@ -500,16 +500,16 @@ map ga. :Git add .<CR>
 " ========================== end fugitive =========================== "
 
 function! DeleteEmptyBuffers()
-    let [i, n; empty] = [1, bufnr('$')]
-    while i <= n
-        if bufexists(i) && bufname(i) == ''
-            call add(empty, i)
-        endif
-        let i += 1
-    endwhile
-    if len(empty) > 0
-        exe 'bdelete' join(empty)
+  let [i, n; empty] = [1, bufnr('$')]
+  while i <= n
+    if bufexists(i) && bufname(i) == ''
+      call add(empty, i)
     endif
+    let i += 1
+  endwhile
+  if len(empty) > 0
+    exe 'bdelete' join(empty)
+  endif
 endfunction
 
 map <leader>db :call DeleteEmptyBuffers()<cr>
