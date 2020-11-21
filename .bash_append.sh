@@ -23,3 +23,11 @@ case $SHELL in
 esac
 
 [ -f $HOME/dotfiles/.fzf.sh ] && source $HOME/dotfiles/.fzf.sh
+
+[ -f $HOME/.local/bin/tmuxp ] && eval "$(_TMUXP_COMPLETE=source tmuxp)"
+
+# heroku autocomplete setup
+if [ -x "$(command -v heroku)" ]; then
+  HEROKU_AC_BASH_SETUP_PATH=/home/kanmii/.cache/heroku/autocomplete/bash_setup
+  test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
+fi

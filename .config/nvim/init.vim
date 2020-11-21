@@ -210,12 +210,12 @@ function! NumberToggle()
     set rnu
   endif
 endfunc
-nnoremap <leader>ln :call NumberToggle()<cr>
+" nnoremap <leader>ln :call NumberToggle()<cr>
 
 " toggle line numbering
-nnoremap ln :set nornu number<CR>
-nnoremap Ln :set nonumber nornu<CR>
-nnoremap eb :e %<CR>
+" nnoremap ln :set nornu number<CR>
+" nnoremap Ln :set nonumber nornu<CR>
+" nnoremap eb :e %<CR>
 
 " ================ Mappings to move lines =============================
 nnoremap <A-k> :m .-2<CR>==
@@ -348,7 +348,11 @@ endfunction
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
-nnoremap fc :Format<CR>
+nnoremap fb :Format<CR>
+
+" use ``:Prettier` to format current buffer.
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
 " multiple cursor ( I can't figure how to use it yet)
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
 nmap <silent> <C-d> <Plug>(coc-cursors-word)
