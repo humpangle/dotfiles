@@ -1,0 +1,7 @@
+if mount | grep /mnt/wsl-ubuntu-18 > /dev/null; then
+  sudo guestunmount  /mnt/wsl-ubuntu-18
+fi
+
+if mount | grep /mnt/wsl-ubuntu-20 > /dev/null; then
+  sudo guestunmount  /mnt/wsl-ubuntu-20
+fi
