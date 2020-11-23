@@ -92,6 +92,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 let g:mkdp_refresh_slow = 1
 " Plug 'plasticboy/vim-markdown'
 
+Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
+
 call plug#end()
 " }}}
 " == VIM PLUG END ==========================================================
@@ -348,7 +350,7 @@ endfunction
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
-nnoremap fb :Format<CR>
+nnoremap fc :Format<CR>
 
 " use ``:Prettier` to format current buffer.
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -545,3 +547,7 @@ nmap ta :Tabularize /
 vmap ta :Tabularize /
 nmap tb :Tabularize /\zs<Left><Left><Left>
 vmap tb :Tabularize /\zs<Left><Left><Left>
+
+"""" rnvimr Ranger vim """""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:rnvimr_ex_enable = 1
+" nmap <space>r :RnvimrToggle<CR>

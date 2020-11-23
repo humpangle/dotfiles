@@ -5,8 +5,3 @@
 if [ "$SHLVL" = 1 ]; then
     [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
 fi
-
-# save tmux sessions
-# if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-#   . $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh
-# fi
