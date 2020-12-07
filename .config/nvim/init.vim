@@ -505,20 +505,12 @@ map gss :Gstatus<CR>
 map ga. :Git add .<CR>
 " ========================== end fugitive =========================== "
 
-function! DeleteEmptyBuffers()
-  let [i, n; empty] = [1, bufnr('$')]
-  while i <= n
-    if bufexists(i) && bufname(i) == ''
-      call add(empty, i)
-    endif
-    let i += 1
-  endwhile
-  if len(empty) > 0
-    exe 'bdelete' join(empty)
-  endif
+function! DeleteAllBuffers()
+  let buffers = range(1, bufnr('$'))
+  exe 'bd '.join(buffers, ' ')
 endfunction
 
-map <leader>db :call DeleteEmptyBuffers()<cr>
+map <leader>db :call DeleteAllBuffers()<cr>
 " ========================== easymotion =========================== "
 nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
 " ========================== end easymotion =========================== "
