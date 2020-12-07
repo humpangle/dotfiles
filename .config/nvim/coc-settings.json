@@ -14,6 +14,6 @@
   "css.validate": false,
   "cSpell.userWords": ["entrypoint"],
   "cSpell.ignoreWords": [],
-  "cSpellExt.enableDictionaries": ["german"],
-  "cSpell.language": "en,de"
+  "cSpellExt.enableDictionaries": ["german", "french"],
+  "cSpell.language": "en,de,fr"
 }

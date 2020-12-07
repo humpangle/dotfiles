@@ -534,6 +534,7 @@ map <leader>dv :DiffVifm<cr>
 " ========================== copy file path ==============================
 nmap ,yap :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
 nmap ,yrp :let @+=expand("%")<CR>    " Mnemonic: yank relative File path
+nmap ,yfp :let @+=expand("%:t")<CR>    " Mnemonic: yank file name
 nmap ,ap :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
 nmap ,rp :let @"=expand("%")<CR>      " Mnemonic: copy relative path
 " ========================== end copy file path ===========================

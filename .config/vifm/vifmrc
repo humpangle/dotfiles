@@ -345,6 +345,11 @@ filextype */
         \ {View in thunar}
         \ Thunar %f &,
 
+" typescript
+filextype *.ts,*.tsx
+        \ {Open with nvim}
+        \ nvim %f,
+
 " Syntax highlighting in preview
 "
 " Explicitly set highlight type for some extensions

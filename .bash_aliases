@@ -8,6 +8,7 @@ alias ....='cd ../../..'
 alias md='mkdir -p'
 alias yarnw="yarn workspace "
 alias yarns="yarn start "
+alias yarnlp="yarn list --pattern "
 alias ff='fzf'
 alias vim="nvim"
 alias vi="/usr/bin/vim"
@@ -25,4 +26,3 @@ alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias tr='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 alias eshell='exec $SHELL'
 alias gst='git st '
-
