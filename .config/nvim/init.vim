@@ -174,7 +174,7 @@ xnoremap <Leader>g gqa
 nmap <Leader>H :Helptags!<CR>
 " Save file
 nnoremap <Leader>w :w<CR>
-" Copy and paste from system clipboard (Might require xclip install)
+" yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
 nmap <Leader>p "+p
@@ -552,3 +552,4 @@ vmap tb :Tabularize /\zs<Left><Left><Left>
 """" rnvimr Ranger vim """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:rnvimr_ex_enable = 1
 " nmap <space>r :RnvimrToggle<CR>
+" UUID=69367429-a380-4e4b-87b5-c1653419243a
