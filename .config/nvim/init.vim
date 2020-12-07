@@ -505,6 +505,7 @@ map gss :Gstatus<CR>
 map ga. :Git add .<CR>
 " ========================== end fugitive =========================== "
 
+"https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
 function! DeleteAllBuffers()
   let buffers = range(1, bufnr('$'))
   exe 'bd '.join(buffers, ' ')
