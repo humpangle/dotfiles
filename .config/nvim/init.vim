@@ -552,4 +552,3 @@ vmap tb :Tabularize /\zs<Left><Left><Left>
 """" rnvimr Ranger vim """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:rnvimr_ex_enable = 1
 " nmap <space>r :RnvimrToggle<CR>
-" UUID=69367429-a380-4e4b-87b5-c1653419243a

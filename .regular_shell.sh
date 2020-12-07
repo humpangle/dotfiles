@@ -23,6 +23,9 @@ alias dce='docker-compose exec '
 alias dcu='docker-compose up '
 alias dcrs='docker-compose restart '
 alias dcd='docker-compose down '
+alias dvra='docker volume rm $(docker volume ls -q)'
+alias dvls='docker volume ls'
+alias dvlsq='docker volume ls -q'
 alias ug='sudo apt update && sudo apt upgrade -y'
 
 [ -f $HOME/dotfiles/.pyenv.sh ] && source $HOME/dotfiles/.pyenv.sh
