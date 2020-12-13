@@ -289,6 +289,17 @@ nmap <Leader>M :Maps<CR>
 nmap <Leader>ss :Filetypes<CR>
 " search in project
 nmap <Leader>/ :Rg<CR>
+
+" Advanced ripgrep integration
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 " ==========================  END FUZZY FIND FILES WITH FZF ========
 " =================== COC Plugin Vim settings ===========================
 " You will have bad experience for diagnostic messages when it's default 4000.
