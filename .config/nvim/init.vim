@@ -101,8 +101,8 @@ call plug#end()
 syntax enable
 
 colorscheme one
-" set background=dark " for the light version
-set background=light " for the light version
+set background=dark " for the light version
+" set background=light " for the light version
 let g:airline_theme='one'
 let g:one_allow_italics = 1 " I love italic for comments
 
@@ -279,6 +279,7 @@ nmap <Leader>' :Marks<CR>
 " Fuzzy search defined commands, whether they be user defined, plugin
 " defined, or native commands:
 nmap <Leader>C :Commands<CR>
+nmap <Leader>cs :CocSearch <Right>
 " Fuzzy search through :command history:
 nmap <Leader>: :History:<CR>
 " Fuzzy search vim key mappings - useful to find what has already been mapped
@@ -518,9 +519,12 @@ nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
 
 " ========================== Start Vifm =================================== "
 map <leader>vv :Vifm<cr>
+" view to the side
 map <leader>vs :VsplitVifm<cr>
-map <leader>sp :SplitVifm<cr>
-map <leader>tv :TabVifm<cr>
+" view below
+map <leader>vb :SplitVifm<cr>
+" view in new tab
+map <leader>vt :TabVifm<cr>
 map <leader>dv :DiffVifm<cr>
 " ========================== end Vifm =================================== "
 
