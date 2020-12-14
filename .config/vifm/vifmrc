@@ -68,6 +68,7 @@ set norunexec
 
 " Selected color scheme
 
+" colorscheme solarized-light
 colorscheme Default
 
 " Format for displaying time in file list. For example:

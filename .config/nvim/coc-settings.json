@@ -7,13 +7,19 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "svelte"
   ],
   // suppress coc-svelte typescript unused variables error until fixed in vscode
-  "svelte.plugin.typescript.diagnostics.enable": false,
+  "svelte.plugin.typescript.diagnostics.enable": true,
   "css.validate": false,
-  "cSpell.userWords": ["entrypoint"],
+  "cSpell.userWords": [
+    "entrypoint"
+  ],
   "cSpell.ignoreWords": [],
-  "cSpellExt.enableDictionaries": ["german", "french"],
+  "cSpellExt.enableDictionaries": [
+    "german",
+    "french"
+  ],
   "cSpell.language": "en,de,fr"
 }
