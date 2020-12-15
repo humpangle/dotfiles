@@ -31,5 +31,12 @@ alias gcma='git commit --amend '
 alias gcm-a='git commit -a '
 alias gcmane='git commit --amend --no-edit '
 alias gcamupm='git commit -am "updated" && git push github master'
+alias ga.='git add . '
 alias hb='sudo systemctl hibernate'
 alias rmvimswap='rm ~/.local/share/nvim/swap/*'
+if [ -n "$WSL_DISTRO_NAME" ]; then
+  # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
+  # up memory, this command will free your memory after about 20-30 seconds.
+  #   Details: https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
+  alias drop-cache="sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
+fi

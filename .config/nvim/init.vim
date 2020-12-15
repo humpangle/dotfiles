@@ -162,6 +162,9 @@ set foldlevel=2
 
 " reload a file if it is changed from outside vim
 set autoread
+set noswapfile
+set undodir=$HOME/.vim/undodir//
+set undofile
 
 " Use Ripgrep for vimgrep
 " set grepprg=rg\ --vimgrep
