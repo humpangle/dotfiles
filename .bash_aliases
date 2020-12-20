@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-alias ll='ls -alFh'
-alias la='ls -A'
-alias l='ls -CF'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -16,11 +13,11 @@ alias vimdiff="nvim -d"
 alias c="clear && printf '\e[3J'"
 alias C=clear
 alias t="tmux"
-alias ta="t a -t"
-alias tls="t ls"
-alias tn="t new -s"
-alias tks="t kill-session -t"
-alias tkss="t kill-server"
+alias ta="tmux a -t"
+alias tls="tmux ls"
+alias tn="tmux new -s"
+alias tks="tmux kill-session -t"
+alias tkss="tmux kill-server"
 alias py='python '
 alias pw='prettier --write '
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
