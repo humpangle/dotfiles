@@ -62,11 +62,12 @@ let g:strip_only_modified_lines=0
 
 Plug 'airblade/vim-gitgutter'
 
-Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_generate_on_write = 1
-let g:gutentags_generate_on_empty_buffer = 0
+" Plug 'ludovicchabant/vim-gutentags'
+" let g:gutentags_generate_on_new = 1
+" let g:gutentags_generate_on_missing = 1
+" let g:gutentags_generate_on_write = 1
+" let g:gutentags_generate_on_empty_buffer = 0
+
 "let g:gutentags_cache_dir = expand('~/.tags_cache')
 "let g:gutentags_trace = 1
 " set statusline+=%{gutentags#statusline()}
@@ -91,8 +92,6 @@ Plug 'godlygeek/tabular'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 let g:mkdp_refresh_slow = 1
 " Plug 'plasticboy/vim-markdown'
-
-Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 
 call plug#end()
 " }}}
@@ -560,7 +559,3 @@ nmap ta :Tabularize /
 vmap ta :Tabularize /
 nmap tb :Tabularize /\zs<Left><Left><Left>
 vmap tb :Tabularize /\zs<Left><Left><Left>
-
-"""" rnvimr Ranger vim """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:rnvimr_ex_enable = 1
-" nmap <space>r :RnvimrToggle<CR>
