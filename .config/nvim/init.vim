@@ -166,8 +166,6 @@ nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
-" Save file
-nnoremap <Leader>w :w<CR>
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
@@ -411,12 +409,6 @@ nnoremap ,. :e ~/.bashrc<CR>
 nnoremap ,no :noh<CR>
 nnoremap ,t :term<cr>
 nnoremap ,e :Vexplore<cr> " open netrw in vertical split
-
-" Quit
-inoremap <C-Q>     <esc>:q<cr>
-nnoremap <C-Q>     :q<cr>
-vnoremap <C-Q>     <esc>:q<cr>
-nnoremap <leader>mq :qa<cr>
 
 " better code indentations in visual mode.
 vnoremap < <gv
