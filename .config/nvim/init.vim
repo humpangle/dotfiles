@@ -512,12 +512,12 @@ autocmd User fugitive
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
 
-map gst :Git st<CR>
-map gcm :Gcommit<CR>
-map gvs :Gvdiffsplit<CR>
-map gss :Gstatus<CR>
-map ga. :Git add .<CR>
-map ,gpm :Git push github master<CR>
+map gst         :Git st<CR>
+map gcm         :Gcommit<CR>
+map gvs         :Gvdiffsplit<CR>
+map gss         :Gstatus<CR>
+map ga.         :Git add .<CR>
+map ,gpm        :Git push github master<CR>
 " ========================== end fugitive =========================== "
 
 "https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
