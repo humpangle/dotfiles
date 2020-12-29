@@ -2,8 +2,6 @@
 let g:python_host_prog = expand('$PYTHON2')
 let g:python3_host_prog = expand('$PYTHON3')
 " === /PYTHON ==========
-let g:loaded_netrw       = 0
-let g:loaded_netrwPlugin = 0
 
 " == VIM PLUG ==============================================================
 call plug#begin('~/.vim/plugged')
@@ -62,14 +60,14 @@ let g:strip_only_modified_lines=0
 
 Plug 'airblade/vim-gitgutter'
 
-" Plug 'ludovicchabant/vim-gutentags'
-" let g:gutentags_generate_on_new = 1
-" let g:gutentags_generate_on_missing = 1
-" let g:gutentags_generate_on_write = 1
-" let g:gutentags_generate_on_empty_buffer = 0
+Plug 'ludovicchabant/vim-gutentags'
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
 
-"let g:gutentags_cache_dir = expand('~/.tags_cache')
-"let g:gutentags_trace = 1
+" let g:gutentags_cache_dir = expand('~/.tags_cache')
+" let g:gutentags_trace = 1
 " set statusline+=%{gutentags#statusline()}
 
 Plug 'itchyny/lightline.vim' " cool status bar
@@ -86,15 +84,12 @@ Plug 'diepm/vim-rest-console'
 let g:vrc_elasticsearch_support = 1 " bulk upload and external data file
 let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
 
-Plug 'vifm/vifm.vim'
-
 Plug 'godlygeek/tabular'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 let g:mkdp_refresh_slow = 1
 " Plug 'plasticboy/vim-markdown'
 
 call plug#end()
-" }}}
 " == VIM PLUG END ==========================================================
 
 syntax enable
@@ -114,9 +109,6 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " makes problem below go away
-" checkhealth suggested - on my ubuntu 18.4, some texts under cursor are not
-" visible when using dracula scheme
 if (has("termguicolors"))
  set termguicolors
 endif
@@ -404,15 +396,6 @@ endfunction
 
 map <leader>rn :call RenameFile()<cr>
 """"""""""""" END RENAME CURRENT FILE """""""""""""""""""""""""""""""""""
-
-" mappings with leader m
-nnoremap <leader>mh :noh<CR>
-nnoremap <leader>mo :so ~/.config/nvim/init.vim<CR>
-nnoremap <leader>mp :e ~/.config/nvim/init.vim<CR>
-nnoremap <leader>m. :e ~/.bashrc<CR>
-nnoremap <leader>mt :term<cr>
-nnoremap <leader>ms :mksession! <space>
-
 nnoremap <leader>nt :tabnew<cr>
 nnoremap <leader>tt :tab split<cr>
 nnoremap <leader>dt :diffthis<cr>
@@ -421,15 +404,19 @@ nnoremap <leader>do :diffoff<cr>
 """"""""""""" MAPPINGS WITH COMMA,""""""""""""""""""""""""""""""""
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr><cr>
-nnoremap ,df :!rm %<cr><cr>
+nnoremap ,rm :call delete(expand('%:p')) <bar> bdelete! <cr>
+nnoremap ,in :e ~/.config/nvim/init.vim<CR>
+nnoremap ,so :so ~/.config/nvim/init.vim<CR>
+nnoremap ,. :e ~/.bashrc<CR>
+nnoremap ,no :noh<CR>
+nnoremap ,t :term<cr>
+nnoremap ,e :Vexplore<cr> " open netrw in vertical split
 
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
 nnoremap <C-Q>     :q<cr>
-vnoremap <C-Q>     <esc>
-nnoremap <Leader>q :q<cr>
-nnoremap <Leader>mq :qa<cr>
-" nnoremap <Leader>mq :qa!<cr>
+vnoremap <C-Q>     <esc>:q<cr>
+nnoremap <leader>mq :qa<cr>
 
 " better code indentations in visual mode.
 vnoremap < <gv
@@ -534,17 +521,6 @@ map <leader>db :call DeleteAllBuffers()<cr>
 " ========================== easymotion =========================== "
 nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
 " ========================== end easymotion =========================== "
-
-" ========================== Start Vifm =================================== "
-map <leader>vv :Vifm<cr>
-" view to the side
-map <leader>vs :VsplitVifm<cr>
-" view below
-map <leader>vb :SplitVifm<cr>
-" view in new tab
-map <leader>vt :TabVifm<cr>
-map <leader>dv :DiffVifm<cr>
-" ========================== end Vifm =================================== "
 
 " ========================== copy file path ==============================
 nmap ,yr :let @+=expand("%")<CR>      " Mnemonic: yank relative File path
