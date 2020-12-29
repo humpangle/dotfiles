@@ -412,12 +412,16 @@ nnoremap <leader>mp :e ~/.config/nvim/init.vim<CR>
 nnoremap <leader>m. :e ~/.bashrc<CR>
 nnoremap <leader>mt :term<cr>
 nnoremap <leader>ms :mksession! <space>
-" create the new directory am already working in
-nnoremap <leader>md :!mkdir -p %:h<cr><cr>
+
 nnoremap <leader>nt :tabnew<cr>
 nnoremap <leader>tt :tab split<cr>
 nnoremap <leader>dt :diffthis<cr>
 nnoremap <leader>do :diffoff<cr>
+
+""""""""""""" MAPPINGS WITH COMMA,""""""""""""""""""""""""""""""""
+" create the new directory am already working in
+nnoremap ,md :!mkdir -p %:h<cr><cr>
+nnoremap ,df :!rm %<cr><cr>
 
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
@@ -552,10 +556,11 @@ nmap ,cr :let @"=expand("%")<CR>      " Mnemonic: copy relative path
 nmap ,cf :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
 " ========================== end copy file path ===========================
 
+" ========================== REST CONSOLE ===========================
 " make new rest
-nnoremap mnr :tabe .rest<Left><Left><Left><Left><Left>
+nnoremap ,nr :tabe .rest<Left><Left><Left><Left><Left>
 " map rest rest
-nnoremap mrr :let b:vrc_output_buffer_name = '__-Rest__'<Left><Left><Left><Left><Left><Left><Left><Left>
+nnoremap ,mr :let b:vrc_output_buffer_name = '__-Rest__'<Left><Left><Left><Left><Left><Left><Left><Left>
 
 nmap ta :Tabularize /
 vmap ta :Tabularize /
