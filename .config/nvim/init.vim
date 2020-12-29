@@ -542,12 +542,13 @@ map <leader>dv :DiffVifm<cr>
 " ========================== end Vifm =================================== "
 
 " ========================== copy file path ==============================
-nmap ,yap :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
-nmap ,yrp :let @+=expand("%")<CR>    " Mnemonic: yank relative File path
-nmap ,yfp :let @+=expand("%:t")<CR>    " Mnemonic: yank file name
-nmap ,yd :let @+=expand("%:p:h")<CR>    " Mnemonic: yank file parent directory
-nmap ,ap :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
-nmap ,rp :let @"=expand("%")<CR>      " Mnemonic: copy relative path
+nmap ,yr :let @+=expand("%")<CR>      " Mnemonic: yank relative File path
+nmap ,yn :let @+=expand("%:t")<CR>    " Mnemonic: yank file name / not path
+nmap ,yd :let @+=expand("%:p:h")<CR>  " Mnemonic: yank file parent directory
+nmap ,yf :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
+
+nmap ,cr :let @"=expand("%")<CR>      " Mnemonic: copy relative path
+nmap ,cf :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
 " ========================== end copy file path ===========================
 
 " make new rest
