@@ -406,9 +406,7 @@ nnoremap ,rm :call delete(expand('%:p')) <bar> bdelete! <cr>
 nnoremap ,in :e ~/.config/nvim/init.vim<CR>
 nnoremap ,so :so ~/.config/nvim/init.vim<CR>
 nnoremap ,. :e ~/.bashrc<CR>
-nnoremap ,no :noh<CR>
 nnoremap ,t :term<cr>
-nnoremap ,e :Vexplore<cr> " open netrw in vertical split
 
 " better code indentations in visual mode.
 vnoremap < <gv
