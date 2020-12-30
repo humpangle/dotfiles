@@ -498,7 +498,8 @@ map gcm         :Gcommit<CR>
 map gvs         :Gvdiffsplit<CR>
 map gss         :Gstatus<CR>
 map ga.         :Git add .<CR>
-map ,gpm        :Git push github master<CR>
+map gpgm        :Git push github master<CR>
+map gpgd        :Git push github dev<CR>
 " ========================== end fugitive =========================== "
 
 "https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
