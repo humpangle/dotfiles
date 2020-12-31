@@ -36,7 +36,7 @@ Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_force_debug = 1
-" CocInstall coc-elixir coc-spell-checker coc-cspell-dicts coc-yank coc-json coc-python coc-emmet coc-tsserver coc-snippets coc-css coc-html coc-eslint coc-pairs coc-prettier coc-svelte coc-docker https://github.com/kanmii/kanmii-coc-snippets
+" CocInstall coc-elixir coc-spell-checker coc-cspell-dicts coc-yank coc-json coc-python coc-emmet coc-tsserver coc-snippets coc-css coc-html coc-eslint coc-pairs coc-prettier coc-svelte coc-docker https://github.com/kanmii/kanmii-coc-snippets coc-vetur
 
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
