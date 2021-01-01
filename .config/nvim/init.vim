@@ -396,7 +396,6 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 nmap ,o :OR<CR>
-xmap ,o :OR<CR>
 
 nnoremap <silent> <space>rs :<C-u>CocRestart<cr><cr>
 " yank
@@ -433,7 +432,7 @@ endfunction
 map ,,n :call RenameFile()<cr>
 """"""""""""" END RENAME CURRENT FILE """""""""""""""""""""""""""""""""""
 nnoremap ,nt :tabnew<cr>
-nnoremap ,tt :tab split<cr>
+nnoremap <leader>tt :tab split<cr>
 nnoremap ,dt :diffthis<cr>
 nnoremap ,do :diffoff<cr>
 
