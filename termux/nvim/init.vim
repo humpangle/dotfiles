@@ -9,7 +9,7 @@ let g:loaded_netrwPlugin = 0
 call plug#begin('~/.vim/plugged')
 
 " Handle multi-file find and replace.
-Plug 'mhinz/vim-grepper'
+Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 let g:grepper={}
 let g:grepper.tools=["rg"]
 

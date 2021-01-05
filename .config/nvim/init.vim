@@ -158,7 +158,7 @@ set undodir=$HOME/.vim/undodir//
 set undofile
 
 " Use Ripgrep for vimgrep
-" set grepprg=rg\ --vimgrep
+set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
 " ===========================END BASIC SETTINGS=====================
 " Format paragraph (selected or not) to 80 character lines.
@@ -278,9 +278,12 @@ nmap <Leader>C :Commands<CR>
 " before defining new mappings
 nmap <Leader>M :Maps<CR>
 " Fuzzy search filetype syntaxes, and hit Enter on a result to set that syntax on the current buffer:
-nmap <Leader>ss :Filetypes<CR>
-" search in project
-nmap <Leader>/ :Rg<CR>
+nmap ,ss :Filetypes<CR>
+" search in project - do not match filenames
+nmap <Leader>/ :Rrg<CR>
+" search in project - match file names first
+nmap ,/ :Rg<CR>
+nmap ,cm :Commits<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
@@ -292,6 +295,8 @@ function! RipgrepFzf(query, fullscreen)
 endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
+command! -bang -nargs=* Rrg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
 " ==========================  END FUZZY FIND FILES WITH FZF ========
 
 " =================== START COC PLUGIN VIM SETTINGS ===========================
@@ -465,7 +470,7 @@ xnoremap <leader>r :%s///g<left><left>
 xnoremap <leader>rc :%s///gc<left><left><left>
 
 " .............................................................................
-" mhinz/vim-grepper
+" mhinz/vim-grepper setting
 " .............................................................................
 xmap gr <plug>(GrepperOperator)
 

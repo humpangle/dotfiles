@@ -11,6 +11,6 @@ fi
 # via `sudo visudo` - see content of ./etc/sudoers.tmp
 # https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
 if [ -n "$WSL_DISTRO_NAME" ]; then
-  sudo /etc/init.d/cron start &> /dev/null
+  # sudo /etc/init.d/cron start &> /dev/null
   umask 022
 fi
