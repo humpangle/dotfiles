@@ -34,3 +34,7 @@ alias gp='git push '
 alias gpgm='git push github master'
 alias rmvimswap='rm ~/.local/share/nvim/swap/*'
 alias hb='sudo systemctl hibernate'
+
+if [ -x "$(command -v sort-package-json)" ]; then
+  alias spj='sort-package-json '
+fi
