@@ -460,6 +460,13 @@ nnoremap ,so :so ~/.config/nvim/init.vim<CR>
 nnoremap ,. :e ~/.bashrc<CR>
 nnoremap ,t :term<cr>
 
+" Quit
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+vnoremap <C-Q>     <esc>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>mq :qa<cr>
+
 " better code indentations in visual mode.
 vnoremap < <gv
 vnoremap > >gv
