@@ -4,7 +4,7 @@
 export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
 # Do not build erlang docs when installing with
 # asdf cos it's slow and unstable
-export KERL_BUILD_DOCS=
+export KERL_BUILD_DOCS=yes
 export KERL_INSTALL_MANPAGES=
 export KERL_INSTALL_HTMLDOCS=
 export PYTHON2="~/.pyenv/versions/2.7.17/bin/python"
