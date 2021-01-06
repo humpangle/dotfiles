@@ -109,13 +109,13 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
-" Remap esc key
-nmap JJ <esc>
-imap JJ <Esc>
-vmap JJ <Esc>
-nmap KK <esc>
-imap KK <Esc>
-vmap KK <Esc>
+" Remap esc key - if doing touch typing
+" nmap JJ <esc>
+" imap JJ <Esc>
+" vmap JJ <Esc>
+" nmap KK <esc>
+" imap KK <Esc>
+" vmap KK <Esc>
 
 if (has("termguicolors"))
  set termguicolors
