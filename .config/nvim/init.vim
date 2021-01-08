@@ -468,7 +468,8 @@ nnoremap ,t :term<cr>
 inoremap <C-Q>     <esc>:q<cr>
 nnoremap <C-Q>     :q<cr>
 vnoremap <C-Q>     <esc>
-nnoremap <Leader>q :q<cr>
+nnoremap <Leader>qq :q<cr>
+nnoremap <Leader>wq :wq<cr>
 nnoremap <Leader>mq :qa<cr>
 
 " better code indentations in visual mode.
