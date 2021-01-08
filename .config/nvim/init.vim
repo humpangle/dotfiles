@@ -171,6 +171,8 @@ set undofile
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
 " ===========================END BASIC SETTINGS=====================
+
+" ================== VARIOUS MAPPINGS =================
 " Format paragraph (selected or not) to 80 character lines.
 nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
@@ -179,6 +181,8 @@ nmap <Leader>H :Helptags!<CR>
 " Save file
 nnoremap <Leader>w :w<CR>
 nnoremap ,wa :wa<CR>
+nnoremap ,wq :wq<cr>
+
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
@@ -469,7 +473,6 @@ inoremap <C-Q>     <esc>:q<cr>
 nnoremap <C-Q>     :q<cr>
 vnoremap <C-Q>     <esc>
 nnoremap <Leader>qq :q<cr>
-nnoremap <Leader>wq :wq<cr>
 nnoremap <Leader>mq :qa<cr>
 
 " better code indentations in visual mode.
