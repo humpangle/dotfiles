@@ -176,6 +176,7 @@ xnoremap <Leader>g gqa
 nmap <Leader>H :Helptags!<CR>
 " Save file
 nnoremap <Leader>w :w<CR>
+nnoremap ,wa :wa<CR>
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
