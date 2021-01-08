@@ -89,6 +89,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 let g:mkdp_refresh_slow = 1
 " Plug 'plasticboy/vim-markdown'
 
+Plug 'neoclide/jsonc.vim'
+
 call plug#end()
 " == VIM PLUG END ==========================================================
 
@@ -241,6 +243,7 @@ au BufNewFile,BufRead *.psql set filetype=sql
 au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
+autocmd! FileType json set filetype=jsonc
 " open help file in vertical split
 autocmd FileType help wincmd H
 " au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
