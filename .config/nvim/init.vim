@@ -183,6 +183,17 @@ nnoremap <Leader>ww :w<CR>
 nnoremap <Leader>wa :wa<CR>
 nnoremap <Leader>wq :wq<cr>
 
+" Quit
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+vnoremap <C-Q>     <esc>
+nnoremap <Leader>qq :q<cr>
+nnoremap <Leader>mq :qa<cr>
+
+" better code indentations in visual mode.
+vnoremap < <gv
+vnoremap > >gv
+
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
@@ -468,16 +479,6 @@ nnoremap ,so :so ~/.config/nvim/init.vim<CR>
 nnoremap ,. :e ~/.bashrc<CR>
 nnoremap <silent><nowait> ,t :term<cr>
 
-" Quit
-inoremap <C-Q>     <esc>:q<cr>
-nnoremap <C-Q>     :q<cr>
-vnoremap <C-Q>     <esc>
-nnoremap <Leader>qq :q<cr>
-nnoremap <Leader>mq :qa<cr>
-
-" better code indentations in visual mode.
-vnoremap < <gv
-vnoremap > >gv
 
 " Type a replacement term and press . to repeat the replacement again. Useful
 " for replacing a few instances of the term (comparable to multiple cursors).
