@@ -1,9 +1,15 @@
-" set up python
+"""""""""""""""""""""""""""""""""""""
+" SET UP PYTHON
+"""""""""""""""""""""""""""""""""""""
 let g:python_host_prog = expand('$PYTHON2')
 let g:python3_host_prog = expand('$PYTHON3')
-" === /PYTHON ==========
+"""""""""""""""""""""""""""""""""""""
+" END SET UP PYTHON
+"""""""""""""""""""""""""""""""""""""
 
-" == VIM PLUG ==============================================================
+"""""""""""""""""""""""""""""""""""""
+" START VIM PLUG
+"""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
 " Handle multi-file find and replace.
@@ -31,45 +37,19 @@ Plug 'junegunn/fzf.vim'
 Plug 'kassio/neoterm'
 " themes
 Plug 'rakr/vim-one'
-" elixir language syntax highlighting
-Plug 'elixir-editors/vim-elixir'
 " typescript and other language server protocols - mimics VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" let g:coc_force_debug = 1
-" CocInstall coc-elixir coc-spell-checker coc-cspell-dicts coc-yank coc-json coc-python coc-emmet coc-tsserver coc-snippets coc-css coc-html coc-eslint coc-pairs coc-prettier coc-svelte coc-docker https://github.com/kanmii/kanmii-coc-snippets coc-vetur
-
-let g:coc_filetype_map = {
-  \ 'htmldjango': 'html',
-  \ '.eslintrc': 'json',
-  \ 'jinja': 'html',
-  \ 'eelixir': 'html',
-\}
 
 " syntax highlighting
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/vim-toml'
-" syntax highlighting and indentation for Svelte 3 components.
 Plug 'evanleck/vim-svelte'
+Plug 'elixir-editors/vim-elixir'
 
 Plug 'ntpeters/vim-better-whitespace'
-let g:better_whitespace_enabled=1
-let g:strip_whitespace_on_save=1
-let g:strip_whitespace_confirm=0
-let g:strip_only_modified_lines=0
-
 Plug 'airblade/vim-gitgutter'
-
 Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_generate_on_write = 1
-let g:gutentags_generate_on_empty_buffer = 0
-
-" let g:gutentags_cache_dir = expand('~/.tags_cache')
-" let g:gutentags_trace = 1
-" set statusline+=%{gutentags#statusline()}
-
 Plug 'itchyny/lightline.vim' " cool status bar
 " Surround text with quotes, parenthesis, brackets, and more.
 Plug 'easymotion/vim-easymotion'
@@ -79,12 +59,8 @@ Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " modifies Vim’s indentation behavior to comply with PEP8
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'lepture/vim-jinja'
-
 Plug 'diepm/vim-rest-console'
-let g:vrc_elasticsearch_support = 1 " bulk upload and external data file
-let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
-
-Plug 'godlygeek/tabular'
+Plug 'godlygeek/tabular' " Align Markdown table
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 let g:mkdp_refresh_slow = 1
 " Plug 'plasticboy/vim-markdown'
@@ -92,20 +68,14 @@ let g:mkdp_refresh_slow = 1
 Plug 'neoclide/jsonc.vim'
 
 call plug#end()
-" == VIM PLUG END ==========================================================
+"""""""""""""""""""""""""""""""""""""
+" END VIM PLUG
+"""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""
+" VIM SETTINGS
+"""""""""""""""""""""""""""""""""""""
 syntax enable
-
-colorscheme one
-set background=dark " for the light version
-" set background=light " for the light version
-let g:airline_theme='one'
-let g:one_allow_italics = 1 " I love italic for comments
-
-" ============================================================================
-" BASIC SETTINGS {{{
-" ============================================================================
-
 " Set <leader> key to <Space>
 nnoremap <Space> <Nop>
 let mapleader=" "
@@ -154,25 +124,129 @@ set cursorline " highlight cursor positions
 " Spell check
 :setlocal spell spelllang=en
 
-" ================================== Folding ===============================
 set foldmethod=indent
 set foldnestmax=10
 set nofoldenable " don't fold by default when opening a file.
 set foldlevel=2
-" =============================== /Folding ================================
 
 " reload a file if it is changed from outside vim
 set autoread
 set noswapfile
-set undodir=$HOME/.vim/undodir//
+set undodir=$HOME/.vim/undodir/
 set undofile
 
 " Use Ripgrep for vimgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+"""""""""""""""""""""""""""""""""""""
+" END VIM SETTINGS
+"""""""""""""""""""""""""""""""""""""
 
-" ===========================END BASIC SETTINGS=====================
+"""""""""""""""""""""""""""""""""""""
+" START THEME SETTINGS
+"""""""""""""""""""""""""""""""""""""
+colorscheme one
+set background=dark " for the dark version
+" set background=light " for the light version
+let g:airline_theme='one'
+let g:one_allow_italics = 1 " I love italic for comments
+"""""""""""""""""""""""""""""""""""""
+" END THEME SETTINGS
+"""""""""""""""""""""""""""""""""""""
 
-" ================== VARIOUS MAPPINGS =================
+"""""""""""""""""""""""""""""""""""""
+" START COC SETTINGS
+"""""""""""""""""""""""""""""""""""""
+" let g:coc_force_debug = 1
+let g:coc_filetype_map = {
+  \ 'htmldjango': 'html',
+  \ '.eslintrc': 'json',
+  \ 'jinja': 'html',
+  \ 'eelixir': 'html',
+\}
+
+" CocInstall coc-elixir coc-spell-checker coc-cspell-dicts coc-yank coc-json coc-python coc-emmet coc-tsserver coc-snippets coc-css coc-html coc-eslint coc-pairs coc-prettier coc-svelte coc-docker https://github.com/kanmii/kanmii-coc-snippets coc-vetur
+"""""""""""""""""""""""""""""""""""""
+" END COC SETTINGS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" BETTER WHITE SPACE SETTINGS
+"""""""""""""""""""""""""""""""""""""
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+let g:strip_whitespace_confirm=0
+let g:strip_only_modified_lines=0
+"""""""""""""""""""""""""""""""""""""
+" END BETTER WHITE SPACE SETTINGS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START GUTENTAGS SETTINGS
+"""""""""""""""""""""""""""""""""""""
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+" let g:gutentags_cache_dir = expand('~/.tags_cache')
+" let g:gutentags_trace = 1
+" set statusline+=%{gutentags#statusline()}
+"""""""""""""""""""""""""""""""""""""
+" END GUTENTAGS SETTINGS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START LIGHTLINE SETTINGS
+"""""""""""""""""""""""""""""""""""""
+let g:lightline = {}
+
+let g:lightline.component_function = {
+  \ 'fugitive': 'LightlineFugitive',
+  \ }
+
+let g:lightline.component = {
+    \ 'filename': '%f',
+  \}
+
+let g:lightline.active = {
+  \ 'left': [
+      \[ 'mode', 'paste' ],
+      \[
+        \'fugitive',
+        \'readonly',
+        \'filename',
+        \'modified'
+      \]
+    \],
+  \ 'right': [
+      \[ 'lineinfo' ],
+      \[ 'percent' ],
+      \['fileformat', 'fileencoding', 'filetype']
+    \]
+  \ }
+
+function! LightlineFugitive()
+  if exists('*fugitive#head')
+    let branch = fugitive#head()
+    return branch !=# '' ? branch : ''
+  endif
+  return ''
+endfunction
+"""""""""""""""""""""""""""""""""""""
+" END LIGHTLINE SETTINGS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START REST CONSOLE SETTINGS
+"""""""""""""""""""""""""""""""""""""
+let g:vrc_elasticsearch_support = 1 " bulk upload and external data file
+let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
+"""""""""""""""""""""""""""""""""""""
+" END REST CONSOLE SETTINGS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" NON PLUGIN MAPPINGS
+"""""""""""""""""""""""""""""""""""""
 " Format paragraph (selected or not) to 80 character lines.
 nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
@@ -221,9 +295,93 @@ nnoremap <silent> <leader>_ :split<CR>
 nnoremap <silent> <leader>\| :vsp<CR>
 " remove all split windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
-set number
 
-" Toggle between normal and relative numbering.
+nnoremap ,nt :tabnew<cr>
+nnoremap <leader>tt :tab split<cr>
+nnoremap ,dt :diffthis<cr>
+nnoremap ,do :diffoff<cr>
+
+" create the new directory am already working in
+nnoremap ,md :!mkdir -p %:h<cr><cr>
+nnoremap ,rm :call delete(expand('%:p')) <bar> bdelete! <cr>
+nnoremap ,in :e ~/.config/nvim/init.vim<CR>
+nnoremap ,so :so ~/.config/nvim/init.vim<CR>
+nnoremap ,. :e ~/.bashrc<CR>
+nnoremap <silent><nowait> ,t :term<cr>
+
+"""""""""""""""""""""""""""""""""""""
+" MAPPINGS TO MOVE LINES
+"""""""""""""""""""""""""""""""""""""
+nnoremap <A-k> :m .-2<CR>==
+nnoremap <A-j> :m .+1<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+"""""""""""""""""""""""""""""""""""""
+" END MAPPINGS TO MOVE LINES
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" EMBEDDED TERMINAL
+"""""""""""""""""""""""""""""""""""""
+:tnoremap <C-h> <C-\><C-N><C-w>h
+:tnoremap <C-j> <C-\><C-N><C-w>j
+:tnoremap <C-k> <C-\><C-N><C-w>k
+:tnoremap <C-l> <C-\><C-N><C-w>l
+:inoremap <A-r> <C-\><C-N><C-w>h
+:inoremap <A-j> <C-\><C-N><C-w>j
+:inoremap <A-k> <C-\><C-N><C-w>k
+:inoremap <A-l> <C-\><C-N><C-w>l
+:nnoremap <C-h> <C-w>h
+:nnoremap <C-j> <C-w>j
+:nnoremap <C-k> <C-w>k
+:nnoremap <C-l> <C-w>l
+" Press escape twice to exit insert mode in embedded terminal
+tnoremap <Esc><Esc> <C-\><C-n>
+"""""""""""""""""""""""""""""""""""""
+" END EMBEDDED TERMINAL
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" COPY FILE PATH
+"""""""""""""""""""""""""""""""""""""
+nmap ,yr :let @+=expand("%")<CR>      " Mnemonic: yank relative File path
+nmap ,yn :let @+=expand("%:t")<CR>    " Mnemonic: yank file name / not path
+nmap ,yd :let @+=expand("%:p:h")<CR>  " Mnemonic: yank file parent directory
+nmap ,yf :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
+
+nmap ,cr :let @"=expand("%")<CR>      " Mnemonic: copy relative path
+nmap ,cf :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
+"""""""""""""""""""""""""""""""""""""
+" END COPY FILE PATH
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" SEARCH AND REPLACE: NOT VERY GOOD
+"""""""""""""""""""""""""""""""""""""
+" Type a replacement term and press . to repeat the replacement again. Useful
+" for replacing a few instances of the term (comparable to multiple cursors).
+nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent> s* "sy:let @/=@s<CR>cgn
+
+""""""""""""""""" find and replace in file """""""""""""""""""""""""""""""""
+" press * {shift 8) to search for word under cursor and key combo below to
+" replace in entire file
+nnoremap <leader>r :%s///g<left><left>
+nnoremap <leader>rc :%s///gc<left><left><left>
+
+" same as above but only visually selected range
+xnoremap <leader>r :%s///g<left><left>
+xnoremap <leader>rc :%s///gc<left><left><left>
+"""""""""""""""""""""""""""""""""""""
+" END SEARCH AND REPLACE
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" TOGGLE LINE NUMBERING
+"""""""""""""""""""""""""""""""""""""
+set number
 function! NumberToggle()
   if(&relativenumber == 1)
     set nornu
@@ -238,15 +396,9 @@ endfunc
 " nnoremap ln :set nornu number<CR>
 " nnoremap Ln :set nonumber nornu<CR>
 " nnoremap eb :e %<CR>
-
-" ================ Mappings to move lines =============================
-nnoremap <A-k> :m .-2<CR>==
-nnoremap <A-j> :m .+1<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
-" ================== end Mappings to move lines ==========================
+"""""""""""""""""""""""""""""""""""""
+" END TOGGLE LINE NUMBERING
+"""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
 " RENAME CURRENT FILE
@@ -266,7 +418,27 @@ map <leader>nf :call RenameFile()<cr>
 " END RENAME CURRENT FILE
 """""""""""""""""""""""""""""""""""""
 
-" =============================== AUTOCMD ==================================
+"""""""""""""""""""""""""""""""""""""
+" MANAGE BUFFERS
+"""""""""""""""""""""""""""""""""""""
+"https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
+function! DeleteAllBuffers()
+  let buffers = range(1, bufnr('$'))
+  exe 'bd '.join(buffers, ' ')
+endfunction
+
+map <leader>db :call DeleteAllBuffers()<cr>
+"""""""""""""""""""""""""""""""""""""
+" END MANAGE BUFFERS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" END NON PLUGIN MAPPINGS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" AUTOCMD
+"""""""""""""""""""""""""""""""""""""
 au FocusGained * :checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
 au BufNewFile,BufRead *.eslintrc set filetype=json
@@ -280,27 +452,14 @@ autocmd! FileType json set filetype=jsonc
 " open help file in vertical split
 autocmd FileType help wincmd H
 " au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
-" ================================ /AUTOCMD ==============================
+"""""""""""""""""""""""""""""""""""""
+" END AUTOCMD
+"""""""""""""""""""""""""""""""""""""
 
-" ============================== EMBEDDED TERMINAL ======================
-:tnoremap <C-h> <C-\><C-N><C-w>h
-:tnoremap <C-j> <C-\><C-N><C-w>j
-:tnoremap <C-k> <C-\><C-N><C-w>k
-:tnoremap <C-l> <C-\><C-N><C-w>l
-:inoremap <A-r> <C-\><C-N><C-w>h
-:inoremap <A-j> <C-\><C-N><C-w>j
-:inoremap <A-k> <C-\><C-N><C-w>k
-:inoremap <A-l> <C-\><C-N><C-w>l
-:nnoremap <C-h> <C-w>h
-:nnoremap <C-j> <C-w>j
-:nnoremap <C-k> <C-w>k
-:nnoremap <C-l> <C-w>l
-" Press escape twice to exit insert mode in embedded terminal
-tnoremap <Esc><Esc> <C-\><C-n>
-" ============================== / END EMBEDDED TERMINAL ======================
-
-" ========================== START FUZZY FIND FILES WITH FZF =================
+"""""""""""""""""""""""""""""""""""""
+" START FUZZY FIND FILES WITH FZF
 " https://medium.com/@jesseleite/its-dangerous-to-vim-alone-take-fzf-283bcff74d21
+"""""""""""""""""""""""""""""""""""""
 " search files from root directory where vim opened.
 nmap <Leader>f :Files<CR>
 " search files only in directory of currently open file
@@ -344,9 +503,13 @@ endfunction
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 command! -bang -nargs=* Rrg call fzf#vim#grep("rg --hidden --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
-" ==========================  END FUZZY FIND FILES WITH FZF ========
+"""""""""""""""""""""""""""""""""""""
+" END START FUZZY FIND FILES WITH FZF
+"""""""""""""""""""""""""""""""""""""
 
-" =================== START COC PLUGIN VIM SETTINGS ===========================
+"""""""""""""""""""""""""""""""""""""
+" START COC PLUGIN MAPPINGS AND SETTINGS
+"""""""""""""""""""""""""""""""""""""
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 " Some servers have issues with backup files, see #649
@@ -465,42 +628,13 @@ nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 nnoremap <silent><nowait> <space>s  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <space>S  :<C-u>CocList -I symbols<cr>
+"""""""""""""""""""""""""""""""""""""
+" END COC PLUGIN VIM SETTINGS
+"""""""""""""""""""""""""""""""""""""
 
-" ===================== END COC PLUGIN SETTINGS =====================
-
-nnoremap ,nt :tabnew<cr>
-nnoremap <leader>tt :tab split<cr>
-nnoremap ,dt :diffthis<cr>
-nnoremap ,do :diffoff<cr>
-
-""""""""""""" MAPPINGS WITH COMMA,""""""""""""""""""""""""""""""""
-" create the new directory am already working in
-nnoremap ,md :!mkdir -p %:h<cr><cr>
-nnoremap ,rm :call delete(expand('%:p')) <bar> bdelete! <cr>
-nnoremap ,in :e ~/.config/nvim/init.vim<CR>
-nnoremap ,so :so ~/.config/nvim/init.vim<CR>
-nnoremap ,. :e ~/.bashrc<CR>
-nnoremap <silent><nowait> ,t :term<cr>
-
-
-" Type a replacement term and press . to repeat the replacement again. Useful
-" for replacing a few instances of the term (comparable to multiple cursors).
-nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
-xnoremap <silent> s* "sy:let @/=@s<CR>cgn
-
-""""""""""""""""" find and replace in file """""""""""""""""""""""""""""""""
-" press * {shift 8) to search for word under cursor and key combo below to
-" replace in entire file
-nnoremap <leader>r :%s///g<left><left>
-nnoremap <leader>rc :%s///gc<left><left><left>
-
-" same as above but only visually selected range
-xnoremap <leader>r :%s///g<left><left>
-xnoremap <leader>rc :%s///gc<left><left><left>
-
-" .............................................................................
-" mhinz/vim-grepper setting
-" .............................................................................
+"""""""""""""""""""""""""""""""""""""
+" START MHINZ/VIM-GREPPER MAPPINGS
+"""""""""""""""""""""""""""""""""""""
 xmap gr <plug>(GrepperOperator)
 
 " After searching for text, press this mapping to do a project wide find and
@@ -518,45 +652,13 @@ xmap <Leader>R
     \ gvgr
     \ :cfdo %s/<C-r>s//g \| update
      \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+"""""""""""""""""""""""""""""""""""""
+" END MHINZ/VIM-GREPPER MAPPINGS
+"""""""""""""""""""""""""""""""""""""
 
-" ========================== lightline settings ==================== "
-let g:lightline = {}
-
-let g:lightline.component_function = {
-  \ 'fugitive': 'LightlineFugitive',
-  \ }
-
-let g:lightline.component = {
-    \ 'filename': '%f',
-  \}
-
-let g:lightline.active = {
-  \ 'left': [
-      \[ 'mode', 'paste' ],
-      \[
-        \'fugitive',
-        \'readonly',
-        \'filename',
-        \'modified'
-      \]
-    \],
-  \ 'right': [
-      \[ 'lineinfo' ],
-      \[ 'percent' ],
-      \['fileformat', 'fileencoding', 'filetype']
-    \]
-  \ }
-
-function! LightlineFugitive()
-  if exists('*fugitive#head')
-    let branch = fugitive#head()
-    return branch !=# '' ? branch : ''
-  endif
-  return ''
-endfunction
-" ========================== end lightline settings ================ "
-
-" ========================== fugitive ============================= "
+"""""""""""""""""""""""""""""""""""""
+" FUGITIVE MAPPINGS
+"""""""""""""""""""""""""""""""""""""
 " Auto-clean fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
 autocmd User fugitive
@@ -571,30 +673,21 @@ map gss         :Gstatus<CR>
 map ga.         :Git add .<CR>
 map gpgm        :Git push github master<CR>
 map gpgd        :Git push github dev<CR>
-" ========================== end fugitive =========================== "
+"""""""""""""""""""""""""""""""""""""
+" END FUGITIVE MAPPINGS
+"""""""""""""""""""""""""""""""""""""
 
-"https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
-function! DeleteAllBuffers()
-  let buffers = range(1, bufnr('$'))
-  exe 'bd '.join(buffers, ' ')
-endfunction
-
-map <leader>db :call DeleteAllBuffers()<cr>
-" ========================== easymotion =========================== "
+"""""""""""""""""""""""""""""""""""""
+" START EASYMOTION MAPPINGS
+"""""""""""""""""""""""""""""""""""""
 nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
-" ========================== end easymotion =========================== "
+"""""""""""""""""""""""""""""""""""""
+" END EASYMOTION MAPPINGS
+"""""""""""""""""""""""""""""""""""""
 
-" ========================== copy file path ==============================
-nmap ,yr :let @+=expand("%")<CR>      " Mnemonic: yank relative File path
-nmap ,yn :let @+=expand("%:t")<CR>    " Mnemonic: yank file name / not path
-nmap ,yd :let @+=expand("%:p:h")<CR>  " Mnemonic: yank file parent directory
-nmap ,yf :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
-
-nmap ,cr :let @"=expand("%")<CR>      " Mnemonic: copy relative path
-nmap ,cf :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
-" ========================== end copy file path ===========================
-
-" ========================== REST CONSOLE ===========================
+"""""""""""""""""""""""""""""""""""""
+" REST CONSOLE MAPPINGS
+"""""""""""""""""""""""""""""""""""""
 " make new rest
 nnoremap ,nr :tabe .rest<Left><Left><Left><Left><Left>
 " map rest rest
@@ -604,3 +697,6 @@ nmap ta :Tabularize /
 vmap ta :Tabularize /
 nmap tb :Tabularize /\zs<Left><Left><Left>
 vmap tb :Tabularize /\zs<Left><Left><Left>
+"""""""""""""""""""""""""""""""""""""
+" END REST CONSOLE
+"""""""""""""""""""""""""""""""""""""
