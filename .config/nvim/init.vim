@@ -248,6 +248,24 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 " ================== end Mappings to move lines ==========================
 
+"""""""""""""""""""""""""""""""""""""
+" RENAME CURRENT FILE
+"""""""""""""""""""""""""""""""""""""
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
+
+map <leader>nf :call RenameFile()<cr>
+"""""""""""""""""""""""""""""""""""""
+" END RENAME CURRENT FILE
+"""""""""""""""""""""""""""""""""""""
+
 " =============================== AUTOCMD ==================================
 au FocusGained * :checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
@@ -450,21 +468,6 @@ nnoremap <silent><nowait> <space>S  :<C-u>CocList -I symbols<cr>
 
 " ===================== END COC PLUGIN SETTINGS =====================
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RENAME CURRENT FILE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! RenameFile()
-  let old_name = expand('%')
-  let new_name = input('New file name: ', expand('%'), 'file')
-  if new_name != '' && new_name != old_name
-    exec ':saveas ' . new_name
-    exec ':silent !rm ' . old_name
-    redraw!
-  endif
-endfunction
-
-map ,,n :call RenameFile()<cr>
-""""""""""""" END RENAME CURRENT FILE """""""""""""""""""""""""""""""""""
 nnoremap ,nt :tabnew<cr>
 nnoremap <leader>tt :tab split<cr>
 nnoremap ,dt :diffthis<cr>
