@@ -466,7 +466,7 @@ nnoremap ,rm :call delete(expand('%:p')) <bar> bdelete! <cr>
 nnoremap ,in :e ~/.config/nvim/init.vim<CR>
 nnoremap ,so :so ~/.config/nvim/init.vim<CR>
 nnoremap ,. :e ~/.bashrc<CR>
-nnoremap ,t :term<cr>
+nnoremap <silent><nowait> ,t :term<cr>
 
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
