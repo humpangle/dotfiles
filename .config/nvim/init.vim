@@ -179,9 +179,9 @@ xnoremap <Leader>g gqa
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
 " Save file
-nnoremap <Leader>w :w<CR>
-nnoremap ,wa :wa<CR>
-nnoremap ,wq :wq<cr>
+nnoremap <Leader>ww :w<CR>
+nnoremap <Leader>wa :wa<CR>
+nnoremap <Leader>wq :wq<cr>
 
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
