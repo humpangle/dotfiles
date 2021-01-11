@@ -298,8 +298,8 @@ nnoremap <silent> <leader>0 :only<CR>
 
 nnoremap ,nt :tabnew<cr>
 nnoremap <leader>tt :tab split<cr>
-nnoremap ,dt :diffthis<cr>
-nnoremap ,do :diffoff<cr>
+nnoremap <leader>dt :diffthis<cr>
+nnoremap <leader>do :diffoff<cr>
 
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr><cr>
@@ -307,7 +307,7 @@ nnoremap ,rm :call delete(expand('%:p')) <bar> bdelete! <cr>
 nnoremap ,in :e ~/.config/nvim/init.vim<CR>
 nnoremap ,so :so ~/.config/nvim/init.vim<CR>
 nnoremap ,. :e ~/.bashrc<CR>
-nnoremap <silent><nowait> ,t :term<cr>
+nnoremap <leader>nt :term<cr>
 
 """""""""""""""""""""""""""""""""""""
 " MAPPINGS TO MOVE LINES
