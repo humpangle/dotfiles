@@ -484,7 +484,7 @@ nmap <Leader>C :Commands<CR>
 " before defining new mappings
 nmap <Leader>M :Maps<CR>
 " Fuzzy search filetype syntaxes, and hit Enter on a result to set that syntax on the current buffer:
-nmap ,ss :Filetypes<CR>
+nmap <leader>ss :Filetypes<CR>
 " search in project - do not match filenames
 nmap <Leader>/ :Rrg<CR>
 " search in project - match file names first
