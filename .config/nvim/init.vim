@@ -296,7 +296,7 @@ nnoremap <silent> <leader>\| :vsp<CR>
 " remove all split windows leaving the one I am on
 nnoremap <silent> <leader>0 :only<CR>
 
-nnoremap ,nt :tabnew<cr>
+nnoremap <leader>nt :tabnew<cr>
 nnoremap <leader>tt :tab split<cr>
 nnoremap <leader>dt :diffthis<cr>
 nnoremap <leader>do :diffoff<cr>
