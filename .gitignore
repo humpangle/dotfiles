@@ -106,3 +106,4 @@ tags*
 .testmondata
 .tt
 .tts*
+**/.nvimlog
