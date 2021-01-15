@@ -504,7 +504,7 @@ nmap <leader>ss :Filetypes<CR>
 nmap <Leader>/ :Rrg<CR>
 " search in project - match file names first
 nmap ,/ :Rg<CR>
-nmap ,cm :Commits<CR>
+nmap <leader>cm :Commits<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
