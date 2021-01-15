@@ -536,8 +536,8 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion - what does this mean?????????
-inoremap <silent><expr> <c-space> coc#refresh()
+" Use <c-leader> (ctrl+leader) to trigger completion
+inoremap <silent><expr> <c-leader> coc#refresh()
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -612,22 +612,22 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 nmap ,o :OR<CR>
 
-nnoremap <silent> <space>rs :<C-u>CocRestart<cr><cr>
+nnoremap <silent> <leader>rs :<C-u>CocRestart<cr><cr>
 " yank
-nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
 nmap <Leader>cs :CocSearch <Right>
 
 " Mappings for CoCList
 " Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
 " Show commands
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <leader>s  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>S  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <leader>S  :<C-u>CocList -I symbols<cr>
 """""""""""""""""""""""""""""""""""""
 " END COC PLUGIN VIM SETTINGS
 """""""""""""""""""""""""""""""""""""
