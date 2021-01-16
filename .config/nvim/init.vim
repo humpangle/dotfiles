@@ -308,6 +308,7 @@ nnoremap ,in :e ~/.config/nvim/init.vim<CR>
 nnoremap ,so :so ~/.config/nvim/init.vim<CR>
 nnoremap ,. :e ~/.bashrc<CR>
 nnoremap <leader>nt :term<cr>
+nnoremap <leader>nh :noh<CR>
 
 """""""""""""""""""""""""""""""""""""
 " MAPPINGS TO MOVE LINES
