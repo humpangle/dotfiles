@@ -8,6 +8,16 @@ let g:python3_host_prog = expand('$PYTHON3')
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
+" NETRW SETTINGS
+"""""""""""""""""""""""""""""""""""""
+" Disable netrw
+" let g:loaded_netrw       = 0
+" let g:loaded_netrwPlugin = 0
+"""""""""""""""""""""""""""""""""""""
+" END NETRW SETTINGS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
 " START VIM PLUG
 """""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
