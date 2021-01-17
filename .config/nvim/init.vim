@@ -425,7 +425,9 @@ map <leader>nf :call RenameFile()<cr>
 "https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
 function! DeleteAllBuffers()
   let buffers = range(1, bufnr('$'))
-  exe 'bd '.join(buffers, ' ')
+  let cmd = 'bd '.join(buffers, ' ')
+  echo(cmd)
+  exe cmd
 endfunction
 
 map <leader>db :call DeleteAllBuffers()<cr>
@@ -439,7 +441,9 @@ function! DeleteEmptyBuffers()
         let i += 1
     endwhile
     if len(empty) > 0
-        exe 'bdelete' join(empty)
+      let cmd = 'bwipeout '.join(empty)
+      echo(cmd)
+      exe cmd
     endif
 endfunction
 
@@ -677,7 +681,7 @@ xmap <Leader>R
 """""""""""""""""""""""""""""""""""""
 " Auto-clean fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
-autocmd BufReadPost */.git/index set bufhidden=delete
+" autocmd BufReadPost */.git/index set bufhidden=delete
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \   nnoremap <buffer> .. :edit %:h<CR> |
