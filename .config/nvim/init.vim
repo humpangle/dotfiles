@@ -147,6 +147,17 @@ set undofile
 
 " Use Ripgrep for vimgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
+"""""""""""""""""""""""""""""""""""""
+" START NATIVE FUZZY FIND SETTINGS
+"""""""""""""""""""""""""""""""""""""
+" set nocompatible " Limit search to project directory
+" set path+=** " Search all subdirectories recursively
+" set wildmenu " Show multiple matches on one line
+"""""""""""""""""""""""""""""""""""""
+" END NATIVE FUZZY FIND SETTINGS
+"""""""""""""""""""""""""""""""""""""
+
 """""""""""""""""""""""""""""""""""""
 " END VIM SETTINGS
 """""""""""""""""""""""""""""""""""""
