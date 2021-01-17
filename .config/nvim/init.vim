@@ -330,6 +330,7 @@ nnoremap ,so :so ~/.config/nvim/init.vim<CR>
 nnoremap ,. :e ~/.bashrc<CR>
 nnoremap <leader>nt :term<cr>
 nnoremap <leader>nh :noh<CR>
+nnoremap <leader>ee :Explore<CR>
 
 """""""""""""""""""""""""""""""""""""
 " MAPPINGS TO MOVE LINES
@@ -662,7 +663,7 @@ nmap <Leader>cs :CocSearch <Right>
 " Show all diagnostics
 nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <leader>ex  :<C-u>CocList extensions<cr>
 " Show commands
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
