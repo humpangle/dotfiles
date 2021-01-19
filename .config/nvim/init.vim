@@ -503,6 +503,7 @@ au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
 au BufNewFile,BufRead .env* set filetype=sh
 au BufNewFile,BufRead *.psql set filetype=sql
 au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
+au BufNewFile,BufRead *wsl.conf set filetype=config
 " To get correct comment highlighting in jsonc file
 autocmd FileType json syntax match Comment +\/\/.\+$+
 autocmd! FileType json set filetype=jsonc
