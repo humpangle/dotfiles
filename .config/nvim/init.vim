@@ -519,7 +519,7 @@ autocmd FileType help wincmd H
 " https://medium.com/@jesseleite/its-dangerous-to-vim-alone-take-fzf-283bcff74d21
 """""""""""""""""""""""""""""""""""""
 " search files from root directory where vim opened.
-nmap <Leader>f :Files<CR>
+nmap <Leader>ff :Files<CR>
 " search files only in directory of currently open file
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 " nmap <Leader>f :GFiles<CR>
@@ -542,7 +542,7 @@ nmap <Leader>C :Commands<CR>
 " before defining new mappings
 nmap <Leader>M :Maps<CR>
 " Fuzzy search filetype syntaxes, and hit Enter on a result to set that syntax on the current buffer:
-nmap <leader>ss :Filetypes<CR>
+nmap <leader>ft :Filetypes<CR>
 " search in project - do not match filenames
 nmap <Leader>/ :Rrg<CR>
 " search in project - match file names first
@@ -683,7 +683,7 @@ nnoremap <silent> <leader>ex  :<C-u>CocList extensions<cr>
 " Show commands
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <leader>s  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>s  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <leader>S  :<C-u>CocList -I symbols<cr>
 """""""""""""""""""""""""""""""""""""
