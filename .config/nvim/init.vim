@@ -450,7 +450,7 @@ map <leader>nf :call RenameFile()<cr>
 function! DeleteAllBuffers()
   let buffers = range(1, bufnr('$'))
   let cmd = 'bd '.join(buffers, ' ')
-  echo(cmd)
+  " echo(cmd)
   exe cmd
 endfunction
 
