@@ -76,6 +76,8 @@ let g:mkdp_refresh_slow = 1
 " Plug 'plasticboy/vim-markdown'
 
 Plug 'neoclide/jsonc.vim'
+" interactive scratchpad  = repl
+Plug 'metakirby5/codi.vim'
 
 call plug#end()
 """""""""""""""""""""""""""""""""""""
