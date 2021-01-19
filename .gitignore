@@ -107,3 +107,6 @@ tags*
 .tt
 .tts*
 **/.nvimlog
+
+# scratch files
+*.___scratch*
