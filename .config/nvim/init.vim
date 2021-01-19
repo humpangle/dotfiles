@@ -732,6 +732,7 @@ map gss         :Gstatus<CR>
 map ga.         :Git add .<CR>
 map gpgm        :Git push github master<CR>
 map gpgd        :Git push github dev<CR>
+map ga%         :Git add %<CR>
 """""""""""""""""""""""""""""""""""""
 " END FUGITIVE MAPPINGS
 """""""""""""""""""""""""""""""""""""
