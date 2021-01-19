@@ -79,6 +79,8 @@ Plug 'neoclide/jsonc.vim'
 " interactive scratchpad  = repl
 Plug 'metakirby5/codi.vim'
 
+Plug 'dense-analysis/ale'
+
 call plug#end()
 """""""""""""""""""""""""""""""""""""
 " END VIM PLUG
@@ -265,6 +267,17 @@ let g:vrc_elasticsearch_support = 1 " bulk upload and external data file
 let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
 """""""""""""""""""""""""""""""""""""
 " END REST CONSOLE SETTINGS
+"""""""""""""""""""""""""""""""""""""
+
+
+"""""""""""""""""""""""""""""""""""""
+" START ALE SETTINGS
+"""""""""""""""""""""""""""""""""""""
+let g:ale_linters = {
+\  'sh': ['shell', 'shellcheck'],
+\}
+"""""""""""""""""""""""""""""""""""""
+" END ALE SETTINGS
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
