@@ -627,8 +627,8 @@ endfunction
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Remap to rename current word
-nmap <leader>n <Plug>(coc-rename)
+" Remap to rename current symbol
+nmap <leader>nn <Plug>(coc-rename)
 
 " Formatting selected code.
 xmap fc  <Plug>(coc-format-selected)
