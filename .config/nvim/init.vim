@@ -273,6 +273,7 @@ let g:vrc_trigger = '<C-n>' " n = new request/ trigger is <C-J> by default
 """""""""""""""""""""""""""""""""""""
 " START ALE SETTINGS
 """""""""""""""""""""""""""""""""""""
+let g:ale_enabled = 0 " Use :ALEEnable/:ALEToggle to enable
 let g:ale_linters = {
 \  'sh': ['shell', 'shellcheck'],
 \}
