@@ -406,7 +406,7 @@ xnoremap <silent> s* "sy:let @/=@s<CR>cgn
 """"""""""""""""" find and replace in file """""""""""""""""""""""""""""""""
 " press * {shift 8) to search for word under cursor and key combo below to
 " replace in entire file
-nnoremap <leader>r :%s///g<left><left>
+nnoremap <leader>rr :%s///g<left><left>
 nnoremap <leader>rc :%s///gc<left><left><left>
 
 " same as above but only visually selected range
