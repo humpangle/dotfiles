@@ -567,7 +567,7 @@ command! -bang -nargs=* Rrg call fzf#vim#grep("rg --hidden --column --line-numbe
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
-" START COC PLUGIN MAPPINGS AND SETTINGS
+" START COC MAPPINGS
 """""""""""""""""""""""""""""""""""""
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
@@ -604,7 +604,8 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in
+" location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
@@ -629,7 +630,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap to rename current symbol
-nmap <leader>nn <Plug>(coc-rename)
+nmap <leader>cr <Plug>(coc-rename)
 
 " Formatting selected code.
 xmap fc  <Plug>(coc-format-selected)
@@ -673,22 +674,22 @@ nmap ,o :OR<CR>
 
 nnoremap <silent> <leader>rs :<C-u>CocRestart<cr><cr>
 " yank
-nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
-nmap <Leader>cs :CocSearch <Right>
+nnoremap <silent> <leader>cy :<C-u>CocList -A --normal yank<cr>
+nmap <Leader>ch :CocSearch <Right>
 
 " Mappings for CoCList
-" Show all diagnostics
-nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+" Show all diagnostics: COC errors
+nnoremap <silent> <leader>ce  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent> <leader>ex  :<C-u>CocList extensions<cr>
+nnoremap <silent> <leader>cx  :<C-u>CocList extensions<cr>
 " Show commands
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent> <leader>s  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>cs  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <leader>S  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <leader>cS  :<C-u>CocList -I symbols<cr>
 """""""""""""""""""""""""""""""""""""
-" END COC PLUGIN VIM SETTINGS
+" END COC MAPPINGS
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
