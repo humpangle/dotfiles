@@ -767,6 +767,7 @@ vmap tb :Tabularize /\zs<Left><Left><Left>
 " START ALE PLUGIN MAPPINGS
 """""""""""""""""""""""""""""""""""""
 map <leader>at :ALEToggle<cr>
+map <leader>ae :ALEEnable<cr>
 """""""""""""""""""""""""""""""""""""
 " END ALE PLUGIN MAPPINGS
 """""""""""""""""""""""""""""""""""""
