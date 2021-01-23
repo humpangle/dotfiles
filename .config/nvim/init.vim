@@ -632,10 +632,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Remap to rename current symbol
 nmap <leader>cr <Plug>(coc-rename)
 
-" Formatting selected code.
-xmap fc  <Plug>(coc-format-selected)
-nmap fc  <Plug>(coc-format-selected)
-
 augroup coc_grp_1
   autocmd!
   " Setup formatexpr specified filetype(s).
@@ -663,7 +659,13 @@ vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
-nnoremap fc :Format<CR>
+" nnoremap fc :Format<CR>
+xmap <leader>cf  :Format<CR>
+nmap <leader>cf  :Format<CR>
+
+" Formatting selected code ------ not working
+" xmap fc  <plug>(coc-format-selected)
+" nmap fc  <plug>(coc-format-selected)
 
 " use ``:Prettier` to format current buffer.
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
