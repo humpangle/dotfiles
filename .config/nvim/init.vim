@@ -491,6 +491,20 @@ map <leader>de :call DeleteEmptyBuffers()<cr>
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
+" START FORMAT ELIXIR MAPPINGS
+"""""""""""""""""""""""""""""""""""""
+function! FormatElixir()
+  w
+  silent execute "!mix format %:p"
+  e %
+endfunction
+command! FormatElixir call FormatElixir()
+nmap <leader>fe  :FormatElixir<CR>
+"""""""""""""""""""""""""""""""""""""
+" END FORMAT ELIXIR MAPPINGS
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
 " END NON PLUGIN MAPPINGS
 """""""""""""""""""""""""""""""""""""
 
