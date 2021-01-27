@@ -362,7 +362,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
-" EMBEDDED TERMINAL
+" EMBEDDED TERMINAL MAPPINGS
 """""""""""""""""""""""""""""""""""""
 :tnoremap <C-h> <C-\><C-N><C-w>h
 :tnoremap <C-j> <C-\><C-N><C-w>j
@@ -379,11 +379,11 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " Press escape twice to exit insert mode in embedded terminal
 tnoremap <Esc><Esc> <C-\><C-n>
 """""""""""""""""""""""""""""""""""""
-" END EMBEDDED TERMINAL
+" END EMBEDDED TERMINAL MAPPINGS
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
-" COPY FILE PATH
+" COPY FILE PATH MAPPINGS
 """""""""""""""""""""""""""""""""""""
 nmap ,yr :let @+=expand("%")<CR>      " Mnemonic: yank relative File path
 nmap ,yn :let @+=expand("%:t")<CR>    " Mnemonic: yank file name / not path
@@ -393,7 +393,7 @@ nmap ,yf :let @+=expand("%:p")<CR>    " Mnemonic: yank absolute File path
 nmap ,cr :let @"=expand("%")<CR>      " Mnemonic: copy relative path
 nmap ,cf :let @"=expand("%:p")<CR>    " Mnemonic: copy absolute path
 """""""""""""""""""""""""""""""""""""
-" END COPY FILE PATH
+" END COPY FILE PATH MAPPINGS
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
@@ -418,7 +418,7 @@ xnoremap <leader>rc :%s///gc<left><left><left>
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
-" TOGGLE LINE NUMBERING
+" TOGGLE LINE NUMBERING MAPPINGS
 """""""""""""""""""""""""""""""""""""
 set number
 function! NumberToggle()
@@ -436,11 +436,11 @@ endfunc
 " nnoremap Ln :set nonumber nornu<CR>
 " nnoremap eb :e %<CR>
 """""""""""""""""""""""""""""""""""""
-" END TOGGLE LINE NUMBERING
+" END TOGGLE LINE NUMBERING MAPPINGS
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
-" RENAME CURRENT FILE
+" RENAME CURRENT FILE MAPPINGS
 """""""""""""""""""""""""""""""""""""
 function! RenameFile()
   let old_name = expand('%')
@@ -454,11 +454,11 @@ endfunction
 
 map <leader>nf :call RenameFile()<cr>
 """""""""""""""""""""""""""""""""""""
-" END RENAME CURRENT FILE
+" END RENAME CURRENT FILE MAPPINGS
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
-" MANAGE BUFFERS
+" MANAGE BUFFERS MAPPINGS
 """""""""""""""""""""""""""""""""""""
 "https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
 function! DeleteAllBuffers()
@@ -487,7 +487,7 @@ endfunction
 
 map <leader>de :call DeleteEmptyBuffers()<cr>
 """""""""""""""""""""""""""""""""""""
-" END MANAGE BUFFERS
+" END MANAGE BUFFERS MAPPINGS
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
