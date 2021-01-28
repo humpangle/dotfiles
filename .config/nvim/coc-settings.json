@@ -7,5 +7,6 @@
   "cSpell.userWords": ["Kanmii", "NEOVIM"],
   "cSpell.ignoreWords": [],
   "cSpellExt.enableDictionaries": ["german", "french"],
-  "cSpell.language": "en,de,fr"
+  "cSpell.language": "en,de,fr",
+  "elixirLS.dialyzerEnabled": false
 }
