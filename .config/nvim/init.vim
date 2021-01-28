@@ -697,7 +697,7 @@ nmap <Leader>ch :CocSearch <Right>
 
 " Mappings for CoCList
 " Show all diagnostics: COC errors
-nnoremap <silent> <leader>ce  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>dd  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
 nnoremap <silent> <leader>cx  :<C-u>CocList extensions<cr>
 " Show commands
