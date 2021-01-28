@@ -676,8 +676,8 @@ vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 " nnoremap fc :Format<CR>
-xmap <leader>cf  :Format<CR>
-nmap <leader>cf  :Format<CR>
+xmap fc :Format<CR>
+nmap fc :Format<CR>
 
 " Formatting selected code ------ not working
 " xmap fc  <plug>(coc-format-selected)
