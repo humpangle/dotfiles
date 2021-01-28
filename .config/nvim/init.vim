@@ -658,10 +658,10 @@ augroup end
 " Show `code action` window for currently selected region. Following actions
 " are availbale: 1. Extract Function 2. Move to a new file 3. Extract constant
 " 4. spelling suggestion
-xmap ,ca  <Plug>(coc-codeaction-selected)
+xmap ,ac  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
-nmap ,ca  <Plug>(coc-codeaction)
+nmap ,ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap ,qf  <Plug>(coc-fix-current)
 
