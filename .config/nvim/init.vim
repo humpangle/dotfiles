@@ -11,8 +11,8 @@ let g:python3_host_prog = expand('$PYTHON3')
 " NETRW SETTINGS
 """""""""""""""""""""""""""""""""""""
 " Disable netrw
-" let g:loaded_netrw       = 0
-" let g:loaded_netrwPlugin = 0
+let g:loaded_netrw       = 0
+let g:loaded_netrwPlugin = 0
 """""""""""""""""""""""""""""""""""""
 " END NETRW SETTINGS
 """""""""""""""""""""""""""""""""""""
@@ -189,7 +189,7 @@ let g:coc_filetype_map = {
   \ 'eelixir': 'html',
 \}
 
-" CocInstall coc-elixir coc-spell-checker coc-cspell-dicts coc-yank coc-json coc-python coc-emmet coc-tsserver coc-snippets coc-css coc-html coc-eslint coc-pairs coc-prettier coc-svelte coc-docker https://github.com/kanmii/kanmii-coc-snippets coc-vetur
+" CocInstall coc-elixir coc-spell-checker coc-cspell-dicts coc-yank coc-json coc-python coc-emmet coc-tsserver coc-snippets coc-css coc-html coc-eslint coc-pairs coc-prettier coc-svelte coc-docker https://github.com/kanmii/kanmii-coc-snippets coc-vetur coc-explorer
 """""""""""""""""""""""""""""""""""""
 " END COC SETTINGS
 """""""""""""""""""""""""""""""""""""
@@ -346,7 +346,7 @@ nnoremap ,so :so ~/.config/nvim/init.vim<CR>
 nnoremap ,. :e ~/.bashrc<CR>
 nnoremap <leader>nt :term<cr>
 nnoremap <leader>nh :noh<CR>
-nnoremap <leader>ee :Explore<CR>
+" nnoremap <leader>ee :Explore<CR>
 
 """""""""""""""""""""""""""""""""""""
 " MAPPINGS TO MOVE LINES
@@ -706,6 +706,10 @@ nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
 nnoremap <silent> <leader>cs  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <leader>cS  :<C-u>CocList -I symbols<cr>
+
+nmap <leader>ee :CocCommand explorer<CR>
+" automatically close coc-explorer if it's the last buffer
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 """""""""""""""""""""""""""""""""""""
 " END COC MAPPINGS
 """""""""""""""""""""""""""""""""""""
