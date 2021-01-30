@@ -693,7 +693,7 @@ nmap ,o :OR<CR>
 
 nnoremap <silent> <leader>rs :<C-u>CocRestart<cr><cr>
 " yank
-nnoremap <silent> <leader>cy :<C-u>CocList -A --normal yank<cr>
+nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
 nmap <Leader>ch :CocSearch <Right>
 
 " Mappings for CoCList
