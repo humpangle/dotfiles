@@ -14,6 +14,7 @@
     "cd": "cd",
     "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
     "v": "open:vsplit",
+    "l": ["wait", "expandable?", "expand"],
 
     "i": false, // cancel default mapped key
     "*": "toggleSelection",
@@ -21,7 +22,7 @@
     "gk": ["wait", "expandablePrev"],
     "gj": ["wait", "expandableNext"],
     "h": ["wait", "collapse"],
-    "l": ["wait", "expandable?", "expand", "open"],
+    /* "l": ["wait", "expandable?", "expand", "open"], */
     "J": ["wait", "toggleSelection", "normal:j"],
     "K": ["wait", "toggleSelection", "normal:k"],
     "gl": ["wait", "expand:recursive"],
