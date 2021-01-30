@@ -300,6 +300,7 @@ nnoremap <C-Q>     :q<cr>
 vnoremap <C-Q>     <esc>
 nnoremap <Leader>qq :q<cr>
 nnoremap <Leader>qa :qa<cr>
+nnoremap <Leader>qf :qa!<cr>
 
 " better code indentations in visual mode.
 vnoremap < <gv
