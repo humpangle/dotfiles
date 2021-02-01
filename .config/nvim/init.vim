@@ -758,6 +758,7 @@ map ga.         :Git add .<CR>
 map gpgm        :Git push github master<CR>
 map gpgd        :Git push github dev<CR>
 map ga%         :Git add %<CR>
+map grb         :Grebase -i HEAD~
 """""""""""""""""""""""""""""""""""""
 " END FUGITIVE MAPPINGS
 """""""""""""""""""""""""""""""""""""
