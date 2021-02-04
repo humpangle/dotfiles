@@ -753,6 +753,8 @@ autocmd User fugitive
 map gst         :Git st<CR>
 map gcm         :Gcommit<CR>
 map gvs         :Gvdiffsplit<CR>
+" vertical split to resolve git merge conflict
+map gvc         :Gvdiffsplit!<CR>
 map gss         :Gstatus<CR>
 map ga.         :Git add .<CR>
 map gpgm        :Git push github master<CR>
