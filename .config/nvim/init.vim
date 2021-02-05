@@ -469,8 +469,6 @@ function! DeleteAllBuffers()
   exe cmd
 endfunction
 
-map <leader>db :call DeleteAllBuffers()<cr>
-
 function! DeleteEmptyBuffers()
     let [i, n; empty] = [1, bufnr('$')]
     while i <= n
@@ -486,7 +484,9 @@ function! DeleteEmptyBuffers()
     endif
 endfunction
 
+map <leader>da :call DeleteAllBuffers()<cr>
 map <leader>de :call DeleteEmptyBuffers()<cr>
+map <leader>db :bd%<cr>
 """""""""""""""""""""""""""""""""""""
 " END MANAGE BUFFERS MAPPINGS
 """""""""""""""""""""""""""""""""""""
