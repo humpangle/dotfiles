@@ -764,6 +764,7 @@ map grb         :Grebase -i HEAD~
 map gst         :Git stash<CR>
 map gsp         :Git stash pop<CR>
 map gsl         :Git stash list<CR>
+map glo         :Glog <CR>
 """""""""""""""""""""""""""""""""""""
 " END FUGITIVE MAPPINGS
 """""""""""""""""""""""""""""""""""""
