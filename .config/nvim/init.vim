@@ -772,7 +772,7 @@ map glo         :Glog <CR>
 """""""""""""""""""""""""""""""""""""
 " START EASYMOTION MAPPINGS
 """""""""""""""""""""""""""""""""""""
-nmap <leader><leader>2s <Plug>(easymotion-overwin-f2)
+nmap <leader><leader>2 <Plug>(easymotion-overwin-f2)
 """""""""""""""""""""""""""""""""""""
 " END EASYMOTION MAPPINGS
 """""""""""""""""""""""""""""""""""""
