@@ -10,6 +10,7 @@
   "cSpell.language": "en,de,fr",
   "elixirLS.dialyzerEnabled": false,
   "explorer.width": 50,
+  "snippets.userSnippetsDirectory": "~/.config/nvim/settings/ultisnips",
   "explorer.keyMappings.global": {
     "cd": "cd",
     "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
