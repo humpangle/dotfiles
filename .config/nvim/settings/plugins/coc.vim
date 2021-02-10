@@ -28,7 +28,6 @@ let g:coc_global_extensions = [
   " \ 'coc-fzf-preview',
   " \ 'coc-marketplace',
   " \ 'coc-pyright',
-  " \ 'coc-floaterm',
 
 " let g:coc_force_debug = 1
 let g:coc_filetype_map = {
