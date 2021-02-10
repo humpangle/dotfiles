@@ -70,6 +70,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
   " Floaterm is a floating terminal for Neovim
   Plug 'voldikss/vim-floaterm'
+
+  " Manage branches and tags with fzf
+  Plug 'stsewd/fzf-checkout.vim'
 call plug#end()
 
 " Automatically install missing plugins on startup

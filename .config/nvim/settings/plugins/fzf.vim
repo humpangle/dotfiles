@@ -33,6 +33,9 @@ nmap <Leader>/ :Rrg<CR>
 nmap ,/ :Rg<CR>
 nmap <leader>cm :Commits<CR>
 
+" fzf-checkout.vim
+nmap <leader>gc :GCheckout<CR>
+
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --hidden --column --line-number --no-heading --color=always --smart-case -- %s || true'
