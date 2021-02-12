@@ -134,7 +134,8 @@ xnoremap <leader>rc :%s///gc<left><left><left>
 """""""""""""""""""""""""""""""""""""
 " TOGGLE LINE NUMBERING
 """""""""""""""""""""""""""""""""""""
-set number
+" set number
+set rnu
 function! NumberToggle()
   if(&relativenumber == 1)
     set nornu
