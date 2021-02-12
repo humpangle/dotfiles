@@ -32,6 +32,11 @@ vmap <Leader>P "+P
 nnoremap gb :ls<CR>:b
 " Move between windows in a tab
 nmap <tab> <C-w>w
+:nnoremap <C-h> <C-w>h
+:nnoremap <C-j> <C-w>j
+:nnoremap <C-k> <C-w>k
+:nnoremap <C-l> <C-w>l
+
 " Go to tab by number
 noremap <leader>1 1gt
 noremap <leader>2 2gt
@@ -85,10 +90,7 @@ nnoremap ,tt :term<cr>
 :inoremap <A-j> <C-\><C-N><C-w>j
 :inoremap <A-k> <C-\><C-N><C-w>k
 :inoremap <A-l> <C-\><C-N><C-w>l
-:nnoremap <C-h> <C-w>h
-:nnoremap <C-j> <C-w>j
-:nnoremap <C-k> <C-w>k
-:nnoremap <C-l> <C-w>l
+
 " exit insert mode
 tnoremap <A-e> <C-\><C-n>
 """""""""""""""""""""""""""""""""""""
