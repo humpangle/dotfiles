@@ -131,6 +131,9 @@ xnoremap <leader>rc :%s///gc<left><left><left>
 " END SEARCH AND REPLACE
 """""""""""""""""""""""""""""""""""""
 
+" toggle cursorcolumn
+:nnoremap ,tc :set cursorline! cursorcolumn!<CR>
+
 """""""""""""""""""""""""""""""""""""
 " TOGGLE LINE NUMBERING
 """""""""""""""""""""""""""""""""""""

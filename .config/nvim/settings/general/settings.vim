@@ -49,8 +49,6 @@ set mouse=a
 
 " I disabled both because they were distracting and slow (according to docs)
 set cursorline " highlight cursor positions
-" toggle cursorcolumn
-:nnoremap ,mc :set cursorline! cursorcolumn!<CR>
 
 " Spell check
 :setlocal spell spelllang=en
