@@ -33,6 +33,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
   " themes
   Plug 'rakr/vim-one'
+  Plug 'lifepillar/vim-gruvbox8'
 
   " typescript and other language server protocols - mimics VSCode.
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
