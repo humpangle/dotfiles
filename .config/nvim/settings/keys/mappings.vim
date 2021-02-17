@@ -245,3 +245,18 @@ autocmd FileType help wincmd H
 """""""""""""""""""""""""""""""""""""
 " END AUTOCMD
 """""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START TOGGLE BACKGROUND COLOR
+"""""""""""""""""""""""""""""""""""""
+function! BackgroundToggle()
+  if(&background == 'dark')
+    set background=light
+  else
+    set background=dark
+  endif
+endfunc
+nnoremap <leader>tb :call BackgroundToggle()<cr>
+"""""""""""""""""""""""""""""""""""""
+" END TOGGLE BACKGROUND COLOR
+"""""""""""""""""""""""""""""""""""""
