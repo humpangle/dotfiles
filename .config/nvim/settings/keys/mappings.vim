@@ -135,26 +135,16 @@ xnoremap <leader>rc :%s///gc<left><left><left>
 :nnoremap ,tc :set cursorline! cursorcolumn!<CR>
 
 """""""""""""""""""""""""""""""""""""
-" TOGGLE LINE NUMBERING
+" LINE NUMBERING
 """""""""""""""""""""""""""""""""""""
-" set number
-set rnu
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set nornu
-    set number
-  else
-    set rnu
-  endif
-endfunc
-nnoremap ,tl :call NumberToggle()<cr>
+set number " always show line numbers
+" set relativenumber " set relative numbering as default
+set norelativenumber " set none relative numbering as default
 
-" toggle line numbering
-" nnoremap ln :set nornu number<CR>
-" nnoremap Ln :set nonumber nornu<CR>
-" nnoremap eb :e %<CR>
+" toggle relative line number
+nmap ,tl :set invrelativenumber<CR>
 """""""""""""""""""""""""""""""""""""
-" END TOGGLE LINE NUMBERING
+" END LINE NUMBERING
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
