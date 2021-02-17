@@ -21,4 +21,4 @@ map gst         :Git stash<CR>
 map gsp         :Git stash pop<CR>
 map gsl         :Git stash list<CR>
 map glo         :Glog <CR>
-map cgl         :0Glog <CR>
+map gl0         :0Glog <CR>
