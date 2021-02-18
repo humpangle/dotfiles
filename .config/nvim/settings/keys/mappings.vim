@@ -139,7 +139,7 @@ xnoremap <leader>rc :%s///gc<left><left><left>
 """""""""""""""""""""""""""""""""""""
 set number " always show line numbers
 " set relativenumber " set relative numbering as default
-set norelativenumber " set none relative numbering as default
+set relativenumber " set none relative numbering as default
 
 " toggle relative line number
 nmap ,tl :set invrelativenumber<CR>
