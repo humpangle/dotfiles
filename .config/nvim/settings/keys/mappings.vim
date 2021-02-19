@@ -178,7 +178,8 @@ endfunction
 function! DeleteEmptyBuffers()
   let [i, n; empty] = [1, bufnr('$')]
   while i <= n
-    if bufexists(i) && bufname(i) == ''
+    let b_name = bufname(i)
+    if bufexists(i) && (b_name == '' || b_name =~ 'fugitive:/')
       call add(empty, i)
     endif
     let i += 1
