@@ -160,6 +160,6 @@ nnoremap <silent> <leader>cs  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <leader>cS  :<C-u>CocList -I symbols<cr>
 
-nmap <leader>ee :CocCommand explorer<CR>
+" nmap <leader>ee :CocCommand explorer<CR>
 " automatically close coc-explorer if it's the last buffer
-autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+" autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif

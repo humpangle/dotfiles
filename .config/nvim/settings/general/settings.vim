@@ -3,8 +3,8 @@ let g:python3_host_prog = expand('$PYTHON3')
 " let g:node_host_prog = expand("~/.nvm/versions/node/v12.16.1/bin/node")
 
 " Disable netrw
-let g:loaded_netrw       = 0
-let g:loaded_netrwPlugin = 0
+" let g:loaded_netrw       = 0
+" let g:loaded_netrwPlugin = 0
 
 syntax enable
 " Set <leader> key to <Space>

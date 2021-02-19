@@ -62,7 +62,7 @@ nnoremap ,in :e ~/.config/nvim/init.vim<CR> " edit init.vim
 nnoremap ,so :so ~/.config/nvim/init.vim<CR> " source init.vim
 nnoremap ,. :e ~/.bashrc<CR>  " edit .bashrc file
 nnoremap <leader>nh :noh<CR> " no highlight
-" nnoremap <leader>ee :Explore<CR>
+nnoremap <leader>ee :Vexplore<CR>
 
 """""""""""""""""""""""""""""""""""""
 " TO MOVE LINES
