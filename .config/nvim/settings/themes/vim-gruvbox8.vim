@@ -2,7 +2,7 @@ syntax on
 
 set background=dark
 
-if !empty($GBL)
+if !empty($BGL)
   set background=light
 endif
 
