@@ -7,7 +7,7 @@ autocmd User fugitive
   \ endif
 
 map gst         :Git st<CR>
-map gcm         :Gcommit<CR>
+map gcm         :Git commit<CR>
 map gvs         :Gvdiffsplit<CR>
 " vertical split to resolve git merge conflict
 map gvc         :Gvdiffsplit!<CR>
