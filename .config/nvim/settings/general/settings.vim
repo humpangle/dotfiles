@@ -5,6 +5,11 @@ let g:python3_host_prog = expand('$PYTHON3')
 " Disable netrw
 " let g:loaded_netrw       = 0
 " let g:loaded_netrwPlugin = 0
+" Always show in tree view
+let g:netrw_liststyle = 3
+" Open file by default in new tab
+let g:netrw_browse_split = 3
+let g:netrw_localrmdir='rm -r'
 
 syntax enable
 " Set <leader> key to <Space>
