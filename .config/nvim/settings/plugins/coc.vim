@@ -4,7 +4,7 @@ let g:coc_global_extensions = [
   \ 'coc-cspell-dicts',
   \ 'coc-yank',
   \ 'coc-json',
-  \ 'coc-python',
+  \ 'coc-jedi',
   \ 'coc-emmet',
   \ 'coc-tsserver',
   \ 'coc-snippets',
