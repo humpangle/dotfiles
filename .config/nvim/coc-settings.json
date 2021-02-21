@@ -4,7 +4,11 @@
   "typescript.showUnused": false,
   "javascript.showUnused": false,
   "css.validate": false,
-  "cSpell.userWords": ["Kanmii", "NEOVIM"],
+  "cSpell.userWords": [
+    "Kanmii",
+    "NEOVIM",
+    "arity"
+  ],
   "cSpell.ignoreWords": [],
   "cSpellExt.enableDictionaries": ["german", "french"],
   "cSpell.language": "en,de,fr",
