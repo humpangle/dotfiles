@@ -1,4 +1,4 @@
-source $HOME/.config/nvim/settings/vim-plug/plugins.vim
+source $HOME/.config/nvim/settings/vim-plug.vim
 
 source $HOME/.config/nvim/settings/general/settings.vim
 
