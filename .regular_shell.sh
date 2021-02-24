@@ -25,6 +25,7 @@ alias dvra='docker volume rm $(docker volume ls -q)'
 alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ug='sudo apt update && sudo apt upgrade -y'
+alias gc='google-chrome -incognito &'
 
 [ -f $HOME/dotfiles/.pyenv.sh ] && source $HOME/dotfiles/.pyenv.sh
 [ -f $HOME/dotfiles/.wsl.sh ] && source $HOME/dotfiles/.wsl.sh
