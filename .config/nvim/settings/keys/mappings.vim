@@ -81,7 +81,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " EMBEDDED TERMINAL
 """""""""""""""""""""""""""""""""""""
 " launch terminal
-nnoremap ,tt :term<cr>
+nnoremap ,tn :term<cr>
 :tnoremap <C-h> <C-\><C-N><C-w>h
 :tnoremap <C-j> <C-\><C-N><C-w>j
 :tnoremap <C-k> <C-\><C-N><C-w>k
