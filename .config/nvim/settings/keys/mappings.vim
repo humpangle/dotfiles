@@ -57,7 +57,7 @@ nnoremap <leader>do :diffoff<cr> " remove file from diffs
 
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr><cr> " mkdir - create directory
-nnoremap ,rm :call delete(expand('%:p')) <bar> bdelete! <cr> " delete file
+nnoremap ,rm :!trash-put %:p<cr>:bdelete!<cr>
 nnoremap ,in :e ~/.config/nvim/init.vim<CR> " edit init.vim
 nnoremap ,so :so ~/.config/nvim/init.vim<CR> " source init.vim
 nnoremap ,. :e ~/.bashrc<CR>  " edit .bashrc file
