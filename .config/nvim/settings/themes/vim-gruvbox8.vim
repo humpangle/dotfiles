@@ -1,8 +1,8 @@
 syntax on
 
-set background=light
+set background=dark
 
-if !empty($BGD)
+if !empty($BGL)
   set background=dark
 endif
 
