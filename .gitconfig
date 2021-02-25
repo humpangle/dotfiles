@@ -35,3 +35,9 @@
 ; 	name = Your Name
 [init]
 	defaultBranch = main
+# specify how pulling is reconciled
+[pull]
+  # git config pull.rebase false  # merge (the default strategy)
+  # git config pull.rebase true   # rebase
+  # fast-forward only
+  ff = only
