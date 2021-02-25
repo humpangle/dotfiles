@@ -58,11 +58,17 @@ nnoremap <leader>do :diffoff<cr> " remove file from diffs
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr><cr> " mkdir - create directory
 nnoremap ,rm :!trash-put %:p<cr>:bdelete!<cr>
-nnoremap ,in :e ~/.config/nvim/init.vim<CR> " edit init.vim
-nnoremap ,so :so ~/.config/nvim/init.vim<CR> " source init.vim
 nnoremap ,. :e ~/.bashrc<CR>  " edit .bashrc file
 nnoremap <leader>nh :noh<CR> " no highlight
 nnoremap <leader>ee :Vexplore<CR>
+
+let my_config_path = has('win32') ? '~\AppData\Local\nvim\init.vim' : "~/.config/nvim/init.vim"
+
+" edit init.vim
+nnoremap ,ec :execute "e " . g:my_config_path<CR>
+
+" source init.vim
+nnoremap ,sc :execute "so " . g:my_config_path <CR>
 
 """""""""""""""""""""""""""""""""""""
 " TO MOVE LINES

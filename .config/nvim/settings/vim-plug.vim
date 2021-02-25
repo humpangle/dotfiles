@@ -1,12 +1,14 @@
 " auto-install vim-plug
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  "autocmd VimEnter * PlugInstall
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+if !has('win32') && empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    "autocmd VimEnter * PlugInstall
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
-call plug#begin('~/.config/nvim/autoload/plugged')
+let my_pluging_path = has('win32') ? '~\AppData\Local\nvim\autoload\plugged' : '~/.config/nvim/autoload/plugged'
+
+call plug#begin(g:my_pluging_path)
   " Handle multi-file find and replace.
   Plug 'mhinz/vim-grepper'
   let g:grepper={}
