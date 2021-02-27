@@ -8,7 +8,7 @@ let g:python3_host_prog = expand('$PYTHON3')
 " Always show in tree view
 let g:netrw_liststyle = 3
 " Open file by default in new tab
-let g:netrw_browse_split = 3
+" let g:netrw_browse_split = 3
 
 syntax enable
 " Set <leader> key to <Space>
