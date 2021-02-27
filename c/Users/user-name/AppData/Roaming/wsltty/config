@@ -10,3 +10,5 @@ Scrollbar=none
 PgUpDnScroll=yes
 Term=xterm-256color
 BellType=0
+Columns=174
+Rows=52
