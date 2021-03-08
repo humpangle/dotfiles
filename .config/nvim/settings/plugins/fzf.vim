@@ -34,7 +34,7 @@ nmap ,/ :Rg<CR>
 nmap <leader>cm :Commits<CR>
 
 " fzf-checkout.vim
-nmap <leader>gc :GCheckout<CR>
+nmap <leader>gb :GBranches<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
