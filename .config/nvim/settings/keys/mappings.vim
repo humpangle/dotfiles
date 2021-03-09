@@ -51,7 +51,7 @@ nnoremap <silent> <leader>_ :split<CR> " split window bottom
 nnoremap <silent> <leader>\| :vsp<CR> " split window right
 nnoremap <silent> <leader>0 :only<CR> " remove all but current window
 nnoremap <leader>tn :tabnew<cr> " new tab
-nnoremap <leader>tt :tab split<cr> " split tab
+nnoremap <leader>ts :tab split<cr>
 nnoremap <leader>dt :diffthis<cr> " diff this add file to diffs
 nnoremap <leader>do :diffoff<cr> " remove file from diffs
 

@@ -11,7 +11,7 @@ nmap <Leader>bb :Buffers<CR>
 " search buffers history
 nmap <Leader>h :History<CR>
 " search for tags without ctags (method names etc) or special package
-nmap <Leader>t :BTags<CR>
+nmap <Leader>tg :BTags<CR>
 " use with gutentags package
 nmap <Leader>T :Tags<CR>
 " search for text in current buffer
