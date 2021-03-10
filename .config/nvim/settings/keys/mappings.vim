@@ -175,10 +175,13 @@ map <leader>nf :call RenameFile()<cr>
 " MANAGE BUFFERS
 """""""""""""""""""""""""""""""""""""
 "https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
-function! DeleteAllBuffers()
+function! DeleteAllBuffers() abort
   let buffers = range(1, bufnr('$'))
-  let cmd = 'bd '.join(buffers, ' ')
-  exe cmd
+  let joinedBuffers = join(buffers, ' ')
+  let deleteCmd = 'bd ' . joinedBuffers
+  exe deleteCmd
+  let wipeCmd = 'bw! ' . joinedBuffers
+  exe wipeCmd
 endfunction
 
 function! DeleteEmptyBuffers()
