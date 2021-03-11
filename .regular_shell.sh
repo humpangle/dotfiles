@@ -41,4 +41,3 @@ if [ -x "$(command -v heroku)" ]; then
   HEROKU_AC_BASH_SETUP_PATH=/home/kanmii/.cache/heroku/autocomplete/bash_setup
   test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
 fi
-[ -f $HOME/.local/bin/tmuxp ] && eval "$(_TMUXP_COMPLETE=source tmuxp)"
