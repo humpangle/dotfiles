@@ -41,3 +41,6 @@ if [ -x "$(command -v heroku)" ]; then
   HEROKU_AC_BASH_SETUP_PATH=/home/kanmii/.cache/heroku/autocomplete/bash_setup
   test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
 fi
+
+# install with: `sudo apt install ssh-askpass-gnome ssh-askpass -y`
+export SUDO_ASKPASS=$(which ssh-askpass)
