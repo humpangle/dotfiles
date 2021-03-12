@@ -58,8 +58,10 @@ nnoremap <silent> <leader>\| :vsp<CR> " split window right
 nnoremap <silent> <leader>0 :only<CR> " remove all but current window
 nnoremap <leader>tn :tabnew<cr> " new tab
 nnoremap <leader>ts :tab split<cr>
-nnoremap <leader>dt :diffthis<cr> " diff this add file to diffs
-nnoremap <leader>do :diffoff<cr> " remove file from diffs
+
+" mappings in unimpaired.vim
+" nnoremap [od :diffthis<cr> " diff this add file to diffs
+" nnoremap ]od :diffoff<cr> " remove file from diffs
 
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr><cr> " mkdir - create directory
