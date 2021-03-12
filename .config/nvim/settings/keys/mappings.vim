@@ -38,10 +38,10 @@ vmap <Leader>P "+P
 nnoremap gb :ls<CR>:b
 " Move between windows in a tab
 nmap <tab> <C-w>w
-:nnoremap <C-h> <C-w>h
-:nnoremap <C-j> <C-w>j
-:nnoremap <C-k> <C-w>k
-:nnoremap <C-l> <C-w>l
+:nnoremap ,h <C-w>h
+:nnoremap ,j <C-w>j
+:nnoremap ,k <C-w>k
+:nnoremap ,l <C-w>l
 
 " Go to tab by number
 noremap <leader>1 1gt
