@@ -8,13 +8,13 @@ autocmd User fugitive
 
 nnoremap gst         :Git st<CR>
 nnoremap gcm         :Git commit<CR>
-nnoremap gv         :Gvdiffsplit<CR>
+nnoremap gv          :Gvdiffsplit<CR>
 " vertical split (3 way merge) to resolve git merge conflict
 nnoremap gv!         :Gvdiffsplit!<CR>
 nnoremap gss         :Gstatus<CR>
 nnoremap ga.         :Git add .<CR>
-nnoremap gpm        :Git push origin master<CR>
-nnoremap gpd        :Git push origin dev<CR>
+nnoremap gpm         :Git push origin master<CR>
+nnoremap gpd         :Git push origin dev<CR>
 nnoremap ga%         :Git add %<CR>
 nnoremap grb         :Git rebase -i HEAD~
 nnoremap gst         :Git stash<CR>
