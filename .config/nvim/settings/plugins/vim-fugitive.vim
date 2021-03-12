@@ -15,6 +15,10 @@ nnoremap gss         :Gstatus<CR>
 nnoremap ga.         :Git add .<CR>
 nnoremap gpm         :Git push origin master<CR>
 nnoremap gpd         :Git push origin dev<CR>
+nnoremap gpo         :Git push origin <right>
+nnoremap gpf         :Git push --force origin <right>
+nnoremap gcma        :Git commit --amend
+nnoremap gcme        :Git commit --amend --no-edit
 nnoremap ga%         :Git add %<CR>
 nnoremap grb         :Git rebase -i HEAD~
 nnoremap gst         :Git stash<CR>
