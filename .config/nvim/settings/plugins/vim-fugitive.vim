@@ -13,8 +13,8 @@ nnoremap gv         :Gvdiffsplit<CR>
 nnoremap gv!         :Gvdiffsplit!<CR>
 nnoremap gss         :Gstatus<CR>
 nnoremap ga.         :Git add .<CR>
-nnoremap gpgm        :Git push github master<CR>
-nnoremap gpgd        :Git push github dev<CR>
+nnoremap gpm        :Git push origin master<CR>
+nnoremap gpd        :Git push origin dev<CR>
 nnoremap ga%         :Git add %<CR>
 nnoremap grb         :Git rebase -i HEAD~
 nnoremap gst         :Git stash<CR>
