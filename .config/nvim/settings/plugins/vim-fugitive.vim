@@ -6,19 +6,19 @@ autocmd User fugitive
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
 
-map gst         :Git st<CR>
-map gcm         :Git commit<CR>
-map gvs         :Gvdiffsplit<CR>
-" vertical split to resolve git merge conflict
-map gvc         :Gvdiffsplit!<CR>
-map gss         :Gstatus<CR>
-map ga.         :Git add .<CR>
-map gpgm        :Git push github master<CR>
-map gpgd        :Git push github dev<CR>
-map ga%         :Git add %<CR>
-map grb         :Git rebase -i HEAD~
-map gst         :Git stash<CR>
-map gsp         :Git stash pop<CR>
-map gsl         :Git stash list<CR>
-map glo         :Glog <CR>
-map gl0         :0Glog <CR>
+nnoremap gst         :Git st<CR>
+nnoremap gcm         :Git commit<CR>
+nnoremap gv         :Gvdiffsplit<CR>
+" vertical split (3 way merge) to resolve git merge conflict
+nnoremap gv!         :Gvdiffsplit!<CR>
+nnoremap gss         :Gstatus<CR>
+nnoremap ga.         :Git add .<CR>
+nnoremap gpgm        :Git push github master<CR>
+nnoremap gpgd        :Git push github dev<CR>
+nnoremap ga%         :Git add %<CR>
+nnoremap grb         :Git rebase -i HEAD~
+nnoremap gst         :Git stash<CR>
+nnoremap gsp         :Git stash pop<CR>
+nnoremap gsl         :Git stash list<CR>
+nnoremap glo         :Glog <CR>
+nnoremap gl0         :0Glog <CR>
