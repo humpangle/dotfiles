@@ -76,6 +76,10 @@ call plug#begin(g:my_pluging_path)
 
   " Manage branches and tags with fzf
   Plug 'stsewd/fzf-checkout.vim'
+
+  " Advanced highlighting features: use in nvim 0.5+
+  " We recommend updating the parsers on update
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " Automatically install missing plugins on startup

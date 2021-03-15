@@ -43,4 +43,5 @@ else
   source $HOME/.config/nvim/settings/plugins/vim-fugitive.vim
   source $HOME/.config/nvim/settings/plugins/tabular.vim
   source $HOME/.config/nvim/settings/plugins/vim-easy-motion.vim
+  source $HOME/.config/nvim/settings/plugins/nvim-treesitter.vim
 endif
