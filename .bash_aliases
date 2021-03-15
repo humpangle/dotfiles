@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+nvim="nvim -u $HOME/.config/nvim/init.vim"
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -9,9 +11,11 @@ alias ys='yarn start '
 alias ylsp='yarn list --pattern '
 alias ywhy='yarn why '
 alias ff='fzf'
-alias vim='nvim'
+alias nvim="$nvim"
+alias vim="$nvim"
+alias v="$nvim"
 alias vi='/usr/bin/vim'
-alias vimdiff='nvim -d'
+alias vimdiff="$nvim -d"
 alias c="clear && printf '\e[3J'"
 alias C=clear
 alias ta='tmux a -t'
