@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-nvim="nvim -u $HOME/.config/nvim/init.vim"
+
+stable_vimrc_path="$HOME/.config/nvim/init.vim"
+nvim="nvim -u $stable_vimrc_path"
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -43,6 +45,14 @@ alias rmvimswap='rm ~/.local/share/nvim/swap/*'
 alias hb='sudo systemctl hibernate'
 alias rsynca='rsync -avzP --delete '
 alias rsyncd='rsync -avzP --delete --dry-run '
+
+# VIM/NEOVIM
+unstable_vimrc_path="$HOME/.config/nvim-unstable/init.vim"
+unstable_vim_local_path="$HOME/.local/nvim-unstable"
+
+alias nvl="XDG_DATA_HOME=$unstable_vim_local_path MYVIMRC=$unstable_vimrc_path NVIM_RPLUGIN_MANIFEST=$unstable_vim_local_path/rplugin.vim $HOME/nvim.appimage -u $unstable_vimrc_path "
+
+alias nv="$HOME/nvim.appimage -u $stable_vimrc_path "
 
 if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json '

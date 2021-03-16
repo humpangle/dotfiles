@@ -26,8 +26,6 @@ alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ug='sudo apt update && sudo apt upgrade -y'
 alias gc='google-chrome -incognito &'
-alias nv="$HOME/nvim.appimage -u $HOME/.config/nvim/init.vim"
-alias nvl="$HOME/nvim.appimage -u $HOME/.config/nvim/init.lua"
 
 [ -f $HOME/dotfiles/.pyenv.sh ] && source $HOME/dotfiles/.pyenv.sh
 [ -f $HOME/dotfiles/.wsl.sh ] && source $HOME/dotfiles/.wsl.sh
