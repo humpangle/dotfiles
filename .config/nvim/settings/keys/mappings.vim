@@ -3,25 +3,12 @@ nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
-" Save file
-nnoremap <Leader>ww :w<CR>
-nnoremap <Leader>wa :wa<CR>
-nnoremap <Leader>wq :wq<cr>
 " Save non user file i.e. file that requires root permission by typing :w!!
 " NOTE: you may need to install a utility such as `askpass` in order to input
 " password. On ubuntu, run:
 " sudo apt install ssh-askpass-gnome ssh-askpass -y && \
 "  echo "export SUDO_ASKPASS=$(which ssh-askpass)" >> ~/.bashrc
 cmap w!! w !sudo tee > /dev/null %
-
-" Quit vim
-inoremap <C-Q>     <esc>:q<cr>
-nnoremap <C-Q>     :q<cr>
-vnoremap <C-Q>     <esc>
-nnoremap <Leader>qq :q<cr>
-nnoremap <Leader>qf :q!<cr>
-nnoremap <Leader>qa :qa<cr>
-nnoremap <Leader>qF :qa!<cr>
 
 " better code indentations in visual mode.
 vnoremap < <gv
