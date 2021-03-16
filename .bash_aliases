@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-stable_vimrc_path="$HOME/.config/nvim/init.vim"
-nvim="nvim -u $stable_vimrc_path"
-
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -13,11 +10,10 @@ alias ys='yarn start '
 alias ylsp='yarn list --pattern '
 alias ywhy='yarn why '
 alias ff='fzf'
-alias nvim="$nvim"
-alias vim="$nvim"
-alias v="$nvim"
+alias vim="nvim"
+alias v="nvim"
 alias vi='/usr/bin/vim'
-alias vimdiff="$nvim -d"
+alias vimdiff="nvim -d"
 alias c="clear && printf '\e[3J'"
 alias C=clear
 alias ta='tmux a -t'
@@ -52,7 +48,7 @@ unstable_vim_local_path="$HOME/.local/nvim-unstable"
 
 alias nvl="XDG_DATA_HOME=$unstable_vim_local_path MYVIMRC=$unstable_vimrc_path NVIM_RPLUGIN_MANIFEST=$unstable_vim_local_path/rplugin.vim $HOME/nvim.appimage -u $unstable_vimrc_path "
 
-alias nv="$HOME/nvim.appimage -u $stable_vimrc_path "
+alias nv="$HOME/nvim.appimage"
 
 if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json '
