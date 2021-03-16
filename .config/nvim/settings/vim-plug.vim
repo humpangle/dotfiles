@@ -80,7 +80,7 @@ call plug#begin(g:my_pluging_path)
   if has('nvim-0.5')
     " Advanced highlighting features: use in nvim 0.5+
     " We recommend updating the parsers on update
-    " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   endif
 call plug#end()
 
