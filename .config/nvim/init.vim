@@ -44,7 +44,7 @@ else
   source ~/.config/nvim/settings/plugins/tabular.vim
   source ~/.config/nvim/settings/plugins/vim-easy-motion.vim
   if has('nvim-0.5')
-    source ~/.config/nvim/settings/plugins/nvim-treesitter.vim
+    " source ~/.config/nvim/settings/plugins/nvim-treesitter.vim
   endif
   source ~/.config/nvim/settings/plugins/vim-prosession.vim
 endif
