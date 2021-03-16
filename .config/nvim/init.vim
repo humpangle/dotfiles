@@ -46,4 +46,5 @@ else
   if has('nvim-0.5')
     " source ~/.config/nvim/settings/plugins/nvim-treesitter.vim
   endif
+  source ~/.config/nvim/settings/plugins/vim-prosession.vim
 endif
