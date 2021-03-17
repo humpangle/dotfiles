@@ -3,6 +3,9 @@ nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
+" Save file
+nnoremap <Leader>ww :w<CR>
+nnoremap <Leader>wa :wa<CR>
 " Save non user file i.e. file that requires root permission by typing :w!!
 " NOTE: you may need to install a utility such as `askpass` in order to input
 " password. On ubuntu, run:
