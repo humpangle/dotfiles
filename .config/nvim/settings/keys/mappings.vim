@@ -145,7 +145,7 @@ xnoremap <leader>rc :%s///gc<left><left><left>
 """""""""""""""""""""""""""""""""""""
 
 " toggle cursorcolumn
-:nnoremap ,tc :set cursorline! cursorcolumn!<CR>
+nnoremap ,tc :set cursorline! cursorcolumn!<CR>
 
 """""""""""""""""""""""""""""""""""""
 " LINE NUMBERING
