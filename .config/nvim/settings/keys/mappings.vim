@@ -37,26 +37,26 @@ vmap <Leader>P "+P
 nnoremap gb :ls<CR>:b
 " Move between windows in a tab
 nmap <tab> <C-w>w
-:nnoremap ,h <C-w>h
-:nnoremap ,j <C-w>j
-:nnoremap ,k <C-w>k
-:nnoremap ,l <C-w>l
+" nnoremap ,h <C-w>h
+" nnoremap ,j <C-w>j
+" nnoremap ,k <C-w>k
+" nnoremap ,l <C-w>l
 
 " Go to tab by number
-noremap <leader>1 1gt
-noremap <leader>2 2gt
-noremap <leader>3 3gt
-noremap <leader>4 4gt
-noremap <leader>5 5gt
-noremap <leader>6 6gt
-noremap <leader>7 7gt
-noremap <leader>8 8gt
-noremap <leader>9 9gt
-nnoremap <silent> <leader>_ :split<CR> " split window bottom
-nnoremap <silent> <leader>\| :vsp<CR> " split window right
-nnoremap <silent> <leader>0 :only<CR> " remove all but current window
-nnoremap <leader>tn :tabnew<cr> " new tab
-nnoremap <leader>ts :tab split<cr>
+" noremap <leader>1 1gt
+" noremap <leader>2 2gt
+" noremap <leader>3 3gt
+" noremap <leader>4 4gt
+" noremap <leader>5 5gt
+" noremap <leader>6 6gt
+" noremap <leader>7 7gt
+" noremap <leader>8 8gt
+" noremap <leader>9 9gt
+" nnoremap <silent> <leader>_ :split<CR> " split window bottom
+" nnoremap <silent> <leader>\| :vsp<CR> " split window right
+" nnoremap <silent> <leader>0 :only<CR> " remove all but current window
+" nnoremap <leader>tn :tabnew<cr> " new tab
+" nnoremap <leader>ts :tab split<cr>
 
 " mappings in unimpaired.vim
 " nnoremap [od :diffthis<cr> " diff this add file to diffs
@@ -94,18 +94,18 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " EMBEDDED TERMINAL
 """""""""""""""""""""""""""""""""""""
 " launch terminal
-nnoremap ,tn :term<cr>
-:tnoremap <C-h> <C-\><C-N><C-w>h
-:tnoremap <C-j> <C-\><C-N><C-w>j
-:tnoremap <C-k> <C-\><C-N><C-w>k
-:tnoremap <C-l> <C-\><C-N><C-w>l
-:inoremap <A-r> <C-\><C-N><C-w>h
-:inoremap <A-j> <C-\><C-N><C-w>j
-:inoremap <A-k> <C-\><C-N><C-w>k
-:inoremap <A-l> <C-\><C-N><C-w>l
+" nnoremap ,tn :term<cr>
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+inoremap <A-r> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
 
 " exit insert mode
-tnoremap <A-e> <C-\><C-n>
+" tnoremap <A-e> <C-\><C-n>
 """""""""""""""""""""""""""""""""""""
 " END EMBEDDED TERMINAL
 """""""""""""""""""""""""""""""""""""
