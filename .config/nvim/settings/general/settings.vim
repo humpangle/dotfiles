@@ -53,7 +53,7 @@ set mouse=a
 set cursorline " highlight cursor positions
 
 " Spell check
-:setlocal spell spelllang=en
+setlocal spell spelllang=en
 
 set foldmethod=indent
 set foldnestmax=10
