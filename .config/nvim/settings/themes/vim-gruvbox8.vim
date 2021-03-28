@@ -1,6 +1,6 @@
 syntax on
 
-set background=light
+set background=dark
 
 if !empty($BGL)
   set background=light
