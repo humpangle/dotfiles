@@ -9,10 +9,10 @@ function touchm() {
 
   dir_path=${data%$sep*}
 
-  if [ $dir_path == $data ]; then
-    touch $dir_path;
+  if [ "$dir_path" == "$data" ]; then
+    touch "$dir_path";
   else
-    mkdir -p $dir_path;
-    touch $data;
+    mkdir -p "$dir_path";
+    touch "$data";
   fi
 }
