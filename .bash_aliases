@@ -38,9 +38,6 @@ alias gst='git stash '
 alias gsl='git stash list'
 # there is a debian package gsc = gambc
 alias gsc='git stash clear'
-# there is a debian package gsa = gwenhywfar-tools
-alias gsa='git stash apply stash@{}'
-alias gsd='git stash drop stash@{}'
 alias gcma='git commit --amend '
 alias gcm-a='git commit -a '
 alias gcmane='git commit --amend --no-edit '
@@ -48,6 +45,15 @@ alias gcamupm='git commit -am "updated" && git push github master'
 alias ga.='git add . '
 alias gp='git push '
 alias gpgm='git push github master'
+
+# there is a debian package gsa = gwenhywfar-tools
+function gsa() {
+ git stash apply "stash@{$1}"
+}
+
+function gsd() {
+ git stash drop "stash@{$1}"
+}
 
 # VIM/NEOVIM
 unstable_vimrc_path="$HOME/.config/nvim-unstable/init.vim"
