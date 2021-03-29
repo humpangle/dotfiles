@@ -21,7 +21,7 @@ nnoremap gcma        :Git commit --amend
 nnoremap gcme        :Git commit --amend --no-edit
 nnoremap ga%         :Git add %<CR>
 nnoremap grb         :Git rebase -i HEAD~
-nnoremap gst         :Git stash<CR>
+" nnoremap gst         :Git stash<CR>
 " nnoremap gsp         :Git stash pop<CR>
 nnoremap gsa         :Git stash apply stash@{}<left>
 nnoremap gsd         :Git stash drop stash@{}<left>
