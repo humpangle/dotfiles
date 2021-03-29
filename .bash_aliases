@@ -26,6 +26,12 @@ alias pw='prettier --write '
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 alias eshell='exec $SHELL'
+alias rmvimswap='rm ~/.local/share/nvim/swap/*'
+alias hb='sudo systemctl hibernate'
+alias rsynca='rsync -avzP --delete '
+alias rsyncd='rsync -avzP --delete --dry-run '
+
+# GIT
 alias gss='git status '
 alias gst='git stash '
 alias gsp='git stash pop'
@@ -39,10 +45,6 @@ alias gcamupm='git commit -am "updated" && git push github master'
 alias ga.='git add . '
 alias gp='git push '
 alias gpgm='git push github master'
-alias rmvimswap='rm ~/.local/share/nvim/swap/*'
-alias hb='sudo systemctl hibernate'
-alias rsynca='rsync -avzP --delete '
-alias rsyncd='rsync -avzP --delete --dry-run '
 
 # VIM/NEOVIM
 unstable_vimrc_path="$HOME/.config/nvim-unstable/init.vim"
