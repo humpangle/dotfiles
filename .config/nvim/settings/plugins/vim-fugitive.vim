@@ -23,6 +23,8 @@ nnoremap ga%         :Git add %<CR>
 nnoremap grb         :Git rebase -i HEAD~
 nnoremap gst         :Git stash<CR>
 nnoremap gsp         :Git stash pop<CR>
+nnoremap gsa         :Git stash apply stash@{}<left>
+nnoremap gsd         :Git stash drop stash@{}<left>
 nnoremap gsl         :Git stash list<CR>
 nnoremap gsc         :Git stash clear<CR>
 nnoremap glo         :Glog <CR>
