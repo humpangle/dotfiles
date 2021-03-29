@@ -24,5 +24,6 @@ nnoremap grb         :Git rebase -i HEAD~
 nnoremap gst         :Git stash<CR>
 nnoremap gsp         :Git stash pop<CR>
 nnoremap gsl         :Git stash list<CR>
+nnoremap gsc         :Git stash clear<CR>
 nnoremap glo         :Glog <CR>
 nnoremap gl0         :0Glog <CR>
