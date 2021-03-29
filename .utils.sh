@@ -19,6 +19,7 @@ function touchm() {
 
 function install_nvim_unstable() {
   local location="$HOME/.local/bin/nv"
+  mkdir -p "$HOME/.local/bin"
   wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -O "$location"
   chmod u+x "$location"
 }
