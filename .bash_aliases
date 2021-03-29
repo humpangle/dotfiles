@@ -45,6 +45,10 @@ alias gcamupm='git commit -am "updated" && git push github master'
 alias ga.='git add . '
 alias gp='git push '
 alias gpgm='git push github master'
+# The following command has serious caveats: see wiki/git.md
+# deliberately put an error: stash1 instead of stash so that user is forced
+# to edit command and put stash message
+alias gsstaged='git stash1 push -m "" -- $(git diff --staged --name-only)'
 
 # there is a debian package gsa = gwenhywfar-tools
 function gsa() {
