@@ -53,3 +53,9 @@ alias nvl="XDG_DATA_HOME=$unstable_vim_local_path MYVIMRC=$unstable_vimrc_path N
 if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json '
 fi
+
+# set vim theme and background per shell session
+alias t1d='export EBNIS_VIM_THEME="t1d"'
+alias t1l='export EBNIS_VIM_THEME="t1l"'
+alias t8d='export EBNIS_VIM_THEME="t8d"'
+alias t8l='export EBNIS_VIM_THEME="t8l"'
