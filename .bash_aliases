@@ -33,7 +33,7 @@ alias rsyncd='rsync -avzP --delete --dry-run '
 
 # GIT
 alias gss='git status '
-alias gst='git stash '
+# alias gst='git stash '
 # alias gsp='git stash pop'
 alias gsl='git stash list'
 # there is a debian package gsc = gambc
