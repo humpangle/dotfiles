@@ -10,10 +10,11 @@ let g:floaterm_keymap_new    = '<F4>'
 " Floaterm
 let g:floaterm_gitcommit='floaterm'
 let g:floaterm_autoinsert=1
-let g:floaterm_width=0.8
-let g:floaterm_height=0.8
+let g:floaterm_width=0.5
+let g:floaterm_height=0.9
 let g:floaterm_wintitle=0
 let g:floaterm_autoclose=1
+let g:floaterm_position='topright'
 
 nmap <Leader>Fk :FloatermKill<CR>
 nmap <Leader>FF :FloatermNew <right>
