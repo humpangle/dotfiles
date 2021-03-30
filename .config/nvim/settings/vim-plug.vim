@@ -36,6 +36,7 @@ call plug#begin(g:my_pluging_path)
   " themes
   Plug 'rakr/vim-one'
   Plug 'lifepillar/vim-gruvbox8'
+  Plug 'lifepillar/vim-solarized8'
 
   " typescript and other language server protocols - mimics VSCode.
   Plug 'neoclide/coc.nvim', {'branch': 'release'}

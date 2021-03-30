@@ -41,6 +41,12 @@ else
   elseif $EBNIS_VIM_THEME == 't8l'
     source ~/.config/nvim/settings/themes/vim-gruvbox8.vim
     set background=light
+  elseif $EBNIS_VIM_THEME == 'tsd'
+    source ~/.config/nvim/settings/themes/vim-solarized8.vim
+    set background=dark
+  elseif $EBNIS_VIM_THEME == 'tsl'
+    source ~/.config/nvim/settings/themes/vim-solarized8.vim
+    set background=light
   else
     source ~/.config/nvim/settings/themes/vim-one.vim
     set background=dark
