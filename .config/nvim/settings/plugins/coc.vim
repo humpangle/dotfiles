@@ -145,12 +145,6 @@ nnoremap <silent> <leader>dd  :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <leader>cx  :<C-u>CocList extensions<cr>
 " Show commands
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent> <leader>tg  :<C-u>CocList outline<cr>
-" nnoremap <silent> <leader>cs  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> <leader>T  :<C-u>CocList -I symbols<cr>
-" nnoremap <silent><nowait> <leader>cS  :<C-u>CocList -I symbols<cr>
 
 " nmap <leader>ee :CocCommand explorer<CR>
 " automatically close coc-explorer if it's the last buffer
