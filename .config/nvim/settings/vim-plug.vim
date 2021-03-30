@@ -33,6 +33,10 @@ call plug#begin(g:my_pluging_path)
   Plug 'junegunn/fzf.vim'
   " Manage branches and tags with fzf
   Plug 'stsewd/fzf-checkout.vim'
+
+  " Fuzzy finder 2
+  Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+
   " Terminal wrapper
   Plug 'kassio/neoterm'
 
@@ -76,6 +80,7 @@ call plug#begin(g:my_pluging_path)
   Plug 'dense-analysis/ale'
 
   " Floaterm is a floating terminal for Neovim
+  Plug 'voldikss/clap-floaterm' " use clap to search floaterm
   Plug 'voldikss/vim-floaterm'
 
   if has('nvim-0.5')
