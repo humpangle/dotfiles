@@ -41,11 +41,17 @@ else
     set background=dark
   endif
 
+  " FUZZY FINDERS
+  if !empty($EBNIS_VIM_FUZZY_FINDER)
+    source ~/.config/nvim/settings/plugins/$EBNIS_VIM_FUZZY_FINDER.vim
+  else
+    source ~/.config/nvim/settings/plugins/vim-clap.vim
+  endif
+
   source ~/.config/nvim/settings/plugins/fzf-checkout.vim
 
   source ~/.config/nvim/settings/plugins/coc.vim
   source ~/.config/nvim/settings/plugins/vim-floaterm.vim
-  source ~/.config/nvim/settings/plugins/fzf.vim
   source ~/.config/nvim/settings/plugins/better-white-space.vim
   source ~/.config/nvim/settings/plugins/gutentags.vim
   source ~/.config/nvim/settings/plugins/lightline.vim

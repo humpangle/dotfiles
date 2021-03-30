@@ -79,3 +79,8 @@ alias vt8l='export EBNIS_VIM_THEME=vim-gruvbox8 EBNIS_VIM_THEME_BG=l'
 # vim-solarized8
 alias vtsd='export EBNIS_VIM_THEME=vim-solarized8 EBNIS_VIM_THEME_BG=d'
 alias vtsl='export EBNIS_VIM_THEME=vim-solarized8 EBNIS_VIM_THEME_BG=l'
+
+# Set vim fuzzy finder
+alias vff.='export EBNIS_VIM_FUZZY_FINDER='
+alias vfff='export EBNIS_VIM_FUZZY_FINDER=fzf'
+alias vffc='export EBNIS_VIM_FUZZY_FINDER=vim-clap'
