@@ -39,8 +39,8 @@ alias gsl='git stash list'
 # there is a debian package gsc = gambc
 alias gsc='git stash clear'
 alias gcma='git commit --amend '
-alias gcm-a='git commit -a '
-alias gcmane='git commit --amend --no-edit '
+alias gcma='git commit -a '
+alias gcme='git commit --amend --no-edit '
 alias gcamupm='git commit -am "updated" && git push github master'
 alias ga.='git add . '
 alias gp='git push '
@@ -49,6 +49,12 @@ alias gpgm='git push github master'
 # deliberately put an error: stash1 instead of stash so that user is forced
 # to edit command and put stash message
 alias gsstaged='git stash1 push -m "" -- $(git diff --staged --name-only)'
+alias gcm='git commit '
+alias grb='git rebase -i'
+# debian package gpodder=gpo
+alias gpo='git push origin'
+alias gpf='git push --force origin'
+alias glone='git log --oneline'
 
 # there is a debian package gsa = gwenhywfar-tools
 function gsa() {
