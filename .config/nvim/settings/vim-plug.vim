@@ -27,7 +27,8 @@ call plug#begin(g:my_pluging_path)
   Plug 'tpope/vim-dadbod'
   " A git wrapper so awesome it should be illegal.
   Plug 'tpope/vim-fugitive'
-  " search
+
+  " Fuzzy finder 1
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   " Manage branches and tags with fzf
