@@ -30,9 +30,9 @@
   prompt = false
 [push]
 	followTags = true
-; [user]
-; 	email = you@example.com
-; 	name = Your Name
+# [user]
+#	  email = you@example.com
+#	  name = Your Name
 [init]
 	defaultBranch = main
 # specify how pulling is reconciled
