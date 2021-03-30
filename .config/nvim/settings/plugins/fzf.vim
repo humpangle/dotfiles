@@ -1,37 +1,37 @@
-" https://medium.com/@jesseleite/its-dangerous-to-vim-alone-take-fzf-283bcff74d21
-
 " Search file from root directory
-nmap <Leader>ff :Files<CR>
-
+nnoremap <Leader>ff :Files<CR>
 " Search file from current directory
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
-
-" nmap <Leader>f :GFiles<CR>
-nmap <Leader>bb :Buffers<CR>
+" find open buffers
+nnoremap <Leader>fb :Buffers<CR>
+" Files managed by git
+nnoremap <Leader>fg :GFiles<CR>
 " search buffers history
-nmap <Leader>h :History<CR>
-" search for tags without ctags (method names etc) or special package
-" nmap <Leader>tg :BTags<CR>
-" use with gutentags package
-" nmap <Leader>T :Tags<CR>
+nnoremap <Leader>hh :History<CR>
 " search for text in current buffer
-nmap <Leader>l :BLines<CR>
-" search for text in all buffers
-nmap <Leader>L :Lines<CR>
-nmap <Leader>m :Marks<CR>
-" Fuzzy search defined commands, whether they be user defined, plugin
-" defined, or native commands:
-nmap <Leader>C :Commands<CR>
-" Fuzzy search vim key mappings - useful to find what has already been mapped
-" before defining new mappings
-nmap <Leader>M :Maps<CR>
-" Fuzzy search filetype syntaxes, and hit Enter on a result to set that syntax on the current buffer:
-nmap <leader>ft :Filetypes<CR>
+nnoremap <Leader>bl :BLines<CR>
+" search for text in loaded buffers
+nnoremap <Leader>L :Lines<CR>
+nnoremap <Leader>mm :Marks<CR>
+" commands: user defined, plugin defined, or native commands
+nnoremap <Leader>C :Commands<CR>
+" key mappings - find already mapped before defining new mappings
+nnoremap <Leader>M :Maps<CR>
+nnoremap <leader>ft :Filetypes<CR>
 " search in project - do not match filenames
-nmap <Leader>/ :Rrg<CR>
+nnoremap <Leader>/ :Rrg<CR>
+" Git commits
+nnoremap <leader>cm :Commits<CR>
+" Git commits for the current buffer
+nnoremap <leader>bc :BCommits<CR>
+nnoremap fww :Windows<CR>
+nnoremap fcs :Colors<CR>
 " search in project - match file names first
-nmap ,/ :Rg<CR>
-nmap <leader>cm :Commits<CR>
+nnoremap ,/ :Rg<CR>
+" search for tags without ctags (method names etc) or special package
+" nnoremap <Leader>tg :BTags<CR>
+" use with gutentags package
+" nnoremap <Leader>T :Tags<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
