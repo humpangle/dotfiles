@@ -24,16 +24,16 @@ nnoremap <Leader>/ :Rrg<CR>
 nnoremap <leader>cm :Commits<CR>
 " Git commits for the current buffer
 nnoremap <leader>bc :BCommits<CR>
-nnoremap fww :Windows<CR>
-nnoremap fcs :Colors<CR>
+nnoremap <leader>fw :Windows<CR>
+nnoremap <leader>fs :Colors<CR>
 " find tags in current buffer
-nnoremap fbt :BTags<CR>
+nnoremap <leader>bt :BTags<CR>
 " find tags in entire project directory: ctags -R
-nnoremap fpt :Tags<CR>
+nnoremap <leader>pt :Tags<CR>
 " search in project - match file names first
 nnoremap ,/ :Rg<CR>
 " Git files (git status)
-nnoremap fgs :GFiles?<CR>
+nnoremap <leader>gs :GFiles?<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)

@@ -24,16 +24,16 @@ nnoremap <Leader>/ :Clap grep2<CR>
 nnoremap <leader>cm :Clap commits<CR>
 " Git commits for the current buffer
 nnoremap <leader>bc :Clap bcommits<CR>
-nnoremap fww :Clap windows<CR>
-nnoremap fcs :Clap colors<CR>
+nnoremap <leader>fw :Clap windows<CR>
+nnoremap <leader>fs :Clap colors<CR>
 " find tags in current buffer: requires liuchengxu/vista.vim
-nnoremap fbt :Clap tags<CR>
+nnoremap <leader>bt :Clap tags<CR>
 " find tags in entire project directory
-nnoremap fpt :Clap proj_tags<CR>
+nnoremap <leader>pt :Clap proj_tags<CR>
 " Ivy-like file explorer - use tab to enter directory
 nnoremap <Leader>fe :Clap filer<CR>
-nnoremap fyy :Clap yanks<CR>
-nnoremap fqf :Clap quickfix<CR>
+nnoremap <leader>y :Clap yanks<CR>
+nnoremap <leader>fq :Clap quickfix<CR>
 
 let g:clap_theme = 'material_design_dark'
 
