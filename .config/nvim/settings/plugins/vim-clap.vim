@@ -26,10 +26,12 @@ nnoremap <leader>cm :Clap commits<CR>
 nnoremap <leader>bc :Clap bcommits<CR>
 nnoremap fww :Clap windows<CR>
 nnoremap fcs :Clap colors<CR>
+" find tags in current buffer: requires liuchengxu/vista.vim
+nnoremap fbt :Clap tags<CR>
+" find tags in entire project directory
+nnoremap fpt :Clap proj_tags<CR>
 " Ivy-like file explorer - use tab to enter directory
 nnoremap <Leader>fe :Clap filer<CR>
-nnoremap ftg :Clap tags<CR>
-nnoremap ftg :Clap proj_tags<CR>
 nnoremap fyy :Clap yanks<CR>
 nnoremap fqf :Clap quickfix<CR>
 

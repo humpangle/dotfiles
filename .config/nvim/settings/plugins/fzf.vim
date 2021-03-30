@@ -26,12 +26,13 @@ nnoremap <leader>cm :Commits<CR>
 nnoremap <leader>bc :BCommits<CR>
 nnoremap fww :Windows<CR>
 nnoremap fcs :Colors<CR>
+" find tags in current buffer
+nnoremap fbt :BTags<CR>
+" find tags in entire project directory: ctags -R
+nnoremap fpt :Tags<CR>
 " search in project - match file names first
 nnoremap ,/ :Rg<CR>
 " search for tags without ctags (method names etc) or special package
-" nnoremap <Leader>tg :BTags<CR>
-" use with gutentags package
-" nnoremap <Leader>T :Tags<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
