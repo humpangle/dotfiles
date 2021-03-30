@@ -29,28 +29,14 @@ else
   source ~/.config/nvim/settings/keys/mappings.vim
 
   " THEME SELECTION
-  if $EBNIS_VIM_THEME == 't1d'
-    source ~/.config/nvim/settings/themes/vim-one.vim
+  source ~/.config/nvim/settings/themes/$EBNIS_VIM_THEME.vim
+
+  if $EBNIS_VIM_THEME_BG == 'd'
     set background=dark
-  elseif $EBNIS_VIM_THEME == 't1l'
-    source ~/.config/nvim/settings/themes/vim-one.vim
-    set background=light
-  elseif $EBNIS_VIM_THEME == 't8d'
-    source ~/.config/nvim/settings/themes/vim-gruvbox8.vim
-    set background=dark
-  elseif $EBNIS_VIM_THEME == 't8l'
-    source ~/.config/nvim/settings/themes/vim-gruvbox8.vim
-    set background=light
-  elseif $EBNIS_VIM_THEME == 'tsd'
-    source ~/.config/nvim/settings/themes/vim-solarized8.vim
-    set background=dark
-  elseif $EBNIS_VIM_THEME == 'tsl'
-    source ~/.config/nvim/settings/themes/vim-solarized8.vim
-    set background=light
   else
-    source ~/.config/nvim/settings/themes/vim-one.vim
-    set background=dark
+    set background=light
   endif
+
 
   source ~/.config/nvim/settings/plugins/coc.vim
   source ~/.config/nvim/settings/plugins/vim-floaterm.vim
