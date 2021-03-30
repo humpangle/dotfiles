@@ -36,6 +36,8 @@ call plug#begin(g:my_pluging_path)
 
   " Fuzzy finder 2
   Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+  " View and search LSP symbols, tags in Vim/NeoVim.
+  Plug 'liuchengxu/vista.vim'
 
   " Terminal wrapper
   Plug 'kassio/neoterm'
