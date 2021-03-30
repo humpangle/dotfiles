@@ -75,9 +75,6 @@ call plug#begin(g:my_pluging_path)
   " Floaterm is a floating terminal for Neovim
   Plug 'voldikss/vim-floaterm'
 
-  " Manage branches and tags with fzf
-  Plug 'stsewd/fzf-checkout.vim'
-
   if has('nvim-0.5')
     " Advanced highlighting features: use in nvim 0.5+
     " We recommend updating the parsers on update

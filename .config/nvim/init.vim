@@ -41,6 +41,8 @@ else
     set background=dark
   endif
 
+  source ~/.config/nvim/settings/plugins/fzf-checkout.vim
+
   source ~/.config/nvim/settings/plugins/coc.vim
   source ~/.config/nvim/settings/plugins/vim-floaterm.vim
   source ~/.config/nvim/settings/plugins/fzf.vim
