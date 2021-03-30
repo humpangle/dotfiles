@@ -30,7 +30,9 @@ nnoremap <leader>fs :Clap colors<CR>
 nnoremap <leader>bt :Clap tags<CR>
 " find tags in entire project directory
 nnoremap <leader>pt :Clap proj_tags<CR>
-" Ivy-like file explorer - use tab to enter directory
+" Ivy-like file explorer:
+" use tab to enter directory
+" bksp go up directory
 nnoremap <Leader>fe :Clap filer<CR>
 nnoremap <leader>y :Clap yanks<CR>
 nnoremap <leader>fq :Clap quickfix<CR>
