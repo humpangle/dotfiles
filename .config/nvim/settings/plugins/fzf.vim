@@ -32,7 +32,6 @@ nnoremap fbt :BTags<CR>
 nnoremap fpt :Tags<CR>
 " search in project - match file names first
 nnoremap ,/ :Rg<CR>
-" search for tags without ctags (method names etc) or special package
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
