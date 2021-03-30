@@ -30,6 +30,8 @@ call plug#begin(g:my_pluging_path)
   " search
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
+  " Manage branches and tags with fzf
+  Plug 'stsewd/fzf-checkout.vim'
   " Terminal wrapper
   Plug 'kassio/neoterm'
 
