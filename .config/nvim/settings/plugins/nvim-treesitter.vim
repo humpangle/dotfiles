@@ -39,7 +39,11 @@ require'nvim-treesitter.configs'.setup {
       "verilog",
     },
   },
+  indent = {
+    enable = true
+  }
 }
 EOF
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+" fold method already in settings.vim
+" set foldmethod=exp
+" set foldexpr=nvim_treesitter#foldexpr()
