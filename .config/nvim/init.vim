@@ -37,7 +37,7 @@ else
       set background=light
     endif
   else
-    source ~/.config/nvim/settings/themes/vim-gruvbox8.vim
+    source ~/.config/nvim/settings/themes/vim-solarized8.vim
     set background=dark
   endif
 
