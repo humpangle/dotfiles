@@ -32,8 +32,6 @@ nnoremap <leader>bt :BTags<CR>
 nnoremap <leader>pt :Tags<CR>
 " search in project - match file names first
 nnoremap ,/ :Rg<CR>
-" Git files (git status)
-nnoremap <leader>gs :GFiles?<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
