@@ -183,32 +183,31 @@ map <leader>nf :call RenameFile()<cr>
 """""""""""""""""""""""""""""""""""""
 "https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
 function! DeleteAllBuffers() abort
-  let buffers = range(1, bufnr('$'))
-  let joined_buffers = join(buffers, ' ')
-  let delete_cmd = 'bd ' . joined_buffers
-  exe delete_cmd
-endfunction
-
-function! DeleteEmptyBuffers()
-  let [i, n; empty] = [1, bufnr('$')]
-  while i <= n
+  let [i, last_b_num, regular, terminals] = [1, bufnr("$"), [], []]
+  while i <= last_b_num
     let b_name = bufname(i)
-    if bufexists(i) && (b_name == '' || b_name =~ 'fugitive:/')
-      call add(empty, i)
+    if bufexists(i)
+      if  (b_name == '' || b_name =~ 'term://')
+        call add(terminals, i)
+      else
+        call add(regular, i)
+      endif
     endif
     let i += 1
   endwhile
-  if len(empty) > 0
-    let cmd = 'bwipeout '.join(empty)
-    echo(cmd)
+  if len(terminals) > 0
+    let cmd = 'bwipeout! '.join(terminals)
     exe cmd
+  endif
+  if len(regular) > 0
+    let delete_cmd = 'bd ' .join(regular)
+    exe delete_cmd
   endif
 endfunction
 
 map <leader>ba :call DeleteAllBuffers()<cr>   " Delete all buffers
-map <leader>be :call DeleteEmptyBuffers()<cr> " Delete empty buffers
 map <leader>bd :bd%<cr>                       " Delete current buffer
-map <leader>bf :bd!%<cr>                      " Delete current buffer force
+map <leader>be :bd!%<cr>                      " Delete current buffer force
 map <leader>bw :bw%<cr>                       " Wipe current buffer
 """""""""""""""""""""""""""""""""""""
 " END MANAGE BUFFERS
