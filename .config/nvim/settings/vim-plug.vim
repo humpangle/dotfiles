@@ -40,7 +40,7 @@ call plug#begin(g:my_pluging_path)
   Plug 'liuchengxu/vista.vim'
 
   " Terminal wrapper
-  Plug 'kassio/neoterm'
+  " Plug 'kassio/neoterm'
 
   " themes
   Plug 'rakr/vim-one'
