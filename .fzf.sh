@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # ripgrep
-RG_OPTIONS="--hidden --follow --glob '!{.git,cover,coverage,.elixir_ls,deps,_build,.build,build}'"
+export RG_IGNORES="!{.git,cover,coverage,.elixir_ls,deps,_build,.build,build}"
+RG_OPTIONS="--hidden --follow --glob '$RG_IGNORES'"
 
 # fzf fuzzy finder
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -1,5 +1,5 @@
 " Search file from root directory
-nnoremap <Leader>ff :Clap files<CR>
+nnoremap <Leader>ff :Clap files ++finder=rg --files --follow --hidden --glob $RG_IGNORES<CR>
 " Search file from current directory
 nnoremap <silent> <Leader>. :Clap files <C-r>=expand("%:h")<CR>/<CR>
 " find open buffers
