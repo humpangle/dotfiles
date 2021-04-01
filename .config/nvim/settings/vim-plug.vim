@@ -56,6 +56,7 @@ call plug#begin(g:my_pluging_path)
   Plug 'cespare/vim-toml'
   Plug 'evanleck/vim-svelte'
   Plug 'elixir-editors/vim-elixir'
+  Plug 'jparise/vim-graphql'
 
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'airblade/vim-gitgutter'

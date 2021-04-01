@@ -9,6 +9,14 @@
   "cSpellExt.enableDictionaries": ["german", "french"],
   "cSpell.language": "en,de,fr",
   "elixirLS.dialyzerEnabled": false,
+  "languageserver": {
+    "graphql": {
+      "command": "graphql-lsp",
+      "args": ["server", "-m", "stream"],
+      // customize filetypes to your needs
+      "filetypes": ["typescript", "typescriptreact", "graphql"]
+    }
+  },
   /* "explorer.width": 50, */
   "snippets.userSnippetsDirectory": "~/.config/nvim/settings/ultisnips"
   /* "explorer.keyMappings.global": { */
