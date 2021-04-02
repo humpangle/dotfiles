@@ -1,0 +1,163 @@
+extends jscommons
+# JSDOC
+snippet import "import { } from 'xyz'"
+import { ${2:member} } from '${1:path}';
+endsnippet
+snippet importfrom "import xyz from 'xyz'"
+import ${2:name} from '${1:path}';
+endsnippet
+snippet importas "import * as name from 'xyz'"
+import * as ${2:name} from '${1:path}';
+endsnippet
+snippet typeassert "type assertion JSDOC"
+/** @type {${1:type}} */ (${2:value})
+${3}
+endsnippet
+snippet typevar "type variable declaration JSDOC"
+/**
+* ${1:description}
+* @type {${2:type}}
+*/
+${3}
+endsnippet
+snippet typedefimport "typdef import first time JSDOC"
+/**
+* @typedef { import('${1}').${2} } ${2} ${3}
+*/
+endsnippet
+snippet typedefimportn "typdef import next time JSDOC"
+@typedef { import('${1}').${2} } ${2} ${3}
+endsnippet
+snippet typedefobject "typdef object first time JSDOC"
+/**
+* @typedef {Object} ${1:NameYourType}
+* @property {${2:type}} ${3:propertyName} ${4:description}
+*/
+endsnippet
+snippet typedefobjectn "typdef object next.additional property JSDOC"
+@property {${1:type}} ${2:propertyName} ${3:description}
+endsnippet
+snippet typedefobjectopt "typdef object optional property JSDOC"
+@property {${1:type}=} ${2:propertyName} ${3:description}
+endsnippet
+snippet callbackparam "callback param JSDOC"
+/**
+* @callback ${1:NameYourType}
+* @param {${2:type}} ${3:paramName} ${4:description} ${6}
+* @returns {${5:return}}
+*/
+endsnippet
+snippet param "function param first time JSDOC"
+/**
+* @param {${1:type}} ${2:paramName} ${3:description}${5}
+* @returns {${4:return}}
+*/
+endsnippet
+snippet paramn "function param next time JSDOC"
+@param {${1:type}} ${2:paramName} ${3:description}
+endsnippet
+snippet paramobjectn "function param object next time JSDOC"
+@param {Object} ${1:paramName}
+* @param {${2:type}} ${1:paramName}.${3:propertyName} ${4:description}
+endsnippet
+snippet paramopt "optional function param JSDOC"
+@param {${1:type}=} ${2:paramName}
+endsnippet
+snippet paramobjectf "first object param of function first time JSDOC"
+/**
+* @param {Object} ${1:paramName}
+* @param {${2:type}} ${1:paramName}.${3:propertyName} ${4:description}
+*/
+endsnippet
+snippet paramobjectn "next/addition object param of function JSDOC"
+@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}
+endsnippet
+snippet paramobjectopt "next/addition object param of function JSDOC"
+@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}
+endsnippet
+# END JSDOC
+snippet newpromise "new promise"
+new Promise((resolve, reject) => {
+	${1}
+})
+endsnippet
+# Flow control
+# if
+snippet if "if statement"
+if (${1:condition}) {
+	${0:${VISUAL}}
+}
+endsnippet
+# if ... else
+snippet ifelse "if esle statement"
+if (${1:condition}) {
+	${3}
+} else {
+	${2}
+}
+endsnippet
+# switch
+snippet switch
+switch (${1:expression}) {
+	case ${2:case}:
+	{
+		${3}
+	}
+	break;
+
+	default:
+		${4}
+}
+endsnippet
+snippet case "case break"
+case ${1:case}:
+	{
+		${0:${VISUAL}}
+	}
+	break;
+endsnippet
+snippet try "try catch"
+try {
+	${0:${VISUAL}}
+} catch (${1:e}) {
+	${2:/* handle error */}
+}
+endsnippet
+snippet tryfinally "try catch finally"
+try {
+	${0:${VISUAL}}
+} catch (${1:e}) {
+	${2:/* handle error */}
+} finally {
+	${3:/* be executed regardless of the try / catch result*/}
+}
+endsnippet
+snippet for "for loop"
+for (let ${1:i} = 0, ${2:len} = ${3:Things.length}; $1 < $2; $1++) {
+	const ${4:elm} = $3[$1];
+	${0:${VISUAL}}
+}
+endsnippet
+snippet forreversed "reversed for loop"
+for (let ${1:len} = ${2:Things.length}, ${3:i} = $1 - 1; $3 >= 0; $3--) {
+	const ${4:elm} = ${5:Things}[$3];
+	${0:${VISUAL}}
+}
+endsnippet
+snippet forin "for in loop"
+for (var ${1:prop} in ${2:object}) {
+	if($2.hasOwnProperty($1)) {
+		${0:${VISUAL}}
+	}
+}
+endsnippet
+snippet forof "for (const prop of object}) { ... }"
+for (const ${1:prop} of ${2:object}) {
+	${0:${VISUAL}}
+}
+endsnippet
+snippet while "while (condition) { ... }"
+while (${1:/* condition */}) {
+	${0:${VISUAL}}
+}
+endsnippet

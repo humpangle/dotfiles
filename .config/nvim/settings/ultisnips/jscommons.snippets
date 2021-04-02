@@ -1,0 +1,36 @@
+snippet doc "docstring"
+/**
+* ${1:doc}
+*/
+endsnippet
+snippet helperfuncs "vim helperfuncs"
+// ====================================================
+// START ${1}
+// ====================================================
+// ${2}
+// ====================================================
+// END ${1}
+// ====================================================
+endsnippet
+# tertiary conditional
+snippet ter "ternary operation"
+${1:condition} ? ${2:truthy} : ${0:falsy}
+endsnippet
+snippet objectdefineProperty "object define property"
+Object.defineProperty(
+	${1:object},
+	'${2:property}',
+	{
+		get : function $1_$2_getter() {
+			// getter code
+		},
+		set : function $1_$2_setter(value) {
+			// setter code
+		},
+		value        : ${3:value},
+		writable    : ${4:boolean},
+		enumerable   : ${5:boolean},
+		configurable : ${0:boolean}
+	}
+);
+endsnippet
