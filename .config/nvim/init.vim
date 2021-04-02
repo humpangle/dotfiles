@@ -38,7 +38,7 @@ else
     endif
   else
     source ~/.config/nvim/settings/themes/vim-solarized8.vim
-    set background=dark
+    set background=light
   endif
 
   " FUZZY FINDERS
