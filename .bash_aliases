@@ -76,6 +76,8 @@ if [ -x "$(command -v sort-package-json)" ]; then
 fi
 
 # set vim theme and background per shell session
+# unset
+alias vt.='export EBNIS_VIM_THEME='
 # vim-one
 alias vt1d='export EBNIS_VIM_THEME=vim-one EBNIS_VIM_THEME_BG=d'
 alias vt1l='export EBNIS_VIM_THEME="vim-one" EBNIS_VIM_THEME_BG=l'
