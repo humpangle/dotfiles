@@ -91,7 +91,10 @@ call plug#begin(g:my_pluging_path)
   Plug 'SirVer/ultisnips'
 
   " LANGUAGE SERVERS
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  if has('nvim-0.5')
+  else
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  end
 
   if has('nvim-0.5')
     " Advanced highlighting features: use in nvim 0.5+
