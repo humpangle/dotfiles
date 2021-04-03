@@ -164,3 +164,12 @@ while (${1:/* condition */}) {
 	${0:${VISUAL}}
 }
 endsnippet
+# REACT
+snippet setstate "set state react"
+${1:setState}((s) => {
+	return {
+		...s,
+		${2}
+	};
+});
+endsnippet
