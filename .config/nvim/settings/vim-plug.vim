@@ -51,9 +51,6 @@ call plug#begin(g:my_pluging_path)
   Plug 'lifepillar/vim-gruvbox8'
   Plug 'lifepillar/vim-solarized8'
 
-  " typescript and other language server protocols - mimics VSCode.
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
   " syntax highlighting
   Plug 'ianks/vim-tsx'
   Plug 'leafgarland/typescript-vim'
@@ -92,6 +89,9 @@ call plug#begin(g:my_pluging_path)
 
   " Snippet engine
   Plug 'SirVer/ultisnips'
+
+  " LANGUAGE SERVERS
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   if has('nvim-0.5')
     " Advanced highlighting features: use in nvim 0.5+
