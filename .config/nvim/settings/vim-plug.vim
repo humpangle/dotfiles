@@ -29,6 +29,10 @@ call plug#begin(g:my_pluging_path)
   Plug 'tpope/vim-fugitive'
 
   " Fuzzy finder 1
+  " Nice to have: ludovicchabant/vim-gutentags to:
+  "   generate useful tags
+  "   continuosly refresh tags
+  "  Fzf does not automatically update project wide tags
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   " Manage branches and tags with fzf
