@@ -1,26 +1,5 @@
 if has('win32')
-  language en_US
-  source $VIMRUNTIME/mswin.vim
-
-  source ~\AppData\Local\nvim\settings\vim-plug.vim
-
-  source ~\AppData\Local\nvim\settings\general\settings.vim
-
-  source ~\AppData\Local\nvim\settings\keys\mappings.vim
-
-  source ~\AppData\Local\nvim\settings\themes\vim-gruvbox8.vim
-
-  source ~\AppData\Local\nvim\settings\plugins\coc.vim
-  " source ~\AppData\Local\nvim\settings\plugins\vim-floaterm.vim
-  source ~\AppData\Local\nvim\settings\plugins\fzf.vim
-  source ~\AppData\Local\nvim\settings\plugins\better-white-space.vim
-  " source ~\AppData\Local\nvim\settings\plugins\gutentags.vim
-  source ~\AppData\Local\nvim\settings\plugins\lightline.vim
-  " source ~\AppData\Local\nvim\settings\plugins\vim-rest-console.vim
-  " source ~\AppData\Local\nvim\settings\plugins\ale.vim
-  " source ~\AppData\Local\nvim\settings\plugins\vim-grepper.vim
-  source ~\AppData\Local\nvim\settings\plugins\tabular.vim
-  source ~\AppData\Local\nvim\settings\plugins\vim-easy-motion.vim
+  so ./init-win.vim
 else
   source ~/.config/nvim/settings/vim-plug.vim
 
