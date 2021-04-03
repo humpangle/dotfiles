@@ -41,28 +41,30 @@ else
     set background=light
   endif
 
-  " FUZZY FINDERS
-  if !empty($EBNIS_VIM_FUZZY_FINDER)
-    source ~/.config/nvim/settings/plugins/$EBNIS_VIM_FUZZY_FINDER.vim
-  else
-    source ~/.config/nvim/settings/plugins/vim-clap.vim
-  endif
-
   source ~/.config/nvim/settings/plugins/fzf-checkout.vim
-
-  source ~/.config/nvim/settings/plugins/coc.vim
   source ~/.config/nvim/settings/plugins/vim-floaterm.vim
   source ~/.config/nvim/settings/plugins/better-white-space.vim
   source ~/.config/nvim/settings/plugins/gutentags.vim
   source ~/.config/nvim/settings/plugins/lightline.vim
   source ~/.config/nvim/settings/plugins/vim-rest-console.vim
   source ~/.config/nvim/settings/plugins/ale.vim
-  source ~/.config/nvim/settings/plugins/vim-grepper.vim
   source ~/.config/nvim/settings/plugins/vim-fugitive.vim
   source ~/.config/nvim/settings/plugins/tabular.vim
   source ~/.config/nvim/settings/plugins/vim-easy-motion.vim
+  source ~/.config/nvim/settings/plugins/vim-prosession.vim
+
+  " FUZZY FINDERS
+  source ~/.config/nvim/settings/plugins/vim-grepper.vim
+  if !empty($EBNIS_VIM_FUZZY_FINDER)
+    source ~/.config/nvim/settings/plugins/$EBNIS_VIM_FUZZY_FINDER.vim
+  else
+    source ~/.config/nvim/settings/plugins/vim-clap.vim
+  endif
+
+  " LANGUAGE SERVERS
+  source ~/.config/nvim/settings/plugins/coc.vim
+  " REQUIRE NVIM 0.5
   if has('nvim-0.5')
     source ~/.config/nvim/settings/plugins/nvim-treesitter.vim
   endif
-  source ~/.config/nvim/settings/plugins/vim-prosession.vim
 endif
