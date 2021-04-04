@@ -45,7 +45,13 @@ endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-command! -bang -nargs=* Rrg call fzf#vim#grep("rg --hidden --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+command! -bang -nargs=* Rrg
+  \ call fzf#vim#grep(
+  \   "rg --hidden --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
+  \   1,
+  \   {'options': '--delimiter : --nth 4..'},
+  \   <bang>0
+  \ )
 
 function! s:copy_fzf_results(lines)
   let joined_lines = join(a:lines, "\n")
