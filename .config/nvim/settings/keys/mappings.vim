@@ -1,6 +1,8 @@
 " Remap esc
 inoremap jk <esc>
 inoremap kj <esc>
+inoremap hj <esc>
+inoremap kl <esc>
 " Format paragraph (selected or not) to 80 character lines.
 nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
