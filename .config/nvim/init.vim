@@ -13,6 +13,7 @@ so ~/.config/nvim/settings/plugins/vim-easy-motion.vim
 so ~/.config/nvim/settings/plugins/vim-prosession.vim
 so ~/.config/nvim/settings/plugins/vim-fugitive.vim
 so ~/.config/nvim/settings/plugins/coc.vim
+so ~/.config/nvim/settings/plugins/vim-lua-format.vim
 
 " FUZZY FINDERS
 so ~/.config/nvim/settings/plugins/vim-grepper.vim

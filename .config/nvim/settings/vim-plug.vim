@@ -90,6 +90,12 @@ call plug#begin(g:my_vim_plug_plugins_path)
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'neoclide/jsonc.vim'
   Plug 'dense-analysis/ale'
+
+  " FORMATTERS
+  " lua
+  " install formatter executable:
+  "   luarocks install --server=https://luarocks.org/dev luaformatter
+  Plug 'andrejlevkovitch/vim-lua-format'
 call plug#end()
 
 " Automatically install missing plugins on startup
