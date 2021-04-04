@@ -32,7 +32,7 @@ nnoremap <leader>bt :BTags<CR>
 nnoremap <leader>pt :Tags<CR>
 " search in project - match file names first
 nnoremap ,/ :Rg<CR>
-nnoremap <leader>sn :Snippets<CR>
+" nnoremap <leader>sn :Snippets<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
