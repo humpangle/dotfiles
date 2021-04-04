@@ -119,14 +119,10 @@ vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
-" nnoremap fc :Format<CR>
-xmap <leader>fc :Format<CR>
-nmap <leader>fc :Format<CR>
-
+xnoremap <leader>fc :Format<CR>
+nnoremap <leader>fc :Format<CR>
 " Formatting selected code ------ not working
-" xmap fc  <plug>(coc-format-selected)
-" nmap fc  <plug>(coc-format-selected)
-
+xmap <leader>fc  <plug>(coc-format-selected)
 " use ``:Prettier` to format current buffer.
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
