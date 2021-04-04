@@ -61,3 +61,7 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit',
   \ 'ctrl-y': function('s:copy_fzf_results'),
   \ }
+
+" scroll the fzf vim listing buffer
+autocmd FileType fzf tnoremap <buffer> <C-j> <Down>
+autocmd FileType fzf tnoremap <buffer> <C-k> <Up>
