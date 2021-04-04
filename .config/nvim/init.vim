@@ -14,6 +14,7 @@ so ~/.config/nvim/settings/plugins/vim-prosession.vim
 so ~/.config/nvim/settings/plugins/vim-fugitive.vim
 so ~/.config/nvim/settings/plugins/coc.vim
 so ~/.config/nvim/settings/plugins/vim-lua-format.vim
+so ~/.config/nvim/settings/plugins/nvim-treesitter.vim
 
 " FUZZY FINDERS
 so ~/.config/nvim/settings/plugins/vim-grepper.vim

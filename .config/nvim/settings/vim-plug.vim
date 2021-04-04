@@ -66,12 +66,9 @@ call plug#begin(g:my_vim_plug_plugins_path)
   Plug 'lifepillar/vim-solarized8'
 
   " SYNTAX HIGHLIGHTING
-  Plug 'ianks/vim-tsx'
-  Plug 'leafgarland/typescript-vim'
-  Plug 'cespare/vim-toml'
-  Plug 'evanleck/vim-svelte'
   Plug 'elixir-editors/vim-elixir'
   Plug 'jparise/vim-graphql'
+  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate'}
 
   " VIM STATUS BAR / TABS / WINDOWS
   " cool status bar
