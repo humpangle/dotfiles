@@ -110,3 +110,5 @@ tags*
 
 # scratch files
 *.___scratch*
+
+*.netrwhist*
