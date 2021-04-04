@@ -1,0 +1,55 @@
+{
+  "django model": {
+    "prefix": "djangomodel",
+    "body": [
+      "from django.db import models",
+      "",
+      "",
+      "class ${1:model_class}(models.Model):",
+      "\t\t\tname = models.CharField(max_length=100)",
+      "",
+      "\t\t\tdef __str__(self):",
+      "\t\t\t\t\t\t\treturn self.name"
+    ],
+    "description": "Django model"
+  },
+  "print python to console": {
+    "prefix": "printtoconsole",
+    "body": [
+      "\nprint(",
+      "\t\"\\n\\nlogging starts--------------------------------------------------\\n\\n\",  # noqa",
+      "\t'${1:topic}\\n',",
+      "\t${2:code},",
+      "\t\"\\n\\nlogging ends-------------------------------------\\n\\n\",  # noqa",
+      ")\n"
+    ],
+    "description": "print python to console"
+  },
+  "helper function": {
+    "prefix": "helperfunction",
+    "body": "############################ ${1:title} ############################## noqa",
+    "description": "helper function"
+  },
+  "coding utf-8": {
+    "prefix": "codingutf8",
+    "body": "# -*- coding: utf-8 -*-\n\n",
+    "description": "coding utf-8"
+  },
+  "noqa E501": {
+    "prefix": "noqae501",
+    "body": "  # noqa E501",
+    "description": "noqa E501"
+  },
+  "type ignore": {
+    "prefix": "typeignore",
+    "body": "  # type: ignore${1} # noqa F821",
+    "description": "type ignore"
+  },
+  "sys.exc_info": {
+    "prefix": "sysex",
+    "body": [
+      "import sys;print('\\n\\n',  *sys.exc_info(), sep='\\n\\n');print('\\n\\n')"
+    ],
+    "description": "sys.exc_info"
+  }
+}

@@ -1,0 +1,444 @@
+{
+  "fn": {
+    "prefix": "fn",
+    "body": ["fn(${1:param}) -> ${2:expr} end"],
+    "description": "Anonymous function"
+  },
+
+  "with <- do": {
+    "prefix": "withok",
+    "body": [
+      "with { ${1:label}, ${2:label} } <- ${3:expr} do",
+      "\t${4:expr}",
+      "end"
+    ],
+    "description": "with ok do"
+  },
+
+  "if clause": {
+    "prefix": "if",
+    "body": ["if ${1:expr} do", "\t${2:expr}", "end"],
+    "description": "if clause"
+  },
+
+  "if else clause": {
+    "prefix": "ifelse",
+    "body": ["if ${1:expr} do", "\t${2:expr}", "else", "\t${3:expr}", "end"],
+    "description": "if else clause"
+  },
+
+  "print to console": {
+    "prefix": "puts",
+    "body": [
+      "IO.puts(\"\"\"\n\n\n",
+      "${1:label}: \n    #{ inspect( ${2:expr} ) }\n\n\n",
+      "\"\"\")"
+    ],
+    "description": "print to console - puts"
+  },
+
+  "inspect console": {
+    "prefix": "putsinspect",
+    "body": [
+      "IO.inspect(${1:data}, label: \"\n-----------${1:label}------------\n\")",
+      "IO.puts(\"-----------end ${1:label}------------\n\")"
+    ],
+    "description": "print to console puts inspect"
+  },
+
+  "inspect with label": {
+    "prefix": "inspectlabel",
+    "body": [
+      "IO.inspect(${1:data}, label: \"\n-----------${2:label}------------\n\")"
+    ],
+    "description": "print to console puts inspect"
+  },
+
+  "inspect with label in pipe": {
+    "prefix": "inspectpipe",
+    "body": "|> IO.inspect(label: \"\n-----------${1:label}------------\n\")",
+    "description": "print to console puts inspect"
+  },
+
+  "@opaque type": {
+    "prefix": "@opaque",
+    "body": "@opaque ${1:t} :: ${2:expr}",
+    "description": "@opaque type"
+  },
+
+  "@type type": {
+    "prefix": "@type",
+    "body": "@type ${1:t} :: ${2:type}",
+    "description": "@type type"
+  },
+
+  "@spec": {
+    "prefix": "@spec",
+    "body": "@spec ${1:fun_name}(${2:param} :: ${3:type}) :: ${4:return}",
+    "description": "function specification"
+  },
+
+  "for expression": {
+    "prefix": "for expr",
+    "body": [
+      "for ${1:member1} <- ${2:list1},",
+      "    ${3:member2 <- member1},",
+      "    ${4:filter},",
+      "    ${5:into: %{}} do",
+      "\t${6:return}",
+      "end"
+    ],
+    "description": "for expression"
+  },
+
+  "for expression no end": {
+    "prefix": "for no end expr",
+    "body": [
+      "for ${1:member1} <- ${2:list1},",
+      "    ${3:member2 <- member1},",
+      "    ${4:filter},",
+      "    ${5:into: %{}} do:",
+      "\t${6:return}"
+    ],
+    "description": "for expression no end"
+  },
+
+  "set up test module": {
+    "prefix": "defmoduletest",
+    "body": [
+      "defmodule ${1:Module.Name}Test do",
+      "\tuse ExUnit.Case, async: ${2:true}",
+      "\talias ${1:Module.Name}",
+      "\n\ttest \"${3:test name}\" do",
+      "\t\t${4}",
+      "\tend",
+      "end"
+    ],
+    "description": "set up test module"
+  },
+
+  "@behaviour": {
+    "prefix": "@behaviour",
+    "body": "@behaviour ",
+    "description": "@behaviour"
+  },
+
+  "Registry": {
+    "prefix": "registry",
+    "body": [
+      "# Add this to supervision: {Registry, keys: :unique, name: ${1:name}}",
+      "def ${2:func_name}(${3:param}) do",
+      "\t{:via, Registry, {${1:name}, ${3:param}}}",
+      "end"
+    ],
+    "description": "Elixir Registry"
+  },
+
+  "@moduledoc": {
+    "prefix": "@moduledoc",
+    "body": ["@moduledoc ~S\"\"\"", "\t$1", "\"\"\""],
+    "description": "@moduledoc"
+  },
+
+  "@moduledoc false": {
+    "prefix": "@moduledoc_false",
+    "body": "@moduledoc false",
+    "description": "@moduledoc false"
+  },
+
+  "@doc": {
+    "prefix": "@doc",
+    "body": ["@doc ~S\"\"\"", "\t$1", "\"\"\""],
+    "description": "@doc"
+  },
+
+  "@doc false": {
+    "prefix": "@doc_false",
+    "body": "@doc false",
+    "description": "@doc false"
+  },
+
+  "Supervisor spec": {
+    "prefix": "supervisor_spec",
+    "body": [
+      "%{",
+      "\tid: ${1:id}, ",
+      "\tstart: {",
+      "\t\tSupervisor, ",
+      "\t\t:start_link, ",
+      "\t\t[",
+      "\t\t\t${2:children}, ",
+      "\t\t\t[strategy: :one_for_one, name: ${3:name}]",
+      "\t\t]",
+      "\t}, ",
+      "\trestart: :${4:transient}, ",
+      "\ttype: :supervisor",
+      "}"
+    ],
+    "description": "Supervisor specification"
+  },
+
+  "DynamicSupervisor spec": {
+    "prefix": "supervisor_spec_dynamic",
+    "body": [
+      "%{",
+      "id: ${1:compulsory},",
+      "start: {",
+      "\tDynamicSupervisor, ",
+      ":start_link, [[strategy: :one_for_one, name: ${2:compulsory}]]}, ",
+      "type: :supervisor",
+      "}"
+    ],
+    "description": "DynamicSupervisor specification"
+  },
+
+  "Supervised worker spec": {
+    "prefix": "supervisor_spec_worker",
+    "body": [
+      "%{",
+      "id: ${1:compulsory}, ",
+      "start: {",
+      "__MODULE__, ${2:start_func}, [${3:args}]",
+      "}, ",
+      "type: :worker",
+      "}"
+    ],
+    "description": "DynamicSupervisor specification"
+  },
+
+  "Create ecto table": {
+    "prefix": "create_table_ecto",
+    "body": [
+      "create table(:${1:table_name}, primary_key: false) do",
+      "\tadd :id, :binary_id, primary_key: true, comment: \"Primary key\"",
+      "\tadd :source, :string, null: false, default: \"password\", comment: \"source of token\"",
+      "\tadd :token, :string, null: false, comment: \"token from source\"",
+      "\tadd :related_id, references(:relateds, on_delete: :delete_all), null: false, comment: \"The owner of ${1:table_name}\"",
+      "",
+      "\ttimestamps(type: :utc_datetime)",
+      "end",
+      "",
+      ":${1:table_name}",
+      "|> index([:source, :token])",
+      "|> create()",
+      "",
+      ":${1:table_name}",
+      "|> unique_index([:related_id, :source])",
+      "|> create()"
+    ],
+    "description": "Create ecto table"
+  },
+
+  "Create ecto schema": {
+    "prefix": "create_schema_ecto",
+    "body": [
+      "defmodule ${1:module_name} do",
+      "\tuse Ecto.Schema, warn: true",
+      "",
+      "\timport Ecto.Changeset",
+      "",
+      "\talias Ecto.Changeset",
+      "",
+      "\t@primary_key {:id, :binary_id, autogenerate: true}",
+      "\t@foreign_key_type :binary_id",
+      "\tschema \"${2:schema_name}\" do",
+      "\t\tfield(:${3:field_name}, :string)",
+      "",
+      "\t\ttimestamps(type: :utc_datetime)",
+      "\tend",
+      "",
+      "\t@doc \"changeset\"",
+      "\tdef changeset(%__MODULE__{} = ${4:name}, %{} = ${5:attrs}) do",
+      "\t\t${4:name}",
+      "\t\t|> cast(${5:attrs}, [:${3:field_name}])",
+      "\tend",
+      "end"
+    ],
+    "description": "Create ecto schema"
+  },
+
+  "Ecto aliases": {
+    "prefix": "ecto_aliases",
+    "body": [
+      "defp aliases do",
+      "\t[",
+      "\t\t\"ecto.setup\": [\"ecto.create\", \"ecto.migrate\", \"run priv/repo/seeds.exs\"],",
+      "\t\t\"ecto.reset\": [\"ecto.drop\", \"ecto.setup\"],",
+      "\t\ttest: [\"ecto.create --quiet\", \"ecto.migrate\", \"test\"]",
+      "\t]",
+      "end"
+    ],
+    "description": "Ecto aliases"
+  },
+
+  "elixirc_paths": {
+    "prefix": "elixirc_paths",
+    "body": [
+      "# Specifies which paths to compile per environment.",
+      "defp elixirc_paths(:dev), do: [\"lib\"${1:, \"another_path\"}]",
+      "defp elixirc_paths(:test), do: elixirc_paths(:dev) ++ [\"test/support\"]",
+      "defp elixirc_paths(_), do: [\"lib\"]"
+    ],
+    "description": "elixirc_paths"
+  },
+
+  "absinthe child schema": {
+    "prefix": "absinthe_child_schema_definition",
+    "body": [
+      "defmodule ${1:module_parent}.Schema.${2:module_name} do",
+      "\tuse Absinthe.Schema.Notation",
+      "",
+      "\talias ${1:module_parent}.${2:module_name}.Resolver",
+      "",
+      "\t@desc \"A ${2:module_name}\"",
+      "\tobject :${3:schema_name} do",
+      "\t\t\tfield :id, non_null(:id)",
+      "",
+      "\t\t\tfield :inserted_at, non_null(:iso_datetime)",
+      "\t\t\tfield :updated_at, non_null(:iso_datetime)",
+      "\tend",
+      "",
+      "\t@desc \"Variables for creating ${2:module_name}\"",
+      "\tinput_object :${3:schema_name} do",
+      "\t\t\tfield :name, non_null(:string)",
+      "\tend",
+      "",
+      "\t@desc \"Mutations allowed on ${2:module_name} object\"",
+      "\tobject :${3:schema_name}_mutation do",
+      "\t\t\t@doc \"Create a ${3:schema_name}\"",
+      "\t\t\tfield :field_input, :${3:schema_name} do",
+      "\t\t\t\t\targ :field_input, non_null(:field_input)",
+      "",
+      "\t\t\t\t\tresolve(&Resolver.create/3)",
+      "\t\t\tend",
+      "\tend",
+      "",
+      "\t@desc \"Queries allowed on ${2:module_name} object\"",
+      "\tobject :${3:schema_name}_query do",
+      "\t\t\t@desc \"query a ${3:schema_name} \"",
+      "\t\t\tfield :field, :${3:schema_name} do",
+      "\t\t\t\t\targ :field, non_null(:field_input)",
+      "\t\t\t\t\tresolve(&Resolver.field/3)",
+      "\t\t\tend",
+      "\tend",
+      "end"
+    ],
+    "description": "absinthe child schema definition"
+  },
+
+  "absinthe schema": {
+    "prefix": "absinthe_schema_definition",
+    "body": [
+      "defmodule ${1:module_name}.Schema do",
+      "\tuse Absinthe.Schema",
+      "",
+      "\timport_types(Absinthe.Type.Custom)",
+      "\timport_types(${1:module_name}.Schema.Types)",
+      "",
+      "",
+      "\tquery do",
+      "\t\t\timport_fields :${2:child}_query",
+      "\tend",
+      "",
+      "\tmutation do",
+      "\t\t\timport_fields :${2:child}_mutation",
+      "\tend",
+      "",
+      "\tdef context(ctx) do",
+      "\t\t\tloader =",
+      "\t\t\t\t\tDataloader.new()",
+      "\t\t\t\t\t|> Dataloader.add_source(",
+      "\t\t\t\t\t\t\t:data,",
+      "\t\t\t\t\t\t\tDataloader.Ecto.new(${3:repo_module}.Repo, query: &my_data/2)",
+      "\t\t\t\t\t)",
+      "",
+      "\t\t\tMap.put(ctx, :loader, loader)",
+      "\tend",
+      "",
+      "\tdef plugins do",
+      "\t\t\t[Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()",
+      "\tend",
+      "",
+      "\tdef my_data(queryable, _params) do",
+      "\t\t\tqueryable",
+      "\tend",
+      "end"
+    ],
+    "description": "absinthe schema definition"
+  },
+
+  "@desc": {
+    "prefix": "@desc",
+    "body": ["@desc ~S\"\"\"", "\t${1}", "\"\"\""],
+    "description": "@desc"
+  },
+
+  "helperfunction": {
+    "prefix": "helperfunction",
+    "body": [
+      "############################################",
+      "# START ${1}",
+      "############################################",
+      "",
+      "${2}",
+      "",
+      "############################################",
+      "# END ${1}",
+      "############################################"
+    ],
+    "description": "helperfunction"
+  },
+
+  "GenServer snippet": {
+    "prefix": "genserver_snippet",
+    "body": [
+      "defmodule ${1:ModuleName} do",
+      "\tuse GenServer",
+      "",
+      "\t# inside supervisor",
+      "\t# children = [{${1:ModuleName}, [${2:arg_from_supervisor}]}]",
+      "",
+      "\t# override default child_spec provided by GenServer",
+      "\t@impl true",
+      "\tdef child_spec(${2:arg_from_supervisor}) do",
+      "\t\t\t%{",
+      "\t\t\t\t\tid: __MODULE__,",
+      "\t\t\t\t\tstart: {",
+      "\t\t\t\t\t\t\t__MODULE__,",
+      "\t\t\t\t\t\t\t:start_link,",
+      "\t\t\t\t\t\t\t[initial_state]",
+      "\t\t\t\t\t}",
+      "\t\t\t}",
+      "\tend",
+      "",
+      "\tdef start_link(initial_state) do",
+      "\t\t\tGenServer.start_link(__MODULE__, initial_state, name: __MODULE__)",
+      "\tend",
+      "",
+      "\t## Client API",
+      "",
+      "\t## GenServer Callbacks",
+      "",
+      "\t@impl true",
+      "\tdef init(stack) do",
+      "\t\t\t{:ok, stack}",
+      "\tend",
+      "",
+      "\t@impl true",
+      "\tdef handle_call(:pop, caller_pid, current_state) do",
+      "\t\t\tsend(caller_pid, \"processing....\")",
+      "\t\t\tnext_state = current_state",
+      "\t\t\tresponse_to_caller = :ok",
+      "\t\t\t{:reply, response_to_caller, next_state}",
+      "\tend",
+      "",
+      "\t@impl true",
+      "\tdef handle_cast({:push, payload}, current_state) do",
+      "\t\t\tnext_state = {current_state, payload}",
+      "\t\t\t{:noreply, next_state}",
+      "\tend",
+      "end"
+    ],
+    "description": "GenServer snippet"
+  }
+}
