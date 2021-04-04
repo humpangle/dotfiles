@@ -1,49 +1,33 @@
-if has('win32')
-  so ./init-win.vim
-else
-  source ~/.config/nvim/settings/vim-plug.vim
+so ~/.config/nvim/settings/vim-plug.vim
+so ~/.config/nvim/settings/general/settings.vim
+so ~/.config/nvim/settings/keys/mappings.vim
 
-  source ~/.config/nvim/settings/general/settings.vim
+" PLUGINS
+so ~/.config/nvim/settings/plugins/vim-floaterm.vim
+so ~/.config/nvim/settings/plugins/better-white-space.vim
+so ~/.config/nvim/settings/plugins/lightline.vim
+so ~/.config/nvim/settings/plugins/vim-rest-console.vim
+so ~/.config/nvim/settings/plugins/ale.vim
+so ~/.config/nvim/settings/plugins/tabular.vim
+so ~/.config/nvim/settings/plugins/vim-easy-motion.vim
+so ~/.config/nvim/settings/plugins/vim-prosession.vim
+so ~/.config/nvim/settings/plugins/vim-fugitive.vim
+so ~/.config/nvim/settings/plugins/coc.vim
 
-  source ~/.config/nvim/settings/keys/mappings.vim
+" FUZZY FINDERS
+so ~/.config/nvim/settings/plugins/vim-grepper.vim
+so ~/.config/nvim/settings/plugins/fzf.vim
+so ~/.config/nvim/settings/plugins/fzf-checkout.vim
 
-  " THEME SELECTION
-  if !empty($EBNIS_VIM_THEME)
-    source ~/.config/nvim/settings/themes/$EBNIS_VIM_THEME.vim
-    if $EBNIS_VIM_THEME_BG == 'd'
-      set background=dark
-    else
-      set background=light
-    endif
+" THEME SELECTION
+if !empty($EBNIS_VIM_THEME)
+  so ~/.config/nvim/settings/themes/$EBNIS_VIM_THEME.vim
+  if $EBNIS_VIM_THEME_BG == 'd'
+    set background=dark
   else
-    source ~/.config/nvim/settings/themes/vim-solarized8.vim
     set background=light
   endif
-
-  source ~/.config/nvim/settings/plugins/fzf-checkout.vim
-  source ~/.config/nvim/settings/plugins/vim-floaterm.vim
-  source ~/.config/nvim/settings/plugins/better-white-space.vim
-  source ~/.config/nvim/settings/plugins/gutentags.vim
-  source ~/.config/nvim/settings/plugins/lightline.vim
-  source ~/.config/nvim/settings/plugins/vim-rest-console.vim
-  source ~/.config/nvim/settings/plugins/ale.vim
-  source ~/.config/nvim/settings/plugins/vim-fugitive.vim
-  source ~/.config/nvim/settings/plugins/tabular.vim
-  source ~/.config/nvim/settings/plugins/vim-easy-motion.vim
-  source ~/.config/nvim/settings/plugins/vim-prosession.vim
-
-  " FUZZY FINDERS
-  source ~/.config/nvim/settings/plugins/vim-grepper.vim
-  if !empty($EBNIS_VIM_FUZZY_FINDER)
-    source ~/.config/nvim/settings/plugins/$EBNIS_VIM_FUZZY_FINDER.vim
-  else
-    source ~/.config/nvim/settings/plugins/vim-clap.vim
-  endif
-
-  " LANGUAGE SERVERS
-  source ~/.config/nvim/settings/plugins/coc.vim
-  " REQUIRE NVIM 0.5
-  if has('nvim-0.5')
-    source ~/.config/nvim/settings/plugins/nvim-treesitter.vim
-  endif
+else
+  so ~/.config/nvim/settings/themes/vim-solarized8.vim
+  set background=dark
 endif

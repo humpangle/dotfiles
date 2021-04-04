@@ -69,11 +69,9 @@ nnoremap ,. :e ~/.bashrc<CR>  " edit .bashrc file
 nnoremap <leader>nh :noh<CR> " no highlight
 nnoremap <leader>ee :Vexplore<CR>
 
-let my_config_path = has('win32') ? '~\AppData\Local\nvim\init.vim' : "~/.config/nvim/init.vim"
-
+let my_config_path =  "~/.config/nvim/init.vim"
 " edit init.vim
 nnoremap ,ec :execute "e " . g:my_config_path<CR>
-
 " source init.vim
 nnoremap ,sc :execute "so " . g:my_config_path <CR>
 
