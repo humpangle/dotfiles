@@ -84,12 +84,3 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 """""""""""""""""""""""""""""""""""""
 " END NATIVE FUZZY FIND SETTINGS
 """""""""""""""""""""""""""""""""""""
-
-" when you need to make changes to a system file, you can override the
-" read-only permissions by typing :w!!, vim will ask for your sudo password
-" and save your changes
-" NOTE: you may need to install a utility such as `askpass` in order to input
-" password. On ubuntu, run:
-" sudo apt install ssh-askpass-gnome ssh-askpass -y && \
-"  echo "export SUDO_ASKPASS=$(which ssh-askpass)" >> ~/.bashrc
-cmap w!! w !sudo tee > /dev/null %

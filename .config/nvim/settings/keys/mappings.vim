@@ -10,7 +10,9 @@ nmap <Leader>H :Helptags!<CR>
 nnoremap <Leader>ww :w<CR>
 nnoremap <Leader>wa :wa<CR>
 nnoremap <Leader>wq :wq<cr>
-" Save non user file i.e. file that requires root permission by typing :w!!
+" when you need to make changes to a system file, you can override the
+" read-only permissions by typing :w!!, vim will ask for your sudo password
+" and save your changes
 " NOTE: you may need to install a utility such as `askpass` in order to input
 " password. On ubuntu, run:
 " sudo apt install ssh-askpass-gnome ssh-askpass -y && \
