@@ -10,6 +10,7 @@
   "cSpell.language": "en,de,fr",
   "elixirLS.dialyzerEnabled": false,
   "languageserver": {
+    /* npm i -g graphql-language-service-cli */
     "graphql": {
       "command": "graphql-lsp",
       "args": ["server", "-m", "stream"],
