@@ -17,7 +17,8 @@
       // customize filetypes to your needs
       "filetypes": ["typescript", "typescriptreact", "graphql"]
     }
-  }
+  },
+  "snippets.userSnippetsDirectory": "~/.config/nvim/Ultisnips"
   /* "explorer.width": 50, */
   /* "explorer.keyMappings.global": { */
   /*   "cd": "cd", */
