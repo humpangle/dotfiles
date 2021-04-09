@@ -84,3 +84,20 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 """""""""""""""""""""""""""""""""""""
 " END NATIVE FUZZY FIND SETTINGS
 """""""""""""""""""""""""""""""""""""
+
+" AUTOCMD
+au FocusGained * :checktime
+au BufNewFile,BufRead *.html.django set filetype=htmldjango
+au BufNewFile,BufRead *.eslintrc set filetype=json
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
+au BufNewFile,BufRead .env* set filetype=sh
+au BufNewFile,BufRead *.psql set filetype=sql
+au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
+au BufNewFile,BufRead *wsl.conf set filetype=config
+" To get correct comment highlighting in jsonc file
+autocmd FileType json syntax match Comment +\/\/.\+$+
+autocmd! FileType json set filetype=jsonc
+autocmd! FileType *vifm set filetype=vim
+" open help file in vertical split
+autocmd FileType help wincmd H
+" au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
