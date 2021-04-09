@@ -137,7 +137,7 @@ set number " always show line numbers
 " set relativenumber " set relative numbering as default
 set relativenumber " set none relative numbering as default
 " toggle relative line number
-nmap ,tl :set invrelativenumber<CR>
+nnoremap ,tl :set invrelativenumber<CR>
 
 " RENAME CURRENT FILE
 function! RenameFile()
