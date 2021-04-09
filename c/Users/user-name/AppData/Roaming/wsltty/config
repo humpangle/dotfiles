@@ -1,7 +1,7 @@
 # To use common configuration in %APPDATA%\mintty, simply remove this file
 CursorType=block
 FontHeight=11
-ThemeFile=dracula
+ThemeFile=mintty
 Locale=C
 Charset=UTF-8
 CtrlShiftShortcuts=yes
