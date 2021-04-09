@@ -4,8 +4,6 @@ inoremap kj <esc>
 " Format paragraph (selected or not) to 80 character lines.
 nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
-" Vim’s :help documentation
-nmap <Leader>H :Helptags!<CR>
 " Save file
 nnoremap <Leader>ww :w<CR>
 nnoremap <Leader>wa :wa<CR>

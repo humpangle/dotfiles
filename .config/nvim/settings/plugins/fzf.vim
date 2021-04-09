@@ -33,6 +33,8 @@ nnoremap <leader>pt :Tags<CR>
 " search in project - match file names first
 nnoremap ,/ :Rg<CR>
 " nnoremap <leader>sn :Snippets<CR>
+" Vim’s :help documentation
+nmap <Leader>H :Helptags!<CR>
 
 " Advanced ripgrep integration
 function! RipgrepFzf(query, fullscreen)
