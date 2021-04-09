@@ -6,7 +6,7 @@ autocmd User fugitive
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
 
-nnoremap gst         :Git st<CR>
+nnoremap gst         :Git status<CR>
 nnoremap gcm         :Git commit<CR>
 nnoremap gvs         :Gvdiffsplit<CR>
 " vertical split (3 way merge) to resolve git merge conflict
