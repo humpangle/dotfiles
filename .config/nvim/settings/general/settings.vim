@@ -32,8 +32,6 @@ set smartcase    " ... unless the query has capital letters
 set gdefault     " Use 'g' flag by default with :s/foo/bar/.
 set hlsearch
 " set nohlsearch
-" Search ignore path
-set wildignore+=*.zip,*.png,*.jpg,*.gif,*.pdf,*DS_Store*,*/.git/*,*/node_modules/*,*/build/*,package-lock.json,*/_build/*,*/deps/*,*/elixir_ls/*,yarn.lock,mix.lock,*/coverage/*
 
 " Tab Splits
 set splitbelow
@@ -71,6 +69,8 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 " set nocompatible " Limit search to project directory
 " set path+=** " Search all subdirectories recursively
 " set wildmenu " Show multiple matches on one line
+" Search ignore path
+" set wildignore+=*.zip,*.png,*.jpg,*.gif,*.pdf,*DS_Store*,*/.git/*,*/node_modules/*,*/build/*,package-lock.json,*/_build/*,*/deps/*,*/elixir_ls/*,yarn.lock,mix.lock,*/coverage/*
 
 " AUTOCMD
 au FocusGained * :checktime
