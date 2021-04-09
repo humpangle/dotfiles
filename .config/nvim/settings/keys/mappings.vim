@@ -62,14 +62,15 @@ nnoremap <c-l> <C-w>l
 " nnoremap <leader>ts :tab split<cr>
 
 " mappings in unimpaired.vim
-" nnoremap [od :diffthis<cr> " diff this add file to diffs
-" nnoremap ]od :diffoff<cr> " remove file from diffs
+" nnoremap [od :diffthis<cr>
+" nnoremap ]od :diffoff<cr>
 
 " create the new directory am already working in
-nnoremap ,md :!mkdir -p %:h<cr><cr> " mkdir - create directory
+nnoremap ,md :!mkdir -p %:h<cr><cr>
 nnoremap ,rm :!trash-put %:p<cr>:bdelete!<cr>
-nnoremap ,. :e ~/.bashrc<CR>  " edit .bashrc file
-nnoremap <leader>nh :noh<CR> " no highlight
+" edit .bashrc file
+nnoremap ,. :e ~/.bashrc<CR>
+nnoremap <leader>nh :noh<CR>
 nnoremap <leader>ee :Vexplore<CR>
 
 let my_config_path =  "~/.config/nvim/init.vim"
@@ -78,22 +79,15 @@ nnoremap ,ec :execute "e " . g:my_config_path<CR>
 " source init.vim
 nnoremap ,sc :execute "so " . g:my_config_path <CR>
 
-"""""""""""""""""""""""""""""""""""""
 " TO MOVE LINES
-"""""""""""""""""""""""""""""""""""""
-nnoremap <A-k> :m .-2<CR>==                   " Move line up normal mode
+nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi            " Move line up insert mode
+inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv               " Move line up visual mode
+vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
-"""""""""""""""""""""""""""""""""""""
-" END TO MOVE LINES
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " EMBEDDED TERMINAL
-"""""""""""""""""""""""""""""""""""""
 " launch terminal
 " nnoremap ,tn :term<cr>
 tnoremap <C-h> <C-\><C-N><C-w>h
@@ -104,66 +98,42 @@ inoremap <A-r> <C-\><C-N><C-w>h
 inoremap <A-j> <C-\><C-N><C-w>j
 inoremap <A-k> <C-\><C-N><C-w>k
 inoremap <A-l> <C-\><C-N><C-w>l
-
 " exit insert mode
 " tnoremap <A-e> <C-\><C-n>
-"""""""""""""""""""""""""""""""""""""
-" END EMBEDDED TERMINAL
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " COPY FILE PATH
-"""""""""""""""""""""""""""""""""""""
 nmap ,yr :let @+=expand("%")<CR>      " yank relative File path
 nmap ,yn :let @+=expand("%:t")<CR>    " yank file name / not path
 nmap ,yd :let @+=expand("%:p:h")<CR>  " yank file parent directory
 nmap ,yf :let @+=expand("%:p")<CR>    " yank absolute File path
 nmap ,cr :let @"=expand("%")<CR>      " copy relative path
 nmap ,cf :let @"=expand("%:p")<CR>    " copy absolute path
-"""""""""""""""""""""""""""""""""""""
-" END COPY FILE PATH
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " SEARCH AND REPLACE: NOT VERY GOOD
-"""""""""""""""""""""""""""""""""""""
 " Type a replacement term and press . to repeat the replacement again. Useful
 " for replacing a few instances of the term (comparable to multiple cursors).
 nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
 xnoremap <silent> s* "sy:let @/=@s<CR>cgn
-
-""""""""""""""""" find and replace in file """""""""""""""""""""""""""""""""
+"find and replace in file
 " press * {shift 8) to search for word under cursor and key combo below to
 " replace in entire file
 nnoremap <leader>rr :%s///g<left><left>
 nnoremap <leader>rc :%s///gc<left><left><left>
-
 " same as above but only visually selected range
 xnoremap <leader>r :%s///g<left><left>
 xnoremap <leader>rc :%s///gc<left><left><left>
-"""""""""""""""""""""""""""""""""""""
-" END SEARCH AND REPLACE
-"""""""""""""""""""""""""""""""""""""
 
 " toggle cursorcolumn
 nnoremap ,tc :set cursorline! cursorcolumn!<CR>
 
-"""""""""""""""""""""""""""""""""""""
 " LINE NUMBERING
-"""""""""""""""""""""""""""""""""""""
 set number " always show line numbers
 " set relativenumber " set relative numbering as default
 set relativenumber " set none relative numbering as default
-
 " toggle relative line number
 nmap ,tl :set invrelativenumber<CR>
-"""""""""""""""""""""""""""""""""""""
-" END LINE NUMBERING
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " RENAME CURRENT FILE
-"""""""""""""""""""""""""""""""""""""
 function! RenameFile()
   let old_name = expand('%')
   let new_name = input('New file name: ', expand('%'), 'file')
@@ -173,15 +143,9 @@ function! RenameFile()
     redraw!
   endif
 endfunction
-
 map <leader>nf :call RenameFile()<cr>
-"""""""""""""""""""""""""""""""""""""
-" END RENAME CURRENT FILE
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " MANAGE BUFFERS
-"""""""""""""""""""""""""""""""""""""
 "https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
 function! DeleteAllBuffers() abort
   let [i, last_b_num, regular, terminals] = [1, bufnr("$"), [], []]
@@ -210,13 +174,8 @@ map <leader>ba :call DeleteAllBuffers()<cr>   " Delete all buffers
 map <leader>bd :bd%<cr>                       " Delete current buffer
 map <leader>be :bd!%<cr>                      " Delete current buffer force
 map <leader>bw :bw%<cr>                       " Wipe current buffer
-"""""""""""""""""""""""""""""""""""""
-" END MANAGE BUFFERS
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " START FORMAT ELIXIR
-"""""""""""""""""""""""""""""""""""""
 function! FormatElixir()
   w
   silent execute "!mix format %:p"
@@ -224,24 +183,14 @@ function! FormatElixir()
 endfunction
 command! FormatElixir call FormatElixir()
 nmap <leader>fe  :FormatElixir<CR>            " Format elixir file
-"""""""""""""""""""""""""""""""""""""
-" END FORMAT ELIXIR
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " RESIZE WINDOW
-"""""""""""""""""""""""""""""""""""""
 nnoremap <A-h> :vertical resize -2<CR>
 nnoremap <A-l> :vertical resize +2<CR>
 nnoremap <A-u> :resize +2<CR>
 nnoremap <A-m> :resize -2<CR>
-"""""""""""""""""""""""""""""""""""""
-" END RESIZE WINDOW
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " AUTOCMD
-"""""""""""""""""""""""""""""""""""""
 au FocusGained * :checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
 au BufNewFile,BufRead *.eslintrc set filetype=json
@@ -257,13 +206,8 @@ autocmd! FileType *vifm set filetype=vim
 " open help file in vertical split
 autocmd FileType help wincmd H
 " au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
-"""""""""""""""""""""""""""""""""""""
-" END AUTOCMD
-"""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""
 " START TOGGLE BACKGROUND COLOR
-"""""""""""""""""""""""""""""""""""""
 function! BackgroundToggle()
   if(&background == 'dark')
     set background=light
@@ -272,6 +216,3 @@ function! BackgroundToggle()
   endif
 endfunc
 nnoremap <leader>tb :call BackgroundToggle()<cr>
-"""""""""""""""""""""""""""""""""""""
-" END TOGGLE BACKGROUND COLOR
-"""""""""""""""""""""""""""""""""""""
