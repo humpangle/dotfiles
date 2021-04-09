@@ -1,6 +1,6 @@
-vim = vim
+local vim_global = vim
 local utils = {}
-local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
+local scopes = {o = vim_global.o, b = vim_global.bo, w = vim_global.wo}
 
 -- autocommands
 function utils.define_augroups(definitions) -- {{{1
@@ -13,15 +13,16 @@ function utils.define_augroups(definitions) -- {{{1
     --    3. Text
     -- just like how they would normally be defined from Vim itself
     for group_name, definition in pairs(definitions) do
-        vim.cmd("augroup " .. group_name)
-        vim.cmd("autocmd!")
+        vim_global.cmd("augroup " .. group_name)
+        vim_global.cmd("autocmd!")
 
         for _, def in pairs(definition) do
-            local command = table.concat(vim.tbl_flatten {"autocmd", def}, " ")
-            vim.cmd(command)
+            local command = table.concat(
+                                vim_global.tbl_flatten({"autocmd", def}), " ")
+            vim_global.cmd(command)
         end
 
-        vim.cmd("augroup END")
+        vim_global.cmd("augroup END")
     end
 end
 
@@ -37,9 +38,9 @@ end
 function utils.map(mode, key, result, opts)
     local options = {noremap = true, silent = true}
     if opts then
-        options = vim.tbl_extend("force", options, opts)
+        options = vim_global.tbl_extend("force", options, opts)
     end
-    vim.api.nvim_set_keymap(mode, key, result, options)
+    vim_global.api.nvim_set_keymap(mode, key, result, options)
 end
 
 -- Telescope
