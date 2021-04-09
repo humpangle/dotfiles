@@ -1,6 +1,5 @@
 let g:python_host_prog = expand('$PYTHON2')
 let g:python3_host_prog = expand('$PYTHON3')
-" let g:node_host_prog = expand("~/.nvm/versions/node/v12.16.1/bin/node")
 
 " Disable netrw
 " let g:loaded_netrw       = 0
@@ -15,14 +14,6 @@ syntax enable
 nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
-
-" Remap esc key - if doing touch typing
-" nmap JJ <esc>
-" imap JJ <Esc>
-" vmap JJ <Esc>
-" nmap KK <esc>
-" imap KK <Esc>
-" vmap KK <Esc>
 
 if (has("termguicolors"))
  set termguicolors
@@ -57,7 +48,8 @@ setlocal spell spelllang=en
 
 set foldmethod=indent
 set foldnestmax=10
-set nofoldenable " don't fold by default when opening a file.
+" don't fold by default when opening a file.
+set nofoldenable
 set foldlevel=2
 
 " reload a file if it is changed from outside vim
@@ -75,15 +67,10 @@ set undofile
 " Use Ripgrep for vimgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
-"""""""""""""""""""""""""""""""""""""
 " START NATIVE FUZZY FIND SETTINGS
-"""""""""""""""""""""""""""""""""""""
 " set nocompatible " Limit search to project directory
 " set path+=** " Search all subdirectories recursively
 " set wildmenu " Show multiple matches on one line
-"""""""""""""""""""""""""""""""""""""
-" END NATIVE FUZZY FIND SETTINGS
-"""""""""""""""""""""""""""""""""""""
 
 " AUTOCMD
 au FocusGained * :checktime

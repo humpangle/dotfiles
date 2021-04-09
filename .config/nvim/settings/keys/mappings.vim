@@ -79,7 +79,7 @@ nnoremap ,ec :execute "e " . g:my_config_path<CR>
 " source init.vim
 nnoremap ,sc :execute "so " . g:my_config_path <CR>
 
-" TO MOVE LINES
+" TO MOVE LINES up/down
 nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==
 inoremap <A-j> <Esc>:m .+1<CR>==gi
@@ -102,12 +102,18 @@ inoremap <A-l> <C-\><C-N><C-w>l
 " tnoremap <A-e> <C-\><C-n>
 
 " COPY FILE PATH
-nmap ,yr :let @+=expand("%")<CR>      " yank relative File path
-nmap ,yn :let @+=expand("%:t")<CR>    " yank file name / not path
-nmap ,yd :let @+=expand("%:p:h")<CR>  " yank file parent directory
-nmap ,yf :let @+=expand("%:p")<CR>    " yank absolute File path
-nmap ,cr :let @"=expand("%")<CR>      " copy relative path
-nmap ,cf :let @"=expand("%:p")<CR>    " copy absolute path
+" yank relative File path
+nmap ,yr :let @+=expand("%")<CR>
+" yank file name / not path
+nmap ,yn :let @+=expand("%:t")<CR>
+" yank file parent directory
+nmap ,yd :let @+=expand("%:p:h")<CR>
+" yank absolute File path
+nmap ,yf :let @+=expand("%:p")<CR>
+" copy relative path
+nmap ,cr :let @"=expand("%")<CR>
+" copy absolute path
+nmap ,cf :let @"=expand("%:p")<CR>
 
 " SEARCH AND REPLACE: NOT VERY GOOD
 " Type a replacement term and press . to repeat the replacement again. Useful
@@ -170,10 +176,14 @@ function! DeleteAllBuffers() abort
   endif
 endfunction
 
-map <leader>ba :call DeleteAllBuffers()<cr>   " Delete all buffers
-map <leader>bd :bd%<cr>                       " Delete current buffer
-map <leader>be :bd!%<cr>                      " Delete current buffer force
-map <leader>bw :bw%<cr>                       " Wipe current buffer
+" Delete all buffers
+nnoremap <leader>ba :call DeleteAllBuffers()<cr>
+" Delete current buffer
+nnoremap <leader>bd :bd%<cr>
+" Delete current buffer force
+nnoremap <leader>be :bd!%<cr>
+" Wipe current buffer
+nnoremap <leader>bw :bw%<cr>
 
 " START FORMAT ELIXIR
 function! FormatElixir()
