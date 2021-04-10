@@ -34,8 +34,10 @@ alias gc='google-chrome -incognito &'
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
+
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
+
 # heroku autocomplete setup
 if [ -x "$(command -v heroku)" ]; then
   HEROKU_AC_BASH_SETUP_PATH=/home/kanmii/.cache/heroku/autocomplete/bash_setup
