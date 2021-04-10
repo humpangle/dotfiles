@@ -152,7 +152,7 @@ endfunction
 map <leader>nf :call RenameFile()<cr>
 
 " MANAGE BUFFERS
-"https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
+" https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
 function! DeleteAllBuffers() abort
   let [i, last_b_num, regular, terminals] = [1, bufnr("$"), [], []]
   while i <= last_b_num
