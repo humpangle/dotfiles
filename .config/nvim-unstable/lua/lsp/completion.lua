@@ -1,5 +1,7 @@
 local u = require("utils.core")
 
+local vim = vim
+
 -- TODO figure out why this don't work
 vim.fn.sign_define(
     "LspDiagnosticsSignError",

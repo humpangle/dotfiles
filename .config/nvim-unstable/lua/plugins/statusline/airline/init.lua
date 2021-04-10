@@ -1,5 +1,7 @@
 local gl = require("galaxyline")
 
+local vim = vim
+
 local function is_buffer_empty()
     return vim.fn.empty(vim.fn.expand("%:t")) == 1
 end

@@ -1,5 +1,4 @@
---local d2d = require("Dusk-til-Dawn")
-
+-- local d2d = require("Dusk-til-Dawn")
 M = {}
 
 M.dark = {
@@ -10,7 +9,7 @@ M.dark = {
     func = "#bc6ec5",
     act1 = "#222226",
     DarkGoldenrod2 = "#eead0e", -- normal / unmodified
-    chartreuse3 = "#66cd00", --insert
+    chartreuse3 = "#66cd00", -- insert
     SkyBlue2 = "#7ec0ee", -- modified
     chocolate = "#d2691e", -- replace
     gray = "#bebebe", -- visual
@@ -20,7 +19,7 @@ M.dark = {
     darkblue = "#081633",
     green = "#afd700",
     orange = "#FF8800",
-    purple = "#5d4d7a", --act2
+    purple = "#5d4d7a", -- act2
     magenta = "#d16d9e",
     grey = "#c0c0c0",
     blue = "#0087d7",
@@ -29,7 +28,7 @@ M.dark = {
     head1 = "#4f97d7",
     error = "#FC5C94",
     warning = "#F3EA98",
-    info = "#8DE6F7"
+    info = "#8DE6F7",
 }
 
 M.light = {
@@ -40,7 +39,7 @@ M.light = {
     act1 = "#e7e5eb",
     func = "#6c3163",
     DarkGoldenrod2 = "#eead0e", -- normal / unmodified
-    chartreuse3 = "#66cd00", --insert
+    chartreuse3 = "#66cd00", -- insert
     SkyBlue2 = "#7ec0ee", -- modified
     chocolate = "#d2691e", -- replace
     gray = "#bebebe", -- visual
@@ -50,7 +49,7 @@ M.light = {
     darkblue = "#081633",
     green = "#afd700",
     orange = "#FF8800",
-    purple = "#d3d3e7", --act2
+    purple = "#d3d3e7", -- act2
     magenta = "#d16d9e",
     grey = "#c0c0c0",
     blue = "#0087d7",
@@ -59,10 +58,10 @@ M.light = {
     head1 = "#3a81c3",
     error = "#FC5C94",
     warning = "#F3EA98",
-    info = "#8DE6F7"
+    info = "#8DE6F7",
 }
 
---function M.color(val)
+-- function M.color(val)
 --    local now = d2d.currentTime()
 --    local sunrise = (function()
 --        if vim.g["dusk_til_dawn_sway_colord"] ~= true then
@@ -84,7 +83,7 @@ M.light = {
 --    else
 --        return M.light[val]
 --    end
---end
+-- end
 
 function M.Color(val)
     return function()
@@ -96,7 +95,7 @@ function M.Color(val)
             func = "#bc6ec5",
             act1 = "#222226",
             DarkGoldenrod2 = "#eead0e", -- normal / unmodified
-            chartreuse3 = "#66cd00", --insert
+            chartreuse3 = "#66cd00", -- insert
             SkyBlue2 = "#7ec0ee", -- modified
             chocolate = "#d2691e", -- replace
             gray = "#bebebe", -- visual
@@ -106,16 +105,16 @@ function M.Color(val)
             darkblue = "#081633",
             green = "#afd700",
             orange = "#FF8800",
-            purple = "#5d4d7a", --act2
+            purple = "#5d4d7a", -- act2
             magenta = "#d16d9e",
             grey = "#c0c0c0",
             blue = "#0087d7",
             red = "#ec5f67",
             comments = "#2aa1ae",
             head1 = "#4f97d7",
-            error = "#e0211d", --err
+            error = "#e0211d", -- err
             warning = "#dc752f", -- war
-            info = "#4f97d7" -- keyword
+            info = "#4f97d7", -- keyword
         }
         local light = {
             bg = "#fbf8ef",
@@ -125,7 +124,7 @@ function M.Color(val)
             act1 = "#e7e5eb",
             func = "#6c3163",
             DarkGoldenrod2 = "#eead0e", -- normal / unmodified
-            chartreuse3 = "#66cd00", --insert
+            chartreuse3 = "#66cd00", -- insert
             SkyBlue2 = "#7ec0ee", -- modified
             chocolate = "#d2691e", -- replace
             gray = "#bebebe", -- visual
@@ -135,7 +134,7 @@ function M.Color(val)
             darkblue = "#081633",
             green = "#afd700",
             orange = "#FF8800",
-            purple = "#d3d3e7", --act2
+            purple = "#d3d3e7", -- act2
             magenta = "#d16d9e",
             grey = "#c0c0c0",
             blue = "#0087d7",
@@ -144,7 +143,7 @@ function M.Color(val)
             head1 = "#3a81c3",
             error = "#e0211d", -- err
             warning = "#dc752f", -- war
-            info = "#3a81c3"
+            info = "#3a81c3",
         }
         if vim.o.background ~= nil and vim.o.background == "light" then
             if light[val] ~= nil then

@@ -1,5 +1,10 @@
 local u = require("utils.core")
+
+local vim = vim
 local cmd = vim.cmd
+
+vim.g.python_host_prog = os.getenv("PYTHON2")
+vim.g.python3_host_prog = os.getenv("PYTHON3")
 
 -- Global
 u.opt("o", "incsearch", true)

@@ -1,0 +1,18 @@
+-- Emmet
+local vim_g = vim.g
+vim_g.user_emmet_mode = "inv"
+vim_g.user_emmet_expandabbr_key = ",,"
+vim_g.user_emmet_expandword_key = "<C-y>;"
+vim_g.user_emmet_update_tag = "<C-y>u"
+vim_g.user_emmet_balancetaginward_key = "<C-y>d"
+vim_g.user_emmet_balancetagoutward_key = "<C-y>D"
+vim_g.user_emmet_next_key = "<C-y>n"
+vim_g.user_emmet_prev_key = "<C-y>N"
+vim_g.user_emmet_imagesize_key = "<C-y>i"
+vim_g.user_emmet_togglecomment_key = "<C-y>/"
+vim_g.user_emmet_splitjointag_key = "<C-y>j"
+vim_g.user_emmet_removetag_key = "<C-y>k"
+vim_g.user_emmet_anchorizeurl_key = "<C-y>a"
+vim_g.user_emmet_anchorizesummary_key = "<C-y>A"
+vim_g.user_emmet_mergelines_key = "<C-y>m"
+vim_g.user_emmet_codepretty_key = "<C-y>c"

@@ -1,3 +1,4 @@
+local vim = vim
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_follow = 1
 vim.g.nvim_tree_disable_netrw = 0
@@ -11,11 +12,23 @@ vim.g.nvim_tree_tab_open = 1
 vim.g.nvim_tree_icons = {
     default = "",
     symlink = "",
-    git = {unstaged = "", staged = "✓", unmerged = "", renamed = "➜", untracked = ""},
-    folder = {default = "", open = "", empty = "", empty_open = "", symlink = ""}
+    git = {
+        unstaged = "",
+        staged = "✓",
+        unmerged = "",
+        renamed = "➜",
+        untracked = "",
+    },
+    folder = {
+        default = "",
+        open = "",
+        empty = "",
+        empty_open = "",
+        symlink = "",
+    },
 }
 
-local tree_cb = require "nvim-tree.config".nvim_tree_callback
+local tree_cb = require"nvim-tree.config".nvim_tree_callback
 vim.g.nvim_tree_bindings = {
     -- mappings
     ["<CR>"] = tree_cb("edit"),
@@ -43,5 +56,5 @@ vim.g.nvim_tree_bindings = {
     ["[c"] = tree_cb("prev_git_item"),
     ["]c"] = tree_cb("next_git_item"),
     ["-"] = tree_cb("dir_up"),
-    ["q"] = tree_cb("close")
+    ["q"] = tree_cb("close"),
 }

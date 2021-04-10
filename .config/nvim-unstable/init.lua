@@ -11,7 +11,11 @@ require("main/colorscheme")
 require("lsp")
 
 -- Plugins
-require("plugins/general")
+require("plugins/gitsigns-nvim")
+require("plugins/emmet-vim")
+require("plugins/nvim-colorizer")
+require("plugins/kommentary")
+require("plugins/nvim-autopairs")
 require("plugins/nvim-tree")
 require("plugins/statusline")
 require("plugins/startify")

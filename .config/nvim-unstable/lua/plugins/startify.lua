@@ -1,20 +1,21 @@
+local vim = vim
 vim.g.header_ascii = {
     "     ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
     "     ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
     "     ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
     "     ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
     "     ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-    "     ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ "
+    "     ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
 }
 
---vim.g.startify_bookmarks = {
+-- vim.g.startify_bookmarks = {
 --             { 'i': '~/.config/nvim/init.vim' },
 --             { 'p': '~/Documents/Programming/' },
 --             { 'z': '~/.config/zsh/.zshrc' },
 --             { 't': '~/.config/kitty/kitty.conf' },
 --             }
 --
---vim.g.startify_lists = {
+-- vim.g.startify_lists = {
 --           { 'type': 'files',     'header': ['   Files']                        },
 --           { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
 --           { 'type': 'sessions',  'header': ['   Sessions']                     },
@@ -23,13 +24,11 @@ vim.g.header_ascii = {
 
 vim.api.nvim_exec(
     "let startify_lists = [ { 'type': 'files',     'header': ['   Files'] }, { 'type': 'dir',     'header': ['   Current Directory '.getcwd()] }, { 'type': 'sessions',  'header': ['   Sessions'] },    { 'type': 'bookmarks', 'header': ['   Bookmarks'] },                                                                   ]",
-    true
-)
+    true)
 
 vim.api.nvim_exec(
     "let startify_bookmarks = [ { 'i': '~/.config/nvim/init.lua' }, {'c': '~/.config/nvim/lua/config.lua'}, { 'z': '~/.config/zsh/.zshrc' } ]",
-    true
-)
+    true)
 
 vim.g.startify_session_dir = "~/.config/nvim/session"
 
