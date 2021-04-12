@@ -3,7 +3,7 @@
 Vim = vim
 -- ditto
 Cmd = Vim.cmd
-Lsp_config = require("lspconfig")
+_, Lsp_config = pcall(require, "lspconfig")
 
 Theming = {
     -- Press <space>fc to see all available themes
