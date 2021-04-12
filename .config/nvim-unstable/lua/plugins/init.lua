@@ -51,6 +51,8 @@ return require("packer").startup(function()
     use "junegunn/goyo.vim"
 
     -- Statusline
+    -- for icons:
+    -- requires = {'kyazdani42/nvim-web-devicons', opt = true}
     use "glepnir/galaxyline.nvim"
 
     -- Terminal
