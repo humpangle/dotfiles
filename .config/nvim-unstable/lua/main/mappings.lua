@@ -23,9 +23,6 @@ u.map("n", "<S-l>", ":vertical resize +2<CR>")
 -- Floaterm
 u.map("n", "<leader>tk", ":FloatermKill<CR>")
 
--- Undotree
-u.map("n", "<leader>u", ":UndotreeToggle<CR>")
-
 -- Git
 u.map("n", "<leader>gg", ":FloatermNew lazygit<CR>")
 u.map("n", "<leader>gf", ":Telescope git_files<CR>")
