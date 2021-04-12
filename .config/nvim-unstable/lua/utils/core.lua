@@ -52,4 +52,13 @@ function utils.search_nvim()
         {prompt_title = "Neovim Config", cwd = "$HOME/.config/nvim"})
 end
 
+function utils.project_files()
+  local telescope = require("telescope.builtin")
+    local opts = {} -- define here if you want to define something
+    local ok = pcall(telescope.git_files, opts)
+    if not ok then
+        telescope.find_files(opts)
+    end
+end
+
 return utils
