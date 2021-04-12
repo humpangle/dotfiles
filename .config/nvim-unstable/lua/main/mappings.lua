@@ -2,37 +2,14 @@ local u = require("utils.core")
 
 Vim.g.mapleader = " "
 
--- Basics
-u.map("n", "<leader>w", ":update<CR>")
-u.map("n", "<leader>q", ":bdelete<CR>")
-u.map("n", "<C-w>", ":bdelete<CR>")
 u.map("i", "jk", "<ESC>")
-u.map("n", "Q", "<Nop>")
 u.map("n", "ss", ":luafile %<CR>", {silent = false})
-u.map("n", "nh", ":noh<CR>")
 
 -- Check file in shellcheck
 u.map("n", "<leader>sc", ":!clear && shellcheck -x %<CR>")
 
--- Resize windows
-u.map("n", "<S-k>", ":resize -2<CR>")
-u.map("n", "<S-j>", ":resize +2<CR>")
-u.map("n", "<S-h>", ":vertical resize -2<CR>")
-u.map("n", "<S-l>", ":vertical resize +2<CR>")
-
 -- Floaterm
 u.map("n", "<leader>tk", ":FloatermKill<CR>")
-
--- Git
-u.map("n", "<leader>gg", ":FloatermNew lazygit<CR>")
-u.map("n", "<leader>gf", ":Telescope git_files<CR>")
-u.map("n", "<leader>gc", ":Telescope git_commits<CR>")
-u.map("n", "<leader>gb", ":Telescope git_branches<CR>")
-u.map("n", "<leader>gs", ":Telescope git_status<CR>")
-
--- buffer navigation
-u.map("n", "<TAB>", ":bn<CR>")
-u.map("n", "<S-TAB>", ":bp<CR>")
 
 -- LSP
 -- u.map("n", "gD", ":lua vim.lsp.buf.declaration()<CR>")
