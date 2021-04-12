@@ -2,6 +2,7 @@ local u = require("utils.core")
 
 Vim.g.python_host_prog = os.getenv("PYTHON2")
 Vim.g.python3_host_prog = os.getenv("PYTHON3")
+Vim.g.netrw_liststyle = 3
 
 -- Global
 u.opt("o", "incsearch", true)
