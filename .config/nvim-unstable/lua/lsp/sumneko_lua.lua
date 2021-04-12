@@ -35,6 +35,7 @@ Lsp_config.sumneko_lua.setup {
                 maxPreload = 10000,
             },
             telemetry = {enable = false},
+            completion = {snippetSupport = true},
         },
     },
 }
