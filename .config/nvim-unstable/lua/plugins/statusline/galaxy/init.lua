@@ -13,7 +13,23 @@ gl.short_line_list = {
     "FloaTerm",
 }
 
-local i = require("plugins.statusline.galaxy.icons")
+local icons = {
+    slant = {Right = "", Left = ""},
+    diagnostic = {error = "", warn = "", info = "!"},
+    diff = {Add = "", Modified = "", Remove = ""},
+    git = "",
+    mode = {
+        c = "🅒",
+        i = "🅘",
+        n = "🅝",
+        r = "🅡",
+        s = "🅢",
+        t = "🅣",
+        v = "🅥",
+    },
+    bullet = "•",
+}
+
 local c = require("plugins.statusline.galaxy.colors")
 local u = require("plugins.statusline.galaxy.utils")
 local diagnostic = require("plugins.statusline.galaxy.providers.diagnostic")
@@ -76,7 +92,7 @@ gls.left[4] = {
     FileName = {
         provider = fileName,
         condition = u.buffer_not_empty,
-        separator = i.slant.Left,
+        separator = icons.slant.Left,
         separator_highlight = {c.Color("purple"), c.Color("act1")},
         highlight = {c.Color("func"), c.Color("act1"), "bold"},
     },
@@ -95,7 +111,7 @@ gls.left[6] = {FiletTypeSeperator = {provider = filetTypeSeperator}}
 gls.left[7] = {
     DiagnosticError = {
         provider = diagnosticError,
-        icon = " " .. i.bullet,
+        icon = " " .. icons.bullet,
         highlight = {c.Color("error"), c.Color("act1")},
     },
 }
@@ -103,7 +119,7 @@ gls.left[7] = {
 gls.left[8] = {
     DiagnosticWarn = {
         provider = diagnosticWarn,
-        icon = " " .. i.bullet,
+        icon = " " .. icons.bullet,
         highlight = {c.Color("warning"), c.Color("act1")},
     },
 }
@@ -111,7 +127,7 @@ gls.left[8] = {
 gls.left[9] = {
     DiagnosticInfo = {
         provider = diagnosticInfo,
-        icon = " " .. i.bullet,
+        icon = " " .. icons.bullet,
         highlight = {c.Color("info"), c.Color("act1")},
     },
 }
@@ -141,44 +157,6 @@ gls.left[12] = {
         highlight = {c.Color("orange"), c.Color("bg")},
     },
 }
-
--- gls.left[13] = {
---    GitBranch = {
---        provider = 'GitBranch',
---        condition = condition.check_git_workspace,
---        separator = ' ',
---        separator_highlight = {'NONE', c.Color('bg')},
---        highlight = {c.Color('grey'), c.Color('bg')}
---    }
--- }
-
--- gls.left[14] = {
---    DiffAdd = {
---        provider = 'DiffAdd',
---        condition = condition.hide_in_width,
---        icon = '  ',
---        highlight = {c.Color('green'), c.Color('bg')}
---    }
--- }
---
--- gls.left[15] = {
---    DiffModified = {
---        provider = 'DiffModified',
---        condition = condition.hide_in_width,
---        icon = ' 柳',
---        highlight = {c.Color('blue'), c.Color('bg')}
---    }
--- }
---
--- gls.left[16] = {
---    DiffRemove = {
---        provider = 'DiffRemove',
---        condition = condition.hide_in_width,
---        icon = '  ',
---        highlight = {c.Color('red'), c.Color('bg')}
---    }
--- }
---
 
 gls.left[12] = {
     GitBranch = {
@@ -213,7 +191,7 @@ gls.right[2] = {
 gls.right[3] = {
     PerCent = {
         provider = linePercent,
-        separator = i.slant.Left,
+        separator = icons.slant.Left,
         separator_highlight = {c.Color("act1"), c.Color("purple")},
         highlight = {c.Color("base"), c.Color("act1")},
     },
@@ -228,7 +206,7 @@ gls.right[4] = {
 gls.short_line_left[1] = {
     BufferType = {
         provider = fileTypeName,
-        separator = i.slant.Right,
+        separator = icons.slant.Right,
         separator_highlight = {c.Color("purple"), c.Color("bg")},
         highlight = {c.Color("base"), c.Color("purple")},
     },
@@ -237,7 +215,7 @@ gls.short_line_left[1] = {
 gls.short_line_right[1] = {
     BufferIcon = {
         provider = bufferIcon,
-        separator = i.slant.Left,
+        separator = icons.slant.Left,
         separator_highlight = {c.Color("purple"), c.Color("bg")},
         highlight = {c.Color("base"), c.Color("purple")},
     },
