@@ -1,15 +1,14 @@
-local vim = vim
-vim.g.nvim_tree_indent_markers = 1
-vim.g.nvim_tree_follow = 1
-vim.g.nvim_tree_disable_netrw = 0
-vim.g.nvim_tree_hijack_netrw = 0
-vim.g.nvim_tree_auto_close = 1
-vim.g.nvim_tree_auto_ignore_ft = "startify"
-vim.g.nvim_tree_side = "right"
-vim.g.nvim_tree_quit_on_open = 0
-vim.g.nvim_tree_tab_open = 1
+Vim.g.nvim_tree_indent_markers = 1
+Vim.g.nvim_tree_follow = 1
+Vim.g.nvim_tree_disable_netrw = 0
+Vim.g.nvim_tree_hijack_netrw = 0
+Vim.g.nvim_tree_auto_close = 1
+Vim.g.nvim_tree_auto_ignore_ft = "startify"
+Vim.g.nvim_tree_side = "right"
+Vim.g.nvim_tree_quit_on_open = 0
+Vim.g.nvim_tree_tab_open = 1
 
-vim.g.nvim_tree_icons = {
+Vim.g.nvim_tree_icons = {
     default = "",
     symlink = "",
     git = {
@@ -29,7 +28,7 @@ vim.g.nvim_tree_icons = {
 }
 
 local tree_cb = require"nvim-tree.config".nvim_tree_callback
-vim.g.nvim_tree_bindings = {
+Vim.g.nvim_tree_bindings = {
     -- mappings
     ["<CR>"] = tree_cb("edit"),
     ["o"] = tree_cb("edit"),

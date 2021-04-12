@@ -1,21 +1,7 @@
 local styles = {
-    edge = {
-        "default",
-        "aura",
-        "neon"
-    },
-    gruvbox = {
-        "medium",
-        "soft",
-        "hard"
-    },
-    sonokai = {
-        "default",
-        "atlantis",
-        "andromeda",
-        "shusia",
-        "maia"
-    }
+    edge = {"default", "aura", "neon"},
+    gruvbox = {"medium", "soft", "hard"},
+    sonokai = {"default", "atlantis", "andromeda", "shusia", "maia"},
 }
 
 if Theming.colorscheme == nil or Theming.colorscheme:gsub("%s+", "") == "" then
@@ -44,63 +30,6 @@ if Theming.colorscheme_style ~= nil then
     check_theme(C)
 else
     CS = ""
-end
-
---[[ local function check_themes(theme)
-    for i, k in pairs(styles) do
-        if i == theme then
-            table = styles[i]
-        end
-    end
-    print(table)
-    local default_style
-    default_style = table[1]
-    if default_style ~= nil then
-        if CS == "" or CS == nil then
-            CS = default_style
-        end
-    end
-end
-check_themes(C) ]]
---[[ local function has_style(index, theme)
-    if index == theme then
-        Style = true
-    end
-    return Style
-end
-
-local function check_style(theme)
-    for i, k in pairs(styles) do
-        has_style(i, theme)
-        if Style == true then
-            table = styles[i]
-            local default_style
-            default_style = table[1]
-            if CS == "" or CS == nil then
-                CS = default_style
-            end
-        end
-    end
-end
-check_style(C) ]]
--- LSP
-
-if LSP.bash == nil then
-    LSP.bash = false
-elseif LSP.clangd == nil then
-    LSP.clangd = false
-elseif LSP.css == nil then
-    LSP.css = false
-elseif LSP.emmet == nil then
-    LSP.emmet = false
-elseif LSP.json == nil then
-    LSP.json = false
-elseif LSP.lua == nil then
-    LSP.lua = false
-elseif LSP.python == nil then
-    LSP.python = false
-elseif LSP.tsserver == nil then
-    LSP.tsserver = false
 end
 
 -- Completion

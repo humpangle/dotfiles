@@ -1,4 +1,3 @@
-local vim = vim
 local i = require("plugins.statusline.galaxy.icons")
 local u = require("plugins.statusline.galaxy.utils")
 local diagnostic = require("plugins.statusline.galaxy.providers.diagnostic")
@@ -19,17 +18,17 @@ function os.capture(cmd, raw)
 end
 
 local function file_readonly()
-    if vim.bo.filetype == "help" then
+    if Vim.bo.filetype == "help" then
         return ""
     end
-    if vim.bo.readonly == true then
+    if Vim.bo.readonly == true then
         return " "
     end
     return ""
 end
 
 local pybang = function()
-    local b = vim.fn.getline(1)
+    local b = Vim.fn.getline(1)
     if b:sub(-7) == "python3" then
         return "Python 3"
     elseif b:sub(-7) == "python2" then
@@ -43,21 +42,21 @@ local function shellbang(shell)
     local b = (function()
         if shell ~= nil then
             return shell
-        elseif vim.fn.getline(1):sub(-3) == "/sh" then
+        elseif Vim.fn.getline(1):sub(-3) == "/sh" then
             return os.capture("readlink /usr/bin/sh")
         else
-            return vim.fn.getline(1)
+            return Vim.fn.getline(1)
         end
     end)()
     if b:sub(-4) == "bash" or b == "bash" then
         return "Bourne Again SHell"
     elseif b:sub(-4) == "dash" or b == "dash" then
         return "Debian Almquist SHell"
-    elseif b:sub(-3) == "csh" or b:sub(-4) == "tcsh" or b == "csh" or b == "tcsh" then
+    elseif b:sub(-3) == "csh" or b:sub(-4) == "tcsh" or b == "csh" or b ==
+        "tcsh" then
         return "C SHell"
-    elseif
-        b:sub(-3) == "ksh" or b:sub(-4) == "mksh" or b:sub(-5) == "pdksh" or b == "ksh" or b == "mksh" or b == "pdksh"
-     then
+    elseif b:sub(-3) == "ksh" or b:sub(-4) == "mksh" or b:sub(-5) == "pdksh" or
+        b == "ksh" or b == "mksh" or b == "pdksh" then
         return "Korn SHell"
     elseif b:sub(-3) == "zsh" or b == "zsh" then
         return "Z SHell"
@@ -73,21 +72,15 @@ local function shellbang(shell)
 end
 
 local bangcheck = function()
-    local b = vim.fn.getline(1)
+    local b = Vim.fn.getline(1)
     if b:sub(3) == "#!/" then
-        if
-            b:sub(-4) == "bash" or b:sub(-4) == "dash" or b:sub(-4) == "tcsh" or b:sub(-3) == "csh" or
-                b:sub(-3) == "ksh" or
-                b:sub(-4) == "mksh" or
-                b:sub(-5) == "pdksh" or
-                b:sub(-3) == "zsh" or
-                b:sub(-3) == "ash" or
-                b:sub(-3) == "ion" or
-                b:sub(-4) == "fish" or
-                b:sub(-2) == "sh"
-         then
+        if b:sub(-4) == "bash" or b:sub(-4) == "dash" or b:sub(-4) == "tcsh" or
+            b:sub(-3) == "csh" or b:sub(-3) == "ksh" or b:sub(-4) == "mksh" or
+            b:sub(-5) == "pdksh" or b:sub(-3) == "zsh" or b:sub(-3) == "ash" or
+            b:sub(-3) == "ion" or b:sub(-4) == "fish" or b:sub(-2) == "sh" then
             return shellbang()
-        elseif b:sub(-7) == "python3" or b:sub(-7) == "python2" or b:sub(-6) == "python" then
+        elseif b:sub(-7) == "python3" or b:sub(-7) == "python2" or b:sub(-6) ==
+            "python" then
             return pybang()
         else
             return "FT?"
@@ -99,20 +92,20 @@ end
 
 -- get current file name
 function M.get_current_file_name()
-    local file = vim.fn.expand("%:t")
-    if vim.fn.empty(file) == 1 then
+    local file = Vim.fn.expand("%:t")
+    if Vim.fn.empty(file) == 1 then
         return ""
     end
     if string.len(file_readonly()) ~= 0 then
         return file .. file_readonly()
     end
-    if vim.bo.modifiable then
-        if vim.bo.modified then
+    if Vim.bo.modifiable then
+        if Vim.bo.modified then
             return file .. "   "
         end
     end
-    if vim.bo.filetype == "toggleterm" then
-        return "Term " .. vim.b.toggle_number
+    if Vim.bo.filetype == "toggleterm" then
+        return "Term " .. Vim.b.toggle_number
     else
         return file .. " "
     end
@@ -120,7 +113,7 @@ end
 
 -- format print current file size
 function M.format_file_size(file)
-    local size = vim.fn.getfsize(file)
+    local size = Vim.fn.getfsize(file)
     if size == 0 or size == -1 or size == -2 then
         return ""
     end
@@ -137,7 +130,7 @@ function M.format_file_size(file)
 end
 
 function M.get_file_size()
-    local file = vim.fn.expand("%:p")
+    local file = Vim.fn.expand("%:p")
     if string.len(file) == 0 then
         return ""
     end
@@ -146,29 +139,29 @@ end
 
 -- get file encode
 function M.get_file_encode()
-    local encode = vim.bo.fenc ~= "" and vim.bo.fenc or vim.o.enc
+    local encode = Vim.bo.fenc ~= "" and Vim.bo.fenc or Vim.o.enc
     return " " .. encode
 end
 
 -- get file format
 function M.get_file_format()
-    return vim.bo.fileformat
+    return Vim.bo.fileformat
 end
 
 -- show line:column
 function M.line_column()
-    local line = vim.fn.line(".")
-    local column = vim.fn.col(".")
+    local line = Vim.fn.line(".")
+    local column = Vim.fn.col(".")
     return line .. ":" .. column
 end
 
 -- show current line percent of all lines
 function M.current_line_percent()
-    local current_line = vim.fn.line(".")
-    local total_line = vim.fn.line("$")
+    local current_line = Vim.fn.line(".")
+    local total_line = Vim.fn.line("$")
     if current_line == 1 then
         return " Top "
-    elseif current_line == vim.fn.line("$") then
+    elseif current_line == Vim.fn.line("$") then
         return " Bot "
     end
     local result, _ = math.modf((current_line / total_line) * 100)
@@ -191,14 +184,28 @@ local icon_colors = {
     Green = "#8FAA54",
     Lightgreen = "#31B53E",
     White = "#FFFFFF",
-    LightBlue = "#5fd7ff"
+    LightBlue = "#5fd7ff",
 }
 
 local icons = {
     Brown = {""},
     Aqua = {""},
     LightBlue = {"", ""},
-    Blue = {"", "", "", "", "", "", "", "", "", "", "", "", ""},
+    Blue = {
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+    },
     Darkblue = {"", ""},
     Purple = {"", "", "", "", ""},
     Red = {"", "", "", "", "", ""},
@@ -210,7 +217,7 @@ local icons = {
     Salmon = {""},
     Green = {"", "", "", "", "", ""},
     Lightgreen = {"", "", "", "﵂"},
-    White = {"", "", "", "", "", ""}
+    White = {"", "", "", "", "", ""},
 }
 
 -- filetype or extensions : { colors ,icon}
@@ -222,8 +229,8 @@ end
 
 function M.get_file_icon()
     local icon = ""
-    if vim.fn.exists("*WebDevIconsGetFileTypeSymbol") == 1 then
-        icon = vim.fn.WebDevIconsGetFileTypeSymbol()
+    if Vim.fn.exists("*WebDevIconsGetFileTypeSymbol") == 1 then
+        icon = Vim.fn.WebDevIconsGetFileTypeSymbol()
         return icon .. " "
     end
     local ok, devicons = pcall(require, "nvim-web-devicons")
@@ -231,11 +238,11 @@ function M.get_file_icon()
         print("Does not found any icon plugin")
         return
     end
-    local f_name, f_extension = vim.fn.expand("%:t"), vim.fn.expand("%:e")
+    local f_name, f_extension = Vim.fn.expand("%:t"), Vim.fn.expand("%:e")
     icon = devicons.get_icon(f_name, f_extension)
     if icon == nil then
-        if user_icons[vim.bo.filetype] ~= nil then
-            icon = user_icons[vim.bo.filetype][2]
+        if user_icons[Vim.bo.filetype] ~= nil then
+            icon = user_icons[Vim.bo.filetype][2]
         elseif user_icons[f_extension] ~= nil then
             icon = user_icons[f_extension][2]
         else
@@ -247,11 +254,11 @@ end
 
 function M.get_file_icon_color()
     local icon = M.get_file_icon():match("%S+")
-    local filetype = vim.bo.filetype
-    local f_ext = vim.fn.expand("%:e")
+    local filetype = Vim.bo.filetype
+    local f_ext = Vim.fn.expand("%:e")
     if user_icons[filetype] == nil and user_icons[f_ext] == nil then
         for k, _ in pairs(icons) do
-            if vim.fn.index(icons[k], icon) ~= -1 then
+            if Vim.fn.index(icons[k], icon) ~= -1 then
                 return icon_colors[k]
             end
         end
@@ -263,7 +270,7 @@ function M.get_file_icon_color()
 end
 
 function M.get_file_type()
-    local ft = vim.bo.filetype
+    local ft = Vim.bo.filetype
     local filetype = (function()
         if ft == "python" then
             return pybang()
@@ -304,7 +311,7 @@ function M.get_file_type()
         elseif ft == "zsh" then
             return "Z SHell"
         elseif ft == "toggleterm" then
-            return shellbang(vim.o.shell)
+            return shellbang(Vim.o.shell)
         elseif ft == "" or ft == nil then
             return bangcheck()
         else
@@ -315,7 +322,7 @@ function M.get_file_type()
 end
 
 function M.filetype_seperator()
-    if not diagnostic.has_diagnostics() and not vim.bo.filetype == "" then
+    if not diagnostic.has_diagnostics() and not Vim.bo.filetype == "" then
         u.GalaxyHi("FiletTypeSeperator", "act1", "purple")
         return ""
     else

@@ -145,13 +145,13 @@ function M.Color(val)
             warning = "#dc752f", -- war
             info = "#3a81c3",
         }
-        if vim.o.background ~= nil and vim.o.background == "light" then
+        if Vim.o.background ~= nil and Vim.o.background == "light" then
             if light[val] ~= nil then
                 return light[val]
             else
                 return light.error
             end
-        elseif vim.o.background ~= nil and vim.o.background == "dark" then
+        elseif Vim.o.background ~= nil and Vim.o.background == "dark" then
             if dark[val] ~= nil then
                 return dark[val]
             else

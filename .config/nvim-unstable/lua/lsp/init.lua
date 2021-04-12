@@ -1,4 +1,16 @@
-local vim = vim
+LSP = {
+    -- values: true, false
+    -- Enable or disable LSP globally
+    enabled = true,
+    -- Choose which servers to start automatically
+    bash = true,
+    css = true,
+    emmet = true,
+    json = true,
+    lua = true,
+    python = true,
+    tsserver = true,
+}
 
 if LSP.enabled == nil or LSP.enabled == false then
     require("lsp/completion")
@@ -8,8 +20,8 @@ elseif LSP.enabled == true then
     -- LSP servers
 
     -- Stop lsp diagnostics from showing virtual text
-    vim.lsp.handlers["textDocument/publishDiagnostics"] =
-        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    Vim.lsp.handlers["textDocument/publishDiagnostics"] =
+        Vim.lsp.with(Vim.lsp.diagnostic.on_publish_diagnostics, {
             virtual_text = false,
             update_in_insert = false,
             underline = true,

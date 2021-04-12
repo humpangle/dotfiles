@@ -1,13 +1,11 @@
 local gl = require("galaxyline")
 
-local vim = vim
-
 local function is_buffer_empty()
-    return vim.fn.empty(vim.fn.expand("%:t")) == 1
+    return Vim.fn.empty(Vim.fn.expand("%:t")) == 1
 end
 
 local function has_width_gt(cols)
-    return vim.fn.winwidth(0) / 2 > cols
+    return Vim.fn.winwidth(0) / 2 > cols
 end
 
 local gls = gl.section
@@ -64,7 +62,7 @@ end
 
 local inactive_statusline = function()
     return buffer_not_empty() and
-               not hasvalue(gl.short_line_list, vim.bo.filetype)
+               not hasvalue(gl.short_line_list, Vim.bo.filetype)
 end
 
 local checkwidth = function()
@@ -83,26 +81,26 @@ local mode_color = function()
         t = colors.blue,
     }
 
-    if mode_colors[vim.fn.mode()] ~= nil then
-        return mode_colors[vim.fn.mode()]
+    if mode_colors[Vim.fn.mode()] ~= nil then
+        return mode_colors[Vim.fn.mode()]
     else
-        print(vim.fn.mode())
+        print(Vim.fn.mode())
         return colors.purple
     end
 end
 
 local function file_readonly()
-    if vim.bo.filetype == "help" then
+    if Vim.bo.filetype == "help" then
         return ""
     end
-    if vim.bo.readonly == true then
+    if Vim.bo.readonly == true then
         return "  "
     end
     return ""
 end
 
 local function get_current_file_name()
-    local file = vim.api.nvim_exec([[
+    local file = Vim.api.nvim_exec([[
     if winwidth(0) < 50
       echo expand('%:t')
     elseif winwidth(0) > 150
@@ -112,7 +110,7 @@ local function get_current_file_name()
     endif
     ]], true)
 
-    if vim.fn.empty(file) == 1 then
+    if Vim.fn.empty(file) == 1 then
         return ""
     end
 
@@ -120,7 +118,7 @@ local function get_current_file_name()
         return file .. file_readonly()
     end
 
-    if vim.bo.modifiable and vim.bo.modified then
+    if Vim.bo.modifiable and Vim.bo.modified then
         return file .. "  "
     end
 
@@ -128,8 +126,8 @@ local function get_current_file_name()
 end
 
 local function get_current_file_name_short()
-    if hasvalue(gl.short_line_list, vim.bo.filetype) then
-        return vim.bo.filetype
+    if hasvalue(gl.short_line_list, Vim.bo.filetype) then
+        return Vim.bo.filetype
     else
         return get_current_file_name()
     end
@@ -147,7 +145,7 @@ local function lsp_status(status)
 end
 
 local function get_coc_lsp()
-    local status = vim.fn["coc#status"]()
+    local status = Vim.fn["coc#status"]()
     if not status or status == "" then
         return ""
     end
@@ -155,14 +153,14 @@ local function get_coc_lsp()
 end
 
 local function get_diagnostic_info()
-    if vim.fn.exists("*coc#rpc#start_server") == 1 then
+    if Vim.fn.exists("*coc#rpc#start_server") == 1 then
         return get_coc_lsp()
     end
     return ""
 end
 
 local function get_current_func()
-    local has_func, func_name = pcall(vim.api.nvim_buf_get_var, 0,
+    local has_func, func_name = pcall(Vim.api.nvim_buf_get_var, 0,
                                       "coc_current_function")
     if not has_func then
         return
@@ -190,9 +188,9 @@ gls.left = {
                     s = "SELECT",
                     S = "S-LINE",
                 }
-                vim.api.nvim_command("hi GalaxyViMode guibg=" .. mode_color())
-                if alias[vim.fn.mode()] ~= nil then
-                    return "  " .. alias[vim.fn.mode()] .. " "
+                Vim.api.nvim_command("hi GalaxyViMode guibg=" .. mode_color())
+                if alias[Vim.fn.mode()] ~= nil then
+                    return "  " .. alias[Vim.fn.mode()] .. " "
                 else
                     return "  V-BLOCK "
                 end
@@ -279,10 +277,10 @@ gls.mid = {
 }
 
 local get_coc_git_status = function()
-    if vim.fn.exists("b:coc_git_status") ~= 1 then
+    if Vim.fn.exists("b:coc_git_status") ~= 1 then
         return ""
     end
-    return vim.api.nvim_buf_get_var(0, "coc_git_status")
+    return Vim.api.nvim_buf_get_var(0, "coc_git_status")
 end
 
 local CocDiffAdd = function()
@@ -496,7 +494,7 @@ function ToggleGalaxyline()
     gl.load_galaxyline()
 end
 
-vim.api.nvim_set_keymap("n", "!", ":lua ToggleGalaxyline()<CR>",
+Vim.api.nvim_set_keymap("n", "!", ":lua ToggleGalaxyline()<CR>",
                         {noremap = true, silent = true})
 
 -- Short status line

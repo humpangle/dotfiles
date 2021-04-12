@@ -1,2 +1,2 @@
 -- npm i -g typescript typescript-language-server
-require("lspconfig").tsserver.setup {autostart = LSP.tsserver}
+require("lspconfig").tsserver.setup {autostart = LSP.tsserver or false}

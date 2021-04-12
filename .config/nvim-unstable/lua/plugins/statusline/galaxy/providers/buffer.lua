@@ -1,11 +1,10 @@
-local vim = vim
 local M = {}
 
 -- get buffer number
 function M.get_buffer_number()
     local num_bufs, idx = 0, 1
-    while (idx <= vim.fn.bufnr("$")) do
-        if vim.fn.buflisted(idx) then
+    while (idx <= Vim.fn.bufnr("$")) do
+        if Vim.fn.buflisted(idx) then
             num_bufs = num_bufs + 1
         end
         idx = idx + 1
@@ -23,15 +22,15 @@ local buf_icon = {
     vista_kind = "  ",
     dbui = "  ",
     magit = "  ",
-    LuaTree = "  "
+    LuaTree = "  ",
 }
 
 function M.get_buffer_type_icon()
-    return buf_icon[vim.bo.filetype]
+    return buf_icon[Vim.bo.filetype]
 end
 
 function M.get_buffer_filetype()
-    return vim.bo.filetype:upper()
+    return Vim.bo.filetype:upper()
 end
 
 return M

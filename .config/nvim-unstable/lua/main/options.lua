@@ -1,10 +1,7 @@
 local u = require("utils.core")
 
-local vim = vim
-local cmd = vim.cmd
-
-vim.g.python_host_prog = os.getenv("PYTHON2")
-vim.g.python3_host_prog = os.getenv("PYTHON3")
+Vim.g.python_host_prog = os.getenv("PYTHON2")
+Vim.g.python3_host_prog = os.getenv("PYTHON3")
 
 -- Global
 u.opt("o", "incsearch", true)
@@ -50,7 +47,7 @@ u.opt("b", "fileencoding", "utf-8")
 u.opt("b", "syntax", "on")
 
 -- Commands
-cmd("set shortmess+=c")
-cmd("set iskeyword+=-")
-cmd("set path+=.,**")
-cmd("filetype plugin on")
+Cmd("set shortmess+=c")
+Cmd("set iskeyword+=-")
+Cmd("set path+=.,**")
+Cmd("filetype plugin on")

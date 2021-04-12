@@ -1,7 +1,9 @@
 local extra = {}
 local G = {}
 local Git = {}
-local api, fn, ft = vim.api, vim.fn, vim.bo.filetype
+local api = Vim.api
+local fn = Vim.fn
+local ft = Vim.bo.filetype
 
 -- Local
 --- Check if a file or directory exists in this path
@@ -69,8 +71,9 @@ function Git.get_root_dir(path)
     -- able to do that inside of logical operator
     local parent_path = pathname(path)
 
-    return has_git_dir(path) or has_git_file(path) or -- Otherwise go up one level and make a recursive call
-        (parent_path ~= path and Git.get_root_dir(parent_path) or nil)
+    return
+        has_git_dir(path) or has_git_file(path) or -- Otherwise go up one level and make a recursive call
+            (parent_path ~= path and Git.get_root_dir(parent_path) or nil)
 end
 
 function extra.get_branch()
@@ -150,12 +153,12 @@ end
 
 function extra.is_buffer_empty()
     -- Check whether the current buffer is empty
-    return vim.fn.empty(vim.fn.expand("%:t")) == 1
+    return Vim.fn.empty(Vim.fn.expand("%:t")) == 1
 end
 
 function extra.has_width_gt(cols)
     -- Check if the windows width is greater than a given number of columns
-    return vim.fn.winwidth(0) / 2 > cols
+    return Vim.fn.winwidth(0) / 2 > cols
 end
 
 return extra

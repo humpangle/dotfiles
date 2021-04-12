@@ -1,2 +1,2 @@
 -- npm i -g pyright
-require("lspconfig").pyright.setup {autostart = LSP.python}
+require("lspconfig").pyright.setup {autostart = LSP.python or false}

@@ -3,7 +3,6 @@
 local configs = require("lspconfig/configs")
 local nvim_lsp = require("lspconfig")
 
-local vim = vim
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -12,12 +11,12 @@ configs.emmet_ls = {
         cmd = {"emmet-ls", "--stdio"},
         filetypes = {"html", "css"},
         root_dir = function()
-            return vim.loop.cwd()
+            return Vim.loop.cwd()
         end,
         settings = {},
     },
 }
-nvim_lsp.emmet_ls.setup {autostart = LSP.emmet}
+nvim_lsp.emmet_ls.setup {autostart = LSP.emmet or false}
 
 -- no need for hmtl server having emmet-ls and snippets working
 -- npm i -g vscode-html-languageserver-bin

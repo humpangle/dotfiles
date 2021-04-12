@@ -1,4 +1,3 @@
-local vim = vim
 local i = require("plugins.statusline.galaxy.icons")
 local u = require("plugins.statusline.galaxy.utils")
 
@@ -24,7 +23,7 @@ local num = {
     "⓱",
     "⓲",
     "⓳",
-    "⓴"
+    "⓴",
 }
 
 function M.get_mode()
@@ -48,19 +47,19 @@ function M.get_mode()
         ["r?"] = {i.mode.r, "chocolate"},
         [""] = {"🅢 ", "SkyBlue2"},
         [""] = {" ", "gray"},
-        ["!"] = {"! ", "plum3"}
+        ["!"] = {"! ", "plum3"},
     }
 
     local n = (function()
-        if num[vim.fn.bufnr("%")] ~= nil then
-            return num[vim.fn.bufnr("%")]
+        if num[Vim.fn.bufnr("%")] ~= nil then
+            return num[Vim.fn.bufnr("%")]
         else
-            return vim.fn.bufnr("%")
+            return Vim.fn.bufnr("%")
         end
     end)()
 
-    local vimMode = mode[vim.fn.mode()]
-    if mode[vim.fn.mode()] ~= nil then
+    local vimMode = mode[Vim.fn.mode()]
+    if mode[Vim.fn.mode()] ~= nil then
         u.GalaxyBG("ViMode", vimMode[2])
         return vimMode[1] .. " | " .. n .. " "
     else
@@ -90,15 +89,15 @@ function M.seperator()
         ["r?"] = "chocolate",
         [""] = "SkyBlue2",
         [""] = "gray",
-        ["!"] = "plum3"
+        ["!"] = "plum3",
     }
 
     local m_color = "error"
-    if mode_color[vim.fn.mode()] ~= nil then
-        m_color = mode_color[vim.fn.mode()]
+    if mode_color[Vim.fn.mode()] ~= nil then
+        m_color = mode_color[Vim.fn.mode()]
     end
 
-    if not u.buffer_not_empty() or vim.bo.filetype == "dashboard" then
+    if not u.buffer_not_empty() or Vim.bo.filetype == "dashboard" then
         u.GalaxyHi("ViModeSeperator", m_color, "purple")
     else
         u.GalaxyHi("ViModeSeperator", m_color, "act1")

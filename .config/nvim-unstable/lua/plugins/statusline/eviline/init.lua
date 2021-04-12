@@ -1,6 +1,5 @@
 -- IMPORTS
-local vim = vim
-local mode = vim.fn.mode
+local mode = Vim.fn.mode
 local galaxyline = require("galaxyline")
 local section = galaxyline.section
 
@@ -33,32 +32,25 @@ local _COLORS = {
     purple = {"#cf55f0", 129, "magenta"},
     magenta_dark = {"#bb0099", 126, "darkmagenta"},
     pink_light = {"#ffb7b7", 38, "white"},
-    purple_light = {"#af60af", 63, "magenta"}
+    purple_light = {"#af60af", 63, "magenta"},
 }
 
 _COLORS.bar = {middle = _COLORS.gray_dark, side = _COLORS.black}
 _COLORS.text = _COLORS.gray_light
 
 -- hex color subtable
-local _HEX_COLORS =
-    setmetatable(
-    {
-        ["bar"] = setmetatable(
-            {},
-            {
-                ["__index"] = function(_, key)
-                    return _COLORS.bar[key] and _COLORS.bar[key][1] or nil
-                end
-            }
-        )
-    },
-    {
+local _HEX_COLORS = setmetatable({
+    ["bar"] = setmetatable({}, {
         ["__index"] = function(_, key)
-            local color = _COLORS[key]
-            return color and color[1] or nil
-        end
-    }
-)
+            return _COLORS.bar[key] and _COLORS.bar[key][1] or nil
+        end,
+    }),
+}, {
+    ["__index"] = function(_, key)
+        local color = _COLORS[key]
+        return color and color[1] or nil
+    end,
+})
 
 local _MODES = {
     ["c"] = {"COMMAND-LINE", _COLORS.red},
@@ -84,13 +76,10 @@ local _MODES = {
     -- libmodal
     ["TABS"] = _COLORS.tan,
     ["BUFFERS"] = _COLORS.teal,
-    ["TABLES"] = _COLORS.orange_light
+    ["TABLES"] = _COLORS.orange_light,
 }
 
-local _SEPARATORS = {
-    left = "",
-    right = ""
-}
+local _SEPARATORS = {left = "", right = ""}
 
 --[[
 	/*
@@ -110,15 +99,16 @@ local function all(...)
 end
 
 local function buffer_not_empty()
-    return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
+    return Vim.fn.empty(Vim.fn.expand("%:t")) ~= 1
 end
 
 local function checkwidth()
-    return (vim.fn.winwidth(0) / 2) > 40
+    return (Vim.fn.winwidth(0) / 2) > 40
 end
 
 local function find_git_root()
-    return require("galaxyline/provider_vcs").get_git_dir(vim.fn.expand("%:p:h"))
+    return
+        require("galaxyline/provider_vcs").get_git_dir(Vim.fn.expand("%:p:h"))
 end
 
 local function get_file_icon_color()
@@ -153,7 +143,7 @@ galaxyline.short_line_list = {
     "startify",
     "packer",
     "packager",
-    "FloaTerm"
+    "FloaTerm",
 }
 
 section.left = {
@@ -164,47 +154,49 @@ section.left = {
                 local mode_color = nil
                 local mode_name = nil
 
-                if vim.g.libmodalActiveModeName then
-                    mode_name = vim.g.libmodalActiveModeName
+                if Vim.g.libmodalActiveModeName then
+                    mode_name = Vim.g.libmodalActiveModeName
                     mode_color = _MODES[mode_name]
                 else
-                    local current_mode = _MODES[mode(true)] or _MODES[mode(false)]
+                    local current_mode =
+                        _MODES[mode(true)] or _MODES[mode(false)]
 
                     mode_name = current_mode[1]
                     mode_color = current_mode[2]
                 end
 
-                require("highlite").highlight("GalaxyViMode", {fg = mode_color, style = "bold"})
+                require("highlite").highlight("GalaxyViMode",
+                                              {fg = mode_color, style = "bold"})
 
                 return mode_name .. " "
             end,
             icon = "▊ ",
             highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.bar.side},
             separator = _SEPARATORS.right,
-            separator_highlight = {_HEX_COLORS.bar.side, get_file_icon_color}
-        }
+            separator_highlight = {_HEX_COLORS.bar.side, get_file_icon_color},
+        },
     },
     {
         FileIcon = {
             provider = {space, "FileIcon"},
             highlight = {_HEX_COLORS.bar.side, get_file_icon_color},
             separator = _SEPARATORS.left,
-            separator_highlight = {_HEX_COLORS.bar.side, get_file_icon_color}
-        }
+            separator_highlight = {_HEX_COLORS.bar.side, get_file_icon_color},
+        },
     },
     {
         FileName = {
             provider = {space, "FileName", "FileSize"},
             condition = buffer_not_empty,
-            highlight = {_HEX_COLORS.text, _HEX_COLORS.bar.side, "bold"}
-        }
+            highlight = {_HEX_COLORS.text, _HEX_COLORS.bar.side, "bold"},
+        },
     },
     {
         GitSeparator = {
             provider = printer(_SEPARATORS.right),
             condition = find_git_root,
-            highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.green_dark}
-        }
+            highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.green_dark},
+        },
     },
     {
         GitBranch = {
@@ -213,39 +205,46 @@ section.left = {
             condition = find_git_root,
             highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.green_dark, "bold"},
             separator = _SEPARATORS.left,
-            separator_highlight = {_HEX_COLORS.bar.middle, _HEX_COLORS.green_dark}
-        }
+            separator_highlight = {
+                _HEX_COLORS.bar.middle,
+                _HEX_COLORS.green_dark,
+            },
+        },
     },
     {
         LeftEnd = {
             provider = printer(_SEPARATORS.left),
             condition = negated(find_git_root),
-            highlight = {_HEX_COLORS.bar.middle, find_git_root() and _HEX_COLORS.green_dark or _HEX_COLORS.bar.side}
-        }
+            highlight = {
+                _HEX_COLORS.bar.middle,
+                find_git_root() and _HEX_COLORS.green_dark or
+                    _HEX_COLORS.bar.side,
+            },
+        },
     },
     {
         DiffAdd = {
             provider = "DiffAdd",
             condition = all(checkwidth, find_git_root),
             icon = "+",
-            highlight = {_HEX_COLORS.green_light, _HEX_COLORS.bar.middle}
-        }
+            highlight = {_HEX_COLORS.green_light, _HEX_COLORS.bar.middle},
+        },
     },
     {
         DiffModified = {
             provider = "DiffModified",
             condition = checkwidth,
             icon = "~",
-            highlight = {_HEX_COLORS.orange_light, _HEX_COLORS.bar.middle}
-        }
+            highlight = {_HEX_COLORS.orange_light, _HEX_COLORS.bar.middle},
+        },
     },
     {
         DiffRemove = {
             provider = "DiffRemove",
             condition = checkwidth,
             icon = "-",
-            highlight = {_HEX_COLORS.red_light, _HEX_COLORS.bar.middle}
-        }
+            highlight = {_HEX_COLORS.red_light, _HEX_COLORS.bar.middle},
+        },
     },
     {
         DiagnosticError = {
@@ -253,8 +252,11 @@ section.left = {
             icon = "Ⓧ ",
             highlight = {_HEX_COLORS.red, _HEX_COLORS.bar.middle},
             separator = " ",
-            separator_highlight = {_HEX_COLORS.bar.middle, _HEX_COLORS.bar.middle}
-        }
+            separator_highlight = {
+                _HEX_COLORS.bar.middle,
+                _HEX_COLORS.bar.middle,
+            },
+        },
     },
     {
         DiagnosticWarn = {
@@ -262,8 +264,11 @@ section.left = {
             icon = "⚠️ ",
             highlight = {_HEX_COLORS.yellow, _HEX_COLORS.bar.middle},
             separator = " ",
-            separator_highlight = {_HEX_COLORS.bar.middle, _HEX_COLORS.bar.middle}
-        }
+            separator_highlight = {
+                _HEX_COLORS.bar.middle,
+                _HEX_COLORS.bar.middle,
+            },
+        },
     },
     {
         DiagnosticHint = {
@@ -271,8 +276,11 @@ section.left = {
             icon = "💡",
             highlight = {_HEX_COLORS.magenta, _HEX_COLORS.bar.middle},
             separator = " ",
-            separator_highlight = {_HEX_COLORS.bar.middle, _HEX_COLORS.bar.middle}
-        }
+            separator_highlight = {
+                _HEX_COLORS.bar.middle,
+                _HEX_COLORS.bar.middle,
+            },
+        },
     },
     {
         DiagnosticInfo = {
@@ -280,9 +288,12 @@ section.left = {
             icon = "ⓘ ",
             highlight = {_HEX_COLORS.white, _HEX_COLORS.bar.middle},
             separator = " ",
-            separator_highlight = {_HEX_COLORS.bar.middle, _HEX_COLORS.bar.middle}
-        }
-    }
+            separator_highlight = {
+                _HEX_COLORS.bar.middle,
+                _HEX_COLORS.bar.middle,
+            },
+        },
+    },
 } -- section.left
 
 section.right = {
@@ -290,81 +301,81 @@ section.right = {
         Vista = {
             provider = "VistaPlugin",
             condition = function()
-                return vim.fn.exists(":Vista") ~= 0
+                return Vim.fn.exists(":Vista") ~= 0
             end,
-            highlight = {_HEX_COLORS.text, _HEX_COLORS.bar.middle}
-        }
+            highlight = {_HEX_COLORS.text, _HEX_COLORS.bar.middle},
+        },
     },
     {
         RightBegin = {
             provider = space,
             highlight = {_HEX_COLORS.bar.middle, _HEX_COLORS.bar.side},
             separator = _SEPARATORS.right,
-            separator_highlight = {_HEX_COLORS.bar.middle, _HEX_COLORS.bar.side}
-        }
+            separator_highlight = {_HEX_COLORS.bar.middle, _HEX_COLORS.bar.side},
+        },
     },
     {
         FileFormat = {
             provider = {"FileFormat", space},
-            highlight = {_HEX_COLORS.text, _HEX_COLORS.bar.side}
-        }
+            highlight = {_HEX_COLORS.text, _HEX_COLORS.bar.side},
+        },
     },
     {
         FileType = {
             provider = "FileTypeName",
             highlight = {_HEX_COLORS.black, get_file_icon_color, "bold"},
             separator = _SEPARATORS.left,
-            separator_highlight = {get_file_icon_color, _HEX_COLORS.bar.side}
-        }
+            separator_highlight = {get_file_icon_color, _HEX_COLORS.bar.side},
+        },
     },
     {
         FileSep = {
             provider = printer(_SEPARATORS.right),
-            highlight = {get_file_icon_color, _HEX_COLORS.bar.side}
-        }
+            highlight = {get_file_icon_color, _HEX_COLORS.bar.side},
+        },
     },
     {
         LineNumber = {
             provider = function()
-                return vim.fn.line(".")
+                return Vim.fn.line(".")
             end,
             icon = " ",
             condition = buffer_not_empty,
             highlight = {_HEX_COLORS.text, _HEX_COLORS.bar.side},
             separator = " ",
-            separator_highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.bar.side}
+            separator_highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.bar.side},
         },
         ColumnNumber = {
             provider = function()
-                return vim.fn.col(".")
+                return Vim.fn.col(".")
             end,
             icon = " ",
             condition = buffer_not_empty,
             highlight = {_HEX_COLORS.text, _HEX_COLORS.bar.side},
             separator = " ",
-            separator_highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.bar.side}
-        }
+            separator_highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.bar.side},
+        },
     },
     {
         PerCentSeparator = {
             provider = printer(_SEPARATORS.left),
             highlight = {_HEX_COLORS.magenta_dark, _HEX_COLORS.bar.side},
             separator = " ",
-            separator_highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.bar.side}
-        }
+            separator_highlight = {_HEX_COLORS.bar.side, _HEX_COLORS.bar.side},
+        },
     },
     {
         PerCent = {
             provider = "LinePercent",
-            highlight = {_HEX_COLORS.white, _HEX_COLORS.magenta_dark}
-        }
+            highlight = {_HEX_COLORS.white, _HEX_COLORS.magenta_dark},
+        },
     },
     {
         ScrollBar = {
             provider = "ScrollBar",
-            highlight = {_HEX_COLORS.gray, _HEX_COLORS.magenta_dark}
-        }
-    }
+            highlight = {_HEX_COLORS.gray, _HEX_COLORS.magenta_dark},
+        },
+    },
 } -- section.right
 
 section.short_line_left = {
@@ -373,9 +384,9 @@ section.short_line_left = {
             provider = {space, space, "FileTypeName", space},
             highlight = {_HEX_COLORS.black, _HEX_COLORS.purple, "bold"},
             separator = _SEPARATORS.right,
-            separator_highlight = {_HEX_COLORS.purple, _HEX_COLORS.bar.middle}
-        }
-    }
+            separator_highlight = {_HEX_COLORS.purple, _HEX_COLORS.bar.middle},
+        },
+    },
 }
 
 section.short_line_right = {
@@ -384,7 +395,7 @@ section.short_line_right = {
             provider = "BufferIcon",
             highlight = {_HEX_COLORS.black, _HEX_COLORS.purple, "bold"},
             separator = _SEPARATORS.left,
-            separator_highlight = {_HEX_COLORS.purple, _HEX_COLORS.bar.middle}
-        }
-    }
+            separator_highlight = {_HEX_COLORS.purple, _HEX_COLORS.bar.middle},
+        },
+    },
 }

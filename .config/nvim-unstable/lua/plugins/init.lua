@@ -59,7 +59,6 @@ return require("packer").startup(function()
     -- General plugins
     use {
         "kyazdani42/nvim-web-devicons",
-        "mhinz/vim-startify",
         "mbbill/undotree",
         "b3nj5m1n/kommentary",
         "windwp/nvim-autopairs",
