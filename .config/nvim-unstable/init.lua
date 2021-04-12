@@ -48,7 +48,7 @@ LSP = {
 
 -- General settings
 require("utils/handlers")
-require("main/options")
+require("main/settings")
 require("main/mappings")
 require("main/autocmds")
 require("plugins")

@@ -25,6 +25,9 @@ u.opt("o", "hidden", true)
 u.opt("o", "splitbelow", true)
 u.opt("o", "splitright", true)
 u.opt("o", "completeopt", "menuone,noinsert,noselect")
+u.opt("o", "encoding", "utf8")
+u.opt("o", "gdefault", true) -- Use 'g' flag by default with :s/foo/bar/.
+-- u.opt("o", "noswapfile", true)
 
 -- Window
 u.opt("w", "relativenumber", true)
@@ -33,6 +36,11 @@ u.opt("w", "numberwidth", 1)
 u.opt("w", "wrap", false)
 u.opt("w", "cursorline", true)
 u.opt("w", "conceallevel", 0)
+u.opt("w", "cc", "80") -- column width
+u.opt("w", "foldmethod", "indent")
+u.opt("w", "foldnestmax", 10)
+u.opt("w", "foldenable", true)
+u.opt("w", "foldlevel", 2)
 
 -- Buffer
 local indent = 2
@@ -46,6 +54,7 @@ u.opt("b", "swapfile", false)
 u.opt("b", "undofile", true)
 u.opt("b", "fileencoding", "utf-8")
 u.opt("b", "syntax", "on")
+u.opt("b", "autoread", true)
 
 -- Commands
 Cmd("set shortmess+=c")
