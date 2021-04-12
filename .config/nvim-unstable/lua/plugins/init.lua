@@ -75,4 +75,7 @@ return require("packer").startup(function()
         {"Th3Whit3Wolf/onebuddy", requires = "tjdevries/colorbuddy.vim"},
         {"npxbr/gruvbox.nvim", requires = "rktjmp/lush.nvim"},
     }
+
+    -- MANAGE VIM SESSIONS AUTOMACTICALLY
+    use {"tpope/vim-obsession", "dhruvasagar/vim-prosession"}
 end)
