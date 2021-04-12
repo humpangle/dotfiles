@@ -9,7 +9,6 @@ gl.short_line_list = {
     "undotree",
     "vista",
     "vista_markdown",
-    "NvimTree",
     "startify",
     "packer",
     "packager",

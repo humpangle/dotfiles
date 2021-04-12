@@ -43,9 +43,6 @@ return require("packer").startup(function()
     -- Git
     use "lewis6991/gitsigns.nvim"
 
-    -- File manager
-    use "kyazdani42/nvim-tree.lua"
-
     -- Markdown
     use {"iamcco/markdown-preview.nvim", run = "cd app && yarn install"}
     use "junegunn/goyo.vim"

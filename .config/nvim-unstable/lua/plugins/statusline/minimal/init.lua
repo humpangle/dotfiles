@@ -7,7 +7,6 @@ gl.short_line_list = {
     "packager",
     "Floaterm",
     "packer",
-    "NvimTree",
     "undotree",
     "diff",
     "Floaterm",

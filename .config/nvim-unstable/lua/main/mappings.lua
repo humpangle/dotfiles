@@ -1,6 +1,5 @@
 local u = require("utils.core")
 
-
 Vim.g.mapleader = " "
 
 -- Basics
@@ -37,9 +36,6 @@ u.map("n", "<leader>gs", ":Telescope git_status<CR>")
 -- buffer navigation
 u.map("n", "<TAB>", ":bn<CR>")
 u.map("n", "<S-TAB>", ":bp<CR>")
-
--- File manager
-u.map("n", "<leader>e", ":NvimTreeToggle<CR>")
 
 -- LSP
 -- u.map("n", "gD", ":lua vim.lsp.buf.declaration()<CR>")
