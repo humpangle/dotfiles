@@ -32,6 +32,20 @@ Completion = {
     spell = true,
 }
 
+LSP = {
+    -- values: true, false
+    -- Enable or disable LSP globally
+    enabled = true,
+    -- Choose which servers to start automatically
+    bash = true,
+    css = true,
+    emmet = true,
+    json = true,
+    lua = true,
+    python = true,
+    tsserver = true,
+}
+
 -- General settings
 require("utils/handlers")
 require("main/options")

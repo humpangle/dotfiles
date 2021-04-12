@@ -1,17 +1,3 @@
-LSP = {
-    -- values: true, false
-    -- Enable or disable LSP globally
-    enabled = true,
-    -- Choose which servers to start automatically
-    bash = true,
-    css = true,
-    emmet = true,
-    json = true,
-    lua = true,
-    python = true,
-    tsserver = true,
-}
-
 if LSP.enabled == nil or LSP.enabled == false then
     require("lsp/completion")
 elseif LSP.enabled == true then
