@@ -7,7 +7,7 @@ Lsp_config = require("lspconfig")
 
 Theming = {
     -- Press <space>fc to see all available themes
-    colorscheme = "gruvbox",
+    colorscheme = "onebuddy",
     --[[ Some colorscheme have multiple styles to choose from.
       here are the available options:
       For @gruvbox = medium, soft, hard
