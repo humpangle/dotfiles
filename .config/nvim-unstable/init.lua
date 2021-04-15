@@ -3,6 +3,8 @@
 Vim = vim
 -- ditto
 Cmd = Vim.cmd
+Vimg = Vim.g
+Vimo = Vim.o
 _, Lsp_config = pcall(require, "lspconfig")
 
 Theming = {

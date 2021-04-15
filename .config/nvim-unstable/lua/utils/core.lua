@@ -1,5 +1,4 @@
 local utils = {}
-local scopes = {o = Vim.o, b = Vim.bo, w = Vim.wo}
 
 -- autocommands
 function utils.define_augroups(definitions) -- {{{1
@@ -24,14 +23,6 @@ function utils.define_augroups(definitions) -- {{{1
     end
 end
 
--- options
-function utils.opt(scope, key, value)
-    scopes[scope][key] = value
-    if scope ~= "o" then
-        scopes["o"][key] = value
-    end
-end
-
 -- mappings
 function utils.map(mode, key, result, opts)
     local options = {noremap = true, silent = true}
@@ -53,7 +44,7 @@ function utils.search_nvim()
 end
 
 function utils.project_files()
-  local telescope = require("telescope.builtin")
+    local telescope = require("telescope.builtin")
     local opts = {} -- define here if you want to define something
     local ok = pcall(telescope.git_files, opts)
     if not ok then
