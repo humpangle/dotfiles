@@ -7,20 +7,6 @@ Vimg = Vim.g
 Vimo = Vim.o
 _, Lsp_config = pcall(require, "lspconfig")
 
-Theming = {
-    -- Press <space>fc to see all available themes
-    colorscheme = "onebuddy",
-    --[[ Some colorscheme have multiple styles to choose from.
-      here are the available options:
-      For @gruvbox = medium, soft, hard
-      For @edge = default, aura, neon
-      For @sonokai = default, atlantis, andromeda, shusia, maia ]]
-    colorscheme_style = "",
-    -- Choose a stulusline:
-    -- Options: galaxy, airline, eviline, gruvbox, minimal
-    statusline = "eviline",
-}
-
 Completion = {
     -- values: true, false
     -- Enable or disable completion globally
@@ -49,12 +35,10 @@ LSP = {
 }
 
 -- General settings
-require("utils/handlers")
 require("main/settings")
 require("main/mappings")
 require("main/autocmds")
 require("plugins")
-require("main/colorscheme")
 
 -- LSP
 require("lsp")
@@ -62,13 +46,23 @@ require("lsp")
 -- Plugins settings
 require("plugins/gitsigns-nvim")
 require("plugins/emmet-vim")
-require("plugins/nvim-colorizer")
 require("plugins/kommentary")
 require("plugins/nvim-autopairs")
 require("plugins/nvim-compe")
-require("plugins/statusline")
 require("plugins/terminal")
 require("plugins/telescope")
 require("plugins/treesitter")
 require("plugins/undotree")
 require("plugins/vim-floaterm")
+
+-- THEME SELECTION
+local theme_file = os.getenv("EBNIS_VIM_THEME")
+local bg = os.getenv("EBNIS_VIM_THEME_BG")
+
+if theme_file ~= nil and theme_file ~= "" then
+    require("plugins/" .. theme_file)
+    Vimo.background = bg == "d" and "dark" or "light"
+else
+    require("plugins/vim-solarized8")
+    Vimo.background = "dark"
+end

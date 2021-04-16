@@ -65,15 +65,7 @@ return require("packer").startup(function()
     }
 
     -- Themes
-    use {
-        "sainnhe/sonokai",
-        "christianchiarulli/nvcode-color-schemes.vim",
-        "Th3Whit3Wolf/space-nvim",
-        "sainnhe/edge",
-        "Iron-E/nvim-highlite",
-        {"Th3Whit3Wolf/onebuddy", requires = "tjdevries/colorbuddy.vim"},
-        {"npxbr/gruvbox.nvim", requires = "rktjmp/lush.nvim"},
-    }
+    use {"rakr/vim-one", "lifepillar/vim-gruvbox8", "lifepillar/vim-solarized8"}
 
     -- MANAGE VIM SESSIONS AUTOMACTICALLY
     use {"tpope/vim-obsession", "dhruvasagar/vim-prosession"}

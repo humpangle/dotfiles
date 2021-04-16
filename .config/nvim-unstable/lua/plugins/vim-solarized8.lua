@@ -1,0 +1,1 @@
+Cmd("colorscheme solarized8")
