@@ -74,7 +74,6 @@ call plug#begin(g:my_vim_plug_plugins_path)
   " cool status bar
   Plug 'itchyny/lightline.vim'
   " Floaterm is a floating terminal for Neovim
-  Plug 'voldikss/clap-floaterm' " use clap to search floaterm
   Plug 'voldikss/vim-floaterm'
 
   " SNIPPET ENGINES
