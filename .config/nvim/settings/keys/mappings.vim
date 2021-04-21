@@ -192,7 +192,7 @@ function! FormatElixir()
   e %
 endfunction
 command! FormatElixir call FormatElixir()
-nmap <leader>fe  :FormatElixir<CR>            " Format elixir file
+nmap <leader>fe  :FormatElixir<CR>
 
 " RESIZE WINDOW
 nnoremap <A-h> :vertical resize -2<CR>
