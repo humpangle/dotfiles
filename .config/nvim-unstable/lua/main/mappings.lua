@@ -42,11 +42,11 @@ u.map("v", "<", "<gv")
 u.map("v", ">", ">gv")
 
 -- yank / Copy and paste from system clipboard (Might require xclip install)
-u.map("v", "<Leader>Y", "\"+y", {noremap = false})
-u.map("v", "<Leader>X", "\"+y", {noremap = false})
-u.map("n", "<Leader>p", "\"+p", {noremap = false})
-u.map("v", "<Leader>p", "\"+p", {noremap = false})
-u.map("v", "<Leader>p", "\"+p", {noremap = false})
+u.map("v", "<Leader>Y", [["+y]], {noremap = false})
+u.map("v", "<Leader>X", [["+y]], {noremap = false})
+u.map("n", "<Leader>p", [["+p]], {noremap = false})
+u.map("v", "<Leader>p", [["+p]], {noremap = false})
+u.map("v", "<Leader>p", [["+p]], {noremap = false})
 -- go to buffer number - use like so gb34
 u.map("n", "gb", ":ls<CR>:b")
 -- Move between windows in a tab
@@ -83,8 +83,8 @@ u.map("v", "<A-j>", ":m '>+1<CR>gv=gv")
 u.map("v", "<A-k>", ":m '<-2<CR>gv=gv")
 
 -- EMBEDDED TERMINAL TODO: complete from mappings.vim
-u.map("t", "<C-h>", "<C-\\><C-N><C-w>h")
-u.map("t", "<C-j>", "<C-\\><C-N><C-w>j")
+u.map("t", "<C-h>", [[<C-\><C-N><C-w>h]])
+u.map("t", "<C-j>", [[<C-\><C-N><C-w>j]])
 
 -- COPY FILE PATH
 -- yank relative File path
