@@ -52,4 +52,12 @@ function utils.project_files()
     end
 end
 
+function utils.toggleBackground()
+    if Vimo.background == "dark" then
+        Vimo.background = "light"
+    else
+        Vimo.background = "light"
+    end
+end
+
 return utils

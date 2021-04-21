@@ -120,3 +120,6 @@ u.map("n", "<A-h>", ":vertical resize -2<CR>")
 u.map("n", "<A-l>", ":vertical resize +2<CR>")
 u.map("n", "<A-u>", ":resize +2<CR>")
 u.map("n", "<A-m>", ":resize -2<CR>")
+
+-- START TOGGLE BACKGROUND COLOR
+u.map('n', "tb", [[:lua require("utils.core").toggleBackground()<CR>]])
