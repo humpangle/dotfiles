@@ -20,7 +20,6 @@ return require("packer").startup(function()
         "sbdchd/neoformat",
         "hrsh7th/vim-vsnip",
         "mattn/emmet-vim",
-        "~/Repos/friendly-snippets",
     }
 
     -- Telescope
