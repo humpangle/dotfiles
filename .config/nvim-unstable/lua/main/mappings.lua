@@ -87,17 +87,17 @@ u.map("t", "<C-j>", "<C-\\><C-N><C-w>j")
 
 -- COPY FILE PATH
 -- yank relative File path
-u.map("n", ",yr", ":let @+=expand(\"%\")<CR>", {noremap = true})
+u.map("n", ",yr", [[:let @+=expand("%")<CR>]], {noremap = false})
 -- yank file name / not path
-u.map("n", ",yn", ":let @+=expand(\"%:t\")<CR>", {noremap = true})
+u.map("n", ",yn", [[:let @+=expand("%:t")<CR>]], {noremap = false})
 -- yank file parent directory
-u.map("n", ",yd", ":let @+=expand(\"%:p:h\")<CR>", {noremap = true})
+u.map("n", ",yd", [[:let @+=expand("%:p:h")<CR>]], {noremap = false})
 -- yank absolute File path
-u.map("n", ",yf", ":let @+=expand(\"%:p\")<CR>", {noremap = true})
+u.map("n", ",yf", [[:let @+=expand("%:p")<CR>]], {noremap = false})
 -- copy relative path
-u.map("n", ",cr", ":let @\"=expand(\"%\")<CR>", {noremap = true})
+u.map("n", ",cr", [[:let @"=expand("%")<CR>]], {noremap = false})
 -- copy absolute path
-u.map("n", ",cf", ":let @\"=expand(\"%:p\")<CR>", {noremap = true})
+u.map("n", ",cf", [[:let @"=expand("%:p")<CR>]], {noremap = false})
 
 -- toggle cursorcolumn
 u.map("n", ",tc", ":set cursorline! cursorcolumn!<CR>")
