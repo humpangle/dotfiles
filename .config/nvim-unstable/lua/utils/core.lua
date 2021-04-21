@@ -25,7 +25,7 @@ end
 
 -- mappings
 function utils.map(mode, key, result, opts)
-    local options = {noremap = true, silent = true}
+    local options = {noremap = true}
     if opts then
         options = Vim.tbl_extend("force", options, opts)
     end
