@@ -82,7 +82,7 @@ function utils.toggleBackground()
     if Vimo.background == "dark" then
         Vimo.background = "light"
     else
-        Vimo.background = "light"
+        Vimo.background = "dark"
     end
 end
 
