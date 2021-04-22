@@ -20,6 +20,7 @@ so ~/.config/nvim/settings/plugins/nvim-treesitter.vim
 so ~/.config/nvim/settings/plugins/vim-grepper.vim
 so ~/.config/nvim/settings/plugins/fzf.vim
 so ~/.config/nvim/settings/plugins/fzf-checkout.vim
+so ~/.config/nvim/settings/plugins/vim-gutentags.vim
 
 " THEME SELECTION
 if !empty($EBNIS_VIM_THEME)
