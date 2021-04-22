@@ -52,16 +52,14 @@ require("telescope").setup {
 
 require("telescope").load_extension("media_files")
 
--- Files managed by git
--- then if no .git folder found,
 -- Search file from root directory
-u.map("n", "<leader>ff", [[:lua require("utils.core").project_files()<CR>]])
+u.map("n", "<leader>ff", [[:lua require("utils.core").find_files() <CR>]])
 -- Search file from current directory
--- not working - searches from root
-u.map("n", "<leader>.",
-      [[:lua require("utils.core").project_files()<CR>=expad("%:h")<CR>/<CR>]])
+u.map("n", "<leader>.", [[:lua require("utils.core").find_files("dir") <CR>]])
 -- find open buffers
 u.map("n", "<leader>fb", [[:Telescope buffers<CR>]])
+-- Files managed by git
+u.map("n", "<leader>fg", [[:lua require("utils.core").find_files("git") <CR>]])
 -- search buffers history
 u.map("n", "<leader>fh", [[:Telescope command_history<CR>]])
 -- search for text in current buffer

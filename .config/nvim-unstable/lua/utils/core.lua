@@ -1,4 +1,16 @@
-local utils = {}
+local utils = {
+    rg_defaults = {
+        "rg",
+        "--files",
+        "--hidden",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+        "--ignore",
+    },
+}
 
 -- autocommands
 function utils.define_augroups(definitions) -- {{{1
@@ -43,13 +55,27 @@ function utils.search_nvim()
         {prompt_title = "Neovim Config", cwd = "$HOME/.config/nvim"})
 end
 
-function utils.project_files()
+function utils.find_files(dir)
     local telescope = require("telescope.builtin")
-    local opts = {} -- define here if you want to define something
-    local ok = pcall(telescope.git_files, opts)
-    if not ok then
-        telescope.find_files(opts)
+    local opts
+
+    if dir == "git" then
+        local ok = pcall(telescope.git_files, opts)
+        if ok then
+            return
+        end
     end
+
+    local rg_options = Vim.tbl_extend("force", utils.rg_defaults, {})
+
+    if dir == "dir" then
+        local current_dir = Vim.fn.expand("%:h")
+        table.insert(rg_options, current_dir)
+    end
+
+    opts = {find_command = rg_options}
+    telescope.find_files(opts)
+
 end
 
 function utils.toggleBackground()
