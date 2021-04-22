@@ -8,7 +8,8 @@ local utils = {
         "--line-number",
         "--column",
         "--smart-case",
-        "--ignore",
+        "--glob",
+        os.getenv("RG_IGNORES"),
     },
 }
 
