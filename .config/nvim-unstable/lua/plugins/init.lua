@@ -22,7 +22,7 @@ return require("packer").startup(function()
         "mattn/emmet-vim",
     }
 
-    -- Telescope
+    -- FUZZY FINDER
     use {
         "nvim-telescope/telescope.nvim",
         requires = {
@@ -30,6 +30,7 @@ return require("packer").startup(function()
             {"nvim-lua/plenary.nvim"},
             {"nvim-telescope/telescope-media-files.nvim"},
         },
+        "ludovicchabant/vim-gutentags",
     }
 
     -- Treesitter
