@@ -75,7 +75,6 @@ function utils.find_files(dir)
 
     opts = {find_command = rg_options}
     telescope.find_files(opts)
-
 end
 
 function utils.toggleBackground()
