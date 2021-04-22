@@ -1,31 +1,13 @@
 local u = require("utils.core")
 
-local RG_IGNORES = os.getenv("RG_IGNORES")
-
 local actions = require("telescope.actions")
 -- Global remapping
 ------------------------------
 -- '--color=never',
 require("telescope").setup {
     defaults = {
-        vimgrep_arguments = {
-            "rg",
-            "--files",
-            "--hidden",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-            "--glob " .. RG_IGNORES,
-        },
         prompt_position = "top",
-        -- sorting_strategy = "descending",
         sorting_strategy = "ascending",
-        file_ignore_patterns = {},
-        shorten_path = true,
-        color_devicons = true,
-        use_less = true,
 
         mappings = {
             i = {
@@ -44,7 +26,7 @@ require("telescope").setup {
         media_files = {
             -- filetypes whitelist
             -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-            filetypes = {"png", "webp", "jpg", "jpeg"},
+            filetypes = {"png", "webp", "jpg", "jpeg", "pdf"},
             find_cmd = "rg", -- find command (defaults to `fd`)
         },
     },
