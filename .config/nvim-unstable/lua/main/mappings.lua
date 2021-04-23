@@ -62,7 +62,7 @@ u.map("n", ",md", ":!mkdir -p %:h<cr><cr>")
 u.map("n", ",rm", ":!trash-put %:p<cr>:bdelete!<cr>")
 -- edit .bashrc file
 u.map("n", ",.", ":e ~/.bashrc<CR>")
-u.map("n", "nh", ":noh<CR>")
+u.map("n", "<leader>nh", ":noh<CR>")
 u.map("n", "<leader>ee", [[:Vexplore<CR>]])
 
 local myConfigPath = "~/.config/nvim/init.vim"
