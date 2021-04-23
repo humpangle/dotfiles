@@ -206,3 +206,7 @@ function! BackgroundToggle()
   endif
 endfunc
 nnoremap <leader>tb :call BackgroundToggle()<cr>
+
+" QuickFix and Location list
+nnoremap <leader>lc :lclose<CR>
+nnoremap <leader>qc :cclose<CR>
