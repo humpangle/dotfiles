@@ -53,7 +53,7 @@ return require("packer").startup(function()
     use "glepnir/galaxyline.nvim"
 
     -- Terminal
-    use {"akinsho/nvim-toggleterm.lua", "voldikss/vim-floaterm"}
+    use {"voldikss/vim-floaterm"}
 
     -- General plugins
     use {
