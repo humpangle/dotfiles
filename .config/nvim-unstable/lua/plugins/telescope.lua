@@ -8,6 +8,7 @@ require("telescope").setup {
     defaults = {
         prompt_position = "top",
         sorting_strategy = "ascending",
+        color_devicons = false,
 
         mappings = {
             i = {
