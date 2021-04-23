@@ -25,11 +25,9 @@ return require("packer").startup(function()
     -- FUZZY FINDER
     use {
         "nvim-telescope/telescope.nvim",
-        requires = {
-            {"nvim-lua/popup.nvim"},
-            {"nvim-lua/plenary.nvim"},
-            {"nvim-telescope/telescope-media-files.nvim"},
-        },
+        "nvim-lua/popup.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope-media-files.nvim",
         "ludovicchabant/vim-gutentags",
     }
 
