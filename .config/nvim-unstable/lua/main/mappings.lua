@@ -65,11 +65,11 @@ u.map("n", ",.", ":e ~/.bashrc<CR>")
 u.map("n", "<leader>nh", ":noh<CR>")
 u.map("n", "<leader>ee", [[:Vexplore<CR>]])
 
-local myConfigPath = "~/.config/nvim/init.vim"
+local my_config_path = "~/.config/nvim-unstable/init.vim"
 -- edit init.vim
-u.map("n", ",ec", ":execute e " .. myConfigPath .. "<CR>")
+u.map("n", ",ec", ":e " .. my_config_path .. "<CR>")
 -- source init.vim
-u.map("n", ",sc", ":execute so " .. myConfigPath .. "<CR>")
+u.map("n", ",sc", ":so " .. my_config_path .. "<CR>")
 
 -- TO MOVE LINES up/down
 u.map("n", "<A-k>", ":m .-2<CR>==")
