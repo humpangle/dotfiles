@@ -10,7 +10,7 @@ nnoremap gst  :Git status<CR>
 nnoremap gcm  :Git commit<CR>
 " vertical split (3 way merge) to resolve git merge conflict
 nnoremap gvs  :Gvdiffsplit!<CR>
-nnoremap gss  :Gstatus<CR>
+nnoremap gss  :Git<CR>
 nnoremap <leader>st  :Git<CR>
 nnoremap <leader>a.  :Git add .<CR>
 nnoremap gpm  :Git push origin master<CR>
@@ -27,5 +27,5 @@ nnoremap <leader>sa  :Git stash apply stash@{}<left>
 nnoremap <leader>sd  :Git stash drop stash@{}<left>
 nnoremap <leader>sl  :Git stash list<CR>
 nnoremap gsc  :Git stash clear<CR>
-nnoremap glo  :Glog <CR>
-nnoremap gl0  :0Glog <CR>
+nnoremap <leader>gl  :Gllog!<CR>
+nnoremap gl0  :0Gllog!<CR>
