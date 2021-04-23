@@ -56,6 +56,12 @@ u.map("n", "<leader>M", [[:Telescope keymaps<CR>]])
 u.map("n", "<leader>ft", [[:Telescope filetypes<CR>]])
 -- Git commits
 u.map("n", "<leader>cm", [[:Telescope git_commits<CR>]])
+-- Git commits for the current buffer
+u.map("n", "<leader>bc", [[:Telescope git_bcommits<CR>]])
+-- find tags in current buffer
+u.map("n", "<leader>bt", [[:Telescope current_buffer_tags<CR>]])
+-- find tags in entire project directory: ctags -R
+u.map("n", "<leader>pt", [[:Telescope tags<CR>]])
 
 u.map("n", "<leader>H", [[:Telescope help_tags<CR>]])
 u.map("n", "<leader>fs", [[:Telescope colorscheme<CR>]])
