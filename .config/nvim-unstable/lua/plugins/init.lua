@@ -49,7 +49,6 @@ return require("packer").startup(function()
 
     -- Statusline
     -- for icons:
-    -- requires = {'kyazdani42/nvim-web-devicons', opt = true}
     use "glepnir/galaxyline.nvim"
 
     -- Terminal
@@ -57,7 +56,6 @@ return require("packer").startup(function()
 
     -- General plugins
     use {
-        "kyazdani42/nvim-web-devicons",
         "mbbill/undotree",
         "b3nj5m1n/kommentary",
         "windwp/nvim-autopairs",
