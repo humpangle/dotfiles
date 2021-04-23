@@ -10,9 +10,6 @@ u.map("n", "<leader>sc", ":!clear && shellcheck -x %<CR>")
 
 u.map("n", "ss", ":luafile %<CR>", {silent = false})
 
--- Remap esc
-u.map("i", "jk", "<esc>")
-u.map("i", "kj", "<esc>")
 -- Format paragraph (selected or not) to 80 character lines.
 u.map("n", "<Leader>g", "gqap")
 u.map("x", "<Leader>g", "gqa")
