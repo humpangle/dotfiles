@@ -1,6 +1,6 @@
 so ~/.config/nvim/settings/vim-plug.vim
-so ~/.config/nvim/settings/general/settings.vim
-so ~/.config/nvim/settings/keys/mappings.vim
+so ~/.config/nvim/settings/settings.vim
+so ~/.config/nvim/settings/mappings.vim
 
 " PLUGINS
 so ~/.config/nvim/settings/plugins/vim-floaterm.vim
