@@ -108,7 +108,10 @@ u.map("n", ",tl", ":set invrelativenumber<CR>")
 
 -- MANAGE BUFFERS
 -- Delete all buffers
--- u.map("n", "<leader>ba", ":call DeleteAllBuffers()<cr>")
+u.map("n", "<leader>ba", [[:lua require("utils.core").delete_buffers()<CR>]])
+-- Delete empty buffers - not working
+u.map("n", "<leader>be",
+      [[:lua require("utils.core").delete_buffers("empty")<CR>]])
 -- Delete current buffer
 u.map("n", "<leader>bd", ":bd%<cr>")
 -- Delete current buffer force

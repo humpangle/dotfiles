@@ -86,4 +86,33 @@ function utils.toggleBackground()
     end
 end
 
+function utils.delete_buffers()
+    local last_buf_num = Vim.fn.bufnr("%")
+    local i = 1
+    local wipe_buf = ""
+    local del_buf = ""
+
+    while i <= last_buf_num do
+        local buf_name = Vim.fn.bufname(i)
+
+        if Vim.fn.bufexists(i) == 1 then
+            if buf_name == "" or buf_name:find("term://") == 1 then
+                wipe_buf = wipe_buf .. " " .. i
+            else
+                del_buf = del_buf .. " " .. i
+            end
+        end
+
+        i = i + 1
+    end
+
+    if wipe_buf ~= "" then
+        Cmd("bwipeout!" .. wipe_buf)
+    end
+
+    if del_buf ~= "" then
+        Cmd("bd" .. del_buf)
+    end
+end
+
 return utils
