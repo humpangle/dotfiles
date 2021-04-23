@@ -38,8 +38,6 @@ let g:coc_filetype_map = {
   \ 'eelixir': 'html',
 \}
 
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup

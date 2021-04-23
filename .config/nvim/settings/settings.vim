@@ -19,6 +19,8 @@ if (has("termguicolors"))
  set termguicolors
 endif
 
+" COC:You will have bad experience for diagnostic messages when default is 4000
+set updatetime=100
 set hidden " close unsaved buffer with 'q' without needing 'q!'
 set tabstop=2
 set softtabstop=2
