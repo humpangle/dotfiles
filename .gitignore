@@ -109,6 +109,7 @@ Session.vim
 **/.nvimlog
 **/.vim/.ropeproject/*
 **/.vim/coc-settings.json
+**/spell/*.spl
 
 # scratch files
 *.___scratch*
