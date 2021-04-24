@@ -16,11 +16,11 @@ case $SHELL in
     export PYTHON3="$PREFIX/bin/python"
     export PGDATA=$PREFIX/var/lib/postgresql
     alias python=python2
-  ;;
+    ;;
 
   *)
-  [ -f $HOME/dotfiles/.regular_shell.sh ] && source $HOME/dotfiles/.regular_shell.sh
-  ;;
+    [ -f $HOME/dotfiles/.regular_shell.sh ] && source $HOME/dotfiles/.regular_shell.sh
+    ;;
 esac
 
 [ -f $HOME/dotfiles/.fzf.sh ] && source $HOME/dotfiles/.fzf.sh
