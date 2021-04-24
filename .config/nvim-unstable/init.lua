@@ -5,6 +5,7 @@ Vim = vim
 Cmd = Vim.cmd
 Vimg = Vim.g
 Vimo = Vim.o
+Vimf = Vim.fn
 _, Lsp_config = pcall(require, "lspconfig")
 
 Completion = {
