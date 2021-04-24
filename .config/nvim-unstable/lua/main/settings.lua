@@ -28,6 +28,13 @@ Vimo.encoding = "utf8"
 Vimo.gdefault = true
 Cmd("noswapfile")
 
+-- SPELLING
+--   ]s   [s = next/prev misspelled
+--   zg = mark misspelled as good
+Vimo.spelllang = "en"
+-- Vimo.spell = true
+Vimo.spellfile = os.getenv("HOME") .. "/.config/nvim/spell/en.utf-8.add"
+
 local indent_size = 2
 -- Window
 Vimo.relativenumber = true

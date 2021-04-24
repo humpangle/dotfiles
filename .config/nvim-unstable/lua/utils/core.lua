@@ -115,4 +115,12 @@ function utils.delete_buffers()
     end
 end
 
+function utils.toggle_spell()
+    if Vim.w.spell then
+        Vimo.spell = false
+    else
+        Vimo.spell = true
+    end
+end
+
 return utils

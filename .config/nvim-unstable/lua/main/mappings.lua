@@ -138,4 +138,7 @@ u.map("n", "[q", ":cprevious")
 u.map("n", "]q", ":cnext")
 u.map("n", "[Q", ":cfirst<CR>")
 u.map("n", "]Q", ":clast<CR>")
+-- Spell
+-- u.map("n", "yos", [[:set spell=<C-R>=&spell == 0 ? "light" : "dark"<CR><CR>]])
+u.map("n", "yos", [[:lua require("utils.core").toggle_spell()<CR>]])
 -- u.map("", "", "")
