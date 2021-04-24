@@ -18,10 +18,10 @@ require"compe".setup {
         calc = Completion.calc,
         vsnip = Completion.snippets,
         nvim_lsp = Completion.lsp,
-        nvim_lua = {kind = "  "},
+        nvim_lua = true,
         spell = Completion.spell,
-        tags = true,
-        -- treesitter = true,
+        tags = false, -- will revisit later: after seeing how lsp accomplishes
+        treesitter = false, -- Warning: it sometimes really slow
         emoji = false,
     },
 }
