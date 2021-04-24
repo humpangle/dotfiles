@@ -53,8 +53,6 @@ u.map("n", "<leader>ff", [[:lua require("utils.core").find_files() <CR>]])
 u.map("n", "<leader>.", [[:lua require("utils.core").find_files("dir") <CR>]])
 -- find open buffers
 u.map("n", "<leader>fb", [[:Telescope buffers<CR>]])
--- Files managed by git
-u.map("n", "<leader>fg", [[:lua require("utils.core").find_files("git") <CR>]])
 -- search buffers history
 u.map("n", "<leader>fh", [[:Telescope command_history<CR>]])
 -- search for text in current buffer
@@ -66,14 +64,23 @@ u.map("n", "<leader>C", [[:Telescope commands<CR>]])
 -- key mappings - find already mapped before defining new mappings
 u.map("n", "<leader>M", [[:Telescope keymaps<CR>]])
 u.map("n", "<leader>ft", [[:Telescope filetypes<CR>]])
--- Git commits
-u.map("n", "<leader>cm", [[:Telescope git_commits<CR>]])
--- Git commits for the current buffer
-u.map("n", "<leader>bc", [[:Telescope git_bcommits<CR>]])
 -- find tags in current buffer
 u.map("n", "<leader>bt", [[:Telescope current_buffer_tags<CR>]])
 -- find tags in entire project directory: ctags -R
 u.map("n", "<leader>pt", [[:Telescope tags<CR>]])
+
+-- GIT
+-- Files managed by git
+u.map("n", "<leader>fg", [[:lua require("utils.core").find_files("git") <CR>]])
+-- find git commits
+u.map("n", "<leader>cm", [[:Telescope git_commits<CR>]])
+-- find git commits for the current buffer
+u.map("n", "<leader>bc", [[:Telescope git_bcommits<CR>]])
+-- find git branch:
+--   checkout = <CR>
+--   rebase = <C-r>
+--   delete = <C-d>
+u.map("n", "<leader>cb", [[:Telescope git_branches<CR>]])
 
 u.map("n", "<leader>H", [[:Telescope help_tags<CR>]])
 u.map("n", "<leader>fs", [[:Telescope colorscheme<CR>]])
