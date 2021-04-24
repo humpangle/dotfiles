@@ -64,6 +64,8 @@ u.map("n", "<leader>C", [[:Telescope commands<CR>]])
 -- key mappings - find already mapped before defining new mappings
 u.map("n", "<leader>M", [[:Telescope keymaps<CR>]])
 u.map("n", "<leader>ft", [[:Telescope filetypes<CR>]])
+-- search in project - do not match filenames
+u.map("n", "<leader>/", [[:Telescope live_grep<CR>]])
 -- find tags in current buffer
 u.map("n", "<leader>bt", [[:Telescope current_buffer_tags<CR>]])
 -- find tags in entire project directory: ctags -R
