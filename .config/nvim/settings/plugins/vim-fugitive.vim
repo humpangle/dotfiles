@@ -12,8 +12,6 @@ nnoremap gvs  :Gvdiffsplit!<CR>
 nnoremap gss  :Git<CR>
 nnoremap <leader>st  :Git<CR>
 nnoremap <leader>a.  :Git add .<CR>
-nnoremap gpm  :Git push origin master<CR>
-nnoremap gpd  :Git push origin dev<CR>
 nnoremap gpo  :Git push origin <right>
 nnoremap <leader>pf  :Git push --force origin <right>
 nnoremap gcma :Git commit --amend
