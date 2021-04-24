@@ -44,7 +44,10 @@ set mouse=a
 set cursorline " highlight cursor positions
 
 " Spell check
-setlocal spell spelllang=en
+set spelllang=en
+" set spell
+" ~/.config/nvim/spell/en.utf-8.add
+set spellfile=~/.config/nvim/spell/en.utf-8.add
 
 set foldmethod=indent
 set foldnestmax=10
