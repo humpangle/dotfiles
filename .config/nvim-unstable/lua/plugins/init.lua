@@ -55,7 +55,7 @@ return require("packer").startup(function()
     -- General plugins
     use {
         "mbbill/undotree",
-        "b3nj5m1n/kommentary",
+        "terrortylor/nvim-comment",
         "windwp/nvim-autopairs",
         "norcalli/nvim-colorizer.lua",
     }
@@ -69,7 +69,7 @@ return require("packer").startup(function()
     -- PLUGIN SETTINGS
     require("plugins/gitsigns-nvim")
     require("plugins/emmet-vim")
-    require("plugins/kommentary")
+    require("plugins/nvim-comment")
     require("plugins/nvim-autopairs")
     require("plugins/nvim-compe")
     require("plugins/telescope")
