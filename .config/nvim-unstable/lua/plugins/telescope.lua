@@ -6,6 +6,18 @@ local actions = require("telescope.actions")
 -- '--color=never',
 require("telescope").setup {
     defaults = {
+        vimgrep_arguments = {
+            "rg",
+            "--hidden",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--glob",
+            os.getenv("RG_IGNORES"),
+        },
         prompt_position = "top",
         sorting_strategy = "ascending",
         color_devicons = false,
