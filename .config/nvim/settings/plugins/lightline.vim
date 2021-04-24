@@ -21,19 +21,6 @@ let g:lightline.active = {
       \'modified',
     \]
   \],
-  \'right': [
-    \[
-      \'lineinfo',
-    \],
-    \[
-      \'percent',
-    \],
-    \[
-      \'fileformat',
-      \'fileencoding',
-      \'filetype',
-    \]
-  \]
 \}
 
 function! LightlineFugitive()
