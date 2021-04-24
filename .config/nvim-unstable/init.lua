@@ -62,6 +62,6 @@ if theme_file ~= nil and theme_file ~= "" then
     require("plugins/" .. theme_file)
     Vimo.background = bg == "d" and "dark" or "light"
 else
-    require("plugins/vim-solarized8")
+    require("plugins/vim-gruvbox8")
     Vimo.background = "dark"
 end
