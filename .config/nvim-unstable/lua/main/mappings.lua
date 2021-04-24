@@ -53,10 +53,6 @@ u.map("n", "<c-j>", "<C-w>j")
 u.map("n", "<c-k>", "<C-w>k")
 u.map("n", "<c-l>", "<C-w>l")
 
--- mappings taken from unimpaired.vim
-u.map("n", "[od", ":diffthis<cr>")
-u.map("n", "]od", ":diffoff<cr>")
-
 -- create the new directory am already working in
 u.map("n", ",md", ":!mkdir -p %:h<cr><cr>")
 u.map("n", ",rm", ":!trash-put %:p<cr>:bdelete!<cr>")
@@ -122,5 +118,24 @@ u.map("n", "<c-right>", ":vertical resize +2<CR>")
 u.map("n", "<c-up>", ":resize +2<CR>")
 u.map("n", "<c-down>", ":resize -2<CR>")
 
--- START TOGGLE BACKGROUND COLOR
-u.map("n", "tb", [[:lua require("utils.core").toggleBackground()<CR>]])
+-- Taken from https://github.com/tpope/vim-unimpaired/blob/master/doc/unimpaired.txt
+-- Toggle background
+u.map("n", "yob",
+      [[:set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>]])
+-- Diff this
+u.map("n", "yod", [[:<C-R>=&diff ? "diffoff" : "diffthis"<CR><CR>]])
+u.map("n", "[od", ":diffthis<cr>")
+u.map("n", "]od", ":diffoff<cr>")
+-- location list
+u.map("n", "yol", ":lclose<CR>")
+u.map("n", "[l", ":lprevious<CR>")
+u.map("n", "]l", ":lnext<CR>")
+u.map("n", "[L", ":lfirst<CR>")
+u.map("n", "]L", ":llast<CR>")
+-- Quickfix list
+u.map("n", "yoq", ":cclose<CR>")
+u.map("n", "[q", ":cprevious")
+u.map("n", "]q", ":cnext")
+u.map("n", "[Q", ":cfirst<CR>")
+u.map("n", "]Q", ":clast<CR>")
+-- u.map("", "", "")
