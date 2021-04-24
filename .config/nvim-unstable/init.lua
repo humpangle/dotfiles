@@ -34,25 +34,11 @@ LSP = {
     tsserver = true,
 }
 
--- General settings
 require("main/settings")
 require("main/mappings")
 require("main/autocmds")
 require("plugins")
-
--- LSP
 require("lsp")
-
--- Plugins settings
-require("plugins/gitsigns-nvim")
-require("plugins/emmet-vim")
-require("plugins/kommentary")
-require("plugins/nvim-autopairs")
-require("plugins/nvim-compe")
-require("plugins/telescope")
-require("plugins/treesitter")
-require("plugins/undotree")
-require("plugins/vim-floaterm")
 
 -- THEME SELECTION
 local theme_file = os.getenv("EBNIS_VIM_THEME")
