@@ -1,6 +1,5 @@
 yarn-error.log
 report.*.*.*.json
-Session.vim
 # these work
 tags.lock
 *.gz
@@ -17,8 +16,6 @@ build/
 # but you can do this
 .vscode/*
 build/*
-**/.vim/.ropeproject/*
-**/.vim/coc-settings.json
 
 # Configuration file with private data:
 *.env
@@ -106,7 +103,12 @@ tags*
 .testmondata
 .tt
 .tts*
+
+# vim/neovim
+Session.vim
 **/.nvimlog
+**/.vim/.ropeproject/*
+**/.vim/coc-settings.json
 
 # scratch files
 *.___scratch*
