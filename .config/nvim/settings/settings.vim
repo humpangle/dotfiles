@@ -80,7 +80,7 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 " AUTOCMD
 au FocusGained * checktime
 au BufNewFile,BufRead *.html.django set filetype=htmldjango
-au BufNewFile,BufRead *.eslintrc set filetype=json
+au BufNewFile,BufRead *.eslintrc set filetype=jsonc
 au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
 au BufNewFile,BufRead .env* set filetype=sh
 au BufNewFile,BufRead *.psql set filetype=sql
