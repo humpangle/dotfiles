@@ -77,5 +77,6 @@ return require("packer").startup(function()
     require("plugins/treesitter")
     require("plugins/undotree")
     require("plugins/vim-floaterm")
+    require("plugins/neoformat")
 
 end)
