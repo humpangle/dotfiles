@@ -58,6 +58,7 @@ return require("packer").startup(function()
         "terrortylor/nvim-comment",
         "windwp/nvim-autopairs",
         "norcalli/nvim-colorizer.lua",
+        "nelstrom/vim-visual-star-search",
     }
 
     -- Themes
