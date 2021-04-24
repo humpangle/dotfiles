@@ -96,9 +96,6 @@ u.map("n", ",cf", [[:let @"=expand("%:p")<CR>]], {noremap = false})
 -- toggle cursorcolumn
 u.map("n", ",tc", ":set cursorline! cursorcolumn!<CR>")
 
--- toggle relative line number
-u.map("n", ",tl", ":set invrelativenumber<CR>")
-
 -- MANAGE BUFFERS
 -- Delete all buffers
 u.map("n", "<leader>ba", [[:lua require("utils.core").delete_buffers()<CR>]])
@@ -141,4 +138,7 @@ u.map("n", "]Q", ":clast<CR>")
 -- Spell
 -- u.map("n", "yos", [[:set spell=<C-R>=&spell == 0 ? "light" : "dark"<CR><CR>]])
 u.map("n", "yos", [[:lua require("utils.core").toggle_spell()<CR>]])
+-- line number
+u.map("n", "yon", ":setlocal invnumber<CR>")
+u.map("n", "yor", ":setlocal invrelativenumber<CR>")
 -- u.map("", "", "")
