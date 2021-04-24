@@ -6,7 +6,6 @@ Cmd = Vim.cmd
 Vimg = Vim.g
 Vimo = Vim.o
 Vimf = Vim.fn
-_, Lsp_config = pcall(require, "lspconfig")
 
 Completion = {
     -- values: true, false
@@ -19,20 +18,6 @@ Completion = {
     path = true,
     calc = true,
     spell = true,
-}
-
-LSP = {
-    -- values: true, false
-    -- Enable or disable LSP globally
-    enabled = true,
-    -- Choose which servers to start automatically
-    bash = true,
-    css = true,
-    emmet = true,
-    json = true,
-    lua = true,
-    python = true,
-    tsserver = true,
 }
 
 require("main/settings")
