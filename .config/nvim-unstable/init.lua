@@ -7,19 +7,6 @@ Vimg = Vim.g
 Vimo = Vim.o
 Vimf = Vim.fn
 
-Completion = {
-    -- values: true, false
-    -- Enable or disable completion globally
-    enabled = true,
-    -- Choose sources of completion
-    snippets = true,
-    lsp = true,
-    buffer = true,
-    path = true,
-    calc = true,
-    spell = true,
-}
-
 require("main/settings")
 require("main/mappings")
 require("main/autocmds")

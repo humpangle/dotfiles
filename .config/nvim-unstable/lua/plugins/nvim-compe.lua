@@ -1,5 +1,5 @@
 require"compe".setup {
-    enabled = Completion.enabled,
+    enabled = true,
     autocomplete = true,
     debug = false,
     min_length = 1,
@@ -13,13 +13,13 @@ require"compe".setup {
     documentation = true,
 
     source = {
-        path = Completion.path,
-        buffer = Completion.buffer,
-        calc = Completion.calc,
-        vsnip = Completion.snippets,
-        nvim_lsp = Completion.lsp,
+        path = true,
+        buffer = true,
+        calc = true,
+        vsnip = true,
+        nvim_lsp = true,
         nvim_lua = true,
-        spell = Completion.spell,
+        spell = true,
         tags = false, -- will revisit later: after seeing how lsp accomplishes
         treesitter = false, -- Warning: it sometimes really slow
         emoji = false,
