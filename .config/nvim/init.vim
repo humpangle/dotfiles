@@ -31,6 +31,6 @@ if !empty($EBNIS_VIM_THEME)
     set background=light
   endif
 else
-  so ~/.config/nvim/settings/themes/vim-solarized8.vim
+  so ~/.config/nvim/settings/themes/vim-gruvbox8.vim
   set background=dark
 endif
