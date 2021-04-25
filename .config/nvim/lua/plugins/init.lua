@@ -14,7 +14,6 @@ return require("packer").startup(function()
         use {
             "neovim/nvim-lspconfig",
             "hrsh7th/nvim-compe",
-            "sbdchd/neoformat",
             "hrsh7th/vim-vsnip",
             "mattn/emmet-vim",
         }
@@ -66,4 +65,7 @@ return require("packer").startup(function()
 
     -- MANAGE VIM SESSIONS AUTOMACTICALLY
     use {"tpope/vim-obsession", "dhruvasagar/vim-prosession"}
+
+    -- FORMATTER
+    use {"sbdchd/neoformat"}
 end)

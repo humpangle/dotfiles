@@ -10,8 +10,6 @@ alias ys='yarn start '
 alias ylsp='yarn list --pattern '
 alias ywhy='yarn why '
 alias ff='fzf'
-alias vim="nvim"
-alias v="nvim"
 alias vi='/usr/bin/vim'
 alias vimdiff="nvim -d"
 alias c="clear && printf '\e[3J'"
@@ -58,18 +56,17 @@ alias glone='git log --oneline'
 
 # there is a debian package gsa = gwenhywfar-tools
 function gsa() {
- git stash apply "stash@{$1}"
+  git stash apply "stash@{$1}"
 }
 
 function gsd() {
- git stash drop "stash@{$1}"
+  git stash drop "stash@{$1}"
 }
 
 # VIM/NEOVIM
-unstable_vimrc_path="$HOME/.config/nvim-unstable/init.vim"
-unstable_vim_local_path="$HOME/.local/nvim-unstable"
-
-alias nvl="XDG_DATA_HOME=$unstable_vim_local_path MYVIMRC=$unstable_vimrc_path NVIM_RPLUGIN_MANIFEST=$unstable_vim_local_path/rplugin.vim nvim -u $unstable_vimrc_path "
+alias vim="nvim"
+alias v="nvim"
+alias nvl="VIM_USE_COC=1 nvim "
 
 if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json '
