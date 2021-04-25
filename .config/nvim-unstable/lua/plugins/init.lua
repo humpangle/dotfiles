@@ -66,17 +66,4 @@ return require("packer").startup(function()
 
     -- MANAGE VIM SESSIONS AUTOMACTICALLY
     use {"tpope/vim-obsession", "dhruvasagar/vim-prosession"}
-
-    -- PLUGIN SETTINGS
-    require("plugins/gitsigns-nvim")
-    require("plugins/emmet-vim")
-    require("plugins/nvim-comment")
-    require("plugins/nvim-autopairs")
-    require("plugins/nvim-compe")
-    require("plugins/telescope")
-    require("plugins/treesitter")
-    require("plugins/undotree")
-    require("plugins/vim-floaterm")
-    require("plugins/neoformat")
-
 end)

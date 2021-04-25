@@ -11,16 +11,17 @@ Vimf = Vim.fn
 require("main/settings")
 require("main/mappings")
 require("plugins")
+require("theme")
 require("lsp")
 
--- THEME SELECTION
-local theme_file = os.getenv("EBNIS_VIM_THEME")
-local bg = os.getenv("EBNIS_VIM_THEME_BG")
-
-if theme_file ~= nil and theme_file ~= "" then
-    require("plugins/" .. theme_file)
-    Vimo.background = bg == "d" and "dark" or "light"
-else
-    require("plugins/vim-gruvbox8")
-    Vimo.background = "dark"
-end
+-- PLUGIN SETTINGS
+require("plugins/gitsigns-nvim")
+require("plugins/emmet-vim")
+require("plugins/nvim-comment")
+require("plugins/nvim-autopairs")
+require("plugins/nvim-compe")
+require("plugins/telescope")
+require("plugins/treesitter")
+require("plugins/undotree")
+require("plugins/vim-floaterm")
+require("plugins/neoformat")
