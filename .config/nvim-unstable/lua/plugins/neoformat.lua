@@ -13,7 +13,7 @@ wget -O pgFormatter-5.0.tar.gz https://github.com/darold/pgFormatter/archive/ref
 --]] --
 --
 -- SETTINGS
--- Shel
+-- Shell
 Vimg.shfmt_opt = "-ci"
 
 local u = require("utils.core")
