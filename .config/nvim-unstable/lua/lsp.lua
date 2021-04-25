@@ -212,3 +212,7 @@ nvim_lsp.sumneko_lua.setup {
         },
     },
 }
+
+-- YAML
+-- npm install -g yaml-language-server
+nvim_lsp.yamlls.setup {capabilities = capabilities, on_attach = on_attach}
