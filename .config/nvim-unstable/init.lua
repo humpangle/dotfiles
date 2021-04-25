@@ -5,6 +5,7 @@ Vim = vim
 Cmd = Vim.cmd
 Vimg = Vim.g
 Vimo = Vim.o
+Vimw = Vim.wo
 Vimf = Vim.fn
 
 require("main/settings")

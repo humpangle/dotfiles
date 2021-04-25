@@ -35,15 +35,16 @@ Vimo.spelllang = "en"
 Vimo.spellfile = os.getenv("HOME") .. "/.config/nvim/spell/en.utf-8.add"
 
 local indent_size = 2
+
 -- Window
-Vimo.relativenumber = true
-Vimo.number = true
+Vimw.relativenumber = true
+Vimw.number = true
 Vimo.numberwidth = 1
 Vimo.wrap = false
 Vimo.cursorline = true
 Vimo.conceallevel = 0
 Vimo.cc = "80" -- column width
-Vimo.foldmethod = "indent"
+Vimw.foldmethod = "indent"
 Vimo.foldnestmax = 10
 -- don't fold by default when opening a file.
 Cmd("set nofoldenable")
