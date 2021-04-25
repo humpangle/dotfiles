@@ -10,7 +10,6 @@ lua <<EOF
   if NO_USE_COC_LSP then
       require("lsp")
       require("plugins/emmet-vim")
-      require("plugins/nvim-comment")
       require("plugins/nvim-autopairs")
       require("plugins/nvim-compe")
       require("plugins/telescope")
@@ -24,6 +23,7 @@ lua <<EOF
   require("plugins/gitsigns-nvim")
   require("plugins/vim-fugitive")
   require("plugins/lightline")
+  require("plugins/nvim-comment")
 EOF
 
 so ~/.config/nvim/settings/plugins/neoformat.vim
