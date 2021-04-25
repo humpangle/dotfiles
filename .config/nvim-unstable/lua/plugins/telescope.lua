@@ -94,3 +94,5 @@ u.map("n", "<leader>fe", [[:Telescope file_browser<CR>]])
 u.map("n", "<leader>fm", [[:Telescope media_files<CR>]])
 -- find previously open files
 u.map("n", "<leader>fo", [[:Telescope oldfiles<CR>]])
+-- code actions
+u.map("n", "<leader>fa", [[:Telescope lsp_code_actions<CR>]])
