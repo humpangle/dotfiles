@@ -29,6 +29,7 @@ vnoremap > >gv
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
+nmap <Leader>x "+x
 nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
@@ -126,15 +127,7 @@ nnoremap <leader>rc :%s///gc<left><left><left>
 xnoremap <leader>r :%s///g<left><left>
 xnoremap <leader>rc :%s///gc<left><left><left>
 
-" toggle cursorcolumn
-nnoremap ,tc :set cursorline! cursorcolumn!<CR>
-
-" LINE NUMBERING
-set number " always show line numbers
-" set relativenumber " set relative numbering as default
-set relativenumber " set none relative numbering as default
-" toggle relative line number
-nnoremap ,tl :set invrelativenumber<CR>
+nnoremap ,tc :tabclose<CR>
 
 " RENAME CURRENT FILE
 function! RenameFile()
@@ -150,31 +143,48 @@ map <leader>nf :call RenameFile()<cr>
 
 " MANAGE BUFFERS
 " https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
-function! DeleteAllBuffers() abort
-  let [i, last_b_num, regular, terminals] = [1, bufnr("$"), [], []]
+function! DeleteAllBuffers(f) abort
+  let i = 1
+  let last_b_num = bufnr("$")
+  let regular = []
+  let terminals = []
+  let no_name = []
+
   while i <= last_b_num
     let b_name = bufname(i)
     if bufexists(i)
-      if  (b_name == '' || b_name =~ 'term://')
-        call add(terminals, i)
-      else
-        call add(regular, i)
+      if  (b_name == '' )
+        call add(no_name, i)
       endif
+
+      if a:f == 'a'
+        if  (b_name =~ 'term://')
+          call add(terminals, i)
+        else
+          call add(regular, i)
+        endif
+     endif
     endif
     let i += 1
   endwhile
-  if len(terminals) > 0
-    let cmd = 'bwipeout! '.join(terminals)
-    exe cmd
+
+  if len(no_name) > 0
+    exe 'bwipeout! '.join(no_name)
   endif
+
+  if len(terminals) > 0
+    exe 'bwipeout! '.join(terminals)
+  endif
+
   if len(regular) > 0
-    let delete_cmd = 'bd ' .join(regular)
-    exe delete_cmd
+    exe 'bd ' .join(regular)
   endif
 endfunction
 
 " Delete all buffers
-nnoremap <leader>ba :call DeleteAllBuffers()<cr>
+nnoremap <leader>ba :call DeleteAllBuffers('a')<cr>
+" Delete empty buffers - not working
+nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete current buffer
 nnoremap <leader>bd :bd%<cr>
 " Delete current buffer force
@@ -182,20 +192,11 @@ nnoremap <leader>b% :bd!%<cr>
 " Wipe current buffer
 nnoremap <leader>bw :bw%<cr>
 
-" START FORMAT ELIXIR
-function! FormatElixir()
-  w
-  silent execute "!mix format %:p"
-  e %
-endfunction
-command! FormatElixir call FormatElixir()
-nmap <leader>fe  :FormatElixir<CR>
-
 " RESIZE WINDOW
-nnoremap <A-h> :vertical resize -2<CR>
-nnoremap <A-l> :vertical resize +2<CR>
-nnoremap <A-u> :resize +2<CR>
-nnoremap <A-m> :resize -2<CR>
+nnoremap <c-left> :vertical resize -2<CR>
+nnoremap <c-right> :vertical resize +2<CR>
+nnoremap <c-up> :resize +2<CR>
+nnoremap <c-down> :resize -2<CR>
 
 " START TOGGLE BACKGROUND COLOR
 function! BackgroundToggle()
@@ -210,3 +211,9 @@ nnoremap <leader>tb :call BackgroundToggle()<cr>
 " QuickFix and Location list
 nnoremap <leader>lc :lclose<CR>
 nnoremap <leader>qc :cclose<CR>
+
+" lua
+nnoremap ss :luafile %<CR>
+
+" Check file in shellcheck
+nnoremap <leader>sc, :!clear && shellcheck -x %<CR>

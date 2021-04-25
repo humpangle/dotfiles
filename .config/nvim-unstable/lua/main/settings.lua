@@ -1,11 +1,3 @@
-Vimg.python_host_prog = os.getenv("PYTHON2")
-Vimg.python3_host_prog = os.getenv("PYTHON3")
-Vimg.netrw_liststyle = 3
-
--- Global
-Vimo.incsearch = true
-Vimo.ignorecase = true
-Vimo.smartcase = true
 Vimo.smarttab = true
 Vimo.title = true
 Vimo.backup = false
@@ -13,91 +5,21 @@ Vimo.writebackup = false
 Vimo.showmode = false
 Vimo.pumheight = 15
 Vimo.showtabline = 2
-Vimo.updatetime = 400
 Vimo.scrolloff = 10
 Vimo.cmdheight = 2
-Vimo.termguicolors = true
-Vimo.mouse = "a"
-Vimo.hidden = true
-Vimo.splitbelow = true
-Vimo.splitright = true
-Vimo.completeopt = "menuone,noinsert,noselect"
-Vimo.encoding = "utf8"
--- Use 'g' flag by default with :s/foo/bar/
-Vimo.gdefault = true
-Cmd("noswapfile")
-
--- SPELLING
---   ]s   [s = next/prev misspelled
---   zg = mark misspelled as good
-Vimo.spelllang = "en"
--- Vimo.spell = true
-Vimo.spellfile = os.getenv("HOME") .. "/.config/nvim/spell/en.utf-8.add"
-
-local indent_size = 2
 
 -- Window
-Vimw.relativenumber = true
-Vimw.number = true
 Vimo.numberwidth = 1
 Vimo.wrap = false
-Vimo.cursorline = true
-Vimo.conceallevel = 0
-Vimo.cc = "80" -- column width
-Vimw.foldmethod = "indent"
-Vimo.foldnestmax = 10
 -- don't fold by default when opening a file.
-Cmd("set nofoldenable")
-Vimo.foldlevel = indent_size
 
 -- Buffer
-Vimo.tabstop = indent_size
-Vimo.softtabstop = indent_size
-Vimo.shiftwidth = indent_size
-Vimo.expandtab = true
 Vimo.autoindent = true
 Vimo.smartindent = true
 Vimo.swapfile = false
-Vimo.undofile = true
 Vimo.fileencoding = "utf-8"
-Cmd("syntax enable")
--- reload a file if it is changed from outside vim
-Vimo.autoread = true
 
 -- Commands
 Cmd("set shortmess+=c")
 Cmd("set iskeyword+=-")
 Cmd("set path+=.,**")
-Cmd("filetype plugin on") -- filetype detection for plugin indentation
-
--- AUTOCMD
-Cmd([[
-  augroup MyMiscGroup
-    au!
-    au FocusGained * checktime
-
-    " highlight yank
-    " :h lua-highlight
-    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
-
-    " Trim whitespace
-    au BufWritePre * %s/\s\+$//e
-    au BufWritePre * %s/\n\+\%$//e
-    au BufWritePre *.[ch] *.[ch] %s/\%$/\r/e
-  augroup END
-]])
-
-Cmd([[
-  augroup filetypes
-    au!
-    autocmd! FileType json set filetype=jsonc
-    autocmd! FileType vifm set filetype=vim
-    au BufNewFile,BufRead *.html.django set filetype=htmldjango
-    au BufNewFile,BufRead *.eslintrc set filetype=jsonc
-    au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
-    au BufNewFile,BufRead .env* set filetype=sh
-    au BufNewFile,BufRead *.psql set filetype=sql
-    au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
-    au BufNewFile,BufRead *config set filetype=gitconfig
-  augroup END
-]])

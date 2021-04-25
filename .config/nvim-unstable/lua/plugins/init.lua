@@ -9,22 +9,24 @@ end
 return require("packer").startup(function()
     use "wbthomason/packer.nvim"
 
-    -- LSP, Autocomplete and snippets
-    use {
-        "neovim/nvim-lspconfig",
-        "hrsh7th/nvim-compe",
-        "sbdchd/neoformat",
-        "hrsh7th/vim-vsnip",
-        "mattn/emmet-vim",
-    }
+    if NO_USE_COC_LSP then
+        -- LSP, Autocomplete and snippets
+        use {
+            "neovim/nvim-lspconfig",
+            "hrsh7th/nvim-compe",
+            "sbdchd/neoformat",
+            "hrsh7th/vim-vsnip",
+            "mattn/emmet-vim",
+        }
 
-    -- FUZZY FINDER
-    use {
-        "nvim-telescope/telescope.nvim",
-        "nvim-lua/popup.nvim",
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope-media-files.nvim",
-    }
+        -- FUZZY FINDER
+        use {
+            "nvim-telescope/telescope.nvim",
+            "nvim-lua/popup.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope-media-files.nvim",
+        }
+    end
 
     -- Treesitter
     use {

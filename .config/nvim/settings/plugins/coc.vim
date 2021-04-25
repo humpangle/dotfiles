@@ -115,15 +115,6 @@ inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float
 vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-xnoremap <leader>fc :Format<CR>
-nnoremap <leader>fc :Format<CR>
-" Formatting selected code ------ not working
-xmap <leader>fc  <plug>(coc-format-selected)
-" use ``:Prettier` to format current buffer.
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 nmap ,o :OR<CR>

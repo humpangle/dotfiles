@@ -12,6 +12,17 @@ set runtimepath+=~/.local/nvim-unstable/nvim/site/after
 set runtimepath^=~/.local/nvim-unstable/nvim/site
 
 let &packpath = &runtimepath
+
+so ~/.config/nvim/settings/settings.vim
+so ~/.config/nvim/settings/mappings.vim
+
 luafile ~/.config/nvim-unstable/init.lua
 
 so ~/.config/nvim-unstable/lua/plugins/lightline.vim
+so ~/.config/nvim-unstable/lua/plugins/vim-maximizer.vim
+
+let s:can_use_coc = !empty($VIM_USE_COC)
+
+if s:can_use_coc
+  so ~/.config/nvim-unstable/settings/vim-plug.vim
+endif

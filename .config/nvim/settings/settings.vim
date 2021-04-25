@@ -40,6 +40,8 @@ set splitbelow
 set splitright
 set mouse=a
 
+set completeopt=menuone,noinsert,noselect
+
 " I disabled both because they were distracting and slow (according to docs)
 set cursorline " highlight cursor positions
 
@@ -67,6 +69,14 @@ endif
 
 set undofile
 
+" LINE NUMBERING
+set number " always show line numbers
+" set relativenumber " set relative numbering as default
+set relativenumber
+
+" filetype detection for plugin indentation
+filetype plugin on
+
 " Use Ripgrep for vimgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
@@ -77,17 +87,29 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 " Search ignore path
 " set wildignore+=*.zip,*.png,*.jpg,*.gif,*.pdf,*DS_Store*,*/.git/*,*/node_modules/*,*/build/*,package-lock.json,*/_build/*,*/deps/*,*/elixir_ls/*,yarn.lock,mix.lock,*/coverage/*
 
-" AUTOCMD
-au FocusGained * checktime
-au BufNewFile,BufRead *.html.django set filetype=htmldjango
-au BufNewFile,BufRead *.eslintrc set filetype=jsonc
-au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
-au BufNewFile,BufRead .env* set filetype=sh
-au BufNewFile,BufRead *.psql set filetype=sql
-au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
-au BufNewFile,BufRead *config set filetype=gitconfig
-autocmd! FileType json set filetype=jsonc
-autocmd! FileType vifm set filetype=vim
-" open help file in vertical split
-autocmd FileType help wincmd H
-" au BufNewFile,BufRead,BufReadPost *.svelte set syntax=html
+augroup MyMiscGroup
+  au!
+  au FocusGained * checktime
+
+  " highlight yank
+  " :h lua-highlight
+  au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+
+  " Trim whitespace
+  au BufWritePre * %s/\s\+$//e
+  au BufWritePre * %s/\n\+\%$//e
+  au BufWritePre *.[ch] *.[ch] %s/\%$/\r/e
+augroup END
+
+augroup filetypes
+  au!
+  autocmd! FileType json set filetype=jsonc
+  autocmd! FileType vifm set filetype=vim
+  au BufNewFile,BufRead *.html.django set filetype=htmldjango
+  au BufNewFile,BufRead *.eslintrc set filetype=jsonc
+  au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
+  au BufNewFile,BufRead .env* set filetype=sh
+  au BufNewFile,BufRead *.psql set filetype=sql
+  au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
+  au BufNewFile,BufRead *config set filetype=gitconfig
+augroup END
