@@ -3,10 +3,21 @@ so ~/.config/nvim/settings/mappings.vim
 
 luafile ~/.config/nvim/lua/plugins/packer.lua
 
+" THEME SELECTION
+if !empty($EBNIS_VIM_THEME)
+  so ~/.config/nvim/settings/themes/$EBNIS_VIM_THEME.vim
+  if $EBNIS_VIM_THEME_BG == 'd'
+    set background=dark
+  else
+    set background=light
+  endif
+else
+  so ~/.config/nvim/settings/themes/vim-gruvbox8.vim
+  set background=dark
+endif
+
 lua <<EOF
  -- see plugins.lua for globals
-  require("theme")
-
   if NO_USE_COC_LSP then
       require("lsp")
       require("plugins/emmet-vim")

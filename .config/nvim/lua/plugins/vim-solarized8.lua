@@ -1,1 +1,0 @@
-Cmd("colorscheme solarized8")
