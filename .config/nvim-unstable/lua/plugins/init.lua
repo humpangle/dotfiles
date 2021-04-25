@@ -54,6 +54,8 @@ return require("packer").startup(function()
         "windwp/nvim-autopairs",
         "norcalli/nvim-colorizer.lua",
         "nelstrom/vim-visual-star-search",
+        -- Surround text with quotes, parenthesis, brackets, and more.
+        "tpope/vim-surround",
     }
 
     -- Themes
