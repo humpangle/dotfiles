@@ -15,6 +15,13 @@ wget -O pgFormatter-5.0.tar.gz https://github.com/darold/pgFormatter/archive/ref
 -- SETTINGS
 -- Shell
 Vimg.shfmt_opt = "-ci"
+-- jsonc
+Vimg.neoformat_jsonc_prettier = {
+    exe = "prettier",
+    args = {"--stdin-filepath", "\"%:p\"", "--parser", "json"},
+    stdin = 1,
+}
+Vimg.neoformat_enabled_jsonc = {"prettier"}
 
 local u = require("utils.core")
 
