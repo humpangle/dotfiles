@@ -56,10 +56,6 @@ call plug#begin(g:my_vim_plug_plugins_path)
   Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
   " View and search LSP symbols, tags in Vim/NeoVim.
   Plug 'liuchengxu/vista.vim'
-  " generate useful tags
-  " continuosly refresh tags
-  Plug 'ludovicchabant/vim-gutentags'
-
 
   " THEMES
   Plug 'rakr/vim-one'
