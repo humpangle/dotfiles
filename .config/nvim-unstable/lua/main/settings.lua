@@ -42,7 +42,7 @@ Vimo.numberwidth = 1
 Vimo.wrap = false
 Vimo.cursorline = true
 Vimo.conceallevel = 0
-Vimo.cc = "80" -- column widt
+Vimo.cc = "80" -- column width
 Vimo.foldmethod = "indent"
 Vimo.foldnestmax = 10
 -- don't fold by default when opening a file.
