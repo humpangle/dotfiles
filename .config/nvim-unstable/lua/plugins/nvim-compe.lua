@@ -1,4 +1,4 @@
-require"compe".setup {
+require("compe").setup {
     enabled = true,
     autocomplete = true,
     debug = false,
@@ -25,3 +25,19 @@ require"compe".setup {
         emoji = false,
     },
 }
+
+local u = require("utils/core")
+--
+-- Key bindings for Auto Import etc
+-- -- Trigger completion
+u.map("i", "<C-Space>", [[compe#complete()]], {silent = true, expr = true})
+-- Confirm completion. Use c-y ??
+u.map("i", "<CR>", [[compe#confirm('<CR>')]], {silent = true, expr = true})
+-- Close completion menu
+u.map("i", "<C-e>", [[compe#close('<C-e>')]], {silent = true, expr = true})
+
+u.map("i", "<C-f>", [[compe#scroll({ 'delta': +4 })]],
+      {silent = true, expr = true})
+
+u.map("i", "<C-d>", [[compe#scroll({ 'delta': -4 })]],
+      {silent = true, expr = true})
