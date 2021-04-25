@@ -22,11 +22,11 @@ call plug#begin(g:my_vim_plug_plugins_path)
   Plug 'tpope/vim-commentary'
   " A number of useful motions for the quickfix list, pasting and more.
   Plug 'tpope/vim-unimpaired'
+  " Surround text with quotes, parenthesis, brackets, and more.
   Plug 'tpope/vim-surround'
   " Connect to database use vim
   Plug 'tpope/vim-dadbod'
   Plug 'ntpeters/vim-better-whitespace'
-  " Surround text with quotes, parenthesis, brackets, and more.
   Plug 'easymotion/vim-easymotion'
   Plug 'diepm/vim-rest-console'
   " interactive scratchpad  = repl
