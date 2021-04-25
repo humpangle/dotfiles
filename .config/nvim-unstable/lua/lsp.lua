@@ -1,3 +1,34 @@
+-- TODO: signcolumn loses color when colorscheme changed. Study the below
+-- for likely fix:
+-- https://github.com/folke/lsp-colors.nvim
+--
+-- underline error/warning messages (with colors)
+-- Diagnostic text colors
+Cmd([[
+  augroup MyLspDiagnosticColors
+    autocmd!
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextInformation guifg=248 ctermfg=248
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextHint guifg=248 ctermfg=248
+
+    " Underline the offending code
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineError guifg=Red ctermfg=Red cterm=underline gui=underline
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineWarning guifg=Yellow ctermfg=Yellow cterm=underline gui=underline
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineInformation guifg=248 ctermfg=248 cterm=underline gui=underline
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineHint guifg=248 ctermfg=248 cterm=underline gui=underline
+
+    " suggested:
+    "      autocmd BufEnter,ColorScheme *  highlight! link LspDiagnosticsUnderlineError SpellBad  "  (SpellCap, SpellLocal and SpellRare)
+  augroup END
+]])
+
+-- this not working: https://github.com/neovim/neovim/issues/12162
+-- Attempt to use autocmd to change color (as below ) also fails
+-- autocmd ColorScheme * hi! LspDiagnosticsErrorSign cterm=bold ctermfg=196 ctermbg=235
+Vimf.sign_define("LspDiagnosticsErrorSign",
+                 {text = "Er", texthl = "LspDiagnosticsError"})
+
 local function on_attach(client, bufnr)
 
     local function buf_set_keymap(...)
