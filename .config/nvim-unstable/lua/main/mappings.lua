@@ -40,10 +40,12 @@ u.map("v", ">", ">gv")
 
 -- yank / Copy and paste from system clipboard (Might require xclip install)
 u.map("v", "<Leader>Y", [["+y]], {noremap = false})
-u.map("v", "<Leader>X", [["+y]], {noremap = false})
+u.map("v", "<Leader>X", [["+x]], {noremap = false})
+u.map("v", "<Leader>x", [["+x]], {noremap = false})
 u.map("n", "<Leader>p", [["+p]], {noremap = false})
+u.map("n", "<Leader>P", [["+P]], {noremap = false})
 u.map("v", "<Leader>p", [["+p]], {noremap = false})
-u.map("v", "<Leader>p", [["+p]], {noremap = false})
+u.map("v", "<Leader>P", [["+P]], {noremap = false})
 -- go to buffer number - use like so gb34
 u.map("n", "gb", ":ls<CR>:b")
 -- Move between windows in a tab
