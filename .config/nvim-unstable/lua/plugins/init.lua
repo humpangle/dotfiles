@@ -33,6 +33,7 @@ return require("packer").startup(function()
     -- Treesitter
     use {
         {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"},
+        -- Use treesitter to autoclose and autorename html tag in html,tsx,vue,svelte
         "windwp/nvim-ts-autotag",
     }
 
