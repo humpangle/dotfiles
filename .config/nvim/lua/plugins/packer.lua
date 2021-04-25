@@ -22,6 +22,9 @@ end
 return require("packer").startup(function()
     use "wbthomason/packer.nvim"
 
+    -- battery included libraries relied upon by several plugins
+    use {"nvim-lua/plenary.nvim"}
+
     if NO_USE_COC_LSP then
         -- LSP, Autocomplete and snippets
         use {
