@@ -55,6 +55,8 @@ return require("packer").startup(function()
         "nelstrom/vim-visual-star-search",
         -- Surround text with quotes, parenthesis, brackets, and more.
         "tpope/vim-surround",
+        -- Quickly toggle maximaize a tab
+        "szw/vim-maximizer",
     }
 
     -- Themes
