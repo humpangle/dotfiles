@@ -10,7 +10,6 @@ Vimo.smarttab = true
 Vimo.title = true
 Vimo.backup = false
 Vimo.writebackup = false
-Vimo.clipboard = "unnamedplus"
 Vimo.showmode = false
 Vimo.pumheight = 15
 Vimo.showtabline = 2
