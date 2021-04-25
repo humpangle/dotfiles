@@ -69,3 +69,35 @@ Cmd("set shortmess+=c")
 Cmd("set iskeyword+=-")
 Cmd("set path+=.,**")
 Cmd("filetype plugin on") -- filetype detection for plugin indentation
+
+-- AUTOCMD
+Cmd([[
+  augroup MyMiscGroup
+    au!
+    au FocusGained * checktime
+
+    " highlight yank
+    " :h lua-highlight
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+
+    " Trim whitespace
+    au BufWritePre * %s/\s\+$//e
+    au BufWritePre * %s/\n\+\%$//e
+    au BufWritePre *.[ch] *.[ch] %s/\%$/\r/e
+  augroup END
+]])
+
+Cmd([[
+  augroup filetypes
+    au!
+    autocmd! FileType json set filetype=jsonc
+    autocmd! FileType vifm set filetype=vim
+    au BufNewFile,BufRead *.html.django set filetype=htmldjango
+    au BufNewFile,BufRead *.eslintrc set filetype=jsonc
+    au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
+    au BufNewFile,BufRead .env* set filetype=sh
+    au BufNewFile,BufRead *.psql set filetype=sql
+    au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
+    au BufNewFile,BufRead *config set filetype=gitconfig
+  augroup END
+]])

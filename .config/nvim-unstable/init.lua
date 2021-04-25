@@ -10,7 +10,6 @@ Vimf = Vim.fn
 
 require("main/settings")
 require("main/mappings")
-require("main/autocmds")
 require("plugins")
 require("lsp")
 
