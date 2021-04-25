@@ -68,4 +68,4 @@ Vimo.autoread = true
 Cmd("set shortmess+=c")
 Cmd("set iskeyword+=-")
 Cmd("set path+=.,**")
-Cmd("filetype plugin on")
+Cmd("filetype plugin on") -- filetype detection for plugin indentation
