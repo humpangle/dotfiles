@@ -1,34 +1,34 @@
--- Git signs
+local u = require("utils/core")
+
 require("gitsigns").setup {
     signs = {
-        -- TODO add hl to colorscheme
         add = {
             hl = "GitSignsAdd",
-            text = "▎",
+            text = "+",
             numhl = "GitSignsAddNr",
             linehl = "GitSignsAddLn",
         },
         change = {
             hl = "GitSignsChange",
-            text = "▎",
+            text = "*",
             numhl = "GitSignsChangeNr",
             linehl = "GitSignsChangeLn",
         },
         delete = {
             hl = "GitSignsDelete",
-            text = "契",
+            text = "_",
             numhl = "GitSignsDeleteNr",
             linehl = "GitSignsDeleteLn",
         },
         topdelete = {
             hl = "GitSignsDelete",
-            text = "契",
+            text = "‾",
             numhl = "GitSignsDeleteNr",
             linehl = "GitSignsDeleteLn",
         },
         changedelete = {
             hl = "GitSignsChange",
-            text = "▎",
+            text = "~",
             numhl = "GitSignsChangeNr",
             linehl = "GitSignsChangeLn",
         },
@@ -44,5 +44,14 @@ require("gitsigns").setup {
     sign_priority = 6,
     update_debounce = 200,
     status_formatter = nil, -- Use default
-    use_decoration_api = false,
+    use_decoration_api = true,
+    use_internal_diff = true, -- If luajit is present
 }
+
+u.map("n", "<leader>hu", [[<cmd>lua require("gitsigns").undo_stage_hunk()<CR>]])
+u.map("n", "<leader>hr", [[<cmd>lua require("gitsigns").reset_hunk()<CR>]])
+u.map("n", "<leader>hR", [[<cmd>lua require("gitsigns").reset_buffer()<CR>]])
+u.map("n", "<leader>hp", [[<cmd>lua require("gitsigns").preview_hunk()<CR>]])
+u.map("n", "<leader>hb", [[<cmd>lua require("gitsigns").blame_line()<CR>]])
+u.map("n", "]c", [[<cmd>lua require("gitsigns").next_hunk()<CR>]])
+u.map("n", "[c", [[<cmd>lua require("gitsigns").prev_hunk()<CR>]])
