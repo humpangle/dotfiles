@@ -86,8 +86,6 @@ u.map("n", "<leader>cb", [[:Telescope git_branches<CR>]])
 
 u.map("n", "<leader>H", [[:Telescope help_tags<CR>]])
 u.map("n", "<leader>fs", [[:Telescope colorscheme<CR>]])
-u.map("n", "<leader>fa", [[:lua require("utils.core").search_dotfiles()<CR>]])
-u.map("n", "<leader>fn", [[:lua require("utils.core").search_nvim()<CR>]])
 -- Ivy-like file explorer:
 -- use tab to enter directory
 -- bksp go up directory

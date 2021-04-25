@@ -22,17 +22,6 @@ function utils.map(mode, key, result, opts)
     Vim.api.nvim_set_keymap(mode, key, result, options)
 end
 
--- Telescope
-function utils.search_dotfiles()
-    require("telescope.builtin").find_files(
-        {prompt_title = "Dotfiles", cwd = "$HOME/.config/"})
-end
-
-function utils.search_nvim()
-    require("telescope.builtin").find_files(
-        {prompt_title = "Neovim Config", cwd = "$HOME/.config/nvim"})
-end
-
 function utils.find_files(dir)
     local telescope = require("telescope.builtin")
     local opts
