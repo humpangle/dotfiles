@@ -1,3 +1,16 @@
+-- Set up global variables
+-- redefine the vim global as capitalized to make editor happy
+Vim = vim
+-- ditto
+Cmd = Vim.cmd
+Vimg = Vim.g
+Vimo = Vim.o
+Vimw = Vim.wo
+Vimf = Vim.fn
+
+local vim_use_coc_env = os.getenv("VIM_USE_COC")
+NO_USE_COC_LSP = vim_use_coc_env == nil or vim_use_coc_env == ""
+
 local install_path = Vimf.stdpath("data") ..
                          "/site/pack/packer/start/packer.nvim"
 
@@ -58,6 +71,8 @@ return require("packer").startup(function()
         "tpope/vim-surround",
         -- Quickly toggle maximaize a tab
         "szw/vim-maximizer",
+        -- A number of useful motions for the quickfix list, pasting and more.
+        "tpope/vim-unimpaired",
     }
 
     -- Themes
