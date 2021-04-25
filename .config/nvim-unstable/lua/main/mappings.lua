@@ -93,6 +93,14 @@ u.map("n", ",cr", [[:let @"=expand("%")<CR>]], {noremap = false})
 -- copy absolute path
 u.map("n", ",cf", [[:let @"=expand("%:p")<CR>]], {noremap = false})
 
+-- find and replace in file
+--  press * {shift 8) to search for word under cursor and key combo below to
+--  replace in entire file
+u.map("n", "<leader>rr", [[:%s///g<left><left>]])
+u.map("n", "<leader>rc", [[:%s///gc<left><left><left>]])
+u.map("x", "<leader>rr", [[:%s///g<left><left>]])
+u.map("x", "<leader>rc", [[:%s///gc<left><left><left>]])
+
 -- toggle cursorcolumn
 u.map("n", ",tc", ":set cursorline! cursorcolumn!<CR>")
 
