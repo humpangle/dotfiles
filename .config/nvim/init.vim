@@ -23,7 +23,6 @@ lua <<EOF
       require("plugins/emmet-vim")
       require("plugins/nvim-autopairs")
       require("plugins/nvim-compe")
-      require("plugins/telescope")
       require("plugins/treesitter")
       require("plugins/undotree")
       require("plugins/vim-floaterm")
@@ -37,6 +36,7 @@ lua <<EOF
   require("plugins/nvim-comment")
 EOF
 
+so ~/.config/nvim/settings/plugins/fzf.vim
 so ~/.config/nvim/settings/plugins/neoformat.vim
 so ~/.config/nvim/lua/plugins/lightline.vim
 so ~/.config/nvim/lua/plugins/vim-maximizer.vim

@@ -11,18 +11,6 @@ if empty(glob(s:my_vim_plug_install_path))
 endif
 
 call plug#begin(s:my_vim_plug_plugins_path)
-  " FUZZY FINDER
-  " Fuzzy finder 1
-  "  Fzf does not automatically update project wide tags
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
-  " Manage branches and tags with fzf
-  Plug 'stsewd/fzf-checkout.vim'
-  " Fuzzy finder 2
-  Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
-  " View and search LSP symbols, tags in Vim/NeoVim.
-  Plug 'liuchengxu/vista.vim'
-
   " SNIPPET ENGINES
   Plug 'SirVer/ultisnips'
 
@@ -39,6 +27,4 @@ autocmd VimEnter *
 
 if !empty(glob(s:my_vim_plug_install_path))
   so ~/.config/nvim/settings/plugins/coc.vim
-  so ~/.config/nvim/settings/plugins/fzf.vim
-  so ~/.config/nvim/settings/plugins/fzf-checkout.vim
 endif

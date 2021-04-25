@@ -4,8 +4,6 @@ nnoremap <Leader>ff :Files<CR>
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 " find open buffers
 nnoremap <Leader>fb :Buffers<CR>
-" Files managed by git
-nnoremap <Leader>fg :GFiles<CR>
 " search buffers history
 nnoremap <Leader>hh :History<CR>
 " search for text in current buffer
@@ -20,16 +18,33 @@ nnoremap <Leader>M :Maps<CR>
 nnoremap <leader>ft :Filetypes<CR>
 " search in project - do not match filenames
 nnoremap <Leader>/ :Rrg<CR>
+nnoremap <leader>fw :Windows<CR>
+nnoremap <leader>fs :Colors<CR>
+
+" Tags
+" find symbols in current buffer (fzf-lsp.nvim)
+nnoremap <leader>bt :DocumentSymbols<CR>
+" find tags in entire project directory (fzf-lsp.nvim)
+nnoremap <leader>pt :WorkspaceSymbols<CR>
+nnoremap <leader>fa :CodeActions<CR>
+nnoremap <leader>fd :Diagnostics<CR>
+
+" GIT
+" Files managed by git
+nnoremap <Leader>fg :GFiles<CR>
 " Git commits
 nnoremap <leader>cm :Commits<CR>
 " Git commits for the current buffer
 nnoremap <leader>bc :BCommits<CR>
-nnoremap <leader>fw :Windows<CR>
-nnoremap <leader>fs :Colors<CR>
-" find tags in current buffer
-nnoremap <leader>bt :BTags<CR>
-" find tags in entire project directory: ctags -R
-nnoremap <leader>pt :Tags<CR>
+" fzf-checkout
+" find git branch:
+" checkout = <CR>
+" rebase = <C-r>
+" delete = <C-d>
+" merge = <C-e>
+" track remote = <a-cr>
+nnoremap <leader>cb :GBranches<CR>
+
 " search in project - match file names first
 nnoremap ,/ :Rg<CR>
 " nnoremap <leader>sn :Snippets<CR>

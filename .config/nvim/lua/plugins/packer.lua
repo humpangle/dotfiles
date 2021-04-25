@@ -33,15 +33,15 @@ return require("packer").startup(function()
             "hrsh7th/vim-vsnip",
             "mattn/emmet-vim",
         }
-
-        -- FUZZY FINDER
-        use {
-            "nvim-telescope/telescope.nvim",
-            "nvim-lua/popup.nvim",
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope-media-files.nvim",
-        }
     end
+
+    use {
+        {"junegunn/fzf", dir = "~/.fzf", run = "./install --all"},
+        "junegunn/fzf.vim",
+        "stsewd/fzf-checkout.vim",
+        -- sudo apt install bat # Syntax highlighting
+        "gfanto/fzf-lsp.nvim",
+    }
 
     -- Treesitter
     use {
