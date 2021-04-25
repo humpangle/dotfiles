@@ -142,7 +142,16 @@ nvim_lsp.emmet_ls.setup {capabilities = capabilities, on_attach = on_attach}
 
 -- python
 -- npm i -g pyright
-nvim_lsp.pyright.setup {capabilities = capabilities, on_attach = on_attach}
+nvim_lsp.pyright.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+        pyright = {
+            disableOrganizeImports = false,
+            disableLanguageServices = false,
+        },
+    },
+}
 
 -- json
 -- npm i -g vscode-json-languageserver
