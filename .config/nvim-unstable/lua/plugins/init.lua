@@ -34,7 +34,6 @@ return require("packer").startup(function()
     use {
         {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"},
         "windwp/nvim-ts-autotag",
-        "p00f/nvim-ts-rainbow",
     }
 
     -- Git
