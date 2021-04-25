@@ -28,7 +28,6 @@ return require("packer").startup(function()
         "nvim-lua/popup.nvim",
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-media-files.nvim",
-        "ludovicchabant/vim-gutentags",
     }
 
     -- Treesitter
