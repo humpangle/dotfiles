@@ -124,9 +124,9 @@ capabilities.textDocument.completion.completionItem.resolveSupport =
 
 -- Emmet
 -- https://github.com/aca/emmet-ls
--- npm i -g vscode-html-languageserver-bin
 -- npm i -g emmet-ls
 -- no need for hmtl server having emmet-ls and snippets working
+-- npm i -g vscode-html-languageserver-bin
 -- nvim_lsp.html.setup {}
 lsp_configs.emmet_ls = {
     default_config = {
