@@ -67,7 +67,7 @@ u.map("n", "<leader>ft", [[:Telescope filetypes<CR>]])
 -- search in project - do not match filenames
 u.map("n", "<leader>/", [[:Telescope live_grep<CR>]])
 -- find tags in current buffer
-u.map("n", "<leader>bt", [[:Telescope current_buffer_tags<CR>]])
+u.map("n", "<leader>bt", [[:Telescope lsp_document_symbols<CR>]])
 -- find tags in entire project directory: ctags -R
 u.map("n", "<leader>pt", [[:Telescope tags<CR>]])
 
