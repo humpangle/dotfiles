@@ -172,15 +172,11 @@ nvim_lsp.tsserver.setup {capabilities = capabilities, on_attach = on_attach}
 -- LUA
 -- install instructions from
 -- https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone):
--- git clone https://github.com/sumneko/lua-language-server $HOME/.local/share/nvim/lua/sumneko_lua
--- cd ~/.local/share/nvim/lua/sumneko_lua
--- git submodule update --init --recursive
--- cd 3rd/luamake
--- ninja -f ninja/linux.ninja
--- cd ../..
--- ./3rd/luamake/luamake rebuild
-local luapath = "/home/" .. os.getenv("USER") ..
-                    "/.local/share/nvim/lua/sumneko_lua"
+-- git clone https://github.com/sumneko/lua-language-server $HOME/.local/bin/lua/sumneko/lua-language-server && cd $HOME/.local/bin/lua/sumneko/lua-language-server && git submodule update --init --recursive && cd 3rd/luamake && compile/install.sh && cd ../.. && ./3rd/luamake/luamake rebuild
+
+local luapath = os.getenv("HOME") ..
+                    "/.local/bin/lua/sumneko/lua-language-server"
+
 local luabin = luapath .. "/bin/Linux/lua-language-server"
 
 nvim_lsp.sumneko_lua.setup {
