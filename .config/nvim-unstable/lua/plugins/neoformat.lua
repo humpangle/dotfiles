@@ -19,3 +19,12 @@ Vimg.shfmt_opt = "-ci"
 local u = require("utils.core")
 
 u.map("n", "<leader>fc", ":Neoformat<CR>")
+
+-- format on save
+Cmd([[
+  augroup fmt
+    autocmd!
+      " if file not changed and saved (e.g. to trigger test run), error is thrown: use try/catch to suppress
+      au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+  augroup END
+]])
