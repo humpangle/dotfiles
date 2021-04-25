@@ -34,15 +34,14 @@ return require("packer").startup(function()
     }
 
     -- Git
-    use "lewis6991/gitsigns.nvim"
+    use {"tpope/vim-fugitive", "lewis6991/gitsigns.nvim"}
 
     -- Markdown
     use {"iamcco/markdown-preview.nvim", run = "cd app && yarn install"}
     use "junegunn/goyo.vim"
 
     -- Statusline
-    -- for icons:
-    use "glepnir/galaxyline.nvim"
+    use "itchyny/lightline.vim"
 
     -- Terminal
     use {"voldikss/vim-floaterm"}

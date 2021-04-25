@@ -13,3 +13,5 @@ set runtimepath^=~/.local/nvim-unstable/nvim/site
 
 let &packpath = &runtimepath
 luafile ~/.config/nvim-unstable/init.lua
+
+so ~/.config/nvim-unstable/lua/plugins/lightline.vim

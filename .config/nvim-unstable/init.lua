@@ -16,6 +16,7 @@ require("lsp")
 
 -- PLUGIN SETTINGS
 require("plugins/gitsigns-nvim")
+require("plugins/vim-fugitive")
 require("plugins/emmet-vim")
 require("plugins/nvim-comment")
 require("plugins/nvim-autopairs")
@@ -25,4 +26,5 @@ require("plugins/treesitter")
 require("plugins/undotree")
 require("plugins/vim-floaterm")
 require("plugins/neoformat")
+require("plugins/lightline")
 require("nvim-ts-autotag").setup()
