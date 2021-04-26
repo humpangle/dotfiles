@@ -17,12 +17,18 @@ local utils = {
 }
 
 -- mappings
-function utils.map(mode, key, result, opts)
+function utils.map(mode, key, result, opts, bufnr)
     local options = {noremap = true}
+
     if opts then
         options = Vim.tbl_extend("force", options, opts)
     end
-    Vim.api.nvim_set_keymap(mode, key, result, options)
+
+    if bufnr then
+        Vim.api.nvim_buf_set_keymap(bufnr, mode, key, result, options)
+    else
+        Vim.api.nvim_set_keymap(mode, key, result, options)
+    end
 end
 
 function utils.find_files(dir)

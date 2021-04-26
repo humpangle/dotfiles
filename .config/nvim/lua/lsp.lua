@@ -1,3 +1,5 @@
+local u = require("util")
+
 -- TODO: signcolumn loses color when colorscheme changed. Study the below
 -- for likely fix:
 -- https://github.com/folke/lsp-colors.nvim
@@ -30,11 +32,6 @@ Vimf.sign_define("LspDiagnosticsErrorSign",
                  {text = "Er", texthl = "LspDiagnosticsError"})
 
 local function on_attach(client, bufnr)
-
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
@@ -42,59 +39,58 @@ local function on_attach(client, bufnr)
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
     -- Mappings.
-    local opts = {noremap = true, silent = true}
-    buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+    local opts = {}
+    u.map("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts, bufnr)
 
-    buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    u.map("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts, bufnr)
 
-    buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+    u.map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts, bufnr)
 
-    buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+    u.map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts, bufnr)
 
-    -- buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>",
+    -- u.map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>",
     --                opts)
 
-    buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>",
-                   opts)
+    u.map("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts, bufnr)
 
-    buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
-                   opts)
+    u.map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts, bufnr)
 
-    buf_set_keymap("n", "<leader>law",
-                   "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
+    u.map("n", "<leader>law", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
+          opts, bufnr)
 
-    buf_set_keymap("n", "<leader>lrw",
-                   "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
+    u.map("n", "<leader>lrw",
+          "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts, bufnr)
 
-    buf_set_keymap("n", "<leader>llw",
-                   "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-                   opts)
+    u.map("n", "<leader>llw",
+          "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+          opts, bufnr)
 
-    buf_set_keymap("n", "<leader>lt",
-                   "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+    u.map("n", "<leader>lt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts,
+          bufnr)
 
-    buf_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+    u.map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts, bufnr)
 
-    buf_set_keymap("n", "<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>",
-                   opts)
+    u.map("n", "<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", opts,
+          bufnr)
 
-    buf_set_keymap("n", "<leader>ld",
-                   "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",
-                   opts)
+    u.map("n", "<leader>ld",
+          "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts, bufnr)
 
-    buf_set_keymap("n", "<leader>dd",
-                   "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
+    u.map("n", "<leader>dd", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",
+          opts, bufnr)
 
-    buf_set_keymap("n", ",ac", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+    u.map("n", ",ac", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, bufnr)
+
+    u.map("n", ",o", "<cmd>lua lsp_organize_imports()<CR>", opts, bufnr)
 
     -- Set some keybinds conditional on server capabilities
     if client.resolved_capabilities.document_formatting then
-        buf_set_keymap("n", "<leader>lf",
-                       "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        u.map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts,
+              bufnr)
 
     elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap("n", "<leader>lf",
-                       "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+        u.map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+              opts, bufnr)
     end
 
     -- Set autocommands conditional on server_capabilities
