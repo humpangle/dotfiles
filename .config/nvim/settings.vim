@@ -295,15 +295,15 @@ function! DeleteAllBuffers(f) abort
   endwhile
 
   if len(no_name_buffers) > 0
-    exe 'bwipeout! '.join(no_name_buffers)
+    silent execute 'bwipeout! '.join(no_name_buffers)
   endif
 
   if len(terminal_buffers) > 0
-    exe 'bwipeout! '.join(terminal_buffers)
+    silent execute 'bwipeout! '.join(terminal_buffers)
   endif
 
   if len(normal_buffers) > 0
-    exe 'bd ' .join(normal_buffers)
+    silent execute 'bd ' .join(normal_buffers)
   endif
 endfunction
 
