@@ -8,13 +8,13 @@ Cmd([[
   augroup MyLspDiagnosticColors
     autocmd!
     autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
-    autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextWarning guifg=Grey ctermfg=Grey
     autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextInformation guifg=248 ctermfg=248
     autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextHint guifg=248 ctermfg=248
 
     " Underline the offending code
     autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineError guifg=Red ctermfg=Red cterm=underline gui=underline
-    autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineWarning guifg=Yellow ctermfg=Yellow cterm=underline gui=underline
+    autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineWarning guifg=Grey ctermfg=Grey cterm=underline gui=underline
     autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineInformation guifg=248 ctermfg=248 cterm=underline gui=underline
     autocmd BufEnter,ColorScheme * hi LspDiagnosticsUnderlineHint guifg=248 ctermfg=248 cterm=underline gui=underline
 
@@ -100,9 +100,9 @@ local function on_attach(client, bufnr)
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
         Cmd([[
-          hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
-          hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
-          hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
+          hi LspReferenceRead cterm=bold ctermbg=red guibg=#6F5858 guifg=#E0DADA
+          hi LspReferenceText cterm=bold ctermbg=red guibg=#6F5858  guifg=#E0DADA
+          hi LspReferenceWrite cterm=bold ctermbg=red guibg=#6F5858  guifg=#E0DADA
 
           augroup lsp_document_highlight
             autocmd! * <buffer>
