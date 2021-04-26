@@ -1,5 +1,6 @@
 so ~/.config/nvim/settings.vim
 
+" packer plugin manager installs plugins
 luafile ~/.config/nvim/lua/plugins/packer.lua
 
 " THEME SELECTION
