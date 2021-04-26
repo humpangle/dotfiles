@@ -235,7 +235,7 @@ nmap ,cr :let @"=expand("%")<CR>
 " copy absolute path
 nmap ,cf :let @"=expand("%:p")<CR>
 
-" SEARCH AND REPLACE: NOT VERY GOOD
+" SEARCH AND REPLACE
 " Type a replacement term and press . to repeat the replacement again. Useful
 " for replacing a few instances of the term (comparable to multiple cursors).
 nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
@@ -248,6 +248,22 @@ nnoremap <leader>rc :%s///gc<left><left><left>
 " same as above but only visually selected range
 xnoremap <leader>r :%s///g<left><left>
 xnoremap <leader>rc :%s///gc<left><left><left>
+" : NOT VERY GOOD
+" After searching for text, press this mapping to do a project wide find and
+" replace. It's similar to <leader>r except this one applies to all matches
+" across all files instead of just the current file.
+nnoremap <Leader>rR
+  \ :let @s='\<'.expand('<cword>').'\>'<CR>
+  \ :Grepper -cword -noprompt<CR>
+  \ :cfdo %s/<C-r>s//g \| update
+  \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" The same as above except it works with a visual selection.
+xmap <Leader>rR
+    \ "sy
+    \ gvgr
+    \ :cfdo %s/<C-r>s//g \| update
+     \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 nnoremap ,tc :tabclose<CR>
 
