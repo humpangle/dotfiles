@@ -270,40 +270,40 @@ map <leader>nf :call RenameFile()<cr>
 " MANAGE BUFFERS
 " https://tech.serhatteker.com/post/2020-06/how-to-delete-multiple-buffers-in-vim/
 function! DeleteAllBuffers(f) abort
-  let i = 1
+  let index = 1
   let last_b_num = bufnr("$")
-  let regular = []
-  let terminals = []
-  let no_name = []
+  let normal_buffers = []
+  let terminal_buffers = []
+  let no_name_buffers = []
 
-  while i <= last_b_num
-    let b_name = bufname(i)
-    if bufexists(i)
+  while index <= last_b_num
+    let b_name = bufname(index)
+    if bufexists(index)
       if  (b_name == '' )
-        call add(no_name, i)
+        call add(no_name_buffers, index)
       endif
 
       if a:f == 'a'
         if  (b_name =~ 'term://')
-          call add(terminals, i)
+          call add(terminal_buffers, index)
         else
-          call add(regular, i)
+          call add(normal_buffers, index)
         endif
      endif
     endif
-    let i += 1
+    let index += 1
   endwhile
 
-  if len(no_name) > 0
-    exe 'bwipeout! '.join(no_name)
+  if len(no_name_buffers) > 0
+    exe 'bwipeout! '.join(no_name_buffers)
   endif
 
-  if len(terminals) > 0
-    exe 'bwipeout! '.join(terminals)
+  if len(terminal_buffers) > 0
+    exe 'bwipeout! '.join(terminal_buffers)
   endif
 
-  if len(regular) > 0
-    exe 'bd ' .join(regular)
+  if len(normal_buffers) > 0
+    exe 'bd ' .join(normal_buffers)
   endif
 endfunction
 
