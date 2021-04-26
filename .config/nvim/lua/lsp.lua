@@ -151,8 +151,17 @@ local lua_settings = {
             path = vim.split(package.path, ";"),
         },
         diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = {"vim", "use", "run"},
+            -- Get the language server to recognize globals
+            globals = {
+                -- neovim lib
+                "vim",
+                "use",
+                "run",
+                -- plenary lib for testing neovim plugins written in lua
+                "describe",
+                "after_each",
+                "it",
+            },
         },
         workspace = {
             -- Make the server aware of Neovim runtime files
