@@ -26,7 +26,7 @@ require("compe").setup {
     },
 }
 
-local u = require("utils/core")
+local u = require("util")
 --
 -- Key bindings for Auto Import etc
 -- -- Trigger completion

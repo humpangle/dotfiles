@@ -1,4 +1,4 @@
-local u = require("utils.core")
+local u = require("util")
 
 Cmd(
     [[ autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |   nnoremap <buffer> .. :edit %:h<CR> | endif ]])

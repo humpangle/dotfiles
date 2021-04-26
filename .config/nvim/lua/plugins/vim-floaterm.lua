@@ -1,4 +1,4 @@
-local u = require("utils.core")
+local u = require("util")
 
 Vimg.floaterm_keymap_toggle = "<F1>"
 Vimg.floaterm_keymap_next = "<F2>"

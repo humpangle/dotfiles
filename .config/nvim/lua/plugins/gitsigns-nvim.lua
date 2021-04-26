@@ -1,4 +1,4 @@
-local u = require("utils/core")
+local u = require("util")
 
 require("gitsigns").setup {
     signs = {

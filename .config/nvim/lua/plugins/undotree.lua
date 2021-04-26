@@ -1,3 +1,3 @@
-local u = require("utils.core")
+local u = require("util")
 
 u.map("n", "<leader>uu", ":UndotreeToggle<CR>")

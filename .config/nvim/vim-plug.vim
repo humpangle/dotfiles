@@ -26,5 +26,5 @@ autocmd VimEnter *
   \| endif
 
 if !empty(glob(s:my_vim_plug_install_path))
-  so ~/.config/nvim/settings/plugins/coc.vim
+  so ~/.config/nvim/plugins/coc.vim
 endif

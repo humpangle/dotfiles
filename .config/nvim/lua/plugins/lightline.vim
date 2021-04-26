@@ -7,13 +7,13 @@ function! LightlineFugitive()
 endfunction
 
 function! LightlineFilename()
-  return luaeval('require("utils/core").get_file_name(2)')
+  return luaeval('require("util").get_file_name(2)')
 endfunction
 
 function! LightlineFilenameTab(n)
   let buflist = tabpagebuflist(a:n)
   let winnr = tabpagewinnr(a:n)
   let filename = expand('#'.buflist[winnr - 1].':f')
-  let lua_func = 'require("utils/core").get_file_name("' . filename . '")'
+  let lua_func = 'require("util").get_file_name("' . filename . '")'
   return luaeval(lua_func)
 endfunction

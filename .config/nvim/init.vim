@@ -1,18 +1,17 @@
-so ~/.config/nvim/settings/settings.vim
-so ~/.config/nvim/settings/mappings.vim
+so ~/.config/nvim/settings.vim
 
 luafile ~/.config/nvim/lua/plugins/packer.lua
 
 " THEME SELECTION
 if !empty($EBNIS_VIM_THEME)
-  so ~/.config/nvim/settings/themes/$EBNIS_VIM_THEME.vim
+  so ~/.config/nvim/plugins/$EBNIS_VIM_THEME.vim
   if $EBNIS_VIM_THEME_BG == 'd'
     set background=dark
   else
     set background=light
   endif
 else
-  so ~/.config/nvim/settings/themes/vim-gruvbox8.vim
+  so ~/.config/nvim/plugins/vim-gruvbox8.vim
   set background=dark
 endif
 
@@ -36,13 +35,13 @@ lua <<EOF
   require("plugins/nvim-comment")
 EOF
 
-so ~/.config/nvim/settings/plugins/fzf.vim
-so ~/.config/nvim/settings/plugins/neoformat.vim
+so ~/.config/nvim/plugins/fzf.vim
+so ~/.config/nvim/plugins/neoformat.vim
 so ~/.config/nvim/lua/plugins/lightline.vim
 so ~/.config/nvim/lua/plugins/vim-maximizer.vim
 
 let s:can_use_coc = !empty($VIM_USE_COC)
 
 if s:can_use_coc
-  so ~/.config/nvim/settings/vim-plug.vim
+  so ~/.config/nvim/vim-plug.vim
 endif
