@@ -41,6 +41,7 @@ so ~/.config/nvim/plugins/fzf.vim
 so ~/.config/nvim/plugins/neoformat.vim
 so ~/.config/nvim/lua/plugins/lightline.vim
 so ~/.config/nvim/lua/plugins/vim-maximizer.vim
+so ~/.config/nvim/plugins/vCoolor.vim
 
 let s:can_use_coc = !empty($VIM_USE_COC)
 
