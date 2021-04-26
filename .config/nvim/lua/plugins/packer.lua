@@ -84,6 +84,9 @@ return require("packer").startup(function()
         {"rrethy/vim-hexokinase", run = "make hexokinase"},
         -- color picker
         "KabbAmine/vCoolor.vim",
+        -- SYNTAX HIGHLIGHTING
+        "elixir-editors/vim-elixir",
+        "jparise/vim-graphql",
     }
 
     -- Themes
