@@ -105,7 +105,6 @@ augroup filetypes
   au!
   autocmd! FileType json set filetype=jsonc
   autocmd! FileType vifm set filetype=vim
-  autocmd! FileType javascriptreact set filetype=typescriptreact
   au BufNewFile,BufRead *.html.django set filetype=htmldjango
   au BufNewFile,BufRead *.eslintrc set filetype=jsonc
   au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
