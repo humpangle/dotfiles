@@ -48,6 +48,7 @@ require("gitsigns").setup {
     use_internal_diff = true, -- If luajit is present
 }
 
+u.map("n", "<leader>hs", [[<cmd>lua require("gitsigns").stage_hunk()<CR>]])
 u.map("n", "<leader>hu", [[<cmd>lua require("gitsigns").undo_stage_hunk()<CR>]])
 u.map("n", "<leader>hr", [[<cmd>lua require("gitsigns").reset_hunk()<CR>]])
 u.map("n", "<leader>hR", [[<cmd>lua require("gitsigns").reset_buffer()<CR>]])
