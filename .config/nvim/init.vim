@@ -16,7 +16,9 @@ else
 endif
 
 lua <<EOF
- -- see plugins.lua for globals
+--vim.lsp.set_log_level('info') -- debug/error/trace
+-- see plugins/packer.lua for globals
+
   if NO_USE_COC_LSP then
       require("lsp")
       require("plugins/emmet-vim")
