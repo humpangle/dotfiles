@@ -78,11 +78,19 @@ function! s:copy_fzf_results(lines)
   let @+ = joined_lines
 endfunction
 
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit',
   \ 'ctrl-y': function('s:copy_fzf_results'),
+  \ 'ctrl-q': function('s:build_quickfix_list'),
   \ }
 
 " scroll the fzf vim listing buffer
