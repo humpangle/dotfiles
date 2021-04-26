@@ -185,10 +185,6 @@ nnoremap <c-l> <C-w>l
 " nnoremap <leader>tn :tabnew<cr> " new tab
 " nnoremap <leader>ts :tab split<cr>
 
-" mappings in unimpaired.vim
-" nnoremap [od :diffthis<cr>
-" nnoremap ]od :diffoff<cr>
-
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr><cr>
 nnoremap ,rm :!trash-put %:p<cr>:bdelete!<cr>
