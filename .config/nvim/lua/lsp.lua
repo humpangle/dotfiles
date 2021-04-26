@@ -105,7 +105,6 @@ local function on_attach(client, bufnr)
 end
 
 local nvim_lsp = require("lspconfig")
-local lsp_configs = require("lspconfig/configs")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- https://github.com/hrsh7th/nvim-compe#how-to-use-lsp-snippet
@@ -119,6 +118,29 @@ capabilities.textDocument.completion.completionItem.resolveSupport =
 -- do not forget to install a server: LspInstall <server>
 -- see: https://github.com/kabouzeid/nvim-lspinstall#bundled-installers
 -- for list of servers
+
+------------------------------ Custom Installer -------------------
+-- https://github.com/kabouzeid/nvim-lspinstall#custom-installer
+
+-- Emmet
+-- https://github.com/aca/emmet-ls
+-- no need for hmtl server having emmet-ls and snippets working
+local emmet_config = {
+    default_config = {
+        cmd = {"emmet-ls", "--stdio"},
+        filetypes = {"html", "css"},
+        root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json",
+                                              "jsconfig.json", ".git",
+                                              Vimf.getcwd()),
+        settings = {},
+    },
+}
+
+require"lspinstall/servers".emmet = vim.tbl_extend("error", emmet_config, {
+    -- lspinstall will automatically create/delete the install directory for every server
+    install_script = "npm install emmet-ls@latest",
+    uninstall_script = nil, -- can be omitted
+})
 
 -- Configure lua language server for neovim development
 local lua_settings = {
@@ -179,21 +201,3 @@ lsp_install.post_install_hook = function()
     -- triggers the FileType autocmd that starts the server
     vim.cmd("bufdo e")
 end
-
--- Emmet
--- https://github.com/aca/emmet-ls
--- npm i -g emmet-ls
--- no need for hmtl server having emmet-ls and snippets working
--- npm i -g vscode-html-languageserver-bin
--- nvim_lsp.html.setup {}
-lsp_configs.emmet_ls = {
-    default_config = {
-        cmd = {"emmet-ls", "--stdio"},
-        filetypes = {"html", "css"},
-        root_dir = function()
-            return Vim.loop.cwd()
-        end,
-        settings = {},
-    },
-}
-nvim_lsp.emmet_ls.setup {capabilities = capabilities, on_attach = on_attach}
