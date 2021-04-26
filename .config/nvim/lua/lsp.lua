@@ -118,6 +118,73 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true;
 capabilities.textDocument.completion.completionItem.resolveSupport =
     {properties = {"documentation", "detail", "additionalTextEdits"}}
 
+-- lsp-install
+-- https://github.com/kabouzeid/nvim-lspinstall/wiki
+-- ################# IMPORTANT ###################
+-- do not forget to install a server: LspInstall <server>
+-- see: https://github.com/kabouzeid/nvim-lspinstall#bundled-installers
+-- for list of servers
+
+-- Configure lua language server for neovim development
+local lua_settings = {
+    Lua = {
+        runtime = {
+            -- LuaJIT in the case of Neovim
+            version = "LuaJIT",
+            path = vim.split(package.path, ";"),
+        },
+        diagnostics = {
+            -- Get the language server to recognize the `vim` global
+            globals = {"vim", "use", "run"},
+        },
+        workspace = {
+            -- Make the server aware of Neovim runtime files
+            library = {
+                [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+            },
+        },
+        telemetry = {enable = false},
+        completion = {snippetSupport = true},
+    },
+}
+
+local python_settings = {
+    pyright = {disableOrganizeImports = false, disableLanguageServices = false},
+}
+
+local lsp_install = require("lspinstall")
+
+local function auto_install()
+    lsp_install.setup()
+    local installed_servers = lsp_install.installed_servers()
+
+    for _, server in pairs(installed_servers) do
+        local config = {on_attach = on_attach, capabilities}
+
+        -- language specific config
+        if server == "lua" then
+            config.settings = lua_settings
+        end
+
+        if server == "python" then
+            config.settings = python_settings
+        end
+
+        nvim_lsp[server].setup(config)
+    end
+end
+
+auto_install()
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+lsp_install.post_install_hook = function()
+    -- reload installed servers
+    auto_install()
+
+    -- triggers the FileType autocmd that starts the server
+    vim.cmd("bufdo e")
+end
+
 -- Emmet
 -- https://github.com/aca/emmet-ls
 -- npm i -g emmet-ls
@@ -135,76 +202,3 @@ lsp_configs.emmet_ls = {
     },
 }
 nvim_lsp.emmet_ls.setup {capabilities = capabilities, on_attach = on_attach}
-
--- python
--- npm i -g pyright
-nvim_lsp.pyright.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = {
-        pyright = {
-            disableOrganizeImports = false,
-            disableLanguageServices = false,
-        },
-    },
-}
-
--- json
--- npm i -g vscode-json-languageserver
-nvim_lsp.jsonls.setup {capabilities = capabilities, on_attach = on_attach}
-
--- bash
--- npm i -g bash-language-server
-nvim_lsp.bashls.setup {capabilities = capabilities, on_attach = on_attach}
-
--- CSS
--- npm i -g vscode-css-languageserver-bin
-nvim_lsp.cssls.setup {capabilities = capabilities, on_attach = on_attach}
-
--- TypeScript
--- npm i -g typescript typescript-language-server
-nvim_lsp.tsserver.setup {capabilities = capabilities, on_attach = on_attach}
-
--- LUA
--- install instructions from
--- https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone):
--- git clone https://github.com/sumneko/lua-language-server $HOME/.local/bin/lua/sumneko/lua-language-server && cd $HOME/.local/bin/lua/sumneko/lua-language-server && git submodule update --init --recursive && cd 3rd/luamake && compile/install.sh && cd ../.. && ./3rd/luamake/luamake rebuild
-
-local luapath = os.getenv("HOME") ..
-                    "/.local/bin/lua/sumneko/lua-language-server"
-
-local luabin = luapath .. "/bin/Linux/lua-language-server"
-
-nvim_lsp.sumneko_lua.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    cmd = {luabin, "-E", luapath .. "/main.lua"},
-    settings = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = "LuaJIT",
-                -- Setup your lua path
-                path = Vim.split(package.path, ";"),
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {"vim", "use", "run", "Theming", "LSP", "Completion"},
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = {
-                    [Vimf.expand("$VIMRUNTIME/lua")] = true,
-                    [Vimf.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                },
-                maxPreload = 10000,
-            },
-            telemetry = {enable = false},
-            completion = {snippetSupport = true},
-        },
-    },
-}
-
--- YAML
--- npm install -g yaml-language-server
-nvim_lsp.yamlls.setup {capabilities = capabilities, on_attach = on_attach}

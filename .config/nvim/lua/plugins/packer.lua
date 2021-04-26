@@ -32,6 +32,9 @@ return require("packer").startup(function()
             "hrsh7th/nvim-compe",
             "hrsh7th/vim-vsnip",
             "mattn/emmet-vim",
+            -- conveniently install language servers.
+            -- Adds `:LspInstall <language>` command
+            "kabouzeid/nvim-lspinstall",
         }
     end
 
