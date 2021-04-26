@@ -169,16 +169,6 @@ nnoremap <c-j> <C-w>j
 nnoremap <c-k> <C-w>k
 nnoremap <c-l> <C-w>l
 
-" Go to tab by number
-" noremap <leader>1 1gt
-" noremap <leader>2 2gt
-" noremap <leader>3 3gt
-" noremap <leader>4 4gt
-" noremap <leader>5 5gt
-" noremap <leader>6 6gt
-" noremap <leader>7 7gt
-" noremap <leader>8 8gt
-" noremap <leader>9 9gt
 " nnoremap <silent> <leader>_ :split<CR> " split window bottom
 " nnoremap <silent> <leader>\| :vsp<CR> " split window right
 " nnoremap <silent> <leader>0 :only<CR> " remove all but current window
