@@ -9,6 +9,13 @@ let g:netrw_liststyle = 3
 " Open file by default in new tab
 " let g:netrw_browse_split = 3
 
+let g:markdown_fenced_languages = [
+  \ 'html',
+  \ 'python',
+  \ 'bash=sh',
+  \ 'lua'
+\]
+
 syntax enable
 " Set <leader> key to <Space>
 nnoremap <Space> <Nop>
