@@ -110,11 +110,11 @@ augroup END
 
 augroup filetypes
   au!
-  autocmd! FileType json set filetype=jsonc
+  " autocmd! FileType json set filetype=jsonc
   autocmd! FileType vifm set filetype=vim
   au BufNewFile,BufRead *.html.django set filetype=htmldjango
-  au BufNewFile,BufRead *.eslintrc set filetype=jsonc
-  au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
+  au BufNewFile,BufRead *.eslintrc set filetype=json
+  " au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
   au BufNewFile,BufRead .env* set filetype=sh
   au BufNewFile,BufRead *.psql set filetype=sql
   au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
