@@ -76,6 +76,11 @@ return require("packer").startup(function()
         "szw/vim-maximizer",
         -- A number of useful motions for the quickfix list, pasting and more.
         "tpope/vim-unimpaired",
+        -- displaying the colours in the file (#rrggbb, #rgb, rgb(a)
+        -- requires golang (asdf plugin-add golang && asdf install golang <version>)
+        {"rrethy/vim-hexokinase", run = "make hexokinase"},
+        -- color picker
+        "KabbAmine/vCoolor.vim",
     }
 
     -- Themes
