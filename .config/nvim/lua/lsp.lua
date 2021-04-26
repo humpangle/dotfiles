@@ -44,6 +44,8 @@ local function on_attach(client, bufnr)
 
     u.map("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts, bufnr)
 
+    u.map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts, bufnr)
+
     u.map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts, bufnr)
 
     u.map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts, bufnr)
@@ -69,9 +71,6 @@ local function on_attach(client, bufnr)
           bufnr)
 
     u.map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts, bufnr)
-
-    u.map("n", "<leader>lrf", "<cmd>lua vim.lsp.buf.references()<CR>", opts,
-          bufnr)
 
     u.map("n", "<leader>ld",
           "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts, bufnr)
