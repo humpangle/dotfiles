@@ -57,9 +57,12 @@ return require("packer").startup(function()
     use {"tpope/vim-fugitive", "lewis6991/gitsigns.nvim"}
 
     -- Markdown
-    use {"iamcco/markdown-preview.nvim", run = "cd app && yarn install"}
-    use "junegunn/goyo.vim"
-
+    use {
+        {"iamcco/markdown-preview.nvim", run = "cd app && yarn install"},
+        -- Align Markdown table
+        "godlygeek/tabular",
+        "junegunn/goyo.vim",
+    }
     -- Statusline
     use "itchyny/lightline.vim"
 

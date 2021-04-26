@@ -43,6 +43,8 @@ so ~/.config/nvim/plugins/neoformat.vim
 so ~/.config/nvim/lua/plugins/lightline.vim
 so ~/.config/nvim/lua/plugins/vim-maximizer.vim
 so ~/.config/nvim/plugins/vCoolor.vim
+" Markdown preview
+let g:mkdp_refresh_slow = 1
 
 let s:can_use_coc = !empty($VIM_USE_COC)
 
