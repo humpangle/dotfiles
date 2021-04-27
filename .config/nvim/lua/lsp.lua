@@ -6,7 +6,7 @@ local u = require("util")
 --
 -- underline error/warning messages (with colors)
 -- Diagnostic text colors
-Cmd([[
+vim.cmd([[
   augroup MyLspDiagnosticColors
     autocmd!
     autocmd BufEnter,ColorScheme * hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
@@ -28,7 +28,7 @@ Cmd([[
 -- this not working: https://github.com/neovim/neovim/issues/12162
 -- Attempt to use autocmd to change color (as below ) also fails
 -- autocmd ColorScheme * hi! LspDiagnosticsErrorSign cterm=bold ctermfg=196 ctermbg=235
-Vimf.sign_define("LspDiagnosticsErrorSign",
+vim.fn.sign_define("LspDiagnosticsErrorSign",
                  {text = "Er", texthl = "LspDiagnosticsError"})
 
 local function on_attach(client, bufnr)
@@ -90,7 +90,7 @@ local function on_attach(client, bufnr)
 
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
-        Cmd([[
+        vim.cmd([[
           hi LspReferenceRead cterm=bold ctermbg=red guibg=#6F5858 guifg=#E0DADA
           hi LspReferenceText cterm=bold ctermbg=red guibg=#6F5858  guifg=#E0DADA
           hi LspReferenceWrite cterm=bold ctermbg=red guibg=#6F5858  guifg=#E0DADA
@@ -131,7 +131,7 @@ local emmet_config = {
         filetypes = {"html", "css"},
         root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json",
                                               "jsconfig.json", ".git",
-                                              Vimf.getcwd()),
+                                              vim.fn.getcwd()),
         settings = {},
     },
 }

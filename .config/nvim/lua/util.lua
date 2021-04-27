@@ -1,5 +1,5 @@
-local vim_expand = Vimf.expand
-local vim_empty = Vimf.empty
+local vim_expand = vim.fn.expand
+local vim_empty = vim.fn.empty
 
 local utils = {
     rg_defaults = {
@@ -21,13 +21,13 @@ function utils.map(mode, key, result, opts, bufnr)
     local options = {noremap = true}
 
     if opts then
-        options = Vim.tbl_extend("force", options, opts)
+        options = vim.tbl_extend("force", options, opts)
     end
 
     if bufnr then
-        Vim.api.nvim_buf_set_keymap(bufnr, mode, key, result, options)
+        vim.api.nvim_buf_set_keymap(bufnr, mode, key, result, options)
     else
-        Vim.api.nvim_set_keymap(mode, key, result, options)
+        vim.api.nvim_set_keymap(mode, key, result, options)
     end
 end
 
@@ -42,7 +42,7 @@ function utils.find_files(dir)
         end
     end
 
-    local rg_options = Vim.tbl_extend("force", utils.rg_defaults, {})
+    local rg_options = vim.tbl_extend("force", utils.rg_defaults, {})
 
     if dir == "dir" then
         local current_dir = vim_expand("%:h")
@@ -54,10 +54,10 @@ function utils.find_files(dir)
 end
 
 function utils.toggleBackground()
-    if Vimo.background == "dark" then
-        Vimo.background = "light"
+    if vim.o.background == "dark" then
+        vim.o.background = "light"
     else
-        Vimo.background = "dark"
+        vim.o.background = "dark"
     end
 end
 

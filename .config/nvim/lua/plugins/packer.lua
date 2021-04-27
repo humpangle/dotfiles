@@ -1,22 +1,12 @@
--- Set up global variables
--- redefine the vim global as capitalized to make editor happy
-Vim = vim
--- ditto
-Cmd = Vim.cmd
-Vimg = Vim.g
-Vimo = Vim.o
-Vimw = Vim.wo
-Vimf = Vim.fn
-
 local vim_use_coc_env = os.getenv("VIM_USE_COC")
 NO_USE_COC_LSP = vim_use_coc_env == nil or vim_use_coc_env == ""
 
-local install_path = Vimf.stdpath("data") ..
+local install_path = vim.fn.stdpath("data") ..
                          "/site/pack/packer/start/packer.nvim"
 
-if Vimf.empty(Vimf.glob(install_path)) > 0 then
-    Cmd("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
-    Cmd "packadd packer.nvim"
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    vim.cmd("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+    vim.cmd("packadd packer.nvim")
 end
 
 return require("packer").startup(function()

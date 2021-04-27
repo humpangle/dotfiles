@@ -1,6 +1,6 @@
 local u = require("util")
 
-Cmd(
+vim.cmd(
     [[ autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |   nnoremap <buffer> .. :edit %:h<CR> | endif ]])
 
 u.map("n", "gst", [[:Git status<CR>]])

@@ -18,4 +18,4 @@ l.tab = {
     inactive = {"tabnum", "filename_active", "modified"},
 }
 
-Vimg.lightline = l
+vim.g.lightline = l
