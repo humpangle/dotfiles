@@ -25,6 +25,4 @@ autocmd VimEnter *
   \|   PlugInstall --sync | q
   \| endif
 
-if !empty(glob(s:my_vim_plug_install_path))
-  so ~/.config/nvim/plugins/coc.vim
-endif
+so ~/.config/nvim/plugins/coc.vim
