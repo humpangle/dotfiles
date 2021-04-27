@@ -161,6 +161,7 @@ local lua_settings = {
                 "describe",
                 "after_each",
                 "it",
+                "before_each",
             },
         },
         workspace = {
