@@ -173,6 +173,11 @@ local lua_settings = {
         },
         telemetry = {enable = false},
         completion = {snippetSupport = true},
+        develop = {
+            -- enable = true,
+            -- debuggerWait = true,
+            -- debuggerPort = 11412
+        },
     },
 }
 
