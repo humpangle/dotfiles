@@ -27,7 +27,6 @@ lua <<EOF
       require("plugins/nvim-compe")
       require("plugins/treesitter")
       require("plugins/undotree")
-      require("plugins/vim-floaterm")
       require("nvim-ts-autotag").setup()
   end
 
@@ -43,6 +42,7 @@ so ~/.config/nvim/plugins/neoformat.vim
 so ~/.config/nvim/lua/plugins/lightline.vim
 so ~/.config/nvim/lua/plugins/vim-maximizer.vim
 so ~/.config/nvim/plugins/vCoolor.vim
+so ~/.config/nvim/plugins/vim-floaterm.vim
 " Markdown preview
 let g:mkdp_refresh_slow = 1
 
