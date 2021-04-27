@@ -338,7 +338,7 @@ nnoremap <leader>tb :call BackgroundToggle()<cr>
 
 " QuickFix and Location list
 nnoremap <leader>lc :lclose<CR>
-nnoremap <leader>qc :cclose<CR>
+nnoremap yoq :cclose<cr>
 
 " lua
 nnoremap ss :luafile %<CR>
