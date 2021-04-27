@@ -18,15 +18,15 @@
       "filetypes": ["typescript", "typescriptreact", "graphql"]
     }
   },
-  "snippets.userSnippetsDirectory": "~/.config/nvim/Ultisnips"
-  /* "Lua.diagnostics.globals": [ */
-  /*   "vim", */
-  /*   "use", */
-  /*   "describe", */
-  /*   "it", */
-  /*   "after_each", */
-  /*   "before_each" */
-  /* ] */
+  "snippets.userSnippetsDirectory": "~/.config/nvim/Ultisnips",
+  "Lua.diagnostics.globals": [
+    "vim",
+    "use",
+    "describe",
+    "it",
+    "after_each",
+    "before_each"
+  ]
   /* "explorer.width": 50, */
   /* "explorer.keyMappings.global": { */
   /*   "cd": "cd", */
