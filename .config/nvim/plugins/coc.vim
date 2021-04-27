@@ -60,11 +60,13 @@ let g:coc_snippet_prev = '<S-TAB>'
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
+" navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in
 " location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [d <Plug>(coc-diagnostic-prev)
+nmap <silent> ]d <Plug>(coc-diagnostic-next)
+" Show all diagnostics: COC errors in CoCList
+nnoremap <silent> <leader>dd  :<C-u>CocList diagnostics<cr>
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -123,8 +125,6 @@ nnoremap <silent> <leader>rs :<C-u>CocRestart<cr><cr>
 nmap <Leader>ch :CocSearch <Right>
 
 " Mappings for CoCList
-" Show all diagnostics: COC errors
-nnoremap <silent> <leader>dd  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
 nnoremap <silent> <leader>cx  :<C-u>CocList extensions<cr>
 " Show commands
