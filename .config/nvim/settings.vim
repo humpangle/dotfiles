@@ -111,6 +111,7 @@ augroup MyMiscGroup
   au BufWritePre * %s/\s\+$//e
   au BufWritePre * %s/\n\+\%$//e
   au BufWritePre *.[ch] *.[ch] %s/\%$/\r/e
+  " autocmd FileType help wincmd H
 augroup END
 
 augroup filetypes
