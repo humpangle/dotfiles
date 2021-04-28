@@ -92,12 +92,16 @@ function utils.get_file_name(num)
         return "[No Name]"
     end
 
-    local splitted = utils.split(file_name, "/+")
-    local len = #splitted
-    local last_but_one_index = len - 1
-    local tail = splitted[len]
+    if num == 2 then
+        return file_name
+    end
 
     if has_file_arg then
+        local splitted = utils.split(file_name, "/+")
+        local len = #splitted
+        local last_but_one_index = len - 1
+        local tail = splitted[len]
+
         local m = {}
 
         for i = 1, last_but_one_index, 1 do
@@ -111,17 +115,9 @@ function utils.get_file_name(num)
         end
 
         return table.concat(m, "/") .. "/" .. tail
-    elseif num == 2 then
-        local head = splitted[last_but_one_index]
-
-        if head then
-            return head .. "/" .. tail
-        end
-
-        return tail
     end
 
-    return tail
+    return file_name
 end
 
 return utils
