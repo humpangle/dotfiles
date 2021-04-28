@@ -13,7 +13,12 @@ let g:markdown_fenced_languages = [
   \ 'html',
   \ 'python',
   \ 'bash=sh',
-  \ 'lua'
+  \ 'lua',
+  \ 'vim',
+  \ 'help',
+  \ 'javascript',
+  \ 'typescript',
+  \ 'css'
 \]
 
 syntax enable
