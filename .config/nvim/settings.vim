@@ -22,6 +22,8 @@ let g:markdown_fenced_languages = [
 \]
 
 syntax enable
+" turn on detection for ftplugin/<filetype.vim>,indent/<filetype>.vim
+filetype plugin indent on
 " Set <leader> key to <Space>
 nnoremap <Space> <Nop>
 let mapleader=" "
