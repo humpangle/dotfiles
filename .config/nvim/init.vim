@@ -1,3 +1,6 @@
+" https://github.com/dag/vim-fish#teach-a-vim-to-fish
+set shell=/bin/bash
+
 so ~/.config/nvim/settings.vim
 
 " packer plugin manager installs plugins
