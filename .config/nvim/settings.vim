@@ -316,7 +316,7 @@ nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete current buffer
 nnoremap <leader>bd :bd%<cr>
 " Delete current buffer force
-nnoremap <leader>b% :bd!%<cr>
+nnoremap <leader>bD :bd!%<cr>
 " Wipe current buffer
 nnoremap <leader>bw :bw%<cr>
 
