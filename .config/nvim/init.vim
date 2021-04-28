@@ -33,7 +33,6 @@ lua <<EOF
   -- PLUGIN SETTINGS
   require("plugins/gitsigns-nvim")
   require("plugins/vim-fugitive")
-  require("plugins/lightline")
   require("plugins/nvim-comment")
 EOF
 

@@ -1,3 +1,46 @@
+let g:lightline = {}
+
+let g:lightline.component_function = {
+  \'fugitive': 'LightlineFugitive',
+  \ 'filename': 'LightlineFilename',
+\}
+
+let g:lightline.component = {
+  \'filename': '%f',
+\}
+
+let g:lightline.active = {
+  \'left': [
+      \[
+          \'mode',
+          \'paste'
+      \],
+      \[
+          \'fugitive',
+          \'readonly',
+          \'filename',
+          \'modified',
+      \]
+  \],
+\}
+
+let g:lightline.tab_component_function = {
+  \ 'filename_active': 'LightlineFilenameTab',
+\}
+
+let g:lightline.tab = {
+  \ 'active': [
+      \ 'tabnum',
+      \ 'filename',
+      \ 'modified'
+  \],
+  \ 'inactive': [
+      \ 'tabnum',
+      \ 'filename_active',
+      \ 'modified'
+  \],
+\}
+
 function! LightlineFugitive()
   if exists('*FugitiveHead')
     let branch = FugitiveHead()
