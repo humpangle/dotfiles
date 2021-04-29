@@ -116,3 +116,11 @@ Session.vim
 
 *.netrwhist*
 .tool-versions
+
+# fish
+.config/fish/completions/asdf.fish
+.config/fish/functions/*bass.*
+.config/fish/functions/*fzf*
+.config/fish/conf.d/fzf*
+.config/fish/fish_variables
+.config/fish/functions/*fisher*

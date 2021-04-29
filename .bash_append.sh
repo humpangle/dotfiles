@@ -5,11 +5,6 @@
 #                 tac /tmp/tmpfile > "$HISTFILE"
 # rm /tmp/tmpfile
 
-[ -f $HOME/dotfiles/.bash_aliases ] && source $HOME/dotfiles/.bash_aliases
-[ -f $HOME/dotfiles/.utils.sh ] && source $HOME/dotfiles/.utils.sh
-
-export EDITOR="nvim"
-
 case $SHELL in
   *"com.termux"*)
     export PYTHON2="$PREFIX/bin/python2"
@@ -22,8 +17,6 @@ case $SHELL in
     [ -f $HOME/dotfiles/.regular_shell.sh ] && source $HOME/dotfiles/.regular_shell.sh
     ;;
 esac
-
-[ -f $HOME/dotfiles/.fzf.sh ] && source $HOME/dotfiles/.fzf.sh
 
 # Codi
 # Usage: codi [filetype] [filename]
