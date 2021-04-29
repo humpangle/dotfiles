@@ -1,6 +1,7 @@
 # To use common configuration in %APPDATA%\mintty, simply remove this file
 CursorType=block
 FontHeight=11
+Font=CaskaydiaCove NF
 ThemeFile=mintty
 Locale=C
 Charset=UTF-8
