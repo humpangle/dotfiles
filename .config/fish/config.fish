@@ -121,6 +121,8 @@ if status --is-interactive
     abbr -a -g ... 'cd ../..'
     abbr -a -g .3 'cd ../../..'
     abbr -a -g .4 'cd ../../../..'
+    abbr -a -g cdo "mkdir -p $HOME/projects/0 && cd $HOME/projects/0"
+    abbr -a -g cd0 "mkdir -p $HOME/projects/0 && cd $HOME/projects/0"
     abbr -a -g md "mkdir -p"
     abbr -a -g ff fzf
     abbr -a -g c "clear && printf '\e[3J'"
