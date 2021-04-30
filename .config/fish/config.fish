@@ -215,6 +215,8 @@ if test -d "$HOME/.asdf"
 end
 
 if test -n "$WSL_DISTRO_NAME"
+    umask 022
+
     # following needed so that cypress browser testing can work in WSL2
     set -x DISPLAY (/sbin/ip route | awk '/default/ { print $3 }'):0
     # without the next line, linux executables randomly fail in TMUX in WSL
