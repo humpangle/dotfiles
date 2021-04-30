@@ -1,5 +1,8 @@
 # suppress fish welcome message
 set -U fish_greeting
+fish_add_path -g "$HOME/bin"
+fish_add_path -g "$HOME/.local/bin"
+
 set -x EDITOR nvim
 
 # skip the java dependency during installation
