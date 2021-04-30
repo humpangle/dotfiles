@@ -119,6 +119,7 @@ if status --is-interactive
         git stash drop "stash@{$argv}"
     end
 
+    abbr -a -g ll 'ls -alh '
     abbr -a -g .. 'cd ..'
     abbr -a -g ... 'cd ../..'
     abbr -a -g .3 'cd ../../..'
