@@ -156,8 +156,6 @@ if test -d "$HOME/.fzf"
     set -x RG_IGNORES "!{.git,cover,coverage,.elixir_ls,deps,_build,.build,build}"
     set -x RG_OPTIONS "--hidden --follow --glob '$RG_IGNORES'"
 
-    # fzf fuzzy finder
-    # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
     set FZF_PREVIEW_APP "--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
     set -x FZF_DEFAULT_OPTS "--layout=reverse --border $FZF_PREVIEW_APP"
     # Use git-ls-files inside git repo, otherwise rg
@@ -229,7 +227,9 @@ end
 
 # The minimal, blazing-fast, and infinitely customizable prompt for any shell!
 # https://github.com/starship/starship
-starship init fish | source
+if type starship >/dev/null
+  starship init fish | source
+end
 
 # settings that vary between machines
 if test -f "$HOME/.config/fish/varying.config.fish"

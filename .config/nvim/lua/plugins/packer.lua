@@ -29,7 +29,6 @@ return require("packer").startup(function()
     end
 
     use {
-        {"junegunn/fzf", dir = "~/.fzf", run = "./install --all"},
         "junegunn/fzf.vim",
         "stsewd/fzf-checkout.vim",
         -- sudo apt install bat # Syntax highlighting
