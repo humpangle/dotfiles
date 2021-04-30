@@ -155,7 +155,7 @@ end
 
 if test -d "$HOME/.fzf"
     # ripgrep
-    set -x RG_IGNORES "!{.git,cover,coverage,.elixir_ls,deps,_build,.build,build}"
+    set -x RG_IGNORES "!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
     set -x RG_OPTIONS "--hidden --follow --glob '$RG_IGNORES'"
 
     function get_fzf_preview
@@ -177,7 +177,7 @@ if test -d "$HOME/.fzf"
     end
 
     function _fzf_compgen_path
-        rg --files --hidden --follow --glob '!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}'
+        rg --files --hidden --follow --glob $RG_IGNORES
     end
 end
 if test -d "$HOME/.asdf"
@@ -239,7 +239,7 @@ end
 # The minimal, blazing-fast, and infinitely customizable prompt for any shell!
 # https://github.com/starship/starship
 if type starship >/dev/null
-  starship init fish | source
+    starship init fish | source
 end
 
 # settings that vary between machines

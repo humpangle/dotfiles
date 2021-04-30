@@ -150,7 +150,7 @@ fi
 
 if [ -d "$HOME/.fzf" ]; then
   # ripgrep
-  export RG_IGNORES="!{.git,cover,coverage,.elixir_ls,deps,_build,.build,build}"
+  export RG_IGNORES= "!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
   RG_OPTIONS="--hidden --follow --glob '$RG_IGNORES'"
 
   FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
@@ -163,7 +163,7 @@ if [ -d "$HOME/.fzf" ]; then
   }
 
   _fzf_compgen_path() {
-    rg --files --hidden --follow --glob '!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}'
+    rg --files --hidden --follow --glob $RG_IGNORES
   }
 fi
 
