@@ -162,7 +162,6 @@ if test -d "$HOME/.fzf"
     set -x RG_IGNORES "!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
     set -x RG_OPTIONS "--hidden --follow --glob '$RG_IGNORES'"
 
-    # set FZF_PREVIEW_APP "--preview='[ (file --mime {}) =~ binary ] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
     set -x FZF_DEFAULT_OPTS "--layout=reverse --border --preview='bat --style=numbers --color=always {}' "
     # Use git-ls-files inside git repo, otherwise rg
     set -x FZF_DEFAULT_COMMAND "rg --files $RG_OPTIONS"

@@ -18,7 +18,7 @@
       "filetypes": ["typescript", "typescriptreact", "graphql"]
     }
   },
-  "snippets.userSnippetsDirectory": "~/.config/nvim/Ultisnips",
+  "snippets.textmateSnippetsRoots": ["~/.config/nvim/snippets"],
   "Lua.diagnostics.globals": [
     "vim",
     "use",
@@ -26,7 +26,13 @@
     "it",
     "after_each",
     "before_each"
-  ]
+  ],
+  "snippets.extends": {
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"],
+    "typescriptreact": ["typescript"],
+    "svelte": ["javascript"]
+  }
   /* "explorer.width": 50, */
   /* "explorer.keyMappings.global": { */
   /*   "cd": "cd", */

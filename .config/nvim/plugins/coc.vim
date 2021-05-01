@@ -15,7 +15,6 @@ let g:coc_global_extensions = [
   \ 'coc-prettier',
   \ 'coc-svelte',
   \ 'coc-docker',
-  \ 'https://github.com/kanmii/kanmii-coc-snippets',
   \ 'coc-vetur',
   \ 'coc-svg',
   \ 'coc-vimlsp',

@@ -1,20 +1,4 @@
 {
-  /*
-		// Place your snippets for JavaScript here. Each snippet is defined under a snippet name and has a prefix, body and
-		// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-		// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
-		// same ids are connected.
-		// Example:
-		"Print to console": {
-			"prefix": "log",
-			"body": [
-				"console.log('$1');",
-				"$2"
-			],
-			"description": "Log output to console"
-		}
-	*/
-
   "Print to console": {
     "prefix": "consolelogapplog",
     "body": [
@@ -28,7 +12,6 @@
     ],
     "description": "Log to console with some debug info"
   },
-
   "Print to console error": {
     "prefix": "consolelogapplogerror",
     "body": [
@@ -44,8 +27,7 @@
     ],
     "description": "Log to console with some debug info"
   },
-
-    "console.log JSON.stringify": {
+  "console.log JSON.stringify": {
     "prefix": "consolelogjson",
     "body": [
       "console.log(",
@@ -58,17 +40,6 @@
     ],
     "description": "console.log JSON.stringify"
   },
-
-  "export const function": {
-    "prefix": "exportconstantfunc",
-    "body": [
-      "export const ${1:funcName} = (${2:props}: ${3:type}) => {",
-      "\t$0",
-      "\treturn null",
-      "}"
-    ]
-  },
-
   "test react": {
     "prefix": "testreact",
     "body": [
@@ -97,7 +68,6 @@
     ],
     "description": "test react"
   },
-
   "react test": {
     "prefix": "reacttest",
     "body": [
@@ -127,7 +97,6 @@
     ],
     "description": "test react"
   },
-
   "dom ready": {
     "prefix": "domready",
     "body": [
@@ -144,7 +113,6 @@
     ],
     "description": "dom ready"
   },
-
   "Compare previous and current props": {
     "prefix": "compareprops",
     "body": [
@@ -173,49 +141,42 @@
     ],
     "description": "Compare previous and current props"
   },
-
+  "Export react functional Component": {
+    "prefix": "exportreactfunction",
+    "body": [
+      "import React from \"react\";",
+      "",
+      "export function ${1:Component}(props) {",
+      "\treturn ${2:<div>1</div>};",
+      "}"
+    ],
+    "description": "Export react functional Component"
+  },
   "useEffect react": {
-    "prefix": "useeffectreact",
+    "prefix": "useEffectReact",
     "body": ["useEffect(() => { ${2} }, [${1}])"],
     "description": "useEffect react"
   },
-
   "istanbul ignore next": {
-    "prefix": "istanbulignorenext",
+    "prefix": "istanbulignore",
     "body": ["// istanbul ignore next:"],
     "description": "istanbul ignore next"
   },
-
-  "istanbul ignore else": {
-    "prefix": "istanbulignoreelse",
-    "body": ["// istanbul ignore else:"],
-    "description": "istanbul ignore else"
-  },
-
-  "istanbul ignore file": {
-    "prefix": "istanbulignorefile",
-    "body": "/* istanbul ignore file */",
-    "description": "istanbul ignore next file"
-  },
-
   "immediately invoked function expression": {
     "prefix": "iife",
     "body": ["( function ${1:funName}(){", "\t${2}", "})();"],
     "description": "immediately invoked function expression"
   },
-
   "eslint-disable-next-line": {
     "prefix": "eslint-disable-next-line",
     "body": "/* eslint-disable-next-line ${1} */",
     "description": "eslint disable next line"
   },
-
   "eslint-disable": {
     "prefix": "eslint-disable",
     "body": "/* eslint-disable ${1} */",
     "description": "eslint disable"
   },
-
   "graphql mutation tag": {
     "prefix": "mutationtag",
     "body": [
@@ -233,7 +194,6 @@
     ],
     "description": "graphql mutation tag"
   },
-
   "graphql mutation tag1": {
     "prefix": "graphqlmutationtag",
     "body": [
@@ -251,19 +211,16 @@
     ],
     "description": "graphql mutation tag"
   },
-
   "jsdoc @type comment": {
     "prefix": "typevariablejsdoc",
     "body": "/** @type {${1}} */",
     "description": "jsdoc @type comment"
   },
-
   "jsdoc import type": {
     "prefix": "jsdocimporttype",
     "body": "/** @typedef { import('./').${1} } ${1} */",
     "description": "jsdoc import type"
   },
-
   "jsdoc function annotation": {
     "prefix": "jsdocfunction",
     "body": [
@@ -274,7 +231,6 @@
     ],
     "description": "jsdoc function annotation"
   },
-
   "svelte test": {
     "prefix": "sveltetest",
     "body": [
@@ -292,7 +248,6 @@
     ],
     "description": "svelte test"
   },
-
   "test svelte": {
     "prefix": "testsvelte",
     "body": [
@@ -310,13 +265,11 @@
     ],
     "description": "test svelte"
   },
-
   "actReactTest": {
     "prefix": "actReactTest",
     "body": ["act(() => {", "\t${1}", "});"],
     "description": "actReactTest"
   },
-
   "describeTest": {
     "prefix": "describeTest",
     "body": [
@@ -328,23 +281,162 @@
     ],
     "description": "describe test jest"
   },
-
   "@jest-environment jest-environment-jsdom-sixteen": {
     "prefix": "jsdomenvsixteen",
     "body": ["/**", "* @jest-environment jest-environment-jsdom-sixteen", "*/"],
     "description": "@jest-environment jest-environment-jsdom-sixteen"
   },
-
-    "helper funcs": {
+  "helper funcs": {
     "prefix": "helperfuncs",
     "body": [
       "// ====================================================",
-      "// ${1}",
+      "// START ${1}",
       "// ====================================================",
-      "",
-      "",
-      "${2}"
+      "// ${2}",
+      "// ====================================================",
+      "// END ${1}",
+      "// ===================================================="
     ],
     "description": "Helper functions header"
+  },
+  "type assertion JSDOC": {
+    "prefix": "typeassert",
+    "body": ["/** @type {${1:type}} */ (${2:value})", "${3}"],
+    "description": "type assertion JSDOC"
+  },
+  "type variable declaration JSDOC": {
+    "prefix": "typevar",
+    "body": ["/**", "* ${1:description}", "* @type {${2:type}}", "*/", "${3}"],
+    "description": "type variable declaration JSDOC"
+  },
+  "typdef import first time JSDOC": {
+    "prefix": "typedefimport",
+    "body": ["/**", "* @typedef { import('${1}').${2} } ${2} ${3}", "*/"],
+    "description": "typdef import first time JSDOC"
+  },
+  "typdef import next time JSDOC": {
+    "prefix": "typedefimportn",
+    "body": ["@typedef { import('${1}').${2} } ${2} ${3}"],
+    "description": "typdef import next time JSDOC"
+  },
+  "typdef object first time JSDOC": {
+    "prefix": "typedefobject",
+    "body": [
+      "/**",
+      "* @typedef {Object} ${1:NameYourType}",
+      "* @property {${2:type}} ${3:propertyName} ${4:description}",
+      "*/"
+    ],
+    "description": "typdef object first time JSDOC"
+  },
+  "typdef object next.additional property JSDOC": {
+    "prefix": "typedefobjectn",
+    "body": ["@property {${1:type}} ${2:propertyName} ${3:description}"],
+    "description": "typdef object next.additional property JSDOC"
+  },
+  "typdef object optional property JSDOC": {
+    "prefix": "typedefobjectopt",
+    "body": ["@property {${1:type}=} ${2:propertyName} ${3:description}"],
+    "description": "typdef object optional property JSDOC"
+  },
+  "callback param JSDOC": {
+    "prefix": "callbackparam",
+    "body": [
+      "/**",
+      "* @callback ${1:NameYourType}",
+      "* @param {${2:type}} ${3:paramName} ${4:description} ${6}",
+      "* @returns {${5:returnType}}",
+      "*/"
+    ],
+    "description": "callback param JSDOC"
+  },
+  "function param first time JSDOC": {
+    "prefix": "param",
+    "body": [
+      "/**",
+      "* @param {${1:type}} ${2:paramName} ${3:description}${5}",
+      "* @returns {${4:returnType}}",
+      "*/"
+    ],
+    "description": "function param first time JSDOC"
+  },
+  "function param next time JSDOC": {
+    "prefix": "paramn",
+    "body": ["@param {${1:type}} ${2:paramName} ${3:description}"],
+    "description": "function param next time JSDOC"
+  },
+  "function param return JSDOC": {
+    "prefix": "paramr",
+    "body": ["@return {${1:returnType}}"],
+    "description": "function param return JSDOC"
+  },
+  "function param object next time JSDOC": {
+    "prefix": "paramobjectn",
+    "body": [
+      "@param {Object} ${1:paramName}",
+      "* @param {${2:type}} ${1:paramName}.${3:propertyName} ${4:description}"
+    ],
+    "description": "function param object next time JSDOC"
+  },
+  "optional function param JSDOC": {
+    "prefix": "paramopt",
+    "body": ["@param {${1:type}=} ${2:paramName}"],
+    "description": "optional function param JSDOC"
+  },
+  "first object param of function first time JSDOC": {
+    "prefix": "paramobjectf",
+    "body": [
+      "/**",
+      "* @param {Object} ${1:paramName}",
+      "* @param {${2:type}} ${1:paramName}.${3:propertyName} ${4:description}",
+      "*/"
+    ],
+    "description": "first object param of function first time JSDOC"
+  },
+  "next/addition object param of function JSDOC": {
+    "prefix": "paramobjectn",
+    "body": [
+      "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
+    ],
+    "description": "next/addition object param of function JSDOC"
+  },
+  "next/addition1 object param of function JSDOC": {
+    "prefix": "paramobjectopt",
+    "body": [
+      "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
+    ],
+    "description": "next/addition object param of function JSDOC"
+  },
+  "new promise": {
+    "prefix": "newpromise",
+    "body": ["new Promise((resolve, reject) => {", "${1}", "})"],
+    "description": "new promise"
+  },
+  "object define property": {
+    "prefix": "objectdefineProperty",
+    "body": [
+      "Object.defineProperty(",
+      "${1:object},",
+      "'${2:property}',",
+      "{",
+      "\tget : function $1_$2_getter() {",
+      "\t\t// getter code",
+      "\t},",
+      "\tset : function $1_$2_setter(value) {",
+      "\t\t// setter code",
+      "\t},",
+      "\tvalue        : ${3:value},",
+      "\twritable    : ${4:boolean},",
+      "\tenumerable   : ${5:boolean},",
+      "\tconfigurable : ${0:boolean}",
+      "}",
+      ");"
+    ],
+    "description": "object define property"
+  },
+  "ternary operation": {
+    "prefix": "ter",
+    "body": ["${1:condition} ? ${2:truthy} : ${0:falsy}"],
+    "description": "ternary operation"
   }
 }
