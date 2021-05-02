@@ -29,12 +29,12 @@ lua <<EOF
       require("plugins/emmet-vim")
       require("plugins/nvim-autopairs")
       require("plugins/nvim-compe")
-      require("plugins/treesitter")
       require("plugins/undotree")
       require("nvim-ts-autotag").setup()
   end
 
   -- PLUGIN SETTINGS
+  require("plugins/treesitter")
   require("plugins/gitsigns-nvim")
   require("plugins/nvim-comment")
   require("plugins/which-key")
