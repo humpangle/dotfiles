@@ -1,8 +1,9 @@
 " https://github.com/dag/vim-fish#teach-a-vim-to-fish
 set shell=/bin/bash
+let g:can_use_coc = !empty($VIM_USE_COC)
 
 so ~/.config/nvim/settings.vim
-
+so ~/.config/nvim/key-maps.vim
 " packer plugin manager installs plugins
 luafile ~/.config/nvim/lua/plugins/packer.lua
 
@@ -35,21 +36,19 @@ lua <<EOF
 
   -- PLUGIN SETTINGS
   require("plugins/gitsigns-nvim")
-  require("plugins/vim-fugitive")
   require("plugins/nvim-comment")
+  require("plugins/which-key")
 EOF
 
+so ~/.config/nvim/plugins/vim-fugitive.vim
 so ~/.config/nvim/plugins/fzf.vim
 so ~/.config/nvim/plugins/neoformat.vim
 so ~/.config/nvim/lua/plugins/lightline.vim
 so ~/.config/nvim/lua/plugins/vim-maximizer.vim
 so ~/.config/nvim/plugins/vCoolor.vim
-so ~/.config/nvim/plugins/vim-floaterm.vim
 " Markdown preview
 let g:mkdp_refresh_slow = 1
 
-let s:can_use_coc = !empty($VIM_USE_COC)
-
-if s:can_use_coc
+if g:can_use_coc
   so ~/.config/nvim/vim-plug.vim
 endif

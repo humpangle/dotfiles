@@ -28,8 +28,6 @@ let g:neoformat_jsonc_prettier = {
 
 let g:neoformat_enabled_jsonc = ['prettier']
 
-nnoremap <leader>fc :Neoformat<CR>
-
 " format on save
 " augroup fmt
 "   autocmd!

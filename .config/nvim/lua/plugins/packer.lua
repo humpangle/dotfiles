@@ -90,4 +90,6 @@ return require("packer").startup(function()
 
     -- FORMATTER
     use {"sbdchd/neoformat"}
+
+    use {"folke/which-key.nvim"}
 end)
