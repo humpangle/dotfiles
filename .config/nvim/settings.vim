@@ -72,14 +72,8 @@ set foldlevel=2
 " reload a file if it is changed from outside vim
 set autoread
 set noswapfile
-
-if has('nvim-0.5')
-  set undodir=$HOME/.vim/undodir/
-else
-  set undodir=$HOME/.vim/undodir-0.4/
-endif
-
 set undofile
+set undodir=$HOME/.vim/undodir/
 
 " LINE NUMBERING
 set number " always show line numbers
