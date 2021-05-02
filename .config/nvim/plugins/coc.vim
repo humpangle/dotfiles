@@ -19,6 +19,7 @@ let g:coc_global_extensions = [
   \ 'coc-svg',
   \ 'coc-vimlsp',
   \ 'coc-lua',
+  \ 'coc-sh',
   \ ]
   " \ 'coc-emoji',
   " \ 'coc-sh',
