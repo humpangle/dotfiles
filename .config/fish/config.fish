@@ -63,18 +63,18 @@ if status --is-interactive
     #     # unset
     abbr -a -g vt. 'set EBNIS_VIM_THEME '
     #     # vim-one
-    abbr -a -g vt1d 'set EBNIS_VIM_THEME vim-one; set EBNIS_VIM_THEME_BG d'
-    abbr -a -g vt1l 'set EBNIS_VIM_THEME "vim-one"; set EBNIS_VIM_THEME_BG l'
+    abbr -a -g vt1d 'set -x EBNIS_VIM_THEME vim-one; set -x EBNIS_VIM_THEME_BG d'
+    abbr -a -g vt1l 'set -x EBNIS_VIM_THEME vim-one; set -x EBNIS_VIM_THEME_BG l'
     #     # vim-gruvbox8
-    abbr -a -g vt8d 'set EBNIS_VIM_THEME vim-gruvbox8; set EBNIS_VIM_THEME_BG d'
-    abbr -a -g vt8l 'set EBNIS_VIM_THEME vim-gruvbox8; set EBNIS_VIM_THEME_BG l'
+    abbr -a -g vt8d 'set -x EBNIS_VIM_THEME vim-gruvbox8; set -x EBNIS_VIM_THEME_BG d'
+    abbr -a -g vt8l 'set -x EBNIS_VIM_THEME vim-gruvbox8; set -x EBNIS_VIM_THEME_BG l'
     #     # vim-solarized8
-    abbr -a -g vtsd 'set EBNIS_VIM_THEME vim-solarized8; set EBNIS_VIM_THEME_BG d'
-    abbr -a -g vtsl 'set EBNIS_VIM_THEME vim-solarized8; set EBNIS_VIM_THEME_BG l'
+    abbr -a -g vtsd 'set -x EBNIS_VIM_THEME vim-solarized8; set -x EBNIS_VIM_THEME_BG d'
+    abbr -a -g vtsl 'set -x EBNIS_VIM_THEME vim-solarized8; set -x EBNIS_VIM_THEME_BG l'
     #     # Set vim fuzzy finder
-    abbr -a -g vff. 'set EBNIS_VIM_FUZZY_FINDER '
-    abbr -a -g vfff 'set EBNIS_VIM_FUZZY_FINDER fzf'
-    abbr -a -g vffc 'set EBNIS_VIM_FUZZY_FINDER vim-clap'
+    abbr -a -g vff. 'set -x EBNIS_VIM_FUZZY_FINDER '
+    abbr -a -g vfff 'set -x EBNIS_VIM_FUZZY_FINDER fzf'
+    abbr -a -g vffc 'set -x EBNIS_VIM_FUZZY_FINDER vim-clap'
 
     #     # tmux
     abbr -a -g ta "tmux a -t"
