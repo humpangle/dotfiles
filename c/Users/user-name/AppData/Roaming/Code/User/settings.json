@@ -7,6 +7,22 @@
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true
   },
+  "advancedNewFile.exclude": {
+    "node_modules": true,
+    "node_modules_electron": true,
+    "**/coverage": true,
+    "rls": true,
+    "target": true,
+    "dist": true,
+    "__pycache__": true,
+    "bower_components": true,
+    "deps": true,
+    "_build": true,
+    "build": true,
+    ".elixir_ls": true,
+    ".pytest_cache": true,
+    ".mypy_cache": true
+  },
   "cSpell.language": "en,de",
   "debug.toolBarLocation": "docked",
   "dotnetAcquisitionExtension.enableTelemetry": false,
