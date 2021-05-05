@@ -41,6 +41,9 @@ nnoremap ,o <Cmd>call VSCodeNotify('editor.action.organizeImports')<CR>
 
 nnoremap ]d <Cmd>call VSCodeNotify('editor.action.marker.next')<CR>
 nnoremap [d <Cmd>call VSCodeNotify('editor.action.marker.prev')<CR>
+
+nnoremap ,yf <Cmd>call VSCodeNotify('copyFilePath')<CR>
+
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
