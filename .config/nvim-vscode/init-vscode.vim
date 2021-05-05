@@ -37,6 +37,7 @@ nnoremap <leader>fc <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 nnoremap <leader>dd <Cmd>call VSCodeNotify('workbench.actions.view.problems')<CR>
 nnoremap ,ac <Cmd>call VSCodeNotify('editor.action.quickFix')<CR>
 
+nnoremap ,o <Cmd>call VSCodeNotify('editor.action.organizeImports')<CR>
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
