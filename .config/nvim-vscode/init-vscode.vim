@@ -31,6 +31,7 @@ nnoremap <silent> <leader>ba :call VSCodeNotify('workbench.action.closeOtherEdit
 nnoremap <silent> <leader>bd :call VSCodeNotify('workbench.action.closeActiveEditor')<cr>
 nnoremap ,rm :call VSCodeNotify('deleteFile')<cr>
 nnoremap <silent> <leader>ee :call VSCodeNotify('workbench.files.action.focusFilesExplorer')<CR>
+nnoremap <silent> <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>
 
 nnoremap <leader>fc <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 nnoremap <leader>dd <Cmd>call VSCodeNotify('workbench.actions.view.problems')<CR>
