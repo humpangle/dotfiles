@@ -35,7 +35,7 @@ nnoremap <silent> <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR
 
 nnoremap <leader>fc <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 nnoremap <leader>dd <Cmd>call VSCodeNotify('workbench.actions.view.problems')<CR>
-nnoremap ,ac <Cmd>call VSCodeNotify('problems.action.showQuickFixes')<CR>
+nnoremap ,ac <Cmd>call VSCodeNotify('editor.action.quickFix')<CR>
 
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
@@ -44,8 +44,6 @@ nmap <Leader>x "+x
 nmap <Leader>P "+P
 vmap <Leader>P "+P
 
-" nnoremap <silent> yon :call VSCodeNotify('workbench.view.explorer')<CR>
-nnoremap <leader>ee :call VSCodeNotify('workbench.view.explorer')<CR>
 nnoremap <c-left> :call VSCodeNotify('workbench.action.increaseViewSize')<CR>
 nnoremap <c-right> :call VSCodeNotify('workbench.action.decreaseViewSize')<CR>
 
