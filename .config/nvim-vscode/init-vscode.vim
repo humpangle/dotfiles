@@ -73,7 +73,6 @@ xnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
 " easy motion
 " Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1
-map <Leader>ss <Plug>(easymotion-prefix)
 
 if empty(glob('~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim  --create-dirs
