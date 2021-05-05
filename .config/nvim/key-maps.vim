@@ -353,6 +353,7 @@ let g:floaterm_autoclose=1
 let g:floaterm_position='topright'
 let g:floaterm_shell='/usr/bin/fish'
 nmap <Leader>FF :FloatermNew <right>
+nmap <Leader>FT :FloatermToggle <right>
 nmap <Leader>FS :FloatermNew --wintype='split' <cr>
 nmap <Leader>FK :FloatermKill!<CR>
 " make width 50% of tab
