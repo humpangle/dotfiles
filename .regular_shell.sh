@@ -127,6 +127,7 @@ alias C=clear
 alias py='python '
 alias pw='prettier --write '
 alias eshell='exec $SHELL'
+alias exshell='export SHELL=/usr/bin/bash'
 alias rmvimswap='rm ~/.local/share/nvim/swap/*'
 alias hb='sudo systemctl hibernate'
 alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake

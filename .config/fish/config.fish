@@ -136,6 +136,7 @@ if status --is-interactive
     abbr -a -g py "python "
     abbr -a -g pw "prettier --write "
     abbr -a -g eshell "source ~/.config/fish/config.fish"
+    abbr -a -g exshell "set -x SHELL /usr/bin/fish"
     abbr -a -g hb "sudo systemctl hibernate"
     abbr -a -g luamake "$HOME/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake"
 
