@@ -25,9 +25,9 @@ set SUDO_ASKPASS (which ssh-askpass)
 if status --is-interactive
     # docker
     # docker remove all containers
-    abbr -a -g drac 'docker rm $(docker ps -a -q) '
+    abbr -a -g drac 'docker rm (docker ps -a -q) '
     # docker remove all containers force
-    abbr -a -g dracf 'docker rm $(docker ps -a -q) --force'
+    abbr -a -g dracf 'docker rm (docker ps -a -q) --force'
     abbr -a -g drmi 'docker rmi '
     abbr -a -g drim 'docker rmi '
     abbr -a -g dim 'docker images '
@@ -38,7 +38,7 @@ if status --is-interactive
     abbr -a -g dcu 'docker-compose up '
     abbr -a -g dcrs 'docker-compose restart '
     abbr -a -g dcd 'docker-compose down '
-    abbr -a -g dvra 'docker volume rm $(docker volume ls -q)'
+    abbr -a -g dvra 'docker volume rm (docker volume ls -q)'
     abbr -a -g dvls 'docker volume ls'
     abbr -a -g dvlsq 'docker volume ls -q'
     abbr -a -g ug 'sudo apt update && sudo apt upgrade -y'
@@ -106,7 +106,7 @@ if status --is-interactive
     #     # The following command has serious caveats: see wiki/git.md
     #     # deliberately put an error: stash1 instead of stash so that user is forced
     #     # to edit command and put stash message
-    abbr -a -g gsstaged 'git stash1 push -m "" -- $(git diff --staged --name-only)'
+    abbr -a -g gsstaged 'git stash1 push -m "" -- (git diff --staged --name-only)'
     abbr -a -g gcm 'git commit '
     abbr -a -g grb 'git rebase -i'
     #     # there is a debian package gpodder=gpo
