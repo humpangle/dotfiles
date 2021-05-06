@@ -32,6 +32,10 @@ nnoremap <silent> <leader>bd :call VSCodeNotify('workbench.action.closeActiveEdi
 nnoremap ,rm :call VSCodeNotify('deleteFile')<cr>
 nnoremap <silent> <leader>ee :call VSCodeNotify('workbench.files.action.focusFilesExplorer')<CR>
 nnoremap <silent> <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>
+" https://code.visualstudio.com/docs/editor/editingevolved#_how-can-i-configure-ctrltab-to-navigate-across-all-editors-of-all-groups
+nnoremap <silent> <leader>fw :call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>
+
+nnoremap <silent> <leader>rn :call VSCodeNotify('editor.action.rename')<CR>
 
 nnoremap <leader>fc <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 nnoremap <leader>dd <Cmd>call VSCodeNotify('workbench.actions.view.problems')<CR>
