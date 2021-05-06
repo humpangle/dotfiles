@@ -136,6 +136,10 @@ if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json '
 fi
 
+function setenvs {
+  set -a; . "$1"; set +a;
+}
+
 if [ -d "$HOME/.pyenv" ]; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"

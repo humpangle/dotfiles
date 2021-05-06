@@ -143,6 +143,16 @@ if status --is-interactive
     if type sort-package-json &>/dev/null
         abbr -a -g spj 'sort-package-json '
     end
+
+    function  setenvs --no-scope-shadowing
+      for line in (cat $argv[1])
+        if test $line != ''; and not string match -rq '\s*^#' $line
+          set t (string split --max 2 '=' $line)
+          echo "set -x $t[1] $t[2]"
+          set -x $t[1] $t[2]
+        end
+      end
+    end
 end
 
 if test -d "$HOME/.pyenv"
