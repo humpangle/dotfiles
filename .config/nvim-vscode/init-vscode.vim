@@ -74,6 +74,10 @@ xnoremap <silent> <C-h> :call VSCodeNotify('workbench.action.navigateLeft')<CR>
 nnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
 xnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
 
+" replace in entire file
+nnoremap <leader>rr :%s///g
+nnoremap <leader>rc :%s///gc
+
 " easy motion
 " Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1
@@ -88,4 +92,5 @@ endif
 call plug#begin('~/.local/share/nvim-vscode/nvim/site/autoload')
   Plug 'asvetliakov/vim-easymotion'
   Plug 'tpope/vim-surround'
+  Plug 'nelstrom/vim-visual-star-search'
 call plug#end()
