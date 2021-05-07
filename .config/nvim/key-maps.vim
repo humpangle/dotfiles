@@ -2,7 +2,6 @@
 nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
-nnoremap ,rm :!trash-put %:p<cr>:bdelete!<cr>
 
 " format paragraphs/lines to 80 chars
 nnoremap <Leader>pp gqap
@@ -52,6 +51,7 @@ nnoremap <c-l> <C-w>l
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
 nnoremap ,tc :tabclose<CR>
+
 " RESIZE WINDOW
 nnoremap <c-left> :vertical resize -2<CR>
 nnoremap <c-right> :vertical resize +2<CR>
