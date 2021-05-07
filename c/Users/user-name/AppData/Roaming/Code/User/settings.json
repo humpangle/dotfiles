@@ -64,6 +64,7 @@
     "tags": true
   },
   "files.insertFinalNewline": true,
+  "git.enabled": false,
   "npm.packageManager": "yarn",
   "search.showLineNumbers": true,
   "telemetry.enableCrashReporter": false,
