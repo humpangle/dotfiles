@@ -41,6 +41,16 @@ nnoremap <silent> <leader>fw :call VSCodeNotify('workbench.action.quickOpenPrevi
 
 nnoremap <silent> <leader>rn :call VSCodeNotify('editor.action.rename')<CR>
 
+" TO MOVE LINES up/down
+nnoremap <silent> <A-k> :call VSCodeNotify('editor.action.moveLinesUpAction')<CR>
+nnoremap <silent> <A-j> :call VSCodeNotify('editor.action.moveLinesDownAction')<CR>
+" nnoremap <A-k> :m .-2<CR>==
+" nnoremap <A-j> :m .+1<CR>==
+" inoremap <A-j> <Esc>:m .+1<CR>==gi
+" inoremap <A-k> <Esc>:m .-2<CR>==gi
+" vnoremap <A-j> :m '>+1<CR>gv=gv
+" vnoremap <A-k> :m '<-2<CR>gv=gv
+
 nnoremap <leader>fc <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 nnoremap <leader>dd <Cmd>call VSCodeNotify('workbench.actions.view.problems')<CR>
 nnoremap ,ac <Cmd>call VSCodeNotify('editor.action.quickFix')<CR>
