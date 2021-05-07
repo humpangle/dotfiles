@@ -329,11 +329,11 @@ endif
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
-" END EASY MOTION
+" START EASY MOTION
 """""""""""""""""""""""""""""""""""""
 let g:EasyMotion_smartcase = 1
 
-nmap <leader>ss <Plug>(easymotion-overwin-f2)
+" nmap <leader><leader> <Plug>(easymotion-overwin-f2)
 """""""""""""""""""""""""""""""""""""
 " END EASY MOTION
 """""""""""""""""""""""""""""""""""""
