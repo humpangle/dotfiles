@@ -39,11 +39,14 @@
   "editor.snippetSuggestions": "top",
   "editor.tabSize": 2,
   "editor.wordWrap": "wordWrapColumn",
+  "elixirLS.enableTestLenses": true,
   "eslint.packageManager": "yarn",
+  "explorer.confirmDragAndDrop": false,
   "files.associations": {
     "*.html.eex": "html",
     ".env*-cmdrc": "json",
-    ".svg": "html"
+    ".svg": "html",
+    ".env*": "shellscript"
   },
   "files.exclude": {
     "**/__pycache__": true,
@@ -1051,9 +1054,9 @@
   "whichkey.sortOrder": "alphabetically",
   "window.openFilesInNewWindow": "on",
   "window.openFoldersInNewWindow": "on",
-  "workbench.colorTheme": "Gruvbox Light Hard",
+  "workbench.activityBar.visible": false,
+  "workbench.colorTheme": "Gruvbox Light Medium",
   "workbench.settings.useSplitJSON": true,
   "workbench.startupEditor": "newUntitledFile",
-  "zenMode.hideLineNumbers": false,
-  "workbench.activityBar.visible": false
+  "zenMode.hideLineNumbers": false
 }
