@@ -1,11 +1,14 @@
 {
   "[elixir]": {
     "editor.wordBasedSuggestions": false,
-    "editor.formatOnType": true,
+    "editor.formatOnType": false,
     "editor.trimAutoWhitespace": false,
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "advancedNewFile.exclude": {
     "node_modules": true,
