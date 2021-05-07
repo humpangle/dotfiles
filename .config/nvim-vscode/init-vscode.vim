@@ -28,6 +28,7 @@ nnoremap <leader>qq <Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')
 nnoremap <leader>qa <Cmd>call VSCodeNotify('workbench.action.closeWindow')<CR>
 nnoremap zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
 nnoremap zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
+nnoremap <leader>/ <Cmd>call VSCodeNotify('workbench.action.replaceInFiles')<CR>
 
 " nnoremap <silent> <leader>ba :call VSCodeNotify('openEditors.closeAll')<cr>
 nnoremap <silent> <leader>ba :call VSCodeNotify('workbench.action.closeOtherEditors')<cr>
