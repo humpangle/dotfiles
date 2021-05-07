@@ -33,6 +33,7 @@ nnoremap zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
 nnoremap <silent> <leader>ba :call VSCodeNotify('workbench.action.closeOtherEditors')<cr>
 nnoremap <silent> <leader>bd :call VSCodeNotify('workbench.action.closeActiveEditor')<cr>
 nnoremap ,rm :call VSCodeNotify('deleteFile')<cr>
+nnoremap ,ec :call VSCodeNotify('workbench.action.openSettings')<cr>
 nnoremap <silent> <leader>ee :call VSCodeNotify('workbench.files.action.focusFilesExplorer')<CR>
 nnoremap <silent> <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>
 " https://code.visualstudio.com/docs/editor/editingevolved#_how-can-i-configure-ctrltab-to-navigate-across-all-editors-of-all-groups
