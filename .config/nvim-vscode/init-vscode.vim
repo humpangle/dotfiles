@@ -133,7 +133,7 @@ nmap gcc <Plug>VSCodeCommentaryLine
 nnoremap zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
 nnoremap zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
 
-nnoremap 1G <Cmd>call VSCodeNotify('workbench.action.toggleTabsVisibility')<CR>
+nnoremap <leader>aa <Cmd>call VSCodeNotify('workbench.action.toggleActivityBarVisibility')<CR>
 
 if empty(glob('~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim  --create-dirs
