@@ -70,6 +70,9 @@ nnoremap <A-j> :call VSCodeNotify('editor.action.moveLinesDownAction')<CR>
 " TERMINAL
 
 " COPY FILE PATH
+" yank relative File path
+nnoremap ,yr <Cmd>call VSCodeNotify('copyRelativeFilePath')<CR>
+" yank absolute File path
 nnoremap ,yf <Cmd>call VSCodeNotify('copyFilePath')<CR>
 
 " SEARCH AND REPLACE
