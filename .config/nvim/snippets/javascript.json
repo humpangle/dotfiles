@@ -243,9 +243,15 @@
     "body": ["( function ${1:funName}(){", "\t${2}", "})();"],
     "description": "immediately invoked function expression"
   },
+  "istanbul ignore else": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "istanbulelse",
+    "body": ["// istanbul ignore else:"],
+    "description": "istanbul ignore else"
+  },
   "istanbul ignore next": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "istanbulignore",
+    "prefix": "istanbulnext",
     "body": ["// istanbul ignore next:"],
     "description": "istanbul ignore next"
   },
