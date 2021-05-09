@@ -1,119 +1,7 @@
+
 {
-  "Print to console": {
-    "prefix": "consolelogapplog",
-    "body": [
-      "console.log(",
-      "\t`\\n======================Logging start==================\\n",
-      "\t\t\tLabel: ${1:label}",
-      "\t`,",
-      "\t${1:code},",
-      "\t`\\n\\n=====================Logging ends===================\\n`",
-      ");"
-    ],
-    "description": "Log to console with some debug info"
-  },
-  "Print to console error": {
-    "prefix": "consolelogapplogerror",
-    "body": [
-      "console.log(",
-      "\t`\\n======================Logging start==================\\n",
-      "\t\t\tLabel: ${1:label}",
-      "\t`,",
-      "\tnew Error().stack,",
-      "\t`\\n\\n`,",
-      "\t${1:code},",
-      "\t`\\n\\n=====================Logging ends===================\\n`",
-      ");"
-    ],
-    "description": "Log to console with some debug info"
-  },
-  "console.log JSON.stringify": {
-    "prefix": "consolelogjson",
-    "body": [
-      "console.log(",
-      "\t`\\n======================Logging start==================\\n",
-      "\t\t\tLabel: ${1:label}",
-      "\t`,",
-      "\tJSON.stringify(${1:code}, null, 2),",
-      "\t`\\n\\n=====================Logging ends===================\\n`",
-      ");"
-    ],
-    "description": "console.log JSON.stringify"
-  },
-  "test react": {
-    "prefix": "testreact",
-    "body": [
-      "/* eslint-disable @typescript-eslint/no-explicit-any */",
-      "import React, { ComponentType } from \"react\";",
-      "import { render, cleanup } from \"@testing-library/react\";",
-      "import { ${1:Component} } from \"../components/${1:Component}/\";",
-      "",
-      "afterEach(() => {",
-      "  cleanup();",
-      "});",
-      "",
-      "it(\"renders\", () => {",
-      "\tconst { ui } = makeComp();",
-      "",
-      "\tconst {} = render(ui);",
-      "});",
-      "",
-      "////////////////////////// HELPER FUNCTIONS ///////////////////////////",
-      "",
-      "function makeComp({ props = {} } = {}) {",
-      "\treturn {",
-      "\t\t\tui: <${1:Component} {...props} />",
-      "\t};",
-      "}"
-    ],
-    "description": "test react"
-  },
-  "react test": {
-    "prefix": "reacttest",
-    "body": [
-      "/* eslint-disable @typescript-eslint/no-explicit-any */",
-      "import React, { ComponentType } from \"react\";",
-      "import { render, cleanup } from \"@testing-library/react\";",
-      "import { ${1:Component} } from \"../components/${1:Component}/\";",
-      "",
-      "afterEach(() => {",
-      "  cleanup();",
-      "});",
-      "",
-      "",
-      "it(\"renders\", () => {",
-      "\tconst { ui } = makeComp();",
-      "",
-      "\tconst {} = render(ui);",
-      "});",
-      "",
-      "////////////////////////// HELPER FUNCTIONS ///////////////////////////",
-      "",
-      "function makeComp({ props = {} } = {}) {",
-      "\treturn {",
-      "\t\t\tui: <${1:Component} {...props} />",
-      "\t};",
-      "}"
-    ],
-    "description": "test react"
-  },
-  "dom ready": {
-    "prefix": "domready",
-    "body": [
-      "function domRead() {}",
-      "",
-      "if (document.readyState !== \"loading\") {",
-      "\tconsole.log(\"loading\");",
-      "",
-      "\tdomRead();",
-      "} else {",
-      "\tdocument.addEventListener(\"DOMContentLoaded\", domRead);",
-      "\tconsole.log(\"ready\");",
-      "}"
-    ],
-    "description": "dom ready"
-  },
   "Compare previous and current props": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "compareprops",
     "body": [
       "React.memo(",
@@ -142,6 +30,7 @@
     "description": "Compare previous and current props"
   },
   "Export react functional Component": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "exportreactfunction",
     "body": [
       "import React from \"react\";",
@@ -152,32 +41,154 @@
     ],
     "description": "Export react functional Component"
   },
-  "useEffect react": {
-    "prefix": "useEffectReact",
-    "body": ["useEffect(() => { ${2} }, [${1}])"],
-    "description": "useEffect react"
+  "Print to console": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "consolelogapplog",
+    "body": [
+      "console.log(",
+      "\t`\\n======================Logging start==================\\n",
+      "\t\t\tLabel: ${1:label}",
+      "\t`,",
+      "\t${1:code},",
+      "\t`\\n\\n=====================Logging ends===================\\n`",
+      ");"
+    ],
+    "description": "Log to console with some debug info"
   },
-  "istanbul ignore next": {
-    "prefix": "istanbulignore",
-    "body": ["// istanbul ignore next:"],
-    "description": "istanbul ignore next"
+  "Print to console error": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "consolelogapplogerror",
+    "body": [
+      "console.log(",
+      "\t`\\n======================Logging start==================\\n",
+      "\t\t\tLabel: ${1:label}",
+      "\t`,",
+      "\tnew Error().stack,",
+      "\t`\\n\\n`,",
+      "\t${1:code},",
+      "\t`\\n\\n=====================Logging ends===================\\n`",
+      ");"
+    ],
+    "description": "Log to console with some debug info"
   },
-  "immediately invoked function expression": {
-    "prefix": "iife",
-    "body": ["( function ${1:funName}(){", "\t${2}", "})();"],
-    "description": "immediately invoked function expression"
+  "actReactTest": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "actReactTest",
+    "body": ["act(() => {", "\t${1}", "});"],
+    "description": "actReactTest"
   },
-  "eslint-disable-next-line": {
-    "prefix": "eslint-disable-next-line",
-    "body": "/* eslint-disable-next-line ${1} */",
-    "description": "eslint disable next line"
+  "callback param JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "callbackparam",
+    "body": [
+      "/**",
+      "* @callback ${1:NameYourType}",
+      "* @param {${2:type}} ${3:paramName} ${4:description} ${6}",
+      "* @returns {${5:returnType}}",
+      "*/"
+    ],
+    "description": "callback param JSDOC"
+  },
+  "console.log JSON.stringify": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "consolelogjson",
+    "body": [
+      "console.log(",
+      "\t`\\n======================Logging start==================\\n",
+      "\t\t\tLabel: ${1:label}",
+      "\t`,",
+      "\tJSON.stringify(${1:code}, null, 2),",
+      "\t`\\n\\n=====================Logging ends===================\\n`",
+      ");"
+    ],
+    "description": "console.log JSON.stringify"
+  },
+  "describeTest": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "describeTest",
+    "body": [
+      "describe(\"${1:describe_label}\", () => {",
+      "\ttest(\"${2:test_label}\", () => {",
+      "",
+      "\t})",
+      "})"
+    ],
+    "description": "describe test jest"
+  },
+  "dom ready": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "domready",
+    "body": [
+      "function domRead() {}",
+      "",
+      "if (document.readyState !== \"loading\") {",
+      "\tconsole.log(\"loading\");",
+      "",
+      "\tdomRead();",
+      "} else {",
+      "\tdocument.addEventListener(\"DOMContentLoaded\", domRead);",
+      "\tconsole.log(\"ready\");",
+      "}"
+    ],
+    "description": "dom ready"
   },
   "eslint-disable": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "eslint-disable",
     "body": "/* eslint-disable ${1} */",
     "description": "eslint disable"
   },
+  "eslint-disable-next-line": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "eslint-disable-next-line",
+    "body": "/* eslint-disable-next-line ${1} */",
+    "description": "eslint disable next line"
+  },
+  "first object param of function first time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "paramobjectf",
+    "body": [
+      "/**",
+      "* @param {Object} ${1:paramName}",
+      "* @param {${2:type}} ${1:paramName}.${3:propertyName} ${4:description}",
+      "*/"
+    ],
+    "description": "first object param of function first time JSDOC"
+  },
+  "function param first time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "param",
+    "body": [
+      "/**",
+      "* @param {${1:type}} ${2:paramName} ${3:description}${5}",
+      "* @returns {${4:returnType}}",
+      "*/"
+    ],
+    "description": "function param first time JSDOC"
+  },
+  "function param next time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "paramn",
+    "body": ["@param {${1:type}} ${2:paramName} ${3:description}"],
+    "description": "function param next time JSDOC"
+  },
+  "function param object next time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "paramobjectn",
+    "body": [
+      "@param {Object} ${1:paramName}",
+      "* @param {${2:type}} ${1:paramName}.${3:propertyName} ${4:description}"
+    ],
+    "description": "function param object next time JSDOC"
+  },
+  "function param return JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "paramr",
+    "body": ["@return {${1:returnType}}"],
+    "description": "function param return JSDOC"
+  },
   "graphql mutation tag": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "mutationtag",
     "body": [
       "import gql from \"graphql-tag\";",
@@ -195,6 +206,7 @@
     "description": "graphql mutation tag"
   },
   "graphql mutation tag1": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "graphqlmutationtag",
     "body": [
       "import gql from \"graphql-tag\";",
@@ -211,82 +223,8 @@
     ],
     "description": "graphql mutation tag"
   },
-  "jsdoc @type comment": {
-    "prefix": "typevariablejsdoc",
-    "body": "/** @type {${1}} */",
-    "description": "jsdoc @type comment"
-  },
-  "jsdoc import type": {
-    "prefix": "jsdocimporttype",
-    "body": "/** @typedef { import('./').${1} } ${1} */",
-    "description": "jsdoc import type"
-  },
-  "jsdoc function annotation": {
-    "prefix": "jsdocfunction",
-    "body": [
-      "/**",
-      "\t* @param {string}  p1 - A string param",
-      "\t* @return {${1:returnType}}",
-      "\t*/"
-    ],
-    "description": "jsdoc function annotation"
-  },
-  "svelte test": {
-    "prefix": "sveltetest",
-    "body": [
-      "/* eslint-disable @typescript-eslint/no-explicit-any */",
-      "import { render, wait } from \"@testing-library/svelte\";",
-      "import ${1} from \"../${1}.svelte\";",
-      "",
-      "it(\"renders layout\", async () => {",
-      "\trender(${1}, {",
-      "\t\t\tsegment: \"\"",
-      "\t});",
-      "",
-      "\tawait wait(() => true);",
-      "});"
-    ],
-    "description": "svelte test"
-  },
-  "test svelte": {
-    "prefix": "testsvelte",
-    "body": [
-      "/* eslint-disable @typescript-eslint/no-explicit-any */",
-      "import { render, wait } from \"@testing-library/svelte\";",
-      "import ${1} from \"../${1}.svelte\";",
-      "",
-      "it(\"renders layout\", async () => {",
-      "\trender(${1}, {",
-      "\t\t\tsegment: \"\"",
-      "\t});",
-      "",
-      "\tawait wait(() => true);",
-      "});"
-    ],
-    "description": "test svelte"
-  },
-  "actReactTest": {
-    "prefix": "actReactTest",
-    "body": ["act(() => {", "\t${1}", "});"],
-    "description": "actReactTest"
-  },
-  "describeTest": {
-    "prefix": "describeTest",
-    "body": [
-      "describe(\"${1:describe_label}\", () => {",
-      "\ttest(\"${2:test_label}\", () => {",
-      "",
-      "\t})",
-      "})"
-    ],
-    "description": "describe test jest"
-  },
-  "@jest-environment jest-environment-jsdom-sixteen": {
-    "prefix": "jsdomenvsixteen",
-    "body": ["/**", "* @jest-environment jest-environment-jsdom-sixteen", "*/"],
-    "description": "@jest-environment jest-environment-jsdom-sixteen"
-  },
   "helper funcs": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "helperfuncs",
     "body": [
       "// ====================================================",
@@ -299,101 +237,32 @@
     ],
     "description": "Helper functions header"
   },
-  "type assertion JSDOC": {
-    "prefix": "typeassert",
-    "body": ["/** @type {${1:type}} */ (${2:value})", "${3}"],
-    "description": "type assertion JSDOC"
+  "immediately invoked function expression": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "iife",
+    "body": ["( function ${1:funName}(){", "\t${2}", "})();"],
+    "description": "immediately invoked function expression"
   },
-  "type variable declaration JSDOC": {
-    "prefix": "typevar",
-    "body": ["/**", "* ${1:description}", "* @type {${2:type}}", "*/", "${3}"],
-    "description": "type variable declaration JSDOC"
+  "istanbul ignore next": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "istanbulignore",
+    "body": ["// istanbul ignore next:"],
+    "description": "istanbul ignore next"
   },
-  "typdef import first time JSDOC": {
-    "prefix": "typedefimport",
-    "body": ["/**", "* @typedef { import('${1}').${2} } ${2} ${3}", "*/"],
-    "description": "typdef import first time JSDOC"
+  "jest-environment-jsdom-sixteen": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "jsdomenvsixteen",
+    "body": ["/**", "* @jest-environment jest-environment-jsdom-sixteen", "*/"],
+    "description": "@jest-environment jest-environment-jsdom-sixteen"
   },
-  "typdef import next time JSDOC": {
-    "prefix": "typedefimportn",
-    "body": ["@typedef { import('${1}').${2} } ${2} ${3}"],
-    "description": "typdef import next time JSDOC"
-  },
-  "typdef object first time JSDOC": {
-    "prefix": "typedefobject",
-    "body": [
-      "/**",
-      "* @typedef {Object} ${1:NameYourType}",
-      "* @property {${2:type}} ${3:propertyName} ${4:description}",
-      "*/"
-    ],
-    "description": "typdef object first time JSDOC"
-  },
-  "typdef object next.additional property JSDOC": {
-    "prefix": "typedefobjectn",
-    "body": ["@property {${1:type}} ${2:propertyName} ${3:description}"],
-    "description": "typdef object next.additional property JSDOC"
-  },
-  "typdef object optional property JSDOC": {
-    "prefix": "typedefobjectopt",
-    "body": ["@property {${1:type}=} ${2:propertyName} ${3:description}"],
-    "description": "typdef object optional property JSDOC"
-  },
-  "callback param JSDOC": {
-    "prefix": "callbackparam",
-    "body": [
-      "/**",
-      "* @callback ${1:NameYourType}",
-      "* @param {${2:type}} ${3:paramName} ${4:description} ${6}",
-      "* @returns {${5:returnType}}",
-      "*/"
-    ],
-    "description": "callback param JSDOC"
-  },
-  "function param first time JSDOC": {
-    "prefix": "param",
-    "body": [
-      "/**",
-      "* @param {${1:type}} ${2:paramName} ${3:description}${5}",
-      "* @returns {${4:returnType}}",
-      "*/"
-    ],
-    "description": "function param first time JSDOC"
-  },
-  "function param next time JSDOC": {
-    "prefix": "paramn",
-    "body": ["@param {${1:type}} ${2:paramName} ${3:description}"],
-    "description": "function param next time JSDOC"
-  },
-  "function param return JSDOC": {
-    "prefix": "paramr",
-    "body": ["@return {${1:returnType}}"],
-    "description": "function param return JSDOC"
-  },
-  "function param object next time JSDOC": {
-    "prefix": "paramobjectn",
-    "body": [
-      "@param {Object} ${1:paramName}",
-      "* @param {${2:type}} ${1:paramName}.${3:propertyName} ${4:description}"
-    ],
-    "description": "function param object next time JSDOC"
-  },
-  "optional function param JSDOC": {
-    "prefix": "paramopt",
-    "body": ["@param {${1:type}=} ${2:paramName}"],
-    "description": "optional function param JSDOC"
-  },
-  "first object param of function first time JSDOC": {
-    "prefix": "paramobjectf",
-    "body": [
-      "/**",
-      "* @param {Object} ${1:paramName}",
-      "* @param {${2:type}} ${1:paramName}.${3:propertyName} ${4:description}",
-      "*/"
-    ],
-    "description": "first object param of function first time JSDOC"
+  "new promise": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "newpromise",
+    "body": ["new Promise((resolve, reject) => {", "${1}", "})"],
+    "description": "new promise"
   },
   "next/addition object param of function JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramobjectn",
     "body": [
       "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
@@ -401,18 +270,15 @@
     "description": "next/addition object param of function JSDOC"
   },
   "next/addition1 object param of function JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramobjectopt",
     "body": [
       "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
     ],
     "description": "next/addition object param of function JSDOC"
   },
-  "new promise": {
-    "prefix": "newpromise",
-    "body": ["new Promise((resolve, reject) => {", "${1}", "})"],
-    "description": "new promise"
-  },
   "object define property": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "objectdefineProperty",
     "body": [
       "Object.defineProperty(",
@@ -434,9 +300,206 @@
     ],
     "description": "object define property"
   },
+  "optional function param JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "paramopt",
+    "body": ["@param {${1:type}=} ${2:paramName}"],
+    "description": "optional function param JSDOC"
+  },
+  "react test": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "reacttest-file",
+    "body": [
+      "/* eslint-disable @typescript-eslint/no-explicit-any */",
+      "import \"@testing-library/jest-dom\";",
+      "import React, { ComponentType } from \"react\";",
+      "import { render, cleanup } from \"@testing-library/react\";",
+      "import { ${1:Component} } from \"../components/${1:Component}/\";",
+      "import { act } from \"react-dom/test-utils\";",
+      "",
+      "afterEach(() => {",
+      "  cleanup();",
+      "});",
+      "",
+      "",
+      "test(\"${2:test_name}\", async () => {",
+      "",
+      "\tawait act(async () => {",
+      "\t\t\t// when app renders",
+      "\t\t\t// eslint-disable-next-line no-unused-vars",
+      "\t\t\tconst { debug } = render(${2:app_name});",
+      "",
+      "\t\t\t// import { cleanup, fireEvent, render, waitFor } from \"@testing-library/react\";",
+      "\t\t\t//await waitFor(() => {",
+      "\t\t\t\t\t// expect().not.toBeNull()",
+      "\t\t\t//});",
+      "\t});",
+      "});",
+      "",
+      "////////////////////////// HELPER FUNCTIONS ///////////////////////////",
+      "",
+      "function makeComp({ props = {} } = {}) {",
+      "\treturn {",
+      "\t\t\tui: <${1:Component} {...props} />",
+      "\t};",
+      "}"
+    ],
+    "description": "test react"
+  },
+  "svelte test": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "sveltetest",
+    "body": [
+      "/* eslint-disable @typescript-eslint/no-explicit-any */",
+      "import { render, wait } from \"@testing-library/svelte\";",
+      "import ${1} from \"../${1}.svelte\";",
+      "",
+      "it(\"renders layout\", async () => {",
+      "\trender(${1}, {",
+      "\t\t\tsegment: \"\"",
+      "\t});",
+      "",
+      "\tawait wait(() => true);",
+      "});"
+    ],
+    "description": "svelte test"
+  },
   "ternary operation": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "ter",
     "body": ["${1:condition} ? ${2:truthy} : ${0:falsy}"],
     "description": "ternary operation"
+  },
+  "test react": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "testreact-file",
+    "body": [
+      "/* eslint-disable @typescript-eslint/no-explicit-any */",
+      "import \"@testing-library/jest-dom\";",
+      "import React, { ComponentType } from \"react\";",
+      "import { render, cleanup } from \"@testing-library/react\";",
+      "import { ${1:Component} } from \"../components/${1:Component}/\";",
+      "import { act } from \"react-dom/test-utils\";",
+      "",
+      "afterEach(() => {",
+      "  cleanup();",
+      "});",
+      "",
+      "",
+      "test(\"${2:test_name}\", async () => {",
+      "",
+      "\tawait act(async () => {",
+      "\t\t\t// when app renders",
+      "\t\t\t// eslint-disable-next-line no-unused-vars",
+      "\t\t\tconst { debug } = render(${2:app_name});",
+      "",
+      "\t\t\t// import { cleanup, fireEvent, render, waitFor } from \"@testing-library/react\";",
+      "\t\t\t//await waitFor(() => {",
+      "\t\t\t\t\t// expect().not.toBeNull()",
+      "\t\t\t//});",
+      "\t});",
+      "});",
+      "",
+      "////////////////////////// HELPER FUNCTIONS ///////////////////////////",
+      "",
+      "function makeComp({ props = {} } = {}) {",
+      "\treturn {",
+      "\t\t\tui: <${1:Component} {...props} />",
+      "\t};",
+      "}"
+    ],
+    "description": "test react"
+  },
+  "test react test": {
+    "prefix": "testreact-test",
+    "body": [
+      "test(\"${1:test_name}\", async () => {",
+      "",
+      "\t// import { act } from \"react-dom/test-utils\";",
+      "\tawait act(async () => {",
+      "\t\t\t// when app renders",
+      "\t\t\t// eslint-disable-next-line no-unused-vars",
+      "\t\t\tconst { debug } = render(${2:app_name});",
+      "",
+      "\t\t\t// import \"@testing-library/jest-dom\";",
+      "\t\t\t// import { cleanup, fireEvent, render, waitFor } from \"@testing-library/react\";",
+      "\t\t\t//await waitFor(() => {",
+      "\t\t\t\t\t// expect().not.toBeNull()",
+      "\t\t\t//});",
+      "\t});",
+      "});"
+    ],
+    "description": "test react test"
+  },
+  "test svelte": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "testsvelte",
+    "body": [
+      "/* eslint-disable @typescript-eslint/no-explicit-any */",
+      "import { render, wait } from \"@testing-library/svelte\";",
+      "import ${1} from \"../${1}.svelte\";",
+      "",
+      "it(\"renders layout\", async () => {",
+      "\trender(${1}, {",
+      "\t\t\tsegment: \"\"",
+      "\t});",
+      "",
+      "\tawait wait(() => true);",
+      "});"
+    ],
+    "description": "test svelte"
+  },
+  "typdef import first time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefimport",
+    "body": ["/**", "* @typedef { import('${1}').${2} } ${2} ${3}", "*/"],
+    "description": "typdef import first time JSDOC"
+  },
+  "typdef import next time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefimportn",
+    "body": ["* @typedef { import('${1}').${2} } ${2} ${3}"],
+    "description": "typdef import next time JSDOC"
+  },
+  "typdef object first time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefobject",
+    "body": [
+      "/**",
+      "* @typedef {Object} ${1:NameYourType}",
+      "* @property {${2:type}} ${3:propertyName} ${4:description}",
+      "*/"
+    ],
+    "description": "typdef object first time JSDOC"
+  },
+  "typdef object next.additional property JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefobjectn",
+    "body": ["@property {${1:type}} ${2:propertyName} ${3:description}"],
+    "description": "typdef object next.additional property JSDOC"
+  },
+  "typdef object optional property JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefobjectopt",
+    "body": ["@property {${1:type}=} ${2:propertyName} ${3:description}"],
+    "description": "typdef object optional property JSDOC"
+  },
+  "type assertion JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typeassert",
+    "body": ["/** @type {${1:type}} */ (${2:value})", "${3}"],
+    "description": "type assertion JSDOC"
+  },
+  "type variable declaration JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typevar",
+    "body": ["/**", "* ${1:description}", "* @type {${2:type}}", "*/", "${3}"],
+    "description": "type variable declaration JSDOC"
+  },
+  "useEffect react": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "useEffectReact",
+    "body": ["useEffect(() => { ${2} }, [${1}])"],
+    "description": "useEffect react"
   }
 }
