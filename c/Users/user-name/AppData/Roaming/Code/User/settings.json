@@ -41,7 +41,6 @@
   "editor.rulers": [80],
   "editor.snippetSuggestions": "top",
   "editor.tabSize": 2,
-  "editor.wordWrap": "wordWrapColumn",
   "elixirLS.enableTestLenses": true,
   "eslint.packageManager": "yarn",
   "explorer.confirmDragAndDrop": false,
