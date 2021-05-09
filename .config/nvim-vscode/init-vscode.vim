@@ -134,6 +134,7 @@ nnoremap zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
 nnoremap zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
 
 nnoremap <leader>aa <Cmd>call VSCodeNotify('workbench.action.toggleActivityBarVisibility')<CR>
+nnoremap <leader>pp <Cmd>call VSCodeNotify('workbench.action.togglePanel')<CR>
 
 if empty(glob('~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim  --create-dirs
