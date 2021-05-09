@@ -307,7 +307,13 @@
       "bindings": [
         {
           "key": "a",
-          "name": "Close bar",
+          "name": "Activity Bar Toggle",
+          "type": "command",
+          "command": "workbench.action.toggleActivityBarVisibility"
+        },
+        {
+          "key": "b",
+          "name": "Sidebar show",
           "type": "command",
           "command": "workbench.action.closeSidebar"
         },
@@ -319,15 +325,9 @@
         },
         {
           "key": "j",
-          "name": "Toggle panel visibility",
+          "name": "Panel visibility toggle",
           "type": "command",
           "command": "workbench.action.togglePanel"
-        },
-        {
-          "key": "F",
-          "name": "Toggle full screen",
-          "type": "command",
-          "command": "workbench.action.toggleFullScreen"
         },
         {
           "key": "c",
@@ -342,22 +342,10 @@
           "command": "workbench.action.toggleMaximizedPanel"
         },
         {
-          "key": "T",
-          "name": "Toggle tab visibility",
-          "type": "command",
-          "command": "workbench.action.toggleTabsVisibility"
-        },
-        {
           "key": "x",
           "name": "Show extensions",
           "type": "command",
           "command": "workbench.view.extensions"
-        },
-        {
-          "key": "z",
-          "name": "Show extensions",
-          "type": "command",
-          "command": "workbench.action.toggleActivityBarVisibility"
         }
       ]
     },
@@ -1060,6 +1048,7 @@
   "window.openFoldersInNewWindow": "on",
   "workbench.activityBar.visible": false,
   "workbench.colorTheme": "Gruvbox Light Medium",
+  "workbench.editor.untitled.hint": "hidden",
   "workbench.settings.useSplitJSON": true,
   "workbench.startupEditor": "newUntitledFile",
   "zenMode.hideLineNumbers": false
