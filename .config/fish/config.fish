@@ -76,6 +76,7 @@ if status --is-interactive
     abbr -a -g vff. 'set -x EBNIS_VIM_FUZZY_FINDER '
     abbr -a -g vfff 'set -x EBNIS_VIM_FUZZY_FINDER fzf'
     abbr -a -g vffc 'set -x EBNIS_VIM_FUZZY_FINDER vim-clap'
+    abbr -a -g vscode-vim "MYVIMRC_DIR=$HOME/.config/nvim-vscode/ XDG_DATA_HOME=~/.local/share/nvim-vscode NVIM_RPLUGIN_MANIFEST=~/.local/share/nvim-vscode/rplugin.vim MYVIMRC=$HOME/.config/nvim-vscode/init-vscode.vim nvim -u $HOME/.config/nvim-vscode/init-vscode.vim nvim"
 
     #     # tmux
     abbr -a -g ta "tmux a -t"

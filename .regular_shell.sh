@@ -68,6 +68,7 @@ alias vtsl='export EBNIS_VIM_THEME=vim-solarized8 EBNIS_VIM_THEME_BG=l'
 alias vff.='export EBNIS_VIM_FUZZY_FINDER='
 alias vfff='export EBNIS_VIM_FUZZY_FINDER=fzf'
 alias vffc='export EBNIS_VIM_FUZZY_FINDER=vim-clap'
+alias vscode-vim="MYVIMRC_DIR=$HOME/.config/nvim-vscode/ XDG_DATA_HOME=~/.local/share/nvim-vscode NVIM_RPLUGIN_MANIFEST=~/.local/share/nvim-vscode/rplugin.vim MYVIMRC=$HOME/.config/nvim-vscode/init-vscode.vim nvim -u $HOME/.config/nvim-vscode/init-vscode.vim nvim"
 
 # tmux
 alias ta='tmux a -t'
