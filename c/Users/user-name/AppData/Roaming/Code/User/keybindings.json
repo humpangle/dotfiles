@@ -28,5 +28,9 @@
   {
     "key": "ctrl+s ctrl+s",
     "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "ctrl+j ctrl+j",
+    "command": "workbench.action.togglePanel"
   }
 ]
