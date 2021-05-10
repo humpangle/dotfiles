@@ -1051,10 +1051,16 @@
   "whichkey.sortOrder": "alphabetically",
   "window.openFilesInNewWindow": "on",
   "window.openFoldersInNewWindow": "on",
-  "workbench.activityBar.visible": false,
   "workbench.colorTheme": "Gruvbox Light Medium",
   "workbench.editor.untitled.hint": "hidden",
   "workbench.settings.useSplitJSON": true,
   "workbench.startupEditor": "newUntitledFile",
-  "zenMode.hideLineNumbers": false
+  "zenMode.hideLineNumbers": false,
+  "gitlens.advanced.messages": {
+    "suppressGitMissingWarning": true
+  },
+  "settingsSync.ignoredSettings": [
+    "editor.fontSize",
+    "workbench.activityBar.visible"
+  ]
 }
