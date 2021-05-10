@@ -96,7 +96,7 @@ nnoremap <leader>bt <Cmd>call VSCodeNotify('workbench.action.gotoSymbol')<CR>
 nnoremap <leader>pt <Cmd>call VSCodeNotify('workbench.action.showAllSymbols')<CR>
 " https://code.visualstudio.com/docs/editor/editingevolved#_how-can-i-configure-ctrltab-to-navigate-across-all-editors-of-all-groups
 nnoremap <leader>fw :call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>
-
+nnoremap <leader>fs <Cmd>call VSCodeNotify('workbench.action.selectTheme')<CR>
 
 " START NEOFORMAT
 nnoremap <leader>fc <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
@@ -132,8 +132,6 @@ nmap gcc <Plug>VSCodeCommentaryLine
 " FOLDS
 nnoremap zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
 nnoremap zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
-
-nnoremap <leader>fs <Cmd>call VSCodeNotify('workbench.action.selectTheme')<CR>
 
 if empty(glob('~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim  --create-dirs
