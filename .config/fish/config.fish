@@ -133,8 +133,8 @@ if status --is-interactive
     abbr -a -g cdp "mkdir -p $HOME/projects && cd $HOME/projects"
     abbr -a -g md "mkdir -p"
     abbr -a -g ff fzf
-    abbr -a -g c "clear && printf '\e[3J'"
-    abbr -a -g C clear
+    # abbr -a -g c "clear && printf '\e[3J'"
+    # abbr -a -g C clear
     abbr -a -g py "python "
     abbr -a -g pw "prettier --write "
     abbr -a -g eshell "source ~/.config/fish/config.fish"
