@@ -26,11 +26,7 @@
     "command": "workbench.action.toggleActivityBarVisibility"
   },
   {
-    "key": "ctrl+b ctrl+b",
+    "key": "ctrl+s ctrl+s",
     "command": "workbench.action.toggleSidebarVisibility"
-  },
-  {
-    "key": "ctrl+b",
-    "command": "-workbench.action.toggleSidebarVisibility"
   }
 ]
