@@ -1,4 +1,4 @@
-// Place your key bindings in this file to override the defaults
+// Place your key bindings in this file to overwrite the defaults
 [
   {
     "key": "shift+space",
@@ -19,5 +19,18 @@
     "key": "alt+up",
     "command": "editor.action.moveLinesUpAction",
     "when": "editorTextFocus && !editorReadonly"
+  },
+  { "key": "ctrl+shift+w", "command": "-workbench.action.closeWindow" },
+  {
+    "key": "ctrl+a ctrl+a",
+    "command": "workbench.action.toggleActivityBarVisibility"
+  },
+  {
+    "key": "ctrl+b ctrl+b",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "-workbench.action.toggleSidebarVisibility"
   }
 ]
