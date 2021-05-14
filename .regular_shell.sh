@@ -36,7 +36,7 @@ alias dvra='docker volume rm $(docker volume ls -q)'
 alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ds='sudo service docker start'
-alias ug='sudo apt update && sudo apt upgrade -y'
+alias ug='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
 alias gc='google-chrome -incognito &'
 
 # yarn

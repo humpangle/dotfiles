@@ -42,7 +42,7 @@ if status --is-interactive
     abbr -a -g dvls 'docker volume ls'
     abbr -a -g dvlsq 'docker volume ls -q'
     abbr -a -g ds 'sudo service docker start'
-    abbr -a -g ug 'sudo apt update && sudo apt upgrade -y'
+    abbr -a -g ug 'sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
     abbr -a -g gc 'google-chrome -incognito &'
 
     # yarn
