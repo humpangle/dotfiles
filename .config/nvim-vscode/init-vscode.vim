@@ -133,6 +133,12 @@ nmap gcc <Plug>VSCodeCommentaryLine
 nnoremap zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
 nnoremap zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
 
+" DEBUGGING
+nnoremap <silent> <leader>R <Cmd>:call VSCodeNotify('workbench.action.debug.start')<CR>
+nnoremap <silent> <leader>b <Cmd>:call VSCodeNotify('editor.debug.action.toggleBreakpoint')<CR>
+nnoremap <silent> c <Cmd>:call VSCodeNotify('workbench.action.debug.continue')<CR>
+nnoremap <silent> s <Cmd>:call VSCodeNotify('workbench.action.debug.stepOver')<CR>
+
 augroup MyMiscGroup
   " highlight yank
   " :h lua-highlight
