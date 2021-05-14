@@ -133,6 +133,12 @@ nmap gcc <Plug>VSCodeCommentaryLine
 nnoremap zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
 nnoremap zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
 
+augroup MyMiscGroup
+  " highlight yank
+  " :h lua-highlight
+  au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+augroup END
+
 if empty(glob('~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim-vscode/nvim/site/autoload/plug.vim  --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
