@@ -39,6 +39,9 @@ nmap <Leader>P "+P
 vmap <Leader>P "+P
 
 " TABS
+
+nnoremap <leader>ts :call VSCodeNotify('workbench.action.newWindow')<CR>
+
 " Move between windows in a tab
 nnoremap <C-j> :call VSCodeNotify('workbench.action.navigateDown')<CR>
 xnoremap <C-j> :call VSCodeNotify('workbench.action.navigateDown')<CR>
