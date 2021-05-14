@@ -95,6 +95,7 @@ nnoremap <leader>/ <Cmd>call VSCodeNotify('workbench.action.replaceInFiles')<CR>
 nnoremap <leader>bt <Cmd>call VSCodeNotify('workbench.action.gotoSymbol')<CR>
 nnoremap <leader>pt <Cmd>call VSCodeNotify('workbench.action.showAllSymbols')<CR>
 " https://code.visualstudio.com/docs/editor/editingevolved#_how-can-i-configure-ctrltab-to-navigate-across-all-editors-of-all-groups
+nnoremap <leader>fl :call VSCodeNotify('actions.find')<CR>
 nnoremap <leader>fw :call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>
 nnoremap <leader>fs <Cmd>call VSCodeNotify('workbench.action.selectTheme')<CR>
 
