@@ -43,6 +43,7 @@ $RECYCLE.BIN/
 
 #####=== Python ===#####
 .python-version
+**/.venv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
