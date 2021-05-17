@@ -6,6 +6,7 @@ let maplocalleader=","
 " format paragraphs/lines to 80 chars
 nnoremap <Leader>pp gqap
 xnoremap <Leader>pp gqa
+xnoremap <Leader>pn :call Renumber()<CR>
 " Save file
 nnoremap <Leader>ww :w<CR>
 nnoremap <Leader>wa :wa<CR>
