@@ -52,7 +52,6 @@ return require("packer").startup(function()
         {"iamcco/markdown-preview.nvim", run = "cd app && yarn install"},
         -- Align Markdown table
         "godlygeek/tabular",
-        "junegunn/goyo.vim",
     }
     -- Statusline
     use "itchyny/lightline.vim"
