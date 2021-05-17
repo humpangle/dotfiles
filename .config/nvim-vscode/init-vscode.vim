@@ -94,7 +94,10 @@ nnoremap <leader>rc :%s///gc
 nnoremap <leader>ba :call VSCodeNotify('workbench.action.closeOtherEditors')<cr>
 " Delete current buffer
 nnoremap <leader>bd :call VSCodeNotify('workbench.action.closeActiveEditor')<cr>
-nnoremap <leader>bg :call VSCodeNotify('workbench.action.closeEditorsInGroup')<cr>
+nnoremap <leader>bn :call VSCodeNotify('renameFile')<cr>
+
+" Fugitive
+nnoremap <leader>gg :call VSCodeNotify('workbench.view.scm')<cr>
 
 " FZF
 nnoremap <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>
