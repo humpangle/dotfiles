@@ -22,6 +22,10 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
+" format paragraphs/lines to 80 chars
+nnoremap <Leader>pp gqap
+xnoremap <Leader>pp gqa
+
 " Save file
 nnoremap <Leader>ww :Write<CR>
 nnoremap <Leader>wa :Wall<CR>
