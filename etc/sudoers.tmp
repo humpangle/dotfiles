@@ -29,6 +29,9 @@ root	ALL=(ALL:ALL) ALL
 # Allow normal user to start cron job in .bashrc
 %sudo ALL=NOPASSWD: /etc/init.d/cron start
 
+# grant passwordless access to dockerd for group docker users
+%docker ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
+
 # See sudoers(5) for more information on "#include" directives:
 
 #includedir /etc/sudoers.d
