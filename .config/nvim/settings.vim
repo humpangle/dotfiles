@@ -1,6 +1,3 @@
-let g:python_host_prog = expand('$PYTHON2')
-let g:python3_host_prog = expand('$PYTHON3')
-
 " Disable netrw
 " let g:loaded_netrw       = 0
 " let g:loaded_netrwPlugin = 0
