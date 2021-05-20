@@ -173,11 +173,14 @@ end
 if test -d "$HOME/.fzf"
     # ripgrep
     set -x RG_IGNORES "!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
-    set -x RG_OPTIONS "--hidden --follow --glob '$RG_IGNORES'"
+    set RG_OPTIONS "--hidden --follow --glob '$RG_IGNORES'"
 
-    set -x FZF_DEFAULT_OPTS "--layout=reverse --border --preview='bat --style=numbers --color=always {}' "
+    set FZF_PREVIEW_APP "--preview='string match -rq binary (file --mime {}); and echo {} is a binary file; or bat --style=numbers --color=always {}'"
+    set -x FZF_DEFAULT_OPTS "--layout=reverse --border $FZF_PREVIEW_APP"
     # Use git-ls-files inside git repo, otherwise rg
     set -x FZF_DEFAULT_COMMAND "rg --files $RG_OPTIONS"
+    set -x FZF_CTRL_T_COMMAND = $FZF_DEFAULT_COMMAND
+    set -x FZF_COMPLETION_TRIGGER ',,'
 
     function _fzf_compgen_dir
         rg --files $RG_OPTIONS

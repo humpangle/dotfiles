@@ -164,6 +164,8 @@ if [ -d "$HOME/.fzf" ]; then
   export FZF_DEFAULT_OPTS="--layout=reverse --border $FZF_PREVIEW_APP"
   # Use git-ls-files inside git repo, otherwise rg
   export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_COMPLETION_TRIGGER=',,'
 
   _fzf_compgen_dir() {
     rg --files $RG_OPTIONS
