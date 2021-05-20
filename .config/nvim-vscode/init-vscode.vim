@@ -35,6 +35,9 @@ nnoremap <Leader>wq :Wq<cr>
 nnoremap <leader>qq <Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>
 nnoremap <leader>qa <Cmd>call VSCodeNotify('workbench.action.closeWindow')<CR>
 
+" better code indentations in visual mode.
+vnoremap < <gv
+vnoremap > >gv
 " yank / Copy and paste from system clipboard (Might require xclip install)
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
