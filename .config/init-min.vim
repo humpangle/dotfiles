@@ -93,6 +93,10 @@ nnoremap <leader>bw :bw%<cr>
 nnoremap <leader>bl :ls<CR>:b
 map <leader>bn :call RenameFile()<cr>
 
+" alias ..='cd ..'
+" alias ...='cd ../..'
+" alias .3='cd ../../..'
+" alias .4='cd ../../../..'
 " alias md='mkdir -p '
 " alias vim=nvim
 " alias svim='sudo nvim -u ~/.config/nvim/init.vim'
@@ -105,3 +109,4 @@ map <leader>bn :call RenameFile()<cr>
 " alias tkss='tmux kill-server'
 " alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 " alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+" export DOCKER_BUILDKIT=1
