@@ -157,6 +157,8 @@ if status --is-interactive
     end
 end
 
+set -x DOCKER_BUILDKIT 1
+
 if test -d "$HOME/.pyenv"
     set PYENV_ROOT "$HOME/.pyenv"
     fish_add_path "$PYENV_ROOT/bin"

@@ -134,6 +134,8 @@ alias rmvimswap='rm ~/.local/share/nvim/swap/*'
 alias hb='sudo systemctl hibernate'
 alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
 
+export DOCKER_BUILDKIT=1
+
 if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json '
 fi
