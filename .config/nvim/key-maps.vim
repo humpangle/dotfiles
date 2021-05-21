@@ -190,6 +190,7 @@ nnoremap <leader>gp  :Git push <right>
 nnoremap <leader>gf  :Git push --force origin <right>
 nnoremap <leader>ca :Git commit --amend
 nnoremap <leader>ce :Git commit --amend --no-edit
+nnoremap <leader>ct :Git commit --allow-empty -m ""<left>
 
 " FZF
 " Search file from root directory
