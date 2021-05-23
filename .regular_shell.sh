@@ -51,6 +51,7 @@ alias vi='/usr/bin/vim'
 alias vimdiff="nvim -d"
 alias vim="nvim"
 alias v="nvim"
+alias svim='sudo nvim -u ~/dotfiles/.config/init-min.vim '
 alias nvl="VIM_USE_COC=1 nvim "
 # set vim theme and background per shell session
 # unset

@@ -57,6 +57,7 @@ if status --is-interactive
     abbr -a -g vimdiff "nvim -d"
     abbr -a -g vim nvim
     abbr -a -g v nvim
+    abbr -a -g svim 'sudo nvim -u ~/dotfiles/.config/init-min.vim '
     # abbr -a -g nvim "SHELL=/bin/bash nvim"
     # abbr -a -g vim "SHELL=/bin/bash nvim"
     abbr -a -g nvl "VIM_USE_COC=1 nvim "
