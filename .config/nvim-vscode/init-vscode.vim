@@ -126,6 +126,10 @@ nnoremap <leader>cx <Cmd>call VSCodeNotify('workbench.view.extensions')<CR>
 nnoremap ,ac <Cmd>call VSCodeNotify('editor.action.quickFix')<CR>
 nnoremap <leader>rn :call VSCodeNotify('editor.action.rename')<CR>
 nnoremap ,o <Cmd>call VSCodeNotify('editor.action.organizeImports')<CR>
+nnoremap gr <Cmd>call VSCodeNotify('editor.action.referenceSearch.trigger')<CR>
+xnoremap gr <Cmd>call VSCodeNotify('editor.action.referenceSearch.trigger')<CR>
+" gD = editor.action.peekDefinition/declaration
+" <C-w>gd = editor.action.revealDefinitionAside
 """""""""""""""""""""""""""""""""""""
 " END COC
 """""""""""""""""""""""""""""""""""""
