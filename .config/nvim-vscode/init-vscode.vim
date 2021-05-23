@@ -95,6 +95,7 @@ nnoremap <leader>rc :%s///gc
 " BUFFERS
 " Delete all buffers
 nnoremap <leader>ba :call VSCodeNotify('workbench.action.closeOtherEditors')<cr>
+nnoremap <leader>bA :call VSCodeNotify('workbench.action.closeAllEditors')<cr>
 " Delete current buffer
 nnoremap <leader>bd :call VSCodeNotify('workbench.action.closeActiveEditor')<cr>
 nnoremap <leader>bg :call VSCodeNotify('workbench.action.closeEditorsInGroup')<cr>
