@@ -15,7 +15,7 @@
 [core]
 	filemode = false
 	editor = \"C:\\Users\\kanmii\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\" --wait
-	excludesfile = \"C:\\Users\\kanmi\\.gitignore\"
+	excludesfile = C:\\Users\\kanmi\\.gitignore
 [commit]
 	verbose = true
 [difftool]
