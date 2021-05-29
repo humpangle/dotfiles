@@ -1,0 +1,40 @@
+[alias]
+	br = branch
+	st = status
+	cm = commit
+	ps = push
+  psf = push --force
+	pl = pull
+	co = checkout
+  cam = commit -am
+  pgm = push github master
+  pgd = push github dev
+  lone = log --oneline
+[credential]
+	helper = cache --timeout 604800
+[core]
+	filemode = false
+	editor = \"C:\\Users\\kanmii\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\" --wait
+	excludesfile = \"C:\\Users\\kanmi\\.gitignore\"
+[commit]
+	verbose = true
+[difftool]
+  prompt = false
+[diff]
+  tool = nvim -d
+[merge]
+	tool = fugitive
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+[mergetool]
+  prompt = false
+[push]
+	followTags = true
+# [user]
+#	  email = you@example.com
+#	  name = Your Name
+[init]
+	defaultBranch = main
+# specify how pulling is reconciled
+[pull]
+  rebase = true
