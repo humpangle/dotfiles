@@ -99,6 +99,7 @@ nnoremap <leader>bA :call VSCodeNotify('workbench.action.closeAllEditors')<cr>
 " Delete current buffer
 nnoremap <leader>bd :call VSCodeNotify('workbench.action.closeActiveEditor')<cr>
 nnoremap <leader>bg :call VSCodeNotify('workbench.action.closeEditorsInGroup')<cr>
+nnoremap <leader>bo :call VSCodeNotify('workbench.action.closeEditorsInOtherGroups')<cr>
 
 " Fugitive
 nnoremap <leader>gg :call VSCodeNotify('workbench.view.scm')<cr>
