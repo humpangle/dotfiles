@@ -158,6 +158,13 @@ nnoremap <silent> <leader>db <Cmd>:call VSCodeNotify('editor.debug.action.toggle
 nnoremap <silent> <leader>dc <Cmd>:call VSCodeNotify('workbench.action.debug.continue')<CR>
 nnoremap <silent> <leader>ds <Cmd>:call VSCodeNotify('workbench.action.debug.stepOver')<CR>
 
+" ctrl+k v
+" !notebookEditorFocused && editorLangId == 'markdown'
+autocmd FileType markdown nnoremap <silent> <leader>mv <Cmd>:call VSCodeNotify('markdown.showPreviewToSide')<CR>
+" ctrl+shift+v
+" !notebookEditorFocused && editorLangId == 'markdown'
+autocmd FileType markdown nnoremap <silent> <leader>ms <Cmd>:call VSCodeNotify('markdown.showPreview')<CR>
+
 augroup MyMiscGroup
   " highlight yank
   " :h lua-highlight
