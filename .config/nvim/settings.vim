@@ -1,6 +1,4 @@
 " Disable netrw
-" let g:loaded_netrw       = 0
-" let g:loaded_netrwPlugin = 0
 " Always show in tree view
 let g:netrw_liststyle = 3
 " Open file by default in new tab
@@ -20,13 +18,13 @@ let g:markdown_fenced_languages = [
 
 syntax enable
 " turn on detection for ftplugin/<filetype.vim>,indent/<filetype>.vim
-filetype plugin indent on
+filetype plugin on
 
 if (has("termguicolors"))
  set termguicolors
 endif
 
-" COC:You will have bad experience for diagnostic messages when default is 4000
+" Many plugins require update time shorter than default of 4000ms
 set updatetime=100
 " which-key plugin appears more quickly
 set timeoutlen=500
@@ -49,7 +47,10 @@ set splitbelow
 set splitright
 set mouse=a
 
-set completeopt=menuone,noinsert,noselect
+" autocompletion
+set complete+=kspell
+set completeopt-=preview
+set completeopt+=menuone,longest,noselect
 
 " I disabled both because they were distracting and slow (according to docs)
 set cursorline " highlight cursor positions
@@ -57,7 +58,7 @@ set cursorline " highlight cursor positions
 " Spell check
 set spelllang=en
 " set spell
-" ~/.config/nvim/spell/en.utf-8.add
+" ~/.config/nvim/spell/en.utf-7.add
 set spellfile=~/.config/nvim/spell/en.utf-8.add
 
 set foldmethod=indent
@@ -76,9 +77,6 @@ set undodir=$HOME/.vim/undodir/
 set number " always show line numbers
 " set relativenumber " set relative numbering as default
 set relativenumber
-
-" filetype detection for plugin indentation
-filetype plugin on
 
 " Use Ripgrep for vimgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
@@ -118,7 +116,6 @@ augroup filetypes
   au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
   au BufNewFile,BufRead *config set filetype=gitconfig
 augroup END
-
 
 " RENAME CURRENT FILE
 function! RenameFile()

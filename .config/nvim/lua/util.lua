@@ -1,57 +1,7 @@
 local vim_expand = vim.fn.expand
 local vim_empty = vim.fn.empty
 
-local utils = {
-    rg_defaults = {
-        "rg",
-        "--files",
-        "--hidden",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-        "--smart-case",
-        "--glob",
-        os.getenv("RG_IGNORES"),
-    },
-}
-
--- mappings
-function utils.map(mode, key, result, opts, bufnr)
-    local options = {noremap = true}
-
-    if opts then
-        options = vim.tbl_extend("force", options, opts)
-    end
-
-    if bufnr then
-        vim.api.nvim_buf_set_keymap(bufnr, mode, key, result, options)
-    else
-        vim.api.nvim_set_keymap(mode, key, result, options)
-    end
-end
-
-function utils.find_files(dir)
-    local telescope = require("telescope.builtin")
-    local opts
-
-    if dir == "git" then
-        local ok = pcall(telescope.git_files, opts)
-        if ok then
-            return
-        end
-    end
-
-    local rg_options = vim.tbl_extend("force", utils.rg_defaults, {})
-
-    if dir == "dir" then
-        local current_dir = vim_expand("%:h")
-        table.insert(rg_options, current_dir)
-    end
-
-    opts = {find_command = rg_options}
-    telescope.find_files(opts)
-end
+local utils = {}
 
 function utils.toggleBackground()
     if vim.o.background == "dark" then

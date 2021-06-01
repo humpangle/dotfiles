@@ -37,6 +37,7 @@ vmap <Leader>x "+x
 nmap <Leader>x "+x
 nmap <Leader>P "+P
 vmap <Leader>P "+P
+
 " TABS
 " Move between windows in a tab
 nmap <tab> <C-w>w
@@ -165,7 +166,18 @@ nnoremap <leader>bw :bw%<cr>
 nnoremap <leader>bl :ls<CR>:b
 map <leader>bn :call RenameFile()<cr>
 
-" Fugitive
+" COMPLETION
+" <c-j> and <c-k> to navigate up and down
+inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
+" <cr> should behave like <c-y>: do not accept and place cursor on next line
+inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+" right arrow also accepts suggestion
+inoremap <expr> <right> pumvisible() ? "<C-y>" : "<right>"
+
+"""""""""""""""""""""""""""""""""""""
+" START FUGITIVE
+"""""""""""""""""""""""""""""""""""""
 " git status
 nnoremap <leader>gg  :Git<CR>
 nnoremap <leader>gc  :Git commit<CR>
@@ -192,7 +204,19 @@ nnoremap <leader>ca :Git commit --amend<cr>
 nnoremap <leader>ce :Git commit --amend --no-edit<cr>
 nnoremap <leader>ct :Git commit --allow-empty -m ""<left>
 
-" FZF
+" Auto-clean fugitive buffers
+autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd User fugitive
+  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+  \   nnoremap <buffer> .. :edit %:h<CR> |
+  \ endif
+"""""""""""""""""""""""""""""""""""""
+" END fugitive
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START FZF
+"""""""""""""""""""""""""""""""""""""
 " Search file from root directory
 nnoremap <Leader>ff :Files!<CR>
 " Search file from current directory
@@ -247,6 +271,42 @@ nnoremap ,/ :Rg!<CR>
 " nnoremap <leader>sn :Snippets<CR>
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
+
+" Advanced ripgrep integration
+command! -bang -nargs=* Rrg
+  \ call fzf#vim#grep(
+  \   "rg --hidden --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
+  \   1,
+  \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
+  \   <bang>0
+  \ )
+
+function! s:copy_fzf_results(lines)
+  let joined_lines = join(a:lines, "\n")
+  if len(a:lines) > 1
+    let joined_lines .= "\n"
+  endif
+  let @+ = joined_lines
+endfunction
+
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit',
+  \ 'ctrl-y': function('s:copy_fzf_results'),
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ }
+
+" scroll the fzf vim listing buffer
+autocmd FileType fzf tnoremap <buffer> <C-j> <Down>
+autocmd FileType fzf tnoremap <buffer> <C-k> <Up>
 """""""""""""""""""""""""""""""""""""
 " END FZF
 """""""""""""""""""""""""""""""""""""
@@ -256,6 +316,43 @@ nmap <Leader>H :Helptags!<CR>
 """""""""""""""""""""""""""""""""""""
 nnoremap <leader>fc :Neoformat<CR>
 nnoremap <leader>N :Neoformat<CR>
+
+" Install binaries for formatting
+
+" javascript, typescript, svelte, graphql, Vue, html, YAML, SCSS, Less, JSON,
+" npm install -g prettier prettier-plugin-svelte
+
+" shell
+" wget -O $HOME/.local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.2.4/shfmt_v3.2.4_linux_amd64 && chmod ugo+x $HOME/.local/bin/shfmt
+
+" sjl
+" wget -O pgFormatter-5.0.tar.gz \
+"   https://github.com/darold/pgFormatter/archive/refs/tags/v5.0.tar.gz && \
+"   tar xzf pgFormatter-5.0.tar.gz && \
+"   cd pgFormatter-5.0/ && \
+"   perl Makefile.PL && \
+"   make && sudo make install && \
+"   pg_format --version
+
+" SETTINGS
+" Shell
+let g:shfmt_opt = '-ci'
+
+" jsonc
+let g:neoformat_jsonc_prettier = {
+  \ 'exe': 'prettier',
+  \ 'args': ['--stdin-filepath', '"%:p"', '--parser', 'json'],
+  \ 'stdin': 1,
+\ }
+
+let g:neoformat_enabled_jsonc = ['prettier']
+
+" format on save
+" augroup fmt
+"   autocmd!
+"   " if file not changed and saved (e.g. to trigger test run), error is thrown: use try/catch to suppress
+"   au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+" augroup END
 """""""""""""""""""""""""""""""""""""
 " END NEOFORMAT
 """""""""""""""""""""""""""""""""""""
@@ -363,4 +460,102 @@ nmap <Leader>FK :FloatermKill!<CR>
 nmap <Leader>F5 :FloatermUpdate --width=0.5<CR>
 """""""""""""""""""""""""""""""""""""
 " END FLOATERM
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START LIGHTLINE
+"""""""""""""""""""""""""""""""""""""
+let g:lightline = {}
+
+let g:lightline.component_function = {
+  \'fugitive': 'LightlineFugitive',
+  \ 'filename': 'LightlineFilename',
+\}
+
+let g:lightline.component = {
+  \'filename': '%f',
+\}
+
+let g:lightline.active = {
+  \'left': [
+      \[
+          \'mode',
+          \'paste'
+      \],
+      \[
+          \'fugitive',
+          \'readonly',
+          \'filename',
+          \'modified',
+      \]
+  \],
+\}
+
+let g:lightline.tab_component_function = {
+  \ 'filename_active': 'LightlineFilenameTab',
+\}
+
+let g:lightline.tab = {
+  \ 'active': [
+      \ 'tabnum',
+      \ 'filename',
+      \ 'modified'
+  \],
+  \ 'inactive': [
+      \ 'tabnum',
+      \ 'filename_active',
+      \ 'modified'
+  \],
+\}
+
+function! LightlineFugitive()
+  if exists('*FugitiveHead')
+    let branch = FugitiveHead()
+    return branch !=# '' ? branch : ''
+  endif
+  return ''
+endfunction
+
+function! LightlineFilename()
+  return luaeval('require("util").get_file_name(2)')
+endfunction
+
+function! LightlineFilenameTab(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  let filename = expand('#'.buflist[winnr - 1].':f')
+  let sf = substitute(filename, '\', '/', 'g')
+  let lua_func = 'require("util").get_file_name("' . sf . '")'
+  return luaeval(lua_func)
+endfunction
+"""""""""""""""""""""""""""""""""""""
+" END LIGHTLINE
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START VIM-MAXIMIZER
+"""""""""""""""""""""""""""""""""""""
+let g:maximizer_set_default_mapping = 0
+
+nnoremap mm :MaximizerToggle!<CR>
+"""""""""""""""""""""""""""""""""""""
+" END VIM-MAXIMIZER
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START vCoolor
+"""""""""""""""""""""""""""""""""""""
+" Disable default mappings
+let g:vcoolor_disable_mappings = 1
+
+" insert hex color
+let g:vcoolor_map = '<a-c>'
+" Insert rgb color
+let g:vcool_ins_rgb_map = '<a-r>'
+" Insert rgba color
+let g:vcool_ins_rgba_map = '<a-z>'
+" Insert hsl color
+let g:vcool_ins_hsl_map = '<a-h>'
+"""""""""""""""""""""""""""""""""""""
+" END vCoolor
 """""""""""""""""""""""""""""""""""""

@@ -20,7 +20,6 @@ return require("packer").startup(function()
         -- LSP, Autocomplete and snippets
         use {
             "neovim/nvim-lspconfig",
-            "hrsh7th/nvim-compe",
             "hrsh7th/vim-vsnip",
             "mattn/emmet-vim",
             -- conveniently install language servers.
@@ -45,7 +44,7 @@ return require("packer").startup(function()
     }
 
     -- Git
-    use {"tpope/vim-fugitive", "lewis6991/gitsigns.nvim"}
+    use {"tpope/vim-fugitive", "airblade/vim-gitgutter"}
 
     -- Markdown
     use {
@@ -62,7 +61,7 @@ return require("packer").startup(function()
     -- General plugins
     use {
         "mbbill/undotree",
-        "terrortylor/nvim-comment",
+        "tpope/vim-commentary",
         "windwp/nvim-autopairs",
         "norcalli/nvim-colorizer.lua",
         "nelstrom/vim-visual-star-search",
@@ -93,4 +92,10 @@ return require("packer").startup(function()
 
     use {"folke/which-key.nvim"}
     use {"easymotion/vim-easymotion"}
+
+    -- powershell syntax
+    use {"pprovost/vim-ps1"}
+
+    -- completion pop up
+    use {"vim-scripts/AutoComplPop"}
 end)
