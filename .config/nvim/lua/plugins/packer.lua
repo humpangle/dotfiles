@@ -98,4 +98,13 @@ return require("packer").startup(function()
 
     -- completion pop up
     use {"vim-scripts/AutoComplPop"}
+
+    use {
+        -- Dart/Flutter
+        -- https://x-team.com/blog/neovim-flutter/
+        "dart-lang/dart-vim-plugin",
+        "thosakwe/vim-flutter",
+        "natebosch/vim-lsc",
+        "natebosch/vim-lsc-dart",
+    }
 end)
