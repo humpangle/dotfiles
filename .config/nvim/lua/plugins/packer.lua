@@ -103,8 +103,11 @@ return require("packer").startup(function()
         -- Dart/Flutter
         -- https://x-team.com/blog/neovim-flutter/
         "dart-lang/dart-vim-plugin",
-        "thosakwe/vim-flutter",
-        "natebosch/vim-lsc",
-        "natebosch/vim-lsc-dart",
+        -- Vim commands for Flutter, including hot-reload-on-save and more.
+        -- "thosakwe/vim-flutter",
+        -- Vim Language Server Client
+        -- "natebosch/vim-lsc",
+        -- vim-lsc server configuration for the Dart language
+        -- "natebosch/vim-lsc-dart",
     }
 end)
