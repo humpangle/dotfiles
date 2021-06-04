@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 
+# Add to $PATH only if `it` does not exist in the $PATH
+# fish shell has the `fish_add_path` function which does something similar
+# CREDIT: https://unix.stackexchange.com/a/217629
+# USAGE:
+#     pathmunge /sbin/             ## Add to the start; default
+#     pathmunge /usr/sbin/ after   ## Add to the end
+pathmunge () {
+  # first check if folder exists on filesystem
+  if [ -d "$1" ]; then
+    if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)" ; then
+      if [ "$2" = "after" ] ; then
+        PATH="$PATH:$1"
+      else
+        PATH="$1:$PATH"
+      fi
+    fi
+  fi
+}
+
 export EDITOR="nvim"
 
 # skip the java dependency during installation
@@ -11,7 +30,7 @@ export KERL_INSTALL_MANPAGES=
 export KERL_INSTALL_HTMLDOCS=
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
-export PATH="$HOME/gems/bin:$PATH"
+pathmunge "$GEM_HOME/bin"
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
 # install with: `sudo apt install ssh-askpass-gnome ssh-askpass -y`
@@ -145,9 +164,11 @@ function setenvs {
   set -a; . "$1"; set +a;
 }
 
+pathmunge "/usr/lib/dart/bin" "after"
+
 if [ -d "$HOME/.pyenv" ]; then
   export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
+  pathmunge "$PYENV_ROOT"
 
   if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
