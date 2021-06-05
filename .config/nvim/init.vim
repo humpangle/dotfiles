@@ -16,7 +16,7 @@ if !empty($EBNIS_VIM_THEME)
     set background=light
   endif
 else
-  colorscheme solarized8
+  colorscheme solarized8_high
   set background=light
 endif
 
