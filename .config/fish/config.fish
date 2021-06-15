@@ -158,6 +158,13 @@ if status --is-interactive
         end
       end
     end
+
+    if type php &>/dev/null
+        # debian pkg bsdgames
+        abbr -a -g sail './vendor/bin/sail'
+
+        abbr -a -g artisan 'php artisan'
+    end
 end
 
 set -x DOCKER_BUILDKIT 1

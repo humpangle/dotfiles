@@ -164,6 +164,13 @@ function setenvs {
   set -a; . "$1"; set +a;
 }
 
+if [ -x "$(command -v php)" ]; then
+  # debian pkg bsdgames
+  alias sail='./vendor/bin/sail'
+
+  alias artisan='php artisan'
+fi
+
 pathmunge "/usr/lib/dart/bin" "after"
 
 if [ -d "$HOME/.pyenv" ]; then
