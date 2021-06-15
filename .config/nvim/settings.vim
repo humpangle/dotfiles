@@ -13,7 +13,8 @@ let g:markdown_fenced_languages = [
   \ 'help',
   \ 'javascript',
   \ 'typescript',
-  \ 'css'
+  \ 'css',
+  \ 'vue',
 \]
 
 syntax enable
