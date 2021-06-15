@@ -69,7 +69,7 @@ nnoremap ,md :!mkdir -p %:h<cr><cr>
 nnoremap ,rm :!trash-put %:p<cr>:bdelete!<cr>
 " edit .bashrc file
 nnoremap ,. :e ~/.bashrc<CR>
-nnoremap <leader>ee :Vexplore<CR>
+nnoremap <c-E> :Vexplore<CR>
 
 " edit init.vim
 nnoremap ,ec :e $MYVIMRC<CR>
