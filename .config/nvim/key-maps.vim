@@ -89,8 +89,6 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " TERMINAL
-" start terminal in insert mode
-autocmd TermOpen * startinsert
 tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
 tnoremap <C-k> <C-\><C-N><C-w>k
@@ -424,7 +422,7 @@ endif
 """""""""""""""""""""""""""""""""""""
 let g:EasyMotion_smartcase = 1
 
-" nmap <leader><leader> <Plug>(easymotion-overwin-f2)
+nmap <leader><leader>2 <Plug>(easymotion-overwin-f2)
 """""""""""""""""""""""""""""""""""""
 " END EASY MOTION
 """""""""""""""""""""""""""""""""""""
