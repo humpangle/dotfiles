@@ -162,6 +162,7 @@ if status --is-interactive
     if type php &>/dev/null
         # debian pkg bsdgames
         abbr -a -g sail './vendor/bin/sail'
+        abbr -a -g sailartisan './vendor/bin/sail artisan'
 
         abbr -a -g artisan 'php artisan'
     end

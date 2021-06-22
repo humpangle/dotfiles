@@ -167,6 +167,7 @@ function setenvs {
 if [ -x "$(command -v php)" ]; then
   # debian pkg bsdgames
   alias sail='./vendor/bin/sail'
+  alias sailartisan='./vendor/bin/sail artisan'
 
   alias artisan='php artisan'
 fi
