@@ -28,13 +28,13 @@ lua <<EOF
       require("lsp")
       require("plugins/emmet-vim")
       require("plugins/nvim-autopairs")
-      require("plugins/undotree")
-      require("nvim-ts-autotag").setup()
+      -- require("plugins/undotree")
+      -- require("nvim-ts-autotag").setup()
   end
 
   -- PLUGIN SETTINGS
-  require("plugins/treesitter")
-  require("plugins/which-key")
+  -- require("plugins/treesitter")
+  -- require("plugins/which-key")
 EOF
 
 " Markdown preview

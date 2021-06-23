@@ -37,11 +37,11 @@ return require("packer").startup(function()
     }
 
     -- Treesitter
-    use {
-        {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"},
-        -- Use treesitter to autoclose and autorename html tag in html,tsx,vue,svelte
-        "windwp/nvim-ts-autotag",
-    }
+    -- use {
+    --   {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"},
+    -- Use treesitter to autoclose and autorename html tag in html,tsx,vue,svelte
+    --  "windwp/nvim-ts-autotag",
+    -- }
 
     -- Git
     use {"tpope/vim-fugitive", "airblade/vim-gitgutter"}
@@ -90,7 +90,7 @@ return require("packer").startup(function()
     -- FORMATTER
     use {"sbdchd/neoformat"}
 
-    use {"folke/which-key.nvim"}
+    -- use {"folke/which-key.nvim"}
     use {"easymotion/vim-easymotion"}
 
     -- powershell syntax
