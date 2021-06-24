@@ -3,7 +3,7 @@ set -U fish_greeting
 set -U fish_prompt_pwd_dir_length 0
 fish_add_path -g "$HOME/bin"
 fish_add_path -g "$HOME/.local/bin"
-fish_add_path -g "/usr/lib/dart/bin"
+fish_add_path -g /usr/lib/dart/bin
 
 set -x EDITOR nvim
 
@@ -40,10 +40,13 @@ if status --is-interactive
     abbr -a -g dcu 'docker-compose up '
     abbr -a -g dcrs 'docker-compose restart '
     abbr -a -g dcd 'docker-compose down '
+    abbr -a -g dv 'docker volume '
     abbr -a -g dvra 'docker volume rm (docker volume ls -q)'
     abbr -a -g dvls 'docker volume ls'
     abbr -a -g dvlsq 'docker volume ls -q'
+    abbr -a -g dn 'docker network '
     abbr -a -g ds 'sudo service docker start'
+
     abbr -a -g ug 'sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
     abbr -a -g gc 'google-chrome -incognito &'
 
@@ -149,22 +152,23 @@ if status --is-interactive
         abbr -a -g spj 'sort-package-json '
     end
 
-    function  setenvs --no-scope-shadowing
-      for line in (cat $argv[1])
-        if test $line != ''; and not string match -rq '\s*^#' $line
-          set t (string split --max 2 '=' $line)
-          echo "set -x $t[1] $t[2]"
-          set -x $t[1] $t[2]
+    function setenvs --no-scope-shadowing
+        for line in (cat $argv[1])
+            if test $line != ''; and not string match -rq '\s*^#' $line
+                set t (string split --max 2 '=' $line)
+                echo "set -x $t[1] $t[2]"
+                set -x $t[1] $t[2]
+            end
         end
-      end
     end
 
     if type php &>/dev/null
         # debian pkg bsdgames
         abbr -a -g sail './vendor/bin/sail'
-        abbr -a -g sailartisan './vendor/bin/sail artisan'
-
-        abbr -a -g artisan 'php artisan'
+        # debian pkg acct
+        abbr -a -g sa './vendor/bin/sail artisan'
+        # debian pkg artemis
+        abbr -a -g art 'php artisan'
     end
 end
 
