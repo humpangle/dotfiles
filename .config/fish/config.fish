@@ -153,11 +153,20 @@ if status --is-interactive
     end
 
     function setenvs --no-scope-shadowing
+        set $pattern '^"(\$\{)(.+?)\}"'
+
         for line in (cat $argv[1])
             if test $line != ''; and not string match -rq '\s*^#' $line
                 set t (string split --max 2 '=' $line)
-                echo "set -x $t[1] $t[2]"
-                set -x $t[1] $t[2]
+                set t1 $t[1]
+                set t2 $t[2]
+
+                if string match -rq '\$\{' $t2
+                    set t2 (string replace -r $pattern '$2'  "$t[2]")
+                end
+
+                echo "set -x $t1 $t2"
+                set -x $t1 $t2
             end
         end
     end
