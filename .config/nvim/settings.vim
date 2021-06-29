@@ -15,6 +15,7 @@ let g:markdown_fenced_languages = [
   \ 'typescript',
   \ 'css',
   \ 'vue',
+  \ 'dart',
 \]
 
 syntax enable
