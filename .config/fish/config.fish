@@ -153,20 +153,48 @@ if status --is-interactive
     end
 
     function setenvs --no-scope-shadowing
-        set $pattern '^"(\$\{)(.+?)\}"'
+        set interpolation_pattern '\$\{'
+        set pattern '\$\{(.+?)\}'
+        set emptyLine ''
+        set comment_pattern '\s*^#'
 
         for line in (cat $argv[1])
-            if test $line != ''; and not string match -rq '\s*^#' $line
+            if test $line != $emptyLine; and not string match -rq $comment_pattern $line
                 set t (string split --max 2 '=' $line)
-                set t1 $t[1]
-                set t2 $t[2]
+                set t1 (string trim $t[1])
+                set t2 (string trim $t[2])
 
-                if string match -rq '\$\{' $t2
-                    set t2 (string replace -r $pattern '$2'  "$t[2]")
+                if string match -rq $interpolation_pattern $t2
+                    set replaced $t2
+
+                    set matched_patterns (string match -r -a $pattern  "$t2")
+
+                    set len (count $matched_patterns)
+                    set half_len (math $len/2)
+
+                    # Matches are in the form [match1, capture1, match2,
+                    # capture2, ..., matchN, captureN] The idea is to replace
+                    # every matchN with $captureN. Thus if we have an nth
+                    # sequence in (1, ..., N) where length matches = 2 * N,
+                    # then nth match = 2 * n - 1 and nth capture = 2 * n
+
+                    for index in (seq 1 $half_len)
+                        set captured (math $index \* 2)
+                        set matched (math $captured - 1)
+
+                        set matched $matched_patterns[$matched]
+                        set captured $matched_patterns[$captured]
+
+                        set replaced (string replace $matched $$captured  $replaced)
+                    end
+
+                    set t2 $replaced
+                    set t2 (string replace --regex --all '^"' '' $t2)
+                    set t2 (string replace --regex --all '"$' '' $t2)
                 end
 
-                echo "set -x $t1 $t2"
                 set -x $t1 $t2
+                echo "set -x $t1 $t2"
             end
         end
     end
