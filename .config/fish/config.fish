@@ -312,3 +312,10 @@ end
 if test -f "$HOME/.config/fish/varying.config.fish"
     source "$HOME/.config/fish/varying.config.fish"
 end
+
+set -x CALLMIY_WIN_VIM_DATA_PATH "$HOME/.local/share/nvim-win"
+set -x CALLMIY_WIN_VIM_AUTOLOAD_PATH "$CALLMIY_WIN_VIM_DATA_PATH/nvim/site/autoload"
+set -x CALLMIY_WIN_VIM_PLUG_PATH "$CALLMIY_WIN_VIM_AUTOLOAD_PATH/plug"
+set -x CALLMIY_WIN_VIM_PLUG_VIM_PATH "$CALLMIY_WIN_VIM_AUTOLOAD_PATH/plug.vim"
+
+abbr -a -g win-vim "MYVIMRC_DIR=$HOME/.config/nvim-win/ XDG_DATA_HOME=$CALLMIY_WIN_VIM_DATA_PATH NVIM_RPLUGIN_MANIFEST=$CALLMIY_WIN_VIM_DATA_PATH/rplugin.vim MYVIMRC=$HOME/.config/nvim-win/init.vim nvim -u $HOME/.config/nvim-win/init.vim nvim"

@@ -1,4 +1,4 @@
-language en_US
+" language en_US
 set fileformat=unix
 
 " Set <leader> key to <Space>
@@ -70,7 +70,21 @@ augroup MyMiscGroup
   au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
 augroup END
 
-call plug#begin('~\AppData\Local\nvim\autoload')
+let autoload_path_set_from_env = !empty($CALLMIY_WIN_VIM_AUTOLOAD_PATH)
+
+let plugins_path = '~\AppData\Local\nvim\autoload'
+
+if(autoload_path_set_from_env)
+  let plugins_path = $CALLMIY_WIN_VIM_PLUG_PATH
+
+  if !filereadable($CALLMIY_WIN_VIM_PLUG_VIM_PATH)
+    silent execute '!curl -fLo ' . $CALLMIY_WIN_VIM_PLUG_VIM_PATH . ' --create-dir https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+  endif
+endif
+
+call plug#begin(plugins_path)
   Plug 'tpope/vim-surround'
   Plug 'nelstrom/vim-visual-star-search'
 
@@ -91,8 +105,12 @@ call plug#begin('~\AppData\Local\nvim\autoload')
   endif
 call plug#end()
 
+
 if !exists('g:vscode')
   so ~\AppData\Local\nvim\regular.vim
 else
-  so ~\AppData\Local\nvim\vscode.vim
+  if (autoload_path_set_from_env)
+    so ~/.config/nvim-win/vscode.vim
+  else
+    so ~\AppData\Local\nvim\vscode.vim
 endif
