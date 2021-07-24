@@ -17,7 +17,7 @@ if !empty($EBNIS_VIM_THEME)
   endif
 else
   colorscheme solarized8_high
-  set background=dark
+  set background=light
 endif
 
 lua <<EOF
