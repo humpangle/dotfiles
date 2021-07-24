@@ -1,5 +1,8 @@
 " language en_US
-set fileformat=unix
+
+if has('win32')
+  set fileformat=unix
+endif
 
 " Set <leader> key to <Space>
 nnoremap <Space> <Nop>
@@ -33,7 +36,7 @@ set cursorline " highlight cursor positions
 set autoread
 set noswapfile
 set undofile
-set undodir=$HOME/.vim/undodir/
+set undodir=$HOME/.vim-win/undodir/
 
 " format paragraphs/lines to 80 chars
 nnoremap <Leader>pp gqap
@@ -70,23 +73,24 @@ augroup MyMiscGroup
   au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
 augroup END
 
-let autoload_path_set_from_env = !empty($CALLMIY_WIN_VIM_AUTOLOAD_PATH)
+let s:plugins_path = '~\AppData\Local\nvim\autoload'
 
-let plugins_path = '~\AppData\Local\nvim\autoload'
+if !has('win32')
+  let $MYVIMRC = "$HOME/.config/nvim/init.vim"
+  let s:plugins_path = "$HOME/.local/share/nvim/site/autoload"
+  let s:plug_install_path = s:plugins_path . '/plug.vim'
+  let s:plugins_path = s:plugins_path . '/plug-vscode'
 
-if(autoload_path_set_from_env)
-  let plugins_path = $CALLMIY_WIN_VIM_PLUG_PATH
-
-  if !filereadable($CALLMIY_WIN_VIM_PLUG_VIM_PATH)
-    silent execute '!curl -fLo ' . $CALLMIY_WIN_VIM_PLUG_VIM_PATH . ' --create-dir https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  if !filereadable(s:plug_install_path)
+     silent execute '!curl -fLo ' . s:plug_install_path . ' --create-dir https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
     autocmd VimEnter * PlugInstall | source $MYVIMRC
   endif
 endif
 
-call plug#begin(plugins_path)
-  Plug 'tpope/vim-surround'
-  Plug 'nelstrom/vim-visual-star-search'
+call plug#begin(s:plugins_path)
+  Plug 'tpope/vim-surround', { 'as': 'vim-surround-vscode' }
+  Plug 'nelstrom/vim-visual-star-search', { 'as': 'vim-visual-star-search-vscode' }
 
   if !exists('g:vscode')
     Plug 'lifepillar/vim-solarized8'
@@ -105,12 +109,10 @@ call plug#begin(plugins_path)
   endif
 call plug#end()
 
-
-if !exists('g:vscode')
-  so ~\AppData\Local\nvim\regular.vim
-else
-  if (autoload_path_set_from_env)
-    so ~/.config/nvim-win/vscode.vim
+if has('win32')
+  if !exists('g:vscode')
+    so ~\AppData\Local\nvim\regular.vim
   else
     so ~\AppData\Local\nvim\vscode.vim
+  endif
 endif

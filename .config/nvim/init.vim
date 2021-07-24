@@ -1,4 +1,10 @@
 " https://github.com/dag/vim-fish#teach-a-vim-to-fish
+if exists('g:vscode')
+  so ~/dotfiles/.config/nvim-win/init.vim
+  so ~/dotfiles/.config/nvim-win/vscode.vim
+  finish
+endif
+
 set shell=/bin/bash
 let g:can_use_coc = !empty($VIM_USE_COC)
 
