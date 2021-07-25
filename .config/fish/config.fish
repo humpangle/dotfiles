@@ -37,6 +37,7 @@ if status --is-interactive
     abbr -a -g dpsa 'docker ps -a '
     abbr -a -g dc 'docker-compose '
     abbr -a -g dce 'docker-compose exec '
+    abbr -a -g de 'docker exec -it '
     abbr -a -g dcu 'docker-compose up '
     abbr -a -g dcrs 'docker-compose restart '
     abbr -a -g dcd 'docker-compose down '
