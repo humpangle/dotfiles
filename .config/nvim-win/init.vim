@@ -1,7 +1,33 @@
-" language en_US
-
 if has('win32')
+  language en_US
   set fileformat=unix
+  let s:plugins_path = '~\AppData\Local\nvim\autoload'
+else
+    " unset default paths of regular nvim
+  set runtimepath-=~/.config/nvim
+  set runtimepath-=~/.config/nvim/after
+  set runtimepath-=~/.local/share/nvim/site
+  set runtimepath-=~/.local/share/nvim/site/after
+
+  " set custom paths for use in vscode nvim
+  set runtimepath+=~/.config/nvim-win/after
+  set runtimepath^=~/.config/nvim-win
+  set runtimepath+=~/.local/share/nvim-win/site/after
+  set runtimepath^=~/.local/share/nvim-win/site
+
+  let &packpath = &runtimepath
+
+  let $MYVIMRC = "$HOME/.config/nvim-win/init.vim"
+
+  let s:plugins_path = "$HOME/.local/share/nvim-win/site/autoload"
+  let s:plug_install_path = s:plugins_path . '/plug.vim'
+  let s:plugins_path = s:plugins_path . '/plug'
+
+  if !filereadable(s:plug_install_path)
+     silent execute '!curl -fLo ' . s:plug_install_path . ' --create-dir https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+  endif
 endif
 
 " Set <leader> key to <Space>
@@ -35,8 +61,8 @@ set cursorline " highlight cursor positions
 " reload a file if it is changed from outside vim
 set autoread
 set noswapfile
-set undofile
-set undodir=$HOME/.vim-win/undodir/
+" set undofile
+" set undodir=$HOME/.vim-win/undodir/
 
 " format paragraphs/lines to 80 chars
 nnoremap <Leader>pp gqap
@@ -73,26 +99,11 @@ augroup MyMiscGroup
   au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
 augroup END
 
-let s:plugins_path = '~\AppData\Local\nvim\autoload'
-
-if !has('win32')
-  let $MYVIMRC = "$HOME/.config/nvim/init.vim"
-  let s:plugins_path = "$HOME/.local/share/nvim/site/autoload"
-  let s:plug_install_path = s:plugins_path . '/plug.vim'
-  let s:plugins_path = s:plugins_path . '/plug-vscode'
-
-  if !filereadable(s:plug_install_path)
-     silent execute '!curl -fLo ' . s:plug_install_path . ' --create-dir https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-    autocmd VimEnter * PlugInstall | source $MYVIMRC
-  endif
-endif
-
 call plug#begin(s:plugins_path)
-  Plug 'tpope/vim-surround', { 'as': 'vim-surround-vscode' }
-  Plug 'nelstrom/vim-visual-star-search', { 'as': 'vim-visual-star-search-vscode' }
+  Plug 'tpope/vim-surround'
+  Plug 'nelstrom/vim-visual-star-search'
 
-  if !exists('g:vscode')
+  if !exists('g:vscode') && has('win32')
     Plug 'lifepillar/vim-solarized8'
     " A number of useful motions for the quickfix list, pasting and more.
     Plug 'tpope/vim-unimpaired'
@@ -115,4 +126,6 @@ if has('win32')
   else
     so ~\AppData\Local\nvim\vscode.vim
   endif
+else
+  so ~/.config/nvim-win/vscode.vim
 endif
