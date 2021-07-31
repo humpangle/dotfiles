@@ -207,7 +207,6 @@ autocmd User fugitive
 " START FZF
 """""""""""""""""""""""""""""""""""""
 " Search file from root directory
-nnoremap <Leader>ff :Files!<CR>
 nnoremap <c-p> :Files!<CR>
 " Search file from current directory
 nnoremap <silent> <Leader>f. :Files! <C-r>=expand("%:h")<CR>/<CR>
