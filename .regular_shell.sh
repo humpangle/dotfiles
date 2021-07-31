@@ -280,6 +280,8 @@ function touchm() {
   fi
 }
 
+# pathmunge "$HOME/android-studio/bin"
+
 # Set the title string at the top of your current terminal window or terminal window tab
 # https://github.com/mgedmin/scripts/blob/master/title
 # https://discourse.gnome.org/t/rename-terminal-tab/3200/5

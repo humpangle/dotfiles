@@ -313,3 +313,7 @@ end
 if test -f "$HOME/.config/fish/varying.config.fish"
     source "$HOME/.config/fish/varying.config.fish"
 end
+
+if test -d "$HOME/Android/Sdk"
+    fish_add_path "$HOME/Android/Sdk/platform-tools"
+end
