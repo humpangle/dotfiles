@@ -18,7 +18,6 @@
       "filetypes": ["typescript", "typescriptreact", "graphql"]
     }
   },
-  "snippets.textmateSnippetsRoots": ["~/.config/nvim/snippets"],
   "Lua.diagnostics.globals": [
     "vim",
     "use",
@@ -27,10 +26,15 @@
     "after_each",
     "before_each"
   ],
+  "snippets.textmateSnippetsRoots": ["~/.config/nvim/snippets"],
   "snippets.extends": {
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"],
     "typescriptreact": ["typescript"],
     "svelte": ["javascript"]
-  }
+  },
+  "vetur.ignoreProjectWarning": true,
+  "vetur.useWorkspaceDependencies": true,
+  "vetur.validation.templateProps": true,
+  "vetur.experimental.templateInterpolationService": true
 }

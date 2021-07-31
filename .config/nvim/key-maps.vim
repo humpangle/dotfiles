@@ -371,8 +371,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
 " Remap to rename current symbol
 nmap <leader>rn <Plug>(coc-rename)
 " Show `code action` window for currently selected region. Following actions
@@ -547,4 +545,12 @@ let g:vcool_ins_rgba_map = '<a-z>'
 let g:vcool_ins_hsl_map = '<a-h>'
 """""""""""""""""""""""""""""""""""""
 " END vCoolor
+"""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""
+" START editorconfig
+"""""""""""""""""""""""""""""""""""""
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+"""""""""""""""""""""""""""""""""""""
+" END editorconfig
 """""""""""""""""""""""""""""""""""""

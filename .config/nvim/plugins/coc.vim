@@ -20,6 +20,9 @@ let g:coc_global_extensions = [
   \ 'coc-vimlsp',
   \ 'coc-lua',
   \ 'coc-sh',
+  \ '@yaegassy/coc-intelephense',
+  \ 'coc-php-cs-fixer',
+  \ 'coc-blade-formatter',
   \ ]
   " \ 'coc-emoji',
   " \ 'coc-sh',
@@ -47,18 +50,22 @@ set cmdheight=2
 set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-set signcolumn=yes
+set signcolumn=number
 
 let g:coc_snippet_next = '<TAB>'
 let g:coc_snippet_prev = '<S-TAB>'
 
 function! s:show_documentation()
-  if (coc#rpc#ready())
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
     call CocActionAsync('doHover')
   else
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')

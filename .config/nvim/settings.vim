@@ -1,3 +1,4 @@
+let g:python3_host_prog = expand('$PYTHON3')
 " Disable netrw
 " Always show in tree view
 let g:netrw_liststyle = 3

@@ -1,11 +1,17 @@
 " https://github.com/dag/vim-fish#teach-a-vim-to-fish
 set shell=/bin/bash
+let $VIM_USE_COC = 1
 let g:can_use_coc = !empty($VIM_USE_COC)
 
 so ~/.config/nvim/settings.vim
 so ~/.config/nvim/key-maps.vim
 " packer plugin manager installs plugins
-luafile ~/.config/nvim/lua/plugins/packer.lua
+" luafile ~/.config/nvim/lua/plugins/packer.lua
+
+if g:can_use_coc
+  so ~/.config/nvim/vim-plug.vim
+  so ~/.config/nvim/plugins/coc.vim
+endif
 
 " THEME SELECTION
 if !empty($EBNIS_VIM_THEME)
@@ -24,13 +30,13 @@ lua <<EOF
 --vim.lsp.set_log_level('info') -- debug/error/trace
 -- see plugins/packer.lua for globals
 
-  if NO_USE_COC_LSP then
-      require("lsp")
-      require("plugins/emmet-vim")
-      require("plugins/nvim-autopairs")
+--  if NO_USE_COC_LSP then
+--      require("lsp")
+--      require("plugins/emmet-vim")
+--      require("plugins/nvim-autopairs")
       -- require("plugins/undotree")
       -- require("nvim-ts-autotag").setup()
-  end
+--  end
 
   -- PLUGIN SETTINGS
   -- require("plugins/treesitter")
@@ -39,7 +45,3 @@ EOF
 
 " Markdown preview
 let g:mkdp_refresh_slow = 1
-
-if g:can_use_coc
-  so ~/.config/nvim/vim-plug.vim
-endif
