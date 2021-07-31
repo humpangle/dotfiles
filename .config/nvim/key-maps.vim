@@ -174,8 +174,8 @@ nnoremap <leader>gc  :Git commit<CR>
 nnoremap <leader>gd  :Gvdiffsplit!<CR>
 nnoremap <leader>g.  :Git add .<CR>
 nnoremap <leader>g%  :Git add %<CR>
-nnoremap <leader>gl  :Gllog!<CR>
-nnoremap <leader>g0  :0Gllog!<CR>
+nnoremap <leader>gl  :Gclog! <right>
+nnoremap <leader>g0  :0Gclog! <right>
 
 nnoremap <leader>gr  :Git rebase -i HEAD~
 
