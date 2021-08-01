@@ -38,5 +38,6 @@
   "vetur.ignoreProjectWarning": true,
   "vetur.useWorkspaceDependencies": true,
   "vetur.validation.templateProps": true,
-  "vetur.experimental.templateInterpolationService": true
+  "vetur.experimental.templateInterpolationService": true,
+  "intelephense.progress.enable": false
 }
