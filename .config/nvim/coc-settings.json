@@ -3,6 +3,7 @@
   "javascript.suggestionActions.enabled": false,
   "typescript.showUnused": false,
   "javascript.showUnused": false,
+  // "tsserver.log": "verbose",
   "css.validate": false,
   "cSpell.userWords": ["Kanmii", "NEOVIM", "arity"],
   "cSpell.ignoreWords": [],
