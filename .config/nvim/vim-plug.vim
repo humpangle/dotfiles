@@ -86,6 +86,7 @@ call plug#begin(s:plugins_path)
   Plug 'lifepillar/vim-solarized8'
 
   " FORMATTER
+  " Works for many files as far as binary to format file exists
   Plug 'sbdchd/neoformat'
   Plug 'aeke/vim-phpfmt'
 
