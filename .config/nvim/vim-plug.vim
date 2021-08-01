@@ -20,6 +20,9 @@ call plug#begin(s:plugins_path)
   Plug 'junegunn/fzf.vim'
   Plug 'stsewd/fzf-checkout.vim'
 
+  " Tag generation - browse tags with FZF - keymap: `,bt` / `,pt`
+  Plug 'ludovicchabant/vim-gutentags'
+
   " GIT
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'

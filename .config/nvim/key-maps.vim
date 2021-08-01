@@ -228,6 +228,10 @@ nnoremap <Leader>C :Commands!<CR>
 nnoremap <Leader>M :Maps!<CR>
 " search in project - do not match filenames
 nnoremap <Leader>/ :Rrg!<CR>
+" find symbols in current buffer (ctags -R)
+nnoremap ,bt :BTags!<CR>
+" find symbols in project directory (ctags -R)
+nnoremap ,pt :Tags!<CR>
 
 if !g:can_use_coc
   " Tags
@@ -561,3 +565,9 @@ let g:mkdp_refresh_slow = 1
 " posva/vim-vue
 " let g:vue_pre_processors = ['typescript', 'scss']
 let g:vue_pre_processors = 'detect_on_enter'
+
+
+" ludovicchabant/vim-gutentags
+  " https://github.com/kuator/nvim/blob/master/lua/plugins/vim-gutentags.lua
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root = ['.git', 'package.json']
