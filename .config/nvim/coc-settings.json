@@ -44,5 +44,8 @@
   "vetur.format.defaultFormatter.html": "prettier",
   "vetur.format.defaultFormatter.css": "prettier",
   "vetur.format.defaultFormatter.scss": "prettier",
-  "vetur.format.defaultFormatter.js": "prettier-eslint"
+  "vetur.format.defaultFormatter.js": "prettier-eslint",
+  "volar.codeLens.references": false,
+  "volar.codeLens.pugTools": false,
+  "volar.codeLens.scriptSetupTools": false
 }
