@@ -490,7 +490,7 @@ let g:vcool_ins_hsl_map = '<a-h>'
 """""""""""""""""""""""""""""""""""""
 " START editorconfig
 """""""""""""""""""""""""""""""""""""
-  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 """""""""""""""""""""""""""""""""""""
 " END editorconfig
 """""""""""""""""""""""""""""""""""""
