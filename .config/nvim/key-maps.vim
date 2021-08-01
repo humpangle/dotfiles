@@ -119,6 +119,13 @@ nmap ,cr :let @"=expand("%")<CR>
 " copy absolute path
 nmap ,cf :let @"=expand("%:p")<CR>
 
+" Some plugins change my CWD to currently opened file - I change it back
+nnoremap <leader>cd
+  \ :let @s=execute("pwd")<CR>
+  \ :cd <C-r>s
+
+nnoremap <leader>wd :pwd<CR>
+
 " SEARCH AND REPLACE
 " remove highlight from search term
 nnoremap <leader>nh :noh<cr>
