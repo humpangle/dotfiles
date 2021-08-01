@@ -32,7 +32,8 @@
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"],
     "typescriptreact": ["typescript"],
-    "svelte": ["javascript"], "vue": ["javascript"]
+    "svelte": ["javascript"],
+    "vue": ["javascript"]
   },
   "vetur.ignoreProjectWarning": true,
   "vetur.useWorkspaceDependencies": true,
