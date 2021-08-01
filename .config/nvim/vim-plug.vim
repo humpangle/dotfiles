@@ -40,7 +40,11 @@ call plug#begin(s:plugins_path)
   Plug 'voldikss/vim-floaterm'
 
   Plug 'mbbill/undotree'
-  Plug 'tpope/vim-commentary'
+
+  " These 2 don't work well for php
+  " Plug 'tpope/vim-commentary'
+  " Plug 'b3nj5m1n/kommentary'
+  Plug 'tomtom/tcomment_vim'
 
   " Surround text with quotes, parenthesis, brackets, and more.
   Plug 'tpope/vim-surround'
