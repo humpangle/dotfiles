@@ -157,6 +157,9 @@ nnoremap <leader>bw :bw%<cr>
 nnoremap <leader>bl :ls<CR>:b
 map <leader>bn :call RenameFile()<cr>
 
+" mbbill/undotree
+nnoremap <A-u> :UndotreeToggle<CR>
+
 " COMPLETION
 " <c-j> and <c-k> to navigate up and down
 inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"

@@ -73,8 +73,10 @@ set foldlevel=2
 " reload a file if it is changed from outside vim
 set autoread
 set noswapfile
-set undofile
+
+" persist undo history even when I quit vim
 set undodir=$HOME/.vim/undodir/
+set undofile
 
 " LINE NUMBERING
 set number " always show line numbers
