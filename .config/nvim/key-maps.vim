@@ -168,13 +168,13 @@ map <leader>bn :call RenameFile()<cr>
 nnoremap <A-u> :UndotreeToggle<CR>
 
 " COMPLETION
-" <c-j> and <c-k> to navigate up and down
-inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
-" <cr> should behave like <c-y>: do not accept and place cursor on next line
-inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
-" right arrow also accepts suggestion
-inoremap <expr> <right> pumvisible() ? "<C-y>" : "<right>"
+" " <c-j> and <c-k> to navigate up and down
+" inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
+" inoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
+" " <cr> should behave like <c-y>: do not accept and place cursor on next line
+" inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+" " right arrow also accepts suggestion
+" inoremap <expr> <right> pumvisible() ? "<C-y>" : "<right>"
 
 """""""""""""""""""""""""""""""""""""
 " START FUGITIVE
