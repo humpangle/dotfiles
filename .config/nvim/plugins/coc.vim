@@ -21,9 +21,9 @@ let g:coc_global_extensions = [
   \ 'coc-lua',
   \ 'coc-sh',
   \ '@yaegassy/coc-intelephense',
-  \ 'coc-php-cs-fixer',
   \ 'coc-blade-formatter',
   \ ]
+  " \ 'coc-php-cs-fixer',
   " \ 'coc-emoji',
   " \ 'coc-sh',
   " \ 'coc-lists',
@@ -50,7 +50,7 @@ set cmdheight=2
 set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-set signcolumn=number
+set signcolumn=auto
 
 let g:coc_snippet_next = '<TAB>'
 let g:coc_snippet_prev = '<S-TAB>'
