@@ -574,3 +574,8 @@ let g:vue_pre_processors = 'detect_on_enter'
   " https://github.com/kuator/nvim/blob/master/lua/plugins/vim-gutentags.lua
 let g:gutentags_add_default_project_roots = 0
 let g:gutentags_project_root = ['.git', 'package.json']
+
+" aeke/vim-phpfmt
+
+let g:phpfmt_psr2 = 1
+let g:phpfmt_enable_auto_align = 1
