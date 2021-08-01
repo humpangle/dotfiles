@@ -12,6 +12,7 @@ endif
 call plug#begin(s:plugins_path)
   " LANGUAGE SERVERS / SYNTAX CHECKING
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Plug 'yaegassy/coc-volar', {'do': 'yarn install --frozen-lockfile'}
 
   " FUZZY FINDER
   " sudo apt install bat # Syntax highlighting
