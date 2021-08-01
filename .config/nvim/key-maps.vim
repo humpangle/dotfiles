@@ -477,7 +477,8 @@ augroup coc_grp_1
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json,vue setl formatexpr=CocAction('formatSelected')
 
-  autocmd BufWritePre *.vue Prettier
+  " Format vue with prettier on write
+  " autocmd BufWritePre *.vue Prettier
 
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
