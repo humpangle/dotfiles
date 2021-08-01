@@ -1,0 +1,136 @@
+{
+  // Place your snippets for php here. Each snippet is defined under a snippet name and has a prefix, body and
+  // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+  // same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "Use Controller": {
+    "prefix": "usecontroller",
+    "body": ["use App\\Http\\Controllers\\\\${1:ControllerName};$0"],
+    "description": "Use Controller"
+  },
+  "Use Model": {
+    "prefix": "usemodel",
+    "body": ["use App\\Models\\\\${1:ModelName};$0"],
+    "description": "Use Model"
+  },
+  "Route::controller": {
+    "prefix": "Route::controller",
+    "body": [
+      "Route::${1:verb}('${2:path}', [${3:NameController}::class, '${method}']);$0"
+    ],
+    "description": "Use Controller"
+  },
+  "Route::prefix": {
+    "prefix": "Route::prefix",
+    "body": [
+      "Route::prefix('${1:path}')->group(function () {",
+      "   ${0://code}",
+      "});"
+    ],
+    "description": ""
+  },
+  "Route::resource": {
+    "prefix": "Route::resource",
+    "body": ["Route::resource('${1:path}', ${3:NameController}::class);$0"],
+    "description": ""
+  },
+  "Save model controller": {
+    "prefix": "savemodelcontroller",
+    "body": [
+      "\\$request->validate([",
+      "   '${2:field}' => '${3:required}',$0",
+      "]);",
+      "return ${1:Model}::create(\\$request->all());"
+    ],
+    "description": "Store model controller"
+  },
+  "Store model controller": {
+    "prefix": "storemodelcontroller",
+    "body": [
+      "\\$request->validate([",
+      "   '${2:field}' => '${3:required}',$0",
+      "]);",
+      "return ${1:Model}::create(\\$request->all());"
+    ],
+    "description": "Store model controller"
+  },
+  "Update model in controller": {
+    "prefix": "updatemodelcontroller",
+    "body": [
+      "// \\$${1:modelInstance}->field = \\$request->input('field');",
+      "\\$${1:modelInstance}->update(\\$request->all());",
+      "return \\$${1:modelInstance};$0"
+    ],
+    "description": ""
+  },
+  "Use carbon": {
+    "prefix": "usecarbon",
+    "body": ["use Illuminate\\Support\\Carbon;"],
+    "description": ""
+  },
+  "Model Class protected members": {
+    "prefix": "modelprotected",
+    "body": [
+      "protected \\$fillable = [",
+      "   'name',",
+      "   // JSON",
+      "   'options->enabled',",
+      "];",
+      "//(",
+      "",
+      "// attributes that aren't mass assignable",
+      "protected \\$guarded = [];",
+      "protected \\$dispatchesEvents = [",
+      "   // 'saved' => UserSaved::class,",
+      "   // 'deleted' => UserDeleted::class,",
+      "];",
+      "protected \\$table = 'table_name';",
+      "protected \\$primaryKey = 'id_field';",
+      "// data type of ID",
+      "protected \\$keyType = 'string';",
+      "protected \\$dateFormat = 'U';",
+      "protected \\$connection = 'sqlite';",
+      "// default values for attributes",
+      "protected \\$attributes = [",
+      "   'delayed' => false,",
+      "];",
+      "// The attributes that should be hidden for arrays/JSON representation",
+      "protected \\$hidden = [",
+      "   'password',",
+      "];",
+      "// The attributes that should be visible in arrays/JSON representation",
+      "protected \\$visible = [",
+      "   'first_name',",
+      "];",
+      "// The attributes that should be cast after retrieval from database",
+      "// 'created_at'/'updated_at'/'deleted_at' are cast by default",
+      "// https://laravel.com/docs/8.x/eloquent-mutators#attribute-casting",
+      "protected \\$cast = [",
+      "   'joined_at' => 'datetime:Y-m-d H:00',",
+      "   'birthday' => 'date:Y-m-d',",
+      "];",
+      "// use other names but 'created_at' and 'updated_at' timestamp fields",
+      "const CREATED_AT = 'creation_date';",
+      "const UPDATED_AT = 'updated_date';",
+      "//)"
+    ],
+    "description": "Model Class protected members"
+  },
+  "Use RefreshDatabase": {
+    "prefix": "userefreshdatabase",
+    "body": [
+      "use RefreshDatabase;",
+      "//use Illuminate\\Foundation\\Testing\\RefreshDatabase;"
+    ],
+    "description": "Use RefreshDatabase"
+  }
+}
