@@ -395,6 +395,18 @@ inoremap <silent><expr> <c-leader> coc#refresh()
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
 " navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in
 " location list.
@@ -456,6 +468,24 @@ nnoremap <silent> <leader>bt  :<C-u>CocList outline<cr>
 nnoremap <silent><nowait> <leader>pt  :<C-u>CocList -I symbols<cr>
 
 " nmap <leader>ee :CocCommand explorer<CR>
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+augroup coc_grp_1
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json,vue setl formatexpr=CocAction('formatSelected')
+
+  autocmd BufWritePre *.vue Prettier
+
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" automatically close coc-explorer if it's the last buffer
+" autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
 endif
 """""""""""""""""""""""""""""""""""""
 " END COC
