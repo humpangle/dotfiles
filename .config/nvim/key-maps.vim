@@ -557,3 +557,7 @@ let g:vcool_ins_hsl_map = '<a-h>'
 
 " Markdown preview
 let g:mkdp_refresh_slow = 1
+
+" posva/vim-vue
+" let g:vue_pre_processors = ['typescript', 'scss']
+let g:vue_pre_processors = 'detect_on_enter'

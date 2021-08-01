@@ -69,6 +69,7 @@ call plug#begin(s:plugins_path)
   Plug 'pprovost/vim-ps1' " Powershell
   Plug 'jwalton512/vim-blade' " Laravel blade
   Plug 'editorconfig/editorconfig-vim'
+  Plug 'posva/vim-vue'
 
   " THEMES
   Plug 'rakr/vim-one'
