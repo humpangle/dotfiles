@@ -369,6 +369,26 @@ if g:can_use_coc
 " Use tab and shift tab to move to next/previous placeholders in snippets
 imap <tab> <Plug>(coc-snippets-expand)
 
+let g:coc_snippet_next = '<TAB>'
+let g:coc_snippet_prev = '<S-TAB>'
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-leader> (ctrl+leader) to trigger completion
+inoremap <silent><expr> <c-leader> coc#refresh()
+
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter
 " <cr> may have been remapped by other vim plugin
@@ -405,13 +425,23 @@ inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float
 vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
-" Use `:Format` to format current buffer
+" Use `:Format` to format current buffer using LSP
 command! -nargs=0 Format :call CocAction('format')
 " nnoremap fc :Format<CR>
 xmap <leader>fc :Format<CR>
 nmap <leader>fc :Format<CR>
-" sort import
+
+" Use ``:Prettier` to format current buffer.
+" If there is a formatter registered with the LSP, prettier has lower
+" priority and thus using `:Format` will not invoke prettier. Use the mapping
+" below to explicitly invoke prettier.
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+nmap <leader>fp :Prettier<CR>
+
+" Sort import
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 nmap ,o :OR<CR>
+
 nnoremap <silent> <leader>rs :<C-u>CocRestart<cr><cr>
 nmap <Leader>ch :CocSearch <Right>
 

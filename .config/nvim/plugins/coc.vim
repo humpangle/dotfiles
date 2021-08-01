@@ -52,8 +52,6 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=auto
 
-let g:coc_snippet_next = '<TAB>'
-let g:coc_snippet_prev = '<S-TAB>'
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -77,12 +75,6 @@ augroup coc_grp_1
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
-
-" use ``:Prettier` to format current buffer.
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " automatically close coc-explorer if it's the last buffer
 " autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
