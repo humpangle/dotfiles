@@ -189,7 +189,7 @@ nnoremap <leader>g%  :Git add %<CR>
 nnoremap <leader>gl  :Gclog! <right>
 nnoremap <leader>g0  :0Gclog! <right>
 
-nnoremap <leader>gr  :Git rebase -i HEAD~
+nnoremap <leader>gr  :Git rebase -
 
 nnoremap <leader>sp  :Git stash push -m ''<left>
 nnoremap <leader>s%  :Git stash push -m '' -- %<left><left><left><left><left><left>
