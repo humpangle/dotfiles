@@ -40,7 +40,7 @@
   "vetur.validation.templateProps": true,
   "vetur.experimental.templateInterpolationService": true,
   "intelephense.progress.enable": false,
-  "coc.preferences.formatOnSaveFiletypes": ["json", "typescript", "javascript"],
+  // "coc.preferences.formatOnSaveFiletypes": ["json", "typescript", "javascript"],
   "vetur.format.defaultFormatter.html": "prettier",
   "vetur.format.defaultFormatter.css": "prettier",
   "vetur.format.defaultFormatter.scss": "prettier",
