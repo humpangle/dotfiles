@@ -554,3 +554,6 @@ let g:vcool_ins_hsl_map = '<a-h>'
 """""""""""""""""""""""""""""""""""""
 " END editorconfig
 """""""""""""""""""""""""""""""""""""
+
+" Markdown preview
+let g:mkdp_refresh_slow = 1

@@ -42,6 +42,3 @@ lua <<EOF
   -- require("plugins/treesitter")
   -- require("plugins/which-key")
 EOF
-
-" Markdown preview
-let g:mkdp_refresh_slow = 1
