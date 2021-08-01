@@ -64,6 +64,8 @@ nnoremap <c-down> :resize -2<CR>
 nnoremap <leader>lc :lclose<CR>
 nnoremap yoq :cclose<cr>
 
+nnoremap <leader>% :e %<CR>
+
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr><cr>
 nnoremap ,rm :!trash-put %:p<cr>:bdelete!<cr>
@@ -142,7 +144,7 @@ xmap <Leader>RR :cfdo %s/<C-r>s//g \| update<Left><Left><Left><Left><Left><Left>
 
 " BUFFERS
 " Delete all buffers
-nnoremap <leader>ba :call DeleteAllBuffers('a')<cr>
+nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
 " Delete empty buffers - not working
 nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete current buffer
