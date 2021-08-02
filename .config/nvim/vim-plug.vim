@@ -90,7 +90,6 @@ call plug#begin(s:plugins_path)
   Plug 'sbdchd/neoformat'
   Plug 'aeke/vim-phpfmt'
 
-  " Plug 'vim-scripts/AutoComplPop'
   Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 
