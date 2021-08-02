@@ -188,6 +188,7 @@ nnoremap <leader>g.  :Git add .<CR>
 nnoremap <leader>g%  :Git add %<CR>
 nnoremap <leader>gl  :Gclog! <right>
 nnoremap <leader>g0  :0Gclog! <right>
+nnoremap <leader>ge  :Gedit &
 
 nnoremap <leader>gr  :Git rebase -
 
@@ -201,9 +202,9 @@ nnoremap <leader>sc  :Git stash clear<CR>
 nnoremap <leader>go  :Git push origin <right>
 nnoremap <leader>gp  :Git push <right>
 nnoremap <leader>gf  :Git push --force origin <right>
-nnoremap <leader>ca :Git commit --amend<cr>
-nnoremap <leader>ce :Git commit --amend --no-edit<cr>
-nnoremap <leader>ct :Git commit --allow-empty -m ""<left>
+nnoremap <leader>ca  :Git commit --amend<cr>
+nnoremap <leader>ce  :Git commit --amend --no-edit<cr>
+nnoremap <leader>ct  :Git commit --allow-empty -m ""<left>
 
 " Auto-clean fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
@@ -233,6 +234,7 @@ nnoremap <Leader>fl :BLines!<CR>
 nnoremap <Leader>fm :Marks!<CR>
 nnoremap <leader>ft :Filetypes!<CR>
 nnoremap <leader>fw :Windows!<CR>
+" Find color schemes
 nnoremap <leader>fs :Colors!<CR>
 " commands: user defined, plugin defined, or native commands
 nnoremap <Leader>C :Commands!<CR>
@@ -424,9 +426,8 @@ nmap <leader>rn <Plug>(coc-rename)
 " Show `code action` window for currently selected region. Following actions
 " are availbale: 1. Extract Function 2. Move to a new file 3. Extract constant
 " 4. spelling suggestion
-xmap ,ac  <Plug>(coc-codeaction-selected)
-" Remap keys for applying codeAction to the current buffer.
 nmap ,ac  <Plug>(coc-codeaction)
+xmap ,ac  <Plug>(coc-codeaction-selected)
 " Apply AutoFix to problem on the current line.
 nmap ,qf  <Plug>(coc-fix-current)
 " Remap <C-f> and <C-b> for scroll float windows/popups.
