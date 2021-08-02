@@ -12,7 +12,7 @@ endif
 call plug#begin(s:plugins_path)
   " LANGUAGE SERVERS / SYNTAX CHECKING
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'yaegassy/coc-volar', {'do': 'yarn install --frozen-lockfile'}
+  " Plug 'yaegassy/coc-volar', {'do': 'yarn install --frozen-lockfile'}
   " execute remove(g:plugs, 'yaegassy/coc-volar')
 
   " FUZZY FINDER
