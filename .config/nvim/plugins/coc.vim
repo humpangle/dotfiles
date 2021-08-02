@@ -22,6 +22,7 @@ let g:coc_global_extensions = [
   \ 'coc-sh',
   \ '@yaegassy/coc-intelephense',
   \ 'coc-blade-formatter',
+  \ 'coc-flutter',
   \ ]
   " \ 'coc-php-cs-fixer',
   " \ 'coc-emoji',
