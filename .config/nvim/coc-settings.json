@@ -37,5 +37,8 @@
   },
   "intelephense.progress.enable": false,
   // "coc.preferences.formatOnSaveFiletypes": ["json", "typescript", "javascript"],
-  "coc.preferences.semanticTokensHighlights": false
+  "coc.preferences.semanticTokensHighlights": false,
+  "volar.codeLens.references": false,
+  "volar.codeLens.pugTools": false,
+  "volar.codeLens.scriptSetupTools": false
 }
