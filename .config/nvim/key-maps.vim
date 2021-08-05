@@ -121,7 +121,7 @@ nmap ,cf :let @"=expand("%:p")<CR>
 
 " Some plugins change my CWD to currently opened file - I change it back
 nnoremap <leader>cd
-  \ :let @s=execute("pwd")<CR>
+  \ :let @s=expand("%:p:h")<CR>
   \ :cd <C-r>s
 
 nnoremap <leader>wd :pwd<CR>
