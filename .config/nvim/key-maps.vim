@@ -161,11 +161,13 @@ nnoremap <leader>bD :bd!%<cr>
 " Wipe current buffer
 nnoremap <leader>bw :bw%<cr>
 " go to buffer number - use like so gb34
-nnoremap <leader>bl :ls<CR>:b
+nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>
 
 " mbbill/undotree
 nnoremap <A-u> :UndotreeToggle<CR>
+
+nnoremap <leader>re :VMessage reg<CR>
 
 " COMPLETION
 " " <c-j> and <c-k> to navigate up and down
