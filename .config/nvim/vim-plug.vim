@@ -22,7 +22,7 @@ call plug#begin(s:plugins_path)
   Plug 'stsewd/fzf-checkout.vim'
 
   " Tag generation - browse tags with FZF - keymap: `,bt` / `,pt`
-  Plug 'ludovicchabant/vim-gutentags'
+  " Plug 'ludovicchabant/vim-gutentags'
 
   " GIT
   Plug 'tpope/vim-fugitive'
