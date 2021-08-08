@@ -118,6 +118,9 @@ call plug#begin(s:plugins_path)
   let g:vimspector_enable_mappings = 'HUMAN'
 
   Plug 'puremourning/vimspector'
+
+  " tmux-like window navigation
+  " Plug 't9md/vim-choosewin'
 call plug#end()
 
 " Automatically install missing plugins on startup
