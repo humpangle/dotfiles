@@ -113,6 +113,11 @@ call plug#begin(s:plugins_path)
   Plug 'tpope/vim-dadbod'
   Plug 'kristijanhusak/vim-dadbod-ui'
   Plug 'kristijanhusak/vim-dadbod-completion'
+
+  " Debugging
+  let g:vimspector_enable_mappings = 'HUMAN'
+
+  Plug 'puremourning/vimspector'
 call plug#end()
 
 " Automatically install missing plugins on startup
