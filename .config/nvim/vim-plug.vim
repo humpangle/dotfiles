@@ -105,6 +105,9 @@ call plug#begin(s:plugins_path)
   Plug 'aeke/vim-phpfmt'
 
   Plug 'dart-lang/dart-vim-plugin'
+
+  " making rest api call
+  Plug 'diepm/vim-rest-console'
 call plug#end()
 
 " Automatically install missing plugins on startup
