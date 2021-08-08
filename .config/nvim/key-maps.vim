@@ -167,6 +167,7 @@ map <leader>bn :call RenameFile()<cr>
 " mbbill/undotree
 nnoremap <A-u> :UndotreeToggle<CR>
 
+" Dump vim register into a buffer in vertical split.
 nnoremap <leader>re :VMessage reg<CR>
 
 " vim-dadbod-ui
