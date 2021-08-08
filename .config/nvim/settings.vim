@@ -57,6 +57,7 @@ set completeopt+=menuone,longest,noselect
 
 " I disabled both because they were distracting and slow (according to docs)
 set cursorline " highlight cursor positions
+" set cursorcolumn
 
 " Spell check
 set spelllang=en
