@@ -22,6 +22,10 @@ call plug#begin(s:plugins_path)
   Plug 'stsewd/fzf-checkout.vim'
 
   " Tag generation - browse tags with FZF - keymap: `,bt` / `,pt`
+  " ludovicchabant/vim-gutentags
+  " https://github.com/kuator/nvim/blob/master/lua/plugins/vim-gutentags.lua
+  " let g:gutentags_add_default_project_roots = 0
+  " let g:gutentags_project_root = ['.git', 'package.json']
   " Plug 'ludovicchabant/vim-gutentags'
 
   " GIT
@@ -29,6 +33,7 @@ call plug#begin(s:plugins_path)
   Plug 'airblade/vim-gitgutter'
 
   " MARKDOWN
+  let g:mkdp_refresh_slow = 1
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
   " Align Markdown table
   Plug 'godlygeek/tabular'
@@ -63,6 +68,7 @@ call plug#begin(s:plugins_path)
   Plug 'easymotion/vim-easymotion'
 
   " Quickly toggle maximaize a tab
+  let g:maximizer_set_default_mapping = 0
   Plug 'szw/vim-maximizer'
 
   " displaying the colours in the file (#rrggbb, #rgb, rgb(a)
@@ -77,7 +83,12 @@ call plug#begin(s:plugins_path)
   Plug 'jparise/vim-graphql'
   Plug 'pprovost/vim-ps1' " Powershell
   Plug 'jwalton512/vim-blade' " Laravel blade
+
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
   Plug 'editorconfig/editorconfig-vim'
+
+  " let g:vue_pre_processors = ['typescript', 'scss']
+  let g:vue_pre_processors = 'detect_on_enter'
   Plug 'posva/vim-vue'
 
   " THEMES
@@ -88,6 +99,9 @@ call plug#begin(s:plugins_path)
   " FORMATTER
   " Works for many files as far as binary to format file exists
   Plug 'sbdchd/neoformat'
+
+  let g:phpfmt_psr2 = 1
+  let g:phpfmt_enable_auto_align = 1
   Plug 'aeke/vim-phpfmt'
 
   Plug 'dart-lang/dart-vim-plugin'

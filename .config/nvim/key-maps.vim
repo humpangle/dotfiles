@@ -529,12 +529,9 @@ nmap <Leader>F5 :FloatermUpdate --width=0.5<CR>
 " END FLOATERM
 """""""""""""""""""""""""""""""""""""
 
-
 """""""""""""""""""""""""""""""""""""
 " START VIM-MAXIMIZER
 """""""""""""""""""""""""""""""""""""
-let g:maximizer_set_default_mapping = 0
-
 nnoremap mm :MaximizerToggle!<CR>
 """""""""""""""""""""""""""""""""""""
 " END VIM-MAXIMIZER
@@ -559,27 +556,3 @@ let g:vcool_ins_hsl_map = '<a-h>'
 """""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""
-" START editorconfig
-"""""""""""""""""""""""""""""""""""""
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-"""""""""""""""""""""""""""""""""""""
-" END editorconfig
-"""""""""""""""""""""""""""""""""""""
-
-" Markdown preview
-let g:mkdp_refresh_slow = 1
-
-" posva/vim-vue
-" let g:vue_pre_processors = ['typescript', 'scss']
-let g:vue_pre_processors = 'detect_on_enter'
-
-
-" ludovicchabant/vim-gutentags
-  " https://github.com/kuator/nvim/blob/master/lua/plugins/vim-gutentags.lua
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['.git', 'package.json']
-
-" aeke/vim-phpfmt
-
-let g:phpfmt_psr2 = 1
-let g:phpfmt_enable_auto_align = 1
