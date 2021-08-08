@@ -169,6 +169,9 @@ nnoremap <A-u> :UndotreeToggle<CR>
 
 nnoremap <leader>re :VMessage reg<CR>
 
+" vim-dadbod-ui
+nnoremap <leader>du :tabnew<CR>:DBUI<CR>
+
 " COMPLETION
 " " <c-j> and <c-k> to navigate up and down
 " inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"

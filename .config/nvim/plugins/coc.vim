@@ -22,7 +22,9 @@ let g:coc_global_extensions = [
   \ 'coc-blade-formatter',
   \ 'coc-flutter',
   \ '@yaegassy/coc-volar',
+  \ 'coc-db',
   \ ]
+  " coc-db Database auto completion powered by vim-dadbod
   " \ 'coc-yank',
   " \ 'coc-vetur',
   " \ 'coc-php-cs-fixer',

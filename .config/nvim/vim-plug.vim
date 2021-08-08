@@ -108,6 +108,11 @@ call plug#begin(s:plugins_path)
 
   " making rest api call
   Plug 'diepm/vim-rest-console'
+
+  " Database management
+  Plug 'tpope/vim-dadbod'
+  Plug 'kristijanhusak/vim-dadbod-ui'
+  Plug 'kristijanhusak/vim-dadbod-completion'
 call plug#end()
 
 " Automatically install missing plugins on startup
