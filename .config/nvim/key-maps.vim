@@ -421,7 +421,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 nmap <silent> [d <Plug>(coc-diagnostic-prev)
 nmap <silent> ]d <Plug>(coc-diagnostic-next)
 " Show all diagnostics: COC errors in CoCList
-nnoremap <silent> <leader>dd  :<C-u>CocList diagnostics<cr>
+nnoremap <C-M> :<c-u>CocList diagnostics<cr>
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -466,7 +466,7 @@ nmap <Leader>ch :CocSearch <Right>
 
 " Mappings for CoCList
 " Manage extensions.
-nnoremap <silent> <leader>cx  :<C-u>CocList extensions<cr>
+nnoremap <C-X>  :<C-u>CocList extensions<cr>
 " Show commands
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
