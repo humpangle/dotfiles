@@ -155,11 +155,11 @@ nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
 " Delete empty buffers - not working
 nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete current buffer
-nnoremap <leader>bd :bd%<cr>
+nnoremap <leader>bd :bd%<cr>:call DeleteAllBuffers('e')<CR>
 " Delete current buffer force
-nnoremap <leader>bD :bd!%<cr>
+nnoremap <leader>bD :bd!%<cr>:call DeleteAllBuffers('e')<CR>
 " Wipe current buffer
-nnoremap <leader>bw :bw%<cr>
+nnoremap <leader>bw :bw%<cr>:call DeleteAllBuffers('e')<CR>
 " go to buffer number - use like so gb34
 nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>
