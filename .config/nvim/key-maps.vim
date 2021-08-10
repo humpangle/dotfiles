@@ -571,7 +571,7 @@ endfun
 nmap <C-Y> :call vimspector#Launch()<CR>
 
 " Close the debugger
-nmap <leader>dR :VimspectorReset
+nmap <leader>dR :VimspectorReset<CR>
 
 " Stop debugging.
 " <F3>
