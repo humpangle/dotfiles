@@ -40,5 +40,7 @@
   "coc.preferences.semanticTokensHighlights": false,
   "volar.codeLens.references": false,
   "volar.codeLens.pugTools": false,
-  "volar.codeLens.scriptSetupTools": false
+  "volar.codeLens.scriptSetupTools": false,
+  "volar.formatting.enable": false,
+  "prettier.disableLanguages": []
 }
