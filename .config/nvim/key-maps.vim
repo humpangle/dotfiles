@@ -54,6 +54,10 @@ nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
 nnoremap ,tc :tabclose<CR>
 
+" Reorder tabs
+noremap <A-Left>  :-tabmove<cr>
+noremap <A-Right> :+tabmove<cr>
+
 " RESIZE WINDOW
 nnoremap <c-left> :vertical resize -2<CR>
 nnoremap <c-right> :vertical resize +2<CR>
