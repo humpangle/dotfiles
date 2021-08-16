@@ -541,6 +541,7 @@ nmap <Leader>F5 :FloatermUpdate --width=0.5<CR>
 " START VIM-MAXIMIZER
 """""""""""""""""""""""""""""""""""""
 nnoremap mm :MaximizerToggle!<CR>
+xnoremap mm :MaximizerToggle!<CR>
 """""""""""""""""""""""""""""""""""""
 " END VIM-MAXIMIZER
 """""""""""""""""""""""""""""""""""""
