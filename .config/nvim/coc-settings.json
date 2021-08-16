@@ -42,5 +42,9 @@
   "volar.codeLens.pugTools": false,
   "volar.codeLens.scriptSetupTools": false,
   "volar.formatting.enable": false,
-  "prettier.disableLanguages": []
+  "prettier.disableLanguages": [],
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "javascript": "javascriptreact"
+  }
 }
