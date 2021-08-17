@@ -111,6 +111,7 @@ call plug#begin(s:plugins_path)
 
   " Database management
   Plug 'tpope/vim-dadbod'
+  " https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
   Plug 'kristijanhusak/vim-dadbod-ui'
   Plug 'kristijanhusak/vim-dadbod-completion'
 
