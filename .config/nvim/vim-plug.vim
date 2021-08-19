@@ -101,7 +101,7 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'sbdchd/neoformat'
 
 let g:phpfmt_psr2 = 1
-let g:phpfmt_enable_auto_align = 1
+" let g:phpfmt_enable_auto_align = 1
 Plug 'aeke/vim-phpfmt'
 
 Plug 'dart-lang/dart-vim-plugin'
