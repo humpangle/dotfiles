@@ -44,6 +44,8 @@ Plug 'itchyny/lightline.vim'
 " Terminal
 Plug 'voldikss/vim-floaterm'
 
+let g:undotree_WindowLayout = 2
+let  g:undotree_ShortIndicators = 1
 Plug 'mbbill/undotree'
 
 " These 2 don't work well for php
