@@ -206,6 +206,7 @@ nnoremap <leader>sp  :Git stash push -m ''<left>
 nnoremap <leader>s%  :Git stash push -m '' -- %<left><left><left><left><left><left>
 nnoremap <leader>sa  :Git stash apply stash@{}<left>
 nnoremap <leader>sd  :Git stash drop stash@{}<left>
+nnoremap <leader>ss  :Git stash show -p stash@{}<left>
 nnoremap <leader>sl  :Git stash list<CR>
 nnoremap <leader>sc  :Git stash clear<CR>
 
