@@ -21,12 +21,12 @@ let g:coc_global_extensions = [
   \ '@yaegassy/coc-intelephense',
   \ 'coc-blade-formatter',
   \ 'coc-flutter',
-  \ '@yaegassy/coc-volar',
+  \ 'coc-vetur',
   \ 'coc-db',
   \ ]
   " coc-db Database auto completion powered by vim-dadbod
   " \ 'coc-yank',
-  " \ 'coc-vetur',
+  " \ '@yaegassy/coc-volar',
   " \ 'coc-php-cs-fixer',
   " \ 'coc-emoji',
   " \ 'coc-sh',
