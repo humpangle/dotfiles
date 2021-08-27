@@ -1,9 +1,27 @@
 let g:python3_host_prog = expand('$PYTHON3')
-" Disable netrw
+
+" https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
 " Always show in tree view
 let g:netrw_liststyle = 3
+
 " Open file by default in new tab
 " let g:netrw_browse_split = 3
+let g:netrw_list_hide= '.*\.swp$,.*\.pyc'
+
+" Keep the current directory and the browsing directory synced. This helps you
+" avoid the move files error. --- I think without this setting, if you try to
+" move file from one directory to another, vim will error. This setting
+" prevents this error.
+let g:netrw_keepdir = 0
+
+" let g:netrw_winsize = 30
+" let g:netrw_banner = 0
+" Change the copy command. Mostly to enable recursive copy of directories.
+let g:netrw_localcopydircmd = 'cp -r'
+
+" Highlight marked files in the same way search matches are. - seems to make
+" no difference.
+" hi! link netrwMarkFile Search
 
 let g:markdown_fenced_languages = [
   \ 'html',
