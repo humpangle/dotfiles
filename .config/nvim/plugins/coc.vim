@@ -19,14 +19,14 @@ let g:coc_global_extensions = [
   \ 'coc-lua',
   \ 'coc-sh',
   \ '@yaegassy/coc-intelephense',
+  \ 'coc-vetur',
   \ 'coc-blade-formatter',
   \ 'coc-flutter',
-  \ '@yaegassy/coc-volar',
   \ 'coc-db',
   \ ]
   " coc-db Database auto completion powered by vim-dadbod
   " \ 'coc-yank',
-  " \ 'coc-vetur',
+  " \ '@yaegassy/coc-volar',
   " \ 'coc-php-cs-fixer',
   " \ 'coc-emoji',
   " \ 'coc-sh',
