@@ -37,6 +37,10 @@ let g:coc_global_extensions = [
   " \ 'coc-pyright',
   " \ 'coc-explorer',
 
+" COC VOLAR
+" :CocCommand eslint.showOutputChannel
+" yarn add --dev vue-tsc / npm i -g vue-tsc
+
 " let g:coc_force_debug = 1
 let g:coc_filetype_map = {
   \ 'htmldjango': 'html',
