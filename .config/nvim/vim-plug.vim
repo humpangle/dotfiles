@@ -52,6 +52,8 @@ Plug 'mbbill/undotree'
 " These 2 don't work well for php
 " Plug 'tpope/vim-commentary'
 " Plug 'b3nj5m1n/kommentary'
+
+" To make new comment types, SEE `autoload/tcomment/types/mytypes.vim`
 Plug 'tomtom/tcomment_vim'
 
 " Surround text with quotes, parenthesis, brackets, and more.
