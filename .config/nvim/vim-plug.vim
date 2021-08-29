@@ -131,6 +131,9 @@ Plug 'mi60dev/image.vim'
 
 " tmux-like window navigation
 " Plug 't9md/vim-choosewin'
+
+" An ASCII math generator from LaTeX equations.
+" Plug 'jbyuki/nabla.nvim'
 call plug#end()
 
 " Automatically install missing plugins on startup
