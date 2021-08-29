@@ -156,6 +156,7 @@ alias hb='sudo systemctl hibernate'
 alias rb='sudo reboot'
 alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
 alias eff='env | ff'
+alias aff='alias | ff'
 
 export DOCKER_BUILDKIT=1
 
