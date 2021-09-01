@@ -63,6 +63,7 @@ alias gc='google-chrome -incognito &'
 alias yw='yarn workspace '
 alias yW='yarn -W '
 alias ys='yarn start '
+alias yn='yarn nps '
 alias ylsp='yarn list --pattern '
 alias ywhy='yarn why '
 
