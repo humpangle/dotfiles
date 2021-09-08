@@ -534,6 +534,7 @@ nmap <Leader>FF :FloatermNew <right>
 nmap <Leader>FT :FloatermToggle <right>
 nmap <Leader>FS :FloatermNew --wintype='split' <cr>
 nmap <Leader>FK :FloatermKill!<CR>
+nnoremap <Leader>vi :FloatermNew vifm <CR>
 " make width 50% of tab
 nmap <Leader>F5 :FloatermUpdate --width=0.5<CR>
 """""""""""""""""""""""""""""""""""""
