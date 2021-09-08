@@ -66,7 +66,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 
-Plug 'windwp/nvim-autopairs'
+" Plug 'windwp/nvim-autopairs'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'nelstrom/vim-visual-star-search'
 
