@@ -23,6 +23,7 @@ let g:coc_global_extensions = [
   \ 'coc-blade-formatter',
   \ 'coc-flutter',
   \ 'coc-db',
+  \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
   \ ]
   " coc-db Database auto completion powered by vim-dadbod
   " \ 'coc-yank',
