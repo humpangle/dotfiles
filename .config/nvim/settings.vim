@@ -11,11 +11,11 @@ let g:netrw_list_hide= '.*\.swp$,.*\.pyc'
 " Keep the current directory and the browsing directory synced. This helps you
 " avoid the move files error. --- I think without this setting, if you try to
 " move file from one directory to another, vim will error. This setting
-" prevents this error.
-let g:netrw_keepdir = 0
+" prevents this error - setting always changing pwd, which breaks some plugins
+" let g:netrw_keepdir = 0
 
 " let g:netrw_winsize = 30
-" let g:netrw_banner = 0
+let g:netrw_banner = 0
 " Change the copy command. Mostly to enable recursive copy of directories.
 let g:netrw_localcopydircmd = 'cp -r'
 
