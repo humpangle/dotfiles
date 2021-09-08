@@ -76,18 +76,6 @@
     "body": ["act(() => {", "  ${1}", "});"],
     "description": "actReactTest"
   },
-  "callback param JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "callbackparam",
-    "body": [
-      "/**",
-      "* @callback ${1:NameYourType}",
-      "* @param {${2:type}} ${3:paramName} ${4:description} ${6}",
-      "* @returns {${5:returnType}}",
-      "*/"
-    ],
-    "description": "callback param JSDOC"
-  },
   "console.log JSON.stringify": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consolelogjson",
@@ -143,6 +131,18 @@
     "body": "/* eslint-disable-next-line ${1} */",
     "description": "eslint disable next line"
   },
+  "callback param JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "callbackparam",
+    "body": [
+      "/**",
+      "* @callback ${1:NameYourType}",
+      "* @param {${2:type}} ${3:paramName} ${4:description} ${6}",
+      "* @returns {${5:returnType}}",
+      "*/"
+    ],
+    "description": "callback param JSDOC"
+  },
   "first object param of function first time JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramobjectf",
@@ -185,6 +185,75 @@
     "prefix": "paramr",
     "body": ["@return {${1:returnType}}"],
     "description": "function param return JSDOC"
+  },
+  "next/addition object param of function JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "paramobjectn",
+    "body": [
+      "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
+    ],
+    "description": "next/addition object param of function JSDOC"
+  },
+  "next/addition1 object param of function JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "paramobjectopt",
+    "body": [
+      "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
+    ],
+    "description": "next/addition object param of function JSDOC"
+  },
+  "typdef import first time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefimport",
+    "body": ["/**", "* @typedef { import('${1}').${2} } ${2} ${3}", "*/"],
+    "description": "typdef import first time JSDOC"
+  },
+  "typdef import next time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefimportn",
+    "body": ["* @typedef { import('${1}').${2} } ${2} ${3}"],
+    "description": "typdef import next time JSDOC"
+  },
+  "typdef object first time JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefobject",
+    "body": [
+      "/**",
+      "* @typedef {Object} ${1:NameYourType}",
+      "* @property {${2:type}} ${3:propertyName} ${4:description}",
+      "*/"
+    ],
+    "description": "typdef object first time JSDOC"
+  },
+  "typdef object next.additional property JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefobjectn",
+    "body": ["@property {${1:type}} ${2:propertyName} ${3:description}"],
+    "description": "typdef object next.additional property JSDOC"
+  },
+  "typdef object optional property JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typedefobjectopt",
+    "body": ["@property {${1:type}=} ${2:propertyName} ${3:description}"],
+    "description": "typdef object optional property JSDOC"
+  },
+  "type assertion JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typeassert",
+    "body": ["/** @type {${1:type}} */ (${2:value})", "${3}"],
+    "description": "type assertion JSDOC"
+  },
+  "type variable declaration JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "typevar",
+    "body": ["/**", "* ${1:description}", "* @type {${2:type}}", "*/", "${3}"],
+    "description": "type variable declaration JSDOC"
+  },
+  "optional function param JSDOC": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "paramopt",
+    "body": ["@param {${1:type}=} ${2:paramName}"],
+    "description": "optional function param JSDOC"
   },
   "graphql mutation tag": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
@@ -272,22 +341,6 @@
     "body": ["new Promise((resolve, reject) => {", "${1}", "})"],
     "description": "new promise"
   },
-  "next/addition object param of function JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "paramobjectn",
-    "body": [
-      "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
-    ],
-    "description": "next/addition object param of function JSDOC"
-  },
-  "next/addition1 object param of function JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "paramobjectopt",
-    "body": [
-      "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
-    ],
-    "description": "next/addition object param of function JSDOC"
-  },
   "object define property": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "objectdefineProperty",
@@ -310,12 +363,6 @@
       ");"
     ],
     "description": "object define property"
-  },
-  "optional function param JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "paramopt",
-    "body": ["@param {${1:type}=} ${2:paramName}"],
-    "description": "optional function param JSDOC"
   },
   "react test": {
     "scope": "javascript,javascriptreact,typescriptreact",
@@ -474,54 +521,7 @@
     ],
     "description": "test svelte"
   },
-  "typdef import first time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typedefimport",
-    "body": ["/**", "* @typedef { import('${1}').${2} } ${2} ${3}", "*/"],
-    "description": "typdef import first time JSDOC"
-  },
-  "typdef import next time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typedefimportn",
-    "body": ["* @typedef { import('${1}').${2} } ${2} ${3}"],
-    "description": "typdef import next time JSDOC"
-  },
-  "typdef object first time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typedefobject",
-    "body": [
-      "/**",
-      "* @typedef {Object} ${1:NameYourType}",
-      "* @property {${2:type}} ${3:propertyName} ${4:description}",
-      "*/"
-    ],
-    "description": "typdef object first time JSDOC"
-  },
-  "typdef object next.additional property JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typedefobjectn",
-    "body": ["@property {${1:type}} ${2:propertyName} ${3:description}"],
-    "description": "typdef object next.additional property JSDOC"
-  },
-  "typdef object optional property JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typedefobjectopt",
-    "body": ["@property {${1:type}=} ${2:propertyName} ${3:description}"],
-    "description": "typdef object optional property JSDOC"
-  },
-  "type assertion JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typeassert",
-    "body": ["/** @type {${1:type}} */ (${2:value})", "${3}"],
-    "description": "type assertion JSDOC"
-  },
-  "type variable declaration JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typevar",
-    "body": ["/**", "* ${1:description}", "* @type {${2:type}}", "*/", "${3}"],
-    "description": "type variable declaration JSDOC"
-  },
-  "useEffect react": {
+ nelstrom/vim-visual-star-search "useEffect react": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "useEffectReact",
     "body": ["useEffect(() => { ${2} }, [${1}])"],
