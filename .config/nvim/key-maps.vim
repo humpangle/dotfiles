@@ -322,6 +322,8 @@ let g:fzf_action = {
   \ 'ctrl-q': function('s:build_quickfix_list'),
   \ }
 
+let g:fzf_preview_window = ["right:50%:hidden", "?"]
+
 " scroll the fzf vim listing buffer
 autocmd FileType fzf tnoremap <buffer> <C-j> <Down>
 autocmd FileType fzf tnoremap <buffer> <C-k> <Up>
