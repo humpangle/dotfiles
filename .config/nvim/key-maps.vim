@@ -597,7 +597,7 @@ nmap <leader>dr <Plug>VimspectorRestart
 nmap <leader>de :VimspectorEval
 nmap <leader>dw :VimspectorWatch
 
-nmap <C-U> :VimspectorShowOutput
+" nmap <C-U> :VimspectorShowOutput
 
 " Toggle line breakpoint on the current line.
 " <F9>
