@@ -66,6 +66,7 @@ alias ys='yarn start '
 alias yn='yarn nps '
 alias ylsp='yarn list --pattern '
 alias ywhy='yarn why '
+alias yw='clear && yarn watch'
 
 # vim
 alias vi='/usr/bin/vim'
