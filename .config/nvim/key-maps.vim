@@ -172,7 +172,8 @@ map <leader>bn :call RenameFile()<cr>
 nnoremap <A-u> :UndotreeToggle<CR>
 
 " Dump vim register into a buffer in vertical split.
-nnoremap <leader>re :VMessage reg<CR>
+nnoremap <leader>re :reg<CR>
+nnoremap <localleader>re :VMessage reg<CR>
 
 " vim-dadbod-ui
 nnoremap <leader>du :tabnew<CR>:DBUI<CR>
