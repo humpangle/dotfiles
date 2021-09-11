@@ -133,10 +133,12 @@ nnoremap <leader>wd :pwd<CR>
 " SEARCH AND REPLACE
 " remove highlight from search term
 nnoremap <leader>nh :noh<cr>
-" Type a replacement term and press . to repeat the replacement again. Useful
-" for replacing a few instances of the term (comparable to multiple cursors).
-nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+
+vnoremap <leader>*
+  \ :let @+=
+
 xnoremap <silent> s* "sy:let @/=@s<CR>cgn
+
 "find and replace in file
 " press * {shift 8) to search for word under cursor and key combo below to
 " replace in entire file
