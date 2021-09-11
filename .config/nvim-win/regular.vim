@@ -4,12 +4,28 @@ if has("gui_running")
   "so $VIMRUNTIME/mswin.vim
 endif
 
-" noremap <C-V> <C-V>
-
+" https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
 " Always show in tree view
 let g:netrw_liststyle = 3
+
 " Open file by default in new tab
 " let g:netrw_browse_split = 3
+let g:netrw_list_hide= '.*\.swp$,.*\.pyc'
+
+" Keep the current directory and the browsing directory synced. This helps you
+" avoid the move files error. --- I think without this setting, if you try to
+" move file from one directory to another, vim will error. This setting
+" prevents this error - setting always changing pwd, which breaks some plugins
+" let g:netrw_keepdir = 0
+
+" let g:netrw_winsize = 30
+let g:netrw_banner = 0
+" Change the copy command. Mostly to enable recursive copy of directories.
+let g:netrw_localcopydircmd = 'cp -r'
+
+" Highlight marked files in the same way search matches are. - seems to make
+" no difference.
+" hi! link netrwMarkFile Search
 
 let g:markdown_fenced_languages = [
   \ 'html',
@@ -77,6 +93,10 @@ nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
 nnoremap ,tc :tabclose<CR>
 
+" Reorder tabs
+noremap <A-Left>  :-tabmove<cr>
+noremap <A-Right> :+tabmove<cr>
+
 " RESIZE WINDOW
 nnoremap <c-left> :vertical resize -2<CR>
 nnoremap <c-right> :vertical resize +2<CR>
@@ -92,7 +112,7 @@ nnoremap ,md :!mkdir -p %:h<cr><cr>
 nnoremap ,rm :!pwsh.exe -Command rm %:p<cr>:bdelete!<cr>
 " edit .bashrc file
 nnoremap ,. :e ~\Documents\PowerShell\Microsoft.PowerShell_profile.ps1<CR>
-nnoremap <leader>ee :Vexplore<CR>
+nnoremap <c-E> :Vexplore<CR>
 
 " edit init.vim
 nnoremap ,ec :e $MYVIMRC<CR>
@@ -142,6 +162,13 @@ nmap ,cr :let @"=expand("%")<CR>
 " copy absolute path
 nmap ,cf :let @"=expand("%:p")<CR>
 
+" Some plugins change my CWD to currently opened file - I change it back
+nnoremap <leader>cd
+  \ :let @s=expand("%:p:h")<CR>
+  \ :cd <C-r>s
+
+nnoremap <leader>wd :pwd<CR>
+
 " SEARCH AND REPLACE
 " remove highlight from search term
 nnoremap <leader>nh :noh<cr>
@@ -157,36 +184,27 @@ nnoremap <leader>rc :%s///gc<left><left><left>
 " same as above but only visually selected range
 xnoremap <leader>rr :%s///g<left><left>
 xnoremap <leader>rc :%s///gc<left><left><left>
-" : NOT VERY GOOD
-" After searching for text, press this mapping to do a project wide find and
+" Search for the strings using `fzf`, press <tab> to select multiple (<s-tab> to deselect) and <cr> to populate QuickFix list
+" After searching for strings, press this mapping to do a project wide find and
 " replace. It's similar to <leader>r except this one applies to all matches
 " across all files instead of just the current file.
-nnoremap <Leader>rR
-  \ :let @s='\<'.expand('<cword>').'\>'<CR>
-  \ :Grepper -cword -noprompt<CR>
-  \ :cfdo %s/<C-r>s//g \| update
-  \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-
+nnoremap <Leader>RR :cfdo %s///g \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 " The same as above except it works with a visual selection.
-xmap <Leader>rR
-    \ "sy
-    \ gvgr
-    \ :cfdo %s/<C-r>s//g \| update
-     \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+xmap <Leader>RR :cfdo %s/<C-r>s//g \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " BUFFERS
 " Delete all buffers
-nnoremap <leader>ba :call DeleteAllBuffers('a')<cr>
+nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
 " Delete empty buffers - not working
 nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete current buffer
-nnoremap <leader>bd :bd%<cr>
+nnoremap <leader>bd :bd%<cr>:call DeleteAllBuffers('e')<CR>
 " Delete current buffer force
-nnoremap <leader>bD :bd!%<cr>
+nnoremap <leader>bD :bd!%<cr>:call DeleteAllBuffers('e')<CR>
 " Wipe current buffer
-nnoremap <leader>bw :bw%<cr>
+nnoremap <leader>bw :bw%<cr>:call DeleteAllBuffers('e')<CR>
 " go to buffer number - use like so gb34
-nnoremap <leader>bl :ls<CR>:b
+nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>
 
 " COMPLETION
@@ -207,6 +225,43 @@ nnoremap ,du :!dos2unix % %<cr>
 """""""""""""""""""""""""""""""""""""
 nnoremap <leader>fc :Neoformat<CR>
 nnoremap <leader>N :Neoformat<CR>
+
+" Install binaries for formatting
+
+" javascript, typescript, svelte, graphql, Vue, html, YAML, SCSS, Less, JSON,
+" npm install -g prettier prettier-plugin-svelte
+
+" shell
+" wget -O $HOME/.local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.2.4/shfmt_v3.2.4_linux_amd64 && chmod ugo+x $HOME/.local/bin/shfmt
+
+" sjl
+" wget -O pgFormatter-5.0.tar.gz \
+"   https://github.com/darold/pgFormatter/archive/refs/tags/v5.0.tar.gz && \
+"   tar xzf pgFormatter-5.0.tar.gz && \
+"   cd pgFormatter-5.0/ && \
+"   perl Makefile.PL && \
+"   make && sudo make install && \
+"   pg_format --version
+
+" SETTINGS
+" Shell
+let g:shfmt_opt = '-ci'
+
+" jsonc
+let g:neoformat_jsonc_prettier = {
+  \ 'exe': 'prettier',
+  \ 'args': ['--stdin-filepath', '"%:p"', '--parser', 'json'],
+  \ 'stdin': 1,
+\ }
+
+let g:neoformat_enabled_jsonc = ['prettier']
+
+" format on save
+" augroup fmt
+"   autocmd!
+"   " if file not changed and saved (e.g. to trigger test run), error is thrown: use try/catch to suppress
+"   au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+" augroup END
 """""""""""""""""""""""""""""""""""""
 " END NEOFORMAT
 """""""""""""""""""""""""""""""""""""
