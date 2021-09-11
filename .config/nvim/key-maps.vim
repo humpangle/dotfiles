@@ -199,7 +199,8 @@ nnoremap <leader>g.  :Git add .<CR>
 nnoremap <leader>g%  :Git add %<CR>
 nnoremap <leader>gl  :Gclog! <right>
 nnoremap <leader>g0  :0Gclog! <right>
-nnoremap <leader>ge  :Gedit &
+nnoremap <leader>ge  :Gedit <right>
+nnoremap <leader>gb  :Git blame<CR>
 
 nnoremap <leader>gr  :Git rebase -
 
@@ -215,7 +216,7 @@ nnoremap <leader>go  :Git push origin <right>
 nnoremap <leader>gp  :Git push <right>
 nnoremap <leader>gf  :Git push --force origin <right>
 nnoremap <leader>ca  :Git commit --amend<cr>
-nnoremap <leader>ce  :Git commit --amend --no-edit<cr>
+nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>ct  :Git commit --allow-empty -m ""<left>
 
 " Auto-clean fugitive buffers
