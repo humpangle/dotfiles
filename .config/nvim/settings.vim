@@ -99,7 +99,7 @@ set undodir=$HOME/.vim/undodir/
 
 " LINE NUMBERING
 set number " always show line numbers
-" set relativenumber " set relative numbering as default
+" set relative numbering as default
 set relativenumber
 
 " Use Ripgrep for vimgrep
