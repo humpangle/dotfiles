@@ -1,9 +1,3 @@
-" set shell=pwsh.exe
-
-if has("gui_running")
-  "so $VIMRUNTIME/mswin.vim
-endif
-
 " https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
 " Always show in tree view
 let g:netrw_liststyle = 3
