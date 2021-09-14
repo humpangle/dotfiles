@@ -171,7 +171,9 @@ nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>
 
 " mbbill/undotree
-nnoremap <A-u> :UndotreeToggle<CR>
+" nnoremap <A-u> :UndotreeToggle<CR>
+" simnalamburt/vim-mundo
+nnoremap <A-u> :MundoToggle<CR>
 
 " Dump vim register into a buffer in vertical split.
 nnoremap <leader>re :reg<CR>
