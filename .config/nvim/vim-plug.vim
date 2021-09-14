@@ -97,7 +97,12 @@ Plug 'editorconfig/editorconfig-vim'
 
 " let g:vue_pre_processors = ['typescript', 'scss']
 let g:vue_pre_processors = 'detect_on_enter'
+" Temporary fix for color highlighting issue in .vue files.
+" let html_no_rendering=1
 Plug 'posva/vim-vue'
+
+" Fixes syntax highlighting for style tags in .vue files.
+Plug 'othree/html5.vim'
 
 " THEMES
 Plug 'rakr/vim-one'
