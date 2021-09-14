@@ -94,8 +94,8 @@ set autoread
 set noswapfile
 
 " persist undo history even when I quit vim
-set undodir=$HOME/.vim/undodir/
 set undofile
+set undodir=$HOME/.vim/undodir/
 
 " LINE NUMBERING
 set number " always show line numbers
