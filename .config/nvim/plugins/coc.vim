@@ -20,6 +20,7 @@ let g:coc_global_extensions = [
   \ 'coc-sh',
   \ '@yaegassy/coc-intelephense',
   \ '@yaegassy/coc-volar',
+  \ '@yaegassy/coc-blade-snippets',
   \ 'coc-blade-formatter',
   \ 'coc-flutter',
   \ 'coc-db',

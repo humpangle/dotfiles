@@ -27,6 +27,7 @@
     "after_each",
     "before_each"
   ],
+  "snippets.loadFromExtensions": true,
   "snippets.textmateSnippetsRoots": ["~/.config/nvim/snippets"],
   "snippets.extends": {
     "javascriptreact": ["javascript"],
