@@ -134,7 +134,7 @@ let g:vimspector_enable_mappings = 'HUMAN'
 Plug 'puremourning/vimspector'
 
 " Image preview
-" pip install -u Pillow
+" pip install -U Pillow
 Plug 'mi60dev/image.vim'
 
 " tmux-like window navigation
