@@ -42,7 +42,7 @@
   },
   "Print to console": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "consolelogapplog",
+    "prefix": "consoleapplog",
     "body": [
       "console.log(",
       "  `\\n======================Logging start==================\\n",
@@ -56,7 +56,7 @@
   },
   "Print to console error": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "consolelogapplogerror",
+    "prefix": "consoleerrorlog",
     "body": [
       "console.log(",
       "  `\\n======================Logging start==================\\n",
@@ -78,7 +78,7 @@
   },
   "console.log JSON.stringify": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "consolelogjson",
+    "prefix": "consolejsonlog",
     "body": [
       "console.log(",
       "  `\\n======================Logging start==================\\n",
@@ -246,7 +246,7 @@
   "type variable declaration JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "typevar",
-    "body": ["/**", "* ${1:description}", "* @type {${2:type}}", "*/", "${3}"],
+    "body": ["/**", "${1:* description}", "* @type {${2:type}}", "*/", "${3}"],
     "description": "type variable declaration JSDOC"
   },
   "optional function param JSDOC": {
@@ -328,12 +328,6 @@
     "prefix": "istanbulfile",
     "body": ["/* istanbul ignore file */", ""],
     "description": "istanbul ignore next"
-  },
-  "jest-environment-jsdom-sixteen": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "jsdomenvsixteen",
-    "body": ["/**", "* @jest-environment jest-environment-jsdom-sixteen", "*/"],
-    "description": "@jest-environment jest-environment-jsdom-sixteen"
   },
   "new promise": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
@@ -521,7 +515,7 @@
     ],
     "description": "test svelte"
   },
- nelstrom/vim-visual-star-search "useEffect react": {
+ "useEffect react": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "useEffectReact",
     "body": ["useEffect(() => { ${2} }, [${1}])"],
