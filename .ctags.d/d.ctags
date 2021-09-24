@@ -1,4 +1,5 @@
 --recurse=yes
+--excmd=number
 #--output-format=json
 --exclude=node_modules
 --exclude=.vscode
