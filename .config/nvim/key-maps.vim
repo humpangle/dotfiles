@@ -240,20 +240,20 @@ autocmd User fugitive
 " START FZF
 """""""""""""""""""""""""""""""""""""
 " Search file from root directory
-nnoremap <c-p> :Files!<CR>
+nnoremap <c-p> :FZFFiles!<CR>
 " Search file from current directory
-nnoremap <silent> <Leader>f. :Files! <C-r>=expand("%:h")<CR>/<CR>
+nnoremap <silent> <Leader>f. :FZFFiles! <C-r>=expand("%:h")<CR>/<CR>
 " find open buffers
 nnoremap <Leader>fb :Buffers!<CR>
 " search buffers history
-nnoremap <Leader>fh :History!<CR>
+nnoremap <Leader>fh :FZFHistory!<CR>
 " search for text in current buffer
-nnoremap <Leader>fl :BLines!<CR>
+nnoremap <Leader>fl :FZFBLines!<CR>
 " search for text in loaded buffers
 " nnoremap <Leader>L :Lines!<CR>
-nnoremap <Leader>fm :Marks!<CR>
+nnoremap <Leader>fm :FZFMarks!<CR>
 nnoremap <leader>ft :Filetypes!<CR>
-nnoremap <leader>fw :Windows!<CR>
+nnoremap <leader>fw :FZFWindows!<CR>
 " Find color schemes
 nnoremap <leader>fs :Colors!<CR>
 " commands: user defined, plugin defined, or native commands
@@ -261,11 +261,11 @@ nnoremap <Leader>C :Commands!<CR>
 " key mappings - find already mapped before defining new mappings
 nnoremap <Leader>M :Maps!<CR>
 " search in project - do not match filenames
-nnoremap <Leader>/ :Rrg!<CR>
+nnoremap <Leader>/ :FZFRg!<CR>
 " find symbols in current buffer (ctags -R)
-nnoremap ,bt :BTags!<CR>
+nnoremap ,bt :FZFBTags!<CR>
 " find symbols in project directory (ctags -R)
-nnoremap ,pt :Tags!<CR>
+nnoremap ,pt :FZFTags!<CR>
 
 if !g:can_use_coc
   " Tags
@@ -299,14 +299,8 @@ nnoremap ,/ :Rg!<CR>
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
 
-" Advanced ripgrep integration
-command! -bang -nargs=* Rrg
-  \ call fzf#vim#grep(
-  \   "rg --hidden --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
-  \   1,
-  \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
-  \   <bang>0
-  \ )
+nnoremap <leader>fq :FZFQuickFix!<CR>
+nnoremap <leader>FL :FZFLocList!<CR>
 
 function! s:copy_fzf_results(lines)
   let joined_lines = join(a:lines, "\n")
@@ -331,7 +325,7 @@ let g:fzf_action = {
   \ 'ctrl-q': function('s:build_quickfix_list'),
   \ }
 
-let g:fzf_preview_window = ["right:50%:hidden", "?"]
+let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
 
 " scroll the fzf vim listing buffer
 autocmd FileType fzf tnoremap <buffer> <C-j> <Down>

@@ -21,6 +21,7 @@ Plug 'neoclide/jsonc.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
+Plug 'chengzeyi/fzf-preview.vim'
 
 " Tag generation - browse tags with FZF - keymap: `,bt` / `,pt`
 " ludovicchabant/vim-gutentags
