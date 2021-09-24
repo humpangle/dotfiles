@@ -145,7 +145,6 @@ alias .4='cd ../../../..'
 alias cdo="mkdir -p $HOME/projects/0 && cd $HOME/projects/0"
 alias cdp="mkdir -p $HOME/projects && cd $HOME/projects"
 alias md='mkdir -p'
-alias ff='fzf'
 alias C="clear && printf '\e[3J'"
 alias py='python '
 alias pw='prettier --write '
@@ -156,8 +155,6 @@ alias hb='sudo systemctl hibernate'
 # debian package `lrzsz`
 alias rb='sudo reboot'
 alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
-alias eff='env | ff'
-alias aff='alias | ff'
 
 export DOCKER_BUILDKIT=1
 
@@ -197,9 +194,7 @@ if [ -d "$HOME/.fzf" ]; then
   export RG_IGNORES="!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
   RG_OPTIONS="--hidden --follow --glob '$RG_IGNORES'"
 
-  FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
-
-  export FZF_DEFAULT_OPTS="--layout=reverse --border $FZF_PREVIEW_APP"
+  export FZF_DEFAULT_OPTS="--layout=reverse --border"
   # Use git-ls-files inside git repo, otherwise rg
   export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -212,6 +207,12 @@ if [ -d "$HOME/.fzf" ]; then
   _fzf_compgen_path() {
     rg --files --hidden --follow --glob $RG_IGNORES
   }
+
+  FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
+
+  alias ff="fzf $FZF_PREVIEW_APP"
+  alias eff='env | fzf'
+  alias aff='alias | fzf'
 fi
 
 if [ -d "$HOME/.asdf" ]; then
