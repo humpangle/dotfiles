@@ -66,7 +66,7 @@ alias ys='yarn start '
 alias yn='yarn nps '
 alias ylsp='yarn list --pattern '
 alias ywhy='yarn why '
-alias yw='clear && yarn watch'
+alias ycw='clear && yarn watch'
 
 # vim
 alias vi='/usr/bin/vim'
@@ -129,7 +129,7 @@ alias grb='git rebase -i'
 alias gpo='git push origin'
 alias gpf='git push --force origin'
 alias glone='git log --oneline'
-# there is a debian package gsa = gwenhywfar-tools
+# debian package gsa = gwenhywfar-tools
 function gsa() {
   git stash apply "stash@{$1}"
 }
@@ -146,8 +146,7 @@ alias cdo="mkdir -p $HOME/projects/0 && cd $HOME/projects/0"
 alias cdp="mkdir -p $HOME/projects && cd $HOME/projects"
 alias md='mkdir -p'
 alias ff='fzf'
-# alias c="clear && printf '\e[3J'"
-# alias C=clear
+alias C="clear && printf '\e[3J'"
 alias py='python '
 alias pw='prettier --write '
 alias eshell='exec $SHELL'
@@ -199,6 +198,7 @@ if [ -d "$HOME/.fzf" ]; then
   RG_OPTIONS="--hidden --follow --glob '$RG_IGNORES'"
 
   FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
+
   export FZF_DEFAULT_OPTS="--layout=reverse --border $FZF_PREVIEW_APP"
   # Use git-ls-files inside git repo, otherwise rg
   export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
@@ -256,6 +256,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 
   alias e.='/c/WINDOWS/explorer.exe .'
   alias wslexe='/c/WINDOWS/system32/wsl.exe '
+  alias wsls="wslexe --shutdown"
   alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
   alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
 
