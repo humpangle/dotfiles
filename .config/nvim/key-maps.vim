@@ -643,3 +643,15 @@ let g:vimspector_install_gadgets = [
 """""""""""""""""""""""""""""""""""""
 " END DEBUGGING
 """""""""""""""""""""""""""""""""""""
+
+" https://kba49.wordpress.com/2013/03/21/clear-all-registers-and-macros-in-vim/
+function! ClearRegisters()
+    let regs='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-="*+'
+    let i=0
+    while (i<strlen(regs))
+        exec 'let @'.regs[i].'=""'
+        let i=i+1
+    endwhile
+endfunction
+
+command! ClearRegisters call ClearRegisters()
