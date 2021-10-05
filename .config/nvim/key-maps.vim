@@ -19,6 +19,7 @@ nnoremap <Leader>wq :wq<cr>
 " sudo apt install ssh-askpass-gnome ssh-askpass -y && \
 "  echo "export SUDO_ASKPASS=$(which ssh-askpass)" >> ~/.bashrc
 cmap W w !sudo tee > /dev/null %<CR>
+cmap ,, w !sudo tee > /dev/null %
 
 " Quit vim
 inoremap <C-Q>     <esc>:q<cr>

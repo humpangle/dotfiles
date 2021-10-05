@@ -288,8 +288,6 @@ function touchm() {
   fi
 }
 
-# pathmunge "$HOME/android-studio/bin"
-
 # Set the title string at the top of your current terminal window or terminal window tab
 # https://github.com/mgedmin/scripts/blob/master/title
 # https://discourse.gnome.org/t/rename-terminal-tab/3200/5
@@ -298,3 +296,28 @@ set-title() {
   # Works for xterm clones
   printf "\033]0;%s\a" "$*"
 }
+
+MY_JAVA_PATH="/usr/lib/jvm/java-11-openjdk-amd64"
+if [ -d "$MY_JAVA_PATH" ]; then
+  export JAVA_HOME="$MY_JAVA_PATH"
+  pathmunge "$JAVA_HOME/bin"
+fi
+
+MY_ANDROID_STUDIO_PATH="$HOME/projects/android-studio"
+if [ -d "$MY_ANDROID_STUDIO_PATH" ]; then
+  export ANDROID_HOME="$MY_ANDROID_STUDIO_PATH"
+  pathmunge "$ANDROID_HOME"
+  pathmunge "$ANDROID_HOME/bin"
+fi
+
+MY_ANDROID_SDK_PATH="$HOME/projects/android-sdk"
+if [ -d "$MY_ANDROID_SDK_PATH" ]; then
+  pathmunge "$MY_ANDROID_SDK_PATH/tools"
+  pathmunge "$MY_ANDROID_SDK_PATH/tools/bin"
+  pathmunge "$MY_ANDROID_SDK_PATH/platform-tools"
+fi
+
+MY_FLUTTER_PATH="$HOME/projects/flutter"
+if [ -d "$MY_FLUTTER_PATH" ]; then
+  pathmunge "$MY_FLUTTER_PATH/bin"
+fi
