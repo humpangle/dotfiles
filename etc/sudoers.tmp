@@ -6,7 +6,8 @@
 #
 # See the man page for details on how to write a sudoers file.
 #
-Defaults	editor=/usr/bin/nvim
+Defaults	editor=/usr/local/bin/nvim
+# Defaults	editor=/usr/bin/nvim
 Defaults	env_reset
 Defaults	mail_badpass
 Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
