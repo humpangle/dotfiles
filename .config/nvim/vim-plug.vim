@@ -13,8 +13,6 @@ call plug#begin(s:plugins_path)
 " LANGUAGE SERVERS / SYNTAX CHECKING
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/jsonc.vim'
-" Plug 'yaegassy/coc-volar', {'do': 'yarn install --frozen-lockfile'}
-" execute remove(g:plugs, 'yaegassy/coc-volar')
 
 " FUZZY FINDER
 " sudo apt install bat # Syntax highlighting
@@ -46,10 +44,6 @@ Plug 'itchyny/lightline.vim'
 " Terminal
 Plug 'voldikss/vim-floaterm'
 
-" let g:undotree_WindowLayout = 2
-" let  g:undotree_ShortIndicators = 1
-" Plug 'mbbill/undotree'
-
 " Better undo diff
 Plug 'simnalamburt/vim-mundo'
 
@@ -70,22 +64,21 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 
-" Plug 'windwp/nvim-autopairs'
+" A high-performance color highlighter for Neovim
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'nelstrom/vim-visual-star-search'
+" Another color highlighter
+" requires golang (asdf plugin-add golang && asdf install golang <version>)
+" Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
+" color picker
+Plug 'KabbAmine/vCoolor.vim'
+
+Plug 'nelstrom/vim-visual-star-search'
 Plug 'easymotion/vim-easymotion'
 
 " Quickly toggle maximaize a tab
 let g:maximizer_set_default_mapping = 0
 Plug 'szw/vim-maximizer'
-
-" displaying the colours in the file (#rrggbb, #rgb, rgb(a)
-" requires golang (asdf plugin-add golang && asdf install golang <version>)
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-
-" color picker
-Plug 'KabbAmine/vCoolor.vim'
 
 " SYNTAX HIGHLIGHTING
 Plug 'elixir-editors/vim-elixir'
@@ -105,7 +98,7 @@ Plug 'posva/vim-vue'
 " Fixes syntax highlighting for style tags in .vue files.
 Plug 'othree/html5.vim'
 
-" THEMES
+" THEMES / COLORSCHEME
 Plug 'rakr/vim-one'
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'lifepillar/vim-solarized8'

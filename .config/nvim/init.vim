@@ -5,17 +5,25 @@ let g:can_use_coc = !empty($VIM_USE_COC)
 
 if g:can_use_coc
   so ~/.config/nvim/vim-plug.vim
-  so ~/.config/nvim/plugins/coc.vim
+  so ~/.config/nvim/coc.vim
 endif
 
 so ~/.config/nvim/settings.vim
+so ~/.config/nvim/lightline.vim
+so ~/.config/nvim/functions.vim
+so ~/.config/nvim/fugitive.vim
+so ~/.config/nvim/fzf.vim
+so ~/.config/nvim/neoformat.vim
+so ~/.config/nvim/floaterm.vim
 so ~/.config/nvim/key-maps.vim
+so ~/.config/nvim/vcoolor.vim
+so ~/.config/nvim/vimspector.vim
 " packer plugin manager installs plugins
 " luafile ~/.config/nvim/lua/plugins/packer.lua
 
 " THEME SELECTION
 if !empty($EBNIS_VIM_THEME)
-  so ~/.config/nvim/plugins/$EBNIS_VIM_THEME.vim
+  so ~/.config/nvim/$EBNIS_VIM_THEME.vim
   if $EBNIS_VIM_THEME_BG == 'd'
     set background=dark
   else
