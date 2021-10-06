@@ -21,11 +21,11 @@ let g:coc_global_extensions = [
   \ '@yaegassy/coc-intelephense',
   \ '@yaegassy/coc-volar',
   \ 'coc-blade',
-  \ 'coc-flutter-tools',
+  \ 'coc-flutter',
   \ 'coc-db',
   \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
   \ ]
-  " \ 'coc-flutter',
+  " \ 'coc-flutter-tools',
   " coc-db Database auto completion powered by vim-dadbod
   " \ 'coc-yank',
   " \ 'coc-vetur',
