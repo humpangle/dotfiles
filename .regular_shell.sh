@@ -320,4 +320,8 @@ fi
 MY_FLUTTER_PATH="$HOME/projects/flutter"
 if [ -d "$MY_FLUTTER_PATH" ]; then
   pathmunge "$MY_FLUTTER_PATH/bin"
+  pathmunge "$MY_FLUTTER_PATH/.pub-cache/bin"
 fi
+
+# Automatically start dbus
+sudo /etc/init.d/dbus start &> /dev/null
