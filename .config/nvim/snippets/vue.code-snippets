@@ -431,41 +431,6 @@
   },
   // END vue-script.json
   // vue.json
-  "Vue Single File Component": {
-    "scope": "vue",
-    "prefix": "vbase-2",
-    "body": [
-      "<template>",
-      "$0",
-      "</template>",
-      "",
-      "<script lang=\"ts\">",
-      "import Vue from 'vue';",
-      "import { PropType } from 'vue';",
-      "",
-      "export default Vue.extend({",
-      "   name: 'name',",
-      "   props: {",
-      "       a: String,",
-      "       b: { type: String },",
-      "       c: {",
-      "           type: Function as PropType<() => void>,",
-      "       },",
-      "       d: { type: [Number, String], default: 0 }, // number | string",
-      "       e: {",
-      "           type: String,",
-      "           required: false", // type e = string | undefined
-      "       },",
-      "   },",
-      "   data() {",
-      "       return {};",
-      "   },",
-      "   methods: {},",
-      "});",
-      "</script>"
-    ],
-    "description": "Base for Vue 2 typescript"
-  },
   "Vue Single File Component with Typescript": {
     "scope": "vue",
     "prefix": "vbase-2-ts",
