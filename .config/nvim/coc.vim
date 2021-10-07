@@ -24,6 +24,7 @@ let g:coc_global_extensions = [
   \ 'coc-flutter',
   \ 'coc-db',
   \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
+  \ 'coc-powershell',
   \ ]
   " \ 'coc-flutter-tools',
   " coc-db Database auto completion powered by vim-dadbod
