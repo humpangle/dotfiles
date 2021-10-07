@@ -8,7 +8,13 @@ let g:floaterm_height=0.999999
 let g:floaterm_wintitle=0
 let g:floaterm_autoclose=1
 let g:floaterm_position='topright'
-let g:floaterm_shell= $SHELL
+
+if has('win32')
+  let g:floaterm_shell= 'pwsh.exe'
+else
+  let g:floaterm_shell= $SHELL
+endif
+
 nmap <Leader>FF :FloatermNew <right>
 nmap <Leader>FT :FloatermToggle <right>
 nmap <Leader>FS :FloatermNew --wintype='split' <cr>
