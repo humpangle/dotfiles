@@ -15,10 +15,15 @@ else
   let g:floaterm_shell= $SHELL
 endif
 
-nmap <Leader>FF :FloatermNew <right>
-nmap <Leader>FT :FloatermToggle <right>
-nmap <Leader>FS :FloatermNew --wintype='split' <cr>
-nmap <Leader>FK :FloatermKill!<CR>
+nnoremap <Leader>FF :FloatermNew <right>
+nnoremap <Leader>FT :FloatermToggle<CR>
+nnoremap <Leader>__FloatermNewVSplit :FloatermNew --wintype='vsplit'
+nnoremap <Leader>FK :FloatermKill!
 nnoremap <Leader>vi :FloatermNew vifm <CR>
-" make width 50% of tab
-nmap <Leader>F5 :FloatermUpdate --width=0.5<CR>
+nnoremap <Leader>__Floaterms :Floaterms
+
+" :FloatermUpdate
+" --title=a
+" --width=0.5
+" --wintype='vsplit' / 'split'
+nnoremap <Leader>__FloatermUpdate :FloatermUpdate --
