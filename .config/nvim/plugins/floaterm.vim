@@ -15,12 +15,12 @@ else
   let g:floaterm_shell= $SHELL
 endif
 
-nnoremap <Leader>FF :FloatermNew <right>
+nnoremap <Leader>FF :FloatermNew --title=
 nnoremap <Leader>FT :FloatermToggle<CR>
+nnoremap <Leader>ff :Floaterms<CR>
 nnoremap <Leader>__FloatermNewVSplit :FloatermNew --wintype='vsplit'
 nnoremap <Leader>FK :FloatermKill!
 nnoremap <Leader>vi :FloatermNew vifm <CR>
-nnoremap <Leader>__Floaterms :Floaterms
 
 " :FloatermUpdate
 " --title=a

@@ -6,16 +6,20 @@ let g:can_use_coc = !empty($VIM_USE_COC)
 so ~/.config/nvim/vim-plug.vim
 
 so ~/.config/nvim/settings.vim
-so ~/.config/nvim/lightline.vim
-so ~/.config/nvim/functions.vim
+so ~/.config/nvim/plugins/lightline.vim
+so ~/.config/nvim/plugins/functions.vim
 so ~/.config/nvim/key-maps.vim
-so ~/.config/nvim/fugitive.vim
-so ~/.config/nvim/fzf.vim
-so ~/.config/nvim/neoformat.vim
-so ~/.config/nvim/floaterm.vim
-so ~/.config/nvim/vcoolor.vim
-so ~/.config/nvim/vimspector.vim
-so ~/.config/nvim/coc.vim
+so ~/.config/nvim/plugins/fugitive.vim
+so ~/.config/nvim/plugins/fzf.vim
+so ~/.config/nvim/plugins/neoformat.vim
+so ~/.config/nvim/plugins/floaterm.vim
+so ~/.config/nvim/plugins/vcoolor.vim
+so ~/.config/nvim/plugins/vimspector.vim
+so ~/.config/nvim/plugins/coc.vim
+so ~/.config/nvim/plugins/markdown-preview.vim
+so ~/.config/nvim/plugins/dadbod-ui.vim
+so ~/.config/nvim/plugins/easymotion.vim
+so ~/.config/nvim/plugins/maximizer.vim
 " packer plugin manager installs plugins
 " luafile ~/.config/nvim/lua/plugins/packer.lua
 

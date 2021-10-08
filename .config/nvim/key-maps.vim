@@ -178,26 +178,4 @@ nnoremap <A-u> :MundoToggle<CR>
 " Dump vim register into a buffer in vertical split.
 nnoremap <leader>re :reg<CR>
 nnoremap <localleader>re :VMessage reg<CR>
-
-" vim-dadbod-ui
-nnoremap <leader>du :tabnew<CR>:DBUI<CR>
-
-
-"""""""""""""""""""""""""""""""""""""
-" START EASY MOTION
-"""""""""""""""""""""""""""""""""""""
-let g:EasyMotion_smartcase = 1
-
-nmap <leader>2 <Plug>(easymotion-overwin-f2)
-"""""""""""""""""""""""""""""""""""""
-" END EASY MOTION
-"""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""
-" START VIM-MAXIMIZER
-"""""""""""""""""""""""""""""""""""""
-nnoremap mm :MaximizerToggle!<CR>
-xnoremap mm :MaximizerToggle!<CR>
-"""""""""""""""""""""""""""""""""""""
-" END VIM-MAXIMIZER
 """""""""""""""""""""""""""""""""""""

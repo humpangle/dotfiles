@@ -36,6 +36,9 @@ Plug 'airblade/vim-gitgutter'
 " MARKDOWN
 let g:mkdp_refresh_slow = 1
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+" Another markdown preview
+" let g:glow_binary_path = '~\scoop\apps\glow\current'
+" Plug 'ellisonleao/glow.nvim'
 " Align Markdown table
 Plug 'godlygeek/tabular'
 
@@ -76,6 +79,11 @@ Plug 'KabbAmine/vCoolor.vim'
 
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'easymotion/vim-easymotion'
+" better easymotion
+" Plug 'phaazon/hop.nvim'
+lua <<EOF
+-- require'hop'.setup()
+EOF
 
 " Quickly toggle maximaize a tab
 let g:maximizer_set_default_mapping = 0
