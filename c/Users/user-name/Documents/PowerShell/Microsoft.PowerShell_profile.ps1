@@ -11,10 +11,13 @@ function Edit-Shell {
     [System.Environment]::GetEnvironmentVariable("Path", "Machine") + `
     ";" + `
     [System.Environment]::GetEnvironmentVariable("Path", "User")
-
-  . $profile
 }
 New-Alias -Name "eshell" Edit-Shell
+
+function Get-KanmiiProfile {
+  . $profile
+}
+New-Alias -Name ".b" Get-KanmiiProfile
 
 function Switch-Nvm {
   if (Test-Path .nvmrc) {
@@ -71,6 +74,8 @@ function New-KanmiiLink {
 }
 New-Alias -Name "ln" New-KanmiiLink
 
+# YARN
+
 function Get-KanmiiYarnStart {
   param (
     $command
@@ -88,6 +93,17 @@ function Get-KanmiiYarnNps {
   yarn nps $command
 }
 New-Alias -Name "yn" Get-KanmiiYarnNps
+
+function Get-KanmiiYarnWhy {
+  param (
+    $command
+  )
+
+  yarn why $command
+}
+New-Alias -Name "ywhy" Get-KanmiiYarnWhy
+
+# END YARN
 
 function Get-KanmiiAliasFzf {
   alias | fzf
