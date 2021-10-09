@@ -25,7 +25,7 @@ so ~/.config/nvim/plugins/maximizer.vim
 
 " THEME SELECTION
 if !empty($EBNIS_VIM_THEME)
-  so ~/.config/nvim/$EBNIS_VIM_THEME.vim
+  so ~/.config/nvim/plugins/$EBNIS_VIM_THEME.vim
   if $EBNIS_VIM_THEME_BG == 'd'
     set background=dark
   else
