@@ -23,10 +23,11 @@ let s:coc_extensions = [
   \ 'coc-flutter',
   \ 'coc-db',
   \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
-  \ 'coc-powershell',
   \ ]
 
-if !has('win32')
+if has('win32')
+  call add(s:coc_extensions, 'coc-powershell')
+else
   call add(s:coc_extensions, 'coc-sh')
 endif
 
