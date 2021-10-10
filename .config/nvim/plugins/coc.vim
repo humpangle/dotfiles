@@ -1,4 +1,4 @@
-let g:coc_global_extensions = [
+let s:coc_extensions = [
   \ 'coc-elixir',
   \ 'coc-spell-checker',
   \ 'coc-cspell-dicts',
@@ -17,7 +17,6 @@ let g:coc_global_extensions = [
   \ 'coc-svg',
   \ 'coc-vimlsp',
   \ 'coc-lua',
-  \ 'coc-sh',
   \ '@yaegassy/coc-intelephense',
   \ '@yaegassy/coc-volar',
   \ 'coc-blade',
@@ -26,19 +25,25 @@ let g:coc_global_extensions = [
   \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
   \ 'coc-powershell',
   \ ]
-  " \ 'coc-flutter-tools',
-  " coc-db Database auto completion powered by vim-dadbod
-  " \ 'coc-yank',
-  " \ 'coc-vetur',
-  " \ 'coc-php-cs-fixer',
-  " \ 'coc-emoji',
-  " \ 'coc-sh',
-  " \ 'coc-lists',
-  " \ 'coc-tasks',
-  " \ 'coc-fzf-preview',
-  " \ 'coc-marketplace',
-  " \ 'coc-pyright',
-  " \ 'coc-explorer',
+
+if !has('win32')
+  call add(s:coc_extensions, 'coc-sh')
+endif
+
+" \ 'coc-flutter-tools',
+" coc-db Database auto completion powered by vim-dadbod
+" \ 'coc-yank',
+" \ 'coc-vetur',
+" \ 'coc-php-cs-fixer',
+" \ 'coc-emoji',
+" \ 'coc-lists',
+" \ 'coc-tasks',
+" \ 'coc-fzf-preview',
+" \ 'coc-marketplace',
+" \ 'coc-pyright',
+" \ 'coc-explorer',
+
+let g:coc_global_extensions = s:coc_extensions
 
 " COC VOLAR
 " :CocCommand eslint.showOutputChannel
