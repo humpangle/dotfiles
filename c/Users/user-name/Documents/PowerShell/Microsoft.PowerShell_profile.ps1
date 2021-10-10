@@ -3,48 +3,43 @@ $vim_config_path = "~\AppData\Local\nvim"
 # ENVS
 $Env:MYVIMRC = "$vim_config_path\init.vim"
 
-# Aliases
-New-Alias -Name "ll" Get-ChildItem
+# Aliases Functions
 
-function Edit-Shell {
+function Set-MyCustomRefreshShell {
   $Env:Path = `
     [System.Environment]::GetEnvironmentVariable("Path", "Machine") + `
     ";" + `
     [System.Environment]::GetEnvironmentVariable("Path", "User")
-}
-New-Alias -Name "eshell" Edit-Shell
 
-function Get-KanmiiProfile {
-  . $profile
+  . "$PSScriptRoot\$scriptName"
 }
-New-Alias -Name ".b" Get-KanmiiProfile
+
+$scriptName = $MyInvocation.MyCommand.Name
+function Set-SourceMyProfile {
+  . "$PSScriptRoot\$scriptName"
+}
 
 function Switch-Nvm {
   if (Test-Path .nvmrc) {
     nvm use $(Get-Content .nvmrc)
   }
 }
-New-Alias -Name "usenvm" Switch-Nvm
 
-function Get-KanmiiCd1 {
+function Get-MyCustomCd1 {
   Set-Location ..
 }
-New-Alias -Name ".." Get-KanmiiCd1
 
-function Get-KanmiiCd2 {
+function Get-MyCustomCd2 {
   Set-Location ../..
 }
-New-Alias -Name "..." Get-KanmiiCd2
 
-function Get-KanmiiCd3 {
+function Get-MyCustomCd3 {
   Set-Location ../../..
 }
-New-Alias -Name "c3" Get-KanmiiCd3
 
-function Get-KanmiiCd4 {
+function Get-MyCustomCd4 {
   Set-Location ../../../..
 }
-New-Alias -Name "c4" Get-KanmiiCd4
 
 function Get-Which {
   param (
@@ -53,7 +48,6 @@ function Get-Which {
 
   where.exe $command
 }
-New-Alias -Name "which" Get-Which
 
 function Get-Nvim {
   param (
@@ -62,9 +56,8 @@ function Get-Nvim {
 
   nvim.exe -u $Env:MYVIMRC $command
 }
-New-Alias -Name "vim" Get-Nvim
 
-function New-KanmiiLink {
+function New-MyCustomLink {
   param (
     $target,
     $link
@@ -72,50 +65,132 @@ function New-KanmiiLink {
 
   New-Item -Path $link -ItemType SymbolicLink -Value $target
 }
-New-Alias -Name "ln" New-KanmiiLink
 
 # YARN
 
-function Get-KanmiiYarnStart {
+function Get-MyCustomYarnStart {
   param (
     $command
   )
 
   yarn start $command
 }
-New-Alias -Name "ys" Get-KanmiiYarnStart
 
-function Get-KanmiiYarnNps {
+function Get-MyCustomYarnNps {
   param (
     $command
   )
 
   yarn nps $command
 }
-New-Alias -Name "yn" Get-KanmiiYarnNps
 
-function Get-KanmiiYarnWhy {
+function Get-MyCustomYarnWhy {
   param (
     $command
   )
 
   yarn why $command
 }
-New-Alias -Name "ywhy" Get-KanmiiYarnWhy
 
 # END YARN
 
-function Get-KanmiiAliasFzf {
-  alias | fzf
+function Get-MyCustomAliasFzf {
+  Get-Alias | fzf
 }
-New-Alias -Name "aff" Get-KanmiiAliasFzf
 
-function Get-KanmiiEnvFzf {
-  dir env: | fzf
+function Get-MyCustomEnvFzf {
+  Get-ChildItem env: | fzf
 }
-New-Alias -Name "eff" Get-KanmiiEnvFzf
 
-function Get-KanmiiClearShell {
+function Get-MyCustomClearShell {
   Clear-Host
 }
-New-Alias -Name "C" Get-KanmiiClearShell
+
+$regex = [Regex]::new('\$\{?([\w]+)\}?')
+function Set-ValForCustomEnv {
+  param (
+    [Parameter(Mandatory)]
+    [string]$val,
+
+    [Parameter(Mandatory)]
+    [string]$key,
+
+    [Parameter(Mandatory)]
+    [Hashtable]$hash
+  )
+
+  $val = $val.Trim(@('"', "'", " "))
+
+  $matched = $regex.Matches($val)
+
+  if ($matched) {
+    foreach ($m in $matched) {
+      $original = $m.Groups[0].Value;
+      $captured = $m.Groups[1].Value
+
+      if ($hash.ContainsKey($captured)) {
+        $val = $val.replace($original, $hash[$captured] )
+      }
+    }
+  }
+
+
+  New-Item -Name $key -Value $val -ItemType Variable -Path Env: -Force > $null
+
+  $hash[$key] = $val;
+}
+
+function Get-MyCustomSetenv {
+  param (
+    $envFileName
+  )
+
+  $hash = @{}
+
+  if (Test-Path $envFileName) {
+    foreach ($line in (Get-Content $envFileName )) {
+      $line = $line.Trim()
+
+      if ($line -Match '^\s*$' -Or $line -Match '^#') {
+        continue
+      }
+
+      $key, $val = $line.Split("=")
+
+      Set-ValForCustomEnv -val $val -key $key -hash $hash
+    }
+  }
+
+  Write-Output $hash;
+}
+
+# END Aliases Functions
+
+# Aliases
+New-Alias -Name ".." Get-MyCustomCd1
+New-Alias -Name "..." Get-MyCustomCd2
+New-Alias -Name "c3" Get-MyCustomCd3
+New-Alias -Name "c4" Get-MyCustomCd4
+New-Alias -Name "ll" Get-ChildItem
+
+# ENVIRONMENT AND SHELL
+New-Alias -Name "setenvs" Get-MyCustomSetenv
+New-Alias -Name "eshell" Set-MyCustomRefreshShell
+New-Alias -Name ".b" Set-SourceMyProfile
+New-Alias -Name "C" Get-MyCustomClearShell
+
+New-Alias -Name "usenvm" Switch-Nvm
+New-Alias -Name "which" Get-Which
+New-Alias -Name "ln" New-MyCustomLink
+
+# VIM
+New-Alias -Name "vim" Get-Nvim
+
+# YARN
+New-Alias -Name "ys" Get-MyCustomYarnStart
+New-Alias -Name "yn" Get-MyCustomYarnNps
+New-Alias -Name "ywhy" Get-MyCustomYarnWhy
+
+# FZF
+New-Alias -Name "aff" Get-MyCustomAliasFzf
+New-Alias -Name "eff" Get-MyCustomEnvFzf
