@@ -23,7 +23,9 @@ build/*
 
 # Configuration file with private data:
 *.env
-.env
+.env*
+!.env.example
+env/*
 
 #####=== Windows ===#####
 # Windows image file caches
@@ -58,7 +60,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-env/*
 develop-eggs/*
 dist/*
 downloads/*
@@ -90,7 +91,6 @@ coverage/*
 cover/*
 *.netlify*
 .cache/*
-.env-cmdrc
 _build/*
 deps/*
 doc/*
