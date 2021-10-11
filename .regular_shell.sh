@@ -6,11 +6,11 @@
 # USAGE:
 #     pathmunge /sbin/             ## Add to the start; default
 #     pathmunge /usr/sbin/ after   ## Add to the end
-pathmunge () {
+pathmunge() {
   # first check if folder exists on filesystem
   if [ -d "$1" ]; then
-    if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)" ; then
-      if [ "$2" = "after" ] ; then
+    if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)"; then
+      if [ "$2" = "after" ]; then
         PATH="$PATH:$1"
       else
         PATH="$1:$PATH"
@@ -163,7 +163,10 @@ if [ -x "$(command -v sort-package-json)" ]; then
 fi
 
 function setenvs {
-  set -a; . "$1"; set +a;
+  set -a
+  . "$1"
+  set +a
+  # set -o allexport; source "$1"; set +o allexport
 }
 
 if [ -x "$(command -v php)" ]; then
@@ -324,4 +327,4 @@ if [ -d "$MY_FLUTTER_PATH" ]; then
 fi
 
 # Automatically start dbus
-sudo /etc/init.d/dbus start &> /dev/null
+sudo /etc/init.d/dbus start &>/dev/null

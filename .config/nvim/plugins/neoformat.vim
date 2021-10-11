@@ -7,7 +7,7 @@ nnoremap <leader>N :Neoformat<CR>
 " npm install -g prettier prettier-plugin-svelte
 
 " shell
-" wget -O $HOME/.local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.2.4/shfmt_v3.2.4_linux_amd64 && chmod ugo+x $HOME/.local/bin/shfmt
+" wget -O $HOME/.local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.4.0/shfmt_v3.4.0_linux_amd64 && chmod ugo+x $HOME/.local/bin/shfmt
 
 " sjl
 " wget -O pgFormatter-5.0.tar.gz \
