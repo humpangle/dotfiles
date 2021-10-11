@@ -68,11 +68,13 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 
-" A high-performance color highlighter for Neovim
-Plug 'norcalli/nvim-colorizer.lua'
-" Another color highlighter
+" A high-performance color highlighter for Neovim - not as good
+" as vim-hexokinase
+" Plug 'norcalli/nvim-colorizer.lua'
+
+" Another color highlighter - superior
 " requires golang (asdf plugin-add golang && asdf install golang <version>)
-" Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 " color picker
 Plug 'KabbAmine/vCoolor.vim'
