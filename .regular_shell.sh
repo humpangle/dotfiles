@@ -179,6 +179,7 @@ function setenvs {
   set +a
   # set -o allexport; source "$1"; set +o allexport
 }
+alias se='setenvs'
 
 if [ -x "$(command -v php)" ]; then
   # debian pkg bsdgames
