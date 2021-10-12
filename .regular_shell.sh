@@ -56,8 +56,30 @@ alias dvra='docker volume rm $(docker volume ls -q)'
 alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ds='sudo service docker start'
+
+if [ -x "$(command -v docker)" ]; then
+  # https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
+
+  # Start Docker daemon automatically when logging in if not running.
+  RUNNING=$(ps aux | grep dockerd | grep -v grep)
+
+  if [ -z "$RUNNING" ]; then
+    sudo dockerd >/dev/null 2>&1 &
+    disown
+  fi
+fi
+
 alias ug='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
-alias gc='google-chrome -incognito &'
+
+function gc() {
+  google-chrome -incognito &
+  disown
+}
+
+function gg() {
+  google-chrome -incognito
+  disown
+}
 
 # yarn
 alias yw='yarn workspace '
@@ -144,6 +166,7 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias cdo="mkdir -p $HOME/projects/0 && cd $HOME/projects/0"
 alias cdp="mkdir -p $HOME/projects && cd $HOME/projects"
+alias cdd="cd $HOME/dotfiles"
 alias md='mkdir -p'
 alias C="clear && printf '\e[3J'"
 alias py='python '

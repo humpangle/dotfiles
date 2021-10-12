@@ -32,6 +32,7 @@ root	ALL=(ALL:ALL) ALL
 
 # grant passwordless access to dockerd for group docker users
 %docker ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
+# kanmii ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
 
 # See sudoers(5) for more information on "#include" directives:
 
