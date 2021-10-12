@@ -57,18 +57,6 @@ alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ds='sudo service docker start'
 
-if [ -x "$(command -v docker)" ]; then
-  # https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
-
-  # Start Docker daemon automatically when logging in if not running.
-  RUNNING=$(ps aux | grep dockerd | grep -v grep)
-
-  if [ -z "$RUNNING" ]; then
-    sudo dockerd >/dev/null 2>&1 &
-    disown
-  fi
-fi
-
 alias ug='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
 
 function gc() {
@@ -291,6 +279,21 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
   # up memory, this command will free your memory after about 20-30 seconds.
   #   Details: https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
   alias dpc="clear && sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
+
+  if [ -x "$(command -v docker)" ]; then
+    # export DOCKER_HOST="unix:///mnt/wsl/shared-docker/docker.sock"
+
+    # https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
+
+    # Start Docker daemon automatically when logging in if not running.
+    RUNNING=$(ps aux | grep dockerd | grep -v grep)
+
+    if [ -z "$RUNNING" ]; then
+      sudo dockerd >/dev/null 2>&1 &
+      disown
+    fi
+  fi
+
 fi
 
 # The minimal, blazing-fast, and infinitely customizable prompt for any shell!
