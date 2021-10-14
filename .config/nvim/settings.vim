@@ -142,6 +142,8 @@ augroup filetypes
   au BufNewFile,BufRead *.psql set filetype=sql
   au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
   au BufNewFile,BufRead *config set filetype=gitconfig
+
+  autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 augroup END
 
 augroup terminal_settings
