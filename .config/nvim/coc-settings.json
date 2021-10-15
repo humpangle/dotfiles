@@ -37,6 +37,7 @@
     "vue": ["javascript"]
   },
   "intelephense.progress.enable": false,
+  "intelephense.telemetry.enabled": false,
   // "coc.preferences.formatOnSaveFiletypes": ["json", "typescript", "javascript"],
   "coc.preferences.semanticTokensHighlights": true,
   /* "volar.codeLens.references": false, */
