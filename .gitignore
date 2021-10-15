@@ -129,3 +129,6 @@ Session.vim
 .config/fish/conf.d/fzf*
 .config/fish/fish_variables
 .config/fish/functions/*fisher*
+
+# php
+.php-cs-fixer.cache
