@@ -431,6 +431,30 @@
   },
   // END vue-script.json
   // vue.json
+  "Vue Single File Component": {
+    "scope": "vue",
+    "prefix": "vbase-2",
+    "body": [
+      "<template>",
+      "$0",
+      "</template>",
+      "",
+      "<script lang=\"ts\">",
+      "import { defineComponent } from 'vue'",
+      "import { PropType } from 'vue';",
+      "",
+      "export default Vue.extend({",
+      "   name: 'name',",
+      "   props: {",
+      "   },",
+      "   setup() {",
+      "       return {};",
+      "   },",
+      "});",
+      "</script>"
+    ],
+    "description": "Base for Vue 2 typescript"
+  },
   "Vue Single File Component with Typescript": {
     "scope": "vue",
     "prefix": "vbase-2-ts",
@@ -452,6 +476,45 @@
       "<style scoped></style>"
     ],
     "description": "Base for Vue File with Typescript"
+  },
+  "Vue Setup Script with Typescript": {
+    "scope": "vue",
+    "prefix": "vbase_setup",
+    "body": [
+      "<script setup lang=\"ts\">",
+      "import { ref } from \"vue\";",
+      "import { ActionType, reducer, Action, initState } from \"./add-course.utils\";",
+      "",
+      "//// DATA",
+      "",
+      "const state = ref(initState());",
+      "",
+      "//// END DATA",
+      "",
+      "//// METHODS",
+      "",
+      "function dispatch(action: Action) {",
+      "  reducer(state.value, action);",
+      "}",
+      "",
+      "//// END METHODS",
+      "</script>",
+      "",
+      "<template>",
+      "  <div",
+      "      @click=\"",
+      "          () =>",
+      "              dispatch({",
+      "                  type: ActionType.action,",
+      "                  data: '',",
+      "              })",
+      "      \"",
+      "  ></div>",
+      "</template>",
+      "",
+      "<style scoped></style>"
+    ],
+    "description": "Vue Setup Script with Typescript"
   },
   "Vue Single File Component Composition API": {
     "scope": "vue",
