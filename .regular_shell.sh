@@ -191,18 +191,18 @@ fi
 
 pathmunge "/usr/lib/dart/bin" "after"
 
-if [ -d "$HOME/.pyenv" ]; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  pathmunge "$PYENV_ROOT"
-
-  if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-
-    if [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
-      eval "$(pyenv virtualenv-init -)"
-    fi
-  fi
-fi
+# if [ -d "$HOME/.pyenv" ]; then
+#   export PYENV_ROOT="$HOME/.pyenv"
+#   pathmunge "$PYENV_ROOT"
+#
+#   if command -v pyenv 1>/dev/null 2>&1; then
+#     eval "$(pyenv init -)"
+#
+#     if [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
+#       eval "$(pyenv virtualenv-init -)"
+#     fi
+#   fi
+# fi
 
 if [ -d "$HOME/.fzf" ]; then
   # ripgrep
@@ -354,4 +354,4 @@ if [ -d "$MY_FLUTTER_PATH" ]; then
 fi
 
 # Automatically start dbus
-sudo /etc/init.d/dbus start &>/dev/null
+# sudo /etc/init.d/dbus start &>/dev/null
