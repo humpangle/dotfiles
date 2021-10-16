@@ -119,12 +119,12 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'sbdchd/neoformat'
 
 " This plugin has been abandoned
-" let g:phpfmt_psr2 = 1
-" let g:phpfmt_enable_auto_align = 1
-" Plug 'aeke/vim-phpfmt'
+let g:phpfmt_psr2 = 1
+let g:phpfmt_enable_auto_align = 1
+Plug 'aeke/vim-phpfmt'
 
 " composer global require friendsofphp/php-cs-fixer
-Plug 'stephpy/vim-php-cs-fixer'
+" Plug 'stephpy/vim-php-cs-fixer'
 
 Plug 'dart-lang/dart-vim-plugin'
 
