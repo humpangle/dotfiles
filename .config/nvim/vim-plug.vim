@@ -149,8 +149,21 @@ Plug 'mi60dev/image.vim'
 " tmux-like window navigation
 " Plug 't9md/vim-choosewin'
 
+" Use <ctrl-h> <ctrl-j> <ctrl-k> <ctrl-l> <ctrl-\> to switch between vim
+" and tmux splits
+" Plug 'christoomey/vim-tmux-navigator'
+
 " An ASCII math generator from LaTeX equations.
 " Plug 'jbyuki/nabla.nvim'
+
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'williamboman/nvim-lsp-installer'
+" Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-path'
+" Plug 'hrsh7th/cmp-cmdline'
+" Plug 'hrsh7th/nvim-cmp'
+
 call plug#end()
 
 " Automatically install missing plugins on startup

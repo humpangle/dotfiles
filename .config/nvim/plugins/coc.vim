@@ -43,6 +43,8 @@ endif
 " \ 'coc-marketplace',
 " \ 'coc-pyright',
 " \ 'coc-explorer',
+" \ 'coc-emmet',
+" \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
 
 let g:coc_global_extensions = s:coc_extensions
 

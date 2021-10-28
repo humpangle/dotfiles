@@ -40,8 +40,9 @@
   "intelephense.telemetry.enabled": false,
   // "coc.preferences.formatOnSaveFiletypes": ["json", "typescript", "javascript"],
   "coc.preferences.semanticTokensHighlights": true,
-  /* "volar.codeLens.references": false, */
-  /* "volar.codeLens.pugTools": false, */
+  "volar.diagnostics.enable": false,
+  "volar.codeLens.references": false,
+  "volar.tagNameCase": "kebab",
   /* "volar.codeLens.scriptSetupTools": false, */
   /* "volar.formatting.enable": false, */
   "prettier.disableLanguages": [],
@@ -49,5 +50,18 @@
     "vue-html": "html",
     "javascript": "javascriptreact",
     "blade": "html"
-  }
+  },
+  // "tailwindCSS.includeLanguages": {
+  //   "vue-html": "html",
+  //   "vue": "html"
+  // },
+  "tailwindCSS.enable": true,
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "(?:classnames|classNames|cn)\\(([^)]*)\\)",
+      "(?:\"|'|`)([^(?:\"|'|`)]*)(?:\"|'|`)"
+    ],
+    ["\\[.+\\]:\\s*`([^)]*)\\`", "([^(?:\"|'|`)]+)\\s*"]
+  ]
 }

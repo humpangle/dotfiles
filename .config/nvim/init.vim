@@ -37,6 +37,8 @@ else
 endif
 
 lua <<EOF
+-- require("nvim-cmp")
+-- require("lsp1")
 --vim.lsp.set_log_level('info') -- debug/error/trace
 -- see plugins/packer.lua for globals
 
