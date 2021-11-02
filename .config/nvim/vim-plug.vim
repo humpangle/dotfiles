@@ -118,10 +118,11 @@ Plug 'lifepillar/vim-solarized8'
 " Works for many files as far as binary to format file exists
 Plug 'sbdchd/neoformat'
 
-" This plugin has been abandoned
+" This plugin has been abandoned - but it's still the easier to use.
 let g:phpfmt_psr2 = 1
-let g:phpfmt_enable_auto_align = 1
+" let g:phpfmt_enable_auto_align = 1
 Plug 'aeke/vim-phpfmt'
+let g:phpfmt_on_save = 0
 
 " composer global require friendsofphp/php-cs-fixer
 " Plug 'stephpy/vim-php-cs-fixer'
