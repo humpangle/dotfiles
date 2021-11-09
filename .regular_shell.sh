@@ -110,6 +110,7 @@ alias tks='tmux kill-session -t'
 alias tkss='tmux kill-server'
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+alias tp='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz'
 
 # rsync
 alias rsynca='rsync -avzP --delete '
