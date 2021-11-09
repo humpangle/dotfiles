@@ -20,6 +20,7 @@ so ~/.config/nvim/plugins/markdown-preview.vim
 so ~/.config/nvim/plugins/dadbod-ui.vim
 so ~/.config/nvim/plugins/easymotion.vim
 so ~/.config/nvim/plugins/maximizer.vim
+so ~/.config/nvim/plugins/vim-phpfmt.vim
 " packer plugin manager installs plugins
 " luafile ~/.config/nvim/lua/plugins/packer.lua
 
