@@ -138,8 +138,9 @@ alias gcm='git commit '
 alias grb='git rebase -i'
 # debian package gpodder=gpo
 alias gpo='git push origin'
-alias gpf='git push --force origin'
+alias gpf='git push --force-with-lease origin'
 alias glone='git log --oneline'
+alias gconflict='git diff --name-only --diff-filter=U'
 # debian package gsa = gwenhywfar-tools
 function gsa() {
   git stash apply "stash@{$1}"

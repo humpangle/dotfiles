@@ -25,7 +25,7 @@ nnoremap <leader>sc  :Git stash clear
 
 nnoremap <leader>go  :Git push origin <right>
 nnoremap <leader>gp  :Git push <right>
-nnoremap <leader>gf  :Git push --force origin <right>
+nnoremap <leader>gf  :Git push --force-with-lease origin <right>
 nnoremap <leader>ca  :Git commit --amend<cr>
 nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>ct  :Git commit --allow-empty -m ""<left>

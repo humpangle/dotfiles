@@ -3,7 +3,7 @@
 	st = status
 	cm = commit
 	ps = push
-  psf = push --force
+  psf = push --force-with-lease
 	pl = pull
 	co = checkout
   cam = commit -am
@@ -34,7 +34,7 @@
 #	  email = you@example.com
 #	  name = Your Name
 [init]
-	defaultBranch = main
+	# defaultBranch = main
 # specify how pulling is reconciled
 [pull]
   rebase = true
