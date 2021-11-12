@@ -141,6 +141,7 @@ alias gpo='git push origin'
 alias gpf='git push --force-with-lease origin'
 alias glone='git log --oneline'
 alias gconflict='git diff --name-only --diff-filter=U'
+alias gwt='git worktree '
 # debian package gsa = gwenhywfar-tools
 function gsa() {
   git stash apply "stash@{$1}"
@@ -168,6 +169,17 @@ alias hb='sudo systemctl hibernate'
 # debian package `lrzsz`
 alias rb='sudo reboot'
 alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
+
+# https://unix.stackexchange.com/a/179852
+# Make bash history unique
+
+function make_history_unique {
+  tac "$HISTFILE" | awk '!x[$0]++' > /tmp/tmpfile \
+    && tac /tmp/tmpfile > "$HISTFILE" \
+    && rm /tmp/tmpfile
+}
+alias hu='make_history_unique'
+# also https://unix.stackexchange.com/a/613644
 
 export DOCKER_BUILDKIT=1
 
