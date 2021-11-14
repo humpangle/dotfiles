@@ -105,12 +105,12 @@ alias vffc='export EBNIS_VIM_FUZZY_FINDER=vim-clap'
 # tmux
 alias ta='tmux a -t'
 alias tls='tmux ls'
-alias tn='tmux new -s '
+alias tp='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz'
+alias tn='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz && tmux new -s '
 alias tks='tmux kill-session -t'
 alias tkss='tmux kill-server'
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
-alias tp='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz'
 
 # rsync
 alias rsynca='rsync -avzP --delete '
