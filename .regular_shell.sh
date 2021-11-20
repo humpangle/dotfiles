@@ -57,7 +57,7 @@ alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ds='sudo service docker start'
 
-alias ug='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
+alias ug='clear && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
 
 function gc() {
   google-chrome -incognito &
