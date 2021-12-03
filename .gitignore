@@ -9,6 +9,7 @@ erl_crash.dump
 .gutctags
 *.code-workspace
 .vimspector.json
+*.rest
 
 # you don't want to ignore the folder itself. What you want is to ignore the
 # contents of the folder. If you ignore the folder itself, unignoring some
