@@ -166,6 +166,7 @@ alias eshell='exec $SHELL'
 alias exshell='export SHELL=/usr/bin/bash'
 alias rmvimswap='rm ~/.local/share/nvim/swap/*'
 alias hb='sudo systemctl hibernate'
+alias sd='sudo shutdown now'
 # debian package `lrzsz`
 alias rb='sudo reboot'
 alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
