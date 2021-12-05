@@ -49,7 +49,8 @@ endif
 set updatetime=100
 " which-key plugin appears more quickly
 set timeoutlen=500
-set hidden " close unsaved buffer with 'q' without needing 'q!'
+" set hidden " close unsaved buffer with 'q' without needing 'q!' - now the
+" default in nvim 0.6.0
 set tabstop=2
 set softtabstop=2
 set expandtab " converts tabs to white space
@@ -62,6 +63,10 @@ set smartcase    " ... unless the query has capital letters
 set gdefault     " Use 'g' flag by default with :s/foo/bar/.
 set hlsearch
 " set nohlsearch
+" :%s/term/sub will be highlighted as sub is typed
+set inccommand=nosplit
+" sub will be opened in split window
+set inccommand=split
 
 " Tab Splits
 set splitbelow
