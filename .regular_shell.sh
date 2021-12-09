@@ -56,6 +56,7 @@ alias dvra='docker volume rm $(docker volume ls -q)'
 alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ds='sudo service docker start'
+alias ngrokd='ngrok http $DOCKER_PUBLISH_WEB_PORT'
 
 alias ug='clear && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
 
