@@ -23,9 +23,9 @@ nnoremap <leader>sl  :Git stash list<CR>
 nnoremap <leader>sP  :Git stash pop
 nnoremap <leader>sc  :Git stash clear
 
-nnoremap <leader>go :execute  'Git push origin '.FugitiveHead()
+nnoremap <leader>go  :Git push origin HEAD
 nnoremap <leader>gp  :Git push <right>
-nnoremap <leader>gf :execute  'Git push --force-with-lease origin '.FugitiveHead()
+nnoremap <leader>gf  :Git push --force-with-lease origin HEAD
 nnoremap <leader>ca  :Git commit --amend<cr>
 nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>ct  :Git commit --allow-empty -m ""<left>
