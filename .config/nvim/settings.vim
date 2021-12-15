@@ -1,3 +1,13 @@
+"{{ Builtin variables
+" Disable Python2 support
+let g:loaded_python_provider = 0
+
+" Disable perl provider
+let g:loaded_perl_provider = 0
+
+" Disable ruby provider
+let g:loaded_ruby_provider = 0
+
 let g:python3_host_prog = expand('$PYTHON3')
 
 " https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
