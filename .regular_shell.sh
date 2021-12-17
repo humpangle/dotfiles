@@ -156,7 +156,7 @@ function gsd() {
 }
 
 alias ..='cd ..'
-alias ...='cd ../..'
+alias .2='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias cdo="mkdir -p $HOME/projects/0 && cd $HOME/projects/0"
@@ -174,6 +174,9 @@ alias sd='sudo shutdown now'
 # debian package `lrzsz`
 alias rb='sudo reboot'
 alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
+
+alias scouser='sudo chown -R $USER:$USER '
+alias scmstorage='sudo chmod -R 777 storage'
 
 # https://unix.stackexchange.com/a/179852
 # Make bash history unique
