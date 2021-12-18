@@ -106,8 +106,8 @@ inoremap <A-l> <C-\><C-N><C-w>l
 " exit insert mode
 tnoremap <ESC><ESC> <C-\><C-n>
 " launch terminal in new spit
-nnoremap <leader>tt :tab split<cr> :term /usr/bin/fish<cr>
-nnoremap <leader>tv :vsplit<cr> :term /usr/bin/fish<cr>
+nnoremap <leader>tt :tab split<cr> :term $SHELL<cr>
+nnoremap <leader>tv :vsplit<cr> :term $SHELL<cr>
 
 " COPY FILE PATH
 " yank relative File path
