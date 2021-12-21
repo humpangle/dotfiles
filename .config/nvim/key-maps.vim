@@ -72,7 +72,7 @@ nnoremap <leader>% :e %<CR>
 
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr>
-nnoremap ,rm :!trash-put %:p<cr>:bdelete!<cr>
+nnoremap ,rm :!trash-put "%:p"<cr>:bdelete!<cr>
 " edit .bashrc file
 nnoremap ,. :e ~/.bashrc<CR>
 nnoremap <c-E> :Vexplore<CR>
