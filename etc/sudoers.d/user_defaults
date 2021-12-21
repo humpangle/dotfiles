@@ -1,0 +1,7 @@
+# Defaults	editor=/usr/local/bin/nvim
+# Allow normal user to start cron job in .bashrc
+# %sudo ALL=NOPASSWD: /etc/init.d/cron start
+
+# grant passwordless access to dockerd for group docker users
+# %docker ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
+# username ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
