@@ -26,15 +26,13 @@ nnoremap ,bt :FZFBTags!<CR>
 " find symbols in project directory (ctags -R)
 nnoremap ,pt :FZFTags!<CR>
 
-if !g:can_use_coc
-  " Tags
-  " find symbols in current buffer (fzf-lsp.nvim)
-  nnoremap <leader>bt :DocumentSymbols!<CR>
-  " find tags in entire project directory (fzf-lsp.nvim)
-  nnoremap <leader>pt :WorkspaceSymbols!<CR>
-  nnoremap <leader>fa :CodeActions!<CR>
-  nnoremap <leader>fd :Diagnostics!<CR>
-endif
+" Tags
+" find symbols in current buffer (fzf-lsp.nvim)
+nnoremap <leader>bt :DocumentSymbols!<CR>
+" find tags in entire project directory (fzf-lsp.nvim)
+nnoremap <leader>pt :WorkspaceSymbols!<CR>
+nnoremap <leader>fa :CodeActions!<CR>
+nnoremap <leader>fd :Diagnostics!<CR>
 
 " GIT
 " Files managed by git

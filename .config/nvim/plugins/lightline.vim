@@ -3,7 +3,6 @@ let g:lightline = {}
 let g:lightline.component_function = {
   \'fugitive': 'LightlineFugitive',
   \ 'filename': 'LightlineFilename',
-  \ 'coc_status': 'LightlineCocStatus',
 \}
 
 let g:lightline.component = {
@@ -21,9 +20,6 @@ let g:lightline.active = {
           \'readonly',
           \'filename',
           \'modified',
-      \],
-      \[
-          \'coc_status'
       \],
   \],
 \}
@@ -64,12 +60,4 @@ function! LightlineFilenameTab(n)
   let sf = substitute(filename, '\', '/', 'g')
   let lua_func = 'require("util").get_file_name("' . sf . '")'
   return luaeval(lua_func)
-endfunction
-
-function! LightlineCocStatus() abort
-  if winwidth(0) < 60
-    return ''
-  endif
-
-  return coc#status()
 endfunction
