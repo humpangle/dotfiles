@@ -62,13 +62,8 @@ alias ngrokd='ngrok http $DOCKER_PUBLISH_WEB_PORT'
 
 alias ug='clear && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
 
-function gc() {
+function ggc() {
   google-chrome -incognito &
-  disown
-}
-
-function gg() {
-  google-chrome -incognito
   disown
 }
 
@@ -127,7 +122,16 @@ function splitp() {
 
   tmux split-window -c "$dir" -h -p 46 \
     \; split-window  -c "$dir" \
-    \; split-window  -c "$dir" -t 2 -b -p 30
+    \; split-window  -c "$dir" -t 2 -b -p 30 \
+    \; new-window -c "$dir" \
+    \; split-window -c "$dir" -h -p 40 \
+    \; split-window -c "$dir" -t 1 \
+    \; select-pane -t 3 \
+    \; send-keys 'yarn && clear && yarn watch' C-m \
+    \; select-pane -t 1 \
+    \; send-keys 'cd storage/logs' C-m \
+    \; last-window \
+    \; select-pane -t 1
 }
 
 function splitpc() {
@@ -142,7 +146,16 @@ function splitpc() {
   tmux split-window -c "$dir" -h -p 46 \
     \; split-window  -c "$dir" \
     \; split-window  -c "$dir" -t 2 -b -p 30 \
-    \; split-window  -c "$dir" -t 3
+    \; split-window  -c "$dir" -t 3 \
+    \; new-window -c "$dir" \
+    \; split-window -c "$dir" -h -p 40 \
+    \; split-window -c "$dir" -t 1 \
+    \; select-pane -t 3 \
+    \; send-keys 'yarn && clear && yarn watch' C-m \
+    \; select-pane -t 1 \
+    \; send-keys 'cd storage/logs' C-m \
+    \; last-window \
+    \; select-pane -t 1
 }
 
 # rsync
