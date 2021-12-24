@@ -116,6 +116,35 @@ alias tkss='tmux kill-server'
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
+function splitp() {
+  if [[ -n "$1" ]]; then
+    dir="$1"
+  else
+    dir="$PWD"
+  fi
+
+  cd "$dir"
+
+  tmux split-window -c "$dir" -h -p 46 \
+    \; split-window  -c "$dir" \
+    \; split-window  -c "$dir" -t 2 -b -p 30
+}
+
+function splitpc() {
+  if [[ -n "$1" ]]; then
+    dir="$1"
+  else
+    dir="$PWD"
+  fi
+
+  cd "$dir"
+
+  tmux split-window -c "$dir" -h -p 46 \
+    \; split-window  -c "$dir" \
+    \; split-window  -c "$dir" -t 2 -b -p 30 \
+    \; split-window  -c "$dir" -t 3
+}
+
 # rsync
 alias rsynca='rsync -avzP --delete '
 alias rsyncd='rsync -avzP --delete --dry-run '
