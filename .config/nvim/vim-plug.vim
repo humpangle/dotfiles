@@ -115,7 +115,7 @@ Plug 'lifepillar/vim-gruvbox8'
 Plug 'lifepillar/vim-solarized8'
 
 " FORMATTER
-" Works for many files as far as binary to format file exists
+" Works for many files as far as binary that can format the file exists
 Plug 'sbdchd/neoformat'
 
 " This plugin has been abandoned - but it's still the easier to use.
