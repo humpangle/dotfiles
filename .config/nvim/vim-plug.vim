@@ -145,7 +145,7 @@ Plug 'puremourning/vimspector'
 Plug 'mi60dev/image.vim'
 
 " tmux-like window navigation
-" Plug 't9md/vim-choosewin'
+Plug 't9md/vim-choosewin'
 
 " Use <ctrl-h> <ctrl-j> <ctrl-k> <ctrl-l> <ctrl-\> to switch between vim
 " and tmux splits
