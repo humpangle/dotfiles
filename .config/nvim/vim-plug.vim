@@ -147,6 +147,9 @@ Plug 'mi60dev/image.vim'
 " tmux-like window navigation
 Plug 't9md/vim-choosewin'
 
+" Send text from vim to tmux/NeoVim :terminal etc
+Plug 'jpalardy/vim-slime'
+
 " Use <ctrl-h> <ctrl-j> <ctrl-k> <ctrl-l> <ctrl-\> to switch between vim
 " and tmux splits
 " Plug 'christoomey/vim-tmux-navigator'

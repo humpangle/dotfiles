@@ -23,6 +23,7 @@ so ~/.config/nvim/plugins/maximizer.vim
 so ~/.config/nvim/plugins/vim-phpfmt.vim
 so ~/.config/nvim/plugins/vim-rest-console.vim
 so ~/.config/nvim/plugins/vim-choosewin.vim
+so ~/.config/nvim/plugins/vim-slime.vim
 " packer plugin manager installs plugins
 " luafile ~/.config/nvim/lua/plugins/packer.lua
 
