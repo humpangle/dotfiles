@@ -112,6 +112,12 @@ alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
 function splitp() {
+  if [[ "$1" == '-h' ]]; then
+    echo "Usage:"
+    echo "splitp absolute_path"
+    return;
+  fi
+
   if [[ -n "$1" ]]; then
     dir="$1"
   else
