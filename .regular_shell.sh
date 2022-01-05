@@ -114,15 +114,17 @@ alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 function splitp() {
   if [[ "$1" == '-h' ]]; then
     echo "Usage:"
-    echo "splitp absolute_path"
+    echo "splitp absolute_path window_name"
     return;
   fi
 
   if [[ -n "$1" ]]; then
-    dir="$1"
+    local dir="$1"
   else
-    dir="$PWD"
+    local dir="$PWD"
   fi
+
+  local window_name="$2"
 
   cd "$dir"
 
@@ -136,8 +138,11 @@ function splitp() {
     \; send-keys 'yarn && clear && yarn watch' C-m \
     \; select-pane -t 1 \
     \; send-keys 'cd storage/logs' C-m \
+    \; rename-window "${window_name}-L" \
     \; last-window \
-    \; select-pane -t 1
+    \; rename-window "$window_name" \
+    \; select-pane -t 1 \
+    \; send-keys 'clear' C-m
 }
 
 function splitpc() {
