@@ -5,8 +5,8 @@ nnoremap <leader>gc  :Git commit<CR>
 nnoremap <leader>gd  :Gvdiffsplit!<CR>
 nnoremap <leader>g.  :Git add .<CR>
 nnoremap <leader>g%  :Git add %<CR>
-nnoremap <leader>gl  :Gclog! <right>
-nnoremap <leader>g0  :0Gclog! <right>
+nnoremap <leader>gl  :Gclog! -
+nnoremap <leader>g0  :0Gclog! -
 nnoremap <leader>ge  :Gedit <right>
 nnoremap <leader>gb  :Git blame<CR>
 
@@ -24,7 +24,7 @@ nnoremap <leader>sP  :Git stash pop
 nnoremap <leader>sc  :Git stash clear
 
 nnoremap <leader>go  :Git push origin HEAD
-nnoremap <leader>gp  :Git push <right>
+nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
 nnoremap <leader>gf  :Git push --force-with-lease origin HEAD
 nnoremap <leader>ca  :Git commit --amend<cr>
 nnoremap <leader>ce  :Git commit --amend --no-edit
