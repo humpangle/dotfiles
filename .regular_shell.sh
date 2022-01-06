@@ -128,7 +128,8 @@ function splitp() {
 
   cd "$dir"
 
-  tmux split-window -c "$dir" -h -p 46 \
+  tmux rename-window "$window_name" \
+    \; split-window -c "$dir" -h -p 46 \
     \; split-window  -c "$dir" \
     \; split-window  -c "$dir" -t 2 -b -p 30 \
     \; new-window -c "$dir" \
@@ -140,21 +141,29 @@ function splitp() {
     \; send-keys 'cd storage/logs' C-m \
     \; rename-window "${window_name}-L" \
     \; last-window \
-    \; rename-window "$window_name" \
     \; select-pane -t 1 \
     \; send-keys 'clear' C-m
 }
 
 function splitpc() {
+  if [[ "$1" == '-h' ]]; then
+    echo "Usage:"
+    echo "splitp absolute_path window_name"
+    return;
+  fi
+
   if [[ -n "$1" ]]; then
     dir="$1"
   else
     dir="$PWD"
   fi
 
+  local window_name="$2"
+
   cd "$dir"
 
-  tmux split-window -c "$dir" -h -p 46 \
+  tmux rename-window "$window_name" \
+    \; split-window -c "$dir" -h -p 46 \
     \; split-window  -c "$dir" \
     \; split-window  -c "$dir" -t 2 -b -p 30 \
     \; split-window  -c "$dir" -t 3 \
@@ -166,7 +175,8 @@ function splitpc() {
     \; select-pane -t 1 \
     \; send-keys 'cd storage/logs' C-m \
     \; last-window \
-    \; select-pane -t 1
+    \; select-pane -t 1 \
+    \; send-keys 'clear' C-m
 }
 
 # rsync
