@@ -24,8 +24,10 @@ nnoremap <leader>sP  :Git stash pop
 nnoremap <leader>sc  :Git stash clear
 
 nnoremap <leader>go  :Git push origin HEAD
+nnoremap <leader>gh  :Git push github HEAD
 nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
 nnoremap <leader>gf  :Git push --force-with-lease origin HEAD
+nnoremap <leader>gF  :Git push --force-with-lease github HEAD
 nnoremap <leader>ca  :Git commit --amend<cr>
 nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>ct  :Git commit --allow-empty -m ""<left>
