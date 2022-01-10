@@ -74,7 +74,7 @@ alias ys='yarn start '
 alias yn='yarn nps '
 alias ylsp='yarn list --pattern '
 alias ywhy='yarn why '
-alias ycw='clear && yarn watch'
+alias ycw='clear && DISABLE_LARAVEL_MIX_NOTIFICATION=1 yarn watch'
 
 # vim
 alias vi='/usr/bin/vim'
