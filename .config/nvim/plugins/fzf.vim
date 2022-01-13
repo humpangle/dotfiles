@@ -1,7 +1,7 @@
 " Search file from root directory
 nnoremap <c-p> :FZFFiles!<CR>
 " Search file from current directory
-nnoremap <silent> <Leader>f. :FZFFiles! <C-r>=expand("%:h")<CR>/<CR>
+nnoremap <Leader>f. :FZFFiles! <C-r>=expand("%:h")<CR>/<CR>
 " find open buffers
 nnoremap <Leader>fb :Buffers!<CR>
 " search buffers history
@@ -21,20 +21,6 @@ nnoremap <Leader>C :Commands!<CR>
 nnoremap <Leader>M :Maps!<CR>
 " search in project - do not match filenames
 nnoremap <Leader>/ :FZFRg!<CR>
-" find symbols in current buffer (ctags -R)
-nnoremap ,bt :FZFBTags!<CR>
-" find symbols in project directory (ctags -R)
-nnoremap ,pt :FZFTags!<CR>
-
-if !g:can_use_coc
-  " Tags
-  " find symbols in current buffer (fzf-lsp.nvim)
-  nnoremap <leader>bt :DocumentSymbols!<CR>
-  " find tags in entire project directory (fzf-lsp.nvim)
-  nnoremap <leader>pt :WorkspaceSymbols!<CR>
-  nnoremap <leader>fa :CodeActions!<CR>
-  nnoremap <leader>fd :Diagnostics!<CR>
-endif
 
 " GIT
 " Files managed by git

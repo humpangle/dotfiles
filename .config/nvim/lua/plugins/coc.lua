@@ -1,64 +1,68 @@
-let s:coc_extensions = [
-  \ 'coc-elixir',
-  \ 'coc-spell-checker',
-  \ 'coc-cspell-dicts',
-  \ 'coc-json',
-  \ 'coc-jedi',
-  \ 'coc-emmet',
-  \ 'coc-tsserver',
-  \ 'coc-snippets',
-  \ 'coc-css',
-  \ 'coc-html',
-  \ 'coc-eslint',
-  \ 'coc-pairs',
-  \ 'coc-prettier',
-  \ 'coc-svelte',
-  \ 'coc-docker',
-  \ 'coc-svg',
-  \ 'coc-vimlsp',
-  \ 'coc-lua',
-  \ '@yaegassy/coc-intelephense',
-  \ '@yaegassy/coc-volar',
-  \ 'coc-blade',
-  \ 'coc-flutter',
-  \ 'coc-db',
-  \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
-  \ ]
+-- 'coc-flutter-tools',
+-- 'coc-yank',
+-- 'coc-vetur',
+-- 'coc-php-cs-fixer',
+-- 'coc-emoji',
+-- 'coc-lists',
+-- 'coc-tasks',
+-- 'coc-fzf-preview',
+-- 'coc-marketplace',
+-- 'coc-pyright',
+-- 'coc-explorer',
+-- 'coc-emmet',
+--
+local coc_extensions = {
+    "coc-elixir",
+    "coc-spell-checker",
+    "coc-cspell-dicts",
+    "coc-json",
+    "coc-jedi",
+    "coc-emmet",
+    "coc-tsserver",
+    "coc-snippets",
+    "coc-css",
+    "coc-html",
+    "coc-eslint",
+    "coc-pairs",
+    "coc-prettier",
+    "coc-svelte",
+    "coc-docker",
+    "coc-svg",
+    "coc-vimlsp",
+    "coc-lua",
+    "@yaegassy/coc-intelephense",
+    "@yaegassy/coc-volar",
+    "coc-blade",
+    "coc-flutter",
+    -- Database auto completion powered by vim-dadbod
+    "coc-db",
+    "https://github.com/rodrigore/coc-tailwind-intellisense",
+}
 
-if has('win32')
-  call add(s:coc_extensions, 'coc-powershell')
+if vim.fn.has("win32") == 1 then
+    table.insert(coc_extensions, "coc-powershell")
 else
-  call add(s:coc_extensions, 'coc-sh')
-endif
+    table.insert(coc_extensions, "coc-sh")
+end
 
-" \ 'coc-flutter-tools',
-" coc-db Database auto completion powered by vim-dadbod
-" \ 'coc-yank',
-" \ 'coc-vetur',
-" \ 'coc-php-cs-fixer',
-" \ 'coc-emoji',
-" \ 'coc-lists',
-" \ 'coc-tasks',
-" \ 'coc-fzf-preview',
-" \ 'coc-marketplace',
-" \ 'coc-pyright',
-" \ 'coc-explorer',
-" \ 'coc-emmet',
-" \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
+vim.g.coc_global_extensions = coc_extensions
 
-let g:coc_global_extensions = s:coc_extensions
+-- COC VOLAR
+-- yarn add --dev vue-tsc / npm i -g vue-tsc
 
-" COC VOLAR
-" :CocCommand eslint.showOutputChannel
-" yarn add --dev vue-tsc / npm i -g vue-tsc
+-- :CocCommand eslint.showOutputChannel
 
-" let g:coc_force_debug = 1
-let g:coc_filetype_map = {
-  \ 'htmldjango': 'html',
-  \ '.eslintrc': 'json',
-  \ 'jinja': 'html',
-  \ 'eelixir': 'html',
-\}
+-- vim.g.coc_force_debug = 1
+vim.g.coc_filetype_map = {
+    htmldjango = "html",
+    [".eslintrc"] = "json",
+    jinja = "html",
+    eelixir = "html",
+}
+
+vim.cmd([[
+" hack to make vim think this is a script
+let s:some = 1
 
 " Some servers have issues with backup files, see #649
 set nobackup
@@ -190,3 +194,4 @@ augroup end
 
 " automatically close coc-explorer if it's the last buffer
 " autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+]])

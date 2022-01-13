@@ -8,6 +8,9 @@ let g:loaded_perl_provider = 0
 " Disable ruby provider
 let g:loaded_ruby_provider = 0
 
+" Disable node provider
+let g:loaded_node_provider = 0
+
 let g:python3_host_prog = expand('$PYTHON3')
 
 " https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
@@ -156,9 +159,9 @@ augroup filetypes
   au BufNewFile,BufRead .env* set filetype=sh
   au BufNewFile,BufRead *.psql set filetype=sql
   au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
+  au BufNewFile,BufRead *.docker set filetype=dockerfile
   au BufNewFile,BufRead *config set filetype=gitconfig
-
-  autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+  " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 augroup END
 
 augroup terminal_settings

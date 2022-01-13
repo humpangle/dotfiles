@@ -3,7 +3,6 @@ let g:lightline = {}
 let g:lightline.component_function = {
   \'fugitive': 'LightlineFugitive',
   \ 'filename': 'LightlineFilename',
-  \ 'coc_status': 'LightlineCocStatus',
 \}
 
 let g:lightline.component = {
@@ -23,7 +22,6 @@ let g:lightline.active = {
           \'modified',
       \],
       \[
-          \'coc_status'
       \],
   \],
 \}

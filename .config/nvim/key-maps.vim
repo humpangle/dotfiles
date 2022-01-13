@@ -3,6 +3,12 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
+" Save key strokes (now we do not need to press shift to enter command mode).
+" Vim-sneak has also mapped `;`, so using the below mapping will break the map
+" used by vim-sneak
+nnoremap ; :
+xnoremap ; :
+
 " format paragraphs/lines to 80 chars
 nnoremap <Leader>pp gqap
 xnoremap <Leader>pp gqa
@@ -82,7 +88,7 @@ nnoremap ,ec :e $MYVIMRC<CR>
 " source init.vim
 nnoremap ,sc :so $MYVIMRC<CR>
 " source lua file
-nnoremap ,sl :luafile %<CR>
+nnoremap ,ss :source %<CR>
 " Check file in shellcheck
 " nnoremap <leader>sc, :!clear && shellcheck -x %<CR>
 
