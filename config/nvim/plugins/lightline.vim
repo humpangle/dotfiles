@@ -27,7 +27,7 @@ let g:lightline.active = {
 \}
 
 let g:lightline.tab_component_function = {
-  \ 'filename_active': 'LightlineFilenameTab',
+  \ 'filename_active': 'LightlineInactiveTabFilename',
 \}
 
 let g:lightline.tab = {
@@ -55,12 +55,12 @@ function! LightlineFilename()
   return luaeval('require("util").get_file_name(2)')
 endfunction
 
-function! LightlineFilenameTab(n)
+function! LightlineInactiveTabFilename(n)
   let buflist = tabpagebuflist(a:n)
   let winnr = tabpagewinnr(a:n)
-  let filename = expand('#'.buflist[winnr - 1].':f')
-  let sf = substitute(filename, '\', '/', 'g')
-  let lua_func = 'require("util").get_file_name("' . sf . '")'
+  let filename = expand('#' . buflist[winnr - 1] . ':f')
+  let shortened_file_path = substitute(filename, '\', '/', 'g')
+  let lua_func = 'require("util").get_file_name("' . shortened_file_path . '")'
   return luaeval(lua_func)
 endfunction
 

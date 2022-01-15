@@ -197,6 +197,14 @@ local function lsp_keymaps(bufnr)
 		keymap_opts
 	)
 
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"x",
+		",ac",
+		"<cmd>lua vim.lsp.buf.code_action()<CR>",
+		keymap_opts
+	)
+
 	-- vim.api.nvim_buf_set_keymap(
 	-- 	bufnr,
 	-- 	"n",

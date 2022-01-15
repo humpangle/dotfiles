@@ -1,3 +1,7 @@
 return {
-	filetypes = { "html", "css", "vue" },
+	filetypes = {
+		"html",
+		"css",
+		"blade",
+	},
 }
