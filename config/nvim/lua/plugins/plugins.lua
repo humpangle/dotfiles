@@ -146,13 +146,20 @@ return packer.startup(function(use)
 
 			-- / COMPLETION SOURCES
 
-			"L3MON4D3/LuaSnip", -- snippet engine
+			-- snippet engine
+			{
+				"L3MON4D3/LuaSnip",
+				config = function()
+					require("luasnip.loaders.from_vscode").lazy_load({
+						paths = { "~/.config/nvim/snippets" },
+					})
+				end,
+			},
 
 			-- a bunch of snippets to use
 			"rafamadriz/friendly-snippets",
 
 			{
-
 				"windwp/nvim-autopairs",
 				config = function()
 					return require("plugins/nvim-autopairs")
