@@ -371,6 +371,7 @@ return packer.startup(function(use)
 		opt = true,
 		run = "cd app && yarn install",
 		cmd = "MarkdownPreview",
+		ft = { "markdown" },
 		setup = function()
 			Vimg.mkdp_refresh_slow = 1
 		end,
