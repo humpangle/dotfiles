@@ -45,7 +45,11 @@ null_ls.setup({
 			},
 		}),
 
+		-- go install mvdan.cc/sh/v3/cmd/shfmt@latest
+		formatting.shfmt,
+
 		-- shell script static analysis tool.
 		diagnostics.shellcheck,
+    code_actions.shellcheck
 	},
 })
