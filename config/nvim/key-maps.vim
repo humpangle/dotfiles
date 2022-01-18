@@ -6,8 +6,8 @@ let maplocalleader=","
 " Save key strokes (now we do not need to press shift to enter command mode).
 " Vim-sneak has also mapped `;`, so using the below mapping will break the map
 " used by vim-sneak
-nnoremap ; :
-xnoremap ; :
+" nnoremap ; :
+" xnoremap ; :
 
 " format paragraphs/lines to 80 chars
 nnoremap <Leader>pp gqap
