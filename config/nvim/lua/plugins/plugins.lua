@@ -377,9 +377,8 @@ return packer.startup(function(use)
 		"iamcco/markdown-preview.nvim",
 		opt = true,
 		run = "cd app && yarn install",
-		cmd = "MarkdownPreview",
 		ft = { "markdown" },
-		setup = function()
+		config = function()
 			Vimg.mkdp_refresh_slow = 1
 		end,
 	})
