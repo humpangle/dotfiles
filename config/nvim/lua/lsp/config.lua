@@ -229,12 +229,12 @@ local function lsp_keymaps(bufnr)
 		keymap_opts
 	)
 
-	-- Open diagnostics in quickfix window
+	-- Open diagnostics in quicklist window
 	vim.api.nvim_buf_set_keymap(
 		bufnr,
 		"n",
 		"<C-m>",
-		"<cmd>lua vim.diagnostic.setqflist()<CR>",
+		"<cmd>lua vim.diagnostic.setloclist()<CR>",
 		keymap_opts
 	)
 
