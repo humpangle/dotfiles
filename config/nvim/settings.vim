@@ -97,7 +97,9 @@ set cursorline " highlight cursor positions
 
 " Spell check
 set spelllang=en
-" set spell
+set nospell
+" Don't underline first word of a sentence that is not capitalized
+set spellcapcheck=
 " ~/.config/nvim/spell/en.utf-7.add
 set spellfile=~/.config/nvim/spell/en.utf-8.add
 
