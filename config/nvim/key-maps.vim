@@ -71,7 +71,7 @@ nnoremap <c-up> :resize +2<CR>
 nnoremap <c-down> :resize -2<CR>
 
 " QuickFix and Location list
-nnoremap <leader>lc :lclose<CR>
+nnoremap yol :lclose<CR>
 nnoremap yoq :cclose<cr>
 
 nnoremap <leader>% :e %<CR>
