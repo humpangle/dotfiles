@@ -232,6 +232,16 @@ make_history_unique() {
 alias hu='make_history_unique'
 # also https://unix.stackexchange.com/a/613644
 
+ltf() {
+	local cmd="lt --subdomain $1 --port $2"
+
+	if [[ "$3" == 'd' ]]; then
+		$cmd &
+	else
+		$cmd
+	fi
+}
+
 export DOCKER_BUILDKIT=1
 
 if [ -x "$(command -v sort-package-json)" ]; then
