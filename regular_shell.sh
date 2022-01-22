@@ -63,7 +63,7 @@ alias ngrokd='ngrok http $DOCKER_PUBLISH_WEB_PORT'
 
 alias ug='clear && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
 
-function ggc() {
+ggc() {
   google-chrome -incognito &
   disown
 }
@@ -190,11 +190,11 @@ alias glone='git log --oneline'
 alias gconflict='git diff --name-only --diff-filter=U'
 alias gwt='git worktree '
 # debian package gsa = gwenhywfar-tools
-function gsa() {
+gsa() {
   git stash apply "stash@{$1}"
 }
 
-function gsd() {
+gsd() {
   git stash drop "stash@{$1}"
 }
 
@@ -224,7 +224,7 @@ alias scmstorage='sudo chmod -R 777 storage'
 # https://unix.stackexchange.com/a/179852
 # Make bash history unique
 
-function make_history_unique {
+make_history_unique() {
   tac "$HISTFILE" | awk '!x[$0]++' > /tmp/tmpfile \
     && tac /tmp/tmpfile > "$HISTFILE" \
     && rm /tmp/tmpfile
@@ -238,7 +238,7 @@ if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json '
 fi
 
-function setenvs {
+setenvs() {
   set -a
   . "$1"
   set +a
@@ -366,7 +366,7 @@ fi
 # https://github.com/starship/starship
 # eval "$(starship init bash)" ## will use only in fish shell for now
 
-function touchm() {
+touchm() {
   local data
   local sep
   local dir_path
