@@ -14,7 +14,8 @@ case $SHELL in
     ;;
 
   *)
-    [ -f $HOME/dotfiles/.regular_shell.sh ] && source $HOME/dotfiles/.regular_shell.sh
+    # shellcheck disable=2086
+    [ -f $HOME/dotfiles/regular_shell.sh ] && source $HOME/dotfiles/regular_shell.sh
     ;;
 esac
 

@@ -34,7 +34,8 @@ pathmunge "$GEM_HOME/bin"
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
 # install with: `sudo apt install ssh-askpass-gnome ssh-askpass -y`
-export SUDO_ASKPASS=$(which ssh-askpass)
+# shellcheck disable=2155
+export SUDO_ASKPASS=$(command -v ssh-askpass)
 
 # docker
 # docker remove all containers
@@ -222,9 +223,9 @@ alias ..='cd ..'
 alias .2='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
-alias cdo="mkdir -p $HOME/projects/0 && cd $HOME/projects/0"
-alias cdp="mkdir -p $HOME/projects && cd $HOME/projects"
-alias cdd="cd $HOME/dotfiles"
+alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
+alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
+alias cdd='cd $HOME/dotfiles'
 alias md='mkdir -p'
 alias C="clear && printf '\e[3J'"
 alias py='python '
@@ -301,7 +302,7 @@ if [ -d "$HOME/.fzf" ]; then
   export FZF_COMPLETION_TRIGGER=',,'
 
   _fzf_compgen_dir() {
-    rg --files $RG_OPTIONS
+    rg --files "$RG_OPTIONS"
   }
 
   _fzf_compgen_path() {
