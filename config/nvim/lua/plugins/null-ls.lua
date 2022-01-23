@@ -50,6 +50,9 @@ null_ls.setup({
 
 		-- shell script static analysis tool.
 		diagnostics.shellcheck,
-    code_actions.shellcheck
+		code_actions.shellcheck,
+
+    -- elixir
+		formatting.mix,
 	},
 })

@@ -9,7 +9,9 @@ M.server_config_map = {
 
 	dockerls = {},
 
-	elixirls = {},
+	elixirls = {
+		no_formatting = true,
+	},
 
 	emmet_ls = {},
 
