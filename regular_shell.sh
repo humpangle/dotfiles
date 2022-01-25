@@ -154,7 +154,7 @@ splitp() {
 		\; rename-window "${window_name}-L" \
 		\; last-window \
 		\; select-pane -t 5 \
-		\; send-keys 'yarn && clear && yarn watch' C-m \
+		\; send-keys 'yarn && clear' C-m \
 		\; select-pane -t 1 \
 		\; send-keys 'clear' C-m
 }
