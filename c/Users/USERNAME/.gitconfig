@@ -3,13 +3,17 @@
 	st = status
 	cm = commit
 	ps = push
-  psf = push --force
+  psf = push --force-with-lease
 	pl = pull
 	co = checkout
   cam = commit -am
   pgm = push github master
   pgd = push github dev
   lone = log --oneline
+  wk = worktree
+  wka = worktree add
+  wkr = worktree remove
+  wkl = worktree list
 [credential]
 	helper = cache --timeout 604800
 [core]
@@ -34,7 +38,7 @@
 #	  email = you@example.com
 #	  name = Your Name
 [init]
-	defaultBranch = main
+	# defaultBranch = main
 # specify how pulling is reconciled
 [pull]
   rebase = true
