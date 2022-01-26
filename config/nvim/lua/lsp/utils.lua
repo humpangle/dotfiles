@@ -27,7 +27,9 @@ M.server_config_map = {
 		no_formatting = true,
 	},
 
-	jsonls = {},
+	jsonls = {
+		no_formatting = true,
+	},
 
 	-- https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/pylsp#installing-pylsp-plugins
 	-- :PylspInstall python-ls-black pylsp-mypy pyls-isort
