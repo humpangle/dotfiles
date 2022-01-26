@@ -81,7 +81,29 @@ nnoremap ,md :!mkdir -p %:h<cr>
 nnoremap ,rm :!trash-put "%:p"<cr>:bdelete!<cr>
 " edit .bashrc file
 nnoremap ,. :e ~/.bashrc<CR>
-nnoremap <c-E> :Vexplore<CR>
+
+" Netrw
+" https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+
+function! NetrwMapping()
+  nmap <buffer> <c-E> :Vexplore<CR>
+endfunction
+
+augroup netrw_mapping
+  autocmd!
+  autocmd filetype netrw call NetrwMapping()
+  autocmd BufEnter * if strlen(&ft) < 1 | call NetrwMapping()
+augroup END
+
+" Open Netrw in current working directory
+nnoremap <c-E>
+  \ :let @s=getcwd()<cr>
+  \ :Vexplore <c-r>s<CR>
+
+" Open Netrw in current file's directory
+nnoremap <leader>dd :Lexplore %:p:h<CR>
+
+" END Netrw
 
 " edit init.vim
 nnoremap ,ec :e $MYVIMRC<CR>
