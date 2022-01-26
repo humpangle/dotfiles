@@ -87,6 +87,8 @@ nnoremap ,. :e ~/.bashrc<CR>
 
 function! NetrwMapping()
   nmap <buffer> <c-E> :Vexplore<CR>
+  " Show a list of marked files.
+  nmap <buffer> fl :echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
 endfunction
 
 augroup netrw_mapping
