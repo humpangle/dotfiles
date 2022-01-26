@@ -1,4 +1,4 @@
-Import-WslCommand "apt", "awk", "emacs", "grep", "head", "less", "man", "sed", "seq", "ssh", "sudo", "tail", "git", "docker", "xargs"
+Import-WslCommand "apt", "awk", "emacs", "grep", "head", "less", "man", "sed", "seq", "ssh", "sudo", "tail", "docker", "xargs"
 
 $vim_config_path = "~\AppData\Local\nvim"
 
