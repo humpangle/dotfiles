@@ -1,5 +1,9 @@
 Import-WslCommand "apt", "awk", "emacs", "grep", "head", "less", "man", "sed", "seq", "ssh", "sudo", "tail", "docker", "xargs"
 
+# [enable scoop-completion](https://github.com/Moeologist/scoop-completion)
+# enable completion in current shell, use absolute path because PowerShell Core not respect $env:PSModulePath
+Import-Module "$($(Get-Item $(Get-Command scoop.ps1).Path).Directory.Parent.FullName)\modules\scoop-completion"
+
 $vim_config_path = "~\AppData\Local\nvim"
 
 # ENVS
