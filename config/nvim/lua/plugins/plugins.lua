@@ -69,6 +69,17 @@ return packer.startup(function(use)
 		"lifepillar/vim-solarized8",
 	})
 
+	-- Improves Vim's spell checking function
+
+	use({
+		"kamykn/spelunker.vim",
+		config = function()
+			Vimg.enable_spelunker_vim_on_readonly = 1
+		end,
+
+		requires = { "kamykn/popup-menu.nvim" },
+	})
+
 	-- LANGUAGE SERVERS / SYNTAX CHECKING
 	use({
 		"neoclide/coc.nvim",
