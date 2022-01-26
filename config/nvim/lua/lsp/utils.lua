@@ -19,7 +19,9 @@ M.server_config_map = {
 
 	graphql = {},
 
-	html = {},
+	html = {
+		no_formatting = true,
+  },
 
 	-- Set up your intelephense licence:
 	-- -- echo "export INTELEPHENSE_LICENCE='' >> ~/.bashrc"
