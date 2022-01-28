@@ -434,6 +434,9 @@ return packer.startup(function(use)
 		end,
 	})
 
+	-- Enhances vim ga with Unicode character names, Vim digraphs, emoji codes
+	use({ "tpope/vim-characterize" })
+
 	-- Use <ctrl-h> <ctrl-j> <ctrl-k> <ctrl-l> <ctrl-\> to switch between vim
 	-- and tmux splits
 	-- use {"christoomey/vim-tmux-navigator"}
