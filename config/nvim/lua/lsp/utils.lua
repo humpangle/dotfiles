@@ -24,7 +24,7 @@ M.server_config_map = {
   },
 
 	-- Set up your intelephense licence:
-	-- -- echo "export INTELEPHENSE_LICENCE='' >> ~/.bashrc"
+	-- -- echo "export INTELEPHENSE_LICENCE=''" >> ~/.bashrc
 	intelephense = {
 		no_formatting = true,
 	},
