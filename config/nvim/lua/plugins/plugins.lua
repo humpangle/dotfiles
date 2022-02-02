@@ -73,6 +73,7 @@ return packer.startup(function(use)
 
 	use({
 		"kamykn/spelunker.vim",
+		disable = true,
 		config = function()
 			Vimg.enable_spelunker_vim_on_readonly = 1
 		end,
