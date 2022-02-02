@@ -17,6 +17,7 @@ xnoremap <Leader>pn :call Renumber()<CR>
 nnoremap <Leader>ww :w<CR>
 nnoremap <Leader>wa :wa<CR>
 nnoremap <Leader>wq :wq<cr>
+nnoremap <Leader>w! :w!<cr>
 " when you need to make changes to a system file, you can override the
 " read-only permissions by typing :w!!, vim will ask for your sudo password
 " and save your changes
