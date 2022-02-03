@@ -238,11 +238,53 @@ return packer.startup(function(use)
 			-- Treesitter
 			{
 				"nvim-treesitter/nvim-treesitter",
-				disable = false,
+				disable = true,
 				run = ":TSUpdate",
 				config = function()
 					require("plugins/treesitter")
 				end,
+
+				requires = {
+					{
+						"JoosepAlviste/nvim-ts-context-commentstring",
+						config = function()
+							require("nvim-treesitter.configs").setup({
+								context_commentstring = {
+									enable = true,
+									enable_autocmd = false,
+									config = {
+										css = "// %s",
+									},
+								},
+							})
+						end,
+					},
+
+					{
+						"terrortylor/nvim-comment",
+						config = function()
+							Cmd([[
+                augroup set-commentstring-ag
+                  autocmd!
+
+                  " when you enter a (new) buffer
+                  autocmd BufEnter *.sql :lua vim.api.nvim_buf_set_option(0, "commentstring", "-- %s")
+
+                  " when you've changed the name of a file opened in a buffer, the file type may have changed
+                  autocmd BufFilePost *.sql :lua vim.api.nvim_buf_set_option(0, "commentstring", "-- %s")
+                augroup END
+              ]])
+
+							require("nvim_comment").setup({
+								-- Ignore Empty Lines
+								comment_empty = false,
+								hook = function()
+									require("ts_context_commentstring.internal").update_commentstring()
+								end,
+							})
+						end,
+					},
+				},
 			},
 		},
 	})
@@ -270,44 +312,7 @@ return packer.startup(function(use)
 	use({ "simnalamburt/vim-mundo" })
 
 	use({
-		"JoosepAlviste/nvim-ts-context-commentstring",
-		disable = false,
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				context_commentstring = {
-					enable = true,
-					enable_autocmd = false,
-					config = {
-						css = "// %s",
-					},
-				},
-			})
-		end,
-	})
-
-	use({
-		"terrortylor/nvim-comment",
-		config = function()
-			Cmd([[
-        augroup set-commentstring-ag
-          autocmd!
-
-          " when you enter a (new) buffer
-          autocmd BufEnter *.sql :lua vim.api.nvim_buf_set_option(0, "commentstring", "-- %s")
-
-          " when you've changed the name of a file opened in a buffer, the file type may have changed
-          autocmd BufFilePost *.sql :lua vim.api.nvim_buf_set_option(0, "commentstring", "-- %s")
-        augroup END
-      ]])
-
-			require("nvim_comment").setup({
-				-- Ignore Empty Lines
-				comment_empty = false,
-				hook = function()
-					require("ts_context_commentstring.internal").update_commentstring()
-				end,
-			})
-		end,
+		"tomtom/tcomment_vim",
 	})
 
 	-- Surround text with quotes, parenthesis, brackets, and more.
@@ -350,7 +355,6 @@ return packer.startup(function(use)
 
 	-- FORMATTERS
 	use({
-
 		-- Works for many files as far as binary that can format the file exists
 		{
 			"sbdchd/neoformat",
