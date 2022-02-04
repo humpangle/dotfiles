@@ -86,6 +86,13 @@ end
 
 local keymap_opts = { noremap = true, silent = false }
 
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>rs",
+	"<cmd>LspRestart<CR>",
+	keymap_opts
+)
+
 local function lsp_keymaps(bufnr)
 	-- Formatting with `prettier*` is slow, hence the large timeout
 	-- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/572#issuecomment-1011172497
