@@ -169,7 +169,10 @@ return packer.startup(function(use)
 			},
 
 			-- a bunch of snippets to use
-			"rafamadriz/friendly-snippets",
+			{
+				"rafamadriz/friendly-snippets",
+				disable = true,
+			},
 
 			{
 				"windwp/nvim-autopairs",

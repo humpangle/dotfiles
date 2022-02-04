@@ -31,6 +31,21 @@
       {
         "language": "python",
         "path": "./python.json"
+      },
+      {
+        "language": [
+          "shellscript",
+          "shell",
+          "sh",
+          "zsh"
+        ],
+        "path": "./shell.json"
+      },
+      {
+        "language": [
+          "markdown"
+        ],
+        "path": "./markdown.json"
       }
     ]
   }
