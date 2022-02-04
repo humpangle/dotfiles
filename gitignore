@@ -26,7 +26,7 @@ build/*
 # Configuration file with private data:
 *.env
 .env*
-!.env.example
+!.env.example*
 env/*
 
 #####=== Windows ===#####
