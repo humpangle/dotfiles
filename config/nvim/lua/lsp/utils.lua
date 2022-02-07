@@ -15,7 +15,7 @@ M.server_config_map = {
 
 	emmet_ls = {},
 
-	eslint = {},
+	-- eslint = {},
 
 	graphql = {},
 
