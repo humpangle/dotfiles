@@ -39,7 +39,7 @@ M.server_config_map = {
 
 	sumneko_lua = {},
 
-	-- tailwindcss = {},
+	tailwindcss = {},
 
 	tsserver = {
 		no_formatting = true,
