@@ -289,6 +289,10 @@ return packer.startup(function(use)
 					},
 				},
 			},
+
+			{
+				"jose-elias-alvarez/nvim-lsp-ts-utils",
+			},
 		},
 	})
 

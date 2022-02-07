@@ -18,10 +18,8 @@ for server_name, _ in pairs(server_config_map) do
 
 	if server_available then
 		requested_server:on_ready(function()
-			local common_opts = {
-				on_attach = lsp_config.on_attach,
-				capabilities = lsp_config.capabilities,
-			}
+			local on_attach = lsp_config.on_attach
+			local capabilities = lsp_config.capabilities
 
 			local server_config_ok, server_opts = pcall(
 				require,
@@ -32,7 +30,14 @@ for server_name, _ in pairs(server_config_map) do
 				server_opts = {}
 			end
 
-			local opts = vim.tbl_deep_extend("force", server_opts, common_opts)
+			if server_opts.on_attach then
+				on_attach = server_opts.on_attach(lsp_config)
+			end
+
+			local opts = vim.tbl_deep_extend("force", server_opts, {
+				on_attach = on_attach,
+				capabilities = capabilities,
+			})
 
 			requested_server:setup(opts)
 		end)

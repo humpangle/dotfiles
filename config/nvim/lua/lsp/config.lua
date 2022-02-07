@@ -85,13 +85,9 @@ local function lsp_highlight_document(client)
 end
 
 local keymap_opts = { noremap = true, silent = false }
+M.keymap_opts = keymap_opts
 
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>rs",
-	"<cmd>LspRestart<CR>",
-	keymap_opts
-)
+vim.api.nvim_set_keymap("n", "<leader>rs", "<cmd>LspRestart<CR>", keymap_opts)
 
 local function lsp_keymaps(bufnr)
 	-- Formatting with `prettier*` is slow, hence the large timeout
