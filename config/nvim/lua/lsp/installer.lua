@@ -37,6 +37,10 @@ for server_name, _ in pairs(server_config_map) do
 			local opts = vim.tbl_deep_extend("force", server_opts, {
 				on_attach = on_attach,
 				capabilities = capabilities,
+				flags = {
+					-- This will be the default in neovim 0.7+
+					debounce_text_changes = 150,
+				},
 			})
 
 			requested_server:setup(opts)
