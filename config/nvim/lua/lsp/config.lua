@@ -89,6 +89,35 @@ M.keymap_opts = keymap_opts
 
 vim.api.nvim_set_keymap("n", "<leader>rs", "<cmd>LspRestart<CR>", keymap_opts)
 
+-- vim.api.nvim_set_keymap(
+-- 	"n",
+-- 	"<leader>f",
+-- 	"<cmd>lua vim.diagnostic.open_float()<CR>",
+-- keymap_opts
+-- )
+
+vim.api.nvim_set_keymap(
+	"n",
+	"[d",
+	[[<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>]],
+	keymap_opts
+)
+
+vim.api.nvim_set_keymap(
+	"n",
+	"]d",
+	'<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>',
+	keymap_opts
+)
+
+-- Open diagnostics in quicklist window
+vim.api.nvim_set_keymap(
+	"n",
+	"<C-m>",
+	"<cmd>lua vim.diagnostic.setloclist()<CR>",
+	keymap_opts
+)
+
 local function lsp_keymaps(bufnr)
 	-- Formatting with `prettier*` is slow, hence the large timeout
 	-- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/572#issuecomment-1011172497
@@ -205,39 +234,6 @@ local function lsp_keymaps(bufnr)
 		"x",
 		",ac",
 		"<cmd>lua vim.lsp.buf.code_action()<CR>",
-		keymap_opts
-	)
-
-	-- vim.api.nvim_buf_set_keymap(
-	-- 	bufnr,
-	-- 	"n",
-	-- 	"<leader>f",
-	-- 	"<cmd>lua vim.diagnostic.open_float()<CR>",
-	-- keymap_opts
-	-- )
-
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"[d",
-		[[<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>]],
-		keymap_opts
-	)
-
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"]d",
-		'<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>',
-		keymap_opts
-	)
-
-	-- Open diagnostics in quicklist window
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"<C-m>",
-		"<cmd>lua vim.diagnostic.setloclist()<CR>",
 		keymap_opts
 	)
 
