@@ -5,6 +5,7 @@ return {
 				globals = {
 					"vim",
 					"use",
+					"require",
 				},
 			},
 
