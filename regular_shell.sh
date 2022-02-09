@@ -163,6 +163,16 @@ splitp() {
 		\; send-keys 'clear' C-m
 }
 
+# Save bash history per tmux pane
+if [[ $TMUX_PANE ]]; then
+	hist_file="$HOME/.bash_history_tmux_${TMUX_PANE:1}"
+	HISTFILE="$hist_file"
+
+	if [[ ! -e "$hist_file" ]]; then
+		touch "$hist_file"
+	fi
+fi
+
 # rsync
 alias rsynca='rsync -avzP --delete '
 alias rsyncd='rsync -avzP --delete --dry-run '
