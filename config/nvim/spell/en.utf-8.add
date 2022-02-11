@@ -97,6 +97,7 @@ github
 globbing
 GOLANG
 goto
+graphql
 gruvbox
 gruvbox8
 Gvdiffsplit
@@ -177,6 +178,7 @@ pcall
 pdo
 pecl
 PEM
+persistor
 PGDATA
 phpunit
 popup
