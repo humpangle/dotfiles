@@ -112,6 +112,7 @@ tags*
 
 # vim/neovim
 Session.vim
+.*.vim.session
 **/.nvimlog
 **/.vim/.ropeproject/*
 **/.vim/coc-settings.json
