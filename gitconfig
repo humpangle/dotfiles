@@ -11,9 +11,10 @@
   pgd = push github dev
   lone = log --oneline
   wk = worktree
-  wka = worktree add
-  wkr = worktree remove
-  wkl = worktree list
+  wkadd = worktree add
+  wkrm = worktree remove
+  wkls = worktree list
+  wkrp = worktree repair
 [credential]
 	helper = cache --timeout 604800
 [core]
