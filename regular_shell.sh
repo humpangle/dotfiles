@@ -405,6 +405,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 	alias wsls="wslexe --shutdown"
 	alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
 	alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
+  alias nameserver="echo 'nameserver 1.1.1.1' | sudo tee /etc/resolv.conf"
 
 	# This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
 	# up memory, this command will free your memory after about 20-30 seconds.
