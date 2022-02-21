@@ -46,7 +46,6 @@ config
 const
 copen
 cp
-cr
 CR
 CSRF
 css
@@ -128,7 +127,6 @@ laravel
 linux
 livereload
 localhost
-lsp
 LSP
 lua
 luarocks
@@ -222,6 +220,7 @@ sql
 src
 ssl
 stackexchange
+stdout
 stdpath
 stmts
 str
