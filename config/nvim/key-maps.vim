@@ -190,14 +190,16 @@ xmap <Leader>RR :cfdo %s/<C-r>s//g \| update<Left><Left><Left><Left><Left><Left>
 " BUFFERS
 " Delete all buffers
 nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
-" Delete empty buffers - not working
+" Delete all empty buffers
 nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
+" Delete all terminal buffers
+nnoremap <leader>bt :call DeleteAllBuffers('t')<cr>
 " Delete current buffer
-nnoremap <leader>bd :bd%<cr>:call DeleteAllBuffers('e')<CR>
+nnoremap <leader>bd :bd%<cr>
 " Delete current buffer force
 nnoremap <leader>bD :bd!%<cr>
 " Wipe current buffer
-nnoremap <leader>bw :bw%<cr>:call DeleteAllBuffers('e')<CR>
+nnoremap <leader>bw :bw%<cr>
 " go to buffer number - use like so gb34
 nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>

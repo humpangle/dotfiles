@@ -25,27 +25,36 @@ function! DeleteAllBuffers(f) abort
         call add(no_name_buffers, index)
       endif
 
-      if a:f == 'a'
-        if  (b_name =~ 'term://')
-          call add(terminal_buffers, index)
-        else
-          call add(normal_buffers, index)
-        endif
-     endif
+      if  (b_name =~ 'term://')
+        call add(terminal_buffers, index)
+      else
+        call add(normal_buffers, index)
+      endif
     endif
+
     let index += 1
   endwhile
 
-  if len(no_name_buffers) > 0
-    silent execute 'bwipeout! '.join(no_name_buffers)
-  endif
+  if a:f == 'a'
+    if len(no_name_buffers) > 0
+      silent execute 'bwipeout! '.join(no_name_buffers)
+    endif
 
-  if len(terminal_buffers) > 0
-    silent execute 'bwipeout! '.join(terminal_buffers)
-  endif
+    if len(terminal_buffers) > 0
+      silent execute 'bwipeout! '.join(terminal_buffers)
+    endif
 
-  if len(normal_buffers) > 0
-    silent execute 'bd ' .join(normal_buffers)
+    if len(normal_buffers) > 0
+      silent execute 'bd ' .join(normal_buffers)
+    endif
+  elseif a:f == 'e'
+    if len(no_name_buffers) > 0
+      silent execute 'bwipeout! '.join(no_name_buffers)
+    endif
+  elseif a:f == 't'
+    if len(terminal_buffers) > 0
+      silent execute 'bwipeout! '.join(terminal_buffers)
+    endif
   endif
 endfunction
 
