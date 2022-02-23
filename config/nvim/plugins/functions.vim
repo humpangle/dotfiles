@@ -25,7 +25,7 @@ function! DeleteAllBuffers(f) abort
       if a:f == 'dbui' && (b_name =~ '.dbout' || b_name =~ 'share/db_ui/')
         call add(dbui_buffers, index)
       else
-        if  (b_name == '' )
+        if  (b_name == '' || b_name == ',' )
           call add(no_name_buffers, index)
         endif
 
