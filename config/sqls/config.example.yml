@@ -1,0 +1,18 @@
+# See https://github.com/lighttiger2505/sqls#configuration-file-sample
+# for more examples
+# Set to true to use lowercase keywords instead of uppercase.
+# lowercaseKeywords: false
+lowercaseKeywords: true
+connections:
+  - alias: fmh_is81
+    driver: mysql
+    proto: tcp
+    user: username
+    passwd: pasport
+    host: 127.0.0.1
+    port: 5002
+    dbName: fmh
+    params:
+      autocommit: "true"
+      # When I enabled the below, sqls was not able to connect to mysql db
+      # tls: skip-verify

@@ -146,16 +146,6 @@ return packer.startup(function(use)
 			-- uses `look` command line tool for dictionary word
 			"octaltree/cmp-look",
 
-			-- vim dadbod database plugin
-			{
-				"kristijanhusak/vim-dadbod-completion",
-				config = function()
-					Cmd(
-						[[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]]
-					)
-				end,
-			},
-
 			-- / COMPLETION SOURCES
 
 			-- snippet engine
@@ -293,6 +283,19 @@ return packer.startup(function(use)
 			{
 				"jose-elias-alvarez/nvim-lsp-ts-utils",
 			},
+
+			{
+				-- Neovim plugin for sqls that leverages the built-in LSP client
+				"nanotee/sqls.nvim",
+				config = function()
+					Cmd([[
+                nnoremap <Leader>qs :SqlsExecuteQuery<cr>
+                xnoremap <Leader>qs :SqlsExecuteQuery<cr>
+                nnoremap <Leader>qv :SqlsExecuteQueryVertical<cr>
+                xnoremap <Leader>qv :SqlsExecuteQueryVertical<cr>
+            ]])
+				end,
+			},
 		},
 	})
 
@@ -399,7 +402,17 @@ return packer.startup(function(use)
 
 		-- https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
 		"kristijanhusak/vim-dadbod-ui",
-		"kristijanhusak/vim-dadbod-completion",
+
+		-- vim dadbod database plugin
+		{
+			"kristijanhusak/vim-dadbod-completion",
+			disable = true,
+			config = function()
+				Cmd(
+					[[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]]
+				)
+			end,
+		},
 	})
 
 	-- Image preview

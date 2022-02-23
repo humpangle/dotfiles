@@ -21,7 +21,7 @@ M.server_config_map = {
 
 	html = {
 		no_formatting = true,
-  },
+	},
 
 	-- Set up your intelephense licence:
 	-- -- echo "export INTELEPHENSE_LICENCE=''" >> ~/.bashrc
@@ -52,6 +52,10 @@ M.server_config_map = {
 	},
 
 	yamlls = {},
+
+  -- https://github.com/lighttiger2505/sqls#installation
+  -- go get github.com/lighttiger2505/sqls
+	sqls = {},
 }
 
 return M
