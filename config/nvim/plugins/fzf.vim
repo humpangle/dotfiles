@@ -1,18 +1,18 @@
 " Search file from root directory
-nnoremap <c-p> :FZFFiles!<CR>
+nnoremap <c-p> :Files!<CR>
 " Search file from current directory
-nnoremap <Leader>f. :FZFFiles! <C-r>=expand("%:h")<CR>/<CR>
+nnoremap <Leader>f. :Files! <C-r>=expand("%:h")<CR>/<CR>
 " find open buffers
 nnoremap <Leader>fb :Buffers!<CR>
 " search buffers history
-nnoremap <Leader>fh :FZFHistory!<CR>
+nnoremap <Leader>fh :History!<CR>
 " search for text in current buffer
-nnoremap <Leader>fl :FZFBLines!<CR>
+nnoremap <Leader>fl :BLines!<CR>
 " search for text in loaded buffers
 " nnoremap <Leader>L :Lines!<CR>
-nnoremap <Leader>fm :FZFMarks!<CR>
+nnoremap <Leader>fm :Marks!<CR>
 nnoremap <leader>ft :Filetypes!<CR>
-nnoremap <leader>fw :FZFWindows!<CR>
+nnoremap <leader>fw :Windows!<CR>
 " Find color schemes
 nnoremap <leader>fs :Colors!<CR>
 " commands: user defined, plugin defined, or native commands
@@ -20,7 +20,7 @@ nnoremap <Leader>C :Commands!<CR>
 " key mappings - find already mapped before defining new mappings
 nnoremap <Leader>M :Maps!<CR>
 " search in project - do not match filenames
-nnoremap <Leader>/ :FZFRg!<CR>
+nnoremap <Leader>/ :Rg!<CR>
 
 " GIT
 " Files managed by git
@@ -46,8 +46,8 @@ nnoremap ,/ :Rg!<CR>
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
 
-nnoremap <leader>fq :FZFQuickFix!<CR>
-nnoremap <leader>FL :FZFLocList!<CR>
+nnoremap <leader>fq :QuickFix!<CR>
+nnoremap <leader>FL :LocList!<CR>
 
 function! s:copy_fzf_results(lines)
   let joined_lines = join(a:lines, "\n")

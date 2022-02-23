@@ -302,7 +302,7 @@ return packer.startup(function(use)
 		"junegunn/fzf",
 		"junegunn/fzf.vim",
 		"stsewd/fzf-checkout.vim",
-		"chengzeyi/fzf-preview.vim",
+		-- "chengzeyi/fzf-preview.vim", -- requires COC
 		"voldikss/fzf-floaterm",
 	})
 
