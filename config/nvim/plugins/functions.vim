@@ -17,18 +17,23 @@ function! DeleteAllBuffers(f) abort
   let normal_buffers = []
   let terminal_buffers = []
   let no_name_buffers = []
+  let dbui_buffers = []
 
   while index <= last_b_num
     let b_name = bufname(index)
     if bufexists(index)
-      if  (b_name == '' )
-        call add(no_name_buffers, index)
-      endif
-
-      if  (b_name =~ 'term://')
-        call add(terminal_buffers, index)
+      if a:f == 'dbui' && (b_name =~ '.dbout' || b_name =~ 'share/db_ui/')
+        call add(dbui_buffers, index)
       else
-        call add(normal_buffers, index)
+        if  (b_name == '' )
+          call add(no_name_buffers, index)
+        endif
+
+        if  (b_name =~ 'term://')
+          call add(terminal_buffers, index)
+        else
+          call add(normal_buffers, index)
+        endif
       endif
     endif
 
@@ -54,6 +59,10 @@ function! DeleteAllBuffers(f) abort
   elseif a:f == 't'
     if len(terminal_buffers) > 0
       silent execute 'bwipeout! '.join(terminal_buffers)
+    endif
+  elseif a:f == 'dbui'
+    if len(dbui_buffers) > 0
+      silent execute 'bwipeout! '.join(dbui_buffers)
     endif
   endif
 endfunction
@@ -161,3 +170,4 @@ function! ClearRegisters()
 endfunction
 
 command! ClearRegisters call ClearRegisters()
+command! DeleteDbUi call DeleteAllBuffers('dbui')
