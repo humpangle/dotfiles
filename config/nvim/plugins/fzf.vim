@@ -20,7 +20,7 @@ nnoremap <Leader>C :Commands!<CR>
 " key mappings - find already mapped before defining new mappings
 nnoremap <Leader>M :Maps!<CR>
 " search in project - do not match filenames
-nnoremap <Leader>/ :Rg!<CR>
+nnoremap <Leader>/ :RgNf!<CR>
 
 " GIT
 " Files managed by git
@@ -48,6 +48,11 @@ nmap <Leader>H :Helptags!<CR>
 
 nnoremap <leader>fq :QuickFix!<CR>
 nnoremap <leader>FL :LocList!<CR>
+
+command! -bang -nargs=* RgNf
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case --no-filename -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
 
 function! s:copy_fzf_results(lines)
   let joined_lines = join(a:lines, "\n")
