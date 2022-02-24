@@ -422,7 +422,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 	fi
 
 	if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
-		sudo "$HOME/dotfiles/etc/wsl.nameserver"
+		sudo "$HOME/dotfiles/etc/wsl-nameserver.sh"
 	fi
 
 fi
