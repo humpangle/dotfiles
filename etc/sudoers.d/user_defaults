@@ -6,3 +6,4 @@
 # %docker ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
 # username ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
 # %username ALL=(ALL)  NOPASSWD: /home/username/dotfiles/etc/wsl.nameserver
+# %username ALL=(ALL)  NOPASSWD: /home/username/dotfiles/etc/wsl-drop-caches.sh
