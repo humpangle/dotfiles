@@ -180,7 +180,14 @@ return packer.startup(function(use)
 			},
 
 			-- simple to use language server installer
-			"williamboman/nvim-lsp-installer",
+			{
+				"williamboman/nvim-lsp-installer",
+				config = function()
+					Cmd([[
+            nnoremap <C-X> :LspInstallInfo<cr>
+          ]])
+				end,
+			},
 
 			-- language server settings defined in json for
 			"tamago324/nlsp-settings.nvim",
