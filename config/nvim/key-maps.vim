@@ -65,6 +65,14 @@ nnoremap ,tc :tabclose<CR>
 noremap <A-Left>  :-tabmove<cr>
 noremap <A-Right> :+tabmove<cr>
 
+" Switch between last active and current tab
+" https://stackoverflow.com/a/2120168
+if !exists('g:lasttab')
+  let g:lasttab = 1
+endif
+nmap <Leader>lt :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
 " RESIZE WINDOW
 nnoremap <c-left> :vertical resize -2<CR>
 nnoremap <c-right> :vertical resize +2<CR>
