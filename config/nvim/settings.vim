@@ -32,6 +32,9 @@ let g:netrw_banner = 0
 " Change the copy command. Mostly to enable recursive copy of directories.
 let g:netrw_localcopydircmd = 'cp -r'
 
+" Line numbering
+let g:netrw_bufsettings = 'noma nomod rnu nobl nowrap ro'
+
 " Highlight marked files in the same way search matches are. - seems to make
 " no difference.
 " hi! link netrwMarkFile Search
