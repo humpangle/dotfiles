@@ -70,7 +70,7 @@ noremap <A-Right> :+tabmove<cr>
 if !exists('g:lasttab')
   let g:lasttab = 1
 endif
-nmap <Leader>lt :exe "tabn ".g:lasttab<CR>
+nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 " RESIZE WINDOW
