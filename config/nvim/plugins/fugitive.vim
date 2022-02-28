@@ -1,6 +1,6 @@
 " git status
 nnoremap <leader>gg  :Git<CR>
-nnoremap <leader>gc  :Git commit<CR>
+nnoremap <leader>cc  :Git commit<CR>
 " vertical split (3 way merge) to resolve git merge conflict
 nnoremap <leader>gd  :Gvdiffsplit!<CR>
 nnoremap <leader>g.  :Git add .<CR>
