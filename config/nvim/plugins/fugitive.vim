@@ -28,6 +28,8 @@ nnoremap <leader>gh  :Git push github HEAD
 nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
 nnoremap <leader>gf  :Git push --force-with-lease origin HEAD
 nnoremap <leader>gF  :Git push --force-with-lease github HEAD
+" gt = git take
+nnoremap <leader>gt  :Git pull <right>
 nnoremap <leader>ca  :Git commit --amend
 nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>ct  :Git commit --allow-empty -m ""<left>
