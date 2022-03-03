@@ -9,6 +9,9 @@ Vimw = Vim.wo
 Vimf = Vim.fn
 
 -- Automatically install packer
+
+PACKER_BOOTSTRAP = false
+
 local install_path = Vimf.stdpath("data")
 	.. "/site/pack/packer/start/packer.nvim"
 if Vimf.empty(Vimf.glob(install_path)) > 0 then
