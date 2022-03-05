@@ -213,9 +213,12 @@ gsd() {
 }
 
 alias ..='cd ..'
-alias .2='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
+alias 2.='cd ../..'
+alias 3.='cd ../../..'
+alias 4.='cd ../../../..'
+alias .2=2.
+alias .3=3.
+alias .4=4.
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
 alias cdd='cd $HOME/dotfiles'
