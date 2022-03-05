@@ -52,7 +52,7 @@ nnoremap <leader>FL :LocList!<CR>
 command! -bang -nargs=* RgNf
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
 function! s:copy_fzf_results(lines)
   let joined_lines = join(a:lines, "\n")
@@ -77,7 +77,7 @@ let g:fzf_action = {
   \ 'ctrl-q': function('s:build_quickfix_list'),
   \ }
 
-let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 
 " scroll the fzf vim listing buffer
 autocmd FileType fzf tnoremap <buffer> <C-j> <Down>
