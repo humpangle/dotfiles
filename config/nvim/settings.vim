@@ -51,6 +51,7 @@ let g:markdown_fenced_languages = [
   \ 'css',
   \ 'vue',
   \ 'dart',
+  \ 'elixir',
 \]
 
 syntax enable
