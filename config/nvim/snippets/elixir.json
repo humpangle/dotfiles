@@ -430,11 +430,6 @@
     "body": ["defmodule ${1:module_name} do", "  $0", "end"],
     "description": "Define a module"
   },
-  "def": {
-    "prefix": "def",
-    "body": ["def ${1:func_name}() do", "  $0", "end"],
-    "description": "Define a function"
-  },
   "if .. do .. end": {
     "prefix": "if",
     "body": ["if ${1:condition} do", "  $0", "end"]

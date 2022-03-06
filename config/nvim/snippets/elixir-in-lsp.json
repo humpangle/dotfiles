@@ -9,5 +9,10 @@
     "prefix": "fn",
     "body": ["fn(${1:param}) -> ${2:expr} end"],
     "description": "Anonymous function"
+  },
+  "def": {
+    "prefix": "def",
+    "body": ["def ${1:func_name}() do", "  $0", "end"],
+    "description": "Define a function"
   }
 }
