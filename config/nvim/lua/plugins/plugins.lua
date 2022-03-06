@@ -430,7 +430,14 @@ return packer.startup(function(use)
 	use({ "mi60dev/image.vim" })
 
 	-- tmux-like window navigation
-	use({ "t9md/vim-choosewin" })
+	use({
+		"t9md/vim-choosewin",
+		config = function()
+			Cmd([[
+        nmap <Leader>- <Plug>(choosewin)
+      ]])
+		end,
+	})
 
 	-- Send text from vim to tmux/NeoVim :terminal etc
 	use({ "jpalardy/vim-slime" })
