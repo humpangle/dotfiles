@@ -1,10 +1,4 @@
 {
-  "fn": {
-    "prefix": "fn",
-    "body": ["fn(${1:param}) -> ${2:expr} end"],
-    "description": "Anonymous function"
-  },
-
   "if clause": {
     "prefix": "if",
     "body": ["if ${1:expr} do", "  ${2:expr}", "end"],
@@ -440,11 +434,6 @@
     "prefix": "def",
     "body": ["def ${1:func_name}() do", "  $0", "end"],
     "description": "Define a function"
-  },
-  "defp": {
-    "prefix": "defp",
-    "body": ["defp ${1:func_name}() do", "  $0", "end"],
-    "description": "Private function"
   },
   "if .. do .. end": {
     "prefix": "if",
