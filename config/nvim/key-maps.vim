@@ -126,12 +126,13 @@ nnoremap ,ss :source %<CR>
 " nnoremap <leader>sc, :!clear && shellcheck -x %<CR>
 
 " TO MOVE LINES up/down
-nnoremap <A-k> :m .-2<CR>==
-nnoremap <A-j> :m .+1<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+" Use unimpaired's [e and ]e
+" nnoremap <A-k> :m .-2<CR>==
+" nnoremap <A-j> :m .+1<CR>==
+" inoremap <A-j> <Esc>:m .+1<CR>==gi
+" inoremap <A-k> <Esc>:m .-2<CR>==gi
+" vnoremap <A-j> :m '>+1<CR>gv=gv
+" vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " TERMINAL
 tnoremap <C-h> <C-\><C-N><C-w>h
@@ -172,7 +173,8 @@ nnoremap <leader>wd :pwd<CR>
 
 " SEARCH AND REPLACE
 " remove highlight from search term
-nnoremap <leader>nh :noh<cr>
+" Use yoh
+" nnoremap <leader>nh :noh<cr>
 
 vnoremap <leader>*
   \ :let @+=
