@@ -112,7 +112,7 @@ alias tp='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz'
 alias tn='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz && tmux new -s '
 alias tndot='cd ~/dotfiles && tn dot'
 alias tks='tmux kill-session -t'
-alias tkss='tmux kill-server -t'
+alias tkss='tmux kill-server'
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
