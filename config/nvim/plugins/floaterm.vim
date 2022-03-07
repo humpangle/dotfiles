@@ -18,7 +18,6 @@ endif
 nnoremap <Leader>FF :FloatermNew --title=
 nnoremap <Leader>FT :FloatermToggle<CR>
 nnoremap <C-`> :FloatermToggle<CR>
-nnoremap <Leader>ff :Floaterms<CR>
 nnoremap <Leader>__FloatermNewVSplit :FloatermNew --wintype='vsplit'
 nnoremap <Leader>FK :FloatermKill!
 nnoremap <Leader>vi :FloatermNew vifm <CR>

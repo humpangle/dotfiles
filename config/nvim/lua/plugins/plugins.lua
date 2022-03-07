@@ -316,24 +316,6 @@ return packer.startup(function(use)
 		"junegunn/fzf.vim",
 		"stsewd/fzf-checkout.vim",
 		-- "chengzeyi/fzf-preview.vim", -- requires COC
-		{
-			"voldikss/fzf-floaterm",
-			config = function()
-				Cmd([[
-            let g:fzf_floaterm_newentries = {
-                \ '+root' : {
-                  \ 'title': 'Root Shell',
-                  \ 'cmd': 'sudo sh' },
-                \ '+fish' : {
-                  \ 'title': 'Fish Shell',
-                  \ 'cmd': 'fish' },
-                \ '+pwsh' : {
-                  \ 'title': 'Powershell',
-                  \ 'cmd': 'pwsh' }
-            \ }
-        ]])
-			end,
-		},
 	})
 
 	-- GIT
