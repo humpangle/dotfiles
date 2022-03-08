@@ -63,6 +63,13 @@ alias ds='sudo service docker start'
 alias dn='docker network '
 alias dnls='docker network ls'
 
+# https://stackoverflow.com/a/42510314
+dcrmlogs() {
+  local log_path = $(docker inspect --format='{{.LogPath}}' "$1")
+  echo "truncating $log_path"
+	echo "" | sudo tee "$log_path"
+}
+
 alias ngrokd='ngrok http '
 
 alias ug='clear && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
