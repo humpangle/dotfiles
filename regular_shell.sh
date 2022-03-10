@@ -67,9 +67,14 @@ alias dcpsa='docker-compose ps -a'
 
 # https://stackoverflow.com/a/42510314
 dcrmlogs() {
-  local log_path = $(docker inspect --format='{{.LogPath}}' "$1")
-  echo "truncating $log_path"
-	echo "" | sudo tee "$log_path"
+  if [[ "$1" == "-h" ]]; then
+    echo "Usage: dcrmlogs container_name_or_ID"
+  else
+    local log_path
+    log_path=$(docker inspect --format='{{.LogPath}}' "$1")
+    echo "truncating $log_path"
+    echo "" | sudo tee "$log_path"
+  fi
 }
 
 alias ngrokd='ngrok http '
