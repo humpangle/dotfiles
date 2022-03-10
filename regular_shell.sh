@@ -62,6 +62,8 @@ alias dvlsq='docker volume ls -q'
 alias ds='sudo service docker start'
 alias dn='docker network '
 alias dnls='docker network ls'
+alias dcps='docker-compose ps'
+alias dcpsa='docker-compose ps -a'
 
 # https://stackoverflow.com/a/42510314
 dcrmlogs() {
