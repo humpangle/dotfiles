@@ -213,6 +213,8 @@ nnoremap <leader>bw :bw%<cr>
 " go to buffer number - use like so gb34
 nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>
+" Remove conents of current file
+nnoremap <leader>r% :%delete<cr>:w!<cr>
 
 " mbbill/undotree
 " nnoremap <A-u> :UndotreeToggle<CR>
