@@ -83,7 +83,7 @@ set hlsearch
 " :%s/term/sub will be highlighted as sub is typed
 set inccommand=nosplit
 " sub will be opened in split window
-set inccommand=split
+" set inccommand=split
 
 " Tab Splits
 set splitbelow
