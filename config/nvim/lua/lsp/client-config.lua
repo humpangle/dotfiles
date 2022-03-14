@@ -1,5 +1,5 @@
-local lsp_utils = require("lsp.utils")
-local server_config_map = lsp_utils.server_config_map
+local servers_names_map_module = require("lsp.server-names-to-flags-map")
+local servers_names_map = servers_names_map_module.servers_names_map
 
 local M = {}
 
@@ -185,7 +185,7 @@ local function lsp_keymaps(bufnr)
 
 	-- show line diagnostics on hover
 	vim.cmd([[
-      autocmd CursorHold <buffer> lua require('lsp.config').show_line_diagnostics()
+      autocmd CursorHold <buffer> lua require('lsp.client-config').show_line_diagnostics()
   ]])
 
 	vim.api.nvim_buf_set_keymap(
@@ -241,15 +241,17 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-	local client_config = server_config_map[client.name]
+	local server_config = servers_names_map[client.name]
 
-	if client_config.no_formatting then
+	if server_config.no_formatting then
 		client.resolved_capabilities.document_formatting = false
 	end
 
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
 end
+
+-- Let `cmp_nvim_lsp` show completions
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 

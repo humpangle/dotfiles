@@ -8,7 +8,7 @@ local M = {}
 
 -- Some servers will have their LSP formatting capabilities disabled
 -- as we will be using null-ls
-M.server_config_map = {
+M.servers_names_map = {
 	bashls = {},
 
 	cssls = {},

@@ -395,7 +395,7 @@ return packer.startup(function(use)
 		-- vim dadbod database plugin
 		{
 			"kristijanhusak/vim-dadbod-completion",
-			disable = true,
+			disable = true, -- favor sqls
 			config = function()
 				Cmd(
 					[[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]]
@@ -405,7 +405,7 @@ return packer.startup(function(use)
 	})
 
 	-- Image preview
-	-- install -U Pillow
+	-- pip install -U Pillow
 	use({ "mi60dev/image.vim" })
 
 	-- tmux-like window navigation
@@ -459,7 +459,16 @@ return packer.startup(function(use)
 	})
 
 	-- Quickly toggle maximaize a tab
-	use({ "szw/vim-maximizer" })
+	use({
+		"szw/vim-maximizer",
+		config = function()
+			Cmd([[
+            let g:maximizer_set_default_mapping = 0
+            nnoremap mm :MaximizerToggle!<CR>
+            xnoremap mm :MaximizerToggle!<CR>
+      ]])
+		end,
+	})
 
 	use({ "editorconfig/editorconfig-vim" })
 

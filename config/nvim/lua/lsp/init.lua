@@ -3,5 +3,5 @@ if not status_ok then
     return
 end
 
-require "lsp.installer"
-require("lsp.config").setup()
+require "lsp.install-and-start-server"
+require("lsp.client-config").setup()

@@ -1,8 +1,6 @@
 " https://github.com/dag/vim-fish#teach-a-vim-to-fish
 set shell=/bin/bash
 
-" szw/vim-maximizer
-let g:maximizer_set_default_mapping = 0
 
 " editorconfig/editorconfig-vim
 let g:EditorConfig_exclude_patterns = ["fugitive://.*"]
@@ -18,10 +16,8 @@ so ~/.config/nvim/plugins/fzf.vim
 so ~/.config/nvim/plugins/floaterm.vim
 so ~/.config/nvim/plugins/vcoolor.vim
 so ~/.config/nvim/plugins/vimspector.vim
-so ~/.config/nvim/plugins/markdown-preview.vim
 so ~/.config/nvim/plugins/dadbod-ui.vim
 so ~/.config/nvim/plugins/easymotion.vim
-so ~/.config/nvim/plugins/maximizer.vim
 so ~/.config/nvim/plugins/vim-phpfmt.vim
 so ~/.config/nvim/plugins/vim-rest-console.vim
 so ~/.config/nvim/plugins/vim-choosewin.vim
