@@ -67,14 +67,14 @@ alias dcpsa='docker-compose ps -a'
 
 # https://stackoverflow.com/a/42510314
 dcrmlogs() {
-  if [[ "$1" == "-h" ]]; then
-    echo "Usage: dcrmlogs container_name_or_ID"
-  else
-    local log_path
-    log_path=$(docker inspect --format='{{.LogPath}}' "$1")
-    echo "truncating $log_path"
-    echo "" | sudo tee "$log_path"
-  fi
+	if [[ "$1" == "-h" ]]; then
+		echo "Usage: dcrmlogs container_name_or_ID"
+	else
+		local log_path
+		log_path=$(docker inspect --format='{{.LogPath}}' "$1")
+		echo "truncating $log_path"
+		echo "" | sudo tee "$log_path"
+	fi
 }
 
 alias ngrokd='ngrok http '
@@ -295,7 +295,8 @@ splitenvs() {
 
 	declare -A vv
 
-	for LINE in $(grep -E '[A-Z][A-Z0-9]+?=.+' "$env_file_abs_path" | grep -v '#' | awk '{print $1}'); do
+	# shellcheck disable=2013
+	for LINE in $(grep -v '^#' "$env_file_abs_path" | awk '{print $1}'); do
 		key=$(echo "$LINE" | cut -d '=' -f 1)
 		val=$(echo "$LINE" | cut -d '=' -f 2)
 
@@ -317,7 +318,7 @@ splitenvs() {
 
 	for key in "${!vv[@]}"; do
 		echo "$key=${vv[$key]}" >>"$new_file"
-		# echo "$key ========== ${vv[$key]}" >/dev/null
+		echo "$key=${vv[$key]}"
 	done
 }
 alias spe='splitenvs'
