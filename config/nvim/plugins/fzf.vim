@@ -46,7 +46,7 @@ nnoremap ,/ :Rg!<CR>
 " Vim’s :help documentation
 nmap <Leader>H :Helptags!<CR>
 
-nnoremap <leader>fq :QuickFix!<CR>
+nnoremap <leader>fq :FzfQF!<CR>
 nnoremap <leader>FL :LocList!<CR>
 
 command! -bang -nargs=* RgNf
@@ -106,7 +106,7 @@ function! s:fzf_to_qf(filtered_list) abort
   endif
 endfunction
 
-command! FzfQF call fzf#run({
+command! -bang FzfQF call fzf#run({
       \ 'source': map(getqflist(), function('<sid>qf_to_fzf')),
       \ 'down':   '20',
       \ 'sink*':   function('<sid>fzf_to_qf'),
