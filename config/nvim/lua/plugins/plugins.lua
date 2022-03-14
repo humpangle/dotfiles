@@ -192,9 +192,6 @@ return packer.startup(function(use)
 				end,
 			},
 
-			-- language server settings defined in json for
-			"tamago324/nlsp-settings.nvim",
-
 			-- Code actions, diagnostics = linters, formatters, hover,  completion
 			{
 				"jose-elias-alvarez/null-ls.nvim",

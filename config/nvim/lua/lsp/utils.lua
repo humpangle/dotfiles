@@ -1,3 +1,9 @@
+-- This is a map of server names and some flags so that in `./config.lua` and I
+-- wouldn't need to do `if...else`. Options that can be passed to each server
+-- on initialization can be found in `./settings/`. For each server, go to
+-- https://github.com/tamago324/nlsp-settings.nvim/tree/main/schemas to see
+-- what options are available
+
 local M = {}
 
 -- Some servers will have their LSP formatting capabilities disabled

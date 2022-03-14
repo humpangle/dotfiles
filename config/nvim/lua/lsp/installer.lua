@@ -1,4 +1,5 @@
 local lsp_config = require("lsp.config")
+local lsp_utils = require("lsp.utils")
 
 local lsp_installer_ok, _ = pcall(require, "nvim-lsp-installer")
 if not lsp_installer_ok then
@@ -6,8 +7,6 @@ if not lsp_installer_ok then
 end
 
 local lsp_installer_servers = require("nvim-lsp-installer.servers")
-
-local lsp_utils = require("lsp.utils")
 
 local server_config_map = lsp_utils.server_config_map
 
@@ -21,12 +20,12 @@ for server_name, _ in pairs(server_config_map) do
 			local on_attach = lsp_config.on_attach
 			local capabilities = lsp_config.capabilities
 
-			local server_config_ok, server_opts = pcall(
+			local has_server_opts, server_opts = pcall(
 				require,
 				"lsp.settings." .. server_name
 			)
 
-			if not server_config_ok then
+			if not has_server_opts then
 				server_opts = {}
 			end
 
