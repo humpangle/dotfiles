@@ -274,8 +274,21 @@ if [ -x "$(command -v sort-package-json)" ]; then
 fi
 
 setenvs() {
+	local path
+	path="$1"
+
+  # Check for path 3 levels deep.
+	if ! [[ -e "$path" ]]; then
+		path="../$path"
+
+		if ! [[ -e "$path" ]]; then
+			path="../$path"
+		fi
+	fi
+
 	set -a
-	. "$1"
+	# shellcheck disable=1090
+	. "$path"
 	set +a
 	# set -o allexport; source "$1"; set +o allexport
 }
