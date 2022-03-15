@@ -16,13 +16,11 @@ local function get_typescript_server_path(root_dir)
 			"lib",
 			"tsserverlibrary.js"
 		)
-	local global_tsserverlib =
-		"/home/[yourusernamehere]/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
 
 	if local_tsserverlib and util.path.exists(local_tsserverlib) then
 		return local_tsserverlib
 	else
-		return global_tsserverlib
+		return os.getenv("TS_SERVER_GBLOBAL_LIBRARY_PATH") or ""
 	end
 end
 
