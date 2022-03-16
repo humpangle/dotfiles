@@ -382,6 +382,18 @@ return packer.startup(function(use)
 		"dart-lang/dart-vim-plugin",
 	})
 
+  use({
+    'aeke/vim-phpfmt',
+			config = function()
+        Cmd([[
+          let g:phpfmt_psr2 = 1
+          " let g:phpfmt_enable_auto_align = 1
+          let g:phpfmt_on_save = 0
+          nmap <leader>pc1 :w<CR>:call PhpFmtFixFile()<CR>
+        ]])
+			end,
+  })
+
 	-- making rest api call
 	use({ "diepm/vim-rest-console" })
 

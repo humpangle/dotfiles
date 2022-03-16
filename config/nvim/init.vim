@@ -18,7 +18,6 @@ so ~/.config/nvim/plugins/vcoolor.vim
 so ~/.config/nvim/plugins/vimspector.vim
 so ~/.config/nvim/plugins/dadbod-ui.vim
 so ~/.config/nvim/plugins/easymotion.vim
-so ~/.config/nvim/plugins/vim-phpfmt.vim
 so ~/.config/nvim/plugins/vim-rest-console.vim
 so ~/.config/nvim/plugins/vim-choosewin.vim
 so ~/.config/nvim/plugins/vim-slime.vim
