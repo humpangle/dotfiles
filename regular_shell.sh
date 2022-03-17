@@ -154,6 +154,7 @@ splitp() {
 
 	local window_name="$2"
 
+	# shellcheck disable=2164
 	cd "$dir"
 
 	tmux rename-window "$window_name" \
@@ -389,45 +390,21 @@ if [ -d "$HOME/.fzf" ]; then
 
 	FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
 
+	# shellcheck disable=2139
 	alias ff="fzf $FZF_PREVIEW_APP"
 	alias eff='env | fzf'
 	alias aff='alias | fzf'
 fi
 
 if [ -d "$HOME/.asdf" ]; then
+	# shellcheck disable=2086,1090
 	. $HOME/.asdf/asdf.sh
+	# shellcheck disable=2086,1090
 	. $HOME/.asdf/completions/asdf.bash
 
 	if command -v asdf 1>/dev/null 2>&1; then
 		TS_SERVER_GBLOBAL_LIBRARY_PATH="$HOME/.asdf/installs/nodejs/$(asdf current nodejs | awk '{print $2}')/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
 		export TS_SERVER_GBLOBAL_LIBRARY_PATH
-
-		# Preprend asdf bin paths for programming executables
-		# required to use VSCODE for some programming languages
-
-		no_version_set="No version set"
-
-		add_asdf_plugins_to_path() {
-			plugin=$1
-			activated="$(asdf current $plugin)"
-
-			case "$no_version_set" in
-			*$activated*)
-				# echo "not activated"
-				;;
-
-			*)
-				version="$(echo $activated | cut -d' ' -f1)"
-				bin_path="$HOME/.asdf/installs/$plugin/$version/bin"
-				export PATH="$bin_path:$PATH"
-				;;
-			esac
-		}
-
-		alias adf='asdf '
-
-		# add_asdf_plugins_to_path elixir
-		# add_asdf_plugins_to_path erlang
 	fi
 fi
 
@@ -448,6 +425,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 	# up memory, this command will free your memory after about 20-30 seconds.
 	#   Details: https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
 	# alias dpc="clear && sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
+	# shellcheck disable=2139
 	alias dpc="sudo $HOME/dotfiles/etc/wsl-drop-caches.sh"
 
 	if [ -x "$(command -v docker)" ]; then
@@ -456,7 +434,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 		# https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
 
 		# Start Docker daemon automatically when logging in if not running.
-		RUNNING=$(ps aux | grep dockerd | grep -v grep)
+		RUNNING=$(pgrep -f dockerd)
 
 		if [ -z "$RUNNING" ]; then
 			sudo dockerd >/dev/null 2>&1 &
