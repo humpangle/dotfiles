@@ -70,7 +70,7 @@ alias dcpsa='docker-compose ps -a'
 
 # https://stackoverflow.com/a/42510314
 dcrmlogs() {
-	if [[ "$1" == "-h" ]]; then
+	if [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
 		echo "Usage: dcrmlogs container_name_or_ID"
 	else
 		local log_path
@@ -78,6 +78,12 @@ dcrmlogs() {
 		echo "truncating $log_path"
 		echo "" | sudo tee "$log_path"
 	fi
+}
+
+# docker-compose up --daemon and logs --follow
+dcudl() {
+  docker-compose up -d "$@" \
+    && docker-compose logs -f "$@"
 }
 
 alias ngrokd='ngrok http '
