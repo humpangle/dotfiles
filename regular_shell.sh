@@ -316,32 +316,28 @@ splitenvs() {
 
 	env_file_abs_path="$env_file_abs_dir/$1"
 
-	declare -A vv
+	declare -A env_key_to_value_map
 
 	# shellcheck disable=2013
-	for LINE in $(grep -v '^#' "$env_file_abs_path" | awk '{print $1}'); do
-		key=$(echo "$LINE" | cut -d '=' -f 1)
-		val=$(echo "$LINE" | cut -d '=' -f 2)
+	for line in $(grep -v '^#' "$env_file_abs_path" | awk '{print $1}'); do
+		key=$(echo "$line" | cut -d '=' -f 1)
+		val=$(echo "$line" | cut -d '=' -f 2)
 
-		for LINE_WITH_VARIRABLES in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
-			variable_text="\${$LINE_WITH_VARIRABLES}"
-			variable_val="${vv[$LINE_WITH_VARIRABLES]}"
+		for line_with_varirables in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
+			variable_text="\${$line_with_varirables}"
+			variable_val="${env_key_to_value_map[$line_with_varirables]}"
 
-			# echo "$LINE --- $variable_text --- $variable_val"
 			val="${val//$variable_text/$variable_val}"
-			# echo -e "$LINE\n"
 		done
 
-		# echo -e "${LINE//\"/}"
-
-		vv["$key"]="${val}"
+		env_key_to_value_map["$key"]="${val}"
 	done
 
 	new_file="$env_file_abs_dir/$1.n"
 
-	for key in "${!vv[@]}"; do
-		echo "$key=${vv[$key]}" >>"$new_file"
-		echo "$key=${vv[$key]}"
+	for key in "${!env_key_to_value_map[@]}"; do
+		echo "$key=${env_key_to_value_map[$key]}" >>"$new_file"
+		echo "$key=${env_key_to_value_map[$key]}"
 	done
 }
 alias spe='splitenvs'
