@@ -369,14 +369,14 @@ return packer.startup(function(use)
 
 	use({
 		"easymotion/vim-easymotion",
-    config = function ()
-      Cmd([[
+		config = function()
+			Cmd([[
           let g:EasyMotion_smartcase = 1
 
           nmap <leader>2 <Plug>(easymotion-overwin-f2)
           " nmap s <Plug>(easymotion-overwin-f2)
       ]])
-    end
+		end,
 
 		-- Easy motion alternative
 		-- "ggandor/lightspeed.nvim",
@@ -486,7 +486,21 @@ return packer.startup(function(use)
 	})
 
 	-- Send text from vim to tmux/NeoVim :terminal etc
-	use({ "jpalardy/vim-slime" })
+	use({
+		"jpalardy/vim-slime",
+		config = function()
+			Cmd([[
+          let g:slime_target = "tmux"
+          " let g:slime_target = "neovim"
+
+          " Vim slime will prompt you for some config the first time it is ran.
+          let g:slime_default_config = {
+            \ "socket_name": "default",
+            \ "target_pane": "dot:"
+          \}
+      ]])
+		end,
+	})
 
 	-- MARKDOWN
 	use({
