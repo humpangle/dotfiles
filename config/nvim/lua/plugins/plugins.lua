@@ -72,18 +72,6 @@ return packer.startup(function(use)
 		"lifepillar/vim-solarized8",
 	})
 
-	-- Improves Vim's spell checking function
-
-	use({
-		"kamykn/spelunker.vim",
-		disable = true,
-		config = function()
-			Vimg.enable_spelunker_vim_on_readonly = 1
-		end,
-
-		requires = { "kamykn/popup-menu.nvim" },
-	})
-
 	-- LANGUAGE SERVERS / SYNTAX CHECKING
 	use({
 		"neoclide/coc.nvim",
@@ -303,6 +291,16 @@ return packer.startup(function(use)
             ]])
 				end,
 			},
+
+			{
+				"kamykn/spelunker.vim",
+				disable = true,
+				config = function()
+					Vimg.enable_spelunker_vim_on_readonly = 1
+				end,
+
+				requires = { "kamykn/popup-menu.nvim" },
+			},
 		},
 	})
 
@@ -382,17 +380,17 @@ return packer.startup(function(use)
 		"dart-lang/dart-vim-plugin",
 	})
 
-  use({
-    'aeke/vim-phpfmt',
-			config = function()
-        Cmd([[
+	use({
+		"aeke/vim-phpfmt",
+		config = function()
+			Cmd([[
           let g:phpfmt_psr2 = 1
           " let g:phpfmt_enable_auto_align = 1
           let g:phpfmt_on_save = 0
           nmap <leader>pc1 :w<CR>:call PhpFmtFixFile()<CR>
         ]])
-			end,
-  })
+		end,
+	})
 
 	-- making rest api call
 	use({ "diepm/vim-rest-console" })
