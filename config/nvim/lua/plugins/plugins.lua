@@ -103,7 +103,7 @@ return packer.startup(function(use)
 		requires = { "neoclide/jsonc.vim" },
 	})
 
-	-- LSP / COMPLETION ENGINE
+	-- NATIVE NEOVIM LSP / COMPLETION ENGINE
 	use({
 		"hrsh7th/nvim-cmp",
 		-- disable = true,
