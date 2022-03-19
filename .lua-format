@@ -4,3 +4,6 @@ keep_simple_function_one_line: false
 chop_down_parameter: true
 chop_down_table: true
 extra_sep_at_table_end: true
+indent_width: 2
+tab_width: 2
+continuation_indent_width: 2
