@@ -10,7 +10,6 @@
   "cSpellExt.enableDictionaries": ["german", "french"],
   "cSpell.language": "en,de,fr",
   "elixirLS.dialyzerEnabled": false,
-  "elixir.pathToElixirLS": "~/projects/elixir-ls/1.13.1-otp-24/release/language_server.sh",
   "languageserver": {
     /* npm i -g graphql-language-service-cli */
     //    "graphql": {
@@ -40,10 +39,8 @@
   "intelephense.progress.enable": false,
   "intelephense.telemetry.enabled": false,
   // "coc.preferences.formatOnSaveFiletypes": ["json", "typescript", "javascript"],
-  "coc.preferences.semanticTokensHighlights": true,
   "volar.diagnostics.enable": false,
   "volar.codeLens.references": false,
-  "volar.tagNameCase": "kebab",
   /* "volar.codeLens.scriptSetupTools": false, */
   /* "volar.formatting.enable": false, */
   "prettier.disableLanguages": [],

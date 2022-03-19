@@ -1,3 +1,7 @@
+local set = vim.opt
+local Vimg = vim.g
+local keymap = vim.api.nvim_set_keymap
+
 -- 'coc-flutter-tools',
 -- 'coc-yank',
 -- 'coc-vetur',
@@ -12,74 +16,77 @@
 -- 'coc-emmet',
 --
 local coc_extensions = {
-    "coc-elixir",
-    "coc-spell-checker",
-    "coc-cspell-dicts",
-    "coc-json",
-    "coc-jedi",
-    "coc-emmet",
-    "coc-tsserver",
-    "coc-snippets",
-    "coc-css",
-    "coc-html",
-    "coc-eslint",
-    "coc-pairs",
-    "coc-prettier",
-    "coc-svelte",
-    "coc-docker",
-    "coc-svg",
-    "coc-vimlsp",
-    "coc-lua",
-    "@yaegassy/coc-intelephense",
-    "@yaegassy/coc-volar",
-    "coc-blade",
-    "coc-flutter",
-    -- Database auto completion powered by vim-dadbod
-    "coc-db",
-    "https://github.com/rodrigore/coc-tailwind-intellisense",
+  "coc-elixir",
+  "coc-spell-checker",
+  "coc-cspell-dicts",
+  "coc-json",
+  "coc-jedi",
+  "coc-emmet",
+  "coc-tsserver",
+  "coc-snippets",
+  "coc-css",
+  "coc-html",
+  "coc-eslint",
+  "coc-pairs",
+  "coc-prettier",
+  "coc-svelte",
+  "coc-docker",
+  "coc-svg",
+  "coc-vimlsp",
+  "coc-lua",
+  "@yaegassy/coc-intelephense",
+  "@yaegassy/coc-volar",
+  "coc-blade",
+  "coc-flutter",
+  -- Database auto completion powered by vim-dadbod
+  "coc-db",
+  "https://github.com/rodrigore/coc-tailwind-intellisense",
 }
 
 if vim.fn.has("win32") == 1 then
-    table.insert(coc_extensions, "coc-powershell")
+  table.insert(coc_extensions, "coc-powershell")
 else
-    table.insert(coc_extensions, "coc-sh")
+  table.insert(coc_extensions, "coc-sh")
 end
 
-vim.g.coc_global_extensions = coc_extensions
+Vimg.coc_global_extensions = coc_extensions
 
 -- COC VOLAR
 -- yarn add --dev vue-tsc / npm i -g vue-tsc
 
 -- :CocCommand eslint.showOutputChannel
 
--- vim.g.coc_force_debug = 1
-vim.g.coc_filetype_map = {
-    htmldjango = "html",
-    [".eslintrc"] = "json",
-    jinja = "html",
-    eelixir = "html",
+-- Vimg.coc_force_debug = 1
+Vimg.coc_filetype_map = {
+  htmldjango = "html",
+  [".eslintrc"] = "json",
+  jinja = "html",
+  eelixir = "html",
 }
+
+-- Some servers have issues with backup files, see #649
+set.backup = false
+set.writebackup = false
+-- Give more space for displaying messages.
+set.cmdheight = 2
+-- don't give |ins-completion-menu| messages.
+set.shortmess:append("c")
+-- Always show the signcolumn, otherwise it would shift the text each time
+-- diagnostics appear/become resolved.
+set.signcolumn = "auto"
+
+-- Use tab and shift tab to move to next/previous placeholders in snippets
+
+keymap("i", "<tab>", "<Plug>(coc-snippets-expand)", {noremap = false})
+
+Vimg.coc_snippet_next = "<TAB>"
+Vimg.coc_snippet_prev = "<S-TAB>"
+
+keymap("n", "<leader>fc", ":Format<CR>", {noremap = true})
 
 vim.cmd([[
 " hack to make vim think this is a script
 let s:some = 1
-
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
-" Give more space for displaying messages.
-set cmdheight=2
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=auto
-
-" Use tab and shift tab to move to next/previous placeholders in snippets
-imap <tab> <Plug>(coc-snippets-expand)
-
-let g:coc_snippet_next = '<TAB>'
-let g:coc_snippet_prev = '<S-TAB>'
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -147,9 +154,7 @@ vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(
 
 " Use `:Format` to format current buffer using LSP
 command! -nargs=0 Format :call CocAction('format')
-" nnoremap fc :Format<CR>
 xmap <leader>fc :Format<CR>
-nmap <leader>fc :Format<CR>
 
 " Use ``:Prettier` to format current buffer.
 " If there is a formatter registered with the LSP, prettier has lower
