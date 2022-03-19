@@ -14,7 +14,6 @@ so ~/.config/nvim/key-maps.vim
 so ~/.config/nvim/plugins/fugitive.vim
 so ~/.config/nvim/plugins/fzf.vim
 so ~/.config/nvim/plugins/floaterm.vim
-so ~/.config/nvim/plugins/vcoolor.vim
 so ~/.config/nvim/plugins/vimspector.vim
 so ~/.config/nvim/plugins/easymotion.vim
 so ~/.config/nvim/plugins/vim-slime.vim
