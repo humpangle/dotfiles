@@ -62,7 +62,7 @@ return packer.startup(function(use)
 	-- Have packer manage itself, eager load
 	use({ "wbthomason/packer.nvim", opt = false })
 
-	-- Useful lua functions used ny lots of plugins
+	-- Useful lua functions used by lots of plugins
 	use({ "nvim-lua/plenary.nvim" })
 
 	-- THEMES / COLORSCHEME
