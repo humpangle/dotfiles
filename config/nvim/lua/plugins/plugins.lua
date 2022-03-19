@@ -369,6 +369,14 @@ return packer.startup(function(use)
 
 	use({
 		"easymotion/vim-easymotion",
+    config = function ()
+      Cmd([[
+          let g:EasyMotion_smartcase = 1
+
+          nmap <leader>2 <Plug>(easymotion-overwin-f2)
+          " nmap s <Plug>(easymotion-overwin-f2)
+      ]])
+    end
 
 		-- Easy motion alternative
 		-- "ggandor/lightspeed.nvim",
