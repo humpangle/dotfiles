@@ -17,7 +17,6 @@ so ~/.config/nvim/plugins/floaterm.vim
 so ~/.config/nvim/plugins/vcoolor.vim
 so ~/.config/nvim/plugins/vimspector.vim
 so ~/.config/nvim/plugins/easymotion.vim
-so ~/.config/nvim/plugins/vim-rest-console.vim
 so ~/.config/nvim/plugins/vim-choosewin.vim
 so ~/.config/nvim/plugins/vim-slime.vim
 
