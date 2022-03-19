@@ -400,7 +400,21 @@ return packer.startup(function(use)
 		"tpope/vim-dadbod",
 
 		-- https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
-		"kristijanhusak/vim-dadbod-ui",
+		{
+			"kristijanhusak/vim-dadbod-ui",
+			config = function()
+				Cmd([[
+          " postgres — postgresql://user1:userpwd@localhost:5432/testdb
+
+          " mysql — mysql://user1:userpwd@127.0.0.1:3306/testdb
+
+          nnoremap <leader>du :DBUI<CR>
+          nnoremap <leader>df :DBUIFindBuffer<CR>
+          nnoremap <leader>dr :DBUIRenameBuffer<CR>
+          nnoremap <leader>dl :DBUILastQueryInfo<CR>
+        ]])
+			end,
+		},
 
 		-- vim dadbod database plugin
 		{
