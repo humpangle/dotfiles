@@ -303,6 +303,7 @@ setenvs() {
 	# set -o allexport; source "$1"; set +o allexport
 }
 alias se='setenvs'
+alias e='setenvs'
 
 splitenvs() {
 	local env_file_abs_dir
