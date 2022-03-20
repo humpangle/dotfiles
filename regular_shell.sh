@@ -69,7 +69,7 @@ alias dcps='docker-compose ps'
 alias dcpsa='docker-compose ps -a'
 
 # https://stackoverflow.com/a/42510314
-dcrmlogs() {
+dcrmlogsf() {
 	if [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
 		echo "Usage: dcrmlogs container_name_or_ID"
 	else
@@ -79,6 +79,8 @@ dcrmlogs() {
 		echo "" | sudo tee "$log_path"
 	fi
 }
+
+alias dcrmlogs='dcrmlogsf '
 
 # docker-compose up --daemon and logs --follow
 dcudl() {
