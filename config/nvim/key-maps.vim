@@ -216,7 +216,7 @@ nnoremap <leader>bw :bw%<cr>
 nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>
 " Remove contents of current file
-nnoremap <leader>r% :e %<CR>:%delete<cr>:w!<cr>
+nnoremap <leader>r% :w!<CR>:e %<CR>:%delete<cr>:w!<cr>
 
 " mbbill/undotree
 " nnoremap <A-u> :UndotreeToggle<CR>
