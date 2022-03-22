@@ -37,7 +37,10 @@ nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>cz  :Git commit --allow-empty -m ""<left>
 
 " Auto-clean fugitive buffers
-autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd BufReadPost fugitive://*
+  \ set bufhidden=delete |
+  \ let b:coc_enabled = 0
+
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \   nnoremap <buffer> .. :edit %:h<CR> |
