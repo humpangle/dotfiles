@@ -3,6 +3,8 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
+nnoremap <Leader>ps :PackerSync<CR>
+
 " Save key strokes (now we do not need to press shift to enter command mode).
 " Vim-sneak has also mapped `;`, so using the below mapping will break the map
 " used by vim-sneak

@@ -129,6 +129,7 @@ alias vtsl='export EBNIS_VIM_THEME=vim-solarized8 EBNIS_VIM_THEME_BG=l'
 alias vff.='export EBNIS_VIM_FUZZY_FINDER='
 alias vfff='export EBNIS_VIM_FUZZY_FINDER=fzf'
 alias vffc='export EBNIS_VIM_FUZZY_FINDER=vim-clap'
+alias npacker="nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
 
 # tmux
 alias ta='tmux a -t'
