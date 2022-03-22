@@ -67,19 +67,6 @@ alias dn='docker network '
 alias dnls='docker network ls'
 alias dcps='docker-compose ps'
 alias dcpsa='docker-compose ps -a'
-
-# https://stackoverflow.com/a/42510314
-dcrmlogsf() {
-	if [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
-		echo "Usage: dcrmlogs container_name_or_ID"
-	else
-		local log_path
-		log_path=$(docker inspect --format='{{.LogPath}}' "$1")
-		echo "truncating $log_path"
-		echo "" | sudo tee "$log_path"
-	fi
-}
-
 alias dcrmlogs='dcrmlogsf '
 
 # docker-compose up --daemon and logs --follow
