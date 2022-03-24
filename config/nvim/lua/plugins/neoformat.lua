@@ -1,6 +1,6 @@
-vim.api.nvim_set_keymap("n", "<leader>fc", ":Neoformat<CR>", {
-	noremap = true,
-})
+-- vim.api.nvim_set_keymap("n", "<leader>fc", ":Neoformat<CR>", {
+-- 	noremap = true,
+-- })
 
 vim.api.nvim_set_keymap("n", "<leader>N", ":Neoformat<CR>", {
 	noremap = true,

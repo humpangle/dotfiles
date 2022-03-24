@@ -153,7 +153,7 @@ augroup END
 
 augroup filetypes
   au!
-  " autocmd! FileType json set filetype=jsonc
+  autocmd! FileType json set filetype=jsonc
   autocmd! FileType vifm set filetype=vim
   " autocmd! FileType mysql set filetype=sql
   au BufNewFile,BufRead *.html.django set filetype=htmldjango

@@ -96,7 +96,15 @@ return packer.startup(function(use)
     -- },
     -- cmd = { "CocActionAsync" },
 
-    requires = {"neoclide/jsonc.vim"},
+    requires = {
+      {"neoclide/jsonc.vim"},
+
+      -- Laravel blade
+      {
+        "jwalton512/vim-blade",
+        -- disable = false,
+      },
+    },
   })
 
   -- NATIVE NEOVIM LSP / COMPLETION ENGINE
@@ -200,20 +208,6 @@ return packer.startup(function(use)
           "tpope/vim-projectionist",
           "tpope/vim-dispatch",
         },
-      },
-
-      -- Laravel blade
-      {
-        "jwalton512/vim-blade",
-        disable = false,
-        config = function()
-          vim.g.blade_custom_directives = {
-            "twillBlockTitle",
-            "twillBlockIcon",
-            "twillBlockGroup",
-            "formField",
-          }
-        end,
       },
 
       -- Treesitter
