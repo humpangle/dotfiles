@@ -32,7 +32,7 @@ nnoremap <leader>ss  :Git stash show -p stash@{}<left>
 nnoremap <leader>su  :Git stash -u push -m ''<left>
 
 nnoremap <leader>ca  :Git commit --amend
-nnoremap <leader>cc  :Git commit<CR>
+nnoremap <leader>gc  :Git commit<CR>
 nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>cz  :Git commit --allow-empty -m ""<left>
 
