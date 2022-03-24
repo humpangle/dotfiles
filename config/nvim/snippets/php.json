@@ -238,23 +238,6 @@
     "body": ["while (${1:\\$${2:a} <= ${3:10}}) {", "\t${0:# code...}", "}"],
     "description": "While-loop"
   },
-  "if …": {
-    "prefix": "if",
-    "body": ["if (${1:condition}) {", "\t${0:# code...}", "}"],
-    "description": "If block"
-  },
-  "if … else …": {
-    "prefix": "ifelse",
-    "body": [
-      "if (${1:condition}) {",
-      "\t${2:# code...}",
-      "} else {",
-      "\t${3:# code...}",
-      "}",
-      "$0"
-    ],
-    "description": "If Else block"
-  },
   "$… = ( … ) ? … : …": {
     "prefix": "if?",
     "body": "\\$${1:retVal} = (${2:condition}) ? ${3:a} : ${4:b} ;",
