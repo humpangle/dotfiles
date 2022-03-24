@@ -279,15 +279,6 @@
     ],
     "description": "For-loop"
   },
-  "foreach …": {
-    "prefix": "foreach",
-    "body": [
-      "foreach (\\$${1:variable} as \\$${2:key} ${3:=> \\$${4:value}}) {",
-      "  ${0:# code...}",
-      "}"
-    ],
-    "description": "Foreach loop"
-  },
   "$… = array (…)": {
     "prefix": "array",
     "body": "\\$${1:arrayName} = array('$2' => $3${4:,} $0);",
@@ -302,21 +293,6 @@
     "prefix": "keyval",
     "body": "'$1' => $2${3:,} $0",
     "description": "Key-Value initializer"
-  },
-  "switch …": {
-    "prefix": "switch",
-    "body": [
-      "switch (\\$${1:variable}) {",
-      "\tcase '${2:value}':",
-      "\t\t${3:# code...}",
-      "\t\tbreak;",
-      "\t$0",
-      "\tdefault:",
-      "\t\t${4:# code...}",
-      "\t\tbreak;",
-      "}"
-    ],
-    "description": "Switch block"
   },
   "case …": {
     "prefix": "case",
@@ -350,16 +326,5 @@
     "prefix": "#endregion",
     "body": ["#endregion"],
     "description": "Folding Region End"
-  },
-  "Try Catch Block": {
-    "prefix": "try",
-    "body": [
-      "try {",
-      "\t${1://code...}",
-      "} catch (${2:\\Throwable} ${3:\\$th}) {",
-      "\t${4://throw \\$th;}",
-      "}"
-    ],
-    "description": "Try catch block"
   }
 }
