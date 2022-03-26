@@ -25,7 +25,7 @@ if !empty($EBNIS_VIM_THEME)
     set background=light
   endif
 else
-  colorscheme one
+  colorscheme gruvbox8_hard
   set background=dark
 endif
 
