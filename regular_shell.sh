@@ -58,7 +58,6 @@ alias dclf='docker-compose logs -f '
 alias dck='docker-compose kill '
 alias dcd='docker-compose down '
 alias dcdv='docker-compose down -v'
-alias dcrs='docker-compose restart '
 alias dvra='docker volume rm $(docker volume ls -q)'
 alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
@@ -74,6 +73,13 @@ dcudl() {
   docker-compose up -d "$@" \
     && docker-compose logs -f "$@"
 }
+
+# docker-compose restart and logs --follow
+dcrsf() {
+  docker-compose restart "$@" \
+    && docker-compose logs -f "$@"
+}
+alias dcrs='dcrsf'
 
 alias ngrokd='ngrok http '
 
