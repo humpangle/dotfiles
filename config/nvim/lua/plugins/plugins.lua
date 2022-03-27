@@ -104,6 +104,11 @@ return packer.startup(function(use)
         "jwalton512/vim-blade",
         -- disable = false,
       },
+
+      {
+        "kristijanhusak/vim-dadbod-completion",
+        -- disable = true, -- favor sqls
+      },
     },
   })
 
@@ -409,16 +414,6 @@ return packer.startup(function(use)
           nnoremap <leader>dr :DBUIRenameBuffer<CR>
           nnoremap <leader>dl :DBUILastQueryInfo<CR>
         ]])
-      end,
-    },
-
-    -- vim dadbod database plugin
-    {
-      "kristijanhusak/vim-dadbod-completion",
-      disable = true, -- favor sqls
-      config = function()
-        Cmd(
-          [[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
       end,
     },
   })
