@@ -109,6 +109,17 @@ return packer.startup(function(use)
         "kristijanhusak/vim-dadbod-completion",
         -- disable = true, -- favor sqls
       },
+
+      -- Laravel
+      {
+        "noahfrederick/vim-laravel",
+        disable = false,
+        requires = {
+          "noahfrederick/vim-composer",
+          "tpope/vim-projectionist",
+          "tpope/vim-dispatch",
+        },
+      },
     },
   })
 
@@ -202,17 +213,6 @@ return packer.startup(function(use)
         branch = "master",
         ft = "php",
         run = "composer install --no-dev -o && ./vendor/bin/phpactor extension:install \"phpactor/language-server-phpstan-extension\"",
-      },
-
-      -- Laravel
-      {
-        "noahfrederick/vim-laravel",
-        disable = false,
-        requires = {
-          "noahfrederick/vim-composer",
-          "tpope/vim-projectionist",
-          "tpope/vim-dispatch",
-        },
       },
 
       -- Treesitter
