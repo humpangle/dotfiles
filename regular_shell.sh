@@ -66,7 +66,8 @@ alias dn='docker network '
 alias dnls='docker network ls'
 alias dcps='docker-compose ps'
 alias dcpsa='docker-compose ps -a'
-alias dcrmlogs='dcrmlogsf '
+alias drmlogs='drmlogsf '
+alias ___drmlogs='docker remove logs container_name_or_ID'
 
 # docker-compose up --daemon and logs --follow
 dcudl() {
