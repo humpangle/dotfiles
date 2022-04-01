@@ -16,6 +16,7 @@ let g:python3_host_prog = expand('$PYTHON3')
 " https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
 " Always show in tree view
 let g:netrw_liststyle = 3
+let g:netrw_winsize = 25
 
 " Open file by default in new tab
 " let g:netrw_browse_split = 3
