@@ -7,8 +7,8 @@
   "css.validate": false,
   "cSpell.userWords": ["Kanmii", "NEOVIM", "arity"],
   "cSpell.ignoreWords": [],
-  "cSpellExt.enableDictionaries": ["german", "french"],
-  "cSpell.language": "en,de,fr",
+  "cSpellExt.enableDictionaries": ["german", "french", "spanish"],
+  "cSpell.language": "en,de,fr,es",
   "elixirLS.dialyzerEnabled": false,
   "languageserver": {
     /* npm i -g graphql-language-service-cli */
