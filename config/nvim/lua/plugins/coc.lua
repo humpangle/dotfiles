@@ -14,6 +14,7 @@ local keymap = vim.api.nvim_set_keymap
 -- 'coc-pyright',
 -- 'coc-explorer',
 -- 'coc-emmet',
+-- "https://github.com/rodrigore/coc-tailwind-intellisense",
 --
 local coc_extensions = {
   "coc-elixir",
@@ -40,7 +41,6 @@ local coc_extensions = {
   "coc-flutter",
   -- Database auto completion powered by vim-dadbod
   "coc-db",
-  "https://github.com/rodrigore/coc-tailwind-intellisense",
 }
 
 if vim.fn.has("win32") == 1 then
