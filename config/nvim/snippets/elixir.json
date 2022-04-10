@@ -459,7 +459,7 @@
     "body": ["for ${1:item} <- ${2:items} do", "  $0", "end"]
   },
   "def + doc": {
-    "prefix": "defd",
+    "prefix": "defdoc",
     "body": [
       "@doc \"\"\"",
       "${1:doc}",
@@ -469,8 +469,17 @@
       "end"
     ]
   },
+  "def + doc false": {
+    "prefix": "defdocfalse",
+    "body": [
+      "@doc false",
+      "def ${2:name} do",
+      "  $0",
+      "end"
+    ]
+  },
   "def + spec": {
-    "prefix": "defs",
+    "prefix": "defspec",
     "body": [
       "@spec ${1:name}(${2:args}) :: ${3:no_return}",
       "def $1{4:args} do",
