@@ -188,9 +188,13 @@
   "public function": {
     "prefix": ["funpublic", "publicfunc"],
     "body": [
-      "public ${1:static} function ${2:FunctionName}(${3:params})",
+      "/**",
+      "* @param ${4:mixed} \\$${3:params}",
+      "* @return mixed",
+      "*/",
+      "public ${1:static} function ${2:functionName}(\\$${3:params})",
       "{",
-      "  ${0:# code...}",
+      "  $0",
       "}"
     ],
     "description": "Function"
@@ -198,7 +202,7 @@
   "private function": {
     "prefix": ["funprivate", "privatefunc"],
     "body": [
-      "private ${1:static} function ${2:FunctionName}(${3:params})",
+      "private ${1:static} function ${2:functionName}(\\$${3:params})",
       "{",
       "  ${0:# code...}",
       "}"
@@ -309,5 +313,16 @@
     "prefix": "#endregion",
     "body": ["#endregion"],
     "description": "Folding Region End"
+  },
+  "Log::info": {
+    "prefix": "loginfo",
+    "body": [
+      "Log::info([",
+      "  '__FILE__' => __FILE__,",
+      "  '__LINE__' => __LINE__,",
+      "  '$1' => $2",
+      "]);"
+    ],
+    "description": "Log::info"
   }
 }
