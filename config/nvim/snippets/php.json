@@ -318,9 +318,10 @@
     "prefix": "loginfo",
     "body": [
       "Log::info([",
-      "  '__FILE__' => __FILE__,",
       "  '__LINE__' => __LINE__,",
-      "  '$1' => $2",
+      "  '__FILE__' => __FILE__,",
+      "  '$1' => $1,",
+      "$0",
       "]);"
     ],
     "description": "Log::info"
