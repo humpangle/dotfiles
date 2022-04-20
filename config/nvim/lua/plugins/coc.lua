@@ -11,12 +11,12 @@ local keymap = vim.api.nvim_set_keymap
 -- 'coc-tasks',
 -- 'coc-fzf-preview',
 -- 'coc-marketplace',
--- 'coc-pyright',
 -- 'coc-explorer',
 -- 'coc-emmet',
 -- "https://github.com/rodrigore/coc-tailwind-intellisense",
 --
 local coc_extensions = {
+  "coc-pyright",
   "coc-elixir",
   "coc-spell-checker",
   "coc-cspell-dicts",
