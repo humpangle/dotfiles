@@ -446,6 +446,13 @@ return packer.startup(function(use)
           " Vim slime will prompt you for some config the first time it is ran.
           let g:slime_default_config = {
             \ "socket_name": "default",
+            " You will be presented with string of the form:
+            "     dot:
+            " after the semicolon, type `w.p`, where
+            "     w = window number
+            "     p = pane number
+            " E.g. if terminal is on 6th window, 4th pane, you should have
+            "     dot:6.4
             \ "target_pane": "dot:"
           \}
       ]])
