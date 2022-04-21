@@ -19,6 +19,7 @@
     //   "filetypes": ["typescript", "typescriptreact", "graphql"]
     // }
     // https://github.com/rodrigore/coc-tailwind-intellisense/issues/29#issuecomment-1000861947
+    // npm install -g @tailwindcss/language-server
     "tailwind-lsp": {
       "command": "tailwindcss-language-server",
       "args": ["--stdio"],
@@ -28,7 +29,8 @@
         "javascript",
         "javascriptreact",
         "typescript",
-        "typescriptreact"
+        "typescriptreact",
+        "vue"
       ],
 
       "rootPatterns": [
