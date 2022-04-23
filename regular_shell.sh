@@ -192,7 +192,13 @@ splitp() {
 
 # Save bash history per tmux pane
 if [[ $TMUX_PANE ]]; then
-	hist_file="$HOME/.bash_history_tmux_${TMUX_PANE:1}"
+	hist_dir="$HOME/.bash_histories"
+
+  if [[ ! -d "$hist_dir" ]]; then
+    mkdir "$hist_dir"
+  fi
+
+	hist_file="$hist_dir/.bash_history_tmux_${TMUX_PANE:1}"
 	HISTFILE="$hist_file"
 
 	if [[ ! -e "$hist_file" ]]; then
