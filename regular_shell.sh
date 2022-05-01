@@ -458,23 +458,6 @@ fi
 # https://github.com/starship/starship
 # eval "$(starship init bash)" ## will use only in fish shell for now
 
-touchm() {
-	local data
-	local sep
-	local dir_path
-	data="$1"
-	sep="/"
-
-	dir_path=${data%$sep*}
-
-	if [ "$dir_path" == "$data" ]; then
-		touch "$dir_path"
-	else
-		mkdir -p "$dir_path"
-		touch "$data"
-	fi
-}
-
 # Set the title string at the top of your current terminal window or terminal window tab
 # https://github.com/mgedmin/scripts/blob/master/title
 # https://discourse.gnome.org/t/rename-terminal-tab/3200/5
