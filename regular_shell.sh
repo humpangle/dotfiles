@@ -142,54 +142,6 @@ alias tkss='tmux kill-server'
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
-splitp() {
-	if [[ "$1" == '-h' ]]; then
-		echo "Usage:"
-		echo "splitp absolute_path window_name"
-		return
-	fi
-
-	if [[ -n "$1" ]]; then
-		local dir="$1"
-	else
-		local dir="$PWD"
-	fi
-
-	local window_name="$2"
-
-	# shellcheck disable=2164
-	cd "$dir"
-
-	tmux rename-window "$window_name" \
-		\; splitw -c "$dir" -h -p 46 \
-		\; splitw -b -p 40 \
-		\; splitw -t 3 -b -p 45 \
-		\; splitw -t 4 -b -p 55 \
-		\; select-pane -t 2 \
-		\; send-keys 'nvim ,' C-m \
-		\; new-window -c "$dir" \
-		\; splitw -c "$dir" -h -p 45 \
-		\; splitw -t 1 -p 60 \
-		\; splitw -p 45 \
-		\; splitw -t 4 -p 87 \
-		\; splitw -p 85 \
-		\; splitw -p 70 \
-		\; splitw \
-		\; select-pane -t 1 \
-		\; send-keys 'cd storage/logs && clear' C-m \
-		\; select-pane -t 2 \
-		\; send-keys 'nvim ,' C-m \
-		\; select-pane -t 3 \
-		\; send-keys 'cd storage/app/public && clear' C-m \
-		\; select-pane -t 4 \
-		\; rename-window "${window_name}-L" \
-		\; last-window \
-		\; select-pane -t 5 \
-		\; send-keys 'yarn && clear' C-m \
-		\; select-pane -t 1 \
-		\; send-keys 'clear' C-m
-}
-
 # Save bash history per tmux pane
 if [[ $TMUX_PANE ]]; then
 	hist_dir="$HOME/.bash_histories"
