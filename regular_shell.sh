@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+###### START COMMONS ##################
+
+export DOCKER_BUILDKIT=1
+export EDITOR="nvim"
+# install with: `sudo apt install ssh-askpass-gnome ssh-askpass -y`
+# shellcheck disable=2155
+export SUDO_ASKPASS=$(command -v ssh-askpass)
+
 # Add to $PATH only if `it` does not exist in the $PATH
 # fish shell has the `fish_add_path` function which does something similar
 # CREDIT: https://unix.stackexchange.com/a/217629
@@ -18,24 +26,6 @@ pathmunge() {
 		fi
 	fi
 }
-
-export EDITOR="nvim"
-
-# skip the java dependency during installation
-export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
-# Do not build erlang docs when installing with
-# asdf cos it's slow and unstable
-export KERL_BUILD_DOCS=yes
-export KERL_INSTALL_MANPAGES=
-export KERL_INSTALL_HTMLDOCS=
-# Install Ruby Gems to ~/gems
-export GEM_HOME="$HOME/gems"
-pathmunge "$GEM_HOME/bin"
-# Do not use PHP PEAR when installing PHP with asdf
-export PHP_WITHOUT_PEAR='yes'
-# install with: `sudo apt install ssh-askpass-gnome ssh-askpass -y`
-# shellcheck disable=2155
-export SUDO_ASKPASS=$(command -v ssh-askpass)
 
 # docker
 # docker remove all containers
@@ -85,20 +75,6 @@ alias dcrs='dcrsf'
 alias ngrokd='ngrok http '
 
 alias ug='clear && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
-
-ggc() {
-	google-chrome -incognito &
-	disown
-}
-
-# yarn
-alias yw='yarn workspace '
-alias yW='yarn -W '
-alias ys='yarn start '
-alias yn='yarn nps '
-alias ylsp='yarn list --pattern '
-alias ywhy='yarn why '
-alias ycw='clear && DISABLE_LARAVEL_MIX_NOTIFICATION=1 yarn watch'
 
 # vim
 alias vi='/usr/bin/vim'
@@ -204,24 +180,15 @@ alias 4.='cd ../../../..'
 alias .2=2.
 alias .3=3.
 alias .4=4.
-alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
-alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
-alias cdd='cd $HOME/dotfiles'
 alias md='mkdir -p'
 alias C="clear && printf '\e[3J'"
 alias py='python '
-alias pw='prettier --write '
-alias eshell='exec $SHELL'
-alias exshell='export SHELL=/usr/bin/bash'
-alias rmvimswap='rm ~/.local/share/nvim/swap/*'
-alias hb='sudo systemctl hibernate'
-alias sd='sudo shutdown now'
 # debian package `lrzsz`
 alias rb='sudo reboot'
-alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
-
 alias scouser='sudo chown -R $USER:$USER '
-alias scmstorage='sudo chmod -R 777 storage'
+alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
+alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
+alias eshell='exec $SHELL'
 
 # https://unix.stackexchange.com/a/179852
 # Make bash history unique
@@ -233,16 +200,6 @@ make_history_unique() {
 }
 alias hu='make_history_unique'
 # also https://unix.stackexchange.com/a/613644
-
-ltf() {
-	lt --subdomain "$1" --port "$2" &
-}
-
-export DOCKER_BUILDKIT=1
-
-if [ -x "$(command -v sort-package-json)" ]; then
-	alias spj='sort-package-json '
-fi
 
 setenvs() {
 	local path
@@ -265,6 +222,102 @@ setenvs() {
 }
 alias se='setenvs'
 alias e='setenvs'
+
+###### END COMMONS ##################
+
+# skip the java dependency during installation
+export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
+# Do not build erlang docs when installing with
+# asdf cos it's slow and unstable
+export KERL_BUILD_DOCS=yes
+export KERL_INSTALL_MANPAGES=
+export KERL_INSTALL_HTMLDOCS=
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+pathmunge "$GEM_HOME/bin"
+# Do not use PHP PEAR when installing PHP with asdf
+export PHP_WITHOUT_PEAR='yes'
+
+ggc() {
+	google-chrome -incognito &
+	disown
+}
+
+# yarn
+alias yw='yarn workspace '
+alias yW='yarn -W '
+alias ys='yarn start '
+alias yn='yarn nps '
+alias ylsp='yarn list --pattern '
+alias ywhy='yarn why '
+alias ycw='clear && DISABLE_LARAVEL_MIX_NOTIFICATION=1 yarn watch'
+
+# TMUX split panes and windows
+splitp() {
+	if [[ "$1" == '-h' ]]; then
+		echo "Usage:"
+		echo "splitp absolute_path window_name"
+		return
+	fi
+
+	if [[ -n "$1" ]]; then
+		local dir="$1"
+	else
+		local dir="$PWD"
+	fi
+
+	local window_name="$2"
+
+	# shellcheck disable=2164
+	cd "$dir"
+
+	tmux rename-window "$window_name" \
+		\; splitw -c "$dir" -h -p 46 \
+		\; splitw -b -p 40 \
+		\; splitw -t 3 -b -p 45 \
+		\; splitw -t 4 -b -p 55 \
+		\; select-pane -t 2 \
+		\; send-keys 'nvim ,' C-m \
+		\; new-window -c "$dir" \
+		\; splitw -c "$dir" -h -p 45 \
+		\; splitw -t 1 -p 60 \
+		\; splitw -p 45 \
+		\; splitw -t 4 -p 87 \
+		\; splitw -p 85 \
+		\; splitw -p 70 \
+		\; splitw \
+		\; select-pane -t 1 \
+		\; send-keys 'cd storage/logs && clear' C-m \
+		\; select-pane -t 2 \
+		\; send-keys 'nvim ,' C-m \
+		\; select-pane -t 3 \
+		\; send-keys 'cd storage/app/public && clear' C-m \
+		\; select-pane -t 4 \
+		\; rename-window "${window_name}-L" \
+		\; last-window \
+		\; select-pane -t 5 \
+		\; send-keys 'yarn && clear' C-m \
+		\; select-pane -t 1 \
+		\; send-keys 'clear' C-m
+}
+
+alias exshell='export SHELL=/usr/bin/bash'
+alias rmvimswap='rm ~/.local/share/nvim/swap/*'
+alias cdd='cd $HOME/dotfiles'
+alias pw='prettier --write '
+alias hb='sudo systemctl hibernate'
+alias sd='sudo shutdown now'
+alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
+
+alias scmstorage='sudo chmod -R 777 storage'
+
+ltf() {
+	lt --subdomain "$1" --port "$2" &
+}
+
+if [ -x "$(command -v sort-package-json)" ]; then
+	alias spj='sort-package-json '
+fi
 
 splitenvs() {
 	local env_file_abs_dir
