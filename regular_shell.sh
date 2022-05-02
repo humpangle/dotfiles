@@ -328,6 +328,8 @@ splitenvs() {
 
 	declare -A env_key_to_value_map
 
+  new_filename="$1.n"
+
 	# shellcheck disable=2013
 	for line in $(grep -v '^#' "$env_file_abs_path" | awk '{print $1}'); do
 		key=$(echo "$line" | cut -d '=' -f 1)
@@ -343,10 +345,10 @@ splitenvs() {
 		env_key_to_value_map["$key"]="${val}"
 	done
 
-	new_file="$env_file_abs_dir/$1.n"
+	new_asbolute_file_path="$env_file_abs_dir/$new_filename"
 
 	for key in "${!env_key_to_value_map[@]}"; do
-		echo "$key=${env_key_to_value_map[$key]}" >>"$new_file"
+		echo "$key=${env_key_to_value_map[$key]}" >>"$new_asbolute_file_path"
 		echo "$key=${env_key_to_value_map[$key]}"
 	done
 }
