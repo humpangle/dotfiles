@@ -302,7 +302,14 @@ return packer.startup(function(use)
   })
 
   -- GIT
-  use({"tpope/vim-fugitive", "airblade/vim-gitgutter"})
+  use({"airblade/vim-gitgutter"})
+  use({
+    "tpope/vim-fugitive",
+    requires = {
+      -- Enable fugitive :GBrowse to open git objects on github
+      "tpope/vim-rhubarb",
+    },
+  })
 
   -- Statusline
   use({"itchyny/lightline.vim"})
@@ -521,35 +528,6 @@ return packer.startup(function(use)
 
   -- Enhances vim ga with Unicode character names, Vim digraphs, emoji codes
   use({"tpope/vim-characterize"})
-
-  use({
-    "ruifm/gitlinker.nvim",
-    config = function()
-      local hosts = require("gitlinker.hosts")
-      local github_host = "github.com"
-
-      require("gitlinker").setup({
-        callbacks = {
-          ["github.kanmii"] = function(url_data)
-            url_data.host = github_host
-            return hosts.get_github_type_url(url_data)
-          end,
-
-          ["github.humpangle"] = function(url_data)
-            url_data.host = github_host
-            return hosts.get_github_type_url(url_data)
-          end,
-
-          ["gitlab.callmiy"] = function(url_data)
-            url_data.host = "gitlab.com"
-            return hosts.get_gitlab_type_url(url_data)
-          end,
-        },
-      })
-    end,
-
-    requires = "nvim-lua/plenary.nvim",
-  })
 
   -- FORMATTERS
   use({
