@@ -14,9 +14,10 @@ nnoremap <leader>gl  :Gclog! -
 nnoremap <leader>go  :Git push origin HEAD
 nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
 nnoremap <leader>gr  :Git rebase -
+" gs = git set / reset
 nnoremap <leader>gs  :Git reset --soft HEAD~
 nnoremap <leader>gS  :Git reset --hard HEAD~
-" gt = git take
+" gt = git take / pull
 nnoremap <leader>gt  :Git pull <right>
 nnoremap <leader>gw  :Git worktree <right>
 
@@ -41,6 +42,7 @@ autocmd BufReadPost fugitive://*
   \ set bufhidden=delete |
   \ let b:coc_enabled = 0
 
+" http://vimcasts.org/episodes/fugitive-vim-browsing-the-git-object-database/
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \   nnoremap <buffer> .. :edit %:h<CR> |
