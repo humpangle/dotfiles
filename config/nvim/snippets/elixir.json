@@ -1,10 +1,4 @@
 {
-  "if clause": {
-    "prefix": "if",
-    "body": ["if ${1:expr} do", "  ${2:expr}", "end"],
-    "description": "if clause"
-  },
-
   "if else clause": {
     "prefix": "ifelse",
     "body": ["if ${1:expr} do", "  ${2:expr}", "else", "  ${3:expr}", "end"],
@@ -471,12 +465,7 @@
   },
   "def + doc false": {
     "prefix": "defdocfalse",
-    "body": [
-      "@doc false",
-      "def ${2:name} do",
-      "  $0",
-      "end"
-    ]
+    "body": ["@doc false", "def ${2:name} do", "  $0", "end"]
   },
   "def + spec": {
     "prefix": "defspec",

@@ -1,4 +1,9 @@
 {
+  "if clause": {
+    "prefix": "if",
+    "body": ["if ${1:expr_for_condition} do", "  ${2:expr}", "end"],
+    "description": "if clause"
+  },
   "defp": {
     "prefix": "defp",
     "body": ["defp ${1:func_name}() do", "  $0", "end"],
