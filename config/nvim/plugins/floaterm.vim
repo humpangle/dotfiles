@@ -15,6 +15,7 @@ else
   let g:floaterm_shell= $SHELL
 endif
 
+nnoremap <Leader>ff :Floaterms<CR>
 nnoremap <Leader>FF :FloatermNew --title=
 nnoremap <Leader>FT :FloatermToggle<CR>
 nnoremap <C-`> :FloatermToggle<CR>
