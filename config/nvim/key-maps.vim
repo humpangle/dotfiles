@@ -155,6 +155,9 @@ tnoremap <ESC><ESC> <C-\><C-n>
 nnoremap <leader>tt :tab split<cr>:term
 nnoremap <leader>tv :vsplit<cr>:term
 
+" Clear terminal buffer: https://superuser.com/a/1485854
+nnoremap <c-w><c-l> :call ClearTerminal()<cr>
+
 " COPY FILE PATH
 " yank relative File path
 nmap ,yr :let @+=expand("%")<CR>

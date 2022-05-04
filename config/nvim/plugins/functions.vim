@@ -171,3 +171,17 @@ endfunction
 
 command! ClearRegisters call ClearRegisters()
 command! DeleteDbUi call DeleteAllBuffers('dbui')
+
+" Clear terminal buffer: https://superuser.com/a/1485854
+let s:scroll_value = 3000000
+function! ClearTerminal()
+  set scrollback=1
+  let &g:scrollback=1
+  echo &scrollback
+  call feedkeys("\i")
+  call feedkeys("clear\<CR>")
+  call feedkeys("\<C-\>\<C-n>")
+  call feedkeys("\i")
+  sleep 100m
+  let &scrollback=s:scroll_value
+endfunction
