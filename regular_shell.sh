@@ -351,6 +351,7 @@ splitenvs() {
 	done
 
 	new_asbolute_file_path="$env_file_abs_dir/$new_filename"
+  rm -rf "$new_asbolute_file_path"
 
 	for key in "${!env_key_to_value_map[@]}"; do
 		echo "$key=${env_key_to_value_map[$key]}" >>"$new_asbolute_file_path"
