@@ -315,7 +315,12 @@ return packer.startup(function(use)
   use({"itchyny/lightline.vim"})
 
   -- Terminal
-  use({"voldikss/vim-floaterm"})
+  use({
+    "voldikss/vim-floaterm",
+    requires = {
+      "voldikss/fzf-floaterm"
+    }
+  })
 
   -- Better undo diff
   use({"simnalamburt/vim-mundo"})
