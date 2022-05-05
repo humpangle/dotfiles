@@ -81,7 +81,7 @@ alias vi='/usr/bin/vim'
 alias vimdiff="nvim -d"
 alias vim="nvim"
 alias v="nvim"
-alias svim='sudo nvim -u ~/dotfiles/.config/init-min.vim '
+alias svim='sudo -E nvim'
 alias nvl="VIM_USE_COC=1 nvim "
 # set vim theme and background per shell session
 # unset
@@ -338,7 +338,7 @@ splitenvs() {
 	# shellcheck disable=2013
 	for line in $(grep -v '^#' "$env_file_abs_path" | awk '{print $1}'); do
 		key=$(echo "$line" | cut -d '=' -f 1)
-		val=$(echo "$line" | cut -d '=' -f 2)
+		val=$(echo "$line" | cut -d '=' -f 2-)
 
 		for line_with_varirables in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
 			variable_text="\${$line_with_varirables}"
