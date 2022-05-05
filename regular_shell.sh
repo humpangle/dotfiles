@@ -319,47 +319,6 @@ if [ -x "$(command -v sort-package-json)" ]; then
 	alias spj='sort-package-json '
 fi
 
-splitenvs() {
-	local env_file_abs_dir
-	local env_file_abs_path
-	local new_file
-
-	env_file_abs_dir="$(
-		(cd -- "$(dirname "$1")" || exit) >/dev/null 2>&1
-		pwd -P
-	)"
-
-	env_file_abs_path="$env_file_abs_dir/$1"
-
-	declare -A env_key_to_value_map
-
-  new_filename="$1.n"
-
-	# shellcheck disable=2013
-	for line in $(grep -v '^#' "$env_file_abs_path" | awk '{print $1}'); do
-		key=$(echo "$line" | cut -d '=' -f 1)
-		val=$(echo "$line" | cut -d '=' -f 2-)
-
-		for line_with_varirables in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
-			variable_text="\${$line_with_varirables}"
-			variable_val="${env_key_to_value_map[$line_with_varirables]}"
-
-			val="${val//$variable_text/$variable_val}"
-		done
-
-		env_key_to_value_map["$key"]="${val}"
-	done
-
-	new_asbolute_file_path="$env_file_abs_dir/$new_filename"
-  rm -rf "$new_asbolute_file_path"
-
-	for key in "${!env_key_to_value_map[@]}"; do
-		echo "$key=${env_key_to_value_map[$key]}" >>"$new_asbolute_file_path"
-		echo "$key=${env_key_to_value_map[$key]}"
-	done
-}
-alias spe='splitenvs'
-
 if [ -x "$(command -v php)" ]; then
 	# debian pkg bsdgames
 	alias sail='./vendor/bin/sail'
