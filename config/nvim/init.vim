@@ -7,10 +7,8 @@ let g:EditorConfig_exclude_patterns = ["fugitive://.*"]
 
 lua require('plugins/plugins')
 
-so ~/.config/nvim/plugins/functions.vim
 so ~/.config/nvim/settings.vim
 so ~/.config/nvim/plugins/lightline.vim
-so ~/.config/nvim/key-maps.vim
 so ~/.config/nvim/plugins/fugitive.vim
 so ~/.config/nvim/plugins/fzf.vim
 so ~/.config/nvim/plugins/floaterm.vim

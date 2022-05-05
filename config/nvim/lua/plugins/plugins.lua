@@ -323,7 +323,17 @@ return packer.startup(function(use)
   })
 
   -- Better undo diff
-  use({"simnalamburt/vim-mundo"})
+  use({
+    "simnalamburt/vim-mundo",
+    config = function ()
+      Cmd([[
+        " mbbill/undotree
+        " nnoremap <A-u> :UndotreeToggle<CR>
+        " simnalamburt/vim-mundo
+        nnoremap <A-u> :MundoToggle<CR>
+      ]])
+    end
+  })
 
   use({"tomtom/tcomment_vim"})
 
