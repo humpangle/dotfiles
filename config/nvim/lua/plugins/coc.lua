@@ -14,6 +14,7 @@ local keymap = vim.api.nvim_set_keymap
 -- 'coc-explorer',
 -- 'coc-emmet',
 -- "https://github.com/rodrigore/coc-tailwind-intellisense",
+-- "coc-docker",
 --
 local coc_extensions = {
   "coc-pyright",
@@ -31,7 +32,7 @@ local coc_extensions = {
   "coc-pairs",
   "coc-prettier",
   "coc-svelte",
-  "coc-docker",
+  "https://github.com/humpangle/coc-docker",
   "coc-svg",
   "coc-vimlsp",
   "coc-lua",
