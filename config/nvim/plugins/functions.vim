@@ -6,6 +6,7 @@ function! RenameFile()
     exec ':saveas ' . new_name
     exec ':silent !rm ' . old_name
     redraw!
+    exec ':bdelete #'
   endif
 endfunction
 
