@@ -3,6 +3,7 @@
 ###### START COMMONS ##################
 
 export DOCKER_BUILDKIT=1
+export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 export EDITOR="nvim"
 # install with: `sudo apt install ssh-askpass-gnome ssh-askpass -y`
 # shellcheck disable=2155
