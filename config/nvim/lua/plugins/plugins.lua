@@ -317,6 +317,9 @@ return packer.startup(function(use)
   -- Terminal
   use({
     "voldikss/vim-floaterm",
+    config = function()
+      require("plugins/floaterm")
+    end,
     requires = {
       "voldikss/fzf-floaterm"
     }
