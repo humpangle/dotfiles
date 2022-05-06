@@ -23,6 +23,10 @@ for line in $(grep -v '^#' "$env_file_abs_path" | awk '{print $1}'); do
     variable_text="\${$line_with_varirables}"
     variable_val="${env_key_to_value_map[$line_with_varirables]}"
 
+    if [[ -z "$variable_val" ]]; then
+      variable_val=${!line_with_varirables}
+    fi
+
     val="${val//$variable_text/$variable_val}"
   done
 
