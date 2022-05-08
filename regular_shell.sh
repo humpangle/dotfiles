@@ -59,6 +59,7 @@ alias dcps='docker-compose ps'
 alias dcpsa='docker-compose ps -a'
 alias drmlogs='drmlogsf '
 alias ___drmlogs='docker remove logs container_name_or_ID'
+alias docker-dangling='dim -qf dangling=true | xargs docker rmi -f'
 
 # docker-compose up --daemon and logs --follow
 dcudl() {
