@@ -130,7 +130,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 nmap <silent> [d <Plug>(coc-diagnostic-prev)
 nmap <silent> ]d <Plug>(coc-diagnostic-next)
 " Show all diagnostics: COC errors in CoCList
-nnoremap <C-M> :<c-u>CocList diagnostics<cr>
+nnoremap <C-N> :<c-u>CocList diagnostics<cr>
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)

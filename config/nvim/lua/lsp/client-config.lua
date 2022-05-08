@@ -113,7 +113,7 @@ vim.api.nvim_set_keymap(
 -- Open diagnostics in quicklist window
 vim.api.nvim_set_keymap(
 	"n",
-	"<C-m>",
+	"<C-N>",
 	"<cmd>lua vim.diagnostic.setloclist()<CR>",
 	keymap_opts
 )
