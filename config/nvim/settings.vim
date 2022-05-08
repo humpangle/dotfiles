@@ -3,8 +3,6 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
-""""""""""""" SETTINGS """""""""""""""""""""""
-
 "{{ Builtin variables
 " Disable Python2 support
 let g:loaded_python_provider = 0
@@ -194,8 +192,6 @@ augroup terminal_settings
   "   \   call nvim_input('<CR>')  |
   "   \ endif
 augroup END
-
-""""""""""""" END SETTINGS """""""""""""""""""""""
 
 " Save key strokes (now we do not need to press shift to enter command mode).
 " Vim-sneak has also mapped `;`, so using the below mapping will break the map
@@ -614,3 +610,7 @@ function! ClearTerminal()
   sleep 100m
   let &scrollback=s:scroll_value
 endfunction
+
+" let g:maximizer_set_default_mapping = 0
+" nnoremap mm :MaximizerToggle!<CR>
+" xnoremap mm :MaximizerToggle!<CR>
