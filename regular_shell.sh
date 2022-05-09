@@ -5,7 +5,7 @@
 export DOCKER_BUILDKIT=1
 export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 export EDITOR="nvim"
-# install with: `sudo apt install ssh-askpass-gnome ssh-askpass -y`
+# install with: `sudo apt-get install ssh-askpass-gnome ssh-askpass -y`
 # shellcheck disable=2155
 export SUDO_ASKPASS=$(command -v ssh-askpass)
 
@@ -76,7 +76,7 @@ alias dcrs='dcrsf'
 
 alias ngrokd='ngrok http '
 
-alias ug='clear && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
+alias ug='clear && sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y'
 
 # vim
 alias vi='/usr/bin/vim'
@@ -190,7 +190,7 @@ alias rb='sudo reboot'
 alias scouser='sudo chown -R $USER:$USER '
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
-alias eshell='exec $SHELL'
+alias eshell='source ~/.bashrc'
 
 # https://unix.stackexchange.com/a/179852
 # Make bash history unique
