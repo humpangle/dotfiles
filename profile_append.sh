@@ -16,3 +16,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 fi
 
 mkdir -p $HOME/.local/bin
+
+if [ -d "$HOME/dotfiles/scripts" ] ; then
+    PATH="$HOME/dotfiles/scripts:$PATH"
+fi
