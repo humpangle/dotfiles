@@ -611,6 +611,17 @@ function! ClearTerminal()
   let &scrollback=s:scroll_value
 endfunction
 
+" === UN COMMENT ON SERVER === "
+" colorscheme desert
 " let g:maximizer_set_default_mapping = 0
 " nnoremap mm :MaximizerToggle!<CR>
 " xnoremap mm :MaximizerToggle!<CR>
+
+" PLUGIN_PATH="vim-maximizer"
+" PLUGIN_OWNER="szw"
+" mkdir -p ~/.local/share/nvim/site/pack/$PLUGIN_PATH/start \
+"   && git clone https://github.com/$PLUGIN_OWNER/$PLUGIN_PATH \
+        " ~/.local/share/nvim/site/pack/$PLUGIN_PATH/start/$PLUGIN_PATH
+
+" PLUGIN_PATH="vim-obsession"
+" PLUGIN_OWNER="tpope"
