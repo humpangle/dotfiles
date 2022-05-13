@@ -234,6 +234,8 @@ vmap <Leader>x "+x
 nmap <Leader>x "+x
 nmap <Leader>P "+P
 vmap <Leader>P "+P
+" Yank all
+nnoremap <Leader>ya ggVG"+y
 
 " TABS
 " Move between windows in a tab
