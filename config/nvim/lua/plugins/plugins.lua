@@ -545,6 +545,11 @@ return packer.startup(function(use)
   })
 
   -- Enhances vim ga with Unicode character names, Vim digraphs, emoji codes
+  -- Pressing ga on a character reveals its representation in
+  -- decimal,
+  -- octal,
+  -- hex
+  -- Unicode character names
   use({"tpope/vim-characterize"})
 
   -- FORMATTERS
