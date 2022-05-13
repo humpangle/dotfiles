@@ -81,7 +81,6 @@ alias ug='clear && sudo apt-get update && sudo apt-get upgrade -y && sudo apt-ge
 # vim
 alias vi='/usr/bin/vim'
 alias vimdiff="nvim -d"
-alias vim="nvim"
 alias v="nvim"
 alias svim='sudo -E nvim'
 alias nvl="VIM_USE_COC=1 nvim "
