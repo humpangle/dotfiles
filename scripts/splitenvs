@@ -41,3 +41,5 @@ for key in "${!env_key_to_value_map[@]}"; do
   echo "$key=${env_key_to_value_map[$key]}" >>"$new_asbolute_file_path"
   echo "$key=${env_key_to_value_map[$key]}"
 done
+
+sort "$new_asbolute_file_path" -o "$new_asbolute_file_path"
