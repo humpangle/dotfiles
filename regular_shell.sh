@@ -29,6 +29,7 @@ pathmunge() {
 }
 
 # docker
+alias d='docker'
 # docker remove all containers
 alias drac='docker rm $(docker ps -a -q) '
 # docker remove all containers force
