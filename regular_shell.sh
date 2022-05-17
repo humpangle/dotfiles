@@ -408,10 +408,10 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 
 		# https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
 
-		# Start Docker daemon automatically when logging in if not running.
-		RUNNING=$(pgrep -f dockerd)
+		# Start Docker daemon automatically when logging in.
+		DOCKER_DAEMON_RUNNING=$(pgrep -f dockerd)
 
-		if [ -z "$RUNNING" ]; then
+		if [ -z "$DOCKER_DAEMON_RUNNING" ]; then
 			sudo dockerd >/dev/null 2>&1 &
 			disown
 		fi
