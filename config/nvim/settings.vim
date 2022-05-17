@@ -361,6 +361,8 @@ nmap ,cr :let @"=expand("%")<CR>
 " copy absolute path
 nmap ,cf :let @"=expand("%:p")<CR>
 nmap ,cn :let @"=expand("%:t")<CR>
+" Yank current git branch
+nnoremap ,yg :execute "let @+=FugitiveHead()"<CR>
 
 " Some plugins change my CWD to currently opened file - I change it back
 nnoremap <leader>cd
