@@ -484,7 +484,7 @@
     "prefix": "defdocspec",
     "body": [
       "@doc \"\"\"",
-      "${1:doc}",
+      "  ${1:doc}",
       "\"\"\"",
       "@spec ${2:func_name}(${3:args}) :: ${4:no_return}",
       "def ${2:func_name}(${5:args}) do",
