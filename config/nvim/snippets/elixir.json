@@ -433,7 +433,7 @@
     "body": "if ${1:condition}, do: $0"
   },
   "if .. do .. else .. end": {
-    "prefix": "ife",
+    "prefix": "ifelse",
     "body": ["if ${1:condition} do", "  $2", "else", "  $0", "end"]
   },
   "if .. do: .. else:": {
@@ -452,46 +452,57 @@
     "prefix": "for",
     "body": ["for ${1:item} <- ${2:items} do", "  $0", "end"]
   },
+
   "def + doc": {
     "prefix": "defdoc",
     "body": [
       "@doc \"\"\"",
-      "${1:doc}",
+      "  ${1:doc}",
       "\"\"\"",
-      "def ${2:name} do",
+      "def ${2:func_name}(${3:args}) do",
       "  $0",
       "end"
     ]
   },
+
   "def + doc false": {
     "prefix": "defdocfalse",
-    "body": ["@doc false", "def ${2:name} do", "  $0", "end"]
+    "body": ["@doc false", "def ${1:func_name}(${2:arg}) do", "  $0", "end"]
   },
+
   "def + spec": {
     "prefix": "defspec",
     "body": [
-      "@spec ${1:name}(${2:args}) :: ${3:no_return}",
-      "def $1{4:args} do",
+      "@spec ${1:func_name}(${2:args}) :: ${3:no_return}",
+      "def $1(${4:args}) do",
       "  $0",
       "end"
     ]
   },
+
   "def + doc + spec": {
-    "prefix": "defsd",
+    "prefix": "defdocspec",
     "body": [
       "@doc \"\"\"",
       "${1:doc}",
       "\"\"\"",
-      "@spec ${2:name}(${3:args}) :: ${4:no_return}",
-      "def $2{5:args} do",
+      "@spec ${2:func_name}(${3:args}) :: ${4:no_return}",
+      "def ${2:func_name}(${5:args}) do",
       "  $0",
       "end"
     ]
   },
+
+  "def": {
+    "prefix": "def",
+    "body": ["def ${1:func_name}(${2:args}) do", "  $0", "end"]
+  },
+
   "doc": {
     "prefix": "doc",
     "body": ["@doc \"\"\"", "$0", "\"\"\""]
   },
+
   "doc s": {
     "prefix": "docs",
     "body": ["@doc ~S\"\"\"", "$0", "\"\"\""]
