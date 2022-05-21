@@ -371,6 +371,47 @@ if [ -d "$HOME/.fzf" ]; then
 	alias aff='alias | fzf'
 fi
 
+rel_asdf_elixirf() {
+  local elixir_version="$1"
+
+  if [[ -z "$elixir_version" ]]; then
+    printf "The elixir version is required.\n"
+    return 0
+  fi
+
+  local install_dir="$HOME/projects/elixir/elixir-ls"
+
+  if ! [[ -d "$install_dir" ]]; then
+    git clone https://github.com/elixir-lsp/elixir-ls.git "$install_dir"
+  fi
+
+  local release_dir="$install_dir/elixir_ls-releases/$elixir_version"
+  mkdir -p "$release_dir"
+
+  cd "$install_dir"
+
+  printf '\n\n\t# Update to the latest code base of elixir LSP server.\n'
+  git pull origin master
+
+  printf '\n\n\t# Remove the previous dependencies and recompile.\n'
+  rm -rf deps _build
+
+  printf '\n\n\t# Fetch current dependencies and compile the code.\n'
+  mix do deps.get, compile
+
+  printf '\n\n\t\t# Create the language server scripts.\n'
+  mix elixir_ls.release -o "$release_dir"
+
+  # Print the path to the language server script so we can use it in LSP
+  # client.
+  printf '\n\n\nThe path to the language server script:'
+  printf '\n\t%s\n\n' "$release_dir/language_server.sh"
+
+  cd -
+}
+
+alias rel_asdf_elixir=rel_asdf_elixirf
+
 if [ -d "$HOME/.asdf" ]; then
 	# shellcheck disable=2086,1090
 	. $HOME/.asdf/asdf.sh
