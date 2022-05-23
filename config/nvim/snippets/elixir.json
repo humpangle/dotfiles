@@ -510,11 +510,6 @@
     ],
     "description": "GenServer snippet"
   },
-  "defmodule": {
-    "prefix": "defmodule",
-    "body": ["defmodule ${1:module_name} do", "  $0", "end"],
-    "description": "Define a module"
-  },
   "if .. do .. end": {
     "prefix": "if",
     "body": ["if ${1:condition} do", "  $0", "end"]
@@ -582,11 +577,6 @@
       "  $0",
       "end"
     ]
-  },
-
-  "def": {
-    "prefix": "def",
-    "body": ["def ${1:func_name}(${2:args}) do", "  $0", "end"]
   },
 
   "doc": {
