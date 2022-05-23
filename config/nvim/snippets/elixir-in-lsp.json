@@ -24,5 +24,15 @@
     "prefix": "defmodule",
     "body": ["defmodule ${1:module_name} do", "  $0", "end"],
     "description": "Define a module"
+  },
+  "receive block": {
+    "prefix": "receive",
+    "body": [
+      "receive do",
+      "  ${1:{:message_type, value}} ->",
+      "      # code$0",
+      "end"
+    ],
+    "description": " Checks if there is a message matching the given clauses in the current process mailbox."
   }
 }
