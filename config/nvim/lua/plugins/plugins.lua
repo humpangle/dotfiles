@@ -567,6 +567,7 @@ return packer.startup(function(use)
 
     {
       "aeke/vim-phpfmt",
+      disable = true,
       config = function()
         Cmd([[
             let g:phpfmt_psr2 = 1
