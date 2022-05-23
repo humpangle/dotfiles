@@ -170,22 +170,8 @@
     "description": "DynamicSupervisor specification"
   },
 
-  "Supervised worker spec": {
-    "prefix": [ "supervisor_spec_worker", "child_spec_worker"],
-    "body": [
-      "%{",
-      "id: ${1:compulsory}, ",
-      "start: {",
-      "__MODULE__, ${2:start_func}, [${3:args}]",
-      "}, ",
-      "type: :worker",
-      "}"
-    ],
-    "description": "DynamicSupervisor worker child specification"
-  },
-
   "Dynamic Supervisor": {
-    "prefix":[ "dynamic_supervisor", "supervisor_dynamic"],
+    "prefix": ["dynamic_supervisor", "supervisor_dynamic"],
     "body": [
       "defmodule ${1:MySupervisor} do",
       "  use DynamicSupervisor",
@@ -467,19 +453,6 @@
       "  # inside supervisor",
       "  # children = [{${1:ModuleName}, [${2:_arg_from_supervisor}]}]",
       "",
-      "  # override default child_spec provided by GenServer",
-      "  @impl true",
-      "  def child_spec(${2:_arg_from_supervisor}) do",
-      "      %{",
-      "          id: __MODULE__,",
-      "          start: {",
-      "              __MODULE__,",
-      "              :start_link,",
-      "              [initial_state]",
-      "          }",
-      "      }",
-      "  end",
-      "",
       "  def start_link(initial_state) do",
       "      GenServer.start_link(__MODULE__, initial_state, name: __MODULE__)",
       "  end",
@@ -510,6 +483,33 @@
     ],
     "description": "GenServer snippet"
   },
+
+  "Def child spec": {
+    "prefix": ["def_child_spec", "child_spec_def"],
+    "body": [
+      "def child_spec(${1:_arg}) do",
+      "  %{",
+      "      id: ${2:__MODULE__},",
+      "      start: {",
+      "          # The module to call",
+      "          ${3:__MODULE__},",
+      "          # start_func, conventionally `:start_link`",
+      "          ${4::start_link},",
+      "          # we will call module.start_func(..start_func_args)",
+      "          [${5:start_func_args}]",
+      "      },",
+      "      # or :supervisor",
+      "      type: ${6::worker},",
+      "      # Optional - :temporary / :transient",
+      "      ${7:restart: :permanent,}",
+      "      # Optional: defaults to 5_000 for worker and :infinity for supervisor",
+      "      ${8:shutdown: 5_000}",
+      "  }",
+      "end"
+    ],
+    "description": "Def child spec"
+  },
+
   "if .. do .. end": {
     "prefix": "if",
     "body": ["if ${1:condition} do", "  $0", "end"]
