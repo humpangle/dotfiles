@@ -493,6 +493,9 @@ return packer.startup(function(use)
     ft = {"markdown"},
     config = function()
       Vimg.mkdp_refresh_slow = 1
+      Cmd([[
+        nnoremap <leader>mt :MarkdownPreviewToggle<CR>
+      ]])
     end,
   })
 
