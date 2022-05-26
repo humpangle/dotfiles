@@ -254,6 +254,8 @@
       "#   }",
       "# ]",
       "#",
+      "#",
+      "# Root Supervisor",
       "# Supervisor.start_link(",
       "#   children,",
       "#   strategy: :one_for_one",
@@ -510,6 +512,12 @@
     "description": "Def child spec"
   },
 
+  "Process get callers": {
+    "prefix": ["process_get_callers", "callers_process_get"],
+    "body": ["Process.get(:\"\\$callers\")"],
+    "description": "Process get callers"
+  },
+
   "if .. do .. end": {
     "prefix": "if",
     "body": ["if ${1:condition} do", "  $0", "end"]
@@ -530,10 +538,7 @@
     "prefix": "cond",
     "body": ["cond do", "  $1 -> ", "  $0", "end"]
   },
-  "case": {
-    "prefix": "case",
-    "body": ["case $1 do", "  $2 -> ", "    $0", "end"]
-  },
+
   "for": {
     "prefix": "for",
     "body": ["for ${1:item} <- ${2:items} do", "  $0", "end"]
@@ -612,14 +617,26 @@
     "prefix": "test",
     "body": ["test ${1:name} do", "  $0", "end"]
   },
+
   "des": {
     "prefix": "test",
     "body": ["describe \"${1:test group subject}\" do", "  $0", "end"]
   },
+
+  // IEX
   "IEx.pry": {
-    "prefix": "pry",
-    "body": ["require IEx; IEx.pry", "$0"]
+    "prefix": ["pry_iex", "iex_pry"],
+    "body": ["require IEx; IEx.pry", "$0"],
+    "description": "IEx.pry"
   },
+
+  "IEx.configure": {
+    "prefix": ["iex_configure", "configure_iex"],
+    "body": ["IEx.configure(inspect: [charlists: :as_lists])", "$0"],
+    "description": "IEx.configure"
+  },
+  // END IEX
+
   "pipe char": {
     "prefix": "p",
     "body": "|> $0"
@@ -640,12 +657,16 @@
     "prefix": ">f",
     "body": "|> Enum.reduce(${1:acc}, fn ${2}, ${3:acc} -> $0 end)"
   },
+
   "word list": {
-    "prefix": "wl",
-    "body": "~w($0)"
+    "prefix": ["word_list", "list_word", "wlw"],
+    "body": "~w($0)",
+    "description": "Word list"
   },
+
   "atom list": {
-    "prefix": "wl",
-    "body": "~w($0)a"
+    "prefix": ["atom_list", "list_atom", "wla"],
+    "body": "~w($0)a",
+    "description": "Atom list"
   }
 }

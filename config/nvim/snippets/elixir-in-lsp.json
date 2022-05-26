@@ -34,5 +34,10 @@
       "end"
     ],
     "description": " Checks if there is a message matching the given clauses in the current process mailbox."
+  },
+
+  "case": {
+    "prefix": "case",
+    "body": ["case $1 do", "  $2 -> ", "    $0", "end"]
   }
 }
