@@ -410,7 +410,22 @@ rel_asdf_elixirf() {
   cd -
 }
 
+rel_asdf_elixir_exists_f() {
+  local elixir_version="$1"
+
+  local server_path="$HOME/projects/elixir/elixir-ls/elixir_ls-releases/$elixir_version/language_server.sh"
+
+  printf "\n%s\n\n" "$server_path"
+
+  if [[ -e "$server_path" ]]; then
+    printf "Exists\n\n"
+  else
+    printf "Does not exist\n\n"
+  fi
+}
+
 alias rel_asdf_elixir=rel_asdf_elixirf
+alias rel_asdf_elixir_exists=rel_asdf_elixir_exists_f
 
 if [ -d "$HOME/.asdf" ]; then
 	# shellcheck disable=2086,1090
