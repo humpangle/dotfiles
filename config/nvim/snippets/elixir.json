@@ -6,7 +6,7 @@
   },
 
   "print to console": {
-    "prefix": "puts",
+    "prefix": ["puts", "ioputs"],
     "body": [
       "IO.puts(\"\"\"\n\n\n",
       "${1:label}: \n    #{ inspect( ${2:expr} ) }\n\n\n",
@@ -18,7 +18,7 @@
   "inspect console": {
     "prefix": "putsinspect",
     "body": [
-      "IO.inspect(${1:data}, label: \"\n-----------${1:label}------------\n\")",
+      "IO.inspect(${1:data}, label: \"\n----------- ${1:label}------------\n\")",
       "IO.puts(\"-----------end ${1:label}------------\n\")"
     ],
     "description": "print to console puts inspect"
@@ -27,7 +27,7 @@
   "inspect with label": {
     "prefix": "inspectlabel",
     "body": [
-      "IO.inspect(${1:data}, label: \"\n-----------${2:label}------------\n\")"
+      "IO.inspect(${1:data}, label: \"\n----------- ${2:label}------------\n\")"
     ],
     "description": "print to console puts inspect"
   },
@@ -87,8 +87,13 @@
       "defmodule ${1:Module.Name}Test do",
       "  use ExUnit.Case, async: ${2:true}",
       "  alias ${1:Module.Name}",
-      "\n  test \"${3:test name}\" do",
-      "    ${4}",
+      "",
+      "  setup do",
+      "    ${3:# code}",
+      "  end",
+      "",
+      "  test \"${4:test name}\" do",
+      "    ${5:# code}",
       "  end",
       "end"
     ],
@@ -452,33 +457,36 @@
       "defmodule ${1:ModuleName} do",
       "  use GenServer",
       "",
-      "  # inside supervisor",
-      "  # children = [{${1:ModuleName}, [${2:_arg_from_supervisor}]}]",
+      "  ## Client API",
       "",
       "  def start_link(initial_state) do",
       "      GenServer.start_link(__MODULE__, initial_state, name: __MODULE__)",
       "  end",
       "",
-      "  ## Client API",
-      "",
       "  ## GenServer Callbacks",
       "",
       "  @impl true",
-      "  def init(stack) do",
-      "      {:ok, stack}",
+      "  def init(state) do",
+      "      {:ok, state}",
       "  end",
       "",
       "  @impl true",
-      "  def handle_call(:pop, caller_pid, current_state) do",
-      "      send(caller_pid, \"processing....\")",
-      "      next_state = current_state",
+      "  def handle_call(:pop, _from, state) do",
+      "      # send(from, \"processing....\")",
+      "      next_state = state",
       "      response_to_caller = :ok",
       "      {:reply, response_to_caller, next_state}",
       "  end",
       "",
       "  @impl true",
-      "  def handle_cast({:push, payload}, current_state) do",
-      "      next_state = {current_state, payload}",
+      "  def handle_cast({:push, payload}, state) do",
+      "      next_state = {state, payload}",
+      "      {:noreply, next_state}",
+      "  end",
+      "",
+      "  @impl true",
+      "  def handle_info(:info, state) do",
+      "      next_state = state",
       "      {:noreply, next_state}",
       "  end",
       "end"
@@ -518,22 +526,21 @@
     "description": "Process get callers"
   },
 
-  "if .. do .. end": {
-    "prefix": "if",
-    "body": ["if ${1:condition} do", "  $0", "end"]
-  },
   "if .. do:": {
-    "prefix": "if:",
+    "prefix": ["if_short", "if:"],
     "body": "if ${1:condition}, do: $0"
   },
+
   "if .. do .. else .. end": {
     "prefix": "ifelse",
     "body": ["if ${1:condition} do", "  $2", "else", "  $0", "end"]
   },
+
   "if .. do: .. else:": {
     "prefix": "ife:",
     "body": "if ${1:condition}, do: $2, else: $0"
   },
+
   "cond": {
     "prefix": "cond",
     "body": ["cond do", "  $1 -> ", "  $0", "end"]
