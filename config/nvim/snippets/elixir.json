@@ -81,6 +81,17 @@
     "description": "for expression no end"
   },
 
+  "defstruct": {
+    "prefix": ["defstruct_def"],
+    "body": [
+      "defstruct [",
+      "  :${1:field},",
+      "  ${2:# field: default_val}",
+      "]"
+    ],
+    "description": "Defines a Struct"
+  },
+
   "set up test module": {
     "prefix": "defmodule_test",
     "body": [
