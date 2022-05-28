@@ -731,13 +731,14 @@
     ],
     "description": "Export react functional Component"
   },
+
   "Print to console": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consoleapplog",
     "body": [
       "console.log(",
       "  `\\n======================Logging start==================\\n",
-      "      Label: ${1:label}",
+      "      Label: ${1:label}$2",
       "  `,",
       "  ${1:code},",
       "  `\\n\\n=====================Logging ends===================\\n`",
@@ -745,13 +746,14 @@
     ],
     "description": "Log to console with some debug info"
   },
+
   "Print to console error": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consoleerrorlog",
     "body": [
       "console.log(",
       "  `\\n======================Logging start==================\\n",
-      "      Label: ${1:label}",
+      "      Label: ${1:label}$2",
       "  `,",
       "  new Error().stack,",
       "  `\\n\\n`,",
@@ -761,19 +763,21 @@
     ],
     "description": "Log to console with some debug info"
   },
+
   "actReactTest": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "actReactTest",
     "body": ["act(() => {", "  ${1}", "});"],
     "description": "actReactTest"
   },
+
   "console.log JSON.stringify": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consolejsonlog",
     "body": [
       "console.log(",
       "  `\\n======================Logging start==================\\n",
-      "      Label: ${1:label}",
+      "      Label: ${1:label}$2",
       "  `,",
       "  JSON.stringify(${1:code}, null, 2),",
       "  `\\n\\n=====================Logging ends===================\\n`",
@@ -781,6 +785,7 @@
     ],
     "description": "console.log JSON.stringify"
   },
+
   "describeTest": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "describeTest",
