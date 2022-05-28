@@ -403,7 +403,7 @@ nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
 " Delete all empty buffers
 nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete all terminal buffers
-nnoremap <leader>bt :call DeleteAllBuffers('t')<cr>
+nnoremap <leader>bT :call DeleteAllBuffers('t')<cr>
 " Delete current buffer
 nnoremap <leader>bd :bd%<cr>
 " Delete current buffer force
