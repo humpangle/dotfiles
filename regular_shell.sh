@@ -30,6 +30,7 @@ pathmunge() {
 
 # docker
 alias d='docker'
+alias docker-compose='docker compose '
 # docker remove all containers
 alias drac='docker rm $(docker ps -a -q) '
 # docker remove all containers force
