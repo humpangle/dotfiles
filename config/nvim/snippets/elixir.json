@@ -27,7 +27,7 @@
   "inspect with label": {
     "prefix": "inspectlabel",
     "body": [
-      "IO.inspect(${1:data}, label: \"\n----------- ${2:label}------------\n\")"
+      "IO.inspect(${1:data}, label: \"\\n----------- ${2:label} ------------\")"
     ],
     "description": "print to console puts inspect"
   },
@@ -109,6 +109,22 @@
       "end"
     ],
     "description": "set up test module"
+  },
+
+  "ExUnit capture log": {
+    "prefix": ["capture_log_exunit", "exunit_capture_log"],
+    "body": [
+      "# import ExUnit.CaptureLog",
+      "# @moduletag capture_log: true",
+      "",
+      "_log_message =",
+      "  capture_log(fn ->",
+      "      ${0:# assertions}",
+      "  end)",
+      "",
+      "# assert log_message =~ \"STACK\""
+    ],
+    "description": "ExUnit capture log"
   },
 
   "@behaviour": {
@@ -686,5 +702,19 @@
     "prefix": ["atom_list", "list_atom", "wla"],
     "body": "~w($0)a",
     "description": "Atom list"
+  },
+
+  "receive after block": {
+    "prefix": ["receive_after"],
+    "body": [
+      "receive do",
+      "  ${1:{:message_type, value\\}} ->",
+      "      # code",
+      "after",
+      "  timeout ->",
+      "      # code",
+      "end"
+    ],
+    "description": "receive after block"
   }
 }
