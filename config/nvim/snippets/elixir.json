@@ -1,10 +1,4 @@
 {
-  "if else clause": {
-    "prefix": "ifelse",
-    "body": ["if ${1:expr} do", "  ${2:expr}", "else", "  ${3:expr}", "end"],
-    "description": "if else clause"
-  },
-
   "print to console": {
     "prefix": ["puts", "ioputs"],
     "body": [
@@ -553,19 +547,28 @@
     "description": "Process get callers"
   },
 
-  "if .. do:": {
-    "prefix": ["if_short", "if:"],
-    "body": "if ${1:condition}, do: $0"
-  },
-
-  "if .. do .. else .. end": {
+  "if else clause": {
     "prefix": "ifelse",
-    "body": ["if ${1:condition} do", "  $2", "else", "  $0", "end"]
+    "body": [
+      "if ${1:condition} do",
+      "  ${2:expr}",
+      "else",
+      "  ${3:expr}",
+      "end"
+    ],
+    "description": "if else clause"
   },
 
-  "if .. do: .. else:": {
-    "prefix": "ife:",
-    "body": "if ${1:condition}, do: $2, else: $0"
+  "if inline": {
+    "prefix": ["if_short", "if_inline", "if:"],
+    "body": "if ${1:condition}, do: $0",
+    "description": "if inline"
+  },
+
+  "if else inline": {
+    "prefix": ["if_inline_else", "if_short_else"],
+    "body": "if ${1:condition}, do: $2, else: $0",
+    "description": "if else inline"
   },
 
   "cond": {
