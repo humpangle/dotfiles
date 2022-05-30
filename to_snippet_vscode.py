@@ -26,7 +26,7 @@ body = '[\n' + ',\n'.join(lout) + '\n]'
 prefix = """
 {
   "name": {
-    "prefix": "",
+    "prefix": [""],
     "body": %s,
     "description": ""
   }
