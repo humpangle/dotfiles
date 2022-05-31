@@ -671,7 +671,7 @@
   // IEX
   "IEx.pry": {
     "prefix": ["pry_iex", "iex_pry"],
-    "body": ["require IEx; IEx.pry", "$0"],
+    "body": ["require IEx; IEx.pry$0"],
     "description": "IEx.pry"
   },
 
