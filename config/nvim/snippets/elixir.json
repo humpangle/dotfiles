@@ -50,29 +50,42 @@
     "description": "function specification"
   },
 
-  "for expression": {
-    "prefix": "for_expr",
+  "for expression full": {
+    "prefix": ["for_exp_full"],
     "body": [
       "for ${1:member1} <- ${2:list1},",
-      "    ${3:member2 <- member1},",
-      "    ${4:filter},",
-      "    ${5:into: %{}} do",
-      "  ${6:return}",
+      "    ${3:member2 <- member1_or_list2},",
+      "    ${4:var = member1 + member2,}",
+      "    ${5:filter_exp,}",
+      "    ${6:unique: true,}",
+      "    ${7:into: string_or_map} do",
+      "  # {key, val}",
+      "  ${8:return_exp}",
       "end"
     ],
-    "description": "for expression"
+    "description": "for expression full"
   },
 
-  "for expression no end": {
-    "prefix": "for no end expr",
+  "for into": {
+    "prefix": ["for_into"],
     "body": [
       "for ${1:member1} <- ${2:list1},",
-      "    ${3:member2 <- member1},",
-      "    ${4:filter},",
-      "    ${5:into: %{}} do:",
-      "  ${6:return}"
+      "    ${3:into: string_or_map} do",
+      "  ${4:{\\}}",
+      "end"
     ],
-    "description": "for expression no end"
+    "description": "for into"
+  },
+
+  "for reduce": {
+    "prefix": ["for_reduce"],
+    "body": [
+      "for ${1:member1} <- ${2:list1},",
+      "    reduce: ${3:string_or_map_or_collectible} do",
+      "  acc -> ${4:expression}",
+      "end"
+    ],
+    "description": "for reduce"
   },
 
   "defstruct": {
@@ -574,11 +587,6 @@
   "cond": {
     "prefix": "cond",
     "body": ["cond do", "  $1 -> ", "  $0", "end"]
-  },
-
-  "for": {
-    "prefix": "for",
-    "body": ["for ${1:item} <- ${2:items} do", "  $0", "end"]
   },
 
   "def + doc": {
