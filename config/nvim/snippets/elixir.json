@@ -175,26 +175,6 @@
     "description": "@doc false"
   },
 
-  "Supervisor spec": {
-    "prefix": "supervisor_spec",
-    "body": [
-      "%{",
-      "  id: ${1:id}, ",
-      "  start: {",
-      "    Supervisor, ",
-      "    :start_link, ",
-      "    [",
-      "      ${2:children}, ",
-      "      [strategy: :one_for_one, name: ${3:name}]",
-      "    ]",
-      "  }, ",
-      "  restart: :${4:transient}, ",
-      "  type: :supervisor",
-      "}"
-    ],
-    "description": "Supervisor specification"
-  },
-
   "DynamicSupervisor spec": {
     "prefix": "supervisor_spec_dynamic",
     "body": [
