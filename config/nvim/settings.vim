@@ -373,8 +373,9 @@ nnoremap <leader>wd :pwd<CR>
 
 " SEARCH AND REPLACE
 " remove highlight from search term
-" Use yoh
+" Use yoh (as defined in vim unimpaired)
 " nnoremap <leader>nh :noh<cr>
+nnoremap yoh :noh<cr>
 
 vnoremap <leader>*
   \ :let @+=
