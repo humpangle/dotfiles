@@ -438,6 +438,10 @@ if [ -d "$HOME/.asdf" ]; then
 		TS_SERVER_GBLOBAL_LIBRARY_PATH="$HOME/.asdf/installs/nodejs/$(asdf current nodejs | awk '{print $2}')/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
 		export TS_SERVER_GBLOBAL_LIBRARY_PATH
 	fi
+
+  if [[ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]]; then
+    . "$HOME/.asdf/plugins/java/set-java-home.bash"
+  fi
 fi
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
