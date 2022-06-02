@@ -70,8 +70,8 @@
     "prefix": ["for_into"],
     "body": [
       "for ${1:member1} <- ${2:list1},",
-      "    ${3:into: string_or_map} do",
-      "  ${4:{\\}}",
+      "    into: ${3:string_or_map} do",
+      "  ${4:# code}",
       "end"
     ],
     "description": "for into"
@@ -100,18 +100,23 @@
   },
 
   "set up test module": {
-    "prefix": "defmodule_test",
+    "prefix": ["defmodule_test", "test_module"],
     "body": [
       "defmodule ${1:Module.Name}Test do",
       "  use ExUnit.Case, async: ${2:true}",
-      "  alias ${1:Module.Name}",
+      "  alias ${1:Module.Name}${3:, as:Name}",
       "",
-      "  setup do",
-      "    ${3:# code}",
+      "  setup_all  do",
+      "    :ok",
       "  end",
       "",
-      "  test \"${4:test name}\" do",
-      "    ${5:# code}",
+      "  setup _context do",
+      "    ${4:# code}",
+      "    :ok",
+      "  end",
+      "",
+      "  test \"${5:test name}\" do",
+      "    ${6:# code}$0",
       "  end",
       "end"
     ],
@@ -151,26 +156,32 @@
     "description": "Elixir Registry"
   },
 
-  "@moduledoc": {
-    "prefix": "@moduledoc",
+  "@module doc": {
+    "prefix": ["@module_doc", "module_doc"],
     "body": ["@moduledoc ~S\"\"\"", "  $1", "\"\"\""],
-    "description": "@moduledoc"
+    "description": "@module doc"
   },
 
-  "@moduledoc false": {
-    "prefix": "@moduledoc_false",
+  "@module doc false": {
+    "prefix": ["@module_doc_false", "module_doc_false"],
     "body": "@moduledoc false",
-    "description": "@moduledoc false"
+    "description": "@module doc false"
   },
 
   "@doc": {
-    "prefix": "@doc",
-    "body": ["@doc ~S\"\"\"", "  $1", "\"\"\""],
+    "prefix": ["doc", "@doc"],
+    "body": ["@doc \"\"\"", "$0", "\"\"\""],
     "description": "@doc"
   },
 
+  "@doc Sigil": {
+    "prefix": ["@doc_sigil", "doc_sigil"],
+    "body": ["@doc ~S\"\"\"", "  $1", "\"\"\""],
+    "description": "@doc Sigil"
+  },
+
   "@doc false": {
-    "prefix": "@doc_false",
+    "prefix": ["@doc_false", "doc_false"],
     "body": "@doc false",
     "description": "@doc false"
   },
@@ -466,15 +477,19 @@
   },
 
   "GenServer snippet": {
-    "prefix": "genserver_snippet",
+    "prefix": ["genserver_snippet", "user_genserver"],
     "body": [
       "defmodule ${1:ModuleName} do",
       "  use GenServer",
       "",
       "  ## Client API",
       "",
-      "  def start_link(initial_state) do",
-      "      GenServer.start_link(__MODULE__, initial_state, name: __MODULE__)",
+      "  def start_link(opts) do",
+      "      GenServer.start_link(",
+      "        __MODULE__,",
+      "        opts.initial_state,",
+      "        opts",
+      "      )",
       "  end",
       "",
       "  ## GenServer Callbacks",
@@ -486,22 +501,17 @@
       "",
       "  @impl true",
       "  def handle_call(:pop, _from, state) do",
-      "      # send(from, \"processing....\")",
-      "      next_state = state",
-      "      response_to_caller = :ok",
-      "      {:reply, response_to_caller, next_state}",
+      "      {:reply, :ok, state}",
       "  end",
       "",
       "  @impl true",
-      "  def handle_cast({:push, payload}, state) do",
-      "      next_state = {state, payload}",
-      "      {:noreply, next_state}",
+      "  def handle_cast(:push, state) do",
+      "      {:noreply, state}",
       "  end",
       "",
       "  @impl true",
       "  def handle_info(:info, state) do",
-      "      next_state = state",
-      "      {:noreply, next_state}",
+      "      {:noreply, state}",
       "  end",
       "end"
     ],
@@ -573,7 +583,7 @@
     "prefix": "defdoc",
     "body": [
       "@doc \"\"\"",
-      "  ${1:doc}",
+      "${1:doc}",
       "\"\"\"",
       "def ${2:func_name}(${3:args}) do",
       "  $0",
@@ -600,7 +610,7 @@
     "prefix": "defdocspec",
     "body": [
       "@doc \"\"\"",
-      "  ${1:doc}",
+      "${1:doc}",
       "\"\"\"",
       "@spec ${2:func_name}(${3:args}) :: ${4:no_return}",
       "def ${2:func_name}(${5:args}) do",
@@ -609,35 +619,16 @@
     ]
   },
 
-  "doc": {
-    "prefix": "doc",
-    "body": ["@doc \"\"\"", "$0", "\"\"\""]
-  },
-
-  "doc s": {
-    "prefix": "docs",
-    "body": ["@doc ~S\"\"\"", "$0", "\"\"\""]
-  },
-  "doc false": {
-    "prefix": "docf",
-    "body": "@doc false"
-  },
-  "moduledoc": {
-    "prefix": "mdoc",
-    "body": ["@moduledoc \"\"\"", "$0", "\"\"\""]
-  },
   "moduledoc s": {
     "prefix": "mdocs",
     "body": ["@moduledoc ~S\"\"\"", "$0", "\"\"\""]
   },
-  "moduledoc false": {
-    "prefix": "mdocf",
-    "body": "@moduledoc false"
-  },
+
   "require": {
     "prefix": "req",
     "body": "require ${0:Logger}"
   },
+
   "test": {
     "prefix": "test",
     "body": ["test ${1:name} do", "  $0", "end"]
@@ -707,5 +698,19 @@
       "end"
     ],
     "description": "receive after block"
+  },
+
+  "mix test interactive": {
+    "prefix": ["mix_test_interactive", "interactive_mix_test"],
+    "body": [
+      "{:mix_test_interactive, \"~> 1.2\", only: [:dev, :test], runtime: false}",
+      "",
+      "# if Mix.env() == :dev || Mix.env() == :test do",
+      "#   config :mix_test_interactive,",
+      "#     clear: true,",
+      "#     exclude: [~r/db_migration\\/.*/]",
+      "# end"
+    ],
+    "description": "Mix test interactive"
   }
 }
