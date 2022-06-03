@@ -712,5 +712,22 @@
       "# end"
     ],
     "description": "Mix test interactive"
+  },
+
+  "Supervisor strategy one_for_one": {
+    "prefix": ["one_for_one_strategy", "strategy_one_for_one"],
+    "body": "strategy: :one_for_one",
+    "description": "Supervisor strategy one_for_one"
+  },
+
+  "Supervisor strategy rest_for_one": {
+    "prefix": ["rest_for_one_strategy", "strategy_rest_for_one"],
+    "body": "strategy: :rest_for_one",
+    "description": "Supervisor strategy rest_for_one"
+  },
+  "Supervisor strategy one_for_all": {
+    "prefix": ["one_for_all_strategy", "strategy_one_for_all"],
+    "body": "strategy: :one_for_all",
+    "description": "Supervisor strategy one_for_all"
   }
 }
