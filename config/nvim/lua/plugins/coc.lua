@@ -42,6 +42,8 @@ local coc_extensions = {
   -- "coc-flutter",
   -- Database auto completion powered by vim-dadbod
   "coc-db",
+  "coc-java",
+  "coc-kotlin"
 }
 
 if vim.fn.has("win32") == 1 then
