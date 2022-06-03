@@ -183,7 +183,6 @@ alias 4.='cd ../../../..'
 alias .2=2.
 alias .3=3.
 alias .4=4.
-alias md='mkdir -p'
 alias C="clear && printf '\e[3J'"
 alias py='python '
 # debian package `lrzsz`
@@ -192,6 +191,13 @@ alias scouser='sudo chown -R $USER:$USER '
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
 alias eshell='source ~/.bashrc'
+
+mdf() {
+  mkdir -p "$1"
+  cd "$1"
+}
+
+alias md='mdf'
 
 # https://unix.stackexchange.com/a/179852
 # Make bash history unique
