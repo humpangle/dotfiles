@@ -137,3 +137,5 @@ Session.vim
 
 # php
 .php-cs-fixer.cache
+
+**/.idea/
