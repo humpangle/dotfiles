@@ -402,6 +402,9 @@ return packer.startup(function(use)
 
     -- Powershell
     "pprovost/vim-ps1",
+
+    -- kotlin
+    "udalov/kotlin-vim",
   })
 
   -- making rest api call
