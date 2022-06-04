@@ -620,6 +620,12 @@
     ]
   },
 
+  "defp": {
+    "prefix": ["defp_short", "defp_inline"],
+    "body": "defp ${1:func_name}(${2:arg}), do: ${0:# code}",
+    "description": "defp short Private function"
+  },
+
   "moduledoc s": {
     "prefix": "mdocs",
     "body": ["@moduledoc ~S\"\"\"", "$0", "\"\"\""]
