@@ -478,7 +478,7 @@
   },
 
   "GenServer snippet": {
-    "prefix": ["genserver_snippet", "user_genserver"],
+    "prefix": ["genserver_snippet", "use_genserver"],
     "body": [
       "defmodule ${1:ModuleName} do",
       "  use GenServer",
