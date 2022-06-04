@@ -691,10 +691,10 @@
     "body": [
       "receive do",
       "  ${1:{:message_type, value\\}} ->",
-      "      # code",
+      "      ${2:# code}",
       "after",
-      "  timeout ->",
-      "      # code",
+      "  ${3:timeout} ->",
+      "      ${4:# code}",
       "end"
     ],
     "description": "receive after block"
