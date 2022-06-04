@@ -104,7 +104,7 @@
     "body": [
       "defmodule ${1:Module.Name}Test do",
       "  use ExUnit.Case, async: ${2:true}",
-      "  alias ${1:Module.Name}${3:, as:Name}",
+      "  ${3:alias Module.Name, as:Name}",
       "",
       "  setup_all  do",
       "    :ok",
@@ -112,6 +112,7 @@
       "",
       "  setup _context do",
       "    ${4:# code}",
+      "",
       "    :ok",
       "  end",
       "",
@@ -127,12 +128,12 @@
     "prefix": ["capture_log_exunit", "exunit_capture_log"],
     "body": [
       "# import ExUnit.CaptureLog",
-      "# @moduletag capture_log: true",
+      "@moduletag capture_log: true",
       "",
-      "_log_message =",
-      "  capture_log(fn ->",
+      "# _log_message =",
+      "  # capture_log(fn ->",
       "      ${0:# assertions}",
-      "  end)",
+      "  # end)",
       "",
       "# assert log_message =~ \"STACK\""
     ],
@@ -725,9 +726,21 @@
     "body": "strategy: :rest_for_one",
     "description": "Supervisor strategy rest_for_one"
   },
+
   "Supervisor strategy one_for_all": {
     "prefix": ["one_for_all_strategy", "strategy_one_for_all"],
     "body": "strategy: :one_for_all",
     "description": "Supervisor strategy one_for_all"
+  },
+
+  "handle_info :DOWN": {
+    "prefix": [
+      "down_message",
+      "down_process",
+      "down_handle_info",
+      "handle_info_down"
+    ],
+    "body": "{:DOWN, ${1:_ref}, :process, ${2:_pid}, ${3:_reason}}",
+    "description": "handle_info :DOWN"
   }
 }
