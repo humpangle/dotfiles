@@ -626,6 +626,13 @@
     "description": "defp short Private function"
   },
 
+
+  "def": {
+    "prefix": ["def_short", "def_inline", "def:"],
+    "body": "def ${1:func_name}(${2:arg}), do: ${0:# code}",
+    "description": "def short Public function"
+  },
+
   "moduledoc s": {
     "prefix": "mdocs",
     "body": ["@moduledoc ~S\"\"\"", "$0", "\"\"\""]
