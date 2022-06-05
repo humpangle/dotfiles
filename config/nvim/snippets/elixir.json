@@ -736,6 +736,24 @@
     "description": "Supervisor strategy one_for_one"
   },
 
+  "restart temporary": {
+    "prefix": ["restart_temporary", "temporary"],
+    "body": "restart: :temporary",
+    "description": "restart temporary"
+  },
+
+  "restart permanent": {
+    "prefix": ["restart_permanent", "permanent"],
+    "body": "restart: :permanent",
+    "description": "restart permanent"
+  },
+
+  "restart transient": {
+    "prefix": ["restart_transient", "transient"],
+    "body": "restart: :transient",
+    "description": "restart transient"
+  },
+
   "Supervisor strategy rest_for_one": {
     "prefix": ["rest_for_one_strategy", "strategy_rest_for_one"],
     "body": "strategy: :rest_for_one",
