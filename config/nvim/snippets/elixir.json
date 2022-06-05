@@ -626,7 +626,6 @@
     "description": "defp short Private function"
   },
 
-
   "def": {
     "prefix": ["def_short", "def_inline", "def:"],
     "body": "def ${1:func_name}(${2:arg}), do: ${0:# code}",
@@ -715,14 +714,17 @@
   },
 
   "mix test interactive": {
-    "prefix": ["mix_test_interactive", "interactive_mix_test"],
+    "prefix": [
+      "mix_test_interactive",
+      "interactive_mix_test",
+      "test_interactive_mix"
+    ],
     "body": [
-      "{:mix_test_interactive, \"~> 1.2\", only: [:dev, :test], runtime: false}",
-      "",
+      "$0{:mix_test_interactive, \"~> 1.2\", only: [:dev, :test], runtime: false}",
       "# if Mix.env() == :dev || Mix.env() == :test do",
       "#   config :mix_test_interactive,",
-      "#     clear: true,",
-      "#     exclude: [~r/db_migration\\/.*/]",
+      "#     clear: true",
+      "#     # exclude: [~r/db_migration\\/.*/]",
       "# end"
     ],
     "description": "Mix test interactive"
