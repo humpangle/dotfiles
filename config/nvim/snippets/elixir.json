@@ -496,7 +496,7 @@
       "  def start_link(opts) do",
       "      GenServer.start_link(",
       "        __MODULE__,",
-      "        opts.initial_state,",
+      "        opts,",
       "        opts",
       "      )",
       "  end",
