@@ -180,6 +180,43 @@
     ],
     "description": "DynamicSupervisor specification"
   },
+  "Supervisor snippet": {
+    "prefix": ["supervisor_snippet", "use_supervisor"],
+    "body": [
+      "defmodule ${1:SupervisorName} do",
+      "  use Supervisor",
+      "$0",
+      "  def start_link(init_arg) do",
+      "      Supervisor.start_link(__MODULE__, init_arg, name: __MODULE__)",
+      "  end",
+      "",
+      "  ## Supervisor callbacks",
+      "",
+      "  @impl true",
+      "  def init(_) do",
+      "      children = []",
+      "",
+      "      Supervisor.init(",
+      "          children,",
+      "          strategy: :one_for_one",
+      "      )",
+      "  end",
+      "end",
+      "",
+      "# Add this supervisor to your main supervision tree:",
+      "# children = [",
+      "#   $1",
+      "# ]",
+      "#",
+      "#",
+      "# Root Supervisor",
+      "# Supervisor.start_link(",
+      "#   children,",
+      "#   strategy: :one_for_one",
+      "# )"
+    ],
+    "description": "Supervisor snippet"
+  },
   "Dynamic Supervisor": {
     "prefix": ["dynamic_supervisor", "supervisor_dynamic"],
     "body": [
