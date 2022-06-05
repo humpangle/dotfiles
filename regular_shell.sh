@@ -197,7 +197,8 @@ mdf() {
   cd "$1"
 }
 
-alias md='mdf'
+alias mdc='mdf'
+alias md='mkdir -p'
 
 # https://unix.stackexchange.com/a/179852
 # Make bash history unique
