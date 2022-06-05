@@ -495,7 +495,7 @@
     "body": [
       "defmodule ${1:ModuleName} do",
       "  use GenServer",
-      "",
+      "$0",
       "  ## Client API",
       "",
       "  def start_link(opts) do",
