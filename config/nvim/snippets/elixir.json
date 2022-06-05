@@ -8,7 +8,6 @@
     ],
     "description": "print to console - puts"
   },
-
   "inspect console": {
     "prefix": "putsinspect",
     "body": [
@@ -17,7 +16,6 @@
     ],
     "description": "print to console puts inspect"
   },
-
   "inspect with label": {
     "prefix": "inspectlabel",
     "body": [
@@ -25,31 +23,26 @@
     ],
     "description": "print to console puts inspect"
   },
-
   "inspect with label in pipe": {
     "prefix": "inspectpipe",
     "body": "|> IO.inspect(label: \"\\n----${1:label}----\\n\")",
     "description": "print to console puts inspect"
   },
-
   "@opaque type": {
     "prefix": "@opaque",
     "body": "@opaque ${1:t} :: ${2:expr}",
     "description": "@opaque type"
   },
-
   "@type type": {
     "prefix": "@type",
     "body": "@type ${1:t} :: ${2:type}",
     "description": "@type type"
   },
-
   "@spec": {
     "prefix": "@spec",
     "body": "@spec ${1:fun_name}(${2:param} :: ${3:type}) :: ${4:return}",
     "description": "function specification"
   },
-
   "for expression full": {
     "prefix": ["for_exp_full"],
     "body": [
@@ -65,7 +58,6 @@
     ],
     "description": "for expression full"
   },
-
   "for into": {
     "prefix": ["for_into"],
     "body": [
@@ -76,7 +68,6 @@
     ],
     "description": "for into"
   },
-
   "for reduce": {
     "prefix": ["for_reduce"],
     "body": [
@@ -87,7 +78,6 @@
     ],
     "description": "for reduce"
   },
-
   "defstruct": {
     "prefix": ["defstruct_def"],
     "body": [
@@ -98,7 +88,6 @@
     ],
     "description": "Defines a Struct"
   },
-
   "set up test module": {
     "prefix": ["defmodule_test", "test_module"],
     "body": [
@@ -123,7 +112,6 @@
     ],
     "description": "set up test module"
   },
-
   "ExUnit capture log": {
     "prefix": ["capture_log_exunit", "exunit_capture_log"],
     "body": [
@@ -139,13 +127,11 @@
     ],
     "description": "ExUnit capture log"
   },
-
   "@behaviour": {
     "prefix": "@behaviour",
     "body": "@behaviour ",
     "description": "@behaviour"
   },
-
   "Registry": {
     "prefix": "registry",
     "body": [
@@ -156,37 +142,31 @@
     ],
     "description": "Elixir Registry"
   },
-
   "@module doc": {
     "prefix": ["@module_doc", "module_doc"],
     "body": ["@moduledoc ~S\"\"\"", "  $1", "\"\"\""],
     "description": "@module doc"
   },
-
   "@module doc false": {
     "prefix": ["@module_doc_false", "module_doc_false"],
     "body": "@moduledoc false",
     "description": "@module doc false"
   },
-
   "@doc": {
     "prefix": ["doc", "@doc"],
     "body": ["@doc \"\"\"", "$0", "\"\"\""],
     "description": "@doc"
   },
-
   "@doc Sigil": {
     "prefix": ["@doc_sigil", "doc_sigil"],
     "body": ["@doc ~S\"\"\"", "  $1", "\"\"\""],
     "description": "@doc Sigil"
   },
-
   "@doc false": {
     "prefix": ["@doc_false", "doc_false"],
     "body": "@doc false",
     "description": "@doc false"
   },
-
   "DynamicSupervisor spec": {
     "prefix": "supervisor_spec_dynamic",
     "body": [
@@ -200,7 +180,6 @@
     ],
     "description": "DynamicSupervisor specification"
   },
-
   "Dynamic Supervisor": {
     "prefix": ["dynamic_supervisor", "supervisor_dynamic"],
     "body": [
@@ -316,7 +295,6 @@
     ],
     "description": "Create ecto table"
   },
-
   "Create ecto schema": {
     "prefix": "create_schema_ecto",
     "body": [
@@ -344,7 +322,6 @@
     ],
     "description": "Create ecto schema"
   },
-
   "Ecto aliases": {
     "prefix": "ecto_aliases",
     "body": [
@@ -358,7 +335,6 @@
     ],
     "description": "Ecto aliases"
   },
-
   "elixirc_paths": {
     "prefix": "elixirc_paths",
     "body": [
@@ -369,7 +345,6 @@
     ],
     "description": "elixirc_paths"
   },
-
   "absinthe child schema": {
     "prefix": "absinthe_child_schema_definition",
     "body": [
@@ -413,7 +388,6 @@
     ],
     "description": "absinthe child schema definition"
   },
-
   "absinthe schema": {
     "prefix": "absinthe_schema_definition",
     "body": [
@@ -454,13 +428,11 @@
     ],
     "description": "absinthe schema definition"
   },
-
   "@desc": {
     "prefix": "@desc",
     "body": ["@desc ~S\"\"\"", "  ${1}", "\"\"\""],
     "description": "@desc"
   },
-
   "helperfunction": {
     "prefix": "helperfunction",
     "body": [
@@ -476,7 +448,6 @@
     ],
     "description": "helperfunction"
   },
-
   "GenServer snippet": {
     "prefix": ["genserver_snippet", "use_genserver"],
     "body": [
@@ -518,7 +489,6 @@
     ],
     "description": "GenServer snippet"
   },
-
   "Def child spec": {
     "prefix": ["def_child_spec", "child_spec_def"],
     "body": [
@@ -544,13 +514,11 @@
     ],
     "description": "Def child spec"
   },
-
   "Process get callers": {
     "prefix": ["process_get_callers", "callers_process_get"],
     "body": ["Process.get(:\"\\$callers\")"],
     "description": "Process get callers"
   },
-
   "if else clause": {
     "prefix": "ifelse",
     "body": [
@@ -562,24 +530,20 @@
     ],
     "description": "if else clause"
   },
-
   "if inline": {
     "prefix": ["if_short", "if_inline", "if:"],
     "body": "if ${1:condition}, do: $0",
     "description": "if inline"
   },
-
   "if else inline": {
     "prefix": ["if_inline_else", "if_short_else"],
     "body": "if ${1:condition}, do: $2, else: $0",
     "description": "if else inline"
   },
-
   "cond": {
     "prefix": "cond",
     "body": ["cond do", "  $1 -> ", "  $0", "end"]
   },
-
   "def + doc": {
     "prefix": "defdoc",
     "body": [
@@ -591,12 +555,10 @@
       "end"
     ]
   },
-
   "def + doc false": {
     "prefix": "defdocfalse",
     "body": ["@doc false", "def ${1:func_name}(${2:arg}) do", "  $0", "end"]
   },
-
   "def + spec": {
     "prefix": "defspec",
     "body": [
@@ -606,7 +568,6 @@
       "end"
     ]
   },
-
   "def + doc + spec": {
     "prefix": "defdocspec",
     "body": [
@@ -619,53 +580,44 @@
       "end"
     ]
   },
-
   "defp": {
     "prefix": ["defp_short", "defp_inline", "defp:"],
     "body": "defp ${1:func_name}(${2:arg}), do: ${0:# code}",
     "description": "defp short Private function"
   },
-
   "def": {
     "prefix": ["def_short", "def_inline", "def:"],
     "body": "def ${1:func_name}(${2:arg}), do: ${0:# code}",
     "description": "def short Public function"
   },
-
   "moduledoc s": {
     "prefix": "mdocs",
     "body": ["@moduledoc ~S\"\"\"", "$0", "\"\"\""]
   },
-
   "require": {
     "prefix": "req",
     "body": "require ${0:Logger}"
   },
-
   "test": {
     "prefix": "test",
     "body": ["test ${1:name} do", "  $0", "end"]
   },
-
   "des": {
     "prefix": "test",
     "body": ["describe \"${1:test group subject}\" do", "  $0", "end"]
   },
-
   // IEX
   "IEx.pry": {
     "prefix": ["pry_iex", "iex_pry"],
     "body": ["require IEx; IEx.pry$0"],
     "description": "IEx.pry"
   },
-
   "IEx.configure": {
     "prefix": ["iex_configure", "configure_iex"],
     "body": ["IEx.configure(inspect: [charlists: :as_lists])", "$0"],
     "description": "IEx.configure"
   },
   // END IEX
-
   "pipe char": {
     "prefix": "p",
     "body": "|> $0"
@@ -686,19 +638,16 @@
     "prefix": ">f",
     "body": "|> Enum.reduce(${1:acc}, fn ${2}, ${3:acc} -> $0 end)"
   },
-
   "word list": {
     "prefix": ["word_list", "list_word", "wlw"],
     "body": "~w($0)",
     "description": "Word list"
   },
-
   "atom list": {
     "prefix": ["atom_list", "list_atom", "wla"],
     "body": "~w($0)a",
     "description": "Atom list"
   },
-
   "receive after block": {
     "prefix": ["receive_after"],
     "body": [
@@ -712,7 +661,6 @@
     ],
     "description": "receive after block"
   },
-
   "mix test interactive": {
     "prefix": [
       "mix_test_interactive",
@@ -729,43 +677,36 @@
     ],
     "description": "Mix test interactive"
   },
-
   "Supervisor strategy one_for_one": {
     "prefix": ["one_for_one_strategy", "strategy_one_for_one"],
     "body": "strategy: :one_for_one",
     "description": "Supervisor strategy one_for_one"
   },
-
   "restart temporary": {
     "prefix": ["restart_temporary", "temporary"],
     "body": "restart: :temporary",
     "description": "restart temporary"
   },
-
   "restart permanent": {
     "prefix": ["restart_permanent", "permanent"],
     "body": "restart: :permanent",
     "description": "restart permanent"
   },
-
   "restart transient": {
     "prefix": ["restart_transient", "transient"],
     "body": "restart: :transient",
     "description": "restart transient"
   },
-
   "Supervisor strategy rest_for_one": {
     "prefix": ["rest_for_one_strategy", "strategy_rest_for_one"],
     "body": "strategy: :rest_for_one",
     "description": "Supervisor strategy rest_for_one"
   },
-
   "Supervisor strategy one_for_all": {
     "prefix": ["one_for_all_strategy", "strategy_one_for_all"],
     "body": "strategy: :one_for_all",
     "description": "Supervisor strategy one_for_all"
   },
-
   "handle_info :DOWN": {
     "prefix": [
       "down_message",
