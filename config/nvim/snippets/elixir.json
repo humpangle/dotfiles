@@ -93,7 +93,12 @@
     "body": [
       "defmodule ${1:Module.Name}Test do",
       "  use ExUnit.Case, async: ${2:true}",
+      "",
+      "  # import ExUnit.CaptureLog",
+      "",
       "  ${3:alias Module.Name, as:Name}",
+      "",
+      "  # @moduletag capture_log: true",
       "",
       "  setup_all  do",
       "    :ok",
