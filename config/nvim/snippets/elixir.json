@@ -766,5 +766,20 @@
     ],
     "body": "{:DOWN, ${1:_ref}, :process, ${2:_pid}, ${3:_reason}}",
     "description": "handle_info :DOWN"
+  },
+  "ets new": {
+    "prefix": [":ets_new", "ets_new", "new_ets"],
+    "body": [
+      "_table_ref =",
+      "  :ets.new(name, [",
+      "      :set,",
+      "      :protected,",
+      "      :named_table,",
+      "      read_concurrency: false,",
+      "      write_concurrency: false,",
+      "      keypos: 1",
+      "  ])"
+    ],
+    "description": "ets new"
   }
 }
