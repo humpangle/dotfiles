@@ -537,8 +537,13 @@
   "Def child spec": {
     "prefix": ["def_child_spec", "child_spec_def"],
     "body": [
-      "def child_spec(${1:_arg}) do",
+      "def child_spec(${1:_opts}) do",
+      "",
+      "  # opts = Keyword.put_new(opts, :name, __MODULE__)",
+      "  # name = Keyword.fetch!(opts, :name)",
+      "",
       "  %{",
+      "      # You may use the name option to customize the ID",
       "      id: ${2:__MODULE__},",
       "      start: {",
       "          # The module to call",
@@ -546,7 +551,7 @@
       "          # start_func, conventionally `:start_link`",
       "          ${4::start_link},",
       "          # we will call module.start_func(..start_func_args)",
-      "          [${5:start_func_args}]",
+      "          [${5:_start_func_args = []}]",
       "      },",
       "      # or :supervisor",
       "      type: ${6::worker},",
