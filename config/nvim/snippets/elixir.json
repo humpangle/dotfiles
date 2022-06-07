@@ -28,6 +28,11 @@
     "body": "|> IO.inspect(label: \"\\n----${1:label}----\\n\")",
     "description": "print to console puts inspect"
   },
+  "tap inspect in a pipe": {
+    "prefix": ["tap_inspect", "inspect_tap"],
+    "body": "|> tap(&IO.inspect(${0:&1}, label: \"${1:label}\"))",
+    "description": "print to console puts inspect"
+  },
   "@opaque type": {
     "prefix": "@opaque",
     "body": "@opaque ${1:t} :: ${2:expr}",
