@@ -779,5 +779,21 @@
       "  ])"
     ],
     "description": "ets new"
+  },
+  "gen_tcp options": {
+    "prefix": ["gen_tcp_options", "tcp_options_gen"],
+    "body": [
+      "[",
+      "  # receives data as binaries (instead of lists)",
+      "  :binary,",
+      "  # receives data line by line",
+      "  packet: :line,",
+      "  # blocks on `:gen_tcp.recv/2` until data is available",
+      "  active: false,",
+      "  # allows us to reuse the address if the listener crashes",
+      "  reuseaddr: true",
+      "]"
+    ],
+    "description": "gen_tcp options"
   }
 }
