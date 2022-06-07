@@ -39,9 +39,9 @@
     "description": "@type type"
   },
   "@spec": {
-    "prefix": "@spec",
+    "prefix": ["@spec", "spec"],
     "body": "@spec ${1:fun_name}(${2:param} :: ${3:type}) :: ${4:return}",
-    "description": "function specification"
+    "description": "@spec"
   },
   "for expression full": {
     "prefix": ["for_exp_full"],
