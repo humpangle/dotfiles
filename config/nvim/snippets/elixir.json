@@ -774,7 +774,7 @@
     "prefix": [":ets_new", "ets_new", "new_ets"],
     "body": [
       "_table_ref =",
-      "  :ets.new(name, [",
+      "  :ets.new(${0:name}, [",
       "      :set,",
       "      :protected,",
       "      :named_table,",
