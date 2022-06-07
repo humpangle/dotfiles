@@ -795,5 +795,10 @@
       "]"
     ],
     "description": "gen_tcp options"
+  },
+  "stop genserver": {
+    "prefix": ["genserver_stop", "stop_genserver"],
+    "body": "{:stop, ${1::normal}, ${0:next_state}\\}",
+    "description": "Stop genserver"
   }
 }
