@@ -199,7 +199,7 @@
       "  def start_link(opts) do",
       "      # opts = Keyword.put_new(opts, :name, __MODULE__)",
       "      # _name = Keyword.fetch!(opts, :name)",
-      "      Supervisor.start_link(__MODULE__, opts, opts)",
+      "      Supervisor.start_link(__MODULE__, :ok, opts)",
       "  end",
       "",
       "  ## Supervisor callbacks",
