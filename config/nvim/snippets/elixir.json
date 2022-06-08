@@ -203,6 +203,28 @@
     "body": "@doc false",
     "description": "@doc false"
   },
+  "@doc doctest": {
+    "prefix": ["doc_test", "doc_doctest", "doctest_doc", "@doc_doctest"],
+    "body": [
+      "@doc ~S\"\"\"",
+      "${0:What does function do?.}",
+      "",
+      "## Examples",
+      "",
+      "Test with comment:",
+      "",
+      "      iex> ${1:Module}.${2:func_name}(${3:args})",
+      "      ${4:result}",
+      "",
+      "Test with comment:",
+      "",
+      "      iex> ${1:Module}.${2:func_name}(${3:args})",
+      "      ${4:result}",
+      "",
+      "\"\"\""
+    ],
+    "description": "@doc doctest"
+  },
   "DynamicSupervisor spec": {
     "prefix": "supervisor_spec_dynamic",
     "body": [
