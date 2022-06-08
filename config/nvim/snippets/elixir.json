@@ -33,15 +33,30 @@
     "body": [
       "|> tap(",
       "  &IO.puts([",
-      "      \"\\n\",",
+      "      \"\\n\\n\",",
       "      \"----${1:label}----\",",
       "      \"\\n\",",
       "      inspect(${0:&1}),",
-      "      \"\\n\"",
+      "      \"\\n\\n\"",
       "  ])",
       ")"
     ],
     "description": "tap inspect in pipe & func"
+  },
+  "tap inspect in pipe fun func": {
+    "prefix": ["tap_inspect_fn", "inspect_tap_fn"],
+    "body": [
+      "|> tap(fn ${2:arg} ->",
+      "  IO.puts([",
+      "      \"\\n\\n\",",
+      "      \"----${1:label}----\",",
+      "      \"\\n\",",
+      "      inspect(${0:arg}),",
+      "      \"\\n\\n\"",
+      "  ])",
+      "end)"
+    ],
+    "description": "tap inspect in pipe fun func"
   },
   "@opaque type": {
     "prefix": "@opaque",
