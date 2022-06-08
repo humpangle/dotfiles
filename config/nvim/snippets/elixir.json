@@ -28,10 +28,20 @@
     "body": "|> IO.inspect(label: \"\\n----${1:label}----\\n\")",
     "description": "print to console puts inspect"
   },
-  "tap inspect in a pipe": {
-    "prefix": ["tap_inspect", "inspect_tap"],
-    "body": "|> tap(&IO.inspect(${0:&1}, label: \"${1:label}\"))",
-    "description": "print to console puts inspect"
+  "tap inspect in a pipe & func": {
+    "prefix": ["tap_inspect_&", "inspect_tap_&"],
+    "body": [
+      "|> tap(",
+      "  &IO.puts([",
+      "      \"\\n\",",
+      "      \"----${1:label}----\",",
+      "      \"\\n\",",
+      "      inspect(${0:&1}),",
+      "      \"\\n\"",
+      "  ])",
+      ")"
+    ],
+    "description": "tap inspect in pipe & func"
   },
   "@opaque type": {
     "prefix": "@opaque",
