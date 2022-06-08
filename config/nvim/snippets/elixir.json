@@ -102,6 +102,7 @@
       "  # import ExUnit.CaptureLog",
       "",
       "  ${3:alias Module.Name, as:Name}",
+      "  # doctest ModuleName",
       "",
       "  # @moduletag capture_log: true",
       "",
