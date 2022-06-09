@@ -39,6 +39,7 @@
 #	  email = you@example.com
 #	  name = Your Name
 [init]
+	defaultBranch = master
 	# defaultBranch = main
 # specify how pulling is reconciled
 [pull]
