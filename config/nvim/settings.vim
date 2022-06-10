@@ -174,6 +174,7 @@ augroup filetypes
   au BufNewFile,BufRead *.docker set filetype=dockerfile
   au BufNewFile,BufRead *config set filetype=gitconfig
   au BufRead,BufNewFile *.heex,*.leex,*.sface,*.lexs set filetype=eelixir
+  au BufNewFile,BufRead rebar.config,*/src/*.app.src set filetype=erlang
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 augroup END
 
