@@ -10,6 +10,10 @@
         "path": "./elixir.json"
       },
       {
+        "language": "erlang",
+        "path": "./erlang.json"
+      },
+      {
         "language": "php",
         "path": "./php.json"
       },
