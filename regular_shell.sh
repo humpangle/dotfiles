@@ -233,6 +233,8 @@ setenvs() {
 alias se='setenvs'
 alias e='setenvs'
 
+alias rebar='rebar3'
+
 ###### END COMMONS ##################
 
 # skip the java dependency during installation
