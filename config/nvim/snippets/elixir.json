@@ -637,7 +637,7 @@
     "description": "if inline"
   },
   "if else inline": {
-    "prefix": ["if_inline_else", "if_short_else"],
+    "prefix": ["if_else_inline", "if_inline_else", "if_short_else"],
     "body": "if ${1:condition}, do: $2, else: $0",
     "description": "if else inline"
   },
