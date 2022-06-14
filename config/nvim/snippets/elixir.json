@@ -853,5 +853,21 @@
     "prefix": ["genserver_stop", "stop_genserver"],
     "body": "{:stop, ${1::normal}, ${0:next_state}\\}",
     "description": "Stop genserver"
+  },
+  "Ecto primary key false migration": {
+    "prefix": ["ecto_primary_key_false", "primary_key_false_ecto", "id_false"],
+    "body": [
+      ", primary_key: false",
+      "",
+      "add(",
+      "  :id,",
+      "  :binary_id,",
+      "  primary_key: true",
+      ")",
+      "",
+      "@primary_key {:id, :binary_id, autogenerate: true}",
+      "@foreign_key_type :binary_id"
+    ],
+    "description": "Ecto primary key false migration"
   }
 }
