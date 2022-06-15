@@ -178,8 +178,8 @@ augroup filetypes
   au BufNewFile,BufRead erlang_ls.config set filetype=yaml
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
-  autocmd FileType eelixir nnoremap <buffer> <leader>fc :!mix format %<CR>
-  autocmd FileType eelixir nnoremap <buffer> <leader>N :!mix format %<CR>
+  autocmd FileType eelixir nnoremap <buffer> <leader>fc :w! %<cr>:!mix format %<CR>
+  autocmd FileType eelixir nnoremap <buffer> <leader>N :w! %<cr>:!mix format %<CR>
 augroup END
 
 augroup terminal_settings
