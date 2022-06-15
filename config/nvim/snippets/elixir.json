@@ -881,5 +881,22 @@
       "@foreign_key_type :binary_id"
     ],
     "description": "Ecto primary key false migration"
+  },
+
+  "live_component": {
+    "prefix": ["use_live_component", "live_component"],
+    "body": [
+      "defmodule ${1:module_name} do",
+      "  use ${2:Web}Web, :live_component",
+      "",
+      "  # <.live_component",
+      "  #   module={$1}",
+      "  #   id={post.id$0}",
+      "  #   post={post}",
+      "  # />",
+      "",
+      "end"
+    ],
+    "description": "Use live_component"
   }
 }
