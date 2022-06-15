@@ -24,6 +24,16 @@
     "body": "<%= link \"${1:Submit}\", to: ${2:\"/users\"}, method: ${3::delete} %>",
     "description": "link tag"
   },
+  "link_l": {
+    "prefix": ["link_live_view", "live_view_link"],
+    "body": [
+      "<%= live_patch(",
+      "  \"${1:text}\",",
+      "  to: Routes.${2:post_index}_path(@socket, ${3::method_name}${0:, resource})",
+      ") %>"
+    ],
+    "description": "Live_path liveview link"
+  },
   "Live component": {
     "prefix": ["live_component"],
     "body": [
