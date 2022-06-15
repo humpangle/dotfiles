@@ -29,7 +29,11 @@
     "body": [
       "<%= live_patch(",
       "  \"${1:text}\",",
-      "  to: Routes.${2:post_index}_path(@socket, ${3::method_name}${0:, resource})",
+      "  to:",
+      "    Routes.${2:post_index}_path(",
+      "      @socket, ",
+      "      ${3::method_name}${0:, resource}",
+      "    )",
       ") %>"
     ],
     "description": "Live_path liveview link"
