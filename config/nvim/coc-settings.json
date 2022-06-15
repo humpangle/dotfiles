@@ -79,7 +79,8 @@
     "typescript": ["javascript"],
     "typescriptreact": ["typescript"],
     "svelte": ["javascript"],
-    "vue": ["javascript"]
+    "vue": ["javascript"],
+    "html": ["eelixir"]
   },
   "intelephense.progress.enable": false,
   "intelephense.telemetry.enabled": false,
