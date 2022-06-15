@@ -23,5 +23,19 @@
     "prefix": "link",
     "body": "<%= link \"${1:Submit}\", to: ${2:\"/users\"}, method: ${3::delete} %>",
     "description": "link tag"
+  },
+  "Live component": {
+    "prefix": ["live_component"],
+    "body": [
+      "<.live_component",
+      "  module={${0:module_name}\\}",
+      "  id={@post.id || :new}",
+      "  title={@page_title}",
+      "  action={@live_action}",
+      "  post={@post}",
+      "  return_to={Routes.post_index_path(@socket, :index)}",
+      "/>"
+    ],
+    "description": "Live component"
   }
 }
