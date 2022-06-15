@@ -1,0 +1,27 @@
+{
+  "<%": {
+    "prefix": ["<%"],
+    "body": "<%= $0 %>",
+    "description": "<%"
+  },
+  "for": {
+    "prefix": "for",
+    "body": ["<%= for ${1:item} <- ${2:items} do %>", "  $0", "<% end %>"],
+    "description": "for loop"
+  },
+  "if": {
+    "prefix": "if",
+    "body": ["<%= if ${1} do %>", "  $0", "<% end %>"],
+    "description": "if"
+  },
+  "ife": {
+    "prefix": "if_else",
+    "body": ["<%= if ${1} do %>", "  $2", "<% else %>", "  $0", "<% end %>"],
+    "description": "If else"
+  },
+  "link": {
+    "prefix": "link",
+    "body": "<%= link \"${1:Submit}\", to: ${2:\"/users\"}, method: ${3::delete} %>",
+    "description": "link tag"
+  }
+}

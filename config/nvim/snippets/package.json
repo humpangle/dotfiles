@@ -10,6 +10,10 @@
         "path": "./elixir.json"
       },
       {
+        "language": "eelixir",
+        "path": "./eelixir.json"
+      },
+      {
         "language": "erlang",
         "path": "./erlang.json"
       },
