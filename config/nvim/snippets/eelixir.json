@@ -20,8 +20,16 @@
     "description": "If else"
   },
   "link": {
-    "prefix": "link",
-    "body": "<%= link \"${1:Submit}\", to: ${2:\"/users\"}, method: ${3::delete} %>",
+    "prefix": ["link", "link_tag"],
+    "body": [
+      "<%= link(",
+      "  \"${1:text}\",",
+      "  to: \"${2:to}\",",
+      "  phx_click: \"${3:method}\",",
+      "  phx_target: ${4:@myself},",
+      "  phx_value_id: ${5:@post.id} ${0:,data: [confirm: \"Are you sure?\"]}",
+      ") %>"
+    ],
     "description": "link tag"
   },
   "link_l": {
