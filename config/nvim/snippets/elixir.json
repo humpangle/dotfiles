@@ -64,8 +64,8 @@
     "description": "@opaque type"
   },
   "@type type": {
-    "prefix": "@type",
-    "body": "@type ${1:t} :: ${2:type}",
+    "prefix": ["type", "@type"],
+    "body": "@type ${1:type_name} :: ${0:type}",
     "description": "@type type"
   },
   "@spec": {
