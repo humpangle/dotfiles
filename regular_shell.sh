@@ -493,6 +493,16 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 
 fi
 
+# Start postgres automatically when logging in.
+if [ -x "$(command -v pg_ctl)" ]; then
+  POSTGRES_RUNNING=$(pgrep -f postgres)
+
+  if [ -z "$POSTGRES_RUNNING" ]; then
+    pg_ctl start >/dev/null 2>&1 &
+    disown
+  fi
+fi
+
 # The minimal, blazing-fast, and infinitely customizable prompt for any shell!
 # https://github.com/starship/starship
 # eval "$(starship init bash)" ## will use only in fish shell for now
