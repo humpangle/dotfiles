@@ -37,6 +37,8 @@ nnoremap <leader>gc  :Git commit<CR>
 nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>cz  :Git commit --allow-empty -m ""<left>
 
+nnoremap <leader>gu  :Git config user.name <right>
+
 " Auto-clean fugitive buffers
 autocmd BufReadPost fugitive://*
   \ set bufhidden=delete |
