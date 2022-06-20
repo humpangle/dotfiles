@@ -43,7 +43,8 @@ local coc_extensions = {
   -- Database auto completion powered by vim-dadbod
   "coc-db",
   "coc-java",
-  "coc-kotlin"
+  "coc-kotlin",
+  -- "@yaegassy/coc-tailwindcss3"
 }
 
 if vim.fn.has("win32") == 1 then
