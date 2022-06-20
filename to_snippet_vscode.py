@@ -28,7 +28,7 @@ prefix = """
   "name": {
     "prefix": [""],
     "body": %s,
-    "description": ""
+    "description": [""]
   }
 }
 """.strip()
