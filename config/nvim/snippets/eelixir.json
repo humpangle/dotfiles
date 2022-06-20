@@ -59,5 +59,137 @@
       "/>"
     ],
     "description": "Live component"
+  },
+  "phx-v": {
+    "prefix": ["phx-value"],
+    "body": ["phx-value-${1:val_name}=\"${0:val}\" "],
+    "description": ["phx-value-* binding", "  phx-value-myvar1=\"val1\""]
+  },
+  "phx-click": {
+    "prefix": ["phx-click", "phx_click"],
+    "body": ["phx-click=\"${0:event-name}\""],
+    "description": [
+      "phx-click binding",
+      "  phx-click={JS.push(\"inc\", value: %{myvar1: @val1})}",
+      "  phx-click=\"inc\" phx-value-myvar1=\"val1\""
+    ]
+  },
+  "phx-click-away": {
+    "prefix": ["phx-click-away"],
+    "body": ["phx-click-away"],
+    "description": [
+      "phx-click-away fired when a click event happens outside of the element",
+      "Useful for hiding toggled containers like drop-downs, modals."
+    ]
+  },
+  "phx-change": {
+    "prefix": ["phx-change"],
+    "body": ["phx-change=\"${0:event-name}\""],
+    "description": ["phx-change: when form/input changes"]
+  },
+  "phx-submit": {
+    "prefix": ["phx-submit"],
+    "body": ["phx-submit=\"${0:event-name}\""],
+    "description": ["phx-submit when form submit button clicked"]
+  },
+  "phx-disable-with": {
+    "prefix": ["phx-disable-with"],
+    "body": ["phx-disable-with=\"${0:message}\""],
+    "description": [
+      "phx-disable-with button binding",
+      "swaps the element's innerText with the provided value during event submission."
+    ]
+  },
+  "phx-trigger-action": {
+    "prefix": ["phx-trigger-action"],
+    "body": ["phx-trigger-action"],
+    "description": [
+      "https://hexdocs.pm/phoenix_live_view/form-bindings.html#submitting-the-form-action-over-http"
+    ]
+  },
+  "phx-auto-recover": {
+    "prefix": ["phx-auto-recover"],
+    "body": ["phx-auto-recover"],
+    "description": [
+      "phx-auto-recover - recover user inputs on disconnect/server crash"
+    ]
+  },
+  "phx-blur": {
+    "prefix": ["phx-blur"],
+    "body": ["phx-blur=\"${0:event-name}\""],
+    "description": ["phx-blur"]
+  },
+  "phx-focus": {
+    "prefix": ["phx-focus"],
+    "body": ["phx-focus=\"${0:event-name}\""],
+    "description": ["phx-focus"]
+  },
+  "phx-window-blur": {
+    "prefix": ["phx-window-blur"],
+    "body": ["phx-window-blur=\"${0:event-name}\""],
+    "description": [
+      "phx-window-blur: Detect when page elm receives blur event",
+      "<div class=\"container\" phx-window-blur=\"page-inactive\" phx-value-page=\"123\">"
+    ]
+  },
+  "phx-window-focus": {
+    "prefix": ["phx-window-focus"],
+    "body": ["phx-window-focus=\"${0:event-name}\""],
+    "description": [
+      "phx-window-focus: Detect when page elm receives focus event",
+      "<div class=\"container\" phx-window-focus=\"page-inactive\" phx-value-page=\"123\">"
+    ]
+  },
+  "phx-keydown": {
+    "prefix": ["phx-keydown"],
+    "body": ["phx-keydown=\"${0:event-name}\""],
+    "description": ["phx-keydown"]
+  },
+  "phx-keyup": {
+    "prefix": ["phx-keyup"],
+    "body": ["phx-keyup=\"${0:event-name}\""],
+    "description": ["phx-keyup"]
+  },
+  "phx-window-keydown": {
+    "prefix": ["phx-window-keydown"],
+    "body": ["phx-window-keydown=\"${0:event-name}\""],
+    "description": ["phx-window-keydown"]
+  },
+  "phx-window-keyup": {
+    "prefix": ["phx-window-keyup"],
+    "body": ["phx-window-keyup=\"${0:event-name}\""],
+    "description": ["phx-window-keyup"]
+  },
+  "phx-key": {
+    "prefix": ["phx-key"],
+    "body": ["phx-key"],
+    "description": ["phx-key"]
+  },
+  "phx-update": {
+    "prefix": ["phx-update"],
+    "body": ["phx-update=\"${0:event-name}\""],
+    "description": ["phx-update DOM patching"]
+  },
+  "phx-remove": {
+    "prefix": ["phx-remove"],
+    "body": ["phx-remove=\"${0:event-name}\""],
+    "description": ["phx-remove DOM patching"]
+  },
+  "phx-debounce": {
+    "prefix": ["phx-debounce", "rate-limit-phx-debounce"],
+    "body": ["phx-debounce=\"${0:dom-event-or-mili-secs}\""],
+    "description": [
+      "phx-debounce rate limiting",
+      "  <input type=\"text\" name=\"user[email]\" phx-debounce=\"blur\"/>",
+      "  <input type=\"text\" name=\"user[username]\" phx-debounce=\"2000\"/>"
+    ]
+  },
+  "phx-throttle": {
+    "prefix": ["phx-throttle", "rate-limit-phx-throttle"],
+    "body": ["phx-throttle=\"${0:mili-secs}\""],
+    "description": [
+      "phx-throttle rate limiting",
+      "  <div phx-window-keydown=\"keydown\" phx-throttle=\"2000\"></div>"
+    ]
   }
 }
