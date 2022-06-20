@@ -261,6 +261,8 @@ nnoremap <c-l> <C-w>l
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
 nnoremap ,tc :tabclose<CR>
+nnoremap ,vn :vnew<cr>
+nnoremap ,sn :new<cr>
 
 " Reorder tabs
 noremap <A-Left>  :-tabmove<cr>
