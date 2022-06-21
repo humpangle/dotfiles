@@ -191,6 +191,7 @@ alias scouser='sudo chown -R $USER:$USER '
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
 alias eshell='source ~/.bashrc'
+alias cpr='cp -r'
 
 mdf() {
   mkdir -p "$1"
