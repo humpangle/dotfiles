@@ -20,15 +20,18 @@
     "description": "If else"
   },
   "link": {
-    "prefix": ["link", "link_tag"],
+    "prefix": ["link_patch", "link_or_live_patch"],
     "body": [
-      "<%= link(",
-      "  \"${1:text}\",",
-      "  to: \"${2:to}\",",
-      "  phx_click: \"${3:method}\",",
-      "  phx_target: ${4:@myself},",
-      "  phx_value_id: ${5:@post.id} ${0:,data: [confirm: \"Are you sure?\"]}",
-      ") %>"
+      "<%= ${1:link_or_live_patch} to: \"${2:#}\",",
+      "  id: \"\",",
+      "  class: \"\",",
+      "  phx_click: \"event-name\",",
+      "  phx_value_id: val,",
+      "  phx_target: @myself,",
+      "  data: [confirm: \"Are you sure?\"]",
+      "do %>",
+      "  ${0:child}",
+      "<% end %>"
     ],
     "description": "link tag"
   },
