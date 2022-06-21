@@ -437,6 +437,12 @@ rel_asdf_elixir_exists_f() {
 
 alias rel_asdf_elixir=rel_asdf_elixirf
 alias rel_asdf_elixir_exists=rel_asdf_elixir_exists_f
+alias mxg='mix deps.get'
+alias mxgc='mix do deps.get, compile'
+alias mxer='mix ecto.reset'
+alias mxes='mix ecto.setup'
+alias mxt='mix test'
+alias mxti='mix test.interactive'
 
 if [ -d "$HOME/.asdf" ]; then
 	# shellcheck disable=2086,1090
