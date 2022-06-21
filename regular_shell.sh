@@ -110,6 +110,19 @@ alias packerinstall="rm -rf $HOME/.local/share/nvim \
 alias packerinstall="rm -rf $HOME/.local/share/nvim \
   && rm -rf $HOME/dotfiles/config/nvim/plugin/packer_compiled.lua"
 
+remove_vim_sessionf(){
+  local ME
+  local filename
+  local absolute_path
+
+  ME=$(pwd)
+  filename="${ME//\//%}"
+  absolute_path="$HOME/.vim/session/$filename.vim"
+  rm "$absolute_path"
+}
+alias remove_vim_session=remove_vim_session
+alias rmvs=remove_vim_session
+
 # tmux
 alias ta='tmux a -t'
 alias tls='tmux ls'
