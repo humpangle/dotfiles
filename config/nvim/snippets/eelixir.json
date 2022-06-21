@@ -66,7 +66,7 @@
     "description": ["phx-value-* binding", "  phx-value-myvar1=\"val1\""]
   },
   "phx-click": {
-    "prefix": ["phx-click", "phx_click"],
+    "prefix": ["phx-click"],
     "body": ["phx-click=\"${0:event-name}\""],
     "description": [
       "phx-click binding",
