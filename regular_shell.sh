@@ -120,8 +120,8 @@ remove_vim_sessionf(){
   absolute_path="$HOME/.vim/session/$filename.vim"
   rm "$absolute_path"
 }
-alias remove_vim_session=remove_vim_session
-alias rmvs=remove_vim_session
+alias remove_vim_session=remove_vim_sessionf
+alias rmvs=remove_vim_sessionf
 
 # tmux
 alias ta='tmux a -t'
