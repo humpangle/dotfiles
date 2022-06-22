@@ -456,6 +456,8 @@ alias mxer='mix ecto.reset'
 alias mxes='mix ecto.setup'
 alias mxt='mix test'
 alias mxti='mix test.interactive'
+alias iexmxps='iex -S mix phx.server'
+alias iexmsps='iexmxps'
 
 if [ -d "$HOME/.asdf" ]; then
 	# shellcheck disable=2086,1090
