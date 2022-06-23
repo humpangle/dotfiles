@@ -328,6 +328,7 @@ return packer.startup(function(use)
   -- Better undo diff
   use({
     "simnalamburt/vim-mundo",
+    disable = true,
     config = function ()
       Cmd([[
         " mbbill/undotree
