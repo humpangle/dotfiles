@@ -29,7 +29,8 @@
         "javascriptreact",
         "typescript",
         "typescriptreact",
-        "vue"
+        "vue",
+        "elixir"
       ],
       "rootPatterns": [
         "tailwind.config.js",
@@ -66,7 +67,8 @@
               "\\[.+\\]:\\s*`([^)]*)`",
               // In eelixir templates:
               //    class: "tailwind-class"
-              ["class:\\s*\"([^\"]*)\""]
+              ["class:\\s*\"([^\"]*)\""],
+              "class=\"([^\"]*)\""
               // 'tailwind-class' "tailwind-class"
               // "(?:\"|'|`)([^(?:\"|'|`)]*)(?:\"|'|`)",
             ]
