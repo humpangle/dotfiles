@@ -213,5 +213,10 @@
       "phx-throttle rate limiting",
       "  <div phx-window-keydown=\"keydown\" phx-throttle=\"2000\"></div>"
     ]
+  },
+  "phx-target": {
+    "prefix": ["phx-target"],
+    "body": ["phx-target=${0:@myself_or_module}"],
+    "description": ["phx-target binding"]
   }
 }
