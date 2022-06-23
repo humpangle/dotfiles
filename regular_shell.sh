@@ -122,6 +122,8 @@ remove_vim_sessionf(){
 }
 alias remove_vim_session=remove_vim_sessionf
 alias rmvs=remove_vim_sessionf
+alias remove_vim_undo='rm -rf $HOME/.vim/undodir/*'
+alias rmvu='remove_vim_undo'
 
 # tmux
 alias ta='tmux a -t'
