@@ -173,6 +173,25 @@
     "body": ["phx-update=\"${0:event-name}\""],
     "description": ["phx-update DOM patching"]
   },
+  "phx-update-pre": {
+    "prefix": ["phx-update-prepend"],
+    "body": ["phx-update=\"prepend\""],
+    "description": ["phx-update DOM prepend"]
+  },
+  "phx-update-app": {
+    "prefix": ["phx-update-append"],
+    "body": ["phx-update=\"append\""],
+    "description": ["phx-update DOM append"]
+  },
+  "phx-update-ig": {
+    "prefix": ["phx-update-ignore"],
+    "body": ["phx-update=\"ignore\""],
+    "description": [
+      "phx-update: ignores updates to the DOM regardless of new content changes.",
+      "Its attributes can still be updated.",
+      "Frequently used when you need to integrate with another JS library."
+    ]
+  },
   "phx-remove": {
     "prefix": ["phx-remove"],
     "body": ["phx-remove=\"${0:event-name}\""],
