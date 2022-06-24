@@ -948,6 +948,6 @@
       "{:cachex, \"~> 3.4\"}",
       "{Cachex, name: :$2}"
     ],
-    "description": [""]
+    "description": ["Cachex Boilerplate"]
   }
 }
