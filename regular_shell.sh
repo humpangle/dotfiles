@@ -456,10 +456,12 @@ alias mxg='mix deps.get'
 alias mxgc='mix do deps.get, compile'
 alias mxer='mix ecto.reset'
 alias mxes='mix ecto.setup'
+alias mxem='mix ecto.migrate'
 alias mxt='mix test'
+alias mxps='mix phx.server'
 alias mxti='mix test.interactive'
 alias iexmxps='iex -S mix phx.server'
-alias iexmsps='iexmxps'
+alias iexmx='iex -S mix'
 
 if [ -d "$HOME/.asdf" ]; then
 	# shellcheck disable=2086,1090
