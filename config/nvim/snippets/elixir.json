@@ -975,5 +975,26 @@
       "}"
     ],
     "description": ["Tailwind boiler plate elixir"]
+  },
+  "formatter": {
+    "prefix": [
+      "formatter_phoenix_boilerplate",
+      "phoenix_formatter_boilerplate"
+    ],
+    "body": [
+      "[",
+      "  import_deps: [:ecto, :phoenix],",
+      "  subdirectories: [\"priv/*/migrations\"],",
+      "  plugins: [Phoenix.LiveView.HTMLFormatter],",
+      "  inputs: [",
+      "      \"*.{heex,ex,exs}\",",
+      "      \"priv/*/seeds.exs\",",
+      "      \"{config,lib,test}/**/*.{heex,ex,exs}\"",
+      "  ],",
+      "  line_length: 80,",
+      "  heex_line_length: 80",
+      "]"
+    ],
+    "description": ["Formatter.exs file for phoenix"]
   }
 }
