@@ -777,11 +777,11 @@
     ],
     "body": [
       "$0{:mix_test_interactive, \"~> 1.2\", only: [:dev, :test], runtime: false}",
-      "# if Mix.env() == :dev || Mix.env() == :test do",
-      "#   config :mix_test_interactive,",
-      "#     clear: true",
-      "#     # exclude: [~r/db_migration\\/.*/]",
-      "# end"
+      "if Mix.env() == :dev || Mix.env() == :test do",
+      "  config :mix_test_interactive,",
+      "    clear: true,",
+      "    exclude: [~r/db_migration\\/.*/]",
+      "end"
     ],
     "description": "Mix test interactive"
   },
@@ -897,7 +897,7 @@
   "cache-x": {
     "prefix": ["boiler_cache_x", "cache_x_boiler"],
     "body": [
-      "defmodule ${1:module_name} do",
+      "defmodule ${1:module_base_name}.CacheApi do",
       "  def fetch_resources(cb) do",
       "      Cachex.fetch(:${2:cache_name}, resources_key(), cb)",
       "  end",
@@ -943,6 +943,8 @@
       "  def resource_key(id), do: \"resource:#{id}\"",
       "",
       "  def resource_params_key(id), do: \"resource_params:#{id}\"",
+      "",
+      "  def purge_all(), do: Cachex.clear(:$2)",
       "end",
       "",
       "{:cachex, \"~> 3.4\"}",
@@ -972,7 +974,48 @@
       "  Tailwind,",
       "  :install_and_run,",
       "  [:default, ~w(--watch)]",
-      "}"
+      "}",
+      "",
+      "",
+      "assets/tailwind.config.js",
+      "// See the Tailwind configuration guide for advanced usage",
+      "// https://tailwindcss.com/docs/configuration",
+      "module.exports = {",
+      "  content: [\"./js/**/*.js\", \"../lib/*_web.ex\", \"../lib/*_web/**/*.*ex\"],",
+      "  theme: {",
+      "      extend: {},",
+      "  },",
+      "  plugins: [require(\"@tailwindcss/forms\")],",
+      "};",
+      "",
+      "",
+      "",
+      "assets/css/app.css",
+      "@import \"tailwindcss/base\";",
+      "@import \"tailwindcss/components\";",
+      "@import \"tailwindcss/utilities\";",
+      "",
+      "",
+      "templates/layout/root.html.heex",
+      "<link",
+      "  phx-track-static",
+      "  rel=\"stylesheet\"",
+      "  href={Routes.static_path(@conn, \"/assets/css/bulma.css\")}",
+      "/>",
+      "",
+      "<link",
+      "  phx-track-static",
+      "  rel=\"stylesheet\"",
+      "  href={Routes.static_path(@conn, \"/assets/css/app.css\")}",
+      "/>",
+      "",
+      "<script",
+      "  defer",
+      "  phx-track-static",
+      "  type=\"text/javascript\"",
+      "  src={Routes.static_path(@conn, \"/assets/js/app.js\")}",
+      ">",
+      "</script>"
     ],
     "description": ["Tailwind boiler plate elixir"]
   },
@@ -996,5 +1039,28 @@
       "]"
     ],
     "description": ["Formatter.exs file for phoenix"]
+<<<<<<< Updated upstream
+=======
+  },
+  "config ecto binary key": {
+    "prefix": [
+      "config_ecto_binary",
+      "ecto_config_binary",
+      "ecto_binary_config",
+      "binary_id_ecto_config"
+    ],
+    "body": [
+      "config :${1:app_name}, ${0:Repo_module_name},",
+      "  migration_primary_key: [",
+      "      name: :id,",
+      "      type: :binary_id",
+      "  ],",
+      "  migration_foreign_key: [",
+      "      column: :id,",
+      "      type: :binary_id",
+      "  ]"
+    ],
+    "description": ["Binary ID for ecto repo"]
+>>>>>>> Stashed changes
   }
 }
