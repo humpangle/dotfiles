@@ -23,11 +23,7 @@
     "prefix": ["link_patch", "link_or_live_patch"],
     "body": [
       "<%= ${1:link_or_live_patch} to: \"${2:#}\",",
-      "  id: \"\",",
       "  class: \"\",",
-      "  phx_click: \"event-name\",",
-      "  phx_value_id: val,",
-      "  phx_target: @myself,",
       "  data: [confirm: \"Are you sure?\"]",
       "do %>",
       "  ${0:child}",
