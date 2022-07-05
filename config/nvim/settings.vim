@@ -242,6 +242,13 @@ vmap <Leader>P "+P
 " Yank all
 nnoremap <Leader>ya ggVG"+y
 
+" https://vi.stackexchange.com/a/17757
+" To share register between editor instances
+" Write shada
+nnoremap ws :wsh<cr>
+" Read shada
+nnoremap rs :rsh<cr>
+
 " TABS
 " Move between windows in a tab
 nmap <tab> <C-w>w
