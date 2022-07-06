@@ -42,12 +42,12 @@
       },
       {
         "language": [
+          "sh",
           "shellscript",
           "shell",
-          "sh",
           "zsh"
         ],
-        "path": "./shell.json"
+        "path": "./sh.json"
       },
       {
         "language": [

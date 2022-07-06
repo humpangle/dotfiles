@@ -1,7 +1,10 @@
 {
   "bash": {
     "prefix": ["bash", "#!", "shebang"],
-    "body": "${1|#!/bin/bash,#!/usr/bin/env bash,#!/bin/sh,#!/usr/bin/env sh|}\n",
+    "body": [
+      "#!/usr/bin/env bash",
+      "# shellcheck disable=2034,2209,2135,2155"
+    ],
     "description": [
       "Option 1:\n",
       "#!/bin/bash\n",
