@@ -51,7 +51,7 @@ nnoremap <leader>FL :LocList!<CR>
 
 command! -bang -nargs=* RgNf
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case --glob !{yarn.lock} -- '.shellescape(<q-args>), 1,
+  \   'rg --hidden --column --line-number --no-heading --color=always --smart-case --glob !{yarn.lock} -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
 function! s:copy_fzf_results(lines)
