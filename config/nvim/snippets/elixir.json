@@ -1034,5 +1034,10 @@
       "]"
     ],
     "description": ["Formatter.exs file for phoenix"]
+  },
+  "heex": {
+    "prefix": ["he", "heex"],
+    "body": ["~H\"\"\"", "$0", "\"\"\""],
+    "description": ["~H Heex sigil"]
   }
 }
