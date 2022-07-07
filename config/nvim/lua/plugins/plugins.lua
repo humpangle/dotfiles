@@ -172,12 +172,12 @@ return packer.startup(function(use)
       -- a bunch of snippets to use
       {"rafamadriz/friendly-snippets", disable = true},
 
-      {
-        "windwp/nvim-autopairs",
-        config = function()
-          return require("plugins/nvim-autopairs")
-        end,
-      },
+      -- {
+      --   "windwp/nvim-autopairs",
+      --   config = function()
+      --     return require("plugins/nvim-autopairs")
+      --   end,
+      -- },
 
       -- LSP
       {
@@ -406,6 +406,9 @@ return packer.startup(function(use)
 
     -- kotlin
     "udalov/kotlin-vim",
+
+    -- Highlight, navigate, and operate on sets of matching text.
+    "andymass/vim-matchup"
   })
 
   -- making rest api call
