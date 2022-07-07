@@ -1034,28 +1034,5 @@
       "]"
     ],
     "description": ["Formatter.exs file for phoenix"]
-<<<<<<< Updated upstream
-=======
-  },
-  "config ecto binary key": {
-    "prefix": [
-      "config_ecto_binary",
-      "ecto_config_binary",
-      "ecto_binary_config",
-      "binary_id_ecto_config"
-    ],
-    "body": [
-      "config :${1:app_name}, ${0:Repo_module_name},",
-      "  migration_primary_key: [",
-      "      name: :id,",
-      "      type: :binary_id",
-      "  ],",
-      "  migration_foreign_key: [",
-      "      column: :id,",
-      "      type: :binary_id",
-      "  ]"
-    ],
-    "description": ["Binary ID for ecto repo"]
->>>>>>> Stashed changes
   }
 }
