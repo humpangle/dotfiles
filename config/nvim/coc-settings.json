@@ -26,7 +26,8 @@
     "typescriptreact": ["typescript"],
     "svelte": ["javascript"],
     "vue": ["javascript"],
-    "html": ["eelixir"]
+    "html": ["eelixir", "elixir"],
+    "elixir": ["eelixir"]
   },
   "intelephense.progress.enable": false,
   "intelephense.telemetry.enabled": false,
@@ -39,7 +40,8 @@
   "emmet.includeLanguages": {
     "vue-html": "html",
     "javascript": "javascriptreact",
-    "blade": "html"
+    "blade": "html",
+    "elixir": "html"
   }
   // "tailwindCSS.includeLanguages": {
   //   "vue-html": "html",
