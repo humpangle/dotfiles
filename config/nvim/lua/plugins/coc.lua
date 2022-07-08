@@ -29,7 +29,7 @@ local coc_extensions = {
   "coc-css",
   "coc-html",
   "coc-eslint",
-  -- "coc-pairs",
+  "coc-pairs",
   "coc-prettier",
   -- "coc-svelte",
   "https://github.com/humpangle/coc-docker",
