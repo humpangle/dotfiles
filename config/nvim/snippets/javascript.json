@@ -3,22 +3,6 @@
     "prefix": "sim",
     "body": "setImmediate(() => {\n\t${0}\n})"
   },
-  "await": {
-    "prefix": "a",
-    "body": "await ${0}"
-  },
-  "await Promise.all": {
-    "prefix": "apa",
-    "body": "await Promise.all(${1:value})"
-  },
-  "await Promise.all with destructuring": {
-    "prefix": "apad",
-    "body": "const [${0}] = await Promise.all(${1:value})"
-  },
-  "await Promise.all map": {
-    "prefix": "apm",
-    "body": "await Promise.all(${1:array}.map(async (${2:value}) => {\n\t${0}\n}))"
-  },
   "await sleep": {
     "prefix": "ast",
     "body": "await new Promise((r) => setTimeout(r, ${0}))"
@@ -226,22 +210,6 @@
   "some": {
     "prefix": "some",
     "body": "${1:iterable}.some((${2:item}) => {\n\t${0}\n})"
-  },
-  "var statement": {
-    "prefix": "v",
-    "body": "var ${1:name}"
-  },
-  "var assignment": {
-    "prefix": "va",
-    "body": "var ${1:name} = ${2:value}"
-  },
-  "let statement": {
-    "prefix": "l",
-    "body": "let ${1:name}"
-  },
-  "const statement": {
-    "prefix": "c",
-    "body": "const ${1:name}"
   },
   "const statement from destructuring": {
     "prefix": "cd",
@@ -827,6 +795,17 @@
     "body": "/* eslint-disable-next-line ${1} */",
     "description": "eslint disable next line"
   },
+  "jsdoc": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "jsdoc",
+    "body": [
+      "/**",
+      "* $0",
+      "*/"
+    ],
+    "description": "callback param JSDOC"
+  },
+
   "callback param JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "callbackparam",
@@ -929,19 +908,19 @@
   },
   "typdef object optional property JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typedefobjectopt",
+    "prefix": ["type_def_object_optional", "optional_type_def_object"],
     "body": ["@property {${1:type}=} ${2:propertyName} ${3:description}"],
     "description": "typdef object optional property JSDOC"
   },
   "type assertion JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typeassert",
+    "prefix": ["typeassert", "assert_type"],
     "body": ["/** @type {${1:type}} */ (${2:value})", "${3}"],
     "description": "type assertion JSDOC"
   },
   "type variable declaration JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "typevar",
+    "prefix": ["typevar", "var_type"],
     "body": ["/**", "${1:* description}", "* @type {${2:type}}", "*/", "${3}"],
     "description": "type variable declaration JSDOC"
   },
