@@ -46,8 +46,8 @@ vim.g.neoformat_enabled_jsonc = {
 }
 
 vim.g.neoformat_enabled_python = {
-	"autopep8",
 	"black",
+	"autopep8",
 }
 
 -- format on save
