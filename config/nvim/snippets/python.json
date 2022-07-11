@@ -1,6 +1,6 @@
 {
   "django model": {
-    "prefix": "djangomodel",
+    "prefix": ["django_model"],
     "body": [
       "from django.db import models",
       "",
@@ -14,7 +14,7 @@
     "description": "Django model"
   },
   "print python to console": {
-    "prefix": "printtoconsole",
+    "prefix": ["print_to_console"],
     "body": [
       "\nprint(",
       "\t\"\\n\\nlogging starts--------------------------------------------------\\n\\n\",  # noqa",
@@ -26,30 +26,38 @@
     "description": "print python to console"
   },
   "helper function": {
-    "prefix": "helperfunction",
+    "prefix": "helper_function",
     "body": "############################ ${1:title} ############################## noqa",
     "description": "helper function"
   },
   "coding utf-8": {
-    "prefix": "codingutf8",
+    "prefix": ["coding_utf8", "encoding_utf"],
     "body": "# -*- coding: utf-8 -*-\n\n",
     "description": "coding utf-8"
   },
-  "noqa E501": {
-    "prefix": "noqae501",
+  "E501": {
+    "prefix": ["noqa_e501"],
     "body": "  # noqa E501",
     "description": "noqa E501"
   },
   "type ignore": {
-    "prefix": "typeignore",
+    "prefix": ["type_ignore"],
     "body": "  # type: ignore${1} # noqa F821",
     "description": "type ignore"
   },
   "sys.exc_info": {
-    "prefix": "sysex",
+    "prefix": "sys_ex",
     "body": [
       "import sys;print('\\n\\n',  *sys.exc_info(), sep='\\n\\n');print('\\n\\n')"
     ],
     "description": "sys.exc_info"
+  },
+  "name = main": {
+    "prefix": ["if_name_main", "if_main_name", "name_main", "main_name"],
+    "body": [
+      "if __name__ == '__main__':",
+      "    ${0:pass}"
+    ],
+    "description": ["If __name__ == __main__"]
   }
 }
