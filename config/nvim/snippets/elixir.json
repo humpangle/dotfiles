@@ -168,16 +168,6 @@
     "body": "@behaviour ",
     "description": "@behaviour"
   },
-  "Registry": {
-    "prefix": "registry",
-    "body": [
-      "# Add this to supervision: {Registry, keys: :unique, name: ${1:name}}",
-      "def ${2:func_name}(${3:param}) do",
-      "  {:via, Registry, {${1:name}, ${3:param}}}",
-      "end"
-    ],
-    "description": "Elixir Registry"
-  },
   "@module doc": {
     "prefix": ["@module_doc", "module_doc"],
     "body": ["@moduledoc ~S\"\"\"", "  $1", "\"\"\""],
@@ -1039,5 +1029,15 @@
     "prefix": ["he", "heex"],
     "body": ["~H\"\"\"", "$0", "\"\"\""],
     "description": ["~H Heex sigil"]
+  },
+  "reg-unique": {
+    "prefix": ["registry_unique", "unique_registry"],
+    "body": ["{Registry, keys: :unique, name: ${0:name}}"],
+    "description": ["Registry unique"]
+  },
+  "reg-via": {
+    "prefix": ["registry_via", "via_registry"],
+    "body": ["{:via, Registry, {${1:name}, ${0:key}}}"],
+    "description": ["Registry via"]
   }
 }
