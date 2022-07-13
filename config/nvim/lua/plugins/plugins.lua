@@ -416,15 +416,21 @@ return packer.startup(function(use)
     "diepm/vim-rest-console",
     config = function()
       Cmd([[
-        " bulk upload and external data file
+        " bulk upload and external data file -
+        " enable the Elasticsearch support flag.
         let g:vrc_elasticsearch_support = 1
+
         " n = new request/ trigger is <C-J> by default
         let g:vrc_trigger = '<C-n>'
 
         " make new rest console buffer
         nnoremap ,nr :tabe .rest<Left><Left><Left><Left><Left>
-        " map rest rest
-        nnoremap ,mr :let b:vrc_output_buffer_name = '__-Rest__'<Left><Left><Left><Left><Left><Left><Left><Left>
+
+        " The output buffer is name `__REST_response__` and will be shared by
+        " all *.rest buffers.
+        " Rename the output buffer if you don't want your output to write to
+        " the `__REST_response__` buffer
+        nnoremap ,mr :let b:vrc_output_buffer_name = '-Rest'<Left><Left><Left><Left><left><left>
      ]])
     end,
   })
