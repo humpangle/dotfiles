@@ -214,5 +214,10 @@
     "prefix": ["phx-target"],
     "body": ["phx-target=${0:@myself_or_module}"],
     "description": ["phx-target binding"]
+  },
+  "phx-hook": {
+    "prefix": ["phx-hook", "hook-phx"],
+    "body": ["phx-hook=${0:hook}"],
+    "description": ["phx-hook binding"]
   }
 }
