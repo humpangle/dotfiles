@@ -77,6 +77,10 @@ dcrsf() {
 }
 alias dcrs='dcrsf'
 
+# Kubernetes
+alias mk='minikube'
+alias kb='kubectl'
+
 alias ngrokd='ngrok http '
 
 alias ug='clear && sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y'
