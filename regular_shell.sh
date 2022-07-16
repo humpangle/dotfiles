@@ -587,3 +587,11 @@ if [ -d "$HOME/.poetry" ]; then
   alias ptys='poetry shell'
   alias pty='poetry'
 fi
+
+#------------------------------------------------------------------------------
+# Complete all bash aliases
+# See https://github.com/cykerway/complete-alias#faq
+#------------------------------------------------------------------------------
+if [[ -e "$HOME/.bash_completion" && -e "$HOME/complete_alias.sh" ]]; then
+  complete -F _complete_alias "${!BASH_ALIASES[@]}"
+fi
