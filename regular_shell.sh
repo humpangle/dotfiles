@@ -17,16 +17,16 @@ export SUDO_ASKPASS=$(command -v ssh-askpass)
 #     pathmunge /sbin/             ## Add to the start; default
 #     pathmunge /usr/sbin/ after   ## Add to the end
 pathmunge() {
-	# first check if folder exists on filesystem
-	if [ -d "$1" ]; then
-		if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)"; then
-			if [ "$2" = "after" ]; then
-				PATH="$PATH:$1"
-			else
-				PATH="$1:$PATH"
-			fi
-		fi
-	fi
+  # first check if folder exists on filesystem
+  if [ -d "$1" ]; then
+    if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)"; then
+      if [ "$2" = "after" ]; then
+        PATH="$PATH:$1"
+      else
+        PATH="$1:$PATH"
+      fi
+    fi
+  fi
 }
 
 # docker
@@ -66,14 +66,14 @@ alias docker-dangling='dim -qf dangling=true | xargs docker rmi -f'
 
 # docker-compose up --daemon and logs --follow
 dcudl() {
-  docker-compose up -d "$@" \
-    && docker-compose logs -f "$@"
+  docker-compose up -d "$@"
+  docker-compose logs -f "$@"
 }
 
 # docker-compose restart and logs --follow
 dcrsf() {
-  docker-compose restart "$@" \
-    && docker-compose logs -f "$@"
+  docker-compose restart "$@"
+  docker-compose logs -f "$@"
 }
 alias dcrs='dcrsf'
 
@@ -115,7 +115,7 @@ alias packerinstall="rm -rf $HOME/.local/share/nvim \
 alias packerinstall="rm -rf $HOME/.local/share/nvim \
   && rm -rf $HOME/dotfiles/config/nvim/plugin/packer_compiled.lua"
 
-remove_vim_sessionf(){
+remove_vim_sessionf() {
   local ME
   local filename
   local absolute_path
@@ -145,18 +145,18 @@ alias run='./run'
 
 # Save bash history per tmux pane
 if [[ $TMUX_PANE ]]; then
-	hist_dir="$HOME/.bash_histories"
+  hist_dir="$HOME/.bash_histories"
 
   if [[ ! -d "$hist_dir" ]]; then
     mkdir "$hist_dir"
   fi
 
-	hist_file="$hist_dir/.bash_history_tmux_${TMUX_PANE:1}"
-	HISTFILE="$hist_file"
+  hist_file="$hist_dir/.bash_history_tmux_${TMUX_PANE:1}"
+  HISTFILE="$hist_file"
 
-	if [[ ! -e "$hist_file" ]]; then
-		touch "$hist_file"
-	fi
+  if [[ ! -e "$hist_file" ]]; then
+    touch "$hist_file"
+  fi
 fi
 
 # rsync
@@ -191,11 +191,11 @@ alias gconflict='git diff --name-only --diff-filter=U'
 alias gwt='git worktree '
 # debian package gsa = gwenhywfar-tools
 gsa() {
-	git stash apply "stash@{$1}"
+  git stash apply "stash@{$1}"
 }
 
 gsd() {
-	git stash drop "stash@{$1}"
+  git stash drop "stash@{$1}"
 }
 
 alias ..='cd ..'
@@ -227,31 +227,31 @@ alias md='mkdir -p'
 # Make bash history unique
 
 make_history_unique() {
-	tac "$HISTFILE" | awk '!x[$0]++' >/tmp/tmpfile &&
-		tac /tmp/tmpfile >"$HISTFILE" &&
-		rm /tmp/tmpfile
+  tac "$HISTFILE" | awk '!x[$0]++' >/tmp/tmpfile &&
+    tac /tmp/tmpfile >"$HISTFILE" &&
+    rm /tmp/tmpfile
 }
 alias hu='make_history_unique'
 # also https://unix.stackexchange.com/a/613644
 
 setenvs() {
-	local path
-	path="$1"
+  local path
+  path="$1"
 
   # Check for path 3 levels deep.
-	if ! [[ -e "$path" ]]; then
-		path="../$path"
+  if ! [[ -e "$path" ]]; then
+    path="../$path"
 
-		if ! [[ -e "$path" ]]; then
-			path="../$path"
-		fi
-	fi
+    if ! [[ -e "$path" ]]; then
+      path="../$path"
+    fi
+  fi
 
-	set -a
-	# shellcheck disable=1090
-	. "$path"
-	set +a
-	# set -o allexport; source "$1"; set +o allexport
+  set -a
+  # shellcheck disable=1090
+  . "$path"
+  set +a
+  # set -o allexport; source "$1"; set +o allexport
 }
 alias se='setenvs'
 alias e='setenvs'
@@ -274,8 +274,8 @@ pathmunge "$GEM_HOME/bin"
 export PHP_WITHOUT_PEAR='yes'
 
 ggc() {
-	google-chrome -incognito &
-	disown
+  google-chrome -incognito &
+  disown
 }
 
 # yarn
@@ -289,51 +289,51 @@ alias ycw='clear && DISABLE_LARAVEL_MIX_NOTIFICATION=1 yarn watch'
 
 # TMUX split panes and windows
 splitp() {
-	if [[ "$1" == '-h' ]]; then
-		echo "Usage:"
-		echo "splitp absolute_path window_name"
-		return
-	fi
+  if [[ "$1" == '-h' ]]; then
+    echo "Usage:"
+    echo "splitp absolute_path window_name"
+    return
+  fi
 
-	if [[ -n "$1" ]]; then
-		local dir="$1"
-	else
-		local dir="$PWD"
-	fi
+  if [[ -n "$1" ]]; then
+    local dir="$1"
+  else
+    local dir="$PWD"
+  fi
 
-	local window_name="$2"
+  local window_name="$2"
 
-	# shellcheck disable=2164
-	cd "$dir"
+  # shellcheck disable=2164
+  cd "$dir"
 
-	tmux rename-window "$window_name" \
-		\; splitw -c "$dir" -h -p 46 \
-		\; splitw -b -p 40 \
-		\; splitw -t 3 -b -p 45 \
-		\; splitw -t 4 -b -p 55 \
-		\; select-pane -t 2 \
-		\; send-keys 'nvim ,' C-m \
-		\; new-window -c "$dir" \
-		\; splitw -c "$dir" -h -p 45 \
-		\; splitw -t 1 -p 60 \
-		\; splitw -p 45 \
-		\; splitw -t 4 -p 87 \
-		\; splitw -p 85 \
-		\; splitw -p 70 \
-		\; splitw \
-		\; select-pane -t 1 \
-		\; send-keys 'cd storage/logs && clear' C-m \
-		\; select-pane -t 2 \
-		\; send-keys 'nvim ,' C-m \
-		\; select-pane -t 3 \
-		\; send-keys 'cd storage/app/public && clear' C-m \
-		\; select-pane -t 4 \
-		\; rename-window "${window_name}-L" \
-		\; last-window \
-		\; select-pane -t 5 \
-		\; send-keys 'yarn && clear' C-m \
-		\; select-pane -t 1 \
-		\; send-keys 'clear' C-m
+  tmux rename-window "$window_name" \
+    \; splitw -c "$dir" -h -p 46 \
+    \; splitw -b -p 40 \
+    \; splitw -t 3 -b -p 45 \
+    \; splitw -t 4 -b -p 55 \
+    \; select-pane -t 2 \
+    \; send-keys 'nvim ,' C-m \
+    \; new-window -c "$dir" \
+    \; splitw -c "$dir" -h -p 45 \
+    \; splitw -t 1 -p 60 \
+    \; splitw -p 45 \
+    \; splitw -t 4 -p 87 \
+    \; splitw -p 85 \
+    \; splitw -p 70 \
+    \; splitw \
+    \; select-pane -t 1 \
+    \; send-keys 'cd storage/logs && clear' C-m \
+    \; select-pane -t 2 \
+    \; send-keys 'nvim ,' C-m \
+    \; select-pane -t 3 \
+    \; send-keys 'cd storage/app/public && clear' C-m \
+    \; select-pane -t 4 \
+    \; rename-window "${window_name}-L" \
+    \; last-window \
+    \; select-pane -t 5 \
+    \; send-keys 'yarn && clear' C-m \
+    \; select-pane -t 1 \
+    \; send-keys 'clear' C-m
 }
 
 alias exshell='export SHELL=/usr/bin/bash'
@@ -347,19 +347,19 @@ alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamak
 alias scmstorage='sudo chmod -R 777 storage'
 
 ltf() {
-	lt --subdomain "$1" --port "$2" &
+  lt --subdomain "$1" --port "$2" &
 }
 
 if [ -x "$(command -v sort-package-json)" ]; then
-	alias spj='sort-package-json '
+  alias spj='sort-package-json '
 fi
 
 if [ -x "$(command -v php)" ]; then
-	# debian pkg bsdgames
-	alias sail='./vendor/bin/sail'
-	alias sailartisan='./vendor/bin/sail artisan'
+  # debian pkg bsdgames
+  alias sail='./vendor/bin/sail'
+  alias sailartisan='./vendor/bin/sail artisan'
 
-	alias artisan='php artisan'
+  alias artisan='php artisan'
 fi
 
 pathmunge "/usr/lib/dart/bin" "after"
@@ -378,30 +378,30 @@ pathmunge "/usr/lib/dart/bin" "after"
 # fi
 
 if [ -d "$HOME/.fzf" ]; then
-	# ripgrep
-	export RG_IGNORES="!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
-	RG_OPTIONS="--hidden --follow --glob '$RG_IGNORES'"
+  # ripgrep
+  export RG_IGNORES="!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
+  RG_OPTIONS="--hidden --follow --glob '$RG_IGNORES'"
 
-	export FZF_DEFAULT_OPTS="--layout=reverse --border"
-	# Use git-ls-files inside git repo, otherwise rg
-	export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
-	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-	export FZF_COMPLETION_TRIGGER=',,'
+  export FZF_DEFAULT_OPTS="--layout=reverse --border"
+  # Use git-ls-files inside git repo, otherwise rg
+  export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_COMPLETION_TRIGGER=',,'
 
-	_fzf_compgen_dir() {
-		rg --files "$RG_OPTIONS"
-	}
+  _fzf_compgen_dir() {
+    rg --files "$RG_OPTIONS"
+  }
 
-	_fzf_compgen_path() {
-		rg --files --hidden --follow --glob $RG_IGNORES
-	}
+  _fzf_compgen_path() {
+    rg --files --hidden --follow --glob $RG_IGNORES
+  }
 
-	FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
+  FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
 
-	# shellcheck disable=2139
-	alias ff="fzf $FZF_PREVIEW_APP"
-	alias eff='env | fzf'
-	alias aff='alias | fzf'
+  # shellcheck disable=2139
+  alias ff="fzf $FZF_PREVIEW_APP"
+  alias eff='env | fzf'
+  alias aff='alias | fzf'
 fi
 
 rel_asdf_elixirf() {
@@ -475,15 +475,15 @@ alias iexmxps='iex -S mix phx.server'
 alias iexmx='iex -S mix'
 
 if [ -d "$HOME/.asdf" ]; then
-	# shellcheck disable=2086,1090
-	. $HOME/.asdf/asdf.sh
-	# shellcheck disable=2086,1090
-	. $HOME/.asdf/completions/asdf.bash
+  # shellcheck disable=2086,1090
+  . $HOME/.asdf/asdf.sh
+  # shellcheck disable=2086,1090
+  . $HOME/.asdf/completions/asdf.bash
 
-	if command -v asdf 1>/dev/null 2>&1; then
-		TS_SERVER_GBLOBAL_LIBRARY_PATH="$HOME/.asdf/installs/nodejs/$(asdf current nodejs | awk '{print $2}')/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
-		export TS_SERVER_GBLOBAL_LIBRARY_PATH
-	fi
+  if command -v asdf 1>/dev/null 2>&1; then
+    TS_SERVER_GBLOBAL_LIBRARY_PATH="$HOME/.asdf/installs/nodejs/$(asdf current nodejs | awk '{print $2}')/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
+    export TS_SERVER_GBLOBAL_LIBRARY_PATH
+  fi
 
   if [[ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]]; then
     . "$HOME/.asdf/plugins/java/set-java-home.bash"
@@ -491,42 +491,42 @@ if [ -d "$HOME/.asdf" ]; then
 fi
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
-	# following needed so that cypress browser testing can work in WSL2
-	export DISPLAY="$WSL_HOST_IP:0"
-	# without the next line, linux executables randomly fail in TMUX in WSL
-	# export PATH="$PATH:/c/WINDOWS/system32"
+  # following needed so that cypress browser testing can work in WSL2
+  export DISPLAY="$WSL_HOST_IP:0"
+  # without the next line, linux executables randomly fail in TMUX in WSL
+  # export PATH="$PATH:/c/WINDOWS/system32"
 
-	alias e.='/c/WINDOWS/explorer.exe .'
-	alias wslexe='/c/WINDOWS/system32/wsl.exe '
-	alias wsls="wslexe --shutdown"
-	alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
-	alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
-	alias nameserver="echo 'nameserver 1.1.1.1' | sudo tee /etc/resolv.conf"
+  alias e.='/c/WINDOWS/explorer.exe .'
+  alias wslexe='/c/WINDOWS/system32/wsl.exe '
+  alias wsls="wslexe --shutdown"
+  alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
+  alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
+  alias nameserver="echo 'nameserver 1.1.1.1' | sudo tee /etc/resolv.conf"
 
-	# This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
-	# up memory, this command will free your memory after about 20-30 seconds.
-	#   Details: https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
-	# alias dpc="clear && sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
-	# shellcheck disable=2139
-	alias dpc="sudo $HOME/dotfiles/etc/wsl-drop-caches.sh"
+  # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
+  # up memory, this command will free your memory after about 20-30 seconds.
+  #   Details: https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
+  # alias dpc="clear && sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
+  # shellcheck disable=2139
+  alias dpc="sudo $HOME/dotfiles/etc/wsl-drop-caches.sh"
 
-	if [ -x "$(command -v docker)" ]; then
-		# export DOCKER_HOST="unix:///mnt/wsl/shared-docker/docker.sock"
+  if [ -x "$(command -v docker)" ]; then
+    # export DOCKER_HOST="unix:///mnt/wsl/shared-docker/docker.sock"
 
-		# https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
+    # https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
 
-		# Start Docker daemon automatically when logging in.
-		DOCKER_DAEMON_RUNNING=$(pgrep -f dockerd)
+    # Start Docker daemon automatically when logging in.
+    DOCKER_DAEMON_RUNNING=$(pgrep -f dockerd)
 
-		if [ -z "$DOCKER_DAEMON_RUNNING" ]; then
-			sudo dockerd >/dev/null 2>&1 &
-			disown
-		fi
-	fi
+    if [ -z "$DOCKER_DAEMON_RUNNING" ]; then
+      sudo dockerd >/dev/null 2>&1 &
+      disown
+    fi
+  fi
 
-	if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
-		sudo "$HOME/dotfiles/etc/wsl-nameserver.sh"
-	fi
+  if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
+    sudo "$HOME/dotfiles/etc/wsl-nameserver.sh"
+  fi
 
 fi
 
@@ -548,35 +548,35 @@ fi
 # https://github.com/mgedmin/scripts/blob/master/title
 # https://discourse.gnome.org/t/rename-terminal-tab/3200/5
 set-title() {
-	# usage: set-title string
-	# Works for xterm clones
-	printf "\033]0;%s\a" "$*"
+  # usage: set-title string
+  # Works for xterm clones
+  printf "\033]0;%s\a" "$*"
 }
 
 MY_JAVA_PATH="/usr/lib/jvm/java-11-openjdk-amd64"
 if [ -d "$MY_JAVA_PATH" ]; then
-	export JAVA_HOME="$MY_JAVA_PATH"
-	pathmunge "$JAVA_HOME/bin"
+  export JAVA_HOME="$MY_JAVA_PATH"
+  pathmunge "$JAVA_HOME/bin"
 fi
 
 MY_ANDROID_STUDIO_PATH="$HOME/projects/android-studio"
 if [ -d "$MY_ANDROID_STUDIO_PATH" ]; then
-	export ANDROID_HOME="$MY_ANDROID_STUDIO_PATH"
-	pathmunge "$ANDROID_HOME"
-	pathmunge "$ANDROID_HOME/bin"
+  export ANDROID_HOME="$MY_ANDROID_STUDIO_PATH"
+  pathmunge "$ANDROID_HOME"
+  pathmunge "$ANDROID_HOME/bin"
 fi
 
 MY_ANDROID_SDK_PATH="$HOME/projects/android-sdk"
 if [ -d "$MY_ANDROID_SDK_PATH" ]; then
-	pathmunge "$MY_ANDROID_SDK_PATH/tools"
-	pathmunge "$MY_ANDROID_SDK_PATH/tools/bin"
-	pathmunge "$MY_ANDROID_SDK_PATH/platform-tools"
+  pathmunge "$MY_ANDROID_SDK_PATH/tools"
+  pathmunge "$MY_ANDROID_SDK_PATH/tools/bin"
+  pathmunge "$MY_ANDROID_SDK_PATH/platform-tools"
 fi
 
 MY_FLUTTER_PATH="$HOME/projects/flutter"
 if [ -d "$MY_FLUTTER_PATH" ]; then
-	pathmunge "$MY_FLUTTER_PATH/bin"
-	pathmunge "$MY_FLUTTER_PATH/.pub-cache/bin"
+  pathmunge "$MY_FLUTTER_PATH/bin"
+  pathmunge "$MY_FLUTTER_PATH/.pub-cache/bin"
 fi
 
 # Automatically start dbus
