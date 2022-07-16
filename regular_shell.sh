@@ -137,6 +137,8 @@ alias tkss='tmux kill-server'
 alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
+alias run='./run'
+
 # Save bash history per tmux pane
 if [[ $TMUX_PANE ]]; then
 	hist_dir="$HOME/.bash_histories"
