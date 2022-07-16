@@ -14,7 +14,7 @@
     "description": "Django model"
   },
   "print python to console": {
-    "prefix": ["print_to_console"],
+    "prefix": ["print_to_console", "console_print"],
     "body": [
       "\nprint(",
       "\t\"\\n\\nlogging starts--------------------------------------------------\\n\\n\",  # noqa",
@@ -46,7 +46,7 @@
     "description": "type ignore"
   },
   "sys.exc_info": {
-    "prefix": "sys_ex",
+    "prefix": ["sys_exec_info", "exec_info_sys"],
     "body": [
       "import sys;print('\\n\\n',  *sys.exc_info(), sep='\\n\\n');print('\\n\\n')"
     ],
@@ -54,10 +54,17 @@
   },
   "name = main": {
     "prefix": ["if_name_main", "if_main_name", "name_main", "main_name"],
+    "body": ["if __name__ == '__main__':", "    ${0:pass}"],
+    "description": ["If __name__ == __main__"]
+  },
+  "try:except:": {
+    "prefix": ["try", "try_except"],
     "body": [
-      "if __name__ == '__main__':",
+      "try:",
+      "    ${1:pass}",
+      "except ${2:Exception}${3: as e}:",
       "    ${0:pass}"
     ],
-    "description": ["If __name__ == __main__"]
+    "description": "try/except"
   }
 }
