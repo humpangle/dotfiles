@@ -17,6 +17,7 @@ local keymap = vim.api.nvim_set_keymap
 -- "coc-docker",
 --
 local coc_extensions = {
+  "coc-htmldjango",
   "coc-pyright",
   "coc-elixir",
   "coc-spell-checker",
@@ -62,9 +63,7 @@ Vimg.coc_global_extensions = coc_extensions
 
 -- Vimg.coc_force_debug = 1
 Vimg.coc_filetype_map = {
-  htmldjango = "html",
   [".eslintrc"] = "json",
-  jinja = "html",
   eelixir = "html",
 }
 

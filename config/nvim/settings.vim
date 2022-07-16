@@ -167,7 +167,6 @@ augroup filetypes
   au BufNewFile,BufRead *.code-snippets set filetype=json
   au BufNewFile,BufRead *.code-workspace set filetype=json
   au BufNewFile,BufRead .babelrc set filetype=json
-  " au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set filetype=jinja
   au BufNewFile,BufRead .env* set filetype=sh
   au BufNewFile,BufRead *.psql set filetype=sql
   au BufNewFile,BufRead Dockerfile* set filetype=dockerfile

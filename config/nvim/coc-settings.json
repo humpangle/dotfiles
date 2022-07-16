@@ -41,8 +41,11 @@
     "vue-html": "html",
     "javascript": "javascriptreact",
     "blade": "html",
-    "elixir": "html"
-  }
+    "elixir": "html",
+    "htmldjango": "html"
+  },
+  "htmldjango.djhtml.tabWidth": 2
+
   // "tailwindCSS.includeLanguages": {
   //   "vue-html": "html",
   //   "vue": "html"
