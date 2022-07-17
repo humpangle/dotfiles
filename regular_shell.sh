@@ -3,6 +3,10 @@
 
 ###### START COMMONS ##################
 
+if [[ -e /usr/local/bin/aws_completer ]]; then
+  complete -C '/usr/local/bin/aws_completer' aws
+fi
+
 export DOCKER_BUILDKIT=1
 export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 export EDITOR="nvim"
