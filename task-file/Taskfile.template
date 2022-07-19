@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------------------
+# See also for inspiration:
+# https://github.com/nickjj/docker-flask-example/blob/main/run
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# Extend the search path so you can easily use executable that are not are the
+# normal search path
+# -----------------------------------------------------------------------------
+PATH=./node_modules/.bin:$PATH
+
+# -----------------------------------------------------------------------------
+# Helper functions start with _ and aren't listed in this script's help menu.
+# -----------------------------------------------------------------------------
+
+function _helper_function {
+  # do something helpful
+  pwd
+}
+
+function install {
+  : "Install dependencies"
+  echo "install task not implemented"
+}
+
+function build {
+  : "Build the project"
+  echo "build task not implemented"
+}
+
+function start {
+  : "Start the server"
+  echo "start task not implemented"
+}
+
+function default {
+  : "Run a default task"
+  start
+}
+
+function help {
+  : "Auto-generate list of tasks, including documentation in the form of these noop statements"
+  : "They can span multiple lines if needed"
+  compgen -A function | grep -v "^_" | while read -r name; do
+    paste <(printf '%s' "$name") <(type "$name" | sed -nEe 's/^[[:space:]]*: ?"(.*)";/    \1/p')
+  done
+
+  printf "\n"
+}
+
+TIMEFORMAT="Task completed in %3lR"
+time "${@:-default}"
