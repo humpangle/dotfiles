@@ -202,6 +202,15 @@ gsd() {
   git stash drop "stash@{$1}"
 }
 
+# python
+alias py='python '
+
+alias py-activate='. venv/bin/activate || . .venv/bin/activate'
+alias pyactivate='py-activate'
+alias pyactivate.='py-activate'
+alias activatepy='py-activate'
+alias activatepy.='py-activate'
+
 alias ..='cd ..'
 alias 2.='cd ../..'
 alias 3.='cd ../../..'
@@ -210,7 +219,6 @@ alias .2=2.
 alias .3=3.
 alias .4=4.
 alias C="clear && printf '\e[3J'"
-alias py='python '
 # debian package `lrzsz`
 alias rb='sudo reboot'
 alias scouser='sudo chown -R $USER:$USER '
