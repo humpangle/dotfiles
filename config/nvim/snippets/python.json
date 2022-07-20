@@ -1,4 +1,9 @@
 {
+  "bash": {
+    "prefix": ["bash", "#!", "shebang"],
+    "body": ["#!/usr/bin/env python"],
+    "description": ["python shebang"]
+  },
   "django model": {
     "prefix": ["django_model"],
     "body": [
