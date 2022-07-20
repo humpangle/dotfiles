@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# shellcheck disable=2034,2209,2135,2155,2046
+
 if [[ "$1" =~ ^/ ]]; then
   env_file_abs_path="$1"
 else
@@ -18,7 +21,7 @@ line_regex="^[^#]+.+"
 
 # shellcheck disable=2013
 while read -r line; do
-  if [[  "$line" =~ $line_regex ]]; then
+  if [[ "$line" =~ $line_regex ]]; then
     key=$(echo "$line" | cut -d '=' -f 1)
     val=$(echo "$line" | cut -d'=' -f 2-)
 
@@ -35,11 +38,28 @@ while read -r line; do
 
     env_key_to_value_map["$key"]="${val}"
   fi
-done <<< $(cat "$env_file_abs_path")
+done <<<$(cat "$env_file_abs_path")
+
+is_file=1
+text=
+
+if [[ -n "$2" ]]; then
+  is_file=
+  text=""
+fi
 
 for key in "${!env_key_to_value_map[@]}"; do
-  echo "$key=${env_key_to_value_map[$key]}" >>"$new_asbolute_file_path"
-  echo "$key=${env_key_to_value_map[$key]}"
+  out="$key=${env_key_to_value_map[$key]}"
+
+  if [[ "$is_file" ]]; then
+    echo "$out" >>"$new_asbolute_file_path"
+  else
+    text="$out $text"
+  fi
 done
 
-sort "$new_asbolute_file_path" -o "$new_asbolute_file_path"
+if [[ "$is_file" ]]; then
+  sort "$new_asbolute_file_path" -o "$new_asbolute_file_path"
+else
+  echo "$text"
+fi
