@@ -447,6 +447,7 @@ rel_asdf_elixirf() {
   local release_dir="$install_dir/elixir_ls-releases/$elixir_version"
   mkdir -p "$release_dir"
 
+  # shellcheck disable=SC2164
   cd "$install_dir"
 
   printf '\n\n\t# Update to the latest code base of elixir LSP server.\n'
@@ -456,6 +457,7 @@ rel_asdf_elixirf() {
   rm -rf deps _build
 
   printf '\n\n\t# Fetch current dependencies and compile the code.\n'
+  # shellcheck disable=SC1010
   mix do deps.get, compile
 
   printf '\n\n\t\t# Create the language server scripts.\n'
