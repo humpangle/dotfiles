@@ -7,8 +7,6 @@ if [[ -e /usr/local/bin/aws_completer ]]; then
   complete -C '/usr/local/bin/aws_completer' aws
 fi
 
-export DOCKER_BUILDKIT=1
-export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 export EDITOR="nvim"
 # install with: `sudo apt-get install ssh-askpass-gnome ssh-askpass -y`
 # shellcheck disable=2155
@@ -34,6 +32,9 @@ pathmunge() {
 }
 
 # docker
+export DOCKER_BUILDKIT=1
+export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
+
 alias d='docker'
 alias docker-compose='docker compose '
 # docker remove all containers
@@ -66,13 +67,15 @@ alias dcps='docker-compose ps'
 alias dcpsa='docker-compose ps -a'
 alias drmlogs='drmlogsf '
 alias ___drmlogs='docker remove logs container_name_or_ID'
-alias docker-dangling='dim -qf dangling=true | xargs docker rmi -f'
+alias d-dangling='dim -qf dangling=true | xargs docker rmi -f'
 
 # docker-compose up --daemon and logs --follow
-dcudl() {
+dcudlf() {
   docker-compose up -d "$@"
   docker-compose logs -f "$@"
 }
+
+alias dcudl='dcudlf'
 
 # docker-compose restart and logs --follow
 dcrsf() {
