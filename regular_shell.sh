@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=2034,2209,2135,2155
+# shellcheck disable=2034,2209,2135,2155,2139
 
 ###### START COMMONS ##################
 
