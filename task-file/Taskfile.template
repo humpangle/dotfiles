@@ -16,8 +16,15 @@ PATH=./node_modules/.bin:$PATH
 # -----------------------------------------------------------------------------
 
 function _helper_function {
-  # do something helpful
-  pwd
+  local env
+
+  if [[ -n "$1" ]]; then
+    env="$1"
+  else
+    env=".env"
+  fi
+
+  splitenvs "$env" --lines
 }
 
 function install {
