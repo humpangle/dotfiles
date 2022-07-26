@@ -84,9 +84,36 @@ dcrsf() {
 }
 alias dcrs='dcrsf'
 
-# Kubernetes
+# minikube/Kubernetes
 alias mk='minikube'
+alias mkss='mk status'
+alias mkp='mk profile'
+alias mkpl='mk profile list'
+alias mks='mk start -p'
+alias mkst='mk stop -p'
+alias mksv='mk service'
+alias mkrm='mk delete -p'
+alias mkd='mk dashboard'
 alias kb='kubectl'
+alias kbg='kb get --namespace'
+alias kbgp='kb get pod --namespace'
+alias kbgn='kb get nodes --namespace'
+alias kbga='kb get all --namespace'
+alias kbgi='kb get ingress --namespace'
+alias kbgns='kb get namespaces'
+alias kbgd='kb get deployments --namespace'
+alias kbgs='kb get services --namespace'
+alias kbapp='kb apply --namespace'
+alias kbappf='kb apply --namespace -f'
+alias kbd='kb describe --namespace'
+alias kbrm='kb delete --namespace'
+alias kbrmp='kb delete pods --namespace'
+alias kbrma='kb delete all --all'
+alias kbe='kb exec --namespace'
+alias kbcs='kb expose --namespace'
+alias kbcn='kb create namespace'
+alias kbc='kb create --namespace'
+alias kbpf='kb port-forward --namespace'
 
 alias ngrokd='ngrok http '
 
