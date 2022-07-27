@@ -1039,5 +1039,27 @@
     "prefix": ["registry_via", "via_registry"],
     "body": ["{:via, Registry, {${1:name}, ${0:key}}}"],
     "description": ["Registry via"]
+  },
+  "releases": {
+    "prefix": ["releases_snippet"],
+    "body": [
+      "releases: [",
+      "  foo: [",
+      "      version: \"0.0.0\",",
+      "      include_executables_for: [:unix],",
+      "      applications: [",
+      "          app1: :permanent",
+      "      ]",
+      "  ],",
+      "  bar: [",
+      "      version: \"0.0.0\",",
+      "      include_executables_for: [:unix],",
+      "      applications: [",
+      "          app2: :permanent",
+      "      ]",
+      "  ]",
+      "]"
+    ],
+    "description": ["Releases"]
   }
 }
