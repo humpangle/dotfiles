@@ -117,6 +117,7 @@ alias kbcn='kb create namespace'
 alias kbc='kb create --namespace'
 alias kbpf='kb port-forward --namespace'
 alias kbe='kb edit --namespace'
+alias kbr='kb run --namespace'
 
 alias ngrokd='ngrok http '
 
