@@ -76,6 +76,7 @@ dcudlf() {
 }
 
 alias dcudl='dcudlf'
+alias dcudl--description='docker up daemon and logs'
 
 # docker-compose restart and logs --follow
 dcrsf() {
