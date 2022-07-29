@@ -149,7 +149,11 @@
     "description": "set up test module"
   },
   "ExUnit capture log": {
-    "prefix": ["capture_log_exunit", "exunit_capture_log"],
+    "prefix": [
+      "capture_log_exunit",
+      "exunit_capture_log",
+      "log_capture_exunit"
+    ],
     "body": [
       "# import ExUnit.CaptureLog",
       "@moduletag capture_log: true",
