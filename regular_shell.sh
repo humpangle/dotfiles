@@ -65,8 +65,9 @@ alias dn='docker network '
 alias dnls='docker network ls'
 alias dcps='docker-compose ps'
 alias dcpsa='docker-compose ps -a'
-alias drmlogs='drmlogsf '
-alias ___drmlogs='docker remove logs container_name_or_ID'
+
+alias drmlogs--description='drmlogs container_name_or_ID [..container_name_or_ID] ,,, docker remove logs: '
+
 alias d-dangling='dim -qf dangling=true | xargs docker rmi -f'
 
 # docker-compose up --daemon and logs --follow

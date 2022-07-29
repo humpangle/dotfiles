@@ -3,7 +3,7 @@
 # https://stackoverflow.com/a/42510314
 
 if [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
-  echo "Usage: drmlogs container_name_or_ID"
+  echo "Usage: drmlogs container_name_or_ID [..container_name_or_ID]"
 else
   for var in "$@"
   do
