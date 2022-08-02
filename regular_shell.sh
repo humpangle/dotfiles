@@ -286,6 +286,7 @@ alias cpr='cp -r'
 
 mdf() {
   mkdir -p "$1"
+  # shellcheck disable=2103,2164
   cd "$1"
 }
 
@@ -511,6 +512,7 @@ rel_asdf_elixirf() {
   printf '\n\n\nThe path to the language server script:'
   printf '\n\t%s\n\n' "$release_dir/language_server.sh"
 
+  # shellcheck disable=2103,2164
   cd -
 }
 
@@ -557,6 +559,7 @@ if [ -d "$HOME/.asdf" ]; then
   fi
 
   if [[ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]]; then
+    # shellcheck disable=1090
     . "$HOME/.asdf/plugins/java/set-java-home.bash"
   fi
 fi
