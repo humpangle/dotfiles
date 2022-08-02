@@ -37,7 +37,7 @@ local coc_extensions = {
   "coc-lua",
   "@yaegassy/coc-intelephense",
   -- "@yaegassy/coc-volar",
-  -- "coc-blade",
+  "coc-blade",
   -- "coc-flutter",
   -- Database auto completion powered by vim-dadbod
   "coc-db",

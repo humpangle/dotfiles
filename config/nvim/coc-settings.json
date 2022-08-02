@@ -44,7 +44,7 @@
     "elixir": "html",
     "htmldjango": "html"
   },
-  "htmldjango.djhtml.tabWidth": 2
+  "htmldjango.djhtml.tabWidth": 2,
 
   // "tailwindCSS.includeLanguages": {
   //   "vue-html": "html",
@@ -74,4 +74,5 @@
   //   "html.twig": "html",
   //   "typescriptreact": "html"
   // }
+  "blade.bladeFormatter.optIndentSize": 2
 }
