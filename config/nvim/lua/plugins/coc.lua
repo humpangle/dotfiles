@@ -5,7 +5,6 @@ local keymap = vim.api.nvim_set_keymap
 -- 'coc-flutter-tools',
 -- 'coc-yank',
 -- 'coc-vetur',
--- 'coc-php-cs-fixer',
 -- 'coc-emoji',
 -- 'coc-lists',
 -- 'coc-tasks',
@@ -36,7 +35,7 @@ local coc_extensions = {
   "coc-svg",
   "coc-vimlsp",
   "coc-lua",
-  -- "@yaegassy/coc-intelephense",
+  "@yaegassy/coc-intelephense",
   -- "@yaegassy/coc-volar",
   -- "coc-blade",
   -- "coc-flutter",
@@ -45,6 +44,7 @@ local coc_extensions = {
   -- "coc-java",
   -- "coc-kotlin",
   -- "@yaegassy/coc-tailwindcss3"
+  "coc-php-cs-fixer",
 }
 
 if vim.fn.has("win32") == 1 then
@@ -61,10 +61,7 @@ Vimg.coc_global_extensions = coc_extensions
 -- :CocCommand eslint.showOutputChannel
 
 -- Vimg.coc_force_debug = 1
-Vimg.coc_filetype_map = {
-  [".eslintrc"] = "json",
-  eelixir = "html",
-}
+Vimg.coc_filetype_map = {[".eslintrc"] = "json", eelixir = "html"}
 
 -- Some servers have issues with backup files, see #649
 set.backup = false
