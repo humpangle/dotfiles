@@ -562,6 +562,7 @@ mysql_startf() {
   fi
 
   mysqld_safe --datadir="$path" &
+  disown
 }
 
 alias mysql_start='mysql_startf'
