@@ -1065,5 +1065,10 @@
       "]"
     ],
     "description": ["Releases"]
+  },
+  "import mix config": {
+    "prefix": ["mix_import_config", "import_mix_config"],
+    "body": ["import_config \"#{Mix.env()}.exs\""],
+    "description": ["import mix config"]
   }
 }
