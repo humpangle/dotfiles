@@ -547,6 +547,26 @@ alias mxti='mix test.interactive'
 alias iexmxps='iex -S mix phx.server'
 alias iexmx='iex -S mix'
 
+##################### mysql
+
+mysql_startf() {
+  local current
+  local path
+
+  current="$(asdf current mysql | awk '{print $2}')"
+  path="$HOME/mysql_data_${current//./_}"
+
+  if [[ ! -e "$path" ]]; then
+    printf "\n\nDirectory data of the mysql version does not exist.\n\n"
+    exit 1
+  fi
+
+  mysqld_safe --datadir="$path" &
+}
+
+alias mysql_start='mysql_startf'
+alias start_mysql='mysql_startf'
+
 if [ -d "$HOME/.asdf" ]; then
   # shellcheck disable=2086,1090
   . $HOME/.asdf/asdf.sh
