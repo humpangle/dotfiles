@@ -12,7 +12,6 @@ local keymap = vim.api.nvim_set_keymap
 -- 'coc-fzf-preview',
 -- 'coc-marketplace',
 -- 'coc-explorer',
--- 'coc-emmet',
 -- "https://github.com/rodrigore/coc-tailwind-intellisense",
 -- "coc-docker",
 --
