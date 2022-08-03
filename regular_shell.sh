@@ -152,7 +152,8 @@ alias kbed='kubectl edit --namespace default'
 alias kbr='kubectl run --namespace'
 alias kbrd='kubectl run --namespace default'
 alias kbcg='kubectl config --namespace'
-alias kbcgd='kubectl config --namespace default'
+alias kbs='kubectl scale --namespace'
+alias kbsd='kubectl scale --namespace default'
 
 alias ngrokd='ngrok http '
 
