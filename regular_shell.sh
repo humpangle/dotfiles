@@ -225,7 +225,8 @@ runf() {
   bash "$name" "$@"
 }
 
-alias run='runf'
+alias rrun='runf'
+alias runn='runf'
 
 # Save bash history per tmux pane
 if [[ $TMUX_PANE ]]; then
