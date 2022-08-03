@@ -45,45 +45,45 @@ alias drim='docker rmi '
 alias dim='docker images '
 alias dps='docker ps '
 alias dpsa='docker ps -a '
-alias dc='docker-compose '
-alias dce='docker-compose exec '
+alias dc='docker compose '
+alias dce='docker compose exec '
 alias de='docker exec -it '
-alias dcu='docker-compose up '
-alias dcub='docker-compose up --build '
-alias dcud='docker-compose up -d '
-alias dcb='docker-compose build '
+alias dcu='docker compose up '
+alias dcub='docker compose up --build '
+alias dcud='docker compose up -d '
+alias dcb='docker compose build '
 alias db='docker build -t'
-alias dcl='docker-compose logs '
-alias dclf='docker-compose logs -f '
-alias dck='docker-compose kill '
-alias dcd='docker-compose down '
-alias dcdv='docker compose kill && docker-compose down -v'
+alias dcl='docker compose logs '
+alias dclf='docker compose logs -f '
+alias dck='docker compose kill '
+alias dcd='docker compose down '
+alias dcdv='docker compose kill && docker compose down -v'
 alias dvra='docker volume rm $(docker volume ls -q)'
 alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ds='sudo service docker start'
 alias dn='docker network '
 alias dnls='docker network ls'
-alias dcps='docker-compose ps'
-alias dcpsa='docker-compose ps -a'
+alias dcps='docker compose ps'
+alias dcpsa='docker compose ps -a'
 
 alias drmlogs--description='drmlogs container_name_or_ID [..container_name_or_ID] ,,, docker remove logs: '
 
 alias d-dangling='dim -qf dangling=true | xargs docker rmi -f'
 
-# docker-compose up --daemon and logs --follow
+# docker compose up --daemon and logs --follow
 dcudlf() {
-  docker-compose up -d "$@"
-  docker-compose logs -f "$@"
+  docker compose up -d "$@"
+  docker compose logs -f "$@"
 }
 
 alias dcudl='dcudlf'
 alias dcudl--description='docker up daemon and logs'
 
-# docker-compose restart and logs --follow
+# docker compose restart and logs --follow
 dcrsf() {
-  docker-compose restart "$@"
-  docker-compose logs -f "$@"
+  docker compose restart "$@"
+  docker compose logs -f "$@"
 }
 alias dcrs='dcrsf'
 
