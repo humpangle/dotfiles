@@ -45,6 +45,7 @@ local coc_extensions = {
   -- "coc-kotlin",
   -- "@yaegassy/coc-tailwindcss3"
   "coc-php-cs-fixer",
+  "@yaegassy/coc-nginx",
 }
 
 if vim.fn.has("win32") == 1 then
