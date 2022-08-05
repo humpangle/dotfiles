@@ -59,7 +59,7 @@ function default {
 }
 
 function help {
-  : "Auto-generate list of tasks, including documentation in the form of these noop statements"
+  : "List available tasks."
   : "They can span multiple lines if needed"
   compgen -A function | grep -v "^_" | while read -r name; do
     paste <(printf '%s' "$name") <(type "$name" | sed -nEe 's/^[[:space:]]*: ?"(.*)";/    \1/p')
