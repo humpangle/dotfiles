@@ -75,5 +75,6 @@
   //   "typescriptreact": "html"
   // }
   "blade.bladeFormatter.optIndentSize": 2,
-  "nginx.nginxfmt.indent": 2
+  "nginx.nginxfmt.indent": 2,
+  "python.formatting.provider": "black"
 }
