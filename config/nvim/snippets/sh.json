@@ -97,7 +97,7 @@
   },
 
   "run.sh": {
-    "prefix": ["run.sh_snippet"],
+    "prefix": ["run.sh_snippet", "run.sh_template"],
     "body": [
       "#!/bin/bash",
       "# shellcheck disable=1090",
