@@ -34,7 +34,7 @@ function _helper_function {
     splitted_envs=$(splitenvs "$env" --lines)
   fi
 
-  "$splitted_envs"
+  printf "%s" "$splitted_envs"
 }
 
 function _timestamp {
