@@ -36,38 +36,38 @@ export DOCKER_BUILDKIT=1
 export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 
 alias d='docker'
-alias docker-compose='docker compose '
+alias docker-compose='docker compose'
 # docker remove all containers
-alias drac='docker rm $(docker ps -a -q) '
+alias drac='docker rm $(docker ps -a -q)'
 # docker remove all containers force
 alias dracf='docker rm $(docker ps -a -q) --force'
-alias drim='docker rmi '
-alias dim='docker images '
-alias dps='docker ps '
-alias dpsa='docker ps -a '
-alias dc='docker compose '
-alias dce='docker compose exec '
-alias de='docker exec -it '
-alias dcu='docker compose up '
-alias dcub='docker compose up --build '
-alias dcud='docker compose up -d '
-alias dcb='docker compose build '
+alias drim='docker rmi'
+alias dim='docker images'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias dc='docker compose'
+alias dce='docker compose exec'
+alias de='docker exec -it'
+alias dcu='docker compose up'
+alias dcub='docker compose up --build'
+alias dcud='docker compose up -d'
+alias dcb='docker compose build'
 alias db='docker build -t'
-alias dcl='docker compose logs '
-alias dclf='docker compose logs -f '
-alias dck='docker compose kill '
-alias dcd='docker compose down '
+alias dcl='docker compose logs'
+alias dclf='docker compose logs -f'
+alias dck='docker compose kill'
+alias dcd='docker compose down'
 alias dcdv='docker compose kill && docker compose down -v'
 alias dvra='docker volume rm $(docker volume ls -q)'
 alias dvls='docker volume ls'
 alias dvlsq='docker volume ls -q'
 alias ds='sudo service docker start'
-alias dn='docker network '
+alias dn='docker network'
 alias dnls='docker network ls'
 alias dcps='docker compose ps'
 alias dcpsa='docker compose ps -a'
 
-alias drmlogs--description='drmlogs container_name_or_ID [..container_name_or_ID] ,,, docker remove logs: '
+alias drmlogs--description='drmlogs container_name_or_ID [..container_name_or_ID] ,,, docker remove logs:'
 
 alias d-dangling='dim -qf dangling=true | xargs docker rmi -f'
 
@@ -155,7 +155,7 @@ alias kbcg='kubectl config --namespace'
 alias kbs='kubectl scale --namespace'
 alias kbsd='kubectl scale --namespace default'
 
-alias ngrokd='ngrok http '
+alias ngrokd='ngrok http'
 
 alias ug='clear && sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y'
 
@@ -209,7 +209,7 @@ alias ta='tmux a -t'
 alias tap='cd ~/projects/php && tmux a -t php'
 alias tls='tmux ls'
 alias tp='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz'
-alias tn='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz && tmux new -s '
+alias tn='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz && tmux new -s'
 alias tndot='cd ~/dotfiles && tn dot'
 alias tks='tmux kill-session -t'
 alias tkss='tmux kill-server'
@@ -247,35 +247,35 @@ if [[ $TMUX_PANE ]]; then
 fi
 
 # rsync
-alias rsynca='rsync -avzP --delete '
-alias rsyncd='rsync -avzP --delete --dry-run '
+alias rsynca='rsync -avzP --delete'
+alias rsyncd='rsync -avzP --delete --dry-run'
 
 # GIT
-alias gss='git status '
-# alias gst='git stash '
+alias gss='git status'
+# alias gst='git stash'
 # alias gsp='git stash pop'
 alias gsl='git stash list'
 # there is a debian package gsc = gambc
 alias gsc='git stash clear'
-alias gcma='git commit --amend '
-alias gcma='git commit -a '
-alias gcme='git commit --amend --no-edit '
+alias gcma='git commit --amend'
+alias gcma='git commit -a'
+alias gcme='git commit --amend --no-edit'
 alias gcamupm='git commit -am "updated" && git push github master'
-alias ga.='git add . '
-alias gp='git push '
+alias ga.='git add .'
+alias gp='git push'
 alias gpgm='git push github master'
 # The following command has serious caveats: see wiki/git.md
 # deliberately put an error: stash1 instead of stash so that user is forced
 # to edit command and put stash message
 alias gsstaged='git stash1 push -m "" -- $(git diff --staged --name-only)'
-alias gcm='git commit '
+alias gcm='git commit'
 alias grb='git rebase -i'
 # debian package gpodder=gpo
 alias gpo='git push origin'
 alias gpf='git push --force-with-lease origin'
 alias glone='git log --oneline'
 alias gconflict='git diff --name-only --diff-filter=U'
-alias gwt='git worktree '
+alias gwt='git worktree'
 # debian package gsa = gwenhywfar-tools
 gsa() {
   git stash apply "stash@{$1}"
@@ -286,7 +286,7 @@ gsd() {
 }
 
 # python
-alias py='python '
+alias py='python'
 
 alias py-activate='. venv/bin/activate || . .venv/bin/activate'
 alias pyactivate='py-activate'
@@ -304,7 +304,7 @@ alias .4=4.
 alias C="clear && printf '\e[3J'"
 # debian package `lrzsz`
 alias rb='sudo reboot'
-alias scouser='sudo chown -R $USER:$USER '
+alias scouser='sudo chown -R $USER:$USER'
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
 alias eshell='source ~/.bashrc'
@@ -380,12 +380,12 @@ ggc() {
 }
 
 # yarn
-alias yw='yarn workspace '
-alias yW='yarn -W '
-alias ys='yarn start '
-alias yn='yarn nps '
-alias ylsp='yarn list --pattern '
-alias ywhy='yarn why '
+alias yw='yarn workspace'
+alias yW='yarn -W'
+alias ys='yarn start'
+alias yn='yarn nps'
+alias ylsp='yarn list --pattern'
+alias ywhy='yarn why'
 alias ycw='clear && DISABLE_LARAVEL_MIX_NOTIFICATION=1 yarn watch'
 
 # TMUX split panes and windows
@@ -440,7 +440,7 @@ splitp() {
 alias exshell='export SHELL=/usr/bin/bash'
 alias rmvimswap='rm ~/.local/share/nvim/swap/*'
 alias cdd='cd $HOME/dotfiles'
-alias pw='prettier --write '
+alias pw='prettier --write'
 alias hb='sudo systemctl hibernate'
 alias sd='sudo shutdown now'
 alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
@@ -452,7 +452,7 @@ ltf() {
 }
 
 if [ -x "$(command -v sort-package-json)" ]; then
-  alias spj='sort-package-json '
+  alias spj='sort-package-json'
 fi
 
 if [ -x "$(command -v php)" ]; then
@@ -623,7 +623,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
   # export PATH="$PATH:/c/WINDOWS/system32"
 
   alias e.='/c/WINDOWS/explorer.exe .'
-  alias wslexe='/c/WINDOWS/system32/wsl.exe '
+  alias wslexe='/c/WINDOWS/system32/wsl.exe'
   alias wsls="wslexe --shutdown"
   alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
   alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
