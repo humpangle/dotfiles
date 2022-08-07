@@ -91,6 +91,7 @@ dimgf() {
   docker images | grep -P "$1" | awk '{print $3}'
 }
 alias dimg='dimgf'
+alias drimg='dimgf'
 # shellcheck disable=2027,2086
 alias dimg___description="docker images | grep "$1" | awk '{print $3}'"
 
