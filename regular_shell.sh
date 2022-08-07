@@ -88,7 +88,7 @@ dcrsf() {
 alias dcrs='dcrsf'
 
 dimgf() {
-  docker images | grep "$1" | awk '{print $3}'
+  docker images | grep -P "$1" | awk '{print $3}'
 }
 alias dimg='dimgf'
 # shellcheck disable=2027,2086
