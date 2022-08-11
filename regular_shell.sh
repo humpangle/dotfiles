@@ -233,6 +233,7 @@ runf() {
 alias rrun='runf'
 alias runn='runf'
 alias rn='runf'
+alias r='runf'
 
 # Save bash history per tmux pane
 if [[ $TMUX_PANE ]]; then
