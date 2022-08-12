@@ -320,23 +320,21 @@ return packer.startup(function(use)
     config = function()
       require("plugins/floaterm")
     end,
-    requires = {
-      "voldikss/fzf-floaterm"
-    }
+    requires = {"voldikss/fzf-floaterm"},
   })
 
   -- Better undo diff
   use({
     "simnalamburt/vim-mundo",
     -- disable = true,
-    config = function ()
+    config = function()
       Cmd([[
         " mbbill/undotree
         " nnoremap <A-u> :UndotreeToggle<CR>
         " simnalamburt/vim-mundo
         nnoremap <A-u> :MundoToggle<CR>
       ]])
-    end
+    end,
   })
 
   use({"tomtom/tcomment_vim"})
@@ -410,7 +408,7 @@ return packer.startup(function(use)
     -- Highlight, navigate, and operate on sets of matching text.
     "andymass/vim-matchup",
 
-    "hashivim/vim-terraform"
+    "hashivim/vim-terraform",
   })
 
   -- making rest api call
