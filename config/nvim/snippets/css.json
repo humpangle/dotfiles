@@ -1,0 +1,7 @@
+{
+  "bc": {
+    "prefix": ["comment_block", "block_comment"],
+    "body": ["/*", "$0", "*/"],
+    "description": ["Block comment"]
+  }
+}
