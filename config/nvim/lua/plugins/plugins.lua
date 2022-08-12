@@ -408,7 +408,9 @@ return packer.startup(function(use)
     "udalov/kotlin-vim",
 
     -- Highlight, navigate, and operate on sets of matching text.
-    "andymass/vim-matchup"
+    "andymass/vim-matchup",
+
+    "hashivim/vim-terraform"
   })
 
   -- making rest api call
