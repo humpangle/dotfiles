@@ -325,5 +325,15 @@
       "]);"
     ],
     "description": "Log::info"
+  },
+  "php tag": {
+    "prefix": ["php_tag", "tag_php"],
+    "body": ["<?php $0 ?>"],
+    "description": ["PHP Tag"]
+  },
+  "html comment": {
+    "prefix": ["html_comment", "comment_html"],
+    "body": ["<!-- $0 -->"],
+    "description": ["HTML Comment"]
   }
 }
