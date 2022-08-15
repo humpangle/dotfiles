@@ -1,3 +1,5 @@
+-- vim.g.neoformat_verbose = 1
+
 -- vim.api.nvim_set_keymap("n", "<leader>fc", ":Neoformat<CR>", {
 -- 	noremap = true,
 -- })
@@ -49,6 +51,10 @@ vim.g.neoformat_enabled_python = {
 	"black",
 	"autopep8",
 }
+
+-- vim.g.neoformat_enabled_php = {
+-- 	"php-cs-fixer",
+-- }
 
 -- format on save
 -- vim.cmd([[
