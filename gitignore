@@ -123,6 +123,8 @@ Session.vim
 
 # scratch files
 *.___scratch*
+*.___pid*
+*.pid
 
 *.netrwhist*
 .tool-versions
