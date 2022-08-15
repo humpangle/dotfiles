@@ -335,5 +335,32 @@
     "prefix": ["html_comment", "comment_html"],
     "body": ["<!-- $0 -->"],
     "description": ["HTML Comment"]
+  },
+  "wordpress plugin": {
+    "prefix": ["wordpress_plugin_template", "plugin_wordpress_snippet"],
+    "body": [
+      "<?php",
+      "/**",
+      "* Plugin Name: ${1:My Plugin}",
+      "* Description: ${2:Description}",
+      "* Plugin URI: https://",
+      "* Author: ${3:Author Name}",
+      "* Author URI: https://",
+      "* Version: ${4:0.0.0}",
+      "*",
+      "* Text Domain: ${5:my-plugin-unique-id}",
+      "*",
+      "* @package ${6:my-plugin}",
+      "* @category Core",
+      "*/",
+      "",
+      "if ( ! defined( 'ABSPATH' ) ) {",
+      "  exit; // Exit if accessed directly.",
+      "}",
+      "$0",
+      "",
+      "?>"
+    ],
+    "description": ["Wordpress plugin template"]
   }
 }
