@@ -100,7 +100,7 @@
     "prefix": ["run.sh_snippet", "run.sh_template"],
     "body": [
       "#!/bin/bash",
-      "# shellcheck disable=1090",
+      "# shellcheck disable=1090,2009",
       "",
       "# -----------------------------------------------------------------------------",
       "# See also for inspiration:",
