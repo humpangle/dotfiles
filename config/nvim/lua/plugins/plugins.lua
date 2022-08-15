@@ -445,8 +445,9 @@ return packer.startup(function(use)
       config = function()
         Cmd([[
           " postgres — postgresql://user1:userpwd@localhost:5432/testdb
-
           " mysql — mysql://user1:userpwd@127.0.0.1:3306/testdb
+          " sqlite - sqlite:path-to-sqlite-database
+          " :w = execute query in open buffer
 
           nnoremap <leader>du :DBUI<CR>
           nnoremap <leader>df :DBUIFindBuffer<CR>
