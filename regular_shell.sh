@@ -605,6 +605,20 @@ mysql_startf() {
 alias mysql_start='mysql_startf'
 alias start_mysql='mysql_startf'
 
+# -----------------------------------------------------------------------------
+# TERRAFORM
+# -----------------------------------------------------------------------------
+
+alias tf='terraform'
+alias tfi='terraform init'
+alias tfp='terraform plan'
+alias tfpd='terraform plan -destroy'
+alias tfapp='terraform apply'
+alias tfsl='terraform state list'
+alias tfss='terraform state show'
+alias tfs='terraform show'
+alias tfd='terraform destroy'
+
 if [ -d "$HOME/.asdf" ]; then
   # shellcheck disable=2086,1090
   . $HOME/.asdf/asdf.sh
