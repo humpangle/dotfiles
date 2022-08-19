@@ -298,7 +298,7 @@ nnoremap <leader>% :e %<CR>
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr>
 " edit .bashrc file
-nnoremap ,. :e ~/.bashrc<CR>
+nnoremap ,. :tab split<cr>:e ~/.bashrc<CR>
 
 " Netrw
 " https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
