@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=1090
+# shellcheck disable=1090,2009
 
 # -----------------------------------------------------------------------------
 # See also for inspiration:
@@ -74,7 +74,7 @@ function _raise_on_no_env_file {
   fi
 
   if [[ -z "$1" ]] || [[ ! -e "$1" ]]; then
-    printf "\nenv filename has not been provided or invalid.\n"
+    printf "\nERROR:env filename has not been provided or invalid.\n"
     printf "You may also source your environment file.\n\n"
     exit 1
   fi
