@@ -621,6 +621,7 @@ alias tfss='terraform state show'
 alias tfs='terraform show'
 alias tfd='terraform destroy'
 alias tfda='terraform destroy -auto-approve'
+alias tfc='terraform console'
 
 if [ -d "$HOME/.asdf" ]; then
   # shellcheck disable=2086,1090
