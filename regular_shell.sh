@@ -620,6 +620,7 @@ alias tfsl='terraform state list'
 alias tfss='terraform state show'
 alias tfs='terraform show'
 alias tfd='terraform destroy'
+alias tfdt='terraform destroy -target'
 alias tfda='terraform destroy -auto-approve'
 alias tfc='terraform console'
 
