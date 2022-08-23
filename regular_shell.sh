@@ -625,6 +625,9 @@ alias tfda='terraform destroy -auto-approve'
 alias tfc='terraform console'
 
 alias ng="sudo nginx -g 'daemon on; master_process on;'"
+alias ngk='pgrep -f nginx | xargs sudo kill -9'
+alias ngkill='pgrep -f nginx | xargs sudo kill -9'
+alias ngstop='pgrep -f nginx | xargs sudo kill -9'
 
 if [ -d "$HOME/.asdf" ]; then
   # shellcheck disable=2086,1090
