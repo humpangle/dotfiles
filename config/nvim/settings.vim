@@ -326,7 +326,7 @@ nnoremap <leader>dd :Lexplore %:p:h<CR>
 " END Netrw
 
 " edit init.vim
-nnoremap ,ec :e $MYVIMRC<CR>
+nnoremap ,ec :tab split<cr>:e $MYVIMRC<CR>
 " source init.vim
 nnoremap ,sc :so $MYVIMRC<CR>
 " source lua file
