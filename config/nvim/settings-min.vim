@@ -650,17 +650,43 @@ function! ClearTerminal()
   let &scrollback=s:scroll_value
 endfunction
 
+luafile ~/.config/nvim/lua/plugins/neoformat.lua
+so ~/.config/nvim/plugins/fzf.vim
+so ~/.config/nvim/plugins/fugitive.vim
+
 " === UN COMMENT ON SERVER === "
 colorscheme desert
 let g:maximizer_set_default_mapping = 0
 nnoremap mm :MaximizerToggle!<CR>
 xnoremap mm :MaximizerToggle!<CR>
 
-" PLUGIN_PATH="vim-maximizer"
 " PLUGIN_OWNER="szw"
-" mkdir -p ~/.local/share/nvim/site/pack/$PLUGIN_PATH/start \
-"   && git clone https://github.com/$PLUGIN_OWNER/$PLUGIN_PATH \
-        " ~/.local/share/nvim/site/pack/$PLUGIN_PATH/start/$PLUGIN_PATH
+" PLUGIN_PATH="vim-maximizer"
 
-" PLUGIN_PATH="vim-obsession"
+" mkdir -p ~/.local/share/nvim-min/site/pack/$PLUGIN_PATH/start \
+"   && git clone https://github.com/$PLUGIN_OWNER/$PLUGIN_PATH \
+        " ~/.local/share/nvim-min/site/pack/$PLUGIN_PATH/start/$PLUGIN_PATH
+
 " PLUGIN_OWNER="tpope"
+" PLUGIN_PATH="vim-obsession"
+" PLUGIN_PATH="vim-unimpaired"
+" PLUGIN_PATH="vim-fugitive"
+
+" PLUGIN_OWNER="sbdchd"
+" PLUGIN_PATH="neoformat"
+
+" PLUGIN_OWNER="junegunn"
+" PLUGIN_PATH="fzf"
+" PLUGIN_PATH="fzf.vim"
+
+" PLUGIN_OWNER="stsewd"
+" PLUGIN_PATH="fzf-checkout.vim"
+
+" PLUGIN_OWNER="dhruvasagar"
+" PLUGIN_PATH="vim-prosession"
+
+" PLUGIN_OWNER="tomtom"
+" PLUGIN_PATH="tcomment_vim"
+
+" PLUGIN_OWNER="nelstrom"
+" PLUGIN_PATH="vim-visual-star-search"
