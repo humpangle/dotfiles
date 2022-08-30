@@ -219,5 +219,10 @@
     "prefix": ["phx-hook", "hook-phx"],
     "body": ["phx-hook=${0:hook}"],
     "description": ["phx-hook binding"]
+  },
+  "html comment": {
+    "prefix": ["html_comment", "comment_html"],
+    "body": ["<!-- $0 -->"],
+    "description": ["HTML Comment"]
   }
 }
