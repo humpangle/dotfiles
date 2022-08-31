@@ -660,33 +660,38 @@ let g:maximizer_set_default_mapping = 0
 nnoremap mm :MaximizerToggle!<CR>
 xnoremap mm :MaximizerToggle!<CR>
 
-" PLUGIN_OWNER="szw"
-" PLUGIN_PATH="vim-maximizer"
-
-" mkdir -p ~/.local/share/nvim-min/site/pack/$PLUGIN_PATH/start \
-"   && git clone https://github.com/$PLUGIN_OWNER/$PLUGIN_PATH \
-        " ~/.local/share/nvim-min/site/pack/$PLUGIN_PATH/start/$PLUGIN_PATH
-
-" PLUGIN_OWNER="tpope"
-" PLUGIN_PATH="vim-obsession"
-" PLUGIN_PATH="vim-unimpaired"
-" PLUGIN_PATH="vim-fugitive"
-
-" PLUGIN_OWNER="sbdchd"
-" PLUGIN_PATH="neoformat"
-
-" PLUGIN_OWNER="junegunn"
-" PLUGIN_PATH="fzf"
-" PLUGIN_PATH="fzf.vim"
-
-" PLUGIN_OWNER="stsewd"
-" PLUGIN_PATH="fzf-checkout.vim"
-
-" PLUGIN_OWNER="dhruvasagar"
-" PLUGIN_PATH="vim-prosession"
-
-" PLUGIN_OWNER="tomtom"
-" PLUGIN_PATH="tcomment_vim"
-
-" PLUGIN_OWNER="nelstrom"
-" PLUGIN_PATH="vim-visual-star-search"
+" #!/bin/bash
+"
+" declare -A dict
+"
+" dict["szw", 0]="vim-maximizer"
+"
+" dict["tpope", 0]="vim-obsession"
+" dict["tpope", 1]="vim-unimpaired"
+" dict["tpope", 2]="vim-fugitive"
+"
+" dict["sbdchd", 0]="neoformat"
+"
+" dict["junegunn", 0]="fzf"
+" dict["junegunn", 1]="fzf.vim"
+"
+" dict["stsewd"]="fzf-checkout.vim"
+"
+" dict["dhruvasagar", 0]="vim-prosession"
+"
+" dict["tomtom", 0]="tcomment_vim"
+"
+" dict["nelstrom", 0]="vim-visual-star-search"
+"
+" shared_path="$HOME/.local/share/nvim-min"
+"
+" for key in "${!dict[@]}"; do
+"   plugin_path="${dict[$key]}"
+"
+"   plugin_owner=${key%%,*}
+"
+"   mkdir -p "${shared_path}/site/pack/$plugin_path/start"
+"
+"   git clone "https://github.com/$plugin_owner/$plugin_path" \
+"     "${shared_path}/site/pack/$plugin_path/start/$plugin_path"
+" done
