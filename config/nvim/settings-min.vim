@@ -651,6 +651,7 @@ function! ClearTerminal()
 endfunction
 
 luafile ~/.config/nvim/lua/plugins/neoformat.lua
+luafile ~/.config/nvim/lua/plugins/floaterm.lua
 so ~/.config/nvim/plugins/fzf.vim
 so ~/.config/nvim/plugins/fugitive.vim
 
@@ -662,33 +663,27 @@ xnoremap mm :MaximizerToggle!<CR>
 
 " #!/bin/bash
 "
-" declare -A dict
-"
-" dict["szw", 0]="vim-maximizer"
-"
-" dict["tpope", 0]="vim-obsession"
-" dict["tpope", 1]="vim-unimpaired"
-" dict["tpope", 2]="vim-fugitive"
-"
-" dict["sbdchd", 0]="neoformat"
-"
-" dict["junegunn", 0]="fzf"
-" dict["junegunn", 1]="fzf.vim"
-"
-" dict["stsewd"]="fzf-checkout.vim"
-"
-" dict["dhruvasagar", 0]="vim-prosession"
-"
-" dict["tomtom", 0]="tcomment_vim"
-"
-" dict["nelstrom", 0]="vim-visual-star-search"
-"
 " shared_path="$HOME/.local/share/nvim-min"
 "
-" for key in "${!dict[@]}"; do
-"   plugin_path="${dict[$key]}"
+" read -r -d '' xx <<'eof'
+" szw/vim-maximizer
+" tpope/vim-obsession
+" tpope/vim-unimpaired
+" tpope/vim-fugitive
+" sbdchd/neoformat
+" junegunn/fzf
+" junegunn/fzf.vim
+" sts/fzf-checkout.vim
+" dhruvasagar/vim-prosession
+" tomtom/tcomment_vim
+" nelstrom/vim-visual-star-search
+" voldikss/vim-floaterm
+" voldikss/fzf-floaterm
+" eof
 "
-"   plugin_owner=${key%%,*}
+" for line in ${xx}; do
+"   plugin_owner=${line%%/*}
+"   plugin_path="${line#*/}"
 "
 "   mkdir -p "${shared_path}/site/pack/$plugin_path/start"
 "
