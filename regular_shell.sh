@@ -70,6 +70,7 @@ alias dcpsa='docker compose ps -a'
 alias drmlogs--description='drmlogs container_name_or_ID [..container_name_or_ID] ,,, docker remove logs:'
 
 alias d-dangling='dim -qf dangling=true | xargs docker rmi -f'
+alias ddangling='dim -qf dangling=true | xargs docker rmi -f'
 
 # docker compose up --daemon and logs --follow
 dcudlf() {
