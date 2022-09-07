@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=1090,2009
+# shellcheck disable=1090,2009,2046
 
 # -----------------------------------------------------------------------------
 # See also for inspiration:
@@ -175,5 +175,5 @@ function help {
   printf "\n"
 }
 
-TIMEFORMAT=$'Task completed in %3lR\n'
+TIMEFORMAT=$'\n\n\nTask completed in %3lR\n'
 time "${@:-default}"
