@@ -379,6 +379,7 @@ nmap ,cn :let @"=expand("%:t")<CR>
 nnoremap ,yg :execute "let @+=FugitiveHead()"<CR>
 " Yank current working directory
 nnoremap ywd :let @+=trim(execute(":pwd"))<CR>
+nnoremap ,yw :let @+=trim(execute(":pwd"))<CR>
 
 " Some plugins change my CWD to currently opened file - I change it back
 nnoremap <leader>cd
