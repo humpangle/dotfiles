@@ -1,18 +1,20 @@
-" unset default paths of regular nvim in unix
-set runtimepath-=~/.config/nvim
-set runtimepath-=~/.config/nvim/after
-set runtimepath-=~/.local/share/nvim/site
-set runtimepath-=~/.local/share/nvim/site/after
+if !empty($NEOVIM_USE_ALT_CONFIG)
+  " unset default paths of regular nvim in unix
+  set runtimepath-=~/.config/nvim
+  set runtimepath-=~/.config/nvim/after
+  set runtimepath-=~/.local/share/nvim/site
+  set runtimepath-=~/.local/share/nvim/site/after
 
-" set custom paths for use in vscode nvim
-set runtimepath+=~/.config/nvim-min/after
-set runtimepath^=~/.config/nvim-min
-set runtimepath+=~/.local/share/nvim-min/site/after
-set runtimepath^=~/.local/share/nvim-min/site
+  " set custom paths for use in vscode nvim
+  set runtimepath+=~/.config/nvim-min/after
+  set runtimepath^=~/.config/nvim-min
+  set runtimepath+=~/.local/share/nvim-min/site/after
+  set runtimepath^=~/.local/share/nvim-min/site
 
-let &packpath = &runtimepath
+  let &packpath = &runtimepath
 
-let $MYVIMRC = "$HOME/dotfiles/config/nvim/settings-min.vim"
+  let $MYVIMRC = "$HOME/dotfiles/config/nvim/settings-min.vim"
+endif
 
 " Set <leader> key to <Space>
 nnoremap <Space> <Nop>
@@ -731,33 +733,3 @@ colorscheme desert
 let g:maximizer_set_default_mapping = 0
 nnoremap mm :MaximizerToggle!<CR>
 xnoremap mm :MaximizerToggle!<CR>
-
-" #!/bin/bash
-"
-" shared_path="$HOME/.local/share/nvim-min"
-"
-" read -r -d '' xx <<'eof'
-" szw/vim-maximizer
-" tpope/vim-obsession
-" tpope/vim-unimpaired
-" tpope/vim-fugitive
-" sbdchd/neoformat
-" junegunn/fzf
-" junegunn/fzf.vim
-" sts/fzf-checkout.vim
-" dhruvasagar/vim-prosession
-" tomtom/tcomment_vim
-" nelstrom/vim-visual-star-search
-" voldikss/vim-floaterm
-" voldikss/fzf-floaterm
-" eof
-"
-" for line in ${xx}; do
-"   plugin_owner=${line%%/*}
-"   plugin_path="${line#*/}"
-"
-"   mkdir -p "${shared_path}/site/pack/$plugin_path/start"
-"
-"   git clone "https://github.com/$plugin_owner/$plugin_path" \
-"     "${shared_path}/site/pack/$plugin_path/start/$plugin_path"
-" done
