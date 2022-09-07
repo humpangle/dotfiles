@@ -108,5 +108,5 @@ function help {
   printf "\n"
 }
 
-TIMEFORMAT="Task completed in %3lR"
+TIMEFORMAT=$'Task completed in %3lR\n'
 time "${@:-default}"
