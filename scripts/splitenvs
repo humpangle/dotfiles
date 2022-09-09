@@ -12,8 +12,8 @@ else
   env_file_abs_path="$env_file_abs_dir/$1"
 fi
 
-new_asbolute_file_path="$env_file_abs_path.n"
-rm -rf "$new_asbolute_file_path"
+new_asbolute_file_path="${env_file_abs_path}.n"
+rm -rf "${new_asbolute_file_path}"
 
 declare -A env_key_to_value_map
 
@@ -39,6 +39,8 @@ while read -r line; do
     env_key_to_value_map["$key"]="${val}"
   fi
 done <<<$(cat "$env_file_abs_path")
+
+env_key_to_value_map["DOCKER_ENV_FILE"]="${new_asbolute_file_path}"
 
 is_file=1
 text=
