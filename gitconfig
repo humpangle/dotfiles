@@ -7,6 +7,7 @@
 	co = checkout
 	cm = commit
   cam = commit -am
+	cz = commit --allow-empty -m
   pgm = push github master
   pgd = push github dev
   lone = log --oneline
