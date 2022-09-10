@@ -1,11 +1,11 @@
 [alias]
 	br = branch
 	st = status
-	cm = commit
 	ps = push
   psf = push --force-with-lease
 	pl = pull
 	co = checkout
+	cm = commit
   cam = commit -am
   pgm = push github master
   pgd = push github dev
