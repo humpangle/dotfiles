@@ -96,6 +96,8 @@ inoremap <silent><expr> <TAB>
       \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <expr>  <C-J> coc#pum#visible() ? coc#pum#next(1) : "\<C-J>"
+inoremap <expr>  <C-K> coc#pum#visible() ? coc#pum#prev(1) : "\<C-K>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
