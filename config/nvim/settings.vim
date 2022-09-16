@@ -444,6 +444,7 @@ nnoremap <localleader>re :VMessage reg<CR>
 
 nnoremap ,rm :!trash-put "%:p"<cr>:bdelete!<cr>
 nnoremap <Leader>ps :PackerSync<CR>
+nnoremap <Leader>pc :PackerCompile<CR>
 
 """""""""""""""""""" Functions """"""""""""""""""""
 
