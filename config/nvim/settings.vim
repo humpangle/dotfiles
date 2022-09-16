@@ -59,7 +59,6 @@ let g:markdown_fenced_languages = [
   \ 'dart',
   \ 'elixir',
   \ 'rest',
-  \ 'sql',
 \]
 
 syntax enable
