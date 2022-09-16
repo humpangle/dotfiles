@@ -219,6 +219,28 @@
     ],
     "description": "@doc doctest"
   },
+  "@doc example": {
+    "prefix": [
+      "doc_example",
+      "doc_docexample",
+      "docexample_doc",
+      "@doc_docexample"
+    ],
+    "body": [
+      "@doc ~S\"\"\"",
+      "${0:What does function do?.}",
+      "",
+      "## Examples",
+      "",
+      "Example 1:",
+      "",
+      "      iex> ${1:func_name}(${2:args})",
+      "      ${4:result}",
+      "",
+      "\"\"\""
+    ],
+    "description": "@doc example"
+  },
   "DynamicSupervisor spec": {
     "prefix": "supervisor_spec_dynamic",
     "body": [
