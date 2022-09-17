@@ -423,6 +423,9 @@ return packer.startup(function(use)
         " n = new request/ trigger is <C-J> by default
         let g:vrc_trigger = '<C-n>'
 
+        " let g:vrc_show_command = 1
+        " let g:vrc_debug = 1
+
         " make new rest console buffer
         nnoremap ,nr :tabe .rest<Left><Left><Left><Left><Left>
 
