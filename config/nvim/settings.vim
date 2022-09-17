@@ -58,6 +58,7 @@ let g:markdown_fenced_languages = [
   \ 'vue',
   \ 'dart',
   \ 'elixir',
+  \ 'eelixir',
   \ 'rest',
 \]
 
