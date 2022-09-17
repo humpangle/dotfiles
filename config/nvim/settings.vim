@@ -444,11 +444,22 @@ nnoremap <leader>re :reg<CR>
 nnoremap <localleader>re :VMessage reg<CR>
 """""""""""""""""""""""""""""""""""""
 
-nnoremap ,rm :!trash-put "%:p"<cr>:bdelete!<cr>
+nnoremap ,rm :call DeleteFile()<CR>
 nnoremap <Leader>ps :PackerSync<CR>
 nnoremap <Leader>pc :PackerCompile<CR>
 
 """""""""""""""""""" Functions """"""""""""""""""""
+" DELETE CURRENT FILE
+function! DeleteFile()
+  let l:delprompt = input('Sure to delete: "' . expand('%') . '"? ')
+  if l:delprompt == "y" || "Y"
+    :echo delete(@%)
+    execute 'bdelete!'
+  else
+    redraw!
+    return
+  endif
+endfunction
 
 " RENAME CURRENT FILE
 function! RenameFile()
