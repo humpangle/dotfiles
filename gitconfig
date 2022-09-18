@@ -4,6 +4,7 @@
 	ps = push
   psf = push --force-with-lease
 	pl = pull
+	tk = pull
 	co = checkout
 	cm = commit
   cam = commit -am
