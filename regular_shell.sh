@@ -166,6 +166,7 @@ alias ug='clear && sudo apt-get update && sudo apt-get upgrade -y && sudo apt-ge
 alias vi='/usr/bin/vim'
 alias vimdiff="nvim -d"
 alias v="nvim"
+alias v.="nvim ."
 alias svim='sudo -E nvim'
 alias sv='sudo -E nvim'
 alias vmin='nvim -u ~/.config/nvim/settings-min.vim'
