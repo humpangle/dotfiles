@@ -142,3 +142,6 @@ Session.vim
 .php-cs-fixer.cache
 
 **/.idea/
+
+# cloudflare
+.cloudflare-tunnel-config*
