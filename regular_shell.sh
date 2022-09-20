@@ -213,6 +213,7 @@ alias rmvu='remove_vim_undo'
 
 # tmux
 alias ta='tmux a -t'
+alias tad='tmux a -d -t'
 alias tap='cd ~/projects/php && tmux a -t php'
 alias tls='tmux ls'
 alias tp='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz'
