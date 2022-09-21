@@ -275,7 +275,8 @@ function install-bins {
   curl -fLo "${bash_append_path}" \
     https://raw.githubusercontent.com/humpangle/dotfiles/master/regular_shell.sh
 
-  [ -f "${bash_append_path}" ] && source "${bash_append_path}"
+  echo "[ -f ${bash_append_path} ] && source ${bash_append_path}" >> "$HOME/.bashrc"
+  source "$HOME/.bashrc"
 }
 
 function help {
