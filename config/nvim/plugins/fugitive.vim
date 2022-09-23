@@ -50,3 +50,6 @@ autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
+
+" git log --decorate=full
+let g:fugitive_summary_format = '%d %s'

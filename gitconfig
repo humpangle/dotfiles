@@ -46,3 +46,5 @@
 # specify how pulling is reconciled
 [pull]
   rebase = true
+[log]
+	decorate = full
