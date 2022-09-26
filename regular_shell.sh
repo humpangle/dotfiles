@@ -592,7 +592,7 @@ alias iexmx='iex -S mix'
 
 ##################### mysql
 
-mysql_startf() {
+mysql-startf() {
   local current
   local path
 
@@ -608,8 +608,8 @@ mysql_startf() {
   disown
 }
 
-alias mysql_start='mysql_startf'
-alias start_mysql='mysql_startf'
+alias mysql-start='mysql-startf'
+alias start-mysql='mysql-startf'
 
 # -----------------------------------------------------------------------------
 # TERRAFORM
