@@ -351,19 +351,23 @@ setenvs() {
   local path
   path="$1"
 
-  # Check for path 3 levels deep.
-  if ! [[ -e "$path" ]]; then
-    path="../$path"
+  # Check for path 2 parent levels deep.
+  local search_paths=("$path" "../${path}" "../../${path}")
 
-    if ! [[ -e "$path" ]]; then
-      path="../$path"
+  for search_path in "${search_paths[@]}"; do
+    if [[ -e "$search_path" ]]; then
+      path="$(realpath "$search_path")"
+      break
     fi
-  fi
+  done
 
   set -a
   # shellcheck disable=1090
   . "$path"
   set +a
+
+  DOCKER_ENV_FILE="${path}"
+
   # set -o allexport; source "$1"; set +o allexport
 }
 alias se='setenvs'
