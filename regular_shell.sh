@@ -592,16 +592,35 @@ alias iexmx='iex -S mix'
 
 ##################### mysql
 
-mysql-startf() {
+_mysql-dir() {
   local current
-  local path
 
   current="$(asdf current mysql | awk '{print $2}')"
-  path="$HOME/mysql_data_${current//./_}"
+
+  printf '%s' "$HOME/mysql_data_${current//./_}"
+}
+
+mysql-setupf() {
+  local DATADIR
+
+  DATADIR="$(_mysql-dir)"
+
+  mkdir -p "$DATADIR"
+  mysqld --initialize-insecure --datadir="$DATADIR"
+  mysql_ssl_rsa_setup --datadir="$DATADIR"
+}
+
+alias mysql-setup='mysql-setupf'
+alias setup-mysql='mysql-setupf'
+
+mysql-startf() {
+  local path
+
+  path="$(_mysql-dir)"
 
   if [[ ! -e "$path" ]]; then
-    printf "\n\nDirectory data of the mysql version does not exist.\n\n"
-    exit 1
+    printf "\n\nDirectory data of the mysql version, '%s', does not exist.\n\n" "${path}"
+    return
   fi
 
   mysqld_safe --datadir="$path" &
