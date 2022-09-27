@@ -12,7 +12,6 @@ local keymap = vim.api.nvim_set_keymap
 -- 'coc-marketplace',
 -- 'coc-explorer',
 -- "https://github.com/rodrigore/coc-tailwind-intellisense",
--- "coc-docker",
 --
 local coc_extensions = {
   "coc-htmldjango",
@@ -32,6 +31,7 @@ local coc_extensions = {
   "coc-prettier",
   -- "coc-svelte",
   "https://github.com/humpangle/coc-docker",
+  -- "coc-docker",
   "coc-svg",
   "coc-vimlsp",
   "coc-lua",
