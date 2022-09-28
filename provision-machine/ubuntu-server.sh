@@ -275,8 +275,33 @@ function install-bins {
   curl -fLo "${bash_append_path}" \
     https://raw.githubusercontent.com/humpangle/dotfiles/master/regular_shell.sh
 
-  echo "[ -f ${bash_append_path} ] && source ${bash_append_path}" >> "$HOME/.bashrc"
+  echo "[ -f ${bash_append_path} ] && source ${bash_append_path}" >>"$HOME/.bashrc"
   source "$HOME/.bashrc"
+}
+
+function install-vifm {
+  : "Install VIFM"
+
+  local version='0.12.1'
+
+  _echo-begin-install "INSTALLING VIFM VERSION ${version}"
+
+  rm -rf ~/.config/vifm
+  mkdir -p ~/.config/vifm
+  curl -LO https://github.com/vifm/vifm/releases/download/v${version}/vifm-${version}.tar.bz2
+  tar xf vifm-${version}.tar.bz2
+  rm -f vifm-${version}.tar.bz2
+  cd vifm-${version} || exit
+  ./configure
+  make
+  sudo make install
+  cd - || exit
+  sudo rm -rf /usr/local/src/vifm-*
+  sudo mv vifm-${version} /usr/local/src
+
+
+  curl -fLo ~/.config/vifm/vifmrc \
+    https://raw.githubusercontent.com/humpangle/dotfiles/master/config/vifm/vifmrc
 }
 
 function help {
