@@ -1,5 +1,5 @@
 {
-  // "suggest.noselect": true,
+  "suggest.noselect": true,
   "typescript.suggestionActions.enabled": false,
   "javascript.suggestionActions.enabled": false,
   "typescript.showUnused": false,
