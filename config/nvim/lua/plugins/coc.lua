@@ -67,10 +67,6 @@ Vimg.coc_filetype_map = {[".eslintrc"] = "json", eelixir = "html"}
 -- Some servers have issues with backup files, see #649
 set.backup = false
 set.writebackup = false
--- Give more space for displaying messages.
-set.cmdheight = 2
--- don't give |ins-completion-menu| messages.
-set.shortmess:append("c")
 -- Always show the signcolumn, otherwise it would shift the text each time
 -- diagnostics appear/become resolved.
 set.signcolumn = "auto"
