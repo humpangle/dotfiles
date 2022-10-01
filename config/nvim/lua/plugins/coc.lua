@@ -18,7 +18,6 @@ local coc_extensions = {
   "coc-pyright",
   "coc-elixir",
   "coc-spell-checker",
-  "coc-cspell-dicts",
   "coc-json",
   "coc-jedi",
   "coc-emmet",
@@ -46,6 +45,7 @@ local coc_extensions = {
   -- "@yaegassy/coc-tailwindcss3"
   "coc-php-cs-fixer",
   "@yaegassy/coc-nginx",
+  "coc-cspell-dicts",
 }
 
 if vim.fn.has("win32") == 1 then
