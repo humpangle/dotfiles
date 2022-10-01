@@ -136,8 +136,11 @@ nmap <leader>rn <Plug>(coc-rename)
 " Show `code action` window for currently selected region. Following actions
 " are availbale: 1. Extract Function 2. Move to a new file 3. Extract constant
 " 4. spelling suggestion
-nmap ,ac  <Plug>(coc-codeaction)
-xmap ,ac  <Plug>(coc-codeaction-selected)
+" Remap keys for applying codeAction to the current buffer.
+nmap ,ab <Plug>(coc-codeaction)
+nmap ,a <Plug>(coc-codeaction-selected)
+xmap ,a <Plug>(coc-codeaction-selected)
+vmap ,a <Plug>(coc-codeaction-selected)
 " Apply AutoFix to problem on the current line.
 nmap ,qf  <Plug>(coc-fix-current)
 " Remap <C-f> and <C-b> for scroll float windows/popups.
