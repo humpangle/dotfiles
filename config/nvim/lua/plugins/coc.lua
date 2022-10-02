@@ -1,6 +1,6 @@
 local set = vim.opt
 local Vimg = vim.g
-local keymap = vim.api.nvim_set_keymap
+local keyset = vim.keymap.set
 
 -- 'coc-flutter-tools',
 -- 'coc-yank',
@@ -73,12 +73,12 @@ set.signcolumn = "auto"
 
 -- Use tab and shift tab to move to next/previous placeholders in snippets
 
-keymap("i", "<tab>", "<Plug>(coc-snippets-expand)", {noremap = false})
+keyset("i", "<tab>", "<Plug>(coc-snippets-expand)", {noremap = false})
 
 Vimg.coc_snippet_next = "<TAB>"
 Vimg.coc_snippet_prev = "<S-TAB>"
 
-keymap("n", "<leader>fc", ":Format<CR>", {noremap = true})
+keyset("n", "<leader>fc", ":Format<CR>", {noremap = true})
 
 vim.cmd([[
 " hack to make vim think this is a script
