@@ -71,6 +71,9 @@ set.writebackup = false
 -- diagnostics appear/become resolved.
 set.signcolumn = "auto"
 
+-- Open .vim/coc-seetings.json of project
+keyset("n", "<leader>cs", ":vsplit<cr>:CocLocalConfig<cr>", {noremap = true})
+
 -- Use tab and shift tab to move to next/previous placeholders in snippets
 
 keyset("i", "<tab>", "<Plug>(coc-snippets-expand)", {noremap = false})
