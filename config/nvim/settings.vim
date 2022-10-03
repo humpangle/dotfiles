@@ -283,8 +283,9 @@ noremap <A-Right> :+tabmove<cr>
 if !exists('g:lasttab')
   let g:lasttab = 1
 endif
-nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
+
+nmap tl :exe "tabn ".g:lasttab<CR>
 
 " RESIZE WINDOW
 nnoremap <c-left> :vertical resize -2<CR>
