@@ -12,7 +12,7 @@ nnoremap <Leader>fl :BLines!<CR>
 " nnoremap <Leader>L :Lines!<CR>
 nnoremap <Leader>fm :Marks!<CR>
 nnoremap <leader>ft :Filetypes!<CR>
-nnoremap fw :Windows!<CR>
+nnoremap <leader>fw :Windows!<CR>
 " Find color schemes
 nnoremap <leader>fs :Colors!<CR>
 " commands: user defined, plugin defined, or native commands
