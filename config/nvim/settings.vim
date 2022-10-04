@@ -490,6 +490,7 @@ function! DeleteAllBuffers(f) abort
       if a:f == 'dbui' && (b_name =~ '.dbout' || b_name =~ 'share/db_ui/')
         call add(dbui_buffers, index)
       else
+        " Why don't I want to delete empty buffers along with dbui buffers???
         if  (b_name == '' || b_name == ',' )
           call add(no_name_buffers, index)
         endif
