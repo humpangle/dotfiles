@@ -25,7 +25,15 @@
   },
   "inspect with label in pipe": {
     "prefix": "inspectpipe",
-    "body": "|> IO.inspect(label: \"\\n----${1:label}----\\n\")",
+    "body": [
+      "|> IO.inspect(",
+      "  label:",
+      "      \"\\n\\n\\n",
+      "----------------------------------------------------------------------",
+      "         ${1:label}     ",
+      "----------------------------------------------------------------------\\n\"",
+      ")$0"
+    ],
     "description": "print to console puts inspect"
   },
   "tap inspect in a pipe & func": {
