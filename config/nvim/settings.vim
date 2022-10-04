@@ -271,6 +271,7 @@ nnoremap <c-l> <C-w>l
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
 nnoremap ,tc :tabclose<CR>
+nnoremap ,td :execute 'bwipeout! '.join(tabpagebuflist())<cr>
 nnoremap ,vn :vnew<cr>
 nnoremap ,sn :new<cr>
 
