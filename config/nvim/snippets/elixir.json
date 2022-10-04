@@ -1082,5 +1082,10 @@
     "prefix": ["mix_import_config", "import_mix_config"],
     "body": ["import_config \"#{Mix.env()}.exs\""],
     "description": ["import mix config"]
+  },
+  "todo": {
+    "prefix": ["todo"],
+    "body": ["# TODO${1:(author)}: ${0:todo_text}"],
+    "description": ["TODO"]
   }
 }
