@@ -286,7 +286,7 @@ if !exists('g:lasttab')
 endif
 au TabLeave * let g:lasttab = tabpagenr()
 
-nmap tl :exe "tabn ".g:lasttab<CR>
+nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 
 " RESIZE WINDOW
 nnoremap <c-left> :vertical resize -2<CR>
@@ -298,7 +298,7 @@ nnoremap <c-down> :resize -2<CR>
 nnoremap yol :lclose<CR>
 nnoremap yoq :cclose<cr>
 
-nnoremap <leader>% :e %<CR>
+nnoremap <leader>e% :e %<CR>
 
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr>
