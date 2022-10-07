@@ -130,6 +130,8 @@ function install-tmux {
 
   rm -rf tmux-${tmux_version}
 
+  sudo apt update
+
   sudo apt remove -y --purge tmux
 
   sudo apt install -y \
@@ -166,6 +168,7 @@ function install-neovim {
 
   _echo-begin-install "INSTALLING NEOVIM VERSION ${neovim_version}"
 
+  sudo apt update
   sudo apt install -y xclip
 
   # shellcheck disable=2016
@@ -250,7 +253,6 @@ function install-haproxy {
   sudo apt install -y --no-install-recommends software-properties-common
   sudo add-apt-repository "ppa:vbernat/haproxy-${version}" -y
   sudo apt update
-  sudo apt upgrade -y
   sudo apt install -y "haproxy=${version}.*"
 }
 
@@ -258,6 +260,8 @@ function install-bins {
   : "Install useful binaries"
 
   _echo-begin-install "INSTALLING adhoc binaries"
+
+  sudo apt update
 
   local bin_path="$HOME/.local/bin"
 
@@ -286,6 +290,8 @@ function install-vifm {
 
   _echo-begin-install "INSTALLING VIFM VERSION ${version}"
 
+  sudo apt update
+
   rm -rf ~/.config/vifm
   mkdir -p ~/.config/vifm
   curl -LO https://github.com/vifm/vifm/releases/download/v${version}/vifm-${version}.tar.bz2
@@ -298,7 +304,6 @@ function install-vifm {
   cd - || exit
   sudo rm -rf /usr/local/src/vifm-*
   sudo mv vifm-${version} /usr/local/src
-
 
   curl -fLo ~/.config/vifm/vifmrc \
     https://raw.githubusercontent.com/humpangle/dotfiles/master/config/vifm/vifmrc
