@@ -437,6 +437,8 @@ nnoremap <leader>bw :bw%<cr>
 nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>
 " Remove contents of current file
+" https://stackoverflow.com/a/7069592
+set autoread
 nnoremap d] :w!<CR>:e %<CR>:%delete<cr>:w!<cr>
 " Remove contents of current file and enter insert mode
 nnoremap c] :%delete<cr>i
