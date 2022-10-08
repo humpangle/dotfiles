@@ -439,7 +439,7 @@ map <leader>bn :call RenameFile()<cr>
 " Remove contents of current file
 " https://stackoverflow.com/a/7069592
 set autoread
-nnoremap d] :w!<CR>:e %<CR>:%delete<cr>:w!<cr>
+nnoremap d] :w!<CR>:%delete_<cr>:w!<cr>
 " Remove contents of current file and enter insert mode
 nnoremap c] :%delete<cr>i
 
