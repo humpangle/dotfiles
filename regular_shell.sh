@@ -160,7 +160,7 @@ alias kbsd='kubectl scale --namespace default'
 
 alias ngrokd='ngrok http'
 
-alias ug='clear && sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y'
+alias ug='clear && sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 
 # vim
 alias vi='/usr/bin/vim'
