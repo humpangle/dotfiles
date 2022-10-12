@@ -8,15 +8,99 @@ set -o pipefail
 set -o noclobber
 set -o nounset
 
-if [[ "$1" =~ ^/ ]]; then
-  env_file_abs_path="$1"
+usage() {
+  echo "Usage: parse-args [ -s | --string ]
+                  [ -f | --format yaml|yml ]
+                  [ -o | --output   /some/path ]
+                  env-file"
+  exit 2
+}
+
+out_file=
+format=
+verbose=
+in_file=
+string=
+
+function parse-args {
+  # -allow a command to fail with !’s side effect on errexit
+  # -use return value from ${PIPESTATUS[0]}, because ! hosed $?
+  ! getopt --test >/dev/null
+  if [[ ${PIPESTATUS[0]} -ne 4 ]]; then
+    echo "I’m sorry, $(getopt --test) failed in this environment."
+    exit 1
+  fi
+
+  # option --output/-o requires 1 argument
+  LONGOPTS=format:,output:,verbose
+  OPTIONS=sf:o:v
+
+  # -regarding ! and PIPESTATUS see above
+  # -temporarily store output to be able to check for errors
+  # -activate quoting/enhanced mode (e.g. by writing out “--options”)
+  # -pass arguments only via   -- "$@"   to separate them correctly
+  ! PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name "$0" -- "$@")
+  if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+    # e.g. return value is 1
+    #  then getopt has complained about wrong arguments to stdout
+    usage
+  fi
+
+  # read getopt’s output this way to handle the quoting right:
+  eval set -- "$PARSED"
+
+  # now enjoy the options in order and nicely split until we see --
+  while true; do
+    case "$1" in
+      -s | --string)
+        string=y
+        shift
+        ;;
+      -f | --format)
+        format="$2"
+        shift 2
+        ;;
+      -v | --verbose)
+        verbose=y
+        shift
+        ;;
+      -o | --output)
+        out_file="$2"
+        shift 2
+        ;;
+        # -- means the end of the arguments; drop this, and break out of the
+        # while loop
+      --)
+        shift
+        break
+        ;;
+      *)
+        echo "Unexpected option: $1."
+        usage
+        ;;
+    esac
+  done
+
+  # handle non-option arguments
+  if [[ $# -ne 1 ]]; then
+    echo "$0: A single input file is required."
+    exit 4
+  fi
+
+  in_file=$1
+}
+
+parse-args "$@"
+
+if [[ "$in_file" =~ ^/ ]]; then
+  env_file_abs_path="$in_file"
 else
   env_file_abs_dir="$(
-    (cd -- "$(dirname "$1")" || exit) >/dev/null 2>&1
+    (cd -- "$(dirname "$in_file")" || exit) >/dev/null 2>&1
     pwd -P
   )"
 
-  env_file_abs_path="$env_file_abs_dir/$1"
+  env_file_abs_path="$env_file_abs_dir/$in_file"
 fi
 
 new_asbolute_file_path="${env_file_abs_path}.n"
@@ -49,25 +133,38 @@ done <<<$(cat "$env_file_abs_path")
 
 env_key_to_value_map["ENV_FILE"]="${new_asbolute_file_path}"
 
-is_file=1
-text=
-
-if [[ -n "${2:-}" ]]; then
-  is_file=
-  text=""
+if [[ -n "$out_file" ]]; then
+  new_asbolute_file_path=$(realpath "$out_file")
 fi
 
-for key in "${!env_key_to_value_map[@]}"; do
-  out="$key=${env_key_to_value_map[$key]}"
+if [[ -z "$string" ]]; then
+  rm -rf "$new_asbolute_file_path"
+  touch "$new_asbolute_file_path"
+fi
 
-  if [[ "$is_file" ]]; then
-    echo "$out" >>"$new_asbolute_file_path"
-  else
+text=
+
+for key in "${!env_key_to_value_map[@]}"; do
+  val="${env_key_to_value_map[$key]}"
+
+  if [[ -z "$val" ]]; then
+    continue
+  fi
+
+  out="${key}=${val}"
+
+  if [[ "$format" = yml ]] || [[ "$format" = yaml ]]; then
+    out="${key}: ${env_key_to_value_map[$key]}"
+  fi
+
+  if [[ -n "${string}" ]]; then
     text="$out $text"
+  else
+    echo "$out" >>"$new_asbolute_file_path"
   fi
 done
 
-if [[ "$is_file" ]]; then
+if [[ -z "$string" ]]; then
   touch "$new_asbolute_file_path"
   sort "$new_asbolute_file_path" -o "$new_asbolute_file_path"
 else
