@@ -170,6 +170,7 @@ augroup filetypes
   au BufNewFile,BufRead *.code-workspace set filetype=json
   au BufNewFile,BufRead .babelrc set filetype=json
   au BufNewFile,BufRead .env* set filetype=sh
+  au BufNewFile,BufRead .env*.y*ml set filetype=yaml
   au BufNewFile,BufRead *.psql set filetype=sql
   au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
   au BufNewFile,BufRead *.docker set filetype=dockerfile
