@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
-# shellcheck disable=2034,2209,2135,2155,2046
+# shellcheck disable=2034,2209,2135,2155,2046,2251
+# More safety, by turning some bugs into errors.
+# Without `errexit` you don’t need ! and can replace
+# ${PIPESTATUS[0]} with a simple $?, but I prefer safety.
+set -o errexit
+set -o pipefail
+set -o noclobber
+set -o nounset
 
 if [[ "$1" =~ ^/ ]]; then
   env_file_abs_path="$1"
@@ -15,7 +22,7 @@ fi
 new_asbolute_file_path="${env_file_abs_path}.n"
 rm -rf "${new_asbolute_file_path}"
 
-declare -A env_key_to_value_map
+declare -A env_key_to_value_map=()
 
 line_regex="^[^#]+.+"
 
@@ -27,7 +34,7 @@ while read -r line; do
 
     for line_with_varirables in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
       variable_text="\${$line_with_varirables}"
-      variable_val="${env_key_to_value_map[$line_with_varirables]}"
+      variable_val="${env_key_to_value_map[$line_with_varirables]:-}"
 
       if [[ -z "$variable_val" ]]; then
         variable_val=${!line_with_varirables}
@@ -45,7 +52,7 @@ env_key_to_value_map["ENV_FILE"]="${new_asbolute_file_path}"
 is_file=1
 text=
 
-if [[ -n "$2" ]]; then
+if [[ -n "${2:-}" ]]; then
   is_file=
   text=""
 fi
@@ -61,6 +68,7 @@ for key in "${!env_key_to_value_map[@]}"; do
 done
 
 if [[ "$is_file" ]]; then
+  touch "$new_asbolute_file_path"
   sort "$new_asbolute_file_path" -o "$new_asbolute_file_path"
 else
   echo "$text"
