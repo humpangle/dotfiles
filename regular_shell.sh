@@ -366,7 +366,7 @@ setenvs() {
   . "$path"
   set +a
 
-  DOCKER_ENV_FILE="${path}"
+  ENV_FILE="${path}"
 
   # set -o allexport; source "$1"; set +o allexport
 }

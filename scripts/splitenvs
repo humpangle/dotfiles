@@ -40,7 +40,7 @@ while read -r line; do
   fi
 done <<<$(cat "$env_file_abs_path")
 
-env_key_to_value_map["DOCKER_ENV_FILE"]="${new_asbolute_file_path}"
+env_key_to_value_map["ENV_FILE"]="${new_asbolute_file_path}"
 
 is_file=1
 text=
