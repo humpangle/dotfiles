@@ -16,7 +16,7 @@ function _env {
     . $env
     set +a
 
-    splitted_envs=$(splitenvs "$env" --lines)
+    splitted_envs=$(p-env "$env" --lines)
   fi
 
   printf "%s" "$splitted_envs"
@@ -269,10 +269,10 @@ function install-bins {
 
   echo "export PATH=${bin_path}:\$PATH" >>"$HOME/.bashrc"
 
-  curl -fLo "${bin_path}/splitenvs" \
-    https://raw.githubusercontent.com/humpangle/dotfiles/master/scripts/splitenvs
+  curl -fLo "${bin_path}/p-env" \
+    https://raw.githubusercontent.com/humpangle/dotfiles/master/scripts/p-env
 
-  chmod u+x "${bin_path}/splitenvs"
+  chmod u+x "${bin_path}/p-env"
 
   local bash_append_path="${HOME}/__bash-append.sh"
 

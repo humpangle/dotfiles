@@ -12,7 +12,7 @@
 # -----------------------------------------------------------------------------
 PATH=./node_modules/.bin:$PATH
 
-function splitenvs {
+function p-env {
   : ""
 
   if [[ "$1" =~ ^/ ]]; then
@@ -98,7 +98,7 @@ function _helper_function {
     . $env
     set +a
 
-    splitted_envs=$(splitenvs "$env" --lines)
+    splitted_envs=$(p-env "$env" --lines)
   fi
 
   printf "%s" "$splitted_envs"
