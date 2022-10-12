@@ -23,7 +23,7 @@ keymap("n", "<leader>ff", ":Floaterms<CR>", {noremap = true})
 keymap("n", "<Leader>FF", ":FloatermNew --title=", {noremap = true})
 keymap("n", "<Leader>FT", ":FloatermToggle<CR>", {noremap = true})
 keymap("n", "<Leader>FK", ":FloatermKill!", {noremap = true})
-keymap("n", "vi", ":FloatermNew vifm <CR>", {noremap = true})
+keymap("n", "<Leader>vi", ":FloatermNew vifm <CR>", {noremap = true})
 -- nnoremap <C-`> :FloatermToggle<CR>
 -- nnoremap <Leader>__FloatermNewVSplit :FloatermNew --wintype='vsplit'
 
