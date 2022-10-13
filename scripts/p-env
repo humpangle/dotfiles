@@ -141,10 +141,6 @@ text=
 for key in "${!env_key_to_value_map[@]}"; do
   val="${env_key_to_value_map[$key]}"
 
-  if [[ -z "$val" ]]; then
-    continue
-  fi
-
   out="${key}=${val}"
 
   if [[ "$format" = yml ]] || [[ "$format" = yaml ]]; then
