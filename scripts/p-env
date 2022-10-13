@@ -22,6 +22,7 @@ verbose=
 in_file=
 string=
 exec_cmd=
+cwd=
 
 function parse-args {
   # -allow a command to fail with !’s side effect on errexit
@@ -33,7 +34,7 @@ function parse-args {
   fi
 
   # option --output/-o requires 1 argument
-  LONGOPTS=format:,output:,exec:verbose
+  LONGOPTS=format:,output:,exec:,cwd:,verbose
   OPTIONS=sf:o:e:v
 
   # -regarding ! and PIPESTATUS see above
@@ -71,6 +72,10 @@ function parse-args {
         ;;
       -e | --exec)
         exec_cmd="$2"
+        shift 2
+        ;;
+      --cwd)
+        cwd="$2"
         shift 2
         ;;
         # -- means the end of the arguments; drop this, and break out of the
@@ -160,7 +165,13 @@ for key in "${!env_key_to_value_map[@]}"; do
 done
 
 if [[ -n "$exec_cmd" ]]; then
-  eval "$text $exec_cmd"
+  cmd="$text $exec_cmd"
+
+  if [[ -n "$cwd" ]]; then
+    cmd="( cd $cwd; $cmd  )"
+  fi
+
+  eval "$cmd"
 elif [[ -z "$string" ]]; then
   sort "$out_path" -o "$out_path"
 else
