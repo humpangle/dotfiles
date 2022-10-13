@@ -372,6 +372,9 @@ setenvs() {
 }
 alias se='setenvs'
 alias e='setenvs'
+# p-env = parse env script
+alias pe='p-env'
+alias p='p-env'
 
 alias rebar='rebar3'
 
