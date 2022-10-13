@@ -90,27 +90,20 @@ function parse-args {
   in_file=$1
 }
 
+function no-write-to-file {
+  [[ -n "${string}" ]] || [[ -n "$exec_cmd" ]] && echo "1"
+}
+
 parse-args "$@"
 
-if [[ "$in_file" =~ ^/ ]]; then
-  env_file_abs_path="$in_file"
-else
-  env_file_abs_dir="$(
-    (cd -- "$(dirname "$in_file")" || exit) >/dev/null 2>&1
-    pwd -P
-  )"
+in_path="$(realpath "$in_file")"
 
-  env_file_abs_path="$env_file_abs_dir/$in_file"
-fi
-
-new_asbolute_file_path="${env_file_abs_path}.n"
-rm -rf "${new_asbolute_file_path}"
+out_path="${in_path}.n"
 
 declare -A env_key_to_value_map=()
 
 line_regex="^[^#]+.+"
 
-# shellcheck disable=2013
 while read -r line; do
   if [[ "$line" =~ $line_regex ]]; then
     key=$(echo "$line" | cut -d '=' -f 1)
@@ -129,17 +122,18 @@ while read -r line; do
 
     env_key_to_value_map["$key"]="${val}"
   fi
-done <<<$(cat "$env_file_abs_path")
-
-env_key_to_value_map["ENV_FILE"]="${new_asbolute_file_path}"
+done <<<$(cat "$in_path")
 
 if [[ -n "$out_file" ]]; then
-  new_asbolute_file_path=$(realpath "$out_file")
+  out_path=$(realpath "$out_file")
 fi
 
-if [[ -z "$string" ]]; then
-  rm -rf "$new_asbolute_file_path"
-  touch "$new_asbolute_file_path"
+if [[ "$(no-write-to-file)" ]]; then
+  env_key_to_value_map["ENV_FILE"]="${in_path}"
+else
+  rm -rf "$out_path"
+  touch "$out_path"
+  env_key_to_value_map["ENV_FILE"]="${out_path}"
 fi
 
 text=
@@ -157,16 +151,15 @@ for key in "${!env_key_to_value_map[@]}"; do
     out="${key}: ${env_key_to_value_map[$key]}"
   fi
 
-  if [[ -n "${string}" ]]; then
+  if [[ "$(no-write-to-file)" ]]; then
     text="$out $text"
   else
-    echo "$out" >>"$new_asbolute_file_path"
+    echo "$out" >>"$out_path"
   fi
 done
 
 if [[ -z "$string" ]]; then
-  touch "$new_asbolute_file_path"
-  sort "$new_asbolute_file_path" -o "$new_asbolute_file_path"
+  sort "$out_path" -o "$out_path"
 else
   echo "$text"
 fi
