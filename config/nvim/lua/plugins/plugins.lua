@@ -409,6 +409,8 @@ return packer.startup(function(use)
     "andymass/vim-matchup",
 
     "hashivim/vim-terraform",
+
+    "pearofducks/ansible-vim"
   })
 
   -- making rest api call

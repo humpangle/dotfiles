@@ -181,6 +181,9 @@ augroup filetypes
   au BufNewFile,BufRead *.service set filetype=systemd
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
+  " Ansible
+  au BufRead,BufNewFile */playbooks/*.y*ml,inventory.y*ml set filetype=yaml.ansible
+
   autocmd FileType eelixir nnoremap <buffer> <leader>fc :w! %<cr>:!mix format %<CR><cr>
   autocmd FileType eelixir nnoremap <buffer> <leader>N :w! %<cr>:!mix format %<CR><cr>
 augroup END

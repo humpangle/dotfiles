@@ -46,6 +46,7 @@ local coc_extensions = {
   "coc-php-cs-fixer",
   "@yaegassy/coc-nginx",
   "coc-cspell-dicts",
+  "@yaegassy/coc-ansible",
 }
 
 if vim.fn.has("win32") == 1 then
@@ -62,7 +63,11 @@ Vimg.coc_global_extensions = coc_extensions
 -- :CocCommand eslint.showOutputChannel
 
 -- Vimg.coc_force_debug = 1
-Vimg.coc_filetype_map = {[".eslintrc"] = "json", eelixir = "html"}
+Vimg.coc_filetype_map = {
+  [".eslintrc"] = "json",
+  eelixir = "html",
+  ["yaml.ansible"] = "ansible",
+}
 
 -- Some servers have issues with backup files, see #649
 set.backup = false

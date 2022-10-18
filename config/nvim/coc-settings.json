@@ -77,5 +77,6 @@
   // }
   "blade.bladeFormatter.optIndentSize": 2,
   "nginx.nginxfmt.indent": 2,
-  "python.formatting.provider": "black"
+  "python.formatting.provider": "black",
+  "ansible.ansible.useFullyQualifiedCollectionNames": false
 }
