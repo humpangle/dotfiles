@@ -72,8 +72,8 @@ endif
 
 " Many plugins require update time shorter than default of 4000ms
 set updatetime=100
-" which-key plugin appears more quickly
-set timeoutlen=500
+" which-key plugin appears more quickly if set to 500
+set timeoutlen=5000
 " set hidden " close unsaved buffer with 'q' without needing 'q!' - now the
 " default in nvim 0.6.0
 set tabstop=2
