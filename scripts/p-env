@@ -34,7 +34,7 @@ function parse-args {
   fi
 
   # option --output/-o requires 1 argument
-  LONGOPTS=format:,output:,exec:,cwd:,verbose
+  LONGOPTS=string,format:,output:,exec:,cwd:,verbose
   OPTIONS=sf:o:e:v
 
   # -regarding ! and PIPESTATUS see above
