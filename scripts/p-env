@@ -130,10 +130,6 @@ while read -r line; do
       val="${val//$variable_text/$variable_val}"
     done
 
-    if echo "$val" | grep -qP '^\$\([^$(]+'; then
-      val=$(eval "echo $val")
-    fi
-
     env_key_to_value_map["$key"]="${val}"
   fi
 done <<<$(cat "$in_path")
