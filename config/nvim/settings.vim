@@ -448,7 +448,7 @@ nnoremap d] :w!<CR>:%delete_<cr>:w!<cr>
 nnoremap c] :%delete<cr>i
 
 " Dump vim register into a buffer in vertical split.
-nnoremap re :reg<CR>
+nnoremap <leader>re :reg<CR>
 nnoremap <localleader>re :VMessage reg<CR>
 """""""""""""""""""""""""""""""""""""
 
