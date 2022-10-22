@@ -359,10 +359,6 @@
     "prefix": "aa",
     "body": "async (${1:arguments}) => {\n\t${0}\n}"
   },
-  "immediately-invoked function expression": {
-    "prefix": "iife",
-    "body": ";(function (${1:arguments}) {\n\t${0}\n})(${2})"
-  },
   "async immediately-invoked function expression": {
     "prefix": "aiife",
     "body": ";(async (${1:arguments}) => {\n\t${0}\n})(${2})"
@@ -798,12 +794,8 @@
   "jsdoc": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "jsdoc",
-    "body": [
-      "/**",
-      "* $0",
-      "*/"
-    ],
-    "description": "callback param JSDOC"
+    "body": ["/**", "* $0", "*/"],
+    "description": "JSDOC for function or variable"
   },
 
   "callback param JSDOC": {
@@ -816,7 +808,7 @@
       "* @returns {${5:returnType}}",
       "*/"
     ],
-    "description": "callback param JSDOC"
+    "description": "JSDOC for callback"
   },
   "first object param of function first time JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
@@ -831,7 +823,7 @@
   },
   "function param first time JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "param",
+    "prefix": ["jsdoc-param", "param-jsdoc", "function-jsdoc"],
     "body": [
       "/**",
       "* @param {${1:type}} ${2:paramName} ${3:description}${5}",
@@ -918,10 +910,16 @@
     "body": ["/** @type {${1:type}} */ (${2:value})", "${3}"],
     "description": "type assertion JSDOC"
   },
-  "type variable declaration JSDOC": {
+  "type_var_description": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["typevar", "var_type"],
+    "prefix": ["type_var_description", "var_type_description"],
     "body": ["/**", "${1:* description}", "* @type {${2:type}}", "*/", "${3}"],
+    "description": "type variable declaration JSDOC with description"
+  },
+  "type_var": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": ["type_var", "var_type"],
+    "body": ["/**", "* @type {${2:type}}", "*/", "${3}"],
     "description": "type variable declaration JSDOC"
   },
   "optional function param JSDOC": {
