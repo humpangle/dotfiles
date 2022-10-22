@@ -340,7 +340,7 @@ nnoremap ,ec :tab split<cr>:e $MYVIMRC<CR>
 " source init.vim
 nnoremap ,sc :so $MYVIMRC<CR>
 " source lua file
-nnoremap ,ss :source %<CR>
+nnoremap ,ss :source %<CR>:so $MYVIMRC<CR>
 " Check file in shellcheck
 " nnoremap <leader>sc, :!clear && shellcheck -x %<CR>
 
