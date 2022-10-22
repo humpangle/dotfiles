@@ -240,6 +240,7 @@ nnoremap <Leader>qF :qa!<cr>
 vnoremap < <gv
 vnoremap > >gv
 " yank / Copy and paste from system clipboard (Might require xclip install)
+nmap yy 0"+yg_
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
 nmap <Leader>x "+x
