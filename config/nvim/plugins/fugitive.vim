@@ -19,6 +19,7 @@ nnoremap <leader>gs  :Git reset --soft HEAD~
 nnoremap <leader>gS  :Git reset --hard HEAD~
 " gt = git take / pull
 nnoremap <leader>gt  :Git pull <right>
+nnoremap ,gf         :Git fetch<CR>
 nnoremap <leader>gw  :Git worktree <right>
 
 nnoremap <leader>s%  :Git stash push -m '' -- %<left><left><left><left><left><left>
