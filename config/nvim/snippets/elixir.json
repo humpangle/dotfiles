@@ -1087,5 +1087,20 @@
     "prefix": ["todo"],
     "body": ["# TODO${1:(author)}: ${0:todo_text}"],
     "description": ["TODO"]
+  },
+  "<%": {
+    "prefix": ["render_html", "html_render"],
+    "body": "<%= $0 %>",
+    "description": "render html"
+  },
+  "<%": {
+    "prefix": ["render_exp", "exp_render"],
+    "body": "<% $0 %>",
+    "description": "render elixir expression"
+  },
+  "<%#": {
+    "prefix": ["render_comment", "comment_render"],
+    "body": ["<%# ", "$0", "%>"],
+    "description": "render comment"
   }
 }

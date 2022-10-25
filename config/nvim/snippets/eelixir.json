@@ -1,8 +1,13 @@
 {
+  "<%=": {
+    "prefix": ["render_html", "html_render"],
+    "body": "<%= $0 %>",
+    "description": "render html"
+  },
   "<%": {
-    "prefix": ["<%", "render"],
-    "body": "<%= $0   %>",
-    "description": "<%"
+    "prefix": ["render_exp", "exp_render"],
+    "body": "<% $0 %>",
+    "description": "render elixir expression"
   },
   "for": {
     "prefix": "for",
@@ -46,18 +51,15 @@
     "description": "Live_path liveview link"
   },
   "Live component": {
-    "prefix": ["live_component"],
+    "prefix": ["live_component_html", "html_live_component"],
     "body": [
       "<.live_component",
-      "  module={${0:module_name}\\}",
-      "  id={@post.id || :new}",
-      "  title={@page_title}",
-      "  action={@live_action}",
-      "  post={@post}",
-      "  return_to={Routes.post_index_path(@socket, :index)}",
-      "/>"
+      "  module={${1:module_name}\\}",
+      "  id={${0:id}\\}",
+      ">",
+      "</.live_component>"
     ],
-    "description": "Live component"
+    "description": "Live component HTML"
   },
   "phx-v": {
     "prefix": ["phx-value"],
