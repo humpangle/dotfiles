@@ -5,24 +5,61 @@
     "description": "render html"
   },
   "<%": {
-    "prefix": ["render_exp", "exp_render"],
+    "prefix": ["render_exp", "exp_render", "exp_html", "html_exp"],
     "body": "<% $0 %>",
     "description": "render elixir expression"
   },
   "for": {
-    "prefix": "for",
+    "prefix": ["for_render", "render_for", "for_html", "html_for"],
     "body": ["<%= for ${1:item} <- ${2:items} do %>", "  $0", "<% end %>"],
-    "description": "for loop"
+    "description": "for loop heex"
+  },
+  "for else": {
+    "prefix": [
+      "for_render_else",
+      "render_for_else",
+      "for_html_else",
+      "html_for_else"
+    ],
+    "body": [
+      "<%= for ${1:item} <- ${2:items} do %>",
+      "  $1",
+      "<% else %>",
+      "  $0",
+      "<% end %>"
+    ],
+    "description": "for else loop heex"
+  },
+  "unless": {
+    "prefix": ["unless_render", "render_unless", "unless_html", "html_unless"],
+    "body": ["<%= unless ${1:cond} do %>", "  ${0:expr}", "<% end %>"],
+    "description": "unless loop heex"
+  },
+  "unless else": {
+    "prefix": [
+      "unless_render_else",
+      "unless_html_else",
+      "render_unless_else",
+      "html_unless_else"
+    ],
+    "body": [
+      "<%= unless ${1:item} <- ${2:items} do %>",
+      "  $1",
+      "<% else %>",
+      "  $0",
+      "<% end %>"
+    ],
+    "description": "unless else loop heex"
   },
   "if": {
-    "prefix": "if",
+    "prefix": ["if_html", "html_if", "if_render", "render_if"],
     "body": ["<%= if ${1} do %>", "  $0", "<% end %>"],
-    "description": "if"
+    "description": "if heex"
   },
   "ife": {
     "prefix": "if_else",
     "body": ["<%= if ${1} do %>", "  $2", "<% else %>", "  $0", "<% end %>"],
-    "description": "If else"
+    "description": "If else heex"
   },
   "link": {
     "prefix": ["link_patch", "link_or_live_patch"],
@@ -56,8 +93,7 @@
       "<.live_component",
       "  module={${1:module_name}\\}",
       "  id={${0:id}\\}",
-      ">",
-      "</.live_component>"
+      "/>"
     ],
     "description": "Live component HTML"
   },
@@ -226,5 +262,10 @@
     "prefix": ["html_comment", "comment_html"],
     "body": ["<!-- $0 -->"],
     "description": ["HTML Comment"]
+  },
+  "<%#": {
+    "prefix": ["render_comment", "comment_render"],
+    "body": ["<%# ", "$0", "%>"],
+    "description": "render comment"
   }
 }
