@@ -303,7 +303,8 @@ nnoremap <c-down> :resize -2<CR>
 nnoremap yol :lclose<CR>
 nnoremap yoq :cclose<cr>
 
-nnoremap <leader>e% :e %<CR>
+" Force sync buffer content with external
+nnoremap <leader>%e :e! %<Cr>
 
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr>
