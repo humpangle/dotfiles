@@ -31,135 +31,6 @@ pathmunge() {
   fi
 }
 
-# docker
-export DOCKER_BUILDKIT=1
-export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
-
-alias d='docker'
-alias docker-compose='docker compose'
-# docker remove all containers
-alias drac='docker rm $(docker ps -a -q)'
-# docker remove all containers force
-alias dracf='docker rm $(docker ps -a -q) --force'
-alias drim='docker rmi'
-alias dim='docker images'
-alias dps='docker ps'
-alias dpsa='docker ps -a'
-alias dc='docker compose'
-alias dce='docker compose exec'
-alias de='docker exec -it'
-alias dcu='docker compose up'
-alias dcub='docker compose up --build'
-alias dcud='docker compose up -d'
-alias dcb='docker compose build'
-alias db='docker build -t'
-alias dcl='docker compose logs'
-alias dclf='docker compose logs -f'
-alias dck='docker compose kill'
-alias dcd='docker compose down'
-alias dcdv='docker compose kill && docker compose down -v'
-alias dvra='docker volume rm $(docker volume ls -q)'
-alias dvls='docker volume ls'
-alias dvlsq='docker volume ls -q'
-alias ds='sudo service docker start'
-alias dn='docker network'
-alias dnls='docker network ls'
-alias dcps='docker compose ps'
-alias dcpsa='docker compose ps -a'
-
-alias drmlogs--description='drmlogs container_name_or_ID [..container_name_or_ID] ,,, docker remove logs:'
-
-alias d-dangling='dim -qf dangling=true | xargs docker rmi -f'
-alias ddangling='dim -qf dangling=true | xargs docker rmi -f'
-
-# docker compose up --daemon and logs --follow
-dcudlf() {
-  docker compose up -d "$@"
-  docker compose logs -f "$@"
-}
-
-alias dcudl='dcudlf'
-alias dcudl--description='docker up daemon and logs'
-
-# docker compose restart and logs --follow
-dcrsf() {
-  docker compose restart "$@"
-  docker compose logs -f "$@"
-}
-alias dcrs='dcrsf'
-
-dimgf() {
-  docker images | grep -P "$1" | awk '{print $3}'
-}
-alias dimg='dimgf'
-alias drimg='dimgf'
-# shellcheck disable=2027,2086
-alias dimg___description="docker images | grep "$1" | awk '{print $3}'"
-
-# minikube/Kubernetes
-alias mk='minikube'
-alias mkss='minikube status'
-alias mkp='minikube profile'
-alias mkpd='minikube profile minikube'
-alias mkpl='minikube profile list'
-alias mks='minikube start -p'
-alias mksd='minikube start -p minikube'
-alias mkst='minikube stop -p'
-alias mkstd='minikube stop -p minikube'
-alias mksv='minikube service'
-alias mkrm='minikube delete -p'
-alias mkrmd='minikube delete -p minikube'
-alias mkd='minikube dashboard'
-alias mkt='minikube tunnel &'
-alias mki='minikube image load'
-alias kb='kubectl'
-alias kbg='kubectl get --namespace'
-alias kbgp='kubectl get pod --namespace'
-alias kbgpd='kubectl get pod --namespace default'
-alias kbgn='kubectl get nodes'
-alias kbga='kubectl get all --namespace'
-alias kbgad='kubectl get all --namespace default'
-alias kbgaa='kubectl get all --all-namespaces'
-alias kbgi='kubectl get ingress --namespace'
-alias kbgid='kubectl get ingress --namespace default'
-alias kbgns='kubectl get namespaces'
-alias kbgd='kubectl get deployments --namespace'
-alias kbgdd='kubectl get deployments --namespace default'
-alias kbgs='kubectl get services --namespace'
-alias kbgsd='kubectl get services --namespace default'
-alias kbapp='kubectl apply --namespace'
-alias kbappd='kubectl apply --namespace default'
-alias kbappd='kubectl apply --namespace default'
-alias kbappf='kubectl apply --namespace -f'
-alias kbappfd='kubectl apply --namespace default -f'
-alias kbd='kubectl describe --namespace'
-alias kbdd='kubectl describe --namespace default'
-alias kbrm='kubectl delete --namespace'
-alias kbrmd='kubectl delete --namespace default'
-alias kbrmp='kubectl delete pods --namespace'
-alias kbrmpd='kubectl delete pods --namespace default'
-alias kbrma='kubectl delete all --all --namespace'
-alias kbrmad='kubectl delete all --all --namespace default'
-alias kbrmn='kubectl delete namespace'
-alias kbex='kubectl exec --namespace'
-alias kbexd='kubectl exec --namespace default'
-alias kbp='kubectl expose --namespace'
-alias kbpd='kubectl expose --namespace default'
-alias kbcn='kubectl create namespace'
-alias kbc='kubectl create --namespace'
-alias kbcd='kubectl create --namespace default'
-alias kbpf='kubectl port-forward --namespace'
-alias kbpfd='kubectl port-forward --namespace default'
-alias kbe='kubectl edit --namespace'
-alias kbed='kubectl edit --namespace default'
-alias kbr='kubectl run --namespace'
-alias kbrd='kubectl run --namespace default'
-alias kbcg='kubectl config --namespace'
-alias kbs='kubectl scale --namespace'
-alias kbsd='kubectl scale --namespace default'
-
-alias ngrokd='ngrok http'
-
 alias ug='clear && sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 
 # vim
@@ -297,15 +168,6 @@ gsd() {
   git stash drop "stash@{$1}"
 }
 
-# python
-alias py='python'
-
-alias py-activate='. venv/bin/activate || . .venv/bin/activate'
-alias pyactivate='py-activate'
-alias pyactivate.='py-activate'
-alias activatepy='py-activate'
-alias activatepy.='py-activate'
-
 alias ..='cd ..'
 alias 2.='cd ../..'
 alias 3.='cd ../../..'
@@ -376,36 +238,10 @@ alias e='setenvs'
 alias pe='p-env'
 alias p='p-env'
 
-alias rebar='rebar3'
-
-###### END COMMONS ##################
-
-# skip the java dependency during installation
-export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
-# Do not build erlang docs when installing with
-# asdf cos it's slow and unstable
-export KERL_BUILD_DOCS=yes
-export KERL_INSTALL_MANPAGES=
-export KERL_INSTALL_HTMLDOCS=
-# Install Ruby Gems to ~/gems
-export GEM_HOME="$HOME/gems"
-pathmunge "$GEM_HOME/bin"
-# Do not use PHP PEAR when installing PHP with asdf
-export PHP_WITHOUT_PEAR='yes'
-
 ggc() {
   google-chrome -incognito &
   disown
 }
-
-# yarn
-alias yw='yarn workspace'
-alias yW='yarn -W'
-alias ys='yarn start'
-alias yn='yarn nps'
-alias ylsp='yarn list --pattern'
-alias ywhy='yarn why'
-alias ycw='clear && DISABLE_LARAVEL_MIX_NOTIFICATION=1 yarn watch'
 
 # TMUX split panes and windows
 splitp() {
@@ -462,40 +298,6 @@ alias cdd='cd $HOME/dotfiles'
 alias pw='prettier --write'
 alias hb='sudo systemctl hibernate'
 alias sd='sudo shutdown now'
-alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
-
-alias scmstorage='sudo chmod -R 777 storage'
-
-ltf() {
-  lt --subdomain "$1" --port "$2" &
-}
-
-if [ -x "$(command -v sort-package-json)" ]; then
-  alias spj='sort-package-json'
-fi
-
-if [ -x "$(command -v php)" ]; then
-  # debian pkg bsdgames
-  alias sail='./vendor/bin/sail'
-  alias sailartisan='./vendor/bin/sail artisan'
-
-  alias artisan='php artisan'
-fi
-
-pathmunge "/usr/lib/dart/bin" "after"
-
-# if [ -d "$HOME/.pyenv" ]; then
-#   export PYENV_ROOT="$HOME/.pyenv"
-#   pathmunge "$PYENV_ROOT"
-#
-#   if command -v pyenv 1>/dev/null 2>&1; then
-#     eval "$(pyenv init -)"
-#
-#     if [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
-#       eval "$(pyenv virtualenv-init -)"
-#     fi
-#   fi
-# fi
 
 if [ -d "$HOME/.fzf" ]; then
   # ripgrep
@@ -523,6 +325,213 @@ if [ -d "$HOME/.fzf" ]; then
   alias eff='env | fzf'
   alias aff='alias | fzf'
 fi
+# -----------------------------------------------------------------------------
+# END COMMONS
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# DOCKER
+# -----------------------------------------------------------------------------
+export DOCKER_BUILDKIT=1
+export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
+
+alias d='docker'
+alias docker-compose='docker compose'
+# docker remove all containers
+alias drac='docker rm $(docker ps -a -q)'
+# docker remove all containers force
+alias dracf='docker rm $(docker ps -a -q) --force'
+alias drim='docker rmi'
+alias dim='docker images'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias dc='docker compose'
+alias dce='docker compose exec'
+alias de='docker exec -it'
+alias dcu='docker compose up'
+alias dcub='docker compose up --build'
+alias dcud='docker compose up -d'
+alias dcb='docker compose build'
+alias db='docker build -t'
+alias dcl='docker compose logs'
+alias dclf='docker compose logs -f'
+alias dck='docker compose kill'
+alias dcd='docker compose down'
+alias dcdv='docker compose kill && docker compose down -v'
+alias dvra='docker volume rm $(docker volume ls -q)'
+alias dvls='docker volume ls'
+alias dvlsq='docker volume ls -q'
+alias ds='sudo service docker start'
+alias dn='docker network'
+alias dnls='docker network ls'
+alias dcps='docker compose ps'
+alias dcpsa='docker compose ps -a'
+
+alias drmlogs--description='drmlogs container_name_or_ID [..container_name_or_ID] ,,, docker remove logs:'
+
+alias d-dangling='dim -qf dangling=true | xargs docker rmi -f'
+alias ddangling='dim -qf dangling=true | xargs docker rmi -f'
+
+# docker compose up --daemon and logs --follow
+dcudlf() {
+  docker compose up -d "$@"
+  docker compose logs -f "$@"
+}
+
+alias dcudl='dcudlf'
+alias dcudl--description='docker up daemon and logs'
+
+# docker compose restart and logs --follow
+dcrsf() {
+  docker compose restart "$@"
+  docker compose logs -f "$@"
+}
+alias dcrs='dcrsf'
+
+dimgf() {
+  docker images | grep -P "$1" | awk '{print $3}'
+}
+alias dimg='dimgf'
+alias drimg='dimgf'
+# shellcheck disable=2027,2086
+alias dimg___description="docker images | grep "$1" | awk '{print $3}'"
+
+alias ngrokd='ngrok http'
+
+# -----------------------------------------------------------------------------
+# MINIKUBE/KUBERNETES
+# -----------------------------------------------------------------------------
+alias mk='minikube'
+alias mkss='minikube status'
+alias mkp='minikube profile'
+alias mkpd='minikube profile minikube'
+alias mkpl='minikube profile list'
+alias mks='minikube start -p'
+alias mksd='minikube start -p minikube'
+alias mkst='minikube stop -p'
+alias mkstd='minikube stop -p minikube'
+alias mksv='minikube service'
+alias mkrm='minikube delete -p'
+alias mkrmd='minikube delete -p minikube'
+alias mkd='minikube dashboard'
+alias mkt='minikube tunnel &'
+alias mki='minikube image load'
+alias kb='kubectl'
+alias kbg='kubectl get --namespace'
+alias kbgp='kubectl get pod --namespace'
+alias kbgpd='kubectl get pod --namespace default'
+alias kbgn='kubectl get nodes'
+alias kbga='kubectl get all --namespace'
+alias kbgad='kubectl get all --namespace default'
+alias kbgaa='kubectl get all --all-namespaces'
+alias kbgi='kubectl get ingress --namespace'
+alias kbgid='kubectl get ingress --namespace default'
+alias kbgns='kubectl get namespaces'
+alias kbgd='kubectl get deployments --namespace'
+alias kbgdd='kubectl get deployments --namespace default'
+alias kbgs='kubectl get services --namespace'
+alias kbgsd='kubectl get services --namespace default'
+alias kbapp='kubectl apply --namespace'
+alias kbappd='kubectl apply --namespace default'
+alias kbappd='kubectl apply --namespace default'
+alias kbappf='kubectl apply --namespace -f'
+alias kbappfd='kubectl apply --namespace default -f'
+alias kbd='kubectl describe --namespace'
+alias kbdd='kubectl describe --namespace default'
+alias kbrm='kubectl delete --namespace'
+alias kbrmd='kubectl delete --namespace default'
+alias kbrmp='kubectl delete pods --namespace'
+alias kbrmpd='kubectl delete pods --namespace default'
+alias kbrma='kubectl delete all --all --namespace'
+alias kbrmad='kubectl delete all --all --namespace default'
+alias kbrmn='kubectl delete namespace'
+alias kbex='kubectl exec --namespace'
+alias kbexd='kubectl exec --namespace default'
+alias kbp='kubectl expose --namespace'
+alias kbpd='kubectl expose --namespace default'
+alias kbcn='kubectl create namespace'
+alias kbc='kubectl create --namespace'
+alias kbcd='kubectl create --namespace default'
+alias kbpf='kubectl port-forward --namespace'
+alias kbpfd='kubectl port-forward --namespace default'
+alias kbe='kubectl edit --namespace'
+alias kbed='kubectl edit --namespace default'
+alias kbr='kubectl run --namespace'
+alias kbrd='kubectl run --namespace default'
+alias kbcg='kubectl config --namespace'
+alias kbs='kubectl scale --namespace'
+alias kbsd='kubectl scale --namespace default'
+
+# -----------------------------------------------------------------------------
+# PYTHON SECTION
+# -----------------------------------------------------------------------------
+alias py='python'
+
+alias py-activate='. venv/bin/activate || . .venv/bin/activate'
+alias pyactivate='py-activate'
+alias pyactivate.='py-activate'
+alias activatepy='py-activate'
+alias activatepy.='py-activate'
+
+# yarn
+alias yw='yarn workspace'
+alias yW='yarn -W'
+alias ys='yarn start'
+alias yn='yarn nps'
+alias ylsp='yarn list --pattern'
+alias ywhy='yarn why'
+alias ycw='clear && DISABLE_LARAVEL_MIX_NOTIFICATION=1 yarn watch'
+
+alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
+
+ltf() {
+  lt --subdomain "$1" --port "$2" &
+}
+
+if [ -x "$(command -v sort-package-json)" ]; then
+  alias spj='sort-package-json'
+fi
+
+# skip the java dependency during installation
+export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
+# Do not build erlang docs when installing with
+# asdf cos it's slow and unstable
+export KERL_BUILD_DOCS=yes
+export KERL_INSTALL_MANPAGES=
+export KERL_INSTALL_HTMLDOCS=
+alias rebar='rebar3'
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+pathmunge "$GEM_HOME/bin"
+
+# PHP SECTION
+# Do not use PHP PEAR when installing PHP with asdf
+export PHP_WITHOUT_PEAR='yes'
+
+if [ -x "$(command -v php)" ]; then
+  # debian pkg bsdgames
+  alias sail='./vendor/bin/sail'
+  alias sailartisan='./vendor/bin/sail artisan'
+
+  alias artisan='php artisan'
+
+  alias scmstorage='sudo chmod -R 777 storage'
+fi
+
+pathmunge "/usr/lib/dart/bin" "after"
+
+# if [ -d "$HOME/.pyenv" ]; then
+#   export PYENV_ROOT="$HOME/.pyenv"
+#   pathmunge "$PYENV_ROOT"
+#
+#   if command -v pyenv 1>/dev/null 2>&1; then
+#     eval "$(pyenv init -)"
+#
+#     if [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
+#       eval "$(pyenv virtualenv-init -)"
+#     fi
+#   fi
+# fi
 
 rel_asdf_elixirf() {
   local elixir_version="$1"
