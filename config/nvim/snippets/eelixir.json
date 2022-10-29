@@ -265,7 +265,7 @@
   },
   "<%#": {
     "prefix": ["render_comment", "comment_render"],
-    "body": ["<%# ", "$0", "%>"],
+    "body": ["<%!-- :COMMENT:", "$0", ":COMMENT: --%>"],
     "description": "render comment"
   }
 }
