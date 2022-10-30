@@ -88,8 +88,8 @@ endif
 
 " Many plugins require update time shorter than default of 4000ms
 set updatetime=100
-" which-key plugin appears more quickly
-set timeoutlen=500
+" which-key plugin appears more quickly if set to 500
+set timeoutlen=5000
 " set hidden " close unsaved buffer with 'q' without needing 'q!' - now the
 " default in nvim 0.6.0
 set tabstop=2
@@ -186,6 +186,7 @@ augroup filetypes
   au BufNewFile,BufRead *.code-workspace set filetype=json
   au BufNewFile,BufRead .babelrc set filetype=json
   au BufNewFile,BufRead .env* set filetype=sh
+  au BufNewFile,BufRead .env*.y*ml set filetype=yaml
   au BufNewFile,BufRead *.psql set filetype=sql
   au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
   au BufNewFile,BufRead *.docker set filetype=dockerfile
@@ -195,6 +196,9 @@ augroup filetypes
   au BufNewFile,BufRead erlang_ls.config set filetype=yaml
   au BufNewFile,BufRead *.service set filetype=systemd
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+
+  " Ansible
+  au BufRead,BufNewFile */playbooks/*.y*ml,inventory.y*ml set filetype=yaml.ansible
 
   autocmd FileType eelixir nnoremap <buffer> <leader>fc :w! %<cr>:!mix format %<CR><cr>
   autocmd FileType eelixir nnoremap <buffer> <leader>N :w! %<cr>:!mix format %<CR><cr>
@@ -252,6 +256,7 @@ nnoremap <Leader>qF :qa!<cr>
 vnoremap < <gv
 vnoremap > >gv
 " yank / Copy and paste from system clipboard (Might require xclip install)
+nmap "+yy 0"+yg_
 vmap <Leader>Y "+y
 vmap <Leader>x "+x
 nmap <Leader>x "+x
@@ -259,6 +264,7 @@ nmap <Leader>P "+P
 vmap <Leader>P "+P
 " Yank all
 nnoremap <Leader>ya ggVG"+y
+nnoremap <Leader>yz ggVG"zy
 
 " https://vi.stackexchange.com/a/17757
 " To share register between editor instances
@@ -286,6 +292,7 @@ nnoremap <c-l> <C-w>l
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
 nnoremap ,tc :tabclose<CR>
+nnoremap ,td :execute 'bwipeout! '.join(tabpagebuflist())<cr>
 nnoremap ,vn :vnew<cr>
 nnoremap ,sn :new<cr>
 
@@ -298,8 +305,9 @@ noremap <A-Right> :+tabmove<cr>
 if !exists('g:lasttab')
   let g:lasttab = 1
 endif
-nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
+
+nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 
 " RESIZE WINDOW
 nnoremap <c-left> :vertical resize -2<CR>
@@ -311,7 +319,8 @@ nnoremap <c-down> :resize -2<CR>
 nnoremap yol :lclose<CR>
 nnoremap yoq :cclose<cr>
 
-nnoremap <leader>% :e %<CR>
+" Force sync buffer content with external
+nnoremap <leader>%e :e! %<Cr>
 
 " create the new directory am already working in
 nnoremap ,md :!mkdir -p %:h<cr>
@@ -348,7 +357,7 @@ nnoremap ,ec :tab split<cr>:e $MYVIMRC<CR>
 " source init.vim
 nnoremap ,sc :so $MYVIMRC<CR>
 " source lua file
-nnoremap ,ss :source %<CR>
+nnoremap ,ss :source %<CR>:so $MYVIMRC<CR>
 " Check file in shellcheck
 " nnoremap <leader>sc, :!clear && shellcheck -x %<CR>
 
@@ -397,6 +406,7 @@ nmap ,cn :let @"=expand("%:t")<CR>
 nnoremap ,yg :execute "let @+=FugitiveHead()"<CR>
 " Yank current working directory
 nnoremap ywd :let @+=trim(execute(":pwd"))<CR>
+nnoremap ,yw :let @+=trim(execute(":pwd"))<CR>
 
 " Some plugins change my CWD to currently opened file - I change it back
 nnoremap <leader>cd
@@ -449,19 +459,33 @@ nnoremap <leader>bw :bw%<cr>
 nnoremap <leader>bl :VMessage ls<CR>
 map <leader>bn :call RenameFile()<cr>
 " Remove contents of current file
-nnoremap d] :w!<CR>:e %<CR>:%delete<cr>:w!<cr>
+" https://stackoverflow.com/a/7069592
+set autoread
+nnoremap d] :e! %<cr><bar>:%delete_<cr>:w!<cr>
 " Remove contents of current file and enter insert mode
-nnoremap c] :%delete<cr>i
+nnoremap c] :e! %<cr><bar>:%delete_<cr>i
 
 " Dump vim register into a buffer in vertical split.
 nnoremap <leader>re :reg<CR>
 nnoremap <localleader>re :VMessage reg<CR>
 """""""""""""""""""""""""""""""""""""
 
-nnoremap ,rm :!trash-put "%:p"<cr>:bdelete!<cr>
+nnoremap ,rm :call DeleteFile()<CR>
 nnoremap <Leader>ps :PackerSync<CR>
+nnoremap <Leader>pc :PackerCompile<CR>
 
 """""""""""""""""""" Functions """"""""""""""""""""
+" DELETE CURRENT FILE
+function! DeleteFile()
+  let l:delprompt = input('Sure to delete: "' . expand('%') . '"? ')
+  if l:delprompt == "y" || "Y"
+    :echo delete(@%)
+    execute 'bdelete!'
+  else
+    redraw!
+    return
+  endif
+endfunction
 
 " RENAME CURRENT FILE
 function! RenameFile()
@@ -491,6 +515,7 @@ function! DeleteAllBuffers(f) abort
       if a:f == 'dbui' && (b_name =~ '.dbout' || b_name =~ 'share/db_ui/')
         call add(dbui_buffers, index)
       else
+        " Why don't I want to delete empty buffers along with dbui buffers???
         if  (b_name == '' || b_name == ',' )
           call add(no_name_buffers, index)
         endif
