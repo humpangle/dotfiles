@@ -298,6 +298,7 @@ alias cdd='cd $HOME/dotfiles'
 alias pw='prettier --write'
 alias hb='sudo systemctl hibernate'
 alias sd='sudo shutdown now'
+alias sb='sudo reboot now'
 
 if [ -d "$HOME/.fzf" ]; then
   # ripgrep
