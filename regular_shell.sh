@@ -689,7 +689,8 @@ if [ -d "$HOME/.asdf" ]; then
   fi
 fi
 
-if [ -n "$WSL_DISTRO_NAME" ]; then
+if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
+  export HAS_WSL2=1
   # following needed so that cypress browser testing can work in WSL2
   # WSL_HOST_IP environment var no longer works in microsoft version of WLS If
   # using WSLg, you must not set DISPLAY env var and in
