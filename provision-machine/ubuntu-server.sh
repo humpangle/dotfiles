@@ -165,6 +165,7 @@ function install-neovim {
   : "Install neovim"
 
   neovim_version=0.7.0
+  RIP_GREP_VERSION=13.0.0
 
   _echo-begin-install "INSTALLING NEOVIM VERSION ${neovim_version}"
 
@@ -184,6 +185,10 @@ function install-neovim {
 
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install --all
+
+  curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RIP_GREP_VERSION}/ripgrep_${RIP_GREP_VERSION}_amd64.deb
+  sudo dpkg -i ripgrep*${RIP_GREP_VERSION}\_amd64.deb
+  rm ripgrep*${RIP_GREP_VERSION}\_amd64.deb
 
   # mkdir -p ~/.config/nvim
 
