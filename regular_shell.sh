@@ -691,11 +691,13 @@ fi
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
   # following needed so that cypress browser testing can work in WSL2
-  # WSL_HOST_IP environment var no longer works in microsoft version of WLS
-  # If using WSLg, you must not set DISPLAY env var and in `/c/Users/ottol/.wslconfig`,
-  # do not set `guiApplications` to `false`
-  export DISPLAY="$(ip route | awk '/default/ {print $3}'):0.0"
-  # without the next line, linux executables randomly fail in TMUX in WSL
+  # WSL_HOST_IP environment var no longer works in microsoft version of WLS If
+  # using WSLg, you must not set DISPLAY env var and in
+  # `/c/Users/username/.wslconfig`, set `guiApplications` to `true`
+  # export DISPLAY="$(ip route | awk '/default/ {print $3}'):0.0"
+
+  # Without the next line, linux executables randomly fail in TMUX in WSL
+  # (**NOT ANY MORE**)
   # export PATH="$PATH:/c/WINDOWS/system32"
 
   alias e.='/c/WINDOWS/explorer.exe .'
