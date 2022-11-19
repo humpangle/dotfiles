@@ -9,7 +9,6 @@ Defaults	editor=/usr/bin/nvim
 
 Cmnd_Alias DOCKER_CMD = /usr/bin/docker inspect *
 
-%docker ALL=(ALL)    NOPASSWD: /usr/bin/dockerd
 %username ALL=(ALL)  NOPASSWD: /home/username/dotfiles/etc/wsl-nameserver.sh
 %username ALL=(ALL)  NOPASSWD: /home/username/dotfiles/etc/wsl-drop-caches.sh
 %username ALL=(ALL)  NOPASSWD: /usr/bin/chown
