@@ -694,7 +694,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
   # WSL_HOST_IP environment var no longer works in microsoft version of WLS If
   # using WSLg, you must not set DISPLAY env var and in
   # `/c/Users/username/.wslconfig`, set `guiApplications` to `true`
-  # export DISPLAY="$(ip route | awk '/default/ {print $3}'):0.0"
+  export DISPLAY="$(ip route | awk '/default/ {print $3}'):0.0"
 
   # Without the next line, linux executables randomly fail in TMUX in WSL
   # (**NOT ANY MORE**)
