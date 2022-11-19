@@ -12,6 +12,5 @@ Cmnd_Alias DOCKER_CMD = /usr/bin/docker inspect *
 %username ALL=(ALL)  NOPASSWD: /home/username/dotfiles/etc/wsl-nameserver.sh
 %username ALL=(ALL)  NOPASSWD: /home/username/dotfiles/etc/wsl-drop-caches.sh
 %username ALL=(ALL)  NOPASSWD: /usr/bin/chown
-%username ALL=(ALL)  NOPASSWD: /etc/init.d/dbus
 %username ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
 %username ALL=(ALL)  NOPASSWD: DOCKER_CMD

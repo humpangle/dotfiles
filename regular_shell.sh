@@ -785,10 +785,12 @@ if [ -d "$MY_FLUTTER_PATH" ]; then
   pathmunge "$MY_FLUTTER_PATH/.pub-cache/bin"
 fi
 
+# THIS IS NO LONGER REQUIRED NOW THAT WE HAVE systemd working
 # Automatically start dbus (stop getting dbus error when running google chrome)
-# To solve google chrome warning: `Failed to connect to the bus: Could not parse server address` See:
+# To solve google chrome warning: `Failed to connect to the bus: Could not
+# parse server address` See:
 # https://github.com/microsoft/WSL/issues/7915#issuecomment-1163333151
-sudo /etc/init.d/dbus start &>/dev/null
+# sudo /etc/init.d/dbus start &>/dev/null
 
 if [ -d "$HOME/.poetry" ]; then
   pathmunge "$HOME/.poetry/bin"
