@@ -732,7 +732,9 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
 
   if [[ -z "$USE_WSL_INTERNET_RESOLVER" ]]; then
     if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
-      sudo "$HOME/dotfiles/etc/wsl-nameserver.sh"
+      if [[ -e "$HOME/dotfiles/etc/wsl-nameserver.sh" ]]; then
+        sudo "$HOME/dotfiles/etc/wsl-nameserver.sh"
+      fi
     fi
   fi
 
