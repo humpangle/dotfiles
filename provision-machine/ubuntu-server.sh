@@ -314,6 +314,16 @@ function install-vifm {
     https://raw.githubusercontent.com/humpangle/dotfiles/master/config/vifm/vifmrc
 }
 
+function install-git {
+  : "Install Git"
+
+  curl -fLo ~/.gitconfig \
+    https://raw.githubusercontent.com/humpangle/dotfiles/master/gitconfig
+
+  curl -fLo ~/.gitignore \
+    https://raw.githubusercontent.com/humpangle/dotfiles/master/gitignore
+}
+
 function help {
   : "List available tasks."
   compgen -A function | grep -v "^_" | while read -r name; do
