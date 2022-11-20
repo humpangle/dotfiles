@@ -100,10 +100,26 @@ alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
 runf() {
   local name
-  if [[ -e "./run" ]]; then
-    name="./run"
-  else
-    name="./run.sh"
+  local search_paths=(run run.sh .run .run.sh)
+
+  for path in "${search_paths[@]}"; do
+    complete_path="./$path"
+
+    if [[ -e "$complete_path" ]]; then
+      name="$complete_path"
+      break
+    fi
+  done
+
+  if [[ -z "$name" ]]; then
+    for path in "${search_paths[@]}"; do
+      complete_path="$HOME/$path"
+
+      if [[ -e "$complete_path" ]]; then
+        name="$complete_path"
+        break
+      fi
+    done
   fi
 
   bash "$name" "$@"
