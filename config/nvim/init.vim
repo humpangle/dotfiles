@@ -12,6 +12,8 @@ so ~/.config/nvim/plugins/lightline.vim
 so ~/.config/nvim/plugins/fugitive.vim
 so ~/.config/nvim/plugins/fzf.vim
 so ~/.config/nvim/plugins/vimspector.vim
+so ~/.config/nvim/plugins/vim-easymotion.vim
+so ~/.config/nvim/plugins/vim-maximizer.vim
 
 " THEME SELECTION
 if !empty($EBNIS_VIM_THEME)

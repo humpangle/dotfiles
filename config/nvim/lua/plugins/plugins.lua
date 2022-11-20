@@ -379,16 +379,6 @@ return packer.startup(function(use)
 
   use({
     "easymotion/vim-easymotion",
-    config = function()
-      Cmd([[
-          let g:EasyMotion_smartcase = 1
-
-          nmap <leader>2 <Plug>(easymotion-overwin-f2)
-          nmap <leader>1 <Plug>(easymotion-overwin-f2)
-          " nmap s <Plug>(easymotion-overwin-f2)
-      ]])
-    end,
-
     -- Easy motion alternative
     -- "ggandor/lightspeed.nvim",
   })
@@ -410,7 +400,7 @@ return packer.startup(function(use)
 
     "hashivim/vim-terraform",
 
-    "pearofducks/ansible-vim"
+    "pearofducks/ansible-vim",
   })
 
   -- making rest api call
@@ -546,16 +536,7 @@ return packer.startup(function(use)
   })
 
   -- Quickly toggle maximaize a tab
-  use({
-    "szw/vim-maximizer",
-    config = function()
-      Cmd([[
-            let g:maximizer_set_default_mapping = 0
-            nnoremap mm :MaximizerToggle!<CR>
-            xnoremap mm :MaximizerToggle!<CR>
-      ]])
-    end,
-  })
+  use({"szw/vim-maximizer"})
 
   use({"editorconfig/editorconfig-vim"})
 
