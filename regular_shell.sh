@@ -828,3 +828,6 @@ fi
 #     complete -F _complete_alias "$x"
 #   done
 # fi
+
+alias ctl='systemctl --user'
+alias sctl='sudo systemctl'
