@@ -3,6 +3,14 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
+" Alter the shape of the cursor
+" set guicursor=
+" augroup Shape
+  au!
+  " au ExitPre * set guicursor=a:ver90
+  " au ExitPre * set guicursor=a:hor200
+" augroup END
+
 "{{ Builtin variables
 " Disable Python2 support
 let g:loaded_python_provider = 0
