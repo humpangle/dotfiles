@@ -89,6 +89,13 @@ function _write-local-bin-path-to-paths {
   fi
 }
 
+function _wsl-setup {
+  curl -fLO \
+    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/etc/wsl.conf"
+
+  sudo mv wsl.conf /etc/wsl.conf
+}
+
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -225,6 +232,8 @@ function install-tmux {
 
   curl -fLo ~/.tmux.conf \
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/tmux.conf"
+
+  mkdir -p "$HOME/.tmux/resurrect"
 }
 
 function install-neovim {
@@ -628,39 +637,18 @@ function set-password-less-shell {
     sudo tee -a /etc/sudoers.d/set-password-less-shell
 }
 
-function setup-wsl {
-  : "Setup WSL"
+function setup-machine {
+  : "Setup the machine"
 
-  curl -fLO \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/etc/wsl.conf"
-
-  sudo mv wsl.conf /etc/wsl.conf
-
-  install-bins
-  install-git
-  install-neovim
-  install-elixir
-  install-nodejs
-  install-python
-  install-tmux
-  install-vifm
-  install-asdf-postgres
-  install-docker
-}
-
-function setup-remote-dev-machine {
-  : "Setup remote development machine"
+  if [[ "$(uname -r)" == *WSL2 ]]; then
+    _wsl-setup
+  fi
 
   install-bins
   install-git
   install-neovim
-  install-elixir
-  install-nodejs
-  install-python
   install-tmux
   install-vifm
-  install-postgres
-  install-docker
 }
 
 function help {
