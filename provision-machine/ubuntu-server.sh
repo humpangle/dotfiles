@@ -387,6 +387,11 @@ function install-bins {
   echo "[ -f ${BASH_APPEND_PATH} ] && source ${BASH_APPEND_PATH}" >>"$HOME/.bashrc"
   source "$HOME/.bashrc"
 
+  curl -fLo "$HOME/complete_alias.sh" \
+    https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
+
+  echo -e "\n. \$HOME/complete_alias.sh" >> "$HOME/.bash_completion"
+
   mkdir -p ~/.ssh
 }
 
