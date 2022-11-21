@@ -293,6 +293,7 @@ itchyny/lightline.vim
 nelstrom/vim-visual-star-search
 easymotion/vim-easymotion
 elixir-editors/vim-elixir
+rakr/vim-one
 eof
 
   for line in ${xx}; do
@@ -329,6 +330,7 @@ config/nvim/plugins___fugitive.vim
 config/nvim/plugins___lightline.vim
 config/nvim/plugins___vim-easymotion.vim
 config/nvim/plugins___vim-maximizer.vim
+config/nvim/plugins___vim-one.vim
 eof
 
   for line in ${plug_configs}; do

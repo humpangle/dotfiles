@@ -694,5 +694,4 @@ so ~/.config/nvim/plugins/fugitive.vim
 so ~/.config/nvim/plugins/lightline.vim
 so ~/.config/nvim/plugins/vim-easymotion.vim
 so ~/.config/nvim/plugins/vim-maximizer.vim
-
-colorscheme desert
+so ~/.config/nvim/plugins/vim-one.vim
