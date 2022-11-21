@@ -818,16 +818,14 @@ if [ -d "$HOME/.poetry" ]; then
   alias pty='poetry'
 fi
 
+alias ctl='systemctl --user'
+alias sctl='sudo systemctl'
+
 #------------------------------------------------------------------------------
 # Complete all bash aliases
 # See https://github.com/cykerway/complete-alias#faq
 #------------------------------------------------------------------------------
-# if [[ -e "$HOME/.bash_completion" && -e "$HOME/complete_alias.sh" ]]; then
-#   complete -F _complete_alias "${!BASH_ALIASES[@]}"
-#   for x in "${!BASH_ALIASES[@]}"; do
-#     complete -F _complete_alias "$x"
-#   done
-# fi
-
-alias ctl='systemctl --user'
-alias sctl='sudo systemctl'
+if [[ -e "$HOME/.bash_completion" && -e "$HOME/complete_alias.sh" ]]; then
+  complete -F _complete_alias ctl
+  complete -F _complete_alias sctl
+fi
