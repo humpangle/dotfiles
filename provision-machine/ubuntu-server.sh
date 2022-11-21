@@ -213,28 +213,18 @@ function install-tmux {
   sudo rm -rf /usr/local/src/tmux-\*
   sudo mv tmux-${tmux_version} /usr/local/src
 
-  local plugins=(tpm tmux-continuum tmux-resurrect tmux-yank)
+  local install_path="$HOME/.tmux/plugins/tpm"
 
-  for plugin in "${plugins[@]}"; do
-    local install_path="$HOME/.tmux/plugins/$plugin"
-
-    if [ ! -d "$install_path" ]; then
-      git clone https://github.com/tmux-plugins/tpm "$install_path"
-    else
-      cd "$install_path"
-      git pull origin master
-      cd -
-    fi
-  done
+  if [ ! -d "$install_path" ]; then
+    git clone https://github.com/tmux-plugins/tpm "$install_path"
+  else
+    cd "$install_path"
+    git pull origin master
+    cd -
+  fi
 
   curl -fLo ~/.tmux.conf \
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/tmux.conf"
-
-  if [ ! -e ~/.config/systemd/user/tmux.service ]; then
-    curl -fLo ~/.config/systemd/user/tmux.service \
-      --create-dirs \
-      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/systemd/user/tmux.service.template"
-  fi
 }
 
 function install-neovim {
