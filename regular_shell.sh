@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=2034,2209,2135,2155,2139
+# shellcheck disable=2034,2209,2135,2155,2139,2086,1090
 
 ###### START COMMONS ##################
 
@@ -241,7 +241,6 @@ setenvs() {
   done
 
   set -a
-  # shellcheck disable=1090
   . "$path"
   set +a
 
@@ -411,7 +410,7 @@ dimgf() {
 }
 alias dimg='dimgf'
 alias drimg='dimgf'
-# shellcheck disable=2027,2086
+# shellcheck disable=2027
 alias dimg___description="docker images | grep "$1" | awk '{print $3}'"
 
 alias ngrokd='ngrok http'
@@ -690,9 +689,7 @@ alias ngkill='pgrep -f nginx | xargs sudo kill -9'
 alias ngstop='pgrep -f nginx | xargs sudo kill -9'
 
 if [ -d "$HOME/.asdf" ]; then
-  # shellcheck disable=2086,1090
   . $HOME/.asdf/asdf.sh
-  # shellcheck disable=2086,1090
   . $HOME/.asdf/completions/asdf.bash
 
   if command -v asdf 1>/dev/null 2>&1; then
@@ -701,7 +698,6 @@ if [ -d "$HOME/.asdf" ]; then
   fi
 
   if [[ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]]; then
-    # shellcheck disable=1090
     . "$HOME/.asdf/plugins/java/set-java-home.bash"
   fi
 fi
