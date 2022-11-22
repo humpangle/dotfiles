@@ -7,6 +7,7 @@ ERLANG_VERSION=25.1.2
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
+PYTHON_VERSION=3.10.8
 
 function _env {
   local env
@@ -94,6 +95,13 @@ function _wsl-setup {
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/etc/wsl.conf"
 
   sudo mv wsl.conf /etc/wsl.conf
+}
+
+function _asdf-plugin-root {
+  local plugin="$1"
+  local version="$2"
+
+  printf '%s' "$HOME/.asdf/installs/${plugin}/$version"
 }
 
 # -----------------------------------------------------------------------------
@@ -390,7 +398,7 @@ function install-bins {
   curl -fLo "$HOME/complete_alias.sh" \
     https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
 
-  echo -e "\n. \$HOME/complete_alias.sh" >> "$HOME/.bash_completion"
+  echo -e "\n. \$HOME/complete_alias.sh" >>"$HOME/.bash_completion"
 
   mkdir -p ~/.ssh
 }
@@ -598,8 +606,6 @@ function install-py {
 
   _echo-begin-install "INSTALLING PYTHON"
 
-  local version=3.10.8
-
   sudo apt-get update
 
   sudo apt-get install -y \
@@ -625,13 +631,27 @@ function install-py {
 
   "$(_asdf-bin-path)" plugin add python
 
-  "$(_asdf-bin-path)" install python $version
-  "$(_asdf-bin-path)" global python $version
+  "$(_asdf-bin-path)" install python $PYTHON_VERSION
+  "$(_asdf-bin-path)" global python $PYTHON_VERSION
 
   pip install -U \
     pip
 
   "$(_asdf-bin-path)" reshim python
+}
+
+function install-ansible {
+  : "Install ansible"
+
+  if [[ ! -d "$(_asdf-plugin-root python "$PYTHON_VERSION")" ]]; then
+    install-py
+  fi
+
+  . "$HOME/.asdf/asdf.sh"
+
+  pip install -U \
+    psycopg2 \
+    ansible
 }
 
 function set-password-less-shell {
