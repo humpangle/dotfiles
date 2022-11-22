@@ -628,10 +628,7 @@ function install-py {
   "$(_asdf-bin-path)" install python $version
   "$(_asdf-bin-path)" global python $version
 
-  local pip_bin_path="$HOME/.asdf/installs/python/$version/bin/pip"
-  pip_bin_path=pip
-
-  "$pip_bin_path" install -U \
+  pip install -U \
     pip
 
   "$(_asdf-bin-path)" reshim python
