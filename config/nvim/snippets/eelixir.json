@@ -267,5 +267,10 @@
     "prefix": ["render_comment", "comment_render"],
     "body": ["<%!-- :COMMENT:", "$0", ":COMMENT: --%>"],
     "description": "render comment"
+  },
+  "static-path": {
+    "prefix": ["static_path", "static_route", "path_static", "route_static"],
+    "body": ["Routes.static_path(${1:@conn}, \"${0:path}\")"],
+    "description": "Live_path liveview link"
   }
 }
