@@ -272,5 +272,25 @@
     "prefix": ["static_path", "static_route", "path_static", "route_static"],
     "body": ["Routes.static_path(${1:@conn}, \"${0:path}\")"],
     "description": "Live_path liveview link"
+  },
+  "inspect-pre": {
+    "prefix": [
+      "inspect_pre",
+      "pre_inspect",
+      "inspect_code",
+      "code_inspect",
+      "inspect_heex",
+      "heex_inspect"
+    ],
+    "body": [
+      "<pre style=\"",
+      "  overflow-wrap: break-word;",
+      "  white-space: pre-wrap;",
+      "  max-width: 24rem;",
+      "\">",
+      "  <%= inspect(${0:code}) %>",
+      "</pre>"
+    ],
+    "description": ["Pre tag inspect code"]
   }
 }
