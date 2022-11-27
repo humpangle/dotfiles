@@ -564,32 +564,34 @@ rel_asdf_elixirf() {
     git clone https://github.com/elixir-lsp/elixir-ls.git "$install_dir"
   fi
 
-  local release_dir="$install_dir/elixir_ls-releases/$elixir_version"
-  mkdir -p "$release_dir"
-
   # shellcheck disable=SC2164
   cd "$install_dir"
 
-  printf '\n\n\t# Update to the latest code base of elixir LSP server.\n'
-  git pull origin master
+  echo -e '\n=> Updating to the latest code base of elixir LSP server.'
 
-  printf '\n\n\t# Remove the previous dependencies and recompile.\n'
-  rm -rf deps _build
+  if ! git pull origin master 2>/dev/null | grep -q "Already up to date."; then
+    echo '=> Remove the previous dependencies and recompile.'
+    rm -rf deps _build
 
-  printf '\n\n\t# Fetch current dependencies and compile the code.\n'
-  # shellcheck disable=SC1010
-  mix do deps.get, compile
+    echo -e '=> Fetch current dependencies and compile the code.\n'
+    # shellcheck disable=SC1010
+    mix do deps.get, compile
+  else
+    echo -e "=> No update available."
+  fi
 
-  printf '\n\n\t\t# Create the language server scripts.\n'
+  echo -e '=> Creating the language server scripts.\n'
+  local release_dir="$install_dir/elixir_ls-releases/$elixir_version"
+  mkdir -p "$release_dir"
   mix elixir_ls.release -o "$release_dir"
 
   # Print the path to the language server script so we can use it in LSP
   # client.
-  printf '\n\n\nThe path to the language server script:'
-  printf '\n\t%s\n\n' "$release_dir/language_server.sh"
+  echo -e '\n\n=> The path to the language server script:'
+  echo "$release_dir/language_server.sh"
 
   # shellcheck disable=2103,2164
-  cd -
+  cd - >/dev/null
 }
 
 rel_asdf_elixir_exists_f() {
