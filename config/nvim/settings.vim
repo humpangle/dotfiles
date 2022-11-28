@@ -68,6 +68,7 @@ let g:markdown_fenced_languages = [
   \ 'elixir',
   \ 'eelixir',
   \ 'rest',
+  \ 'yaml',
 \]
 
 syntax enable
