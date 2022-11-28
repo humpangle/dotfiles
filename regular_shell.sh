@@ -741,20 +741,6 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
   # shellcheck disable=2139
   alias dpc="sudo $HOME/dotfiles/etc/wsl-drop-caches.sh"
 
-  if [ -x "$(command -v docker)" ]; then
-    # export DOCKER_HOST="unix:///mnt/wsl/shared-docker/docker.sock"
-
-    # https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
-
-    # Start Docker daemon automatically when logging in.
-    DOCKER_DAEMON_RUNNING=$(pgrep -f dockerd)
-
-    if [ -z "$DOCKER_DAEMON_RUNNING" ]; then
-      sudo dockerd >/dev/null 2>&1 &
-      disown
-    fi
-  fi
-
   if [[ -z "$USE_WSL_INTERNET_RESOLVER" ]]; then
     if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
       if [[ -e "$HOME/dotfiles/etc/wsl-nameserver.sh" ]]; then
