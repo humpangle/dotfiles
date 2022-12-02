@@ -259,6 +259,7 @@ vmap <Leader>P "+P
 nnoremap <Leader>yA ggVG"+y
 nnoremap <Leader>ya :%y<CR>
 nnoremap <Leader>yz ggVG"zy
+nnoremap <Leader>y/ :let @+=@/<CR>
 
 " https://vi.stackexchange.com/a/17757
 " To share register between editor instances
