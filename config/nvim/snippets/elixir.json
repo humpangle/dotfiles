@@ -26,13 +26,14 @@
   "inspect with label in pipe": {
     "prefix": "inspectpipe",
     "body": [
+      "$0",
       "|> IO.inspect(",
       "  label:",
       "      \"\\n\\n\\n",
       "----------------------------------------------------------------------",
       "         ${1:label}     ",
       "----------------------------------------------------------------------\\n\"",
-      ")$0"
+      ")"
     ],
     "description": "print to console puts inspect"
   },
