@@ -729,7 +729,7 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
 
   alias e.='/c/WINDOWS/explorer.exe .'
   alias wslexe='/c/WINDOWS/system32/wsl.exe'
-  alias wsls="wslexe --shutdown"
+  alias wsls="ts || true; wslexe --shutdown"
   alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
   alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
   alias nameserver="sudo $HOME/dotfiles/etc/wsl-nameserver.sh"
