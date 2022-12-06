@@ -10,7 +10,7 @@ nnoremap <leader>gF  :Git push --force-with-lease github HEAD
 nnoremap <leader>gg  :Git<CR>
 nnoremap <leader>gh  :Git push github HEAD
 " vertical split (3 way merge) to resolve git merge conflict
-nnoremap <leader>gl  :Gclog! -
+nnoremap <leader>gl  :tab split<CR>:Gclog! -
 nnoremap <leader>go  :Git push origin HEAD
 nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
 nnoremap <leader>gr  :Git rebase -
