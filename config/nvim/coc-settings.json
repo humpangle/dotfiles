@@ -78,5 +78,6 @@
   "blade.bladeFormatter.optIndentSize": 2,
   "nginx.nginxfmt.indent": 2,
   "python.formatting.provider": "black",
-  "ansible.ansible.useFullyQualifiedCollectionNames": false
+  "ansible.ansible.useFullyQualifiedCollectionNames": false,
+  "ansible.builtin.isWithYamllint": true
 }
