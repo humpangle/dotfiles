@@ -1088,5 +1088,30 @@
     "prefix": ["todo"],
     "body": ["# TODO${1:(author)}: ${0:todo_text}"],
     "description": ["TODO"]
+  },
+  "def Application": {
+    "prefix": ["def_application", "application_def"],
+    "body": [
+      "defmodule ${1:ModuleName}.Application do",
+      "  # See https://hexdocs.pm/elixir/Application.html",
+      "  # for more information on OTP Applications",
+      "  @moduledoc false",
+      "",
+      "  use Application",
+      "",
+      "  @impl true",
+      "  def start(_type, _args) do",
+      "      children = [",
+      "        $0",
+      "      ]",
+      "",
+      "      # See https://hexdocs.pm/elixir/Supervisor.html",
+      "      # for other strategies and supported options",
+      "      opts = [strategy: :one_for_one, name: ${1:ModuleName}.Supervisor]",
+      "      Supervisor.start_link(children, opts)",
+      "  end",
+      "end"
+    ],
+    "description": ["defmodule application"]
   }
 }
