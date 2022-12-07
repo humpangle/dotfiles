@@ -233,7 +233,11 @@
     "description": "@doc example"
   },
   "DynamicSupervisor spec": {
-    "prefix": "supervisor_spec_dynamic",
+    "prefix": [
+      "supervisor_spec_dynamic",
+      "dynamic_supervisor_spec",
+      "spec_dynamic_supervisor"
+    ],
     "body": [
       "%{",
       "id: ${1:compulsory},",
