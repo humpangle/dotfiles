@@ -285,8 +285,12 @@
     ],
     "description": "Supervisor snippet"
   },
-  "Dynamic Supervisor": {
-    "prefix": ["dynamic_supervisor", "supervisor_dynamic"],
+  "Dynamic Supervisor Module": {
+    "prefix": [
+      "dynamic_supervisor_module",
+      "supervisor_dynamic_module",
+      "module_dynamic_supervisor"
+    ],
     "body": [
       "defmodule ${1:MySupervisor} do",
       "  use DynamicSupervisor",
@@ -376,7 +380,7 @@
       "#   strategy: :one_for_one",
       "# )"
     ],
-    "description": "Dynamic Supervisor"
+    "description": "Dynamic Supervisor Module"
   },
   "Create ecto table": {
     "prefix": "create_table_ecto",
