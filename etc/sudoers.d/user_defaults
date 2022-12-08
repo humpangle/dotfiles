@@ -5,7 +5,7 @@
 # grant passwordless access to dockerd for group docker users
 # %docker ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
 # username ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
-Defaults	editor=/usr/bin/nvim
+Defaults	editor=__NEOVIM_BIN__
 
 Cmnd_Alias DOCKER_CMD = /usr/bin/docker inspect *
 
