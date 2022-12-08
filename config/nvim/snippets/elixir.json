@@ -1121,5 +1121,10 @@
       "end"
     ],
     "description": ["defmodule application"]
+  },
+  "start dynamic supervisor": {
+    "prefix": ["start_dynamic_supervisor", "dynamic_supervisor_start"],
+    "body": ["{DynamicSupervisor, strategy: :one_for_one, name: ${0:name}}"],
+    "description": ["Start dynamic supervisor"]
   }
 }
