@@ -66,6 +66,16 @@ function _has-wsl {
   [[ "$(uname -r)" == *WSL2 ]] && true
 }
 
+function _update-and-upgrade-os-packages {
+  sudo apt-get update
+  sudo apt-get upgrade -y
+  sudo apt-get install -y \
+    git \
+    curl
+
+  sudo apt-get autoremove -y
+}
+
 function _may_be_install_asdf {
   if [[ ! -e "$(_asdf-bin-path)" ]]; then
     install-asdf
@@ -428,6 +438,8 @@ function install-asdf {
   local version=v0.10.2
 
   _echo-begin-install "INSTALLING ASDF"
+
+  _update-and-upgrade-os-packages
 
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch $version
 
