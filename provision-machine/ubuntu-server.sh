@@ -55,7 +55,7 @@ function _wsl-setup {
   sudo mv wsl.conf /etc/wsl.conf
 }
 
-function _asdf-plugin-root {
+function _asdf-plugin-install-root {
   local plugin="$1"
   local version="$2"
 
@@ -599,7 +599,7 @@ function install-py {
 function install-ansible {
   : "Install ansible"
 
-  if [[ ! -d "$(_asdf-plugin-root python "$PYTHON_VERSION")" ]]; then
+  if [[ ! -d "$(_asdf-plugin-install-root python "$PYTHON_VERSION")" ]]; then
     install-py
   fi
 
