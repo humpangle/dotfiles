@@ -8,6 +8,7 @@ BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
 PYTHON_VERSION=3.10.8
+RUST_VERSION=1.65.0
 
 full_line_str=''
 full_line_len=$(tput cols)
@@ -85,6 +86,48 @@ function _may_be_install_asdf {
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
+
+function install-rust {
+  : "Install rust"
+
+  _may_be_install_asdf
+
+  _echo-begin-install "INSTALLING RUST"
+
+  sudo apt-get install -y \
+    g++ \
+    build-essential
+
+  . "$HOME/.asdf/asdf.sh"
+
+  "$(_asdf-bin-path)" plugin add rust
+  "$(_asdf-bin-path)" install rust $RUST_VERSION
+  "$(_asdf-bin-path)" global rust $RUST_VERSION
+
+  local rust_install_root
+  rust_install_root="$(_asdf-plugin-install-root rust "$RUST_VERSION")"
+
+  source "${rust_install_root}/env"
+
+  "$(_asdf-bin-path)" reshim rust
+
+  # Install and set as default latest release of cargo
+  rustup default stable
+
+  "$(_asdf-bin-path)" reshim rust
+
+  local cargo_bin_path="${rust_install_root}/bin/cargo"
+
+  # Install the lua formatter - stylua
+  "${cargo_bin_path}" install stylua --features lua52
+  "$(_asdf-bin-path)" reshim rust
+
+  local cargo_bin_dir="${HOME}/.cargo/bin"
+
+  if [[ -d "${cargo_bin_dir}" ]]; then
+    echo -e "\nexport PATH=${cargo_bin_dir}:\$PATH" >>"${HOME}/.bashrc"
+  fi
+}
 
 function install-docker {
   : "Install docker"
