@@ -610,6 +610,9 @@ function install-py {
     pip
 
   "$(_asdf-bin-path)" reshim python
+
+  # shellcheck disable=SC2016
+  echo 'export PYTHON3="$(asdf which python)"' >>~/.bashrc
 }
 
 function install-ansible {
