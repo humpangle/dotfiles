@@ -99,7 +99,7 @@ function install-docker {
 
   sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 
-  sudo usermod -aG docker "${USER}"
+  sudo usermod -aG docker "${USER}" || true
   # newgrp docker
 
   sudo apt-get autoremove -y
