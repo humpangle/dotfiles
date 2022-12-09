@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=1090,2009,2046,2143,2164,2103
+# shellcheck disable=1090,2009,2046,2143,2164,2103,2230
 
 set -o pipefail
 
@@ -228,7 +228,9 @@ function install-neovim {
   ~/.fzf/install --all
 
   curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RIP_GREP_VERSION}/ripgrep_${RIP_GREP_VERSION}_amd64.deb
+  # shellcheck disable=SC1001
   sudo dpkg -i ripgrep*${RIP_GREP_VERSION}\_amd64.deb
+  # shellcheck disable=SC1001
   rm ripgrep*${RIP_GREP_VERSION}\_amd64.deb
 
   # mkdir -p ~/.config/nvim
