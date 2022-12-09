@@ -87,6 +87,33 @@ function _may_be_install_asdf {
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
 
+function install-golang {
+  : "Install golang"
+
+  _may_be_install_asdf
+
+  _echo-begin-install "INSTALLING GOLANG"
+
+  local version=1.19.3
+
+  sudo apt-get update
+  sudo apt-get install coreutils -y
+
+  . "$HOME/.asdf/asdf.sh"
+
+  "$(_asdf-bin-path)" plugin add golang
+
+  "$(_asdf-bin-path)" install golang $version
+  "$(_asdf-bin-path)" global golang $version
+
+  local go_bin_path
+  go_bin_path="$(_asdf-plugin-install-root golang "$version")/go/bin/go"
+
+  "${go_bin_path}" install mvdan.cc/sh/v3/cmd/shfmt@latest
+  "${go_bin_path}" install github.com/lighttiger2505/sqls@latest
+  "$(_asdf-bin-path)" reshim golang
+}
+
 function install-rust {
   : "Install rust"
 
