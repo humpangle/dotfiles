@@ -234,8 +234,10 @@ function install-neovim {
 
   sudo mv nvim /usr/bin
 
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install --all
+  if [[ ! -d ~/.fzf ]]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --all
+  fi
 
   curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RIP_GREP_VERSION}/ripgrep_${RIP_GREP_VERSION}_amd64.deb
   # shellcheck disable=SC1001
