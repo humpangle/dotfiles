@@ -217,6 +217,12 @@ function install-neovim {
   sudo apt update
   sudo apt install -y xclip
 
+  if [[ ! $(dpkg -l | grep -q fuse2) ]]; then
+    sudo apt-get install -y \
+      fuse \
+      libfuse2
+  fi
+
   # shellcheck disable=2016
   printf 'export DISPLAY="$(%s):0"' "ip route | awk '/default/ {print \$3}'"
 
