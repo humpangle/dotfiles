@@ -67,6 +67,40 @@ function _has-wsl {
   [[ "$(uname -r)" == *WSL2 ]] && true
 }
 
+function _setup-wsl-home {
+  if ! _has-wsl; then
+    return
+  fi
+
+  sudo cp ~/dotfiles/etc/wsl.conf /etc/wsl.conf
+
+  echo 'export USE_WSL_INTERNET_RESOLVER=1' >>~/.bashrc
+
+  local wsl_user_home_dir="/mnt/c/Users/${USERNAME}"
+
+  local vcxsrv_output="${wsl_user_home_dir}/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+  local vcxsrv_file='vcxsrv-config.xlaunch'
+  local vcxsrv_full_path="${vcxsrv_output}/${vcxsrv_file}"
+
+  if [[ ! -e "$vcxsrv_full_path" ]]; then
+    _echo-begin-install "DOWNLOAD AND CONFIGURE vcxsrv"
+
+    local vcxsrv_download_url="https://sourceforge.net/projects/vcxsrv/files/vcxsrv/1.20.14.0/vcxsrv-64.1.20.14.0.installer.exe/download"
+
+    curl -fLo ~/vcxsrv "${vcxsrv_download_url}"
+
+    mv ~/vcxsrv "${wsl_user_home_dir}/Desktop/vcxsrv.exe"
+
+    cp "$HOME/dotfiles/c/Users/USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/${vcxsrv_file}" \
+      "${vcxsrv_full_path}"
+  fi
+
+  if [[ ! -e "${wsl_user_home_dir}/AppData/Roaming/wsltty" ]]; then
+    cp "$HOME/dotfiles/c/Users/USERNAME/AppData/Roaming/wsltty/config" \
+      "${wsl_user_home_dir}/AppData/Roaming/wsltty"
+  fi
+}
+
 function _update-and-upgrade-os-packages {
   sudo apt-get update
   sudo apt-get upgrade -y
@@ -81,6 +115,10 @@ function _may_be_install_asdf {
   if [[ ! -e "$(_asdf-bin-path)" ]]; then
     install-asdf
   fi
+}
+
+function _is-dev {
+  [[ "$1" == 'dev' ]] && true
 }
 
 # -----------------------------------------------------------------------------
@@ -284,8 +322,12 @@ function install-tmux {
     cd -
   fi
 
-  curl -fLo ~/.tmux.conf \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/tmux.conf"
+  if ! _is-dev "$1"; then
+    _echo-begin-install "DOWNLOADING TMUX CONF"
+
+    curl -fLo ~/.tmux.conf \
+      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/tmux.conf"
+  fi
 
   mkdir -p "$HOME/.tmux/resurrect"
 }
@@ -308,9 +350,6 @@ function install-neovim {
       fuse \
       libfuse2
   fi
-
-  # shellcheck disable=2016
-  printf 'export DISPLAY="$(%s):0"' "ip route | awk '/default/ {print \$3}'"
 
   curl -fLo nvim https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage
 
@@ -335,6 +374,14 @@ function install-neovim {
   curl -LO "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/${bat_deb}"
   sudo dpkg -i "${bat_deb}"
   rm "${bat_deb}"
+
+  if _is-dev "$1"; then
+    _echo-begin-install "WE'LL BE USING DOTFILES FOR NEOVIM CONFIG. RETURNING."
+    return
+  fi
+
+  # shellcheck disable=2016
+  printf 'export DISPLAY="$(%s):0"' "ip route | awk '/default/ {print \$3}'"
 
   # mkdir -p ~/.config/nvim
 
@@ -488,8 +535,12 @@ function install-vifm {
   sudo rm -rf /usr/local/src/vifm-*
   sudo mv vifm-${version} /usr/local/src
 
-  curl -fLo ~/.config/vifm/vifmrc \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/config/vifm/vifmrc"
+  if ! _is-dev "$1"; then
+    _echo-begin-install "DOWNLOADING VIFM CONF"
+
+    curl -fLo ~/.config/vifm/vifmrc \
+      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/config/vifm/vifmrc"
+  fi
 }
 
 function install-git {
@@ -646,9 +697,25 @@ function install-nodejs {
 
   "$(_asdf-bin-path)" reshim nodejs
 
-  npm install --global \
-    npm \
-    yarn
+  if _is-dev "$1"; then
+    npm install --global \
+      npm \
+      yarn \
+      eslint_d \
+      goops \
+      typescript \
+      prettier \
+      @fsouza/prettierd \
+      sort-package-json \
+      intelephense \
+      chokidar-cli \
+      graphql-language-service-cli \
+      @tailwindcss/language-server
+  else
+    npm install --global \
+      npm \
+      yarn
+  fi
 }
 
 function install-python {
@@ -692,13 +759,14 @@ function install-py {
   "$(_asdf-bin-path)" install python $PYTHON_VERSION
   "$(_asdf-bin-path)" global python $PYTHON_VERSION
 
-  pip install -U \
-    pip
+  . "$HOME/.asdf/asdf.sh"
 
-  "$(_asdf-bin-path)" reshim python
+  pip install -U pip 2>/dev/null || true
+
+  "$(_asdf-bin-path)" reshim python || true
 
   # shellcheck disable=SC2016
-  echo 'export PYTHON3="$(asdf which python)"' >>~/.bashrc
+  echo 'export PYTHON3="$( asdf which python 2>/dev/null )"' >>~/.bashrc
 }
 
 function install-ansible {
@@ -775,6 +843,101 @@ function setup-machine {
   install-neovim
   install-tmux
   install-vifm
+}
+
+function install-dev {
+  : "See setup-dev"
+  setup-dev
+}
+
+function provision-dev {
+  : "See setup-dev"
+  setup-dev
+}
+
+function setup-dev {
+  : "Setup dev machine with dotfiles"
+
+  _echo-begin-install "SETUP DEV MACHINE WITH DOTFILE"
+
+  if _has-wsl && [[ -z "$USERNAME" ]]; then
+    echo "Windows OS username is required"
+  fi
+
+  _update-and-upgrade-os-packages
+
+  install-tmux dev
+  install-vifm dev
+  install-neovim dev
+
+  # Check bash/shell files for syntax/style errors
+  sudo apt-get install -y shellcheck
+
+  mkdir -p "${LOCAL_BIN_PATH}" \
+    ~/projects/0 \
+    ~/.ssh \
+    ~/.config \
+    ~/.local/bin \
+    ~/.config/erlang_ls
+
+  git clone https://github.com/humpangle/dotfiles ~/dotfiles
+
+  cp ~/dotfiles/etc/sudoers.d/user_defaults "${HOME}"
+
+  sed -i -e "s/username/$USER/g" ~/user_defaults
+  sed -i -e "s|__NEOVIM_BIN__|$(which nvim)|g" ~/user_defaults
+  sudo chown root:root ~/user_defaults
+  sudo mv ~/user_defaults /etc/sudoers.d/
+
+  ln -s ~/dotfiles/gitignore ~/.gitignore
+  ln -s ~/dotfiles/gitconfig ~/.gitconfig
+  ln -s ~/dotfiles/config/nvim ~/.config
+  ln -s ~/dotfiles/config/erlang_ls/erlang_ls.config ~/.config/erlang_ls
+  ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+  ln -s ~/dotfiles/config/vifm/vifmrc ~/.config/vifm/vifmrc
+
+  curl -fLo "$HOME/complete_alias.sh" \
+    https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
+
+  touch "${HOME}/.hushlogin"
+
+  # We preliminary save tmux sessions every minute instead of default to 15.
+  # After the first save, we must revert back to 15 - so git does not record
+  # any changes.
+  sed -i -e "s/set -g @continuum-save-interval '15'/set -g @continuum-save-interval '1'/" ~/dotfiles/tmux.conf
+
+  chmod 755 ~/dotfiles/scripts/*
+  find ~/dotfiles/etc/ -type f -name "*.sh" -exec chmod 755 {} \;
+
+  echo "[ -f $HOME/dotfiles/bash_append.sh ] && source $HOME/dotfiles/bash_append.sh" >>~/.bashrc
+
+  # shellcheck disable=SC2016
+  echo '[ -f "$HOME/dotfiles/profile_append.sh" ] && source "$HOME/dotfiles/profile_append.sh"' >>~/.profile
+
+  echo "export INTELEPHENSE_LICENCE=''" >>~/.bashrc
+
+  _setup-wsl-home
+
+  # Other things to install
+  install-nodejs dev || true
+  install-python || true
+  install-golang || true
+
+  # Installing lua will also install rust because of stylua
+  install-lua || true
+
+  . "$HOME/.asdf/asdf.sh"
+
+  # Many times, installing rust will just error (mostly for network reasons)
+  # So we try again just one more time.
+  # shellcheck disable=SC2076
+  if ! [[ "$(_asdf-bin-path current rust 2>/dev/null)" =~ "$RUST_VERSION" ]]; then
+    install-rust
+  fi
+
+  install-docker || true
+
+  sudo apt-get autoremove -y
 }
 
 function help {
