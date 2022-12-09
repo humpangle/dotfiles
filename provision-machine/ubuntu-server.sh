@@ -62,6 +62,10 @@ function _asdf-plugin-install-root {
   printf '%s' "$HOME/.asdf/installs/${plugin}/$version"
 }
 
+function _has-wsl {
+  [[ "$(uname -r)" == *WSL2 ]] && true
+}
+
 function _may_be_install_asdf {
   if [[ ! -e "$(_asdf-bin-path)" ]]; then
     install-asdf
@@ -639,7 +643,7 @@ function set-password-less-shell {
 function setup-machine {
   : "Setup the machine"
 
-  if [[ "$(uname -r)" == *WSL2 ]]; then
+  if _has-wsl; then
     _wsl-setup
   fi
 
