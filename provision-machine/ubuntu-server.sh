@@ -518,7 +518,8 @@ function install-elixir {
   "$(_asdf-bin-path)" install elixir $version
   "$(_asdf-bin-path)" global elixir $version
 
-  local mix_bin_path="$HOME/.asdf/installs/elixir/$version/bin/mix"
+  local mix_bin_path
+  mix_bin_path="$(_asdf-plugin-install-root elixir "$version")/bin/mix"
 
   "$mix_bin_path" local.hex --force --if-missing
   "$mix_bin_path" local.rebar --force --if-missing
