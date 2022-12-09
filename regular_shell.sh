@@ -734,8 +734,9 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
   alias e.='/c/WINDOWS/explorer.exe .'
   alias wslexe='/c/WINDOWS/system32/wsl.exe'
   alias wsls="_save_tmux || true; wslexe --shutdown"
-  alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
-  alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
+  alias ubuntu18='wslexe --distribution Ubuntu'
+  alias ubuntu20='wslexe --distribution Ubuntu-20.04'
+  alias ubuntu22='wslexe --distribution Ubuntu-22.04'
   alias nameserver="sudo $HOME/dotfiles/etc/wsl-nameserver.sh"
 
   # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
