@@ -62,6 +62,12 @@ function _asdf-plugin-root {
   printf '%s' "$HOME/.asdf/installs/${plugin}/$version"
 }
 
+function _may_be_install_asdf {
+  if [[ ! -e "$(_asdf-bin-path)" ]]; then
+    install-asdf
+  fi
+}
+
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -102,9 +108,7 @@ function install-docker {
 function install-asdf-postgres {
   : "Install postgres with asdf"
 
-  if [[ ! -e "$(_asdf-bin-path)" ]]; then
-    install-asdf
-  fi
+  _may_be_install_asdf
 
   local version=14.2
 
@@ -418,9 +422,7 @@ function install-asdf {
 function install-erlang {
   : "Install erlang"
 
-  if [[ ! -e "$(_asdf-bin-path)" ]]; then
-    install-asdf
-  fi
+  _may_be_install_asdf
 
   _echo-begin-install "INSTALLING ERLANG"
 
@@ -479,9 +481,7 @@ function install-rebar3 {
 function install-elixir {
   : "Install elixir"
 
-  if [[ ! -e "$(_asdf-bin-path)" ]]; then
-    install-asdf
-  fi
+  _may_be_install_asdf
 
   if ! "$(_asdf-bin-path)" current erlang | grep -q "$ERLANG_VERSION"; then
     install-erlang
@@ -520,9 +520,7 @@ function install-node {
 function install-nodejs {
   : "Install nodejs"
 
-  if [[ ! -e "$(_asdf-bin-path)" ]]; then
-    install-asdf
-  fi
+  _may_be_install_asdf
 
   _echo-begin-install "INSTALLING NODEJS"
 
@@ -560,9 +558,7 @@ function install-python {
 function install-py {
   : "Install python"
 
-  if [[ ! -e "$(_asdf-bin-path)" ]]; then
-    install-asdf
-  fi
+  _may_be_install_asdf
 
   _echo-begin-install "INSTALLING PYTHON"
 
