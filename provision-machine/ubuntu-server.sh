@@ -715,6 +715,47 @@ function install-ansible {
     ansible
 }
 
+function install-lua {
+  : "Install lua"
+
+  _may_be_install_asdf
+
+  local version=5.4.4
+
+  _echo-begin-install "INSTALLING LUA VERSION ${version}"
+
+  sudo apt-get install -y \
+    unzip \
+    g++ \
+    build-essential \
+    make
+
+  if ! _has-wsl; then
+    sudo apt-get install -y \
+      linux-headers-$(uname -r)
+  fi
+
+  if ! _has-wsl; then
+    sudo apt-get install -y \
+      linux-headers-$(uname -r)
+  fi
+
+  . "$HOME/.asdf/asdf.sh"
+
+  "$(_asdf-bin-path)" plugin add lua
+
+  "$(_asdf-bin-path)" install lua $version
+  "$(_asdf-bin-path)" global lua $version
+
+  # We source scripts to bring stylua executable into shell
+  . "$HOME/.bashrc"
+  . "$HOME/.asdf/asdf.sh"
+
+  if ! command -v stylua; then
+    install-rust
+  fi
+}
+
 function set-password-less-shell {
   : "Allow current shell user to run root commands without sudo password"
 
