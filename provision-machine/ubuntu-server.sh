@@ -9,11 +9,33 @@ LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
 PYTHON_VERSION=3.10.8
 
-function _echo-begin-install {
+full_line_str=''
+full_line_len=$(tput cols)
 
-  echo -e "\n\n============================================="
-  echo -e "\n\n======== ${*} ============="
-  echo -e "\n\n=============================================\n\n"
+function _echo-begin-install {
+  local text="${*}"
+  local equal='='
+
+  local len="${#text}"
+  len=$((full_line_len - len))
+  local half=$((len / 2 - 1))
+
+  local line=''
+
+  for i in $(seq $half); do
+    line="${line}${equal}"
+  done
+
+  if [[ -z "${full_line_str}" ]]; then
+    # shellcheck disable=SC2034
+    for i in $(seq "$full_line_len"); do
+      full_line_str="${full_line_str}${equal}"
+    done
+  fi
+
+  echo -e "\n\n${full_line_str}"
+  echo -e "\n\n${line} ${text} ${line}"
+  echo -e "\n\n${full_line_str}\n"
 }
 
 function _asdf-bin-path {
