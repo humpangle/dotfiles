@@ -91,7 +91,12 @@
     "description": "Calculate numbers with Bash."
   },
   "shellcheck disable": {
-    "prefix": ["shellcheck_disable", "disable_shellcheck", "ignore_shellcheck"],
+    "prefix": [
+      "shellcheck_disable",
+      "disable_shellcheck",
+      "ignore_shellcheck",
+      "shellcheck_ignore"
+    ],
     "body": ["# shellcheck disable=${0:code}"],
     "description": "Shellcheck disable"
   },
