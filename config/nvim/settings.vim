@@ -259,7 +259,7 @@ vmap <Leader>P "+P
 nnoremap <Leader>yA ggVG"+y<bar><C-o>
 nnoremap <Leader>y+ ggVG"+y<bar><C-o>
 nnoremap <Leader>ya :%y<CR>
-nnoremap <Leader>yz ggVG"zy
+nnoremap <Leader>yz ggVG"zy<bar><C-o>
 nnoremap <Leader>y/ :let @+=@/<CR>
 
 " https://vi.stackexchange.com/a/17757
