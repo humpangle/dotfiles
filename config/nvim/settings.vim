@@ -257,6 +257,7 @@ nmap <Leader>P "+P
 vmap <Leader>P "+P
 " Yank all
 nnoremap <Leader>yA ggVG"+y<bar><C-o>
+nnoremap <Leader>y+ ggVG"+y<bar><C-o>
 nnoremap <Leader>ya :%y<CR>
 nnoremap <Leader>yz ggVG"zy
 nnoremap <Leader>y/ :let @+=@/<CR>
