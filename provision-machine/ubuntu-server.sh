@@ -9,75 +9,11 @@ LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
 PYTHON_VERSION=3.10.8
 
-function _env {
-  local env
-  local splitted_envs=""
-
-  if [[ -n "$1" ]]; then
-    env="$1"
-  elif [[ -e .env ]]; then
-    env=".env"
-  fi
-
-  if [[ -n "$env" ]]; then
-    set -a
-    . $env
-    set +a
-
-    splitted_envs=$(p-env "$env" --lines)
-  fi
-
-  printf "%s" "$splitted_envs"
-}
-
 function _echo-begin-install {
 
   echo -e "\n\n============================================="
   echo -e "\n\n======== ${*} ============="
   echo -e "\n\n=============================================\n\n"
-}
-
-function _wait_until {
-  command="${1}"
-  timeout="${2:-30}"
-
-  echo -e "\n\n\n=Running: $command=\n\n"
-
-  i=0
-  until eval "${command}"; do
-    ((i++))
-
-    if [ "${i}" -gt "${timeout}" ]; then
-      echo -e "\n\n\n=Command: $command="
-      echo -e "failed, aborting due to ${timeout}s timeout!\n\n"
-      exit 1
-    fi
-
-    sleep 1
-  done
-
-  echo -e "\n\n\n= Done successfully running: $command =\n\n"
-}
-
-function _timestamp {
-  date +'%s'
-}
-
-function _raise_on_no_env_file {
-  if [[ -n "$SOME_ENV_EXISTS" ]]; then
-    if [[ "$SOME_ENV_EXISTS" =~ .env.example ]]; then
-      printf "\nERROR: env filename can not be .env.example.\n\n"
-      exit 1
-    fi
-
-    return 0
-  fi
-
-  if [[ -z "$1" ]] || [[ ! -e "$1" ]]; then
-    printf "\nERROR:env filename has not been provided or invalid.\n"
-    printf "You may also source your environment file.\n\n"
-    exit 1
-  fi
 }
 
 function _asdf-bin-path {
