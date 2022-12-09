@@ -1126,5 +1126,13 @@
     "prefix": ["start_dynamic_supervisor", "dynamic_supervisor_start"],
     "body": ["{DynamicSupervisor, strategy: :one_for_one, name: ${0:name}}"],
     "description": ["Start dynamic supervisor"]
+  },
+  "start task sup": {
+    "prefix": ["start_task_supervisor", "task_supervisor_start"],
+    "body": [
+      "{Task.Supervisor, name: ${0:name}}",
+      "{Task, fn -> :some_work end}"
+    ],
+    "description": ["Start task supervisor"]
   }
 }
