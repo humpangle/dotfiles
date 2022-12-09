@@ -83,6 +83,10 @@ alias remove_vim_undo='rm -rf $HOME/.vim/undodir/*'
 alias rmvu='remove_vim_undo'
 
 # tmux
+function _save_tmux {
+  tmux ls &>/dev/null && $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh
+}
+
 alias ta='tmux a -t'
 alias tad='tmux a -d -t'
 alias tap='cd ~/projects/php && tmux a -t php'
@@ -95,7 +99,7 @@ alias tnd='cd ~/dotfiles && tn dot'
 alias tadd='cd ~/dotfiles && ta dot'
 alias tks='tmux kill-session -t'
 alias tkss='tmux kill-server'
-alias ts='$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh'
+alias ts=_save_tmux
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
 runf() {
@@ -729,7 +733,7 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
 
   alias e.='/c/WINDOWS/explorer.exe .'
   alias wslexe='/c/WINDOWS/system32/wsl.exe'
-  alias wsls="ts || true; wslexe --shutdown"
+  alias wsls="_save_tmux || true; wslexe --shutdown"
   alias ubuntu20='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu-20.04'
   alias ubuntu18='/c/WINDOWS/system32/wsl.exe --distribution Ubuntu'
   alias nameserver="sudo $HOME/dotfiles/etc/wsl-nameserver.sh"
