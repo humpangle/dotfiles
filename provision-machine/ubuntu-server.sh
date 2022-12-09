@@ -211,6 +211,8 @@ function install-neovim {
 
   neovim_version=v0.8.1
   RIP_GREP_VERSION=13.0.0
+  # `bat` is for syntax highlighting inside `fzf`
+  BAT_VERSION=0.22.1
 
   _echo-begin-install "INSTALLING NEOVIM VERSION ${neovim_version}"
 
@@ -244,6 +246,11 @@ function install-neovim {
   sudo dpkg -i ripgrep*${RIP_GREP_VERSION}\_amd64.deb
   # shellcheck disable=SC1001
   rm ripgrep*${RIP_GREP_VERSION}\_amd64.deb
+
+  bat_deb="bat_${BAT_VERSION}_amd64.deb"
+  curl -LO "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/${bat_deb}"
+  sudo dpkg -i "${bat_deb}"
+  rm "${bat_deb}"
 
   # mkdir -p ~/.config/nvim
 
