@@ -39,7 +39,7 @@ function _echo-begin-install {
 }
 
 function _asdf-bin-path {
-  realpath "$HOME/.asdf/bin/asdf"
+  realpath "$HOME/.asdf/bin/asdf" 2>/dev/null
 }
 
 function _write-local-bin-path-to-paths {
