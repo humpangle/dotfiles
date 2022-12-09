@@ -562,7 +562,7 @@ rel_asdf_elixirf() {
     return 0
   fi
 
-  local install_dir="$HOME/projects/elixir/elixir-ls"
+  local install_dir="$HOME/projects/elixir/elixir-ls/${elixir_version}"
 
   if ! [[ -d "$install_dir" ]]; then
     git clone https://github.com/elixir-lsp/elixir-ls.git "$install_dir"
