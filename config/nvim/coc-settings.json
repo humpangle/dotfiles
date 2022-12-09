@@ -79,5 +79,6 @@
   "nginx.nginxfmt.indent": 2,
   "python.formatting.provider": "black",
   "ansible.ansible.useFullyQualifiedCollectionNames": false,
-  "ansible.builtin.isWithYamllint": true
+  "ansible.builtin.isWithYamllint": true,
+  "snippets.ultisnips.pythonPrompt": false
 }
