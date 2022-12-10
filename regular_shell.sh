@@ -573,7 +573,12 @@ rel_asdf_elixirf() {
   # shellcheck disable=SC2164
   cd "$install_dir"
 
+  git reset .
   git checkout 02d3b2e
+
+  rm -rf mix.lock _build deps
+  # shellcheck disable=SC1010
+  mix do deps.get, compile
 
   if false; then
     echo -e '\n=> Updating to the latest code base of elixir LSP server.'
