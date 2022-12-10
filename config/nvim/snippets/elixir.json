@@ -1130,7 +1130,7 @@
   "start task sup": {
     "prefix": ["start_task_supervisor", "task_supervisor_start"],
     "body": [
-      "{Task.Supervisor, name: ${0:name}}",
+      "{Task.Supervisor, name: ${0:name}.TaskSupervisor}",
       "{Task, fn -> :some_work end}"
     ],
     "description": ["Start task supervisor"]
