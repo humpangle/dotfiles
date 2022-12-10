@@ -147,6 +147,7 @@ function install-golang {
   local go_bin_path
   go_bin_path="$(_asdf-plugin-install-root golang "$version")/go/bin/go"
 
+  # Github repo archived
   "${go_bin_path}" install github.com/lighttiger2505/sqls@latest
   "$(_asdf-bin-path)" reshim golang
 }
