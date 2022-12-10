@@ -108,5 +108,22 @@
       "# -----------------------------------------------------------------------------"
     ],
     "description": "Helper function"
+  },
+  "run sh": {
+    "prefix": ["runsh"],
+    "body": [
+      "function help {",
+      "  : \"List available tasks.\"",
+      "  compgen -A function | grep -v \"^_\" | while read -r name; do",
+      "      paste <(printf '%s' \"\\$name\") <(type \"\\$name\" | sed -nEe 's/^[[:space:]]*: ?\"(.*)\";/    \\1/p')",
+      "  done",
+      "",
+      "  printf \"\\n\"",
+      "}",
+      "",
+      "TIMEFORMAT=\\$'Task completed in %3lR\\n'",
+      "time \"\\${@:-help}\""
+    ],
+    "description": ["Help function for run.sh scripts"]
   }
 }
