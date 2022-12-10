@@ -896,6 +896,9 @@ function setup-dev {
   ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
   ln -s ~/dotfiles/config/vifm/vifmrc ~/.config/vifm/vifmrc
 
+  [[ -e ~/dotfiles/to_snippet_vscode.py ]] &&
+    chmod 755 ~/dotfiles/to_snippet_vscode.py
+
   curl -fLo "$HOME/complete_alias.sh" \
     https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
 
