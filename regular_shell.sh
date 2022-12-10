@@ -556,6 +556,32 @@ pathmunge "/usr/lib/dart/bin" "after"
 
 ELIXIR_LS_SCRIPTS_BASE="$HOME/projects/elixir/elixir-ls/00scripts"
 
+rel_asdf_elixir-build-f() {
+  local elixir_version="$1"
+  local install_dir="$HOME/projects/elixir/elixir-ls/${elixir_version}"
+
+  rm -rf mix.lock _build deps
+
+  # shellcheck disable=SC1010
+  mix do deps.get, compile
+
+  local release_dir="${ELIXIR_LS_SCRIPTS_BASE}/$elixir_version"
+  mkdir -p "$release_dir"
+  mix elixir_ls.release -o "$release_dir"
+
+  # Print the path to the language server script so we can use it in LSP
+  # client.
+  echo -e '\n\n=> The path to the language server script:'
+  echo "$release_dir/language_server.sh"
+
+  # shellcheck disable=2103,2164
+  cd - >/dev/null
+}
+
+rel_asdf_elixir-build-current-f() {
+  rel_asdf_elixir-build-f "$(rel-asdf-elixir-current-f)"
+}
+
 rel_asdf_elixir-install-f() {
   local elixir_version="$1"
 
