@@ -629,8 +629,8 @@ rel-asdf-elixir-exists-current-f() {
   rel_asdf_elixir_exists_f "$(asdf current elixir | awk '{print $2}')"
 }
 
-alias rel-asdf-elixir=rel_asdf_elixirf
-alias rel-asdf-elixir-current=rel-asdf-elixir-current-f
+alias rel-asdf-elixir-install=rel_asdf_elixirf
+alias rel-asdf-elixir-install-current=rel-asdf-elixir-current-f
 alias rel-asdf-elixir-exists=rel_asdf_elixir_exists_f
 alias rel-asdf-elixir-exists-current=rel-asdf-elixir-exists-current-f
 alias rel-asdf-elixir-current-exists=rel-asdf-elixir-exists-current-f
