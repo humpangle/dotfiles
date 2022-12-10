@@ -568,29 +568,26 @@ rel_asdf_elixirf() {
 
   if ! [[ -d "$install_dir" ]]; then
     git clone https://github.com/elixir-lsp/elixir-ls.git "$install_dir"
-
-    # shellcheck disable=SC2164
-    cd "$install_dir"
-
-    echo -e '=> Fetch current dependencies and compile the code.\n'
-    # shellcheck disable=SC1010
-    mix do deps.get, compile
   fi
 
   # shellcheck disable=SC2164
   cd "$install_dir"
 
-  echo -e '\n=> Updating to the latest code base of elixir LSP server.'
+  git checkout 02d3b2e
 
-  if ! git pull origin master 2>/dev/null | grep -q "Already up to date."; then
-    echo '=> Remove the previous dependencies and recompile.'
-    rm -rf deps _build
+  if false; then
+    echo -e '\n=> Updating to the latest code base of elixir LSP server.'
 
-    echo -e '=> Fetch current dependencies and compile the code.\n'
-    # shellcheck disable=SC1010
-    mix do deps.get, compile
-  else
-    echo -e "=> No update available."
+    if ! git pull origin master 2>/dev/null | grep -q "Already up to date."; then
+      echo '=> Remove the previous dependencies and recompile.'
+      rm -rf deps _build
+
+      echo -e '=> Fetch current dependencies and compile the code.\n'
+      # shellcheck disable=SC1010
+      mix do deps.get, compile
+    else
+      echo -e "=> No update available."
+    fi
   fi
 
   echo -e '=> Creating the language server scripts.\n'
