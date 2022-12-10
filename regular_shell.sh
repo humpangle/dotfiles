@@ -556,7 +556,7 @@ pathmunge "/usr/lib/dart/bin" "after"
 
 ELIXIR_LS_SCRIPTS_BASE="$HOME/projects/elixir/elixir-ls/00scripts"
 
-rel_asdf_elixirf() {
+rel_asdf_elixir-install-f() {
   local elixir_version="$1"
 
   if [[ -z "$elixir_version" ]]; then
@@ -624,15 +624,19 @@ rel_asdf_elixir_exists_f() {
 }
 
 rel-asdf-elixir-current-f() {
-  rel_asdf_elixirf "$(asdf current elixir | awk '{print $2}')"
+  asdf current elixir | awk '{print $2}'
+}
+
+rel-asdf-elixir-install-current-f() {
+  rel_asdf_elixir-install-f "$(rel-asdf-elixir-current-f)"
 }
 
 rel-asdf-elixir-exists-current-f() {
-  rel_asdf_elixir_exists_f "$(asdf current elixir | awk '{print $2}')"
+  rel_asdf_elixir_exists_f "$(rel-asdf-elixir-current-f)"
 }
 
-alias rel-asdf-elixir-install=rel_asdf_elixirf
-alias rel-asdf-elixir-install-current=rel-asdf-elixir-current-f
+alias rel-asdf-elixir-install=rel_asdf_elixir-install-f
+alias rel-asdf-elixir-install-current=rel-asdf-elixir-install-current-f
 alias rel-asdf-elixir-exists=rel_asdf_elixir_exists_f
 alias rel-asdf-elixir-exists-current=rel-asdf-elixir-exists-current-f
 alias rel-asdf-elixir-current-exists=rel-asdf-elixir-exists-current-f
