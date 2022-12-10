@@ -742,13 +742,15 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
   # (**NOT ANY MORE**)
   # export PATH="$PATH:/c/WINDOWS/system32"
 
+  NAME_SERVER_SCRIPT="$HOME/dotfiles/etc/wsl-nameserver.sh"
+
   alias e.='/c/WINDOWS/explorer.exe .'
   alias wslexe='/c/WINDOWS/system32/wsl.exe'
   alias wsls="_save_tmux || true; wslexe --shutdown"
   alias ubuntu18='wslexe --distribution Ubuntu'
   alias ubuntu20='wslexe --distribution Ubuntu-20.04'
   alias ubuntu22='wslexe --distribution Ubuntu-22.04'
-  alias nameserver="sudo $HOME/dotfiles/etc/wsl-nameserver.sh"
+  alias nameserver="sudo $NAME_SERVER_SCRIPT"
 
   # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
   # up memory, this command will free your memory after about 20-30 seconds.
@@ -759,8 +761,8 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
 
   if [[ -z "$USE_WSL_INTERNET_RESOLVER" ]]; then
     if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
-      if [[ -x "$HOME/dotfiles/etc/wsl-nameserver.sh" ]]; then
-        sudo "$HOME/dotfiles/etc/wsl-nameserver.sh"
+      if [[ -x "$NAME_SERVER_SCRIPT" ]]; then
+        sudo "$NAME_SERVER_SCRIPT"
       fi
     fi
   fi
