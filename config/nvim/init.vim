@@ -29,7 +29,8 @@ else
 endif
 
 " Make ~/.bashrc interactive
-set shellcmdflag=-ic
+" May be use https://stackoverflow.com/a/19819036
+" set shellcmdflag=-ic
 
 lua <<EOF
   -- vim.lsp.set_log_level('debug') -- info/debug/error/trace
