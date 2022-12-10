@@ -554,6 +554,8 @@ pathmunge "/usr/lib/dart/bin" "after"
 #   fi
 # fi
 
+ELIXIR_LS_SCRIPTS_BASE="$HOME/projects/elixir/elixir-ls/00scripts"
+
 rel_asdf_elixirf() {
   local elixir_version="$1"
 
@@ -592,7 +594,7 @@ rel_asdf_elixirf() {
   fi
 
   echo -e '=> Creating the language server scripts.\n'
-  local release_dir="$install_dir/elixir_ls-releases/$elixir_version"
+  local release_dir="${ELIXIR_LS_SCRIPTS_BASE}/$elixir_version"
   mkdir -p "$release_dir"
   mix elixir_ls.release -o "$release_dir"
 
@@ -608,7 +610,7 @@ rel_asdf_elixirf() {
 rel_asdf_elixir_exists_f() {
   local elixir_version="$1"
 
-  local server_path="$HOME/projects/elixir/elixir-ls/elixir_ls-releases/$elixir_version/language_server.sh"
+  local server_path="${ELIXIR_LS_SCRIPTS_BASE}/${elixir_version}/language_server.sh"
 
   printf "\n%s\n\n" "$server_path"
 
