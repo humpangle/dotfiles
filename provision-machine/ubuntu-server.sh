@@ -733,7 +733,7 @@ function install-elixir {
 
   _may_be_install_asdf
 
-  if ! "$(_asdf-bin-path)" current erlang | grep -q "$ERLANG_VERSION"; then
+  if ! "$(_asdf-bin-path)" current erlang 2>/dev/null | grep -q "$ERLANG_VERSION"; then
     install-erlang
   fi
 
