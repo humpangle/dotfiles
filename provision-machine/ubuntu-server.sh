@@ -858,11 +858,12 @@ function provision-dev {
 function setup-dev {
   : "Setup dev machine with dotfiles"
 
-  _echo-begin-install "SETUP DEV MACHINE WITH DOTFILE"
-
   if _has-wsl && [[ -z "$USERNAME" ]]; then
-    echo "Windows OS username is required"
+    echo -e "\nWindows OS username is required as USERNAME environment variable"
+    exit
   fi
+
+  _echo-begin-install "SETUP DEV MACHINE WITH DOTFILE"
 
   _update-and-upgrade-os-packages
 
