@@ -3,12 +3,102 @@
 
 set -o pipefail
 
+INITIAL_WSL_C_PATH=/mnt/c
+
 ERLANG_VERSION=25.1.2
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
 PYTHON_VERSION=3.10.8
 RUST_VERSION=1.65.0
+
+LUA_DEPS=(
+  'unzip'
+  'g++'
+  'build-essential'
+  'make'
+)
+
+RUST_DEPS=(
+  'g++'
+  'build-essential'
+)
+
+TMUX_DEPS=(
+  'libevent-dev'
+  'ncurses-dev'
+  'build-essential'
+  'bison'
+  'pkg-config'
+  'xclip'
+)
+
+# Shellcheck check bash/shell files for syntax/style errors
+NEOVIM_DEPS=(
+  'xclip'
+  'shellcheck'
+  'ssh-askpass-gnome'
+  'ssh-askpass'
+)
+
+NODEJS_DEPS=(
+  'python3'
+  'g++'
+  'make'
+  'python3-pip'
+  'build-essential'
+)
+
+PYTHON_DEPS=(
+  'g++'
+  'make'
+  'build-essential'
+  'libssl-dev zlib1g-dev'
+  'libbz2-dev'
+  'libreadline-dev'
+  'libsqlite3-dev'
+  'wget'
+  'curl'
+  'llvm'
+  'libncursesw5-dev'
+  'xz-utils'
+  'tk-dev'
+  'libxml2-dev'
+  'libxmlsec1-dev'
+  'libffi-dev'
+  'liblzma-dev'
+)
+
+GOLANG_DEPS=(
+  'coreutils'
+)
+
+DOCKER_DEPS=(
+  'ca-certificates'
+  'curl'
+  'gnupg'
+  'lsb-release'
+)
+
+ERLANG_DEPS=(
+  'g++'
+  'build-essential'
+  'autoconf'
+  'm4'
+  'libncurses5-dev'
+  'libwxgtk3.0-gtk3-dev'
+  'libwxgtk-webview3.0-gtk3-dev'
+  'libgl1-mesa-dev'
+  'libglu1-mesa-dev'
+  'libpng-dev'
+  'libssh-dev'
+  'unixodbc-dev'
+  'xsltproc'
+  'fop'
+  'libxml2-utils'
+  'libncurses-dev'
+  'inotify-tools'
+)
 
 full_line_str=''
 full_line_len=$(tput cols)
@@ -76,7 +166,7 @@ function _setup-wsl-home {
 
   echo 'export USE_WSL_INTERNET_RESOLVER=1' >>~/.bashrc
 
-  local wsl_user_home_dir="/mnt/c/Users/${USERNAME}"
+  local wsl_user_home_dir="${INITIAL_WSL_C_PATH}/Users/${USERNAME}"
 
   local vcxsrv_output="${wsl_user_home_dir}/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
   local vcxsrv_file='vcxsrv-config.xlaunch'
@@ -104,21 +194,43 @@ function _setup-wsl-home {
 function _update-and-upgrade-os-packages {
   sudo apt-get update
   sudo apt-get upgrade -y
-  sudo apt-get install -y \
-    git \
-    curl
+
+  if ! _is-dev "$@"; then
+    sudo apt-get install -y \
+      git \
+      curl
+  else
+    deps="${LUA_DEPS[*]} \
+      ${RUST_DEPS[*]} \
+      ${TMUX_DEPS[*]} \
+      ${NEOVIM_DEPS[*]} \
+      ${NODEJS_DEPS[*]} \
+      ${PYTHON_DEPS[*]} \
+      ${GOLANG_DEPS[*]} \
+      ${DOCKER_DEPS[*]} "
+
+    local cmd="sudo apt-get install -y ${deps}"
+    eval "$cmd"
+  fi
 
   sudo apt-get autoremove -y
 }
 
 function _may_be_install_asdf {
   if [[ ! -e "$(_asdf-bin-path)" ]]; then
-    install-asdf
+    install-asdf "$@"
   fi
 }
 
 function _is-dev {
   [[ "${*}" =~ dev ]] && true
+}
+
+function _install-deps {
+  sudo apt-get update
+
+  local cmd="sudo apt-get install -y $1"
+  eval "$cmd"
 }
 
 # -----------------------------------------------------------------------------
@@ -128,14 +240,15 @@ function _is-dev {
 function install-golang {
   : "Install golang"
 
-  _may_be_install_asdf
+  _may_be_install_asdf "$@"
 
   _echo-begin-install "INSTALLING GOLANG"
 
   local version=1.19.3
 
-  sudo apt-get update
-  sudo apt-get install coreutils -y
+  if ! _is-dev "$@"; then
+    _install-deps "${GOLANG_DEPS[*]}"
+  fi
 
   . "$HOME/.asdf/asdf.sh"
 
@@ -155,13 +268,13 @@ function install-golang {
 function install-rust {
   : "Install rust"
 
-  _may_be_install_asdf
+  _may_be_install_asdf "$@"
 
   _echo-begin-install "INSTALLING RUST"
 
-  sudo apt-get install -y \
-    g++ \
-    build-essential
+  if ! _is-dev "$@"; then
+    _install-deps "${RUST_DEPS[*]}"
+  fi
 
   . "$HOME/.asdf/asdf.sh"
 
@@ -201,13 +314,9 @@ function install-docker {
 
   # https://docs.docker.com/engine/install/ubuntu/
 
-  sudo apt update
-
-  sudo apt install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release -y
+  if ! _is-dev "$@"; then
+    _install-deps "${DOCKER_DEPS[*]}"
+  fi
 
   sudo mkdir -p /etc/apt/keyrings
 
@@ -217,20 +326,22 @@ function install-docker {
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
-  sudo apt update
+  sudo apt-get update
 
-  sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+  sudo apt-get install -y \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io \
+    docker-compose-plugin
 
   sudo usermod -aG docker "${USER}" || true
   # newgrp docker
-
-  sudo apt-get autoremove -y
 }
 
 function install-asdf-postgres {
   : "Install postgres with asdf"
 
-  _may_be_install_asdf
+  _may_be_install_asdf "$@"
 
   local version=14.2
 
@@ -285,21 +396,12 @@ function install-tmux {
   if [ -e "$current_tmux_bin_path" ]; then
     tmux kill-server &>/dev/null || true
     sudo rm -rf "$current_tmux_bin_path"
+    sudo apt remove -y --purge tmux
   fi
 
-  sudo apt update
-
-  sudo apt remove -y --purge tmux
-
-  sudo apt install -y \
-    libevent-dev \
-    ncurses-dev \
-    build-essential \
-    bison \
-    pkg-config \
-    xclip
-
-  sudo apt-get autoremove -y
+  if ! _is-dev "$@"; then
+    _install-deps "${TMUX_DEPS[*]}"
+  fi
 
   curl -LO https://github.com/tmux/tmux/releases/download/${tmux_version}/tmux-${tmux_version}.tar.gz
   tar xf tmux-${tmux_version}.tar.gz
@@ -342,8 +444,9 @@ function install-neovim {
 
   _echo-begin-install "INSTALLING NEOVIM VERSION ${neovim_version}"
 
-  sudo apt update
-  sudo apt install -y xclip
+  if ! _is-dev "$@"; then
+    _install-deps "${NEOVIM_DEPS[*]}"
+  fi
 
   if [[ ! $(dpkg -l | grep -q fuse2) ]]; then
     sudo apt-get install -y \
@@ -529,7 +632,9 @@ function install-vifm {
 
   _echo-begin-install "INSTALLING VIFM VERSION ${version}"
 
-  sudo apt-get update
+  if ! _is-dev "$@"; then
+    sudo apt-get update
+  fi
 
   rm -rf ~/.config/vifm
   mkdir -p ~/.config/vifm
@@ -569,7 +674,9 @@ function install-asdf {
 
   _echo-begin-install "INSTALLING ASDF"
 
-  _update-and-upgrade-os-packages
+  if ! _is-dev "$@"; then
+    _update-and-upgrade-os-packages
+  fi
 
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch $version
 
@@ -587,25 +694,7 @@ function install-erlang {
 
   _echo-begin-install "INSTALLING ERLANG"
 
-  sudo apt-get update
-
-  sudo apt-get -y install \
-    g++ \
-    build-essential \
-    autoconf \
-    m4 \
-    libncurses5-dev \
-    libwxgtk3.0-gtk3-dev \
-    libwxgtk-webview3.0-gtk3-dev \
-    libgl1-mesa-dev \
-    libglu1-mesa-dev \
-    libpng-dev \
-    libssh-dev \
-    unixodbc-dev \
-    xsltproc \
-    fop \
-    libxml2-utils \
-    libncurses-dev
+  _install-deps "${ERLANG_DEPS[*]}"
 
   sudo apt-get autoremove -y
 
@@ -673,29 +762,18 @@ function install-elixir {
   "$(_asdf-bin-path)" reshim elixir
 }
 
-function install-node {
-  : "Install nodejs"
-
-  install-nodejs
-}
-
 function install-nodejs {
   : "Install nodejs"
 
-  _may_be_install_asdf
+  _may_be_install_asdf "$@"
 
   _echo-begin-install "INSTALLING NODEJS"
 
   local version=16.18.1
 
-  sudo apt-get update
-
-  sudo apt-get install -y \
-    python3 \
-    g++ \
-    make \
-    python3-pip \
-    build-essential
+  if ! _is-dev "$@"; then
+    _install-deps "${NODEJS_DEPS[*]}"
+  fi
 
   . "$HOME/.asdf/asdf.sh"
 
@@ -730,36 +808,13 @@ function install-nodejs {
 function install-python {
   : "Install python"
 
-  install-py
-}
-
-function install-py {
-  : "Install python"
-
-  _may_be_install_asdf
+  _may_be_install_asdf "$@"
 
   _echo-begin-install "INSTALLING PYTHON"
 
-  sudo apt-get update
-
-  sudo apt-get install -y \
-    g++ \
-    make \
-    build-essential \
-    libssl-dev zlib1g-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    wget \
-    curl \
-    llvm \
-    libncursesw5-dev \
-    xz-utils \
-    tk-dev \
-    libxml2-dev \
-    libxmlsec1-dev \
-    libffi-dev \
-    liblzma-dev
+  if ! _is-dev "$@"; then
+    _install-deps "${PYTHON_DEPS[*]}"
+  fi
 
   . "$HOME/.asdf/asdf.sh"
 
@@ -795,21 +850,14 @@ function install-ansible {
 function install-lua {
   : "Install lua"
 
-  _may_be_install_asdf
+  _may_be_install_asdf "$@"
 
   local version=5.4.4
 
   _echo-begin-install "INSTALLING LUA VERSION ${version}"
 
-  sudo apt-get install -y \
-    unzip \
-    g++ \
-    build-essential \
-    make
-
-  if ! _has-wsl; then
-    sudo apt-get install -y \
-      linux-headers-$(uname -r)
+  if ! _is-dev "$@"; then
+    _install-deps "${LUA_DEPS[*]}"
   fi
 
   if ! _has-wsl; then
@@ -829,7 +877,7 @@ function install-lua {
   . "$HOME/.asdf/asdf.sh"
 
   if ! command -v stylua; then
-    install-rust
+    install-rust "$@"
   fi
 }
 
@@ -874,23 +922,25 @@ function setup-dev {
 
   _echo-begin-install "SETUP DEV MACHINE WITH DOTFILE"
 
-  _update-and-upgrade-os-packages
+  echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf >/dev/null
+
+  _update-and-upgrade-os-packages dev
 
   install-tmux dev
   install-vifm dev
   install-neovim dev
 
-  # Check bash/shell files for syntax/style errors
-  sudo apt-get install -y shellcheck
-
   mkdir -p "${LOCAL_BIN_PATH}" \
     ~/projects/0 \
     ~/.ssh \
     ~/.config \
-    ~/.local/bin \
     ~/.config/erlang_ls
 
+  _write-local-bin-path-to-paths
+
   git clone https://github.com/humpangle/dotfiles ~/dotfiles
+
+  _setup-wsl-home
 
   cp ~/dotfiles/etc/sudoers.d/user_defaults "${HOME}"
 
@@ -919,6 +969,10 @@ function setup-dev {
   # any changes.
   sed -i -e "s/set -g @continuum-save-interval '15'/set -g @continuum-save-interval '1'/" ~/dotfiles/tmux.conf
 
+  # Install tmux plugins specified in .tmux.conf
+  chmod 755 ~/.tmux/plugins/tpm/bin/install_plugins
+  ~/.tmux/plugins/tpm/bin/install_plugins
+
   chmod 755 ~/dotfiles/scripts/*
   find ~/dotfiles/etc/ -type f -name "*.sh" -exec chmod 755 {} \;
 
@@ -929,15 +983,13 @@ function setup-dev {
 
   echo "export INTELEPHENSE_LICENCE=''" >>~/.bashrc
 
-  _setup-wsl-home
-
   # Other things to install
   install-nodejs dev || true
-  install-python || true
-  install-golang || true
+  install-python dev || true
+  install-golang dev || true
 
   # Installing lua will also install rust because of stylua
-  install-lua || true
+  install-lua dev || true
 
   . "$HOME/.asdf/asdf.sh"
 
@@ -945,12 +997,16 @@ function setup-dev {
   # So we try again just one more time.
   # shellcheck disable=SC2076
   if ! [[ "$(_asdf-bin-path current rust 2>/dev/null)" =~ "$RUST_VERSION" ]]; then
-    install-rust
+    install-rust dev
   fi
 
-  install-docker || true
+  install-docker dev || true
 
   sudo apt-get autoremove -y
+
+  sudo rm -rf /etc/resolv.conf
+
+  echo "${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --terminate"
 }
 
 function help {
