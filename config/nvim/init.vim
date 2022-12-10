@@ -28,6 +28,9 @@ else
   set background=dark
 endif
 
+" Make ~/.bashrc interactive
+set shellcmdflag=-ic
+
 lua <<EOF
   -- vim.lsp.set_log_level('debug') -- info/debug/error/trace
   -- Open log file with:
