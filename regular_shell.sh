@@ -566,6 +566,13 @@ rel_asdf_elixirf() {
 
   if ! [[ -d "$install_dir" ]]; then
     git clone https://github.com/elixir-lsp/elixir-ls.git "$install_dir"
+
+    # shellcheck disable=SC2164
+    cd "$install_dir"
+
+    echo -e '=> Fetch current dependencies and compile the code.\n'
+    # shellcheck disable=SC1010
+    mix do deps.get, compile
   fi
 
   # shellcheck disable=SC2164
