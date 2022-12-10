@@ -118,7 +118,7 @@ function _may_be_install_asdf {
 }
 
 function _is-dev {
-  [[ "$1" == 'dev' ]] && true
+  [[ "${*}" =~ dev ]] && true
 }
 
 # -----------------------------------------------------------------------------
@@ -321,7 +321,7 @@ function install-tmux {
     cd -
   fi
 
-  if ! _is-dev "$1"; then
+  if ! _is-dev "$@"; then
     _echo-begin-install "DOWNLOADING TMUX CONF"
 
     curl -fLo ~/.tmux.conf \
@@ -383,7 +383,7 @@ function install-neovim {
 
   chmod ugo+x "$HOME/.local/bin/shfmt"
 
-  if _is-dev "$1"; then
+  if _is-dev "$@"; then
     _echo-begin-install "WE'LL BE USING DOTFILES FOR NEOVIM CONFIG. RETURNING."
     return
   fi
@@ -543,7 +543,7 @@ function install-vifm {
   sudo rm -rf /usr/local/src/vifm-*
   sudo mv vifm-${version} /usr/local/src
 
-  if ! _is-dev "$1"; then
+  if ! _is-dev "$@"; then
     _echo-begin-install "DOWNLOADING VIFM CONF"
 
     curl -fLo ~/.config/vifm/vifmrc \
@@ -705,7 +705,7 @@ function install-nodejs {
 
   "$(_asdf-bin-path)" reshim nodejs
 
-  if _is-dev "$1"; then
+  if _is-dev "$@"; then
     npm install --global \
       npm \
       yarn \
