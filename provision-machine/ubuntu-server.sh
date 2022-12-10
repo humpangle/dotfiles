@@ -147,7 +147,6 @@ function install-golang {
   local go_bin_path
   go_bin_path="$(_asdf-plugin-install-root golang "$version")/go/bin/go"
 
-  "${go_bin_path}" install mvdan.cc/sh/v3/cmd/shfmt@latest
   "${go_bin_path}" install github.com/lighttiger2505/sqls@latest
   "$(_asdf-bin-path)" reshim golang
 }
@@ -374,6 +373,15 @@ function install-neovim {
   curl -LO "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/${bat_deb}"
   sudo dpkg -i "${bat_deb}"
   rm "${bat_deb}"
+
+  local shfmt_version=v3.5.1
+
+  curl -Lo \
+    "$HOME/.local/bin/shfmt" \
+    --create-dirs \
+    "https://github.com/mvdan/sh/releases/download/${shfmt_version}/shfmt_${shfmt_version}_linux_amd64"
+
+  chmod ugo+x "$HOME/.local/bin/shfmt"
 
   if _is-dev "$1"; then
     _echo-begin-install "WE'LL BE USING DOTFILES FOR NEOVIM CONFIG. RETURNING."
