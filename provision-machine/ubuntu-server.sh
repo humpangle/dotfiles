@@ -1009,6 +1009,20 @@ function setup-dev {
   echo "${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --terminate"
 }
 
+function install-terraform-lsp {
+  : "Install terraform"
+
+  cd ~/projects/0
+
+  local version=0.0.12
+
+  curl -fLO "https://github.com/juliosueiras/terraform-lsp/releases/download/v${version}/terraform-lsp_${version}_linux_amd64.tar.gz"
+  tar xzf "terraform-lsp_${version}_linux_amd64.tar.gz"
+  sudo mv terraform-lsp /usr/local/bin/
+
+  cd - >/dev/null
+}
+
 function help {
   : "List available tasks."
   compgen -A function | grep -v "^_" | while read -r name; do
