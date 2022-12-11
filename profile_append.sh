@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # start cron job to reclaim WSL2 memory for windows OS re-use every minute
 # run following:
 # sudo echo 3 > /proc/sys/vm/drop_caches && sudo touch /root/drop_caches_last_run
@@ -10,7 +12,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
   umask 022
 fi
 
-mkdir -p $HOME/.local/bin
+mkdir -p "$HOME/.local/bin"
 
 if [ -d "$HOME/dotfiles/scripts" ] ; then
     PATH="$HOME/dotfiles/scripts:$PATH"
