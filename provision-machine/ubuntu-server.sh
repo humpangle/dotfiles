@@ -825,7 +825,19 @@ function install-python {
 
   . "$HOME/.asdf/asdf.sh"
 
-  pip install -U pip 2>/dev/null || true
+  if _is-dev "$@"; then
+    pip install -U \
+      pip \
+      pynvim \
+      jupyterlab \
+      2>/dev/null ||
+      true
+  else
+    pip install -U \
+      pip \
+      2>/dev/null ||
+      true
+  fi
 
   "$(_asdf-bin-path)" reshim python || true
 
