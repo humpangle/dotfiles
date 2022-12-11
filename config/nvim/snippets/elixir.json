@@ -791,7 +791,11 @@
       "test_interactive_mix"
     ],
     "body": [
-      "$0{:mix_test_interactive, \"~> 1.2\", only: [:dev, :test], runtime: false}",
+      "{",
+      "  :mix_test_interactive,",
+      "  \"~> 1.2\",",
+      "  only: [:dev, :test], runtime: false",
+      "}",
       "if Mix.env() == :dev || Mix.env() == :test do",
       "  config :mix_test_interactive,",
       "    clear: true,",
