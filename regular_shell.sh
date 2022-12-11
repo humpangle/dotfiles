@@ -541,6 +541,14 @@ fi
 
 pathmunge "/usr/lib/dart/bin" "after"
 
+function python-current {
+  asdf current python | awk '{print $2}'
+}
+
+function current-python {
+  python-current
+}
+
 # if [ -d "$HOME/.pyenv" ]; then
 #   export PYENV_ROOT="$HOME/.pyenv"
 #   pathmunge "$PYENV_ROOT"
