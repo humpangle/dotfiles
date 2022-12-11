@@ -760,6 +760,15 @@ if [ -d "$HOME/.asdf" ]; then
   fi
 fi
 
+function check-wsl-distro-name {
+  : "Check if WSL distro name has been set"
+
+  if [[ -z "$WSL_DISTRO_NAME" ]]; then
+    echo -e "\n Please set WSL_DISTRO_NAME environment variable\n"
+    exit 1
+  fi
+}
+
 if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
   export HAS_WSL2=1
   # following needed so that cypress browser testing can work in WSL2
@@ -777,6 +786,7 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
   alias e.='/c/WINDOWS/explorer.exe .'
   alias wslexe='/c/WINDOWS/system32/wsl.exe'
   alias wsls="_save_tmux || true; wslexe --shutdown"
+  alias wslt="check-wsl-distro-name && { _save_tmux || true; wslexe --terminate $WSL_DISTRO_NAME ; }"
   alias ubuntu18='wslexe --distribution Ubuntu'
   alias ubuntu20='wslexe --distribution Ubuntu-20.04'
   alias ubuntu22='wslexe --distribution Ubuntu-22.04'
