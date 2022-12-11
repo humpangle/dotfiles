@@ -967,6 +967,7 @@ function setup-dev {
   ln -s ~/dotfiles/config/erlang_ls/erlang_ls.config ~/.config/erlang_ls
   ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
   ln -s ~/dotfiles/config/vifm/vifmrc ~/.config/vifm/vifmrc
+  ln -s ~/dotfiles/.config/shellcheckrc ~/.config
 
   [[ -e ~/dotfiles/to_snippet_vscode.py ]] &&
     chmod 755 ~/dotfiles/to_snippet_vscode.py
