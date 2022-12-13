@@ -473,6 +473,8 @@ nnoremap ,rm :call DeleteFile()<CR>
 nnoremap <Leader>ps :PackerSync<CR>
 nnoremap <Leader>pc :PackerCompile<CR>
 
+nnoremap ,oe :silent !open-explorer.sh %:p:h<CR>
+
 """""""""""""""""""" Functions """"""""""""""""""""
 " DELETE CURRENT FILE
 function! DeleteFile()
