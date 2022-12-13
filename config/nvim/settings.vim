@@ -190,6 +190,8 @@ augroup filetypes
   au BufNewFile,BufRead *.service set filetype=systemd
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
+  au BufReadPre *.doc,*.docx set ro
+
   " Ansible
   au BufRead,BufNewFile */playbooks/*.y*ml,inventory.y*ml set filetype=yaml.ansible
 
