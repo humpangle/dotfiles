@@ -23,6 +23,8 @@
 	filemode = false
 	editor = nvim
 	excludesfile = ~/.gitignore
+  # Print utf8 pathnames
+	quotePath = false
 [commit]
 	verbose = true
 [difftool]
