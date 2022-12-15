@@ -54,5 +54,24 @@ autocmd User fugitive
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
 
+autocmd FileType gitcommit
+  \ nnoremap <buffer> <leader>wq :call EbnisSaveCommitBuffer()<CR>
+
 " git log --decorate=full
 let g:fugitive_summary_format = '%d %s'
+
+function! EbnisSaveCommitBuffer()
+  let max_tab_number = tabpagenr('$')
+  let current_tab_number = tabpagenr()
+
+  if max_tab_number == current_tab_number
+    execute ':write %'
+    execute ':quit'
+    execute ':quit'
+  else
+    execute ':write %'
+    execute ':quit'
+    execute ':tabprevious'
+    execute ':quit'
+  endif
+endfunction
