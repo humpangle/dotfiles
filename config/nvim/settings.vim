@@ -146,6 +146,11 @@ set relativenumber
 " Use Ripgrep for vimgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
+" Paste text unmodified from other applications.
+" https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste
+set paste
+set nopaste
+
 " START NATIVE FUZZY FIND SETTINGS
 " set nocompatible " Limit search to project directory
 " set path+=** " Search all subdirectories recursively
