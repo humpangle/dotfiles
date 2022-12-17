@@ -170,6 +170,9 @@ augroup END
 
 augroup filetypes
   au!
+
+  autocmd VimEnter * PackerCompile
+
   autocmd! FileType json set filetype=jsonc
   autocmd! FileType vifm set filetype=vim
   " autocmd! FileType mysql set filetype=sql
