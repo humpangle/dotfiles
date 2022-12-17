@@ -71,7 +71,7 @@ remove_vim_sessionf() {
   ME=$(pwd)
   filename="${ME//\//%}"
   absolute_path="$HOME/.vim/session/$filename.vim"
-  rm "$absolute_path"
+  rm -rf "$absolute_path"
 }
 alias remove_vim_session=remove_vim_sessionf
 alias rmvs=remove_vim_sessionf
