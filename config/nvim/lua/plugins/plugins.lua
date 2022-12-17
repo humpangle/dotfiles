@@ -459,15 +459,37 @@ return packer.startup(function(use)
 
   -- tmux-like window navigation
   use({
-    "t9md/vim-choosewin",
-    config = function()
-      Cmd([[
-        " if you want to use overlay feature
-        let g:choosewin_overlay_enable = 1
-        " invoke with '-'
-        nmap <Leader>- <Plug>(choosewin)
+    use {
+      "s1n7ax/nvim-window-picker",
+      tag = "v1.*",
+      config = function()
+        require"window-picker".setup({
+          include_current_win = true,
+          show_prompt = false,
+          filter_rules = {bo = {buftype = {}}},
+        })
+
+        local picker = require("window-picker")
+
+        vim.keymap.set("n", "<leader>-", function()
+          local picked_window_id = picker.pick_window() or
+                                     vim.api.nvim_get_current_win()
+          vim.api.nvim_set_current_win(picked_window_id)
+        end, {desc = "Pick a window"})
+      end,
+    },
+    {
+      "t9md/vim-choosewin",
+      disable = true,
+      config = function()
+        Cmd([[
+      " if you want to use overlay feature
+      let g:choosewin_overlay_enable = 1
+      " invoke with '-'
+      nmap <Leader>- <Plug>(choosewin)
       ]])
-    end,
+      end,
+    },
   })
 
   -- Send text from vim to tmux/NeoVim :terminal etc
