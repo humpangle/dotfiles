@@ -927,6 +927,8 @@ function provision-dev {
 function setup-dev {
   : "Setup dev machine with dotfiles"
 
+  USERNAME="$(cmd.exe /c echo %USERNAME% 2>/dev/null)"
+
   if _has-wsl && [[ -z "$USERNAME" ]]; then
     echo -e "\nWindows OS username is required as USERNAME environment variable"
     exit
