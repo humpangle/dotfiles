@@ -12,8 +12,17 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
   umask 022
 fi
 
-mkdir -p "$HOME/.local/bin"
+# set PATH so it includes user's .local private bin if it exists
+if [ -d "$HOME/.local/bin" ]; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
 
-if [ -d "$HOME/dotfiles/scripts" ] ; then
-    PATH="$HOME/dotfiles/scripts:$PATH"
+if [ -d "$HOME/dotfiles/scripts" ]; then
+  PATH="$HOME/dotfiles/scripts:$PATH"
+fi
+
+if [ -d "$HOME/.poetry" ]; then
+  PATH="$HOME/.poetry/bin:$PATH"
+  alias ptys='poetry shell'
+  alias pty='poetry'
 fi

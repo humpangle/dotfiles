@@ -948,8 +948,6 @@ function setup-dev {
     ~/.config \
     ~/.config/erlang_ls
 
-  _write-local-bin-path-to-paths
-
   git clone https://github.com/humpangle/dotfiles ~/dotfiles
 
   _setup-wsl-home

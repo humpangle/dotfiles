@@ -875,12 +875,6 @@ fi
 # https://github.com/microsoft/WSL/issues/7915#issuecomment-1163333151
 # sudo /etc/init.d/dbus start &>/dev/null
 
-if [ -d "$HOME/.poetry" ]; then
-  pathmunge "$HOME/.poetry/bin"
-  alias ptys='poetry shell'
-  alias pty='poetry'
-fi
-
 alias ctl='systemctl --user'
 alias sctl='sudo systemctl'
 
