@@ -488,6 +488,17 @@ function install-neovim {
   chmod ugo+x "$HOME/.local/bin/shfmt"
 
   if _is-dev "$@"; then
+    local packer_install_dir=~/.local/share/nvim/site/pack/packer/start
+
+    git clone --depth 1 \
+      https://github.com/wbthomason/packer.nvim \
+      "${packer_install_dir}/packer.nvim"
+
+    nvim \
+      --headless \
+      -c 'autocmd User PackerComplete quitall' \
+      -c 'PackerSync' 2>/dev/null
+
     _echo-begin-install "WE'LL BE USING DOTFILES FOR NEOVIM CONFIG. RETURNING."
     return
   fi
@@ -942,7 +953,6 @@ function setup-dev {
 
   install-tmux dev
   install-vifm dev
-  install-neovim dev
 
   mkdir -p "${LOCAL_BIN_PATH}" \
     ~/projects/0 \
@@ -954,10 +964,6 @@ function setup-dev {
 
   _setup-wsl-home
 
-  cp ~/dotfiles/etc/sudoers.d/user_defaults "${HOME}"
-
-  sed -i -e "s/username/$USER/g" ~/user_defaults
-  sed -i -e "s|__NEOVIM_BIN__|$(which nvim)|g" ~/user_defaults
   sudo chown root:root ~/user_defaults
   sudo mv ~/user_defaults /etc/sudoers.d/
 
@@ -996,10 +1002,9 @@ function setup-dev {
 
   echo "export INTELEPHENSE_LICENCE=''" >>~/.bashrc
 
-  # Other things to install
+  install-golang dev || true
   install-nodejs dev || true
   install-python dev || true
-  install-golang dev || true
 
   # Installing lua will also install rust because of stylua
   install-lua dev || true
@@ -1014,10 +1019,14 @@ function setup-dev {
   fi
 
   install-docker dev || true
+  install-neovim dev
 
   sudo apt-get autoremove -y
 
-  sudo rm -rf /etc/resolv.conf
+  cp ~/dotfiles/etc/sudoers.d/user_defaults "${HOME}"
+
+  sed -i -e "s/username/$USER/g" ~/user_defaults
+  sed -i -e "s|__NEOVIM_BIN__|$(which nvim)|g" ~/user_defaults
 
   echo "${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --terminate"
 }
