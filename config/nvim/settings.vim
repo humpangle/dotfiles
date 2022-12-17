@@ -269,12 +269,13 @@ nmap <Leader>x "+x
 nmap <Leader>P "+P
 vmap <Leader>P "+P
 " Yank all
-nnoremap <Leader>yA ggVG"+y<bar><C-o>
-nnoremap <Leader>yY ggVG"+y
-nnoremap <Leader>y+ ggVG"+y<bar><C-o>
+nnoremap <Leader>yA :%y<bar>:let @+=@"<CR>
+nnoremap <Leader>y+ :%y<bar>:let @+=@"<CR>
+nnoremap <Leader>YY :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>ya :%y<CR>
-nnoremap <Leader>yz ggVG"zy<bar><C-o>
-nnoremap <Leader>y/ :let @+=@/<CR>
+nnoremap <Leader>yz :%y<bar>:let @z=@"<CR>
+nnoremap <Leader>y/ vgny<bar>:let @+=@"<CR> <bar>" yank highlighted
+nnoremap ,y/        vgny<bar>:let @+=@"<CR> <bar>" yank highlighted
 
 " https://vi.stackexchange.com/a/17757
 " To share register between editor instances
