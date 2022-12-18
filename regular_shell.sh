@@ -786,11 +786,6 @@ function check-wsl-distro-name {
 }
 
 function _edit-windows-terminal-settings {
-  if [ -z "$WT_SESSION" ]; then
-    echo "Windows terminal is not running. Quitting!"
-    exit 0
-  fi
-
   local settings_path
 
   settings_path="$(
