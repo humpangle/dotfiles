@@ -48,6 +48,7 @@
         "size": 11
       },
       "historySize": 100000,
+      "padding": "0, 0, 0, 0",
       "scrollbarState": "hidden"
     },
     "list": [
