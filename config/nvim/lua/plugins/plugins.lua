@@ -444,7 +444,7 @@ return packer.startup(function(use)
           " sqlite - sqlite:path-to-sqlite-database
           " :w = execute query in open buffer
 
-          nnoremap <leader>du :DBUI<CR>
+          nnoremap <leader>du :tab new<bar>:DBUI<CR><C-w>o
           nnoremap <leader>df :DBUIFindBuffer<CR>
           nnoremap <leader>dr :DBUIRenameBuffer<CR>
           nnoremap <leader>dl :DBUILastQueryInfo<CR>
