@@ -800,6 +800,10 @@ function _edit-windows-terminal-settings {
 alias edit_wt='nvim _edit-windows-terminal-settings'
 alias wt='_edit-windows-terminal-settings'
 
+function _set-display {
+  echo "$(ip route | awk '/default/ {print $3}'):0.0"
+}
+
 if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
   export HAS_WSL2=1
   # following needed so that cypress browser testing can work in WSL2
@@ -822,6 +826,7 @@ if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
   alias ubuntu20='wslexe --distribution Ubuntu-20.04'
   alias ubuntu22='wslexe --distribution Ubuntu-22.04'
   alias nameserver="sudo $NAME_SERVER_SCRIPT"
+  alias set-display="export DISPLAY=$(_set-display)"
 
   # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
   # up memory, this command will free your memory after about 20-30 seconds.
