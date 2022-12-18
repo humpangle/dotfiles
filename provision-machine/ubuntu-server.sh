@@ -975,6 +975,9 @@ function setup-dev {
   ln -s ~/dotfiles/config/vifm/vifmrc ~/.config/vifm/vifmrc
   ln -s ~/dotfiles/.config/shellcheckrc ~/.config
 
+  touch ~/dotfiles/snippet_in.txt
+  touch ~/dotfiles/snippet_out.json
+
   [[ -e ~/dotfiles/to_snippet_vscode.py ]] &&
     chmod 755 ~/dotfiles/to_snippet_vscode.py
 
