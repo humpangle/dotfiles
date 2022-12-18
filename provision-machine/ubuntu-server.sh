@@ -943,6 +943,8 @@ function setup-dev {
   if _has-wsl && [[ -z "$USERNAME" ]]; then
     echo -e "\nWindows OS username is required as USERNAME environment variable"
     exit
+  else
+    echo "export USERNAME=${USERNAME}" >>~/.bashrc
   fi
 
   _echo-begin-install "SETUP DEV MACHINE WITH DOTFILE"
