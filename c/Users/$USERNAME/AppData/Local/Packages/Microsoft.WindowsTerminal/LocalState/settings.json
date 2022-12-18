@@ -39,7 +39,7 @@
   "profiles": {
     "defaults": {
       "bellStyle": ["window", "taskbar"],
-      "closeOnExit": "automatic",
+      "closeOnExit": "always",
       "colorScheme": "Gruvbox Dark",
       "cursorColor": "#FFB261",
       "cursorShape": "vintage",
