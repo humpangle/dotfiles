@@ -12,6 +12,7 @@ usage() {
   echo "Usage: parse-args [ -s | --string ]
                   [ -f | --format yaml|yml ]
                   [ -o | --output   /some/path ]
+                  [ -d | --debug ]
                   env-file"
   exit 2
 }
@@ -23,6 +24,7 @@ in_file=
 string=
 exec_cmd=
 cwd=
+debug=
 
 function parse-args {
   # -allow a command to fail with !’s side effect on errexit
@@ -34,8 +36,8 @@ function parse-args {
   fi
 
   # option --output/-o requires 1 argument
-  LONGOPTS=string,format:,output:,exec:,cwd:,verbose
-  OPTIONS=sf:o:e:v
+  LONGOPTS=string,debug,format:,output:,exec:,cwd:,verbose
+  OPTIONS=sdf:o:e:v
 
   # -regarding ! and PIPESTATUS see above
   # -temporarily store output to be able to check for errors
@@ -56,6 +58,10 @@ function parse-args {
     case "$1" in
       -s | --string)
         string=y
+        shift
+        ;;
+      -d | --debug)
+        debug=y
         shift
         ;;
       -f | --format)
@@ -118,6 +124,8 @@ while read -r line; do
   if [[ "$line" =~ $line_regex ]]; then
     key=$(echo "$line" | cut -d '=' -f 1)
     val=$(echo "$line" | cut -d'=' -f 2-)
+
+    [[ -n "$debug" ]] && echo "$key=$val"
 
     for line_with_varirables in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
       variable_text="\${$line_with_varirables}"
