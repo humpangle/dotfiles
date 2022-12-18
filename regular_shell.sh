@@ -785,6 +785,26 @@ function check-wsl-distro-name {
   fi
 }
 
+function _edit-windows-terminal-settings {
+  if [ -z "$WT_SESSION" ]; then
+    echo "Windows terminal is not running. Quitting!"
+    exit 0
+  fi
+
+  local settings_path
+
+  settings_path="$(
+    find \
+      "/c/Users/$USERNAME/AppData/Local/Packages" \
+      -type f -path '*/Microsoft.WindowsTerminal*/LocalState/settings.json'
+  )"
+
+  echo "$settings_path"
+}
+
+alias edit_wt='nvim _edit-windows-terminal-settings'
+alias wt='_edit-windows-terminal-settings'
+
 if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
   export HAS_WSL2=1
   # following needed so that cypress browser testing can work in WSL2
