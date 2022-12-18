@@ -1027,6 +1027,7 @@ function setup-dev {
 
   sed -i -e "s/username/$USER/g" ~/user_defaults
   sed -i -e "s|__NEOVIM_BIN__|$(which nvim)|g" ~/user_defaults
+  sudo mv ~/user_defaults /etc/sudoers.d/
 
   echo "${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --terminate"
 }
