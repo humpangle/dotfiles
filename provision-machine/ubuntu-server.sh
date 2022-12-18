@@ -978,6 +978,8 @@ function setup-dev {
   touch ~/dotfiles/snippet_in.txt
   touch ~/dotfiles/snippet_out.json
 
+  sed -i -e "s/filemode = true/filemode = false/" ~/dotfiles/.git/config
+
   [[ -e ~/dotfiles/to_snippet_vscode.py ]] &&
     chmod 755 ~/dotfiles/to_snippet_vscode.py
 
