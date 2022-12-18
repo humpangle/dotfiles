@@ -30,6 +30,7 @@
       "keys": "alt+shift+d"
     }
   ],
+  "alwaysShowTabs": true,
   "copyFormatting": "none",
   "copyOnSelect": true,
   "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
@@ -38,15 +39,15 @@
   "profiles": {
     "defaults": {
       "bellStyle": ["window", "taskbar"],
-      "closeOnExit": "graceful",
+      "closeOnExit": "automatic",
       "colorScheme": "Gruvbox Dark",
       "cursorColor": "#FFB261",
       "cursorShape": "vintage",
       "font": {
         "face": "CaskaydiaCove NF",
-        "size": 12
+        "size": 11
       },
-      "historySize": 11141,
+      "historySize": 100000,
       "scrollbarState": "hidden"
     },
     "list": [
