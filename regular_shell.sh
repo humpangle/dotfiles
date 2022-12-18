@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155,2139,2086,1090
 
+# Inverted cursor workaround for windows terminal
+# https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268
+if [ -n "$WT_SESSION" ]; then
+  PS1="\[\e[0 q\e[?12l\]$PS1"
+fi
+
 ###### START COMMONS ##################
 
 if [[ -e /usr/local/bin/aws_completer ]]; then
