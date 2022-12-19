@@ -485,7 +485,7 @@ nnoremap ,rm :call DeleteFile()<CR>
 nnoremap <Leader>ps :PackerSync<CR>
 nnoremap <Leader>pc :PackerCompile<CR>
 
-nnoremap ,oe :silent !open-explorer.sh %:p:h<CR>
+nnoremap ,oe :silent !open-wsl-explorer.sh %:p:h<CR>
 
 " Inverted cursor workaround for windows terminal
 " https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268
