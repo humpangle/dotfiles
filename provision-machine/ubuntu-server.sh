@@ -5,7 +5,7 @@ set -o pipefail
 
 INITIAL_WSL_C_PATH=/mnt/c
 
-ERLANG_VERSION=25.1.2
+ERLANG_VERSION=25.2
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
