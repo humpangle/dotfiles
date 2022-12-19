@@ -34,8 +34,10 @@ nnoremap <leader>ss  :Git stash show -p stash@{}<left>
 nnoremap <leader>su  :Git stash -u push -m ''<left>
 
 nnoremap <leader>ca  :Git commit --amend
-" nnoremap <leader>gc  :tab new <bar> :Git commit<cr> <bar> :call DeleteAllBuffers('e')<cr>
+
 nnoremap <leader>gc  :Git commit<bar>:tab split<CR>
+nnoremap <leader>gC  :Git commit<CR>
+
 nnoremap <leader>ce  :Git commit --amend --no-edit
 " -z means empty in bash - hence cz means allow empty
 nnoremap <leader>cz  :Git commit --allow-empty -m ""<left>
