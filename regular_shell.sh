@@ -543,9 +543,7 @@ function _phpunit {
   fi
 }
 
-if [ -z "$PHP_IS_SET" ] &&
-  [ -x "$(command -v php)" ]; then
-  export PHP_IS_SET=1
+if [ -x "$(command -v php)" ]; then
   export -f _phpunit
   alias pu='_phpunit'
 
@@ -556,6 +554,11 @@ if [ -z "$PHP_IS_SET" ] &&
   alias artisan='php artisan'
 
   alias scmstorage='sudo chmod -R 777 storage'
+
+  alias cmp='composer'
+  alias cmpr='composer require'
+  alias cmprd='composer require --dev'
+  alias cmpd='composer dumpautoload -o'
 fi
 
 pathmunge "/usr/lib/dart/bin" "after"
