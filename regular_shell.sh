@@ -535,7 +535,20 @@ pathmunge "$GEM_HOME/bin"
 # Do not use PHP PEAR when installing PHP with asdf
 export PHP_WITHOUT_PEAR='yes'
 
-if [ -x "$(command -v php)" ]; then
+function _phpunit {
+  if command -v phpunit >/dev/null; then
+    phpunit --testdox "$@"
+  else
+    ./vendor/bin/phpunit --testdox "$@"
+  fi
+}
+
+if [ -z "$PHP_IS_SET" ] &&
+  [ -x "$(command -v php)" ]; then
+  export PHP_IS_SET=1
+  export -f _phpunit
+  alias pu='_phpunit'
+
   # debian pkg bsdgames
   alias sail='./vendor/bin/sail'
   alias sailartisan='./vendor/bin/sail artisan'
