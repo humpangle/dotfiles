@@ -328,7 +328,7 @@
   },
   "php tag": {
     "prefix": ["php_tag", "tag_php"],
-    "body": ["<?php $0 ?>"],
+    "body": ["<?php", "declare(strict_types=1);", "$0", "?>"],
     "description": ["PHP Tag"]
   },
   "html comment": {
