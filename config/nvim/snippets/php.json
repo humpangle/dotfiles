@@ -362,5 +362,28 @@
       "?>"
     ],
     "description": ["Wordpress plugin template"]
+  },
+  "phpunit test": {
+    "prefix": ["phpunit_test", "test_phpunit"],
+    "body": [
+      "<?php",
+      "",
+      "declare(strict_types=1);",
+      "",
+      "use PHPUnit\\Framework\\TestCase;",
+      "use ${1:Namespace\\\\}${2:ClassName};",
+      "",
+      "final class ${2:ClassName}Test extends TestCase",
+      "{",
+      "      public function testCanBeUsedAsString(): void",
+      "      {",
+      "              \\$this->assertEquals(",
+      "                      ${0:\"user@example.com\"},",
+      "                      ${2:ClassName}::${3:fromString}(${4:\"val\"})",
+      "              );",
+      "      }",
+      "}"
+    ],
+    "description": ["PHPUnit test"]
   }
 }
