@@ -920,6 +920,23 @@ fi
 alias ctl='systemctl --user'
 alias sctl='sudo systemctl'
 
+function _cert-etc {
+  : "Publish host to /etc/hosts"
+  local host_entry="127.0.0.1 ${1}"
+
+  if [[ ! "$(cat /etc/hosts)" =~ $host_entry ]]; then
+    printf "%s\n" "$host_entry" | sudo tee -a /etc/hosts
+
+    # On chrome browser, enter into address bar:
+    #      chrome://flags/#allow-insecure-localhost
+  fi
+
+  echo -e "\n\n##### Also update on windows OS:"
+  echo -e "C:\Windows\System32\drivers\etc\hosts\n\n"
+}
+
+export -f _cert-etc
+
 #------------------------------------------------------------------------------
 # Complete all bash aliases
 # See https://github.com/cykerway/complete-alias#faq
