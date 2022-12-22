@@ -605,6 +605,25 @@ return packer.startup(function(use)
     },
   })
 
+  -- Generate random paragraph/country/word/nonsense
+  use({
+    "tkhren/vim-fake",
+    config = function()
+      Cmd([[
+          "" Get a nonsense text like Lorem ipsum
+          call fake#define('sentence', 'fake#capitalize('
+                  \ . 'join(map(range(fake#int(3,15)),"fake#gen(\"nonsense\")"))'
+                  \ . ' . fake#chars(1,"..............!?"))')
+
+          call fake#define('paragraph', 'join(map(range(fake#int(3,10)),"fake#gen(\"sentence\")"))')
+
+          "" Alias
+          call fake#define('p', 'fake#gen("paragraph")')
+          call fake#define('lorem', 'fake#gen("paragraph")')
+        ]])
+    end,
+  })
+
   -- Use <ctrl-h> <ctrl-j> <ctrl-k> <ctrl-l> <ctrl-\> to switch between vim
   -- and tmux splits
   -- use {"christoomey/vim-tmux-navigator"}
