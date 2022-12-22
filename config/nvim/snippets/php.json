@@ -188,11 +188,7 @@
   "public function": {
     "prefix": ["funpublic", "publicfunc"],
     "body": [
-      "/**",
-      "* @param ${4:mixed} \\$${3:params}",
-      "* @return mixed",
-      "*/",
-      "public ${1:static} function ${2:functionName}(\\$${3:params})",
+      "public ${1:static} function ${2:functionName}(${3:type} ${4:\\$params})",
       "{",
       "  $0",
       "}"
