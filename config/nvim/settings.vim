@@ -269,7 +269,6 @@ nmap <Leader>x "+x
 nmap <Leader>P "+P
 vmap <Leader>P "+P
 " Yank all
-nnoremap <Leader>yA :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>y+ :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>YY :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>ya :%y<CR>
