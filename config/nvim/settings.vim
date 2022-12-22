@@ -271,7 +271,7 @@ vmap <Leader>P "+P
 " Yank all
 nnoremap <Leader>y+ :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>YY :%y<bar>:let @+=@"<CR>
-nnoremap <Leader>ya :%y<CR>
+nnoremap <Leader>ya :%y<bar>:let @a=@"<CR>
 nnoremap <Leader>yz :%y<bar>:let @z=@"<CR>
 nnoremap <Leader>y/ vgny<bar>:let @+=@"<CR> <bar>" yank highlighted
 nnoremap ,y/        vgny<bar>:let @+=@"<CR> <bar>" yank highlighted
