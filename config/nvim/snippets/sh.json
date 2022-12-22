@@ -125,5 +125,21 @@
       "time \"\\${@:-help}\""
     ],
     "description": ["Help function for run.sh scripts"]
+  },
+  "raise on no env": {
+    "prefix": ["raise_on_no_env_file", "env_file_raise"],
+    "body": [
+      "function _raise_on_no_env_file {",
+      "  if [[ -n \"\\$ENV_FILE\" ]]; then",
+      "      if [[ \"\\$ENV_FILE\" =~ .env.example ]]; then",
+      "          printf \"\\nERROR: env filename can not be .env.example.\\n\\n\"",
+      "          exit 1",
+      "      fi",
+      "",
+      "      return 0",
+      "  fi",
+      "}"
+    ],
+    "description": ["Raise on no env file"]
   }
 }
