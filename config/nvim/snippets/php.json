@@ -381,5 +381,17 @@
       "}"
     ],
     "description": ["PHPUnit test"]
+  },
+  "PDO connection": {
+    "prefix": ["pdo_connection_string", "db_connection_pdo_string"],
+    "body": [
+      "\\$connString = \"mysql\" .",
+      "  \":host=\" . \"127.0.0.1\" .",
+      "  \";port=\" . DB_CONNECTION_PORT .",
+      "  \";dbname=\" . DB_DATABASE;",
+      "",
+      "\\$db = new PDO(\\$connString, DB_USERNAME, DB_PASSWORD);"
+    ],
+    "description": ["PDO Connection"]
   }
 }
