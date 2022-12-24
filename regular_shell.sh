@@ -556,6 +556,7 @@ if [ -x "$(command -v php)" ]; then
   alias scmstorage='sudo chmod -R 777 storage'
 
   alias cmp='composer'
+  alias cmpi='composer install'
   alias cmpr='composer require'
   alias cmprd='composer require --dev'
   alias cmpd='composer dumpautoload -o'
