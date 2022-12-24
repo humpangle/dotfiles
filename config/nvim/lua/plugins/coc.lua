@@ -175,6 +175,7 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 nmap ,o :OR<CR>
 
 nnoremap <leader>rs :<C-u>CocRestart<cr>
+nnoremap <leader>rd :<C-u>CocDisable<cr>
 nmap <Leader>ch :CocSearch <Right>
 
 " Mappings for CoCList
