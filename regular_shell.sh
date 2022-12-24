@@ -942,6 +942,7 @@ function _cert-etc {
 }
 
 export -f _cert-etc
+alias cert-etc='_cert-etc'
 
 #------------------------------------------------------------------------------
 # Complete all bash aliases
