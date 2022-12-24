@@ -923,6 +923,11 @@ alias sctl='sudo systemctl'
 
 function _cert-etc {
   : "Publish host to /etc/hosts"
+  if [ -z "$1" ]; then
+    echo -e "\n Please provide a domain\n"
+    return
+  fi
+
   local host_entry="127.0.0.1 ${1}"
 
   if [[ ! "$(cat /etc/hosts)" =~ $host_entry ]]; then
