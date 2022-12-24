@@ -174,7 +174,7 @@ nmap <leader>fp :Prettier<CR>
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 nmap ,o :OR<CR>
 
-nnoremap <silent> <leader>rs :<C-u>CocRestart<cr><cr>
+nnoremap <leader>rs :<C-u>CocRestart<cr>
 nmap <Leader>ch :CocSearch <Right>
 
 " Mappings for CoCList
