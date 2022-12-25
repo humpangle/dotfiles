@@ -944,6 +944,8 @@ function _cert-etc {
 export -f _cert-etc
 alias cert-etc='_cert-etc'
 
+alias cpath='pwd | xclip'
+
 #------------------------------------------------------------------------------
 # Complete all bash aliases
 # See https://github.com/cykerway/complete-alias#faq
