@@ -333,7 +333,7 @@ nnoremap yoq :cclose<cr>
 nnoremap <leader>%e :e! %<Cr>
 
 " create the new directory am already working in
-nnoremap ,md :!mkdir -p %:h<cr>
+nnoremap ,md :!mkdir -p %:h<cr>:w %<CR>
 " edit .bashrc file
 nnoremap ,. :tab split<cr>:e ~/.bashrc<CR>
 
