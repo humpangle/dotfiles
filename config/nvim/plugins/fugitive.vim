@@ -62,11 +62,18 @@ autocmd FileType gitcommit
 let g:fugitive_summary_format = '%d %s'
 
 function! EbnisSaveCommitBuffer()
+  if winnr() != 1
+    execute ':write %'
+    execute ':quit'
+    return
+  endif
+
   let max_tab_number = tabpagenr('$')
   let current_tab_number = tabpagenr()
 
-  if max_tab_number == current_tab_number
+  if  max_tab_number == current_tab_number
     execute ':write %'
+    " Quit twice to return to previous tab
     execute ':quit'
     execute ':quit'
   else
