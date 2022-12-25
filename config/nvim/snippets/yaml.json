@@ -25,6 +25,7 @@
       "      - \"./docker/data/\\${COMPOSE_PROJECT_NAME}:/var/lib/mysql\"",
       "  ports:",
       "      - \"\\${DOCKER_PUBLISH_DB_PORT:-3306}:3306\"",
+      "  env_file: \"\\${ENV_FILE:-.env}\"",
       "  healthcheck:",
       "      test: [\"CMD\", \"mysqladmin\", \"ping\", \"-p\\${DB_PASSWORD}\"]",
       "      retries: 3",
