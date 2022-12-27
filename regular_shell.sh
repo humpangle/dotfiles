@@ -821,7 +821,7 @@ function _set-display {
   echo "$(ip route | awk '/default/ {print $3}'):0.0"
 }
 
-if [ -n "$HAS_WSL2" ] || [[ "$(uname -r)" == *WSL2 ]]; then
+if [[ "$(uname -r)" == *WSL2 ]]; then
   export HAS_WSL2=1
   # following needed so that cypress browser testing can work in WSL2
   # WSL_HOST_IP environment var no longer works in microsoft version of WLS If
