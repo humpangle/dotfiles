@@ -822,6 +822,14 @@ function _set-display {
 }
 
 if [[ "$(uname -r)" == *WSL2 ]]; then
+  function _open-wsl-explorer {
+    if [ -n "$1" ]; then
+      /c/WINDOWS/explorer.exe "${1}"
+    else
+      /c/WINDOWS/explorer.exe .
+    fi
+  }
+
   export HAS_WSL2=1
   # following needed so that cypress browser testing can work in WSL2
   # WSL_HOST_IP environment var no longer works in microsoft version of WLS If
@@ -835,7 +843,7 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
 
   NAME_SERVER_SCRIPT="$HOME/dotfiles/etc/wsl-nameserver.sh"
 
-  alias e.='/c/WINDOWS/explorer.exe .'
+  alias e.='_open-wsl-explorer'
   alias wslexe='/c/WINDOWS/system32/wsl.exe'
   alias wsls="_save_tmux || true; wslexe --shutdown"
   alias wslt="check-wsl-distro-name && { _save_tmux || true; wslexe --terminate $WSL_DISTRO_NAME ; }"
