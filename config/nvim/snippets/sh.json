@@ -140,5 +140,20 @@
       "}"
     ],
     "description": ["Raise on no env file"]
+  },
+  "browser sync start": {
+    "prefix": ["browser_sync_start", "start_browser_sync"],
+    "body": [
+      "browser-sync start \\",
+      "  --port \"browser-sync-port\" \\",
+      "  --no-ui --no-open --no-notify \\",
+      "  --proxy \"localhost:server_port\" \\",
+      "  --files src/**/** \\",
+      "  --files views/**/** \\",
+      "  --files public/**/** &",
+      "",
+      "echo -n \"\\$!\" >./.___pid/browser-sync"
+    ],
+    "description": ["Browser sync start"]
   }
 }
