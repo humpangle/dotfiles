@@ -273,8 +273,8 @@ nnoremap <Leader>y+ :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>YY :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>ya :%y<bar>:let @a=@"<CR>
 nnoremap <Leader>yz :%y<bar>:let @z=@"<CR>
-nnoremap <Leader>y/ vgny<bar>:let @+=@"<CR> <bar>" yank highlighted
-nnoremap ,y/        vgny<bar>:let @+=@"<CR> <bar>" yank highlighted
+nnoremap <Leader>y/ nvgny<bar>:let @+=@"<CR> <bar>" yank highlighted
+nnoremap ,y/        nvgny<bar>:let @+=@"<CR> <bar>" yank highlighted
 
 " https://vi.stackexchange.com/a/17757
 " To share register between editor instances
