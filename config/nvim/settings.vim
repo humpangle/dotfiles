@@ -349,7 +349,7 @@ endfunction
 augroup netrw_mapping
   autocmd!
   autocmd filetype netrw call NetrwMapping()
-  autocmd BufEnter * if strlen(&ft) < 1 | call NetrwMapping()
+  " autocmd BufEnter * if strlen(&ft) < 1 | call NetrwMapping()
 augroup END
 
 " Open Netrw in current working directory
