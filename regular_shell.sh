@@ -958,7 +958,5 @@ alias cpath='pwd | xclip'
 # Complete all bash aliases
 # See https://github.com/cykerway/complete-alias#faq
 #------------------------------------------------------------------------------
-if [[ -e "$HOME/.bash_completion" && -e "$HOME/complete_alias.sh" ]]; then
-  complete -F _complete_alias ctl
-  complete -F _complete_alias sctl
-fi
+complete -F _complete_alias ctl 2</dev/null || true
+complete -F _complete_alias sctl 2</dev/null || true
