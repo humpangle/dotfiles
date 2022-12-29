@@ -250,9 +250,9 @@ setenvs() {
     fi
   done
 
-  set -a
+  set -o allexport
   . "$path"
-  set +a
+  set +o allexport
 
   ENV_FILE="${path}"
 
