@@ -356,138 +356,9 @@ fi
 # END COMMONS
 # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# DOCKER
-# -----------------------------------------------------------------------------
-export DOCKER_BUILDKIT=1
-export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
-
-alias d='docker'
-alias docker-compose='docker compose'
-# docker remove all containers
-alias drac='docker rm $(docker ps -a -q)'
-# docker remove all containers force
-alias dracf='docker rm $(docker ps -a -q) --force'
-alias drim='docker rmi'
-alias dim='docker images'
-alias dps='docker ps'
-alias dpsa='docker ps -a'
-alias dc='docker compose'
-alias dce='docker compose exec'
-alias de='docker exec -it'
-alias dcu='docker compose up'
-alias dcub='docker compose up --build'
-alias dcud='docker compose up -d'
-alias dcb='docker compose build'
-alias db='docker build -t'
-alias dcl='docker compose logs'
-alias dclf='docker compose logs -f'
-alias dck='docker compose kill'
-alias dcd='docker compose down'
-alias dcdv='docker compose kill && docker compose down -v'
-alias dvra='docker volume rm $(docker volume ls -q)'
-alias dvls='docker volume ls'
-alias dvlsq='docker volume ls -q'
-alias ds='sudo service docker start'
-alias dn='docker network'
-alias dnls='docker network ls'
-alias dcps='docker compose ps'
-alias dcpsa='docker compose ps -a'
-
-alias drmlogs--description='drmlogs container_name_or_ID [..container_name_or_ID] ,,, docker remove logs:'
-
-alias d-dangling='dim -qf dangling=true | xargs docker rmi -f'
-alias ddangling='dim -qf dangling=true | xargs docker rmi -f'
-
-# docker compose up --daemon and logs --follow
-dcudlf() {
-  docker compose up -d "$@"
-  docker compose logs -f "$@"
-}
-
-alias dcudl='dcudlf'
-alias dcudl--description='docker up daemon and logs'
-
-# docker compose restart and logs --follow
-dcrsf() {
-  docker compose restart "$@"
-  docker compose logs -f "$@"
-}
-alias dcrs='dcrsf'
-
-dimgf() {
-  docker images | grep -P "$1" | awk '{print $3}'
-}
-alias dimg='dimgf'
-alias drimg='dimgf'
-# shellcheck disable=2027
-alias dimg___description="docker images | grep "$1" | awk '{print $3}'"
-
 alias ngrokd='ngrok http'
 
-# -----------------------------------------------------------------------------
-# MINIKUBE/KUBERNETES
-# -----------------------------------------------------------------------------
-alias mk='minikube'
-alias mkss='minikube status'
-alias mkp='minikube profile'
-alias mkpd='minikube profile minikube'
-alias mkpl='minikube profile list'
-alias mks='minikube start -p'
-alias mksd='minikube start -p minikube'
-alias mkst='minikube stop -p'
-alias mkstd='minikube stop -p minikube'
-alias mksv='minikube service'
-alias mkrm='minikube delete -p'
-alias mkrmd='minikube delete -p minikube'
-alias mkd='minikube dashboard'
-alias mkt='minikube tunnel &'
-alias mki='minikube image load'
-alias kb='kubectl'
-alias kbg='kubectl get --namespace'
-alias kbgp='kubectl get pod --namespace'
-alias kbgpd='kubectl get pod --namespace default'
-alias kbgn='kubectl get nodes'
-alias kbga='kubectl get all --namespace'
-alias kbgad='kubectl get all --namespace default'
-alias kbgaa='kubectl get all --all-namespaces'
-alias kbgi='kubectl get ingress --namespace'
-alias kbgid='kubectl get ingress --namespace default'
-alias kbgns='kubectl get namespaces'
-alias kbgd='kubectl get deployments --namespace'
-alias kbgdd='kubectl get deployments --namespace default'
-alias kbgs='kubectl get services --namespace'
-alias kbgsd='kubectl get services --namespace default'
-alias kbapp='kubectl apply --namespace'
-alias kbappd='kubectl apply --namespace default'
-alias kbappd='kubectl apply --namespace default'
-alias kbappf='kubectl apply --namespace -f'
-alias kbappfd='kubectl apply --namespace default -f'
-alias kbd='kubectl describe --namespace'
-alias kbdd='kubectl describe --namespace default'
-alias kbrm='kubectl delete --namespace'
-alias kbrmd='kubectl delete --namespace default'
-alias kbrmp='kubectl delete pods --namespace'
-alias kbrmpd='kubectl delete pods --namespace default'
-alias kbrma='kubectl delete all --all --namespace'
-alias kbrmad='kubectl delete all --all --namespace default'
-alias kbrmn='kubectl delete namespace'
-alias kbex='kubectl exec --namespace'
-alias kbexd='kubectl exec --namespace default'
-alias kbp='kubectl expose --namespace'
-alias kbpd='kubectl expose --namespace default'
-alias kbcn='kubectl create namespace'
-alias kbc='kubectl create --namespace'
-alias kbcd='kubectl create --namespace default'
-alias kbpf='kubectl port-forward --namespace'
-alias kbpfd='kubectl port-forward --namespace default'
-alias kbe='kubectl edit --namespace'
-alias kbed='kubectl edit --namespace default'
-alias kbr='kubectl run --namespace'
-alias kbrd='kubectl run --namespace default'
-alias kbcg='kubectl config --namespace'
-alias kbs='kubectl scale --namespace'
-alias kbsd='kubectl scale --namespace default'
+source "$HOME/dotfiles/_aliases.sh"
 
 # -----------------------------------------------------------------------------
 # PYTHON SECTION
@@ -754,25 +625,6 @@ mysql-startf() {
 alias mysql-start='mysql-startf'
 alias start-mysql='mysql-startf'
 
-# -----------------------------------------------------------------------------
-# TERRAFORM
-# -----------------------------------------------------------------------------
-
-alias tf='terraform'
-alias tfi='terraform init'
-alias tfp='terraform plan'
-alias tfpd='terraform plan -destroy'
-alias tfa='terraform apply'
-alias tfar='terraform apply -replace'
-alias tfaa='terraform apply -auto-approve'
-alias tfsl='terraform state list'
-alias tfss='terraform state show'
-alias tfs='terraform show'
-alias tfd='terraform destroy'
-alias tfdt='terraform destroy -target'
-alias tfda='terraform destroy -auto-approve'
-alias tfc='terraform console'
-
 alias ng="sudo nginx -g 'daemon off; master_process on;' &"
 alias ngd="sudo nginx -g 'daemon on; master_process on;'"
 alias ngk='pgrep -f nginx | xargs sudo kill -9'
@@ -926,9 +778,6 @@ fi
 # https://github.com/microsoft/WSL/issues/7915#issuecomment-1163333151
 # sudo /etc/init.d/dbus start &>/dev/null
 
-alias ctl='systemctl --user'
-alias sctl='sudo systemctl'
-
 function _cert-etc {
   : "Publish host to /etc/hosts"
   if [ -z "$1" ]; then
@@ -953,10 +802,3 @@ export -f _cert-etc
 alias cert-etc='_cert-etc'
 
 alias cpath='pwd | xclip'
-
-#------------------------------------------------------------------------------
-# Complete all bash aliases
-# See https://github.com/cykerway/complete-alias#faq
-#------------------------------------------------------------------------------
-complete -F _complete_alias ctl 2</dev/null || true
-complete -F _complete_alias sctl 2</dev/null || true
