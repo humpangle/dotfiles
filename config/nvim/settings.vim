@@ -353,8 +353,8 @@ augroup netrw_mapping
 augroup END
 
 " Open Netrw in current working directory
-nnoremap <c-E>
-  \ :let @s=getcwd()<cr>
+nnoremap <C-E>
+  \ :let @s=getcwd()<bar>
   \ :Vexplore <c-r>s<CR>
 
 " Open Netrw in current file's directory
