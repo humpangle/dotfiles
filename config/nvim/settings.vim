@@ -484,7 +484,11 @@ nnoremap ,rm :call DeleteFile()<CR>
 nnoremap <Leader>ps :PackerSync<CR>
 nnoremap <Leader>pc :PackerCompile<CR>
 
-nnoremap ,e. :silent !open-wsl-explorer.sh %:p:h<CR>
+if !empty($HAS_WSL2)
+  nnoremap ,e. :silent !open-wsl-explorer.sh %:p:h<CR>
+  nnoremap ,TT :execute("!ebnis-save-tmux.sh && $WSL_EXE --shutdown")<CR>
+  nnoremap <leader>TT :execute("! ebnis-save-tmux.sh && $WSL_EXE --terminate $WSL_DISTRO_NAME")<CR>
+endif
 
 " Inverted cursor workaround for windows terminal
 " https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268
