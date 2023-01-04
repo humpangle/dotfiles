@@ -88,11 +88,6 @@ alias rmvs=remove_vim_sessionf
 alias remove_vim_undo='rm -rf $HOME/.vim/undodir/*'
 alias rmvu='remove_vim_undo'
 
-# tmux
-function _save_tmux {
-  tmux ls &>/dev/null && $HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh
-}
-
 alias ta='tmux a -t'
 alias tad='tmux a -d -t'
 alias tap='cd ~/projects/php && tmux a -t php'
@@ -105,7 +100,7 @@ alias tnd='cd ~/dotfiles && tn dot'
 alias tadd='cd ~/dotfiles && ta dot'
 alias tks='tmux kill-session -t'
 alias tkss='tmux kill-server'
-alias ts=_save_tmux
+alias ts='ebnis-save-tmux.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
 runf() {
@@ -695,13 +690,14 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
 
   NAME_SERVER_SCRIPT="$HOME/dotfiles/etc/wsl-nameserver.sh"
 
+  export WSL_EXE='/c/WINDOWS/system32/wsl.exe'
+
   alias e.='_open-wsl-explorer'
-  alias wslexe='/c/WINDOWS/system32/wsl.exe'
-  alias wsls="_save_tmux || true; wslexe --shutdown"
-  alias wslt="check-wsl-distro-name && { _save_tmux || true; wslexe --terminate $WSL_DISTRO_NAME ; }"
-  alias ubuntu18='wslexe --distribution Ubuntu'
-  alias ubuntu20='wslexe --distribution Ubuntu-20.04'
-  alias ubuntu22='wslexe --distribution Ubuntu-22.04'
+  alias wsls="ebnis-save-tmux.sh && $WSL_EXE --shutdown"
+  alias wslt="check-wsl-distro-name && { ebnis-save-tmux.sh && $WSL_EXE --terminate $WSL_DISTRO_NAME ; }"
+  alias ubuntu18="$WSL_EXE --distribution Ubuntu"
+  alias ubuntu20="$WSL_EXE --distribution Ubuntu-20.04"
+  alias ubuntu22="$WSL_EXE --distribution Ubuntu-22.04"
   alias nameserver="sudo $NAME_SERVER_SCRIPT"
   alias set-display="export DISPLAY=$(_set-display)"
 
