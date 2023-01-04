@@ -46,7 +46,7 @@ alias packerremove='packerdelete'
 
 alias vi='/usr/bin/vim'
 alias vimdiff="nvim -d"
-alias v="packerdelete; nvim"
+alias v="packerdelete &>/dev/null; nvim"
 alias v.="v ."
 alias svim='sudo -E nvim'
 alias sv='sudo -E nvim'
