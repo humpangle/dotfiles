@@ -86,6 +86,7 @@ let g:markdown_fenced_languages = [
   \ 'elixir',
   \ 'eelixir',
   \ 'rest',
+  \ 'yaml',
 \]
 
 syntax enable
@@ -162,6 +163,11 @@ set relativenumber
 
 " Use Ripgrep for vimgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
+" Paste text unmodified from other applications.
+" https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste
+set paste
+set nopaste
 
 " START NATIVE FUZZY FIND SETTINGS
 " set nocompatible " Limit search to project directory
@@ -273,8 +279,12 @@ nmap <Leader>x "+x
 nmap <Leader>P "+P
 vmap <Leader>P "+P
 " Yank all
-nnoremap <Leader>ya ggVG"+y
-nnoremap <Leader>yz ggVG"zy
+nnoremap <Leader>y+ :%y<bar>:let @+=@"<CR>
+nnoremap <Leader>YY :%y<bar>:let @+=@"<CR>
+nnoremap <Leader>ya :%y<bar>:let @a=@"<CR>
+nnoremap <Leader>yz :%y<bar>:let @z=@"<CR>
+nnoremap <Leader>y/ nvgny<bar>:let @+=@"<CR> <bar>" yank highlighted
+nnoremap ,y/        nvgny<bar>:let @+=@"<CR> <bar>" yank highlighted
 
 " https://vi.stackexchange.com/a/17757
 " To share register between editor instances
@@ -333,7 +343,7 @@ nnoremap yoq :cclose<cr>
 nnoremap <leader>%e :e! %<Cr>
 
 " create the new directory am already working in
-nnoremap ,md :!mkdir -p %:h<cr>
+nnoremap ,md :!mkdir -p %:h<cr>:w %<CR>
 " edit .bashrc file
 nnoremap ,. :tab split<cr>:e ~/.bashrc<CR>
 
@@ -483,6 +493,52 @@ nnoremap <localleader>re :VMessage reg<CR>
 nnoremap ,rm :call DeleteFile()<CR>
 nnoremap <Leader>ps :PackerSync<CR>
 nnoremap <Leader>pc :PackerCompile<CR>
+
+" Inverted cursor workaround for windows terminal
+" https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268
+if !empty($WT_SESSION)
+  " guicursor will leave reverse to the terminal, which won't work in WT.
+  " therefore we will set bg and fg colors explicitly in an autocmd.
+  " however guicursor also ignores fg colors, so fg color will be set
+  " with a second group that has gui=reverse.
+  hi! WindowsTerminalCursorFg gui=none
+  hi! WindowsTerminalCursorBg gui=none
+  set guicursor+=n-v-c-sm:block-WindowsTerminalCursorBg
+
+  function! WindowsTerminalFixHighlight()
+      " reset match to the character under cursor
+      silent! call matchdelete(99991)
+      call matchadd('WindowsTerminalCursorFg', '\%#.', 100, 99991)
+
+      " find fg color under cursor or fall back to Normal fg then black
+      let bg = synIDattr(synIDtrans(synID(line("."), col("."), 1)), 'fg#')
+      if bg == "" | let bg = synIDattr(synIDtrans(hlID('Normal')), 'fg#') | endif
+      if bg == "" | let bg = "black" | endif
+      exec 'hi WindowsTerminalCursorBg guibg=' . bg
+      " reset this group so it survives theme changes
+      hi! WindowsTerminalCursorFg gui=reverse
+  endfunction
+
+  function! WindowsTerminalFixClear()
+      " hide cursor highlight
+      silent! call matchdelete(99991)
+
+      " make cursor the default color or black in insert mode
+      let bg = synIDattr(synIDtrans(hlID('Normal')), 'fg#')
+      if bg == "" | let bg = "black" | endif
+      exec 'hi WindowsTerminalCursorBg guibg=' . bg
+  endfunction
+
+  augroup windows_terminal_fix
+      autocmd!
+      autocmd FocusLost * call WindowsTerminalFixClear()
+      autocmd FocusGained * if mode(1) != "i" | call WindowsTerminalFixHighlight() | endif
+
+      autocmd InsertEnter * call WindowsTerminalFixClear()
+      autocmd InsertLeave * call WindowsTerminalFixHighlight()
+      autocmd CursorMoved * call WindowsTerminalFixHighlight()
+  augroup END
+endif
 
 """""""""""""""""""" Functions """"""""""""""""""""
 " DELETE CURRENT FILE
@@ -687,11 +743,11 @@ function! ClearTerminal()
   let &scrollback=s:scroll_value
 endfunction
 
-luafile ~/.config/nvim/lua/plugins/neoformat.lua
-luafile ~/.config/nvim/lua/plugins/floaterm.lua
-so ~/.config/nvim/plugins/fzf.vim
+so ~/.config/nvim/plugins/vim-maximizer.vim
 so ~/.config/nvim/plugins/fugitive.vim
+luafile ~/.config/nvim/lua/plugins/neoformat.lua
+so ~/.config/nvim/plugins/fzf.vim
+luafile ~/.config/nvim/lua/plugins/floaterm.lua
 so ~/.config/nvim/plugins/lightline.vim
 so ~/.config/nvim/plugins/vim-easymotion.vim
-so ~/.config/nvim/plugins/vim-maximizer.vim
 so ~/.config/nvim/plugins/vim-one.vim
