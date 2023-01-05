@@ -531,7 +531,6 @@ voldikss/vim-floaterm
 voldikss/fzf-floaterm
 airblade/vim-gitgutter
 itchyny/lightline.vim
-nelstrom/vim-visual-star-search
 easymotion/vim-easymotion
 elixir-editors/vim-elixir
 rakr/vim-one
