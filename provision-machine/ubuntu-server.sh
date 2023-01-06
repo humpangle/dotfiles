@@ -437,7 +437,7 @@ function install-tmux {
 function install-neovim {
   : "Install neovim"
 
-  neovim_version=v0.8.1
+  neovim_version=v0.8.2
   RIP_GREP_VERSION=13.0.0
   # `bat` is for syntax highlighting inside `fzf`
   BAT_VERSION=0.22.1
@@ -454,13 +454,10 @@ function install-neovim {
       libfuse2
   fi
 
-  curl -fLo nvim https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage
-
-  sudo chown root:root nvim
-
-  sudo chmod +x nvim
-
-  sudo mv nvim /usr/bin
+  curl -fLo nvim https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage &&
+    sudo chown root:root nvim &&
+    sudo chmod +x nvim &&
+    sudo mv nvim /usr/bin
 
   if [[ ! -d ~/.fzf ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
