@@ -695,8 +695,8 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   export WSL_EXE='/c/WINDOWS/system32/wsl.exe'
 
   alias e.='_open-wsl-explorer'
-  alias wsls="ebnis-save-tmux.sh && $WSL_EXE --shutdown"
-  alias wslt="check-wsl-distro-name && { ebnis-save-tmux.sh && $WSL_EXE --terminate $WSL_DISTRO_NAME ; }"
+  alias wsls="{ ebnis-save-tmux.sh || true; } && $WSL_EXE --shutdown"
+  alias wslt="check-wsl-distro-name && { { ebnis-save-tmux.sh || true ; } && $WSL_EXE --terminate $WSL_DISTRO_NAME ; }"
   alias ubuntu18="$WSL_EXE --distribution Ubuntu"
   alias ubuntu20="$WSL_EXE --distribution Ubuntu-20.04"
   alias ubuntu22="$WSL_EXE --distribution Ubuntu-22.04"
