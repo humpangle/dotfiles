@@ -49,6 +49,28 @@
     ],
     "description": "tap inspect in pipe & func"
   },
+  "tap_log_inspect": {
+    "prefix": ["tap_log_inspect", "inspect_tap_log", "log_tap_inspect"],
+    "body": [
+      "|> tap(fn args ->",
+      "  require Logger",
+      "",
+      "  opts = Inspect.Opts.new([])",
+      "  doc = Inspect.Algebra.group(Inspect.Algebra.to_doc(args, opts))",
+      "  chardata = Inspect.Algebra.format(doc, opts.width)",
+      "",
+      "  Logger.info([",
+      "    \"\\n\\n\\n\",",
+      "    \"Start ===  list_users  ===\\n\",",
+      "    \"-------------------------------------------------------------------------------\\n\",",
+      "    chardata,",
+      "    \"\\n-------------------------------------------------------------------------------\",",
+      "    \"\\nEnd ===  list_users  ===\\n\\n\\n\"",
+      "  ])",
+      "end)"
+    ],
+    "description": ["tap Logger inspect"]
+  },
   "@opaque type": {
     "prefix": "@opaque",
     "body": "@opaque ${1:t} :: ${2:expr}",
