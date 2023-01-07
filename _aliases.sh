@@ -69,12 +69,16 @@ if command -v docker &>/dev/null; then
     if [ -n "$1" ]; then
       docker images | grep -P "$1" | awk '{print $3}'
     else
-      docker images
+      printf 'false'
     fi
   }
+
+  drimgf() {
+    dimgf "$1" | xargs docker rmi
+  }
+
   alias_map[dimg]='dimgf'
-  alias_map[drimg]='dimgf'
-  # shellcheck disable=2027
+  alias_map[drimg]='drimgf'
   alias_map[dimg___description]='docker images grep'
 fi
 
