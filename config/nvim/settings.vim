@@ -464,10 +464,25 @@ nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
 nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete all terminal buffers
 nnoremap <leader>bT :call DeleteAllBuffers('t')<cr>
+
 " Delete current buffer
-nnoremap <leader>bd :bd%<cr>
+function DeleteOrCloseBuffer(flag)
+  if &filetype == 'netrw'
+    if tabpagenr() == 1
+      return
+    else
+      execute 'quit'
+    endif
+  elseif a:flag == 'f'
+    execute 'bd!%'
+  else
+    execute 'bd%'
+  endif
+endfunction
+nnoremap <leader>bd :call DeleteOrCloseBuffer(1)<cr>
 " Delete current buffer force
-nnoremap <leader>bD :bd!%<cr>
+nnoremap <leader>bD :call DeleteOrCloseBuffer('f')<cr>
+
 " Wipe current buffer
 nnoremap <leader>bw :bw%<cr>
 " go to buffer number - use like so gb34
