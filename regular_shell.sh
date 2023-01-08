@@ -349,6 +349,16 @@ if [ -d "$HOME/.fzf" ]; then
 fi
 
 alias cpath='pwd | xclip'
+
+purge-systemd-service() {
+  sudo systemctl stop "$1"
+  sudo systemctl disable "$1"
+  sudo rm -rf /etc/systemd/system/"$1"
+  sudo rm -rf /usr/lib/systemd/system/"$1"
+  sudo systemctl daemon-reload
+  sudo systemctl reset-failed
+}
+export -f purge-systemd-service
 # -----------------------------------------------------------------------------
 # END COMMONS
 # -----------------------------------------------------------------------------
