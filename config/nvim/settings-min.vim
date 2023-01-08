@@ -213,11 +213,16 @@ augroup filetypes
   au BufNewFile,BufRead *.service set filetype=systemd
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
+  au BufReadPre *.doc,*.docx set ro
+
   " Ansible
   au BufRead,BufNewFile */playbooks/*.y*ml,inventory.y*ml set filetype=yaml.ansible
 
-  autocmd FileType eelixir nnoremap <buffer> <leader>fc :w! %<cr>:!mix format %<CR><cr>
-  autocmd FileType eelixir nnoremap <buffer> <leader>N :w! %<cr>:!mix format %<CR><cr>
+  autocmd FileType eelixir
+    \ nnoremap <buffer> <leader>fc :w! %<cr>:!mix format %<CR><cr>
+
+  autocmd FileType eelixir
+    \ nnoremap <buffer> <leader>N :w! %<cr>:!mix format %<CR><cr>
 augroup END
 
 augroup terminal_settings
@@ -283,8 +288,7 @@ nnoremap <Leader>y+ :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>YY :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>ya :%y<bar>:let @a=@"<CR>
 nnoremap <Leader>yz :%y<bar>:let @z=@"<CR>
-nnoremap <Leader>y/ nvgny<bar>:let @+=@"<CR> <bar>" yank highlighted
-nnoremap ,y/        nvgny<bar>:let @+=@"<CR> <bar>" yank highlighted
+nnoremap ,y/        vgny<bar>:let @+=@"<CR> <bar>" yank highlighted
 
 " https://vi.stackexchange.com/a/17757
 " To share register between editor instances
@@ -349,26 +353,32 @@ nnoremap ,. :tab split<cr>:e ~/.bashrc<CR>
 
 " Netrw
 " https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+function! NetrwVExplore(f)
+  execute 'Vexplore "' . expand('%:h') . '"'
+  if tabpagenr() == 1
+    execute 'only'
+  elseif a:f == 'n'
+    execute '1wincmd c'
+  else
+    execute 'vertical resize +30'
+  endif
+endfunction
+nnoremap <C-E> :call NetrwVExplore(1)<CR>
 
 function! NetrwMapping()
-  nmap <buffer> <c-E> :Vexplore<CR>
   " Show a list of marked files.
   nmap <buffer> fl :echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
 endfunction
 
 augroup netrw_mapping
   autocmd!
-  autocmd filetype netrw call NetrwMapping()
-  autocmd BufEnter * if strlen(&ft) < 1 | call NetrwMapping()
+
+  autocmd BufEnter * if expand("%") == "NetrwTreeListing" |
+        \ set ft=netrw |
+        \ call NetrwVExplore('n') |
+        \ call NetrwMapping() |
+        \ endif
 augroup END
-
-" Open Netrw in current working directory
-nnoremap <c-E>
-  \ :let @s=getcwd()<cr>
-  \ :Vexplore <c-r>s<CR>
-
-" Open Netrw in current file's directory
-nnoremap <leader>dd :Lexplore %:p:h<CR>
 
 " END Netrw
 
@@ -469,10 +479,25 @@ nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
 nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete all terminal buffers
 nnoremap <leader>bT :call DeleteAllBuffers('t')<cr>
+
 " Delete current buffer
-nnoremap <leader>bd :bd%<cr>
+function DeleteOrCloseBuffer(flag)
+  if &filetype == 'netrw'
+    if tabpagenr() == 1
+      return
+    else
+      execute 'quit'
+    endif
+  elseif a:flag == 'f'
+    execute 'bd!%'
+  else
+    execute 'bd%'
+  endif
+endfunction
+nnoremap <leader>bd :call DeleteOrCloseBuffer(1)<cr>
 " Delete current buffer force
-nnoremap <leader>bD :bd!%<cr>
+nnoremap <leader>bD :call DeleteOrCloseBuffer('f')<cr>
+
 " Wipe current buffer
 nnoremap <leader>bw :bw%<cr>
 " go to buffer number - use like so gb34
