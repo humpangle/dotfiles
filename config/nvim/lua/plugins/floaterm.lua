@@ -19,7 +19,7 @@ else
   Vimg.floaterm_shell= os.getenv("SHELL")
 end
 
-keymap("n", "<leader>ff", ":Floaterms<CR>", {noremap = true})
+keymap("n", ",FL", ":Floaterms<CR>", {noremap = true})
 keymap("n", "<Leader>FF", ":FloatermNew --title=", {noremap = true})
 keymap("n", "<Leader>FT", ":FloatermToggle<CR>", {noremap = true})
 keymap("n", "<Leader>FK", ":FloatermKill!", {noremap = true})
