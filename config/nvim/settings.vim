@@ -397,7 +397,7 @@ inoremap <A-l> <C-\><C-N><C-w>l
 " exit insert mode
 " tnoremap <ESC><ESC> <C-\><C-n>
 " launch terminal in new spit
-nnoremap <leader>tt :tab split<cr>:term <right>
+" nnoremap <leader>tt :tab split<cr>:term <right>
 nnoremap <leader>tv :vsplit<cr>:term <right>
 
 " Clear terminal buffer: https://superuser.com/a/1485854
