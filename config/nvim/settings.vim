@@ -338,26 +338,32 @@ nnoremap ,. :tab split<cr>:e ~/.bashrc<CR>
 
 " Netrw
 " https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+function! NetrwVExplore(f)
+  execute 'Vexplore "' . expand('%:h') . '"'
+  if tabpagenr() == 1
+    execute 'only'
+  elseif a:f == 'n'
+    execute '1wincmd c'
+  else
+    execute 'vertical resize +30'
+  endif
+endfunction
+nnoremap <C-E> :call NetrwVExplore(1)<CR>
 
 function! NetrwMapping()
-  nmap <buffer> <c-E> :Vexplore<CR>
   " Show a list of marked files.
   nmap <buffer> fl :echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
 endfunction
 
 augroup netrw_mapping
   autocmd!
-  autocmd filetype netrw call NetrwMapping()
-  " autocmd BufEnter * if strlen(&ft) < 1 | call NetrwMapping()
+
+  autocmd BufEnter * if expand("%") == "NetrwTreeListing" |
+        \ set ft=netrw |
+        \ call NetrwVExplore('n') |
+        \ call NetrwMapping() |
+        \ endif
 augroup END
-
-" Open Netrw in current working directory
-nnoremap <C-E>
-  \ :let @s=getcwd()<bar>
-  \ :Vexplore <c-r>s<CR>
-
-" Open Netrw in current file's directory
-nnoremap <leader>dd :Lexplore %:p:h<CR>
 
 " END Netrw
 
