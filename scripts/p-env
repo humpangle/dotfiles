@@ -14,6 +14,7 @@ usage() {
                   [ -o | --output   /some/path ]
                   [ -d | --debug ]
                   [ -e | --exec ]
+                  [ -n | --no-change-name ]
                   env-file"
   exit 2
 }
@@ -26,6 +27,7 @@ string=
 exec_cmd=
 cwd=
 debug=
+no_change_name=
 
 function parse-args {
   # -allow a command to fail with !’s side effect on errexit
@@ -37,8 +39,8 @@ function parse-args {
   fi
 
   # option --output/-o requires 1 argument
-  LONGOPTS=string,debug,format:,output:,exec:,cwd:,verbose
-  OPTIONS=sdf:o:e:v
+  LONGOPTS=string,debug,format:,output:,exec:,cwd:,verbose,no-change-name
+  OPTIONS=sdf:o:e:v,n
 
   # -regarding ! and PIPESTATUS see above
   # -temporarily store output to be able to check for errors
@@ -68,6 +70,10 @@ function parse-args {
       -f | --format)
         format="$2"
         shift 2
+        ;;
+      -n | --no-change-name)
+        no_change_name=y
+        shift
         ;;
       -v | --verbose)
         verbose=y
@@ -152,7 +158,12 @@ if [[ "$(no-write-to-file)" ]]; then
 else
   rm -rf "$out_path"
   touch "$out_path"
-  env_key_to_value_map["ENV_FILE"]="${out_path}"
+
+  if [[ -z "$no_change_name" ]]; then
+    env_key_to_value_map["ENV_FILE"]="${out_path}"
+  else
+    env_key_to_value_map["ENV_FILE"]="${in_path}"
+  fi
 fi
 
 text=
