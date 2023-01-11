@@ -13,6 +13,7 @@ usage() {
                   [ -f | --format yaml|yml ]
                   [ -o | --output   /some/path ]
                   [ -d | --debug ]
+                  [ -e | --exec ]
                   env-file"
   exit 2
 }
