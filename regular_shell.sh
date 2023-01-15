@@ -365,7 +365,7 @@ export -f purge-systemd-service
 
 alias ngrokd='ngrok http'
 
-source "$HOME/dotfiles/_aliases.sh"
+[[ -e "$HOME/dotfiles/_aliases.sh" ]] && source "$HOME/dotfiles/_aliases.sh"
 
 # -----------------------------------------------------------------------------
 # PYTHON SECTION
