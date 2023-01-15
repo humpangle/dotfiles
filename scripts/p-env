@@ -9,11 +9,12 @@ set -o noclobber
 set -o nounset
 
 usage() {
-  echo "Usage: parse-args [ -s | --string ]
+  echo "Usage: p-env [ -s | --string ]
+                  [ --cwd some/path ]
+                  [ -e | --exec 'command' ]
                   [ -f | --format yaml|yml ]
                   [ -o | --output   /some/path ]
                   [ -d | --debug ]
-                  [ -e | --exec ]
                   [ -n | --no-change-name ]
                   env-file"
   exit "${1:-2}"
