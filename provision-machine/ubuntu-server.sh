@@ -907,7 +907,12 @@ function set-password-less-shell {
     sudo tee -a /etc/sudoers.d/set-password-less-shell
 }
 
-function setup-machine {
+function min-machine {
+  : "Setup the machine"
+  setup-machine-min
+}
+
+function setup-machine-min {
   : "Setup the machine"
 
   if _has-wsl; then
