@@ -16,7 +16,7 @@ usage() {
                   [ -e | --exec ]
                   [ -n | --no-change-name ]
                   env-file"
-  exit 2
+  exit "${1:-2}"
 }
 
 out_file=
@@ -107,7 +107,7 @@ function parse-args {
   # handle non-option arguments
   if [[ $# -ne 1 ]]; then
     echo "$0: File containing environment variable is required is required."
-    exit 4
+    usage 4
   fi
 
   in_file=$1
