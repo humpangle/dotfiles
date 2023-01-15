@@ -288,9 +288,14 @@ nmap <tab> <C-w>w
 nnoremap <c-h> <C-w>h
 " use <c-b>
 " inoremap <c-h> <Left>
-nnoremap <c-j> <C-w>j
-nnoremap <c-k> <C-w>k
-nnoremap <c-l> <C-w>l
+
+" These mappings are supposed to activate down/left/right windows in a tab -
+" but they work against terminal buffer
+" nnoremap <c-j> <C-w>j
+" nnoremap <c-k> <C-w>k
+" nnoremap <c-l> <C-w>l
+"
+
 " use <c-f>
 " inoremap <c-l> <Right>
 " split windows
