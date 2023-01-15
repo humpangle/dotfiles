@@ -303,9 +303,14 @@ nmap <tab> <C-w>w
 nnoremap <c-h> <C-w>h
 " use <c-b>
 " inoremap <c-h> <Left>
-nnoremap <c-j> <C-w>j
-nnoremap <c-k> <C-w>k
-nnoremap <c-l> <C-w>l
+
+" These mappings are supposed to activate down/left/right windows in a tab -
+" but they work against terminal buffer
+" nnoremap <c-j> <C-w>j
+" nnoremap <c-k> <C-w>k
+" nnoremap <c-l> <C-w>l
+"
+
 " use <c-f>
 " inoremap <c-l> <Right>
 " split windows
@@ -370,13 +375,15 @@ function! NetrwMapping()
   nmap <buffer> fl :echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
 endfunction
 
+let g:ebnis_netrw_loaded = 0
 augroup netrw_mapping
   autocmd!
 
-  autocmd BufEnter * if expand("%") == "NetrwTreeListing" |
+  autocmd BufEnter * if ( g:ebnis_netrw_loaded == 0 && expand("%") == "NetrwTreeListing"  ) |
         \ set ft=netrw |
         \ call NetrwVExplore('n') |
         \ call NetrwMapping() |
+        \ let g:ebnis_netrw_loaded = 1 |
         \ endif
 augroup END
 
@@ -412,7 +419,7 @@ inoremap <A-l> <C-\><C-N><C-w>l
 " exit insert mode
 " tnoremap <ESC><ESC> <C-\><C-n>
 " launch terminal in new spit
-nnoremap <leader>tt :tab split<cr>:term <right>
+" nnoremap <leader>tt :tab split<cr>:term <right>
 nnoremap <leader>tv :vsplit<cr>:term <right>
 
 " Clear terminal buffer: https://superuser.com/a/1485854
