@@ -513,6 +513,7 @@ nnoremap <Leader>pc :PackerCompile<CR>
 
 if !empty($HAS_WSL2)
   nnoremap ,e. :silent !open-wsl-explorer.sh %:p:h<CR>
+  nnoremap ,ef : !wslpath -w %<CR>
   nnoremap <leader>TT :execute("!ebnis-save-tmux.sh && $WSL_EXE --shutdown")
   nnoremap ,TT :execute("! ebnis-save-tmux.sh && $WSL_EXE --terminate $WSL_DISTRO_NAME")
 endif
