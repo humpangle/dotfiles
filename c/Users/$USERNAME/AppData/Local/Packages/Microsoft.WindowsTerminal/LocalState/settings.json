@@ -97,7 +97,7 @@
       },
       {
         "guid": "{59b72ad2-09f7-55ec-af87-65d062af8472}",
-        "hidden": false,
+        "hidden": true,
         "name": "Ubuntu20.04",
         "source": "CanonicalGroupLimited.Ubuntu20.04LTS_79rhkp1fndgsc"
       },
