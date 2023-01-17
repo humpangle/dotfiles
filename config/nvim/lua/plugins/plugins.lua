@@ -496,23 +496,7 @@ return packer.startup(function(use)
   use({
     "jpalardy/vim-slime",
     config = function()
-      Cmd([[
-          let g:slime_target = "tmux"
-          " let g:slime_target = "neovim"
-
-          " Vim slime will prompt you for some config the first time it is ran.
-          " You will be presented with string of the form:
-          "     dot:
-          " after the semicolon, type `w.p`, where
-          "     w = window number
-          "     p = pane number
-          " E.g. if terminal is on 6th window, 4th pane, you should have
-          "     dot:6.4
-          let g:slime_default_config = {
-            \ "socket_name": "default",
-            \ "target_pane": "dot:"
-          \}
-      ]])
+      require("plugins/vim-slime")
     end,
   })
 
