@@ -518,6 +518,7 @@ tpope/vim-unimpaired
 tpope/vim-fugitive
 tpope/vim-surround
 sbdchd/neoformat
+jpalardy/vim-slime
 junegunn/fzf
 junegunn/fzf.vim
 stsewd/fzf-checkout.vim
@@ -561,6 +562,7 @@ function install-neovim-plugins-configs {
 
   read -r -d '' plug_configs <<'eof'
 config/nvim/lua/plugins___neoformat.lua
+config/nvim/lua/plugins___vim-slime.lua
 config/nvim/lua/plugins___floaterm.lua
 config/nvim/plugins___fzf.vim
 config/nvim/plugins___fugitive.vim

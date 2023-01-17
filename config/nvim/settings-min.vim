@@ -778,6 +778,7 @@ endfunction
 so ~/.config/nvim/plugins/vim-maximizer.vim
 so ~/.config/nvim/plugins/fugitive.vim
 luafile ~/.config/nvim/lua/plugins/neoformat.lua
+luafile ~/.config/nvim/lua/plugins/vim-slime.lua
 so ~/.config/nvim/plugins/fzf.vim
 luafile ~/.config/nvim/lua/plugins/floaterm.lua
 so ~/.config/nvim/plugins/lightline.vim
