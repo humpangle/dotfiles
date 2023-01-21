@@ -466,6 +466,37 @@ if [ -z "${PYENV_ROOT}" ] && [ -d "$HOME/.pyenv" ]; then
 fi
 
 ELIXIR_LS_SCRIPTS_BASE="$HOME/projects/elixir/elixir-ls/00scripts"
+# Release v0.13.0
+ELIXIR_LS_STABLE_HASH='15d0553'
+
+get-hash() {
+  local args="${*}"
+
+  local hash="$(
+    echo "${args}" |
+      sed -n -E "s/.*--hash(=|\s+)([a-zA-Z0-9]+)?.*/\2/p"
+  )"
+
+  if [[ -z "${hash}" ]]; then
+    hash="${ELIXIR_LS_STABLE_HASH}"
+  fi
+
+  echo -n "${hash}"
+}
+
+check-elixir_ls-vsn() {
+  if [ -n "${1}" ]; then printf y; fi
+}
+
+elixir_ls-install-dir() {
+  if ! [ "$(check-elixir_ls-vsn "${@}")" ]; then
+    return
+  fi
+
+  local install_dir="$HOME/projects/elixir/elixir-ls/${1}/$(get-hash "${@}")"
+
+  printf '%s' "${install_dir}"
+}
 
 rel_asdf_elixir-build-f() {
   local elixir_version="$1"
@@ -494,66 +525,71 @@ rel_asdf_elixir-build-current-f() {
 }
 
 rel_asdf_elixir-install-f() {
-  local elixir_version="$1"
-
-  if [[ -z "$elixir_version" ]]; then
+  if ! [ "$(check-elixir_ls-vsn "${@}")" ]; then
     printf "The elixir version is required.\n"
-    return 0
+    return
   fi
 
-  local install_dir="$HOME/projects/elixir/elixir-ls/${elixir_version}"
+  local elixir_version="$1"
+
+  local hash
+  hash="$(get-hash "${@}")"
+
+  local install_dir
+  install_dir="$(elixir_ls-install-dir "${@}")"
+
+  echo "$install_dir"
 
   if ! [[ -d "$install_dir" ]]; then
     git clone https://github.com/elixir-lsp/elixir-ls.git "$install_dir"
   fi
 
-  # shellcheck disable=SC2164
-  cd "$install_dir"
+  (
+    echo -e "\n=> Entering install directory ${install_dir} ===\n"
+    # shellcheck disable=SC2164
+    cd "$install_dir"
 
-  git reset .
-  git checkout 02d3b2e
+    git reset .
+    git checkout "${hash}"
 
-  rm -rf mix.lock _build deps
-  # shellcheck disable=SC1010
-  mix do deps.get, compile
+    rm -rf mix.lock _build deps
 
-  if false; then
-    echo -e '\n=> Updating to the latest code base of elixir LSP server.'
+    mix deps.get
+    mix compile
 
-    if ! git pull origin master 2>/dev/null | grep -q "Already up to date."; then
-      echo '=> Remove the previous dependencies and recompile.'
-      rm -rf deps _build
+    echo -e '=> Creating the language server scripts.\n'
 
-      echo -e '=> Fetch current dependencies and compile the code.\n'
-      # shellcheck disable=SC1010
-      mix do deps.get, compile
-    else
-      echo -e "=> No update available."
-    fi
-  fi
+    local release_dir
+    release_dir="$(elixir_ls-rel-bin-dir "${@}")"
 
-  echo -e '=> Creating the language server scripts.\n'
-  local release_dir="${ELIXIR_LS_SCRIPTS_BASE}/$elixir_version"
-  mkdir -p "$release_dir"
-  mix elixir_ls.release -o "$release_dir"
+    mkdir -p "$release_dir"
 
-  # Print the path to the language server script so we can use it in LSP
-  # client.
-  echo -e '\n\n=> The path to the language server script:'
-  echo "$release_dir/language_server.sh"
+    mix elixir_ls.release -o "$release_dir"
 
-  # shellcheck disable=2103,2164
-  cd - >/dev/null
+    # Print the path to the language server script so we can use it in LSP
+    # client.
+    echo -e '\n\n=> The path to the language server script:'
+    echo "${release_dir}/language_server.sh"
+  )
+}
+
+elixir_ls-rel-bin-dir() {
+  local hash
+  hash="$(get-hash "${@}")"
+
+  local elixir_version="${1}"
+
+  echo -n "${ELIXIR_LS_SCRIPTS_BASE}/${elixir_version}/${hash}"
 }
 
 rel_asdf_elixir_exists_f() {
   local elixir_version="$1"
 
-  local server_path="${ELIXIR_LS_SCRIPTS_BASE}/${elixir_version}/language_server.sh"
+  local server_bin_path="$(elixir_ls-rel-bin-dir "${@}")/language_server.sh"
 
-  printf "\n%s\n\n" "$server_path"
+  printf "\n%s\n\n" "$server_bin_path"
 
-  if [[ -e "$server_path" ]]; then
+  if [[ -e "$server_bin_path" ]]; then
     printf "Exists\n\n"
   else
     printf "Does not exist\n\n"
@@ -565,15 +601,16 @@ rel-asdf-elixir-current-f() {
 }
 
 rel-asdf-elixir-install-current-f() {
-  rel_asdf_elixir-install-f "$(rel-asdf-elixir-current-f)"
+  rel_asdf_elixir-install-f "$(rel-asdf-elixir-current-f)" "${@}"
 }
 
 rel-asdf-elixir-exists-current-f() {
-  rel_asdf_elixir_exists_f "$(rel-asdf-elixir-current-f)"
+  rel_asdf_elixir_exists_f "$(rel-asdf-elixir-current-f)" "${@}"
 }
 
-alias rel-asdf-elixir-install=rel_asdf_elixir-install-f
-alias rel-asdf-elixir-install-current=rel-asdf-elixir-install-current-f
+alias rel-asdf-elixir-current='rel-asdf-elixir-current-f'
+alias rel-asdf-elixir-install='rel_asdf_elixir-install-f'
+alias rel-asdf-elixir-install-current='rel-asdf-elixir-install-current-f'
 alias rel-asdf-elixir-exists=rel_asdf_elixir_exists_f
 alias rel-asdf-elixir-exists-current=rel-asdf-elixir-exists-current-f
 alias rel-asdf-elixir-current-exists=rel-asdf-elixir-exists-current-f
