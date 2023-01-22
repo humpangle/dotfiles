@@ -24,7 +24,8 @@ keymap("n", "<Leader>ff", ":FloatermNew --height=0.99 --width=0.99 --title=",
 keymap("n", ",FL", ":Floaterms<CR>", { noremap = true })
 keymap("n", "<Leader>FK", ":FloatermKill!", { noremap = true })
 
-keymap("n", "<Leader>vi", ":FloatermNew vifm <CR>", { noremap = true })
+keymap("n", "<Leader>vi", ":let @+=trim(execute(':pwd'))<bar>:FloatermNew vifm <CR>", { noremap = true })
+keymap("n", "<Leader>vI", ":FloatermNew vifm <CR>", { noremap = true })
 
 keymap("n", ",FU", ":FloatermUpdate --height=0.99 --width=0.99 --title",
   { noremap = true })
