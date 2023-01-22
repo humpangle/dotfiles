@@ -40,12 +40,17 @@
     "defaults": {
       "bellStyle": ["window", "taskbar"],
       "closeOnExit": "always",
-      "colorScheme": "Gruvbox Dark",
-      "cursorColor": "#FFB261",
+      "colorScheme": "Gruvbox Light",
+      "cursorColor": "#000000",
       "cursorShape": "vintage",
+      "cursorHeight": 36,
+      // Switch cursorColor to light color when bg is dark
+      // "colorScheme": "Gruvbox Dark",
+      // "cursorColor": "#FFB261",
       "font": {
         "face": "CaskaydiaCove NF",
-        "size": 12
+        "size": 12,
+        "weight": "extra-bold"
       },
       "historySize": 100000,
       "padding": "0, 0, 0, 0",
