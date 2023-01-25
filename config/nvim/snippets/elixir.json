@@ -52,7 +52,7 @@
   "tap_log_inspect": {
     "prefix": ["tap_log_inspect", "inspect_tap_log", "log_tap_inspect"],
     "body": [
-      "|> tap(fn args ->",
+      "${2} |> tap(fn args ->",
       "  require Logger",
       "",
       "  opts = Inspect.Opts.new([])",
@@ -61,11 +61,11 @@
       "",
       "  Logger.info([",
       "    \"\\n\\n\\n\",",
-      "    \"Start ===  list_users  ===\\n\",",
+      "    \"Start ===  ${1:label}  ===\\n\",",
       "    \"-------------------------------------------------------------------------------\\n\",",
       "    chardata,",
       "    \"\\n-------------------------------------------------------------------------------\",",
-      "    \"\\nEnd ===  list_users  ===\\n\\n\\n\"",
+      "    \"\\nEnd ===  ${1:label}  ===\\n\\n\\n\"",
       "  ])",
       "end)"
     ],
