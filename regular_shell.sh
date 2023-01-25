@@ -379,6 +379,7 @@ alias activatepy='py-activate'
 alias activatepy.='py-activate'
 
 # yarn
+alias y='yarn'
 alias yw='yarn workspace'
 alias yW='yarn -W'
 alias ys='yarn start'
