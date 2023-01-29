@@ -260,9 +260,20 @@ alias pe='p-env'
 alias p='p-env'
 
 ggc() {
-  google-chrome -incognito &
+  if [[ "${1}" == "-h" ]]; then
+    echo "Usage:"
+    echo "  ggc"
+    echo "  ggc -h"
+    echo "  ggc --incognito"
+    echo "  ggc --user-data-dir=\$HOME/.config/google-chrome/some-profile"
+    return
+  fi
+
+  google-chrome "${@}" &
   disown
 }
+
+export -f ggc
 
 # TMUX split panes and windows
 splitp() {
