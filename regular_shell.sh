@@ -679,7 +679,12 @@ mysql-startf() {
 }
 
 alias mysql-start='mysql-startf'
+alias mysqls='mysql-startf'
 alias start-mysql='mysql-startf'
+alias smysql='mysql-startf'
+# -----------------------------------------------------------------------------
+# END MYSQL
+# -----------------------------------------------------------------------------
 
 alias ng="sudo nginx -g 'daemon off; master_process on;' &"
 alias ngd="sudo nginx -g 'daemon on; master_process on;'"

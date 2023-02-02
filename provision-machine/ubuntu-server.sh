@@ -902,6 +902,41 @@ function install-lua {
   fi
 }
 
+function install-mysql {
+  : "Install mysql"
+
+  _may_be_install_asdf
+
+  _echo-begin-install "INSTALLING msql"
+
+  local version=8.0.29
+
+  sudo apt-get update
+
+  sudo apt-get install -y \
+    curl \
+    libaio1 \
+    libtinfo5 \
+    libncurses5 \
+    numactl
+
+  . "$HOME/.asdf/asdf.sh"
+
+  "$(_asdf-bin-path)" plugin add mysql
+
+  "$(_asdf-bin-path)" install mysql $version
+  "$(_asdf-bin-path)" global mysql $version
+
+  . "$HOME/.asdf/asdf.sh"
+
+  export DATADIR="$HOME/mysql_data_${version//./_}"
+  mkdir -p "$DATADIR"
+  mysqld --initialize-insecure --datadir="$DATADIR"
+  mysql_ssl_rsa_setup --datadir="$DATADIR"
+
+  "$(_asdf-bin-path)" reshim mysql
+}
+
 function install-php {
   : "Install php"
 
