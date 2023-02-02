@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=1090,2009,2046,2143,2164,2103,2230
+# shellcheck disable=1090,2009,2046,2143,2164,2103,2230,1091
 
 set -o pipefail
 
@@ -900,6 +900,61 @@ function install-lua {
   if ! command -v stylua; then
     install-rust "$@"
   fi
+}
+
+function install-php {
+  : "Install php"
+
+  _may_be_install_asdf
+
+  _echo-begin-install "INSTALLING PHP"
+
+  local version=8.2.2
+
+  sudo apt-get update
+
+  sudo apt-get install -y \
+    autoconf \
+    bison \
+    build-essential \
+    curl \
+    gettext \
+    git \
+    libgd-dev \
+    libcurl4-openssl-dev \
+    libedit-dev \
+    libicu-dev \
+    libjpeg-dev \
+    libmysqlclient-dev \
+    libonig-dev \
+    libpng-dev \
+    libpq-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libxml2-dev \
+    libzip-dev \
+    openssl \
+    pkg-config \
+    re2c \
+    zlib1g-dev
+
+  . "$HOME/.asdf/asdf.sh"
+
+  "$(_asdf-bin-path)" plugin add php
+
+  "$(_asdf-bin-path)" install php $version
+  "$(_asdf-bin-path)" global php $version
+
+  . "$HOME/.asdf/asdf.sh"
+
+  curl -fL \
+    https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /tmp/php-cs-fixer
+
+  sudo chmod a+x /tmp/php-cs-fixer
+  sudo mv /tmp/php-cs-fixer /usr/local/bin/php-cs-fixer
+
+  "$(_asdf-bin-path)" reshim php
 }
 
 function set-password-less-shell {
