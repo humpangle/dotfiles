@@ -101,36 +101,41 @@ ERLANG_DEPS=(
 )
 
 full_line_str=''
+line_marker_for__echo='+'
+
+function _full-line-str {
+  if [[ -z "${full_line_str}" ]]; then
+    # shellcheck disable=SC2034
+    for i in $(seq "$full_line_len"); do
+      full_line_str="${full_line_str}${line_marker_for__echo}"
+    done
+  fi
+}
+
 full_line_len=$(tput cols)
 
-function _echo-begin-install {
+function _echo {
   local text="${*}"
-  local equal='='
 
-  local len="${#text}"
-  len=$((full_line_len - len))
-  local half=$((len / 2 - 1))
+  local text_len="${#text}"
+
+  local len
+  len=$((full_line_len - text_len - 2))
 
   local line=''
 
-  for i in $(seq $half); do
-    line="${line}${equal}"
+  for i in $(seq $len); do
+    line="${line}${line_marker_for__echo}"
   done
 
   if [[ -z "${full_line_str}" ]]; then
     # shellcheck disable=SC2034
     for i in $(seq "$full_line_len"); do
-      full_line_str="${full_line_str}${equal}"
+      full_line_str="${full_line_str}${line_marker_for__echo}"
     done
   fi
 
-  echo -e "\n\n${full_line_str}"
-  echo -e "\n\n${line} ${text} ${line}"
-  echo -e "\n\n${full_line_str}\n"
-}
-
-function _asdf-bin-path {
-  realpath "$HOME/.asdf/bin/asdf" 2>/dev/null
+  echo -e "\n${text}  ${line}\n"
 }
 
 function _write-local-bin-path-to-paths {
@@ -173,7 +178,7 @@ function _setup-wsl-home {
   local vcxsrv_full_path="${vcxsrv_output}/${vcxsrv_file}"
 
   if [[ ! -e "$vcxsrv_full_path" ]]; then
-    _echo-begin-install "DOWNLOAD AND CONFIGURE vcxsrv"
+    _echo "DOWNLOAD AND CONFIGURE vcxsrv"
 
     local vcxsrv_download_url="https://sourceforge.net/projects/vcxsrv/files/vcxsrv/1.20.14.0/vcxsrv-64.1.20.14.0.installer.exe/download"
 
@@ -242,7 +247,7 @@ function install-golang {
 
   _may_be_install_asdf "$@"
 
-  _echo-begin-install "INSTALLING GOLANG"
+  _echo "INSTALLING GOLANG"
 
   local version=1.19.3
 
@@ -270,7 +275,7 @@ function install-rust {
 
   _may_be_install_asdf "$@"
 
-  _echo-begin-install "INSTALLING RUST"
+  _echo "INSTALLING RUST"
 
   if ! _is-dev "$@"; then
     _install-deps "${RUST_DEPS[*]}"
@@ -310,7 +315,7 @@ function install-rust {
 function install-docker {
   : "Install docker"
 
-  _echo-begin-install "INSTALLING DOCKER"
+  _echo "INSTALLING DOCKER"
 
   # https://docs.docker.com/engine/install/ubuntu/
 
@@ -371,7 +376,7 @@ function install-postgres {
     exit 0
   fi
 
-  _echo-begin-install "INSTALLING POSTGRES"
+  _echo "INSTALLING POSTGRES"
 
   # https://www.postgresql.org/download/linux/ubuntu/
 
@@ -388,7 +393,7 @@ function install-tmux {
 
   tmux_version='3.3a'
 
-  _echo-begin-install "TMUX ${tmux_version}"
+  _echo "TMUX ${tmux_version}"
 
   local current_tmux_bin_path
   current_tmux_bin_path="$(command -v tmux)"
@@ -425,7 +430,7 @@ function install-tmux {
   fi
 
   if ! _is-dev "$@"; then
-    _echo-begin-install "DOWNLOADING TMUX CONF"
+    _echo "DOWNLOADING TMUX CONF"
 
     curl -fLo ~/.tmux.conf \
       "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/tmux.conf"
@@ -442,7 +447,7 @@ function install-neovim {
   # `bat` is for syntax highlighting inside `fzf`
   BAT_VERSION=0.22.1
 
-  _echo-begin-install "INSTALLING NEOVIM VERSION ${neovim_version}"
+  _echo "INSTALLING NEOVIM VERSION ${neovim_version}"
 
   if ! _is-dev "$@"; then
     _install-deps "${NEOVIM_DEPS[*]}"
@@ -496,7 +501,7 @@ function install-neovim {
       -c 'autocmd User PackerComplete quitall' \
       -c 'PackerSync' 2>/dev/null
 
-    _echo-begin-install "WE'LL BE USING DOTFILES FOR NEOVIM CONFIG. RETURNING."
+    _echo "WE'LL BE USING DOTFILES FOR NEOVIM CONFIG. RETURNING."
     return
   fi
 
@@ -596,7 +601,7 @@ function install-haproxy {
 
   local version="2.4"
 
-  _echo-begin-install "INSTALLING HAPROXY VERSION ${version}"
+  _echo "INSTALLING HAPROXY VERSION ${version}"
 
   sudo apt install -y --no-install-recommends software-properties-common
   sudo add-apt-repository "ppa:vbernat/haproxy-${version}" -y
@@ -607,7 +612,7 @@ function install-haproxy {
 function install-bins {
   : "Install useful binaries"
 
-  _echo-begin-install "INSTALLING adhoc binaries"
+  _echo "INSTALLING adhoc binaries"
 
   sudo apt-get update
 
@@ -639,7 +644,7 @@ function install-vifm {
 
   local version='0.12.1'
 
-  _echo-begin-install "INSTALLING VIFM VERSION ${version}"
+  _echo "INSTALLING VIFM VERSION ${version}"
 
   if ! _is-dev "$@"; then
     sudo apt-get update
@@ -659,7 +664,7 @@ function install-vifm {
   sudo mv vifm-${version} /usr/local/src
 
   if ! _is-dev "$@"; then
-    _echo-begin-install "DOWNLOADING VIFM CONF"
+    _echo "DOWNLOADING VIFM CONF"
 
     curl -fLo ~/.config/vifm/vifmrc \
       "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/config/vifm/vifmrc"
@@ -681,7 +686,7 @@ function install-asdf {
 
   local version=v0.10.2
 
-  _echo-begin-install "INSTALLING ASDF"
+  _echo "INSTALLING ASDF"
 
   if ! _is-dev "$@"; then
     _update-and-upgrade-os-packages
@@ -701,7 +706,7 @@ function install-erlang {
 
   _may_be_install_asdf
 
-  _echo-begin-install "INSTALLING ERLANG"
+  _echo "INSTALLING ERLANG"
 
   _install-deps "${ERLANG_DEPS[*]}"
 
@@ -726,7 +731,7 @@ function install-rebar3 {
 
   local rebar3_version=3.20.0
 
-  _echo-begin-install "INSTALLING REBAR3"
+  _echo "INSTALLING REBAR3"
 
   curl -fLo "$HOME/.local/bin/rebar3" \
     --create-dirs \
@@ -746,7 +751,7 @@ function install-elixir {
     install-erlang
   fi
 
-  _echo-begin-install "INSTALLING ELIXIR"
+  _echo "INSTALLING ELIXIR"
 
   local version=1.14.2-otp-25
 
@@ -776,7 +781,7 @@ function install-nodejs {
 
   _may_be_install_asdf "$@"
 
-  _echo-begin-install "INSTALLING NODEJS"
+  _echo "INSTALLING NODEJS"
 
   local version=18.12.1
 
@@ -819,7 +824,7 @@ function install-python {
 
   _may_be_install_asdf "$@"
 
-  _echo-begin-install "INSTALLING PYTHON"
+  _echo "INSTALLING PYTHON"
 
   if ! _is-dev "$@"; then
     _install-deps "${PYTHON_DEPS[*]}"
@@ -875,7 +880,7 @@ function install-lua {
 
   local version=5.4.4
 
-  _echo-begin-install "INSTALLING LUA VERSION ${version}"
+  _echo "INSTALLING LUA VERSION ${version}"
 
   if ! _is-dev "$@"; then
     _install-deps "${LUA_DEPS[*]}"
@@ -907,7 +912,7 @@ function install-mysql {
 
   _may_be_install_asdf
 
-  _echo-begin-install "INSTALLING msql"
+  _echo "INSTALLING msql"
 
   local version=8.0.29
 
@@ -944,7 +949,7 @@ function install-php {
 
   _may_be_install_asdf
 
-  _echo-begin-install "INSTALLING PHP"
+  _echo "INSTALLING PHP"
 
   local version=8.2.2
 
@@ -1042,7 +1047,7 @@ function setup-dev {
     echo "export USERNAME=${USERNAME}" >>~/.bashrc
   fi
 
-  _echo-begin-install "SETUP DEV MACHINE WITH DOTFILE"
+  _echo "SETUP DEV MACHINE WITH DOTFILE"
 
   echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf >/dev/null
 
