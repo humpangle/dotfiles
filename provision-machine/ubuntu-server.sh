@@ -918,7 +918,7 @@ function install-mysql {
 
   _echo "INSTALLING msql"
 
-  local version=8.0.29
+  local version=8.0.32
 
   sudo apt-get update
 
@@ -932,7 +932,6 @@ function install-mysql {
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add mysql
-
   "$(_asdf-bin-path)" install mysql $version
   "$(_asdf-bin-path)" global mysql $version
 
