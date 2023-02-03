@@ -99,7 +99,7 @@ alias tdot='cd ~/dotfiles && tn dot'
 alias tnd='cd ~/dotfiles && tn dot'
 alias tadd='cd ~/dotfiles && ta dot'
 alias tks='tmux kill-session -t'
-alias tkss='tmux kill-server'
+alias tkss='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
 alias ts='ebnis-save-tmux.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
