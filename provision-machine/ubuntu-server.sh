@@ -138,6 +138,10 @@ function _echo {
   echo -e "\n${text}  ${line}\n"
 }
 
+function _asdf-bin-path {
+  realpath "$HOME/.asdf/bin/asdf" 2>/dev/null
+}
+
 function _write-local-bin-path-to-paths {
   if ! grep -q "PATH=.*${LOCAL_BIN_PATH}" "$HOME/.bashrc"; then
     echo -e "\nexport PATH=${LOCAL_BIN_PATH}:\$PATH" >>"$HOME/.bashrc"
