@@ -125,6 +125,7 @@ Session.vim
 *.___scratch*
 *.___pid*
 *.pid
+do-run.sh
 
 *.netrwhist*
 .tool-versions
