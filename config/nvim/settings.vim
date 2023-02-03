@@ -501,9 +501,9 @@ map <leader>bn :call RenameFile()<cr>
 " Remove contents of current file
 " https://stackoverflow.com/a/7069592
 set autoread
-nnoremap d] :e! %<cr><bar>:%delete_<cr>:w!<cr>
+nnoremap D] :e! %<cr><bar>:%delete_<cr>:w!<cr>
 " Remove contents of current file and enter insert mode
-nnoremap c] :e! %<cr><bar>:%delete_<cr>i
+nnoremap C] :e! %<cr><bar>:%delete_<cr>i
 
 " Dump vim register into a buffer in vertical split.
 nnoremap <leader>re :reg<CR>
