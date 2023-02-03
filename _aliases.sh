@@ -10,8 +10,13 @@ if command -v docker &>/dev/null; then
   export DOCKER_BUILDKIT=1
   export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 
+  function docker-compose {
+    docker compose "${@}"
+  }
+
+  export -f docker-compose
+
   alias_map[d]='docker'
-  alias_map['docker-compose']='docker compose'
   # docker remove all containers
   # shellcheck disable=2016
   alias_map[drac]='docker rm $(docker ps -a -q)'
