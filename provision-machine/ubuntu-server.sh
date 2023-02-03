@@ -935,6 +935,8 @@ function install-mysql {
   mysql_ssl_rsa_setup --datadir="$DATADIR"
 
   "$(_asdf-bin-path)" reshim mysql
+
+  unset DATADIR
 }
 
 function install-php {
