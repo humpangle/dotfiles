@@ -60,6 +60,7 @@ if command -v docker &>/dev/null; then
   }
 
   alias_map[dcudl]='dcudlf'
+  alias_map[dcudfl]='dcudlf'
   alias_map[dcudl__description]='docker up daemon and logs'
 
   # docker compose restart and logs --follow
