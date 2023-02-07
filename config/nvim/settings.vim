@@ -503,7 +503,18 @@ map <leader>bn :call RenameFile()<cr>
 set autoread
 nnoremap d= :e! %<cr><bar>:%delete_<cr>:w!<cr>
 " Remove contents of current file and enter insert mode
-nnoremap c= :e! %<cr><bar>:%delete_<cr>i
+nnoremap c= :call EbnisClearAllBuffer()<CR>
+
+function! EbnisClearAllBuffer() abort
+  if buffer_name() == ''
+    execute '%delete_'
+  else
+    execute 'e! %'
+    execute '%delete_'
+  endif
+
+  execute 'startinsert'
+endfunction
 
 " Dump vim register into a buffer in vertical split.
 nnoremap <leader>re :reg<CR>
