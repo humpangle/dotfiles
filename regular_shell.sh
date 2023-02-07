@@ -424,7 +424,7 @@ pathmunge "$GEM_HOME/bin"
 
 # PHP SECTION
 # Do not use PHP PEAR when installing PHP with asdf
-export PHP_WITHOUT_PEAR='yes'
+# export PHP_WITHOUT_PEAR='yes'
 
 function _phpunit {
   if command -v phpunit >/dev/null; then
