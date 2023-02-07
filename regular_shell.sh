@@ -359,6 +359,7 @@ if [ -d "$HOME/.fzf" ]; then
   alias aff='alias | fzf'
 fi
 
+alias xclip='xclip -selection c'
 alias cpath='pwd | xclip -selection c'
 
 purge-systemd-service() {
