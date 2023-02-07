@@ -359,7 +359,7 @@ if [ -d "$HOME/.fzf" ]; then
   alias aff='alias | fzf'
 fi
 
-alias cpath='pwd | xclip'
+alias cpath='pwd | xclip -selection c'
 
 purge-systemd-service() {
   sudo systemctl stop "$1"
