@@ -999,6 +999,10 @@ function install-php {
   sudo chmod a+x /tmp/php-cs-fixer
   sudo mv /tmp/php-cs-fixer /usr/local/bin/php-cs-fixer
 
+  . "$HOME/.asdf/asdf.sh"
+  pecl install xdebug
+
+  . "$HOME/.asdf/asdf.sh"
   "$(_asdf-bin-path)" reshim php
 }
 
