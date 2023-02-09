@@ -401,6 +401,7 @@ return packer.startup(function(use)
     "hashivim/vim-terraform",
 
     "pearofducks/ansible-vim",
+    "nelsyeung/twig.vim",
   })
 
   -- making rest api call
