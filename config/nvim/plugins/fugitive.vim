@@ -36,7 +36,6 @@ nnoremap <leader>su  :Git stash -u push -m ''<left>
 
 nnoremap <leader>ca  :Git commit --amend
 
-nnoremap <leader>gC  :Git commit<bar>:tab split<CR>
 nnoremap <leader>gc  :Git commit<CR>
 
 nnoremap <leader>ce  :Git commit --amend --no-edit
