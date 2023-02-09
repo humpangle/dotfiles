@@ -39,7 +39,15 @@ function parse-args {
     exit 1
   fi
 
-  # option --output/-o requires 1 argument
+  # options:
+  #   --format/f  requires 1 argument
+  #   --output/-o requires 1 argument
+  #   --exec/-e   requires 1 argument
+  #   --cwd       requires 1 argument
+  #   string/s
+  #   debug/d
+  #   verbose/v
+  #   no-change-name/n
   LONGOPTS=string,debug,format:,output:,exec:,cwd:,verbose,no-change-name
   OPTIONS=sdf:o:e:v,n
 
