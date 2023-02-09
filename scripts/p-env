@@ -6,7 +6,7 @@
 set -o errexit
 set -o pipefail
 set -o noclobber
-set -o nounset
+# set -o nounset
 
 usage() {
   echo "Usage: p-env [ -s | --string ]
