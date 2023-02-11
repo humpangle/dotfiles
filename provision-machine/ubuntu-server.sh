@@ -803,24 +803,28 @@ function install-nodejs {
   "$(_asdf-bin-path)" reshim nodejs
 
   if _is-dev "$@"; then
-    npm install --global \
-      npm \
-      yarn \
-      eslint_d \
-      goops \
-      typescript \
-      prettier \
-      @fsouza/prettierd \
-      sort-package-json \
-      intelephense \
-      chokidar-cli \
-      graphql-language-service-cli \
-      @tailwindcss/language-server
+    install-nodejs-dev-pkgs
   else
     npm install --global \
       npm \
       yarn
   fi
+}
+
+function install-nodejs-dev-pkgs {
+  npm install --global \
+    npm \
+    yarn \
+    eslint_d \
+    goops \
+    typescript \
+    prettier \
+    @fsouza/prettierd \
+    sort-package-json \
+    intelephense \
+    chokidar-cli \
+    graphql-language-service-cli \
+    @tailwindcss/language-server
 }
 
 function install-python {
