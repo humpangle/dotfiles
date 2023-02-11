@@ -55,7 +55,7 @@ function parse-args {
   # -temporarily store output to be able to check for errors
   # -activate quoting/enhanced mode (e.g. by writing out “--options”)
   # -pass arguments only via   -- "$@"   to separate them correctly
-  ! parsed_output=$(getopt --options=$short_options --longoptions=$long_options --name "$0" -- "$@")
+  ! parsed_output=$(getopt --options=$short_options --longoptions=$long_options --name="$0" -- "$@")
   if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
     # e.g. return value is 1
     #  then getopt has complained about wrong arguments to stdout
@@ -72,40 +72,49 @@ function parse-args {
         string=y
         shift
         ;;
+
       -d | --debug)
         debug=y
         shift
         ;;
+
       -f | --format)
         format="$2"
         shift 2
         ;;
+
       -n | --no-change-name)
         no_change_name=y
         shift
         ;;
+
       -v | --verbose)
         verbose=y
         shift
         ;;
+
       -o | --output)
         out_file="$2"
         shift 2
         ;;
+
       -e | --exec)
         exec_cmd="$2"
         shift 2
         ;;
+
       --cwd)
         cwd="$2"
         shift 2
         ;;
+
         # -- means the end of the arguments; drop this, and break out of the
         # while loop
       --)
         shift
         break
         ;;
+
       *)
         echo "Unexpected option: $1."
         usage
