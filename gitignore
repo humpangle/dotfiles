@@ -142,6 +142,7 @@ do-run.sh
 .php-cs-fixer.cache
 
 **/.idea/
+**/*.iml
 
 # cloudflare
 .cloudflare-tunnel-config*
