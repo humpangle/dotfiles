@@ -269,7 +269,7 @@ ggc() {
     return
   fi
 
-  google-chrome "${@}" &
+  google-chrome "${@}" &>/dev/null &
   disown
 }
 
