@@ -5,7 +5,7 @@ set -o pipefail
 
 INITIAL_WSL_C_PATH=/mnt/c
 
-ERLANG_VERSION=25.2
+ERLANG_VERSION=25.2.2
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
@@ -757,7 +757,7 @@ function install-elixir {
 
   _echo "INSTALLING ELIXIR"
 
-  local version=1.14.2-otp-25
+  local version=1.14.3-otp-25
 
   sudo apt-get update
 
@@ -787,7 +787,7 @@ function install-nodejs {
 
   _echo "INSTALLING NODEJS"
 
-  local version=18.12.1
+  local version=18.14.0
 
   if ! _is-dev "$@"; then
     _install-deps "${NODEJS_DEPS[*]}"
