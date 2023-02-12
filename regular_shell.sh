@@ -400,7 +400,7 @@ alias ylsp='yarn list --pattern'
 alias ywhy='yarn why'
 alias ycw='clear && DISABLE_LARAVEL_MIX_NOTIFICATION=1 yarn watch'
 
-alias luamake=/home/kanmii/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
+alias luamake=${HOME}/.local/bin/lua/sumneko/lua-language-server/3rd/luamake/luamake
 
 ltf() {
   lt --subdomain "$1" --port "$2" &
