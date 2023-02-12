@@ -127,12 +127,13 @@ map <leader>gd <Action>(Diff.ShowDiff)
 map <leader>tt <Action>(ActivateTerminalToolWindow)
 map <leader>fl <Action>(Find)
 map <C-0> <Action>(WelcomeScreen.OpenProject)
-map <leader> <Action>(Rename)
+map <leader>rn <Action>(Rename)
+map <leader>bt <Action>(GotoSymbol)
 
 """ Plugin --------------------------------
 Plug 'easymotion/vim-easymotion'
-map <leader>f <Plug>(easymotion-s)
-map <leader>e <Plug>(easymotion-f)
+map <leader>J <Plug>(easymotion-s)
+map <leader>j <Plug>(easymotion-f)
 
 set NERDTree
 set commentary
