@@ -863,3 +863,17 @@ function _cert-etc {
 
 export -f _cert-etc
 alias cert-etc='_cert-etc'
+
+# -----------------------------------------------------------------------------
+# INTELLIJ IDEA IDE
+# -----------------------------------------------------------------------------
+
+intellij_idea_bin_path="${HOME}/.local/bin/idea-intellij/bin"
+if [[ -d "${intellij_idea_bin_path}" ]]; then
+  function intellij {
+    "${intellij_idea_bin_path}/idea.sh" &>/dev/null &
+    disown
+  }
+
+  export -f intellij
+fi
