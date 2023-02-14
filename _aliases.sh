@@ -52,6 +52,7 @@ if command -v docker &>/dev/null; then
   alias_map[drmlogs__description]='docker rm logs containers..'
   alias_map['d-dangling']='dim -qf dangling=true | xargs docker rmi -f'
   alias_map[ddangling]='d-dangling'
+  alias_map[dcrml]='dcps -aq | xargs drmlogs'
 
   # docker compose up --daemon and logs --follow
   dcudlf() {
