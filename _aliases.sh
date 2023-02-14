@@ -74,14 +74,18 @@ if command -v docker &>/dev/null; then
 
   dimgf() {
     if [ -n "$1" ]; then
-      docker images | grep -P "$1" | awk '{print $3}'
+      docker images |
+        grep -P "$1"
     else
       printf 'false'
     fi
   }
 
   drimgf() {
-    dimgf "$1" | xargs docker rmi
+    docker images |
+      grep -P "$1" |
+      awk '{print $3}' |
+      xargs docker rmi
   }
 
   alias_map[dimg]='dimgf'
