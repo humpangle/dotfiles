@@ -30,7 +30,8 @@ nnoremap <Leader>w! :w!<cr>
 nnoremap <Leader>qq :q<cr>
 nnoremap <Leader>qf :q!<cr>
 nnoremap <Leader>bd :q!<cr>
-map <Leader>qa <Action>(Exit)
+map <Leader>qA <Action>(Exit)
+map <Leader>bA <Action>(CloseAllEditorsButActive)
 map <Leader>rs <Action>(RestartIDE)
 
 " better code indentations in visual mode.
@@ -92,7 +93,7 @@ nnoremap ,yw :let @+=execute(":pwd")<CR>
 vnoremap <leader>*
   \ :let @+=
 
-xnoremap <silent> s* "sy:let @/=@s<CR>cgn
+xmap <silent> s* "sy:let @/=@s<CR>cgn
 
 "find and replace in file
 " press * {shift 8) to search for word under cursor and key combo below to
@@ -127,13 +128,19 @@ map <leader>fc <Action>(ReformatCode)
 map <leader>gd <Action>(Diff.ShowDiff)
 map <leader>tt <Action>(ActivateTerminalToolWindow)
 map <leader>fl <Action>(Find)
-map <Leader>/  <Action>(SearchEverywhere)
+map <C-p>  <Action>(SearchEverywhere)
+map <Leader>/  <Action>(FindInPath)
 map <Leader>tt  <Action>(ActivateTerminalToolWindow)
+map <Leader>TT  <Action>(ToggleFullScreen)
 map <Leader>hh  <Action>(HideActiveWindow)
-map <C-p> <Action>(ActivateProjectToolWindow)
+" map <C-p> <Action>(ActivateProjectToolWindow)
 map <C-0> <Action>(WelcomeScreen.OpenProject)
 map <leader>rn <Action>(RenameElement)
 map <leader>bt <Action>(FindUsages)
+map <leader>gg <Action>(ActivateVersionControlToolWindow)
+map ,o <Action>(OptimizeImports)
+map <leader>fb <Action>(RecentFiles)
+map ,dd <Action>(ActivateDebugToolWindow)
 
 """ Plugin --------------------------------
 Plug 'easymotion/vim-easymotion'
