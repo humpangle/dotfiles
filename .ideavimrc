@@ -29,6 +29,7 @@ nnoremap <Leader>w! :w!<cr>
 " Quit vim
 nnoremap <Leader>qq :q<cr>
 nnoremap <Leader>qf :q!<cr>
+nnoremap <Leader>bd :q!<cr>
 map <Leader>qa <Action>(Exit)
 map <Leader>rs <Action>(RestartIDE)
 
@@ -70,13 +71,13 @@ nnoremap ,ss :source %<CR>:so ~/.ideavimrc<CR>
 
 " COPY FILE PATH
 " yank relative File path
-nmap ,yr :let @+=expand("%")<CR>
+map ,yr <Action>(CopyContentRootPath)
 " yank file name / not path
-nmap ,yn :let @+=expand("%:t")<CR>
+map ,yn <Action>(CopyFileName)
 " yank file parent directory
 nmap ,yd :let @+=expand("%:p:h")<CR>
 " yank absolute File path
-nmap ,yf :let @+=expand("%:p")<CR>
+map ,yf <Action>(CopyAbsolutePath)
 " copy relative path
 nmap ,cr :let @"=expand("%")<CR>
 " copy absolute path
@@ -131,8 +132,8 @@ map <Leader>tt  <Action>(ActivateTerminalToolWindow)
 map <Leader>hh  <Action>(HideActiveWindow)
 map <C-p> <Action>(ActivateProjectToolWindow)
 map <C-0> <Action>(WelcomeScreen.OpenProject)
-map <leader>rn <Action>(Rename)
-map <leader>bt <Action>(GotoSymbol)
+map <leader>rn <Action>(RenameElement)
+map <leader>bt <Action>(FindUsages)
 
 """ Plugin --------------------------------
 Plug 'easymotion/vim-easymotion'
