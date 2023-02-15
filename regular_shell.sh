@@ -868,8 +868,7 @@ alias cert-etc='_cert-etc'
 # INTELLIJ IDEA IDE
 # -----------------------------------------------------------------------------
 
-intellij_idea_bin_path="${HOME}/.local/bin/idea-intellij/bin"
-if [[ -d "${intellij_idea_bin_path}" ]]; then
+if [[ -e "${INTELLIJ_IDEA_BIN_PATH}" ]]; then
   function intellij {
     (
       cd "${HOME}/.config/JetBrains/IntelliJIdea2022.3/settingsSync" || true
@@ -881,7 +880,7 @@ if [[ -d "${intellij_idea_bin_path}" ]]; then
         -m "${timestamp} - Launching intellij - checkpoint."
     )
 
-    "${intellij_idea_bin_path}/idea.sh" &>/dev/null &
+    "${INTELLIJ_IDEA_BIN_PATH}" &>/dev/null &
     disown
   }
 
