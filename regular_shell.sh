@@ -876,4 +876,5 @@ if [[ -d "${intellij_idea_bin_path}" ]]; then
   }
 
   export -f intellij
+  alias idea='intellij'
 fi
