@@ -33,6 +33,7 @@ nnoremap <Leader>qf :q!<cr>
 nnoremap <Leader>bd :q!<cr>
 map <Leader>qA <Action>(Exit)
 map <Leader>bA <Action>(CloseAllEditorsButActive)
+map <leader>ta <Action>(CloseAllEditors)
 map <Leader>rs <Action>(RestartIDE)
 
 " better code indentations in visual mode.
@@ -50,7 +51,7 @@ nnoremap <Leader>y+ :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>YY :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>ya :%y<bar>:let @a=@"<CR>
 nnoremap <Leader>yz :%y<bar>:let @z=@"<CR>
-nnoremap ,y/        vgny<bar>:let @+=@"<CR> <bar>" yank highlighted
+nnoremap ,y/        vgny<bar>:let @+=@"<CR>
 
 " TABS
 " Move between windows in a tab
@@ -94,7 +95,7 @@ nnoremap ,yw :let @+=execute(":pwd")<CR>
 vnoremap <leader>*
   \ :let @+=
 
-xmap <silent> s* "sy:let @/=@s<CR>cgn
+xmap * "sy:let @/=@s<CR>gn
 
 "find and replace in file
 " press * {shift 8) to search for word under cursor and key combo below to
@@ -126,7 +127,6 @@ nnoremap yoh :noh<cr>
 map ]d <Action>(GotoNextError)
 map [d <Action>(GotoPreviousError)
 map <leader>fc <Action>(ReformatCode)
-map <leader>gd <Action>(Diff.ShowDiff)
 map <leader>tt <Action>(ActivateTerminalToolWindow)
 map <leader>fl <Action>(Find)
 map <C-p>  <Action>(SearchEverywhere)
@@ -138,11 +138,18 @@ map <Leader>hh  <Action>(HideActiveWindow)
 " map <C-p> <Action>(ActivateProjectToolWindow)
 map <C-0> <Action>(WelcomeScreen.OpenProject)
 map <leader>rn <Action>(RenameElement)
-map <leader>bt <Action>(FindUsages)
-map <leader>gg <Action>(ActivateVersionControlToolWindow)
+map <leader>bu <Action>(FindUsages)
 map ,o <Action>(OptimizeImports)
 map <leader>fb <Action>(RecentFiles)
 map ,dd <Action>(ActivateDebugToolWindow)
+map <leader>du <Action>(ActivateDatabaseToolWindow)
+map <C-w>T <Action>(MoveEditorToOppositeTabGroup)
+map ,aw <Action>(ShowIntentionActions)
+map <leader>sp <Action>(SelectInProjectView)
+map ,rm <Action>(Delete)
+map <leader>gg <Action>(ActivateVersionControlToolWindow)
+map <leader>gd <Action>(Diff.ShowDiff)
+map <leader>gb <Action>(Annotate)
 
 """ Plugin --------------------------------
 Plug 'easymotion/vim-easymotion'
