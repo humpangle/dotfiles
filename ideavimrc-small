@@ -2,6 +2,10 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 let maplocalleader=","
 
+" Disable bells
+set visualbell
+set noerrorbells
+
 " set showmode
 set idearefactormode=keep
 set ideajoin
