@@ -870,15 +870,17 @@ alias cert-etc='_cert-etc'
 
 if [[ -e "${INTELLIJ_IDEA_BIN_PATH}" ]]; then
   function intellij {
-    (
-      cd "${HOME}/.config/JetBrains/IntelliJIdea2022.3/settingsSync" || true
-      timestamp=
-      timestamp="$(date +'%s')"
+    if [[ -d "${HOME}/.config/JetBrains/IntelliJIdea2022.3/settingsSync" ]]; then
+      (
+        cd "${HOME}/.config/JetBrains/IntelliJIdea2022.3/settingsSync" || true
+        timestamp=
+        timestamp="$(date +'%s')"
 
-      git commit \
-        --allow-empty \
-        -m "${timestamp} - Launching intellij - checkpoint."
-    )
+        git commit \
+          --allow-empty \
+          -m "${timestamp} - Launching intellij - checkpoint."
+      )
+    fi
 
     "${INTELLIJ_IDEA_BIN_PATH}" &>/dev/null &
     disown
