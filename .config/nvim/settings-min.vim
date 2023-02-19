@@ -320,6 +320,8 @@ nnoremap <c-h> <C-w>h
 " nnoremap <silent> <leader>tv :vsp<CR>
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
+" You may also use CTRL-W_T builtin instead of the custom function
+" nnoremap <leader>ts :call MoveToNextTab()<cr>
 nnoremap ,tc :tabclose<CR>
 nnoremap ,td :execute 'bwipeout! '.join(tabpagebuflist())<cr>
 nnoremap ,vn :vnew<cr>

@@ -516,7 +516,7 @@ function install-neovim {
 
   curl -fLo ~/.config/nvim/init.vim \
     --create-dirs \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/config/nvim/settings-min.vim"
+    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/nvim/settings-min.vim"
 
   shared_path=~/.local/share/nvim
 
@@ -597,7 +597,7 @@ eof
 
   curl -fLo ~/.config/nvim/lua/util.lua \
     --create-dirs \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/config/nvim/lua/util.lua"
+    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/nvim/lua/util.lua"
 }
 
 function install-haproxy {
@@ -671,7 +671,7 @@ function install-vifm {
     _echo "DOWNLOADING VIFM CONF"
 
     curl -fLo ~/.config/vifm/vifmrc \
-      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/config/vifm/vifmrc"
+      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/vifm/vifmrc"
   fi
 }
 
