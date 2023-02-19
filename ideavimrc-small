@@ -4,7 +4,7 @@ let maplocalleader=","
 
 " Disable bells
 set visualbell
-set noerrorbells
+" set noerrorbells
 
 " set showmode
 set idearefactormode=keep
@@ -131,6 +131,7 @@ nnoremap yoh :noh<cr>
 map ]d <Action>(GotoNextError)
 map [d <Action>(GotoPreviousError)
 map <leader>fc <Action>(ReformatCode)
+map <leader>N <Action>(ReformatCode)
 map <leader>tt <Action>(ActivateTerminalToolWindow)
 map <leader>fl <Action>(Find)
 map <leader>se  <Action>(SearchEverywhere)
@@ -153,7 +154,7 @@ map ,aw <Action>(ShowIntentionActions)
 map <leader>sp <Action>(SelectInProjectView)
 map ,rm <Action>(Delete)
 map <leader>gg <Action>(ActivateVersionControlToolWindow)
-map <leader>gd <Action>(Diff.ShowDiff)
+map <leader>gd <Action>(CompareTwoFiles)
 map <leader>gb <Action>(Annotate)
 
 """ Plugin --------------------------------
