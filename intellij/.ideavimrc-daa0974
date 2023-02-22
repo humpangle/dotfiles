@@ -154,7 +154,8 @@ map ,aw <Action>(ShowIntentionActions)
 map <leader>sp <Action>(SelectInProjectView)
 map ,rm <Action>(Delete)
 map <leader>gg <Action>(ActivateVersionControlToolWindow)
-map <leader>gd <Action>(CompareTwoFiles)
+" map <leader>gd <Action>(CompareTwoFiles)
+map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gb <Action>(Annotate)
 
 """ Plugin --------------------------------
