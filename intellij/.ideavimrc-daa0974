@@ -55,7 +55,7 @@ nnoremap <Leader>y+ :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>YY :%y<bar>:let @+=@"<CR>
 nnoremap <Leader>ya :%y<bar>:let @a=@"<CR>
 nnoremap <Leader>yz :%y<bar>:let @z=@"<CR>
-nnoremap ,y/        vgny<bar>:let @+=@"<CR>
+nnoremap ,yy vgny<bar>:let @+=@"<CR>
 
 " TABS
 " Move between windows in a tab
