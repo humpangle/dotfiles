@@ -138,13 +138,15 @@ map <leader>se  <Action>(SearchEverywhere)
 map <C-p>  <Action>(GotoFile)
 map <Leader>/  <Action>(FindInPath)
 map <Leader>tt  <Action>(ActivateTerminalToolWindow)
-map <Leader>TT  <Action>(ToggleZenMode)<CR>:set number<CR>
+map <Leader>TT  <Action>(ToggleFullScreen)<CR>:set number<CR>
+map <Leader>ZZ  <Action>(ToggleZenMode)<CR>:set number<CR>
 
 map <Leader>hh  <Action>(HideActiveWindow)
 " map <C-p> <Action>(ActivateProjectToolWindow)
 map <C-0> <Action>(WelcomeScreen.OpenProject)
 map <leader>rn <Action>(RenameElement)
 map <leader>bu <Action>(FindUsages)
+map <leader>bt <Action>(FileStructurePopup)
 map ,o <Action>(OptimizeImports)
 map <leader>fb <Action>(RecentFiles)
 map ,dd <Action>(ActivateDebugToolWindow)
