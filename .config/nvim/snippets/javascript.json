@@ -906,19 +906,23 @@
   },
   "type assertion JSDOC": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["typeassert", "assert_type"],
-    "body": ["/** @type {${1:type}} */ (${2:value})", "${3}"],
+    "prefix": ["type_assert_jsdoc", "jsdoc_assert_type"],
+    "body": ["/** @type {${1:type}} */ (${2:variable_or_value})", "${3}"],
     "description": "type assertion JSDOC"
   },
   "type_var_description": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["type_var_description", "var_type_description"],
-    "body": ["/**", "${1:* description}", "* @type {${2:type}}", "*/", "${3}"],
+    "prefix": [
+      "jsdoc_type_var_description",
+      "type_var_description_jsdoc",
+      "var_type_description"
+    ],
+    "body": ["/**", "* ${1:description}", "* @type {${2:type}}", "*/", "${3}"],
     "description": "type variable declaration JSDOC with description"
   },
   "type_var": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["type_var", "var_type"],
+    "prefix": ["type_var_jsdoc", "jsdoc_type_var", "var_type_jsdoc"],
     "body": ["/**", "* @type {${2:type}}", "*/", "${3}"],
     "description": "type variable declaration JSDOC"
   },
