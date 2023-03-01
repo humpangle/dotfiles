@@ -106,7 +106,7 @@ alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 runf() {
   local name
   local search_paths=(run run.sh .run .run.sh do-run.sh)
-  local parent_dirs=(. .. "${HOME}")
+  local parent_dirs=(. .. ../../z ../../../z "${HOME}")
   local exit_parent
 
   for parent_dir in "${parent_dirs[@]}"; do
