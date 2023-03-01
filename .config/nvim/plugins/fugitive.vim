@@ -1,5 +1,4 @@
 nnoremap <leader>g.  :Git add .<CR>
-nnoremap <leader>g0  :0Gclog! -
 nnoremap <leader>g%  :Git add %<CR>
 nnoremap <leader>gb  :Git blame<CR>
 nnoremap <leader>gd  :Gvdiffsplit!<CR>
@@ -9,7 +8,8 @@ nnoremap <leader>gF  :Git push --force-with-lease github HEAD
 nnoremap <leader>gg  :Git<CR>:Git<CR><bar>" git status
 nnoremap <leader>gh  :Git push github HEAD
 " vertical split (3 way merge) to resolve git merge conflict
-nnoremap <leader>gl  :tab split<CR>:Gclog! -
+nnoremap <leader>g0  :0Gclog! -
+nnoremap <leader>gl  :Gclog! -
 nnoremap <leader>go  :Git push origin HEAD
 nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
 nnoremap <leader>gr  :Git rebase -
