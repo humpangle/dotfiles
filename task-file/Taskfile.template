@@ -1,6 +1,10 @@
 #!/bin/bash
 # shellcheck disable=1090,2009,2046
 
+set -o errexit
+set -o pipefail
+set -o noclobber
+
 # -----------------------------------------------------------------------------
 # See also for inspiration:
 # https://github.com/nickjj/docker-flask-example/blob/main/run
@@ -15,27 +19,6 @@ PATH=./node_modules/.bin:$PATH
 # -----------------------------------------------------------------------------
 # Helper functions start with _ and aren't listed in this script's help menu.
 # -----------------------------------------------------------------------------
-
-function _helper_function {
-  local env
-  local splitted_envs=""
-
-  if [[ -n "$1" ]]; then
-    env="$1"
-  elif [[ -e .env ]]; then
-    env=".env"
-  fi
-
-  if [[ -n "$env" ]]; then
-    set -a
-    . $env
-    set +a
-
-    splitted_envs=$(p-env "$env" --lines)
-  fi
-
-  printf "%s" "$splitted_envs"
-}
 
 function _wait_until {
   command="${1}"
@@ -87,6 +70,61 @@ function _has_internet {
 
   printf 1
 }
+
+function _q {
+  # First and last newlines are required in order to pretty print help text
+  read -r -d '' var <<'eof'
+
+What does function do. Usage:
+  ./run.sh ping-app [OPTIONS]
+
+Options:
+  --verbose/-v. Description should be capitalized and end in a period.
+  --timeout/-t. Super long
+                description's subsequent lines should start at same column as
+                first line.
+
+Examples:
+  ./run.sh ping-app
+
+eof
+
+  local output
+  IFS=''
+  while read -r line; do
+    next=": \"${line}\" "
+    output="${output}\n${next}"
+  done <<<"$(printf "%s" "$var")"
+
+  echo -e "${output}\n"
+
+  if command -v xclip &>/dev/null; then
+    echo -e "${output}" | xclip -selection c
+  fi
+}
+
+full_line_len=$(tput cols)
+
+function _echo {
+  local text="${*}"
+  local equal='='
+
+  local len="${#text}"
+  len=$((full_line_len - len))
+  local half=$((len / 2 - 1))
+
+  local line=''
+
+  for i in $(seq $half); do
+    line="${line}${equal}"
+  done
+
+  echo -e "\n${line} ${text} ${line}"
+}
+
+# -----------------------------------------------------------------------------
+# END HELPER FUNCTIONS
+# -----------------------------------------------------------------------------
 
 function build {
   : "Build the project"
