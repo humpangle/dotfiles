@@ -257,7 +257,7 @@ alias e='setenvs'
 alias pe='p-env'
 alias p='p-env'
 
-ggc() {
+_ggc() {
   if [[ "${1}" == "-h" ]]; then
     echo "Usage:"
     echo "  ggc"
@@ -271,7 +271,7 @@ ggc() {
   disown
 }
 
-export -f ggc
+alias ggc='_ggc'
 
 # TMUX split panes and windows
 splitp() {
@@ -360,7 +360,7 @@ fi
 alias xclip='xclip -selection c'
 alias cpath='pwd | xclip -selection c'
 
-purge-systemd-service() {
+_purge-systemd-service() {
   sudo systemctl stop "$1"
   sudo systemctl disable "$1"
   sudo rm -rf /etc/systemd/system/"$1"
@@ -368,7 +368,8 @@ purge-systemd-service() {
   sudo systemctl daemon-reload
   sudo systemctl reset-failed
 }
-export -f purge-systemd-service
+alias purge-systemd-service='_purge-systemd-service'
+
 # -----------------------------------------------------------------------------
 # END COMMONS
 # -----------------------------------------------------------------------------
@@ -433,7 +434,7 @@ function _phpunit {
 }
 
 if [ -x "$(command -v php)" ]; then
-  export -f _phpunit
+  alias php-unit='_phpunit'
   alias pu='_phpunit'
 
   # debian pkg bsdgames
@@ -859,7 +860,6 @@ function _cert-etc {
   echo -e "C:\Windows\System32\drivers\etc\hosts\n\n"
 }
 
-export -f _cert-etc
 alias cert-etc='_cert-etc'
 
 # -----------------------------------------------------------------------------
@@ -867,7 +867,7 @@ alias cert-etc='_cert-etc'
 # -----------------------------------------------------------------------------
 
 if [[ -e "${INTELLIJ_IDEA_BIN_PATH}" ]]; then
-  function intellij {
+  function _intellij {
     if [[ -d "${HOME}/.config/JetBrains/IntelliJIdea2022.3/settingsSync" ]]; then
       (
         cd "${HOME}/.config/JetBrains/IntelliJIdea2022.3/settingsSync" || true
@@ -884,6 +884,6 @@ if [[ -e "${INTELLIJ_IDEA_BIN_PATH}" ]]; then
     disown
   }
 
-  export -f intellij
+  alias intellij='_intellij'
   alias idea='intellij'
 fi
