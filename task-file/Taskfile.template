@@ -138,12 +138,46 @@ function default {
 
 function help {
   : "List available tasks."
-  : "They can span multiple lines if needed"
-  compgen -A function | grep -v "^_" | while read -r name; do
-    paste <(printf '%s' "$name") <(type "$name" | sed -nEe 's/^[[:space:]]*: ?"(.*)";/    \1/p')
+
+  mapfile -t names < <(compgen -A function | grep -v '^_')
+
+  local len=0
+  declare -A names_map=()
+
+  for name in "${names[@]}"; do
+    _len="${#name}"
+    names_map["$name"]="${_len}"
+    if [[ "${_len}" -gt "${len}" ]]; then len=${_len}; fi
   done
 
-  printf "\n"
+  len=$((len + 10))
+
+  for name in "${names[@]}"; do
+    local spaces=""
+    _len="${names_map[$name]}"
+    _len=$((len - _len))
+
+    for _ in $(seq "${_len}"); do
+      spaces="${spaces}-"
+      ((++t))
+    done
+
+    mapfile -t doc1 < <(
+      type "$name" |
+        sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p"
+
+    )
+
+    if [[ -n "${doc1[*]}" ]]; then
+      for _doc in "${doc1[@]}"; do
+        echo -e "${name} ${spaces} ${_doc}"
+      done
+    else
+      echo "${name} ${spaces} *************"
+    fi
+
+    echo
+  done
 }
 
 TIMEFORMAT=$'\n\n\nTask completed in %3lR\n'
