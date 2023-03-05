@@ -71,7 +71,7 @@ function _has_internet {
   printf 1
 }
 
-function _q {
+function _h {
   # First and last newlines are required in order to pretty print help text
   read -r -d '' var <<'eof'
 What does function do. Usage:
