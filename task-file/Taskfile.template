@@ -1,7 +1,7 @@
 #!/bin/bash
-# shellcheck disable=1090,2009,2046
+# shellcheck disable=
 
-set -o errexit
+# set -o errexit
 set -o pipefail
 set -o noclobber
 
@@ -11,7 +11,7 @@ set -o noclobber
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
-# Extend the search path so you can easily use executable that are not are the
+# Extend the search path so you can easily use executables that are not on the
 # normal search path
 # -----------------------------------------------------------------------------
 PATH=./node_modules/.bin:$PATH
@@ -74,7 +74,6 @@ function _has_internet {
 function _q {
   # First and last newlines are required in order to pretty print help text
   read -r -d '' var <<'eof'
-
 What does function do. Usage:
   ./run.sh ping-app [OPTIONS]
 
@@ -86,7 +85,6 @@ Options:
 
 Examples:
   ./run.sh ping-app
-
 eof
 
   local output
@@ -129,11 +127,6 @@ function _echo {
 function build {
   : "Build the project"
   echo "build task not implemented"
-}
-
-function default {
-  : "Run a default task"
-  build
 }
 
 function help {
@@ -180,5 +173,5 @@ function help {
   done
 }
 
-TIMEFORMAT=$'\n\n\nTask completed in %3lR\n'
-time "${@:-default}"
+TIMEFORMAT=$'\n\nTask completed in %3lR\n'
+time "${@:-help}"
