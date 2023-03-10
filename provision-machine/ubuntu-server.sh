@@ -100,6 +100,7 @@ ERLANG_DEPS=(
   'inotify-tools'
 )
 
+full_line_len=$(tput cols)
 full_line_str=''
 line_marker_for__echo='+'
 
@@ -112,30 +113,21 @@ function _full-line-str {
   fi
 }
 
-full_line_len=$(tput cols)
-
 function _echo {
   local text="${*}"
+  local equal='*'
 
-  local text_len="${#text}"
-
-  local len
-  len=$((full_line_len - text_len - 2))
+  local len="${#text}"
+  len=$((full_line_len - len))
+  local half=$((len / 2 - 1))
 
   local line=''
 
-  for i in $(seq $len); do
-    line="${line}${line_marker_for__echo}"
+  for _ in $(seq $half); do
+    line="${line}${equal}"
   done
 
-  if [[ -z "${full_line_str}" ]]; then
-    # shellcheck disable=SC2034
-    for i in $(seq "$full_line_len"); do
-      full_line_str="${full_line_str}${line_marker_for__echo}"
-    done
-  fi
-
-  echo -e "\n${text}  ${line}\n"
+  echo -e "\n${text}  ${line}${line}"
 }
 
 function _asdf-bin-path {
