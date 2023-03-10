@@ -105,7 +105,7 @@ full_line_len=$(tput cols)
 
 function _echo {
   local text="${*}"
-  local equal='='
+  local equal='*'
 
   local len="${#text}"
   len=$((full_line_len - len))
@@ -113,11 +113,11 @@ function _echo {
 
   local line=''
 
-  for i in $(seq $half); do
+  for _ in $(seq $half); do
     line="${line}${equal}"
   done
 
-  echo -e "\n${line} ${text} ${line}"
+  echo -e "\n${text}  ${line}${line}"
 }
 
 # -----------------------------------------------------------------------------
