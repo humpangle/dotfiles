@@ -17,7 +17,7 @@ nnoremap <leader>gr  :Git rebase -
 nnoremap <leader>gs  :Git reset --soft HEAD~
 nnoremap <leader>gS  :Git reset --hard HEAD~
 " gt = git take / pull
-nnoremap <leader>gt :Git fetch<bar>:execute 'Git pull origin ' . FugitiveHead()<Cr>
+nnoremap <leader>gt :Git fetch<bar>:execute 'Git pull origin ' . FugitiveHead()
 nnoremap <leader>gT  :Git pull <right>
 nnoremap ,gf         :Git fetch<CR>
 nnoremap <leader>gw  :Git worktree <right>
