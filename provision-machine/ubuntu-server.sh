@@ -616,10 +616,14 @@ function install-bins {
 
   _write-local-bin-path-to-paths
 
-  curl -fLo "${LOCAL_BIN_PATH}/p-env" \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/scripts/p-env"
+  declare -a local_bin_scripts=(p-env ebnis-save-tmux.sh)
 
-  chmod u+x "${LOCAL_BIN_PATH}/p-env"
+  for script in "${local_bin_scripts[@]}"; do
+    curl -fLo "${LOCAL_BIN_PATH}/p-env" \
+      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/scripts/$script"
+
+    chmod u+x "${LOCAL_BIN_PATH}/$script"
+  done
 
   curl -fLo "${BASH_APPEND_PATH}" \
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/regular_shell.sh"
