@@ -149,6 +149,7 @@ map <leader>bu <Action>(FindUsages)
 map <leader>bt <Action>(FileStructurePopup)
 map ,o <Action>(OptimizeImports)
 map <leader>fb <Action>(RecentFiles)
+map <leader>fw <Action>(RecentFiles)
 map ,dd <Action>(ActivateDebugToolWindow)
 map <leader>du <Action>(ActivateDatabaseToolWindow)
 map <C-w>T <Action>(MoveEditorToOppositeTabGroup)
@@ -159,6 +160,7 @@ map <leader>gg <Action>(ActivateVersionControlToolWindow)
 " map <leader>gd <Action>(CompareTwoFiles)
 map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gb <Action>(Annotate)
+map ,gg <Action>(Generate)
 
 """ Plugin --------------------------------
 Plug 'easymotion/vim-easymotion'
