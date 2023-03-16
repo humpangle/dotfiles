@@ -196,7 +196,15 @@
       "          exit 1",
       "          ;;",
       "  esac",
-      "done"
+      "done",
+      "",
+      "# handle non-option arguments",
+      "if [[ \\$# -ne 1 ]]; then",
+      "  echo \"\\$0: Non optional argument XX is required.\"",
+      "  exit 1",
+      "fi",
+      "",
+      "non_optional=\\$1"
     ],
     "description": ["getopt parse options"]
   }
