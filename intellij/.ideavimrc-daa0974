@@ -161,6 +161,7 @@ map <leader>gg <Action>(ActivateVersionControlToolWindow)
 map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gb <Action>(Annotate)
 map ,gg <Action>(Generate)
+map <leader>do <Action>(Diff.ApplyLeftSide)
 
 """ Plugin --------------------------------
 Plug 'easymotion/vim-easymotion'
