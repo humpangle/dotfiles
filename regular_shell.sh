@@ -357,8 +357,15 @@ if [ -d "$HOME/.fzf" ]; then
   alias aff='alias | fzf'
 fi
 
+function _ebnis-xclip {
+  if command -v xclip &>/dev/null; then
+    xclip -selection c <<<"${1}"
+  fi
+}
+
 alias xclip='xclip -selection c'
 alias cpath='pwd | xclip -selection c'
+alias copy='_ebnis-xclip'
 
 _purge-systemd-service() {
   sudo systemctl stop "$1"
