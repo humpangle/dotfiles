@@ -16,6 +16,7 @@ usage() {
                   [ -o | --output   /some/path ]
                   [ -d | --debug ]
                   [ -n | --no-change-name ]
+                  [ -a | --env-name 'name-for-env-file' ]
                   env-file"
   exit "${1:-2}"
 }
@@ -29,6 +30,7 @@ exec_cmd=
 cwd=
 debug=
 no_change_name=
+new_env_name=
 
 function parse-args {
   # -allow a command to fail with !’s side effect on errexit
@@ -48,8 +50,8 @@ function parse-args {
   #   debug/d
   #   verbose/v
   #   no-change-name/n
-  long_options=string,debug,format:,output:,exec:,cwd:,verbose,no-change-name
-  short_options=sdf:o:e:v,n
+  long_options=string,debug,format:,output:,exec:,cwd:,verbose,no-change-name,env-name:
+  short_options=sdf:o:e:v,n,a:
 
   # -regarding ! and PIPESTATUS see above
   # -temporarily store output to be able to check for errors
@@ -105,6 +107,11 @@ function parse-args {
 
       --cwd)
         cwd="$2"
+        shift 2
+        ;;
+
+      --env-name | -a)
+        new_env_name="$2"
         shift 2
         ;;
 
@@ -177,10 +184,16 @@ else
   rm -rf "$out_path"
   touch "$out_path"
 
-  if [[ -z "$no_change_name" ]]; then
-    env_key_to_value_map["ENV_FILE"]="${out_path}"
-  else
+  #### Update value of ENV_FILE depending on args
+  if [[ -n "${new_env_name}" ]]; then
+    # We have a new name, let's use it
+    env_key_to_value_map["ENV_FILE"]="${new_env_name}"
+  elif [[ -n "$no_change_name" ]]; then
+    # We are told not to change the name, so we use input file name
     env_key_to_value_map["ENV_FILE"]="${in_path}"
+  else
+    # BY default, we set value to output file name
+    env_key_to_value_map["ENV_FILE"]="${out_path}"
   fi
 fi
 
