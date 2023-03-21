@@ -162,6 +162,7 @@ map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gb <Action>(Annotate)
 map ,gg <Action>(Generate)
 map <leader>do <Action>(Diff.ApplyLeftSide)
+map ,pd <Action>(PhpListenDebugAction)
 
 """ Plugin --------------------------------
 Plug 'easymotion/vim-easymotion'
