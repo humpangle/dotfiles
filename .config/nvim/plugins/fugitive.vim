@@ -10,7 +10,7 @@ nnoremap <leader>gh  :Git push github HEAD
 " vertical split (3 way merge) to resolve git merge conflict
 nnoremap <leader>g0  :0Gclog! -
 nnoremap <leader>gl  :Gclog! -
-nnoremap <leader>go  :Git push origin HEAD
+nnoremap <leader>go  :execute 'Git push origin ' . FugitiveHead()
 nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
 nnoremap <leader>gr  :Git rebase -
 " gs = git set / reset
