@@ -695,22 +695,19 @@
     ],
     "description": "Export react functional Component"
   },
-
   "Print to console": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consoleapplog",
     "body": [
       "console.log(",
-      "  `\\n======================Logging start==================\\n",
-      "      Label: ${1:label}$2",
-      "  `,",
-      "  ${1:code},",
-      "  `\\n\\n=====================Logging ends===================\\n`",
+      "  `\\n\\n\\nSTART ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`,",
+      "  `\\n>>>>>>>>>>>>>> ${1:label1}$0\\n`,",
+      "  ${1:label1},",
+      "  ${2:// `\\n\\n>>>>>>>>>>>>>> label2\\n`, label2,}",
+      "  `\\nEND ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\\n\\n\\n`",
       ");"
     ],
     "description": "Log to console with some debug info"
   },
-
   "Print to console error": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consoleerrorlog",
