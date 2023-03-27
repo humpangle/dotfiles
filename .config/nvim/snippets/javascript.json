@@ -731,22 +731,19 @@
     "body": ["act(() => {", "  ${1}", "});"],
     "description": "actReactTest"
   },
-
   "console.log JSON.stringify": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consolejsonlog",
     "body": [
       "console.log(",
-      "  `\\n======================Logging start==================\\n",
-      "      Label: ${1:label}$2",
-      "  `,",
-      "  JSON.stringify(${1:code}, null, 2),",
-      "  `\\n\\n=====================Logging ends===================\\n`",
+      "  `\\n\\n\\nSTART ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`,",
+      "  `\\n>>>>>>>>>>>>>> ${1:label1}$0\\n`,",
+      "  JSON.stringify($1, null, 2),",
+      "  `\\nEND ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\\n\\n\\n`",
       ");"
     ],
     "description": "console.log JSON.stringify"
   },
-
   "describeTest": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "describeTest",
