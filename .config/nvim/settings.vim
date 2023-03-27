@@ -315,6 +315,7 @@ nnoremap ,tc :tabclose<CR>
 nnoremap ,td :execute 'bwipeout! '.join(tabpagebuflist())<cr>
 nnoremap ,vn :vnew<cr>
 nnoremap ,sn :new<cr>
+nnoremap ,tt :tab split<bar>:term<cr>
 
 " Reorder tabs
 noremap <A-Left>  :-tabmove<cr>
