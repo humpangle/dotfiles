@@ -162,6 +162,8 @@ map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gb <Action>(Annotate)
 map ,gg <Action>(Generate)
 map <leader>do <Action>(Diff.ApplyLeftSide)
+map ]c <Action>(NextDiff)
+map [c <Action>(PreviousDiff)
 map ,pd <Action>(PhpListenDebugAction)
 
 """ Plugin --------------------------------
