@@ -872,25 +872,27 @@ alias cert-etc='_cert-etc'
 # -----------------------------------------------------------------------------
 # INTELLIJ IDEA IDE
 # -----------------------------------------------------------------------------
+# In `~/.bashrc`
+# export INTELLIJ_VERSION='IntelliJIdea2022.3'
+# export INTELLIJ_IDEA_BIN_PATH="${HOME}/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/223.8836.41/bin/idea.sh"
+
 if [[ -e "${INTELLIJ_IDEA_BIN_PATH}" ]]; then
   pathmunge "$(dirname "${INTELLIJ_IDEA_BIN_PATH}")"
 
   function _intellij {
-    if [[ -d "${HOME}/.config/JetBrains/IntelliJIdea2022.3/settingsSync" ]]; then
-      (
-        if cd "${HOME}/.config/JetBrains/IntelliJIdea2022.3/settingsSync"; then
-          timestamp=
-          timestamp="$(date +'%s')"
+    (
+      if cd "${HOME}/.config/JetBrains/${INTELLIJ_VERSION:-bahridarnish}/settingsSync"; then
+        timestamp=
+        timestamp="$(date +'%s')"
 
-          git commit \
-            --allow-empty \
-            -m "${timestamp} - Launching intellij - checkpoint." &>/dev/null
+        git commit \
+          --allow-empty \
+          -m "Launching intellij checkpoint -- $(hostname) -- $(date)"
 
-          # Sometime to allow the commit to complete
-          sleep 2
-        fi
-      )
-    fi
+        # Sometime to allow the commit to complete
+        sleep 2
+      fi
+    )
 
     "${INTELLIJ_IDEA_BIN_PATH}" &>/dev/null &
     disown
