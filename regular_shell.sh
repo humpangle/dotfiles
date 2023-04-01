@@ -880,17 +880,26 @@ if [[ -e "${INTELLIJ_IDEA_BIN_PATH}" ]]; then
   pathmunge "$(dirname "${INTELLIJ_IDEA_BIN_PATH}")"
 
   function _intellij {
+    local settings_sync_dir="${HOME}/.config/JetBrains/${INTELLIJ_VERSION:-bahridarnish}/settingsSync"
+
     (
-      if cd "${HOME}/.config/JetBrains/${INTELLIJ_VERSION:-bahridarnish}/settingsSync"; then
-        timestamp=
+      if cd "${settings_sync_dir}" &>/dev/null; then
+        local timestamp
         timestamp="$(date +'%s')"
 
-        git commit \
-          --allow-empty \
-          -m "Launching intellij checkpoint -- $(hostname) -- $(date)"
+        local commit_message="Launching intellij checkpoint -- $(hostname) -- $(date)"
 
-        # Sometime to allow the commit to complete
-        sleep 2
+        if git commit \
+          --allow-empty \
+          -m "${commit_message}"; then
+
+          # Sometime to allow the commit to complete
+          sleep 2
+
+          echo -e "\nCommit message: \"${commit_message}\"\n"
+        else
+          echo -e "${settings_sync_dir}"
+        fi
       fi
     )
 
