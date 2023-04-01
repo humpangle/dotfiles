@@ -23,8 +23,8 @@ nnoremap <leader>sn :set number<CR>
 set relativenumber
 
 " format paragraphs/lines to 80 chars
-nnoremap <Leader>pp gqap
-xnoremap <Leader>pp gqa
+" nnoremap <Leader>pp gqap
+" xnoremap <Leader>pp gqa
 " Save file
 nnoremap <Leader>ww :w<CR>
 nnoremap <Leader>wa :wa<CR>
@@ -163,7 +163,9 @@ map <leader>gb <Action>(Annotate)
 map ,gg <Action>(Generate)
 map <leader>do <Action>(Diff.ApplyLeftSide)
 map ]c <Action>(NextDiff)
+" map <leader>pp <Action>(NextDiff)
 map [c <Action>(PreviousDiff)
+" map <leader>P <Action>(PreviousDiff)
 map ,pd <Action>(PhpListenDebugAction)
 
 """ Plugin --------------------------------
