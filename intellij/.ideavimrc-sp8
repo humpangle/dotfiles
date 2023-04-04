@@ -130,6 +130,12 @@ nnoremap yoh :noh<cr>
 " map <leader>z <Action>(ToggleDistractionFreeMode)
 map ]d <Action>(GotoNextError)
 map [d <Action>(GotoPreviousError)
+
+"""""" Do not work for git diff
+map ]c <Action>(NextDiff)
+map [c <Action>(PreviousDiff)
+"""""" Do not work for git diff
+
 map <leader>fc <Action>(ReformatCode)
 map <leader>N <Action>(ReformatCode)
 map <leader>tt <Action>(ActivateTerminalToolWindow)
@@ -162,10 +168,6 @@ map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gb <Action>(Annotate)
 map ,gg <Action>(Generate)
 map <leader>do <Action>(Diff.ApplyLeftSide)
-map ]c <Action>(NextDiff)
-" map <leader>pp <Action>(NextDiff)
-map [c <Action>(PreviousDiff)
-" map <leader>P <Action>(PreviousDiff)
 map ,pd <Action>(PhpListenDebugAction)
 
 """ Plugin --------------------------------
