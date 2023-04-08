@@ -28,7 +28,7 @@ nnoremap <Leader>fg :GFiles!<CR>
 " Search file from current directory
 nnoremap <silent> <Leader>f, :GFiles! <C-r>=expand("%:h")<CR>/<CR>
 " Git commits
-nnoremap <leader>cm :Commits!<CR>
+" nnoremap <leader>cm :Commits!<CR>
 " Git commits for the current buffer
 nnoremap <leader>%c :BCommits!<CR>
 " fzf-checkout
