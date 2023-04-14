@@ -146,3 +146,4 @@ Session.vim
 
 # cloudflare
 .cloudflare-tunnel-config*
+*dump.tar.*
