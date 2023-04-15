@@ -2,7 +2,7 @@ nnoremap <leader>g.  :Git add .<CR>
 nnoremap <leader>g%  :Git add %<CR>
 nnoremap <leader>gb  :Git blame<CR>
 nnoremap <leader>gd  :Gvdiffsplit!<CR>
-nnoremap <leader>ge  :Gedit <right>
+nnoremap <leader>ge  :tab split<CR>:Gedit <right>
 nnoremap <leader>gf  :Git push --force-with-lease origin HEAD
 nnoremap <leader>gF  :Git push --force-with-lease github HEAD
 nnoremap <leader>gg  :Git<CR>:Git<CR><bar>" git status
