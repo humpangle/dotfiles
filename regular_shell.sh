@@ -80,13 +80,32 @@ remove_vim_sessionf() {
 
   ME=$(pwd)
   filename="${ME//\//%}"
+  echo -e "\n\n${filename}"
   absolute_path="$HOME/.vim/session/$filename.vim"
   rm -rf "$absolute_path"
 }
 alias remove_vim_session=remove_vim_sessionf
 alias rmvs=remove_vim_sessionf
-alias remove_vim_undo='rm -rf $HOME/.vim/undodir/*'
-alias rmvu='remove_vim_undo'
+
+remove_vim_undof() {
+  local ME
+  local filename
+  local absolute_path
+  local prefix
+
+  ME=$(pwd)
+  filename="${ME//\//%}%"
+  prefix="${HOME}/.vim/undodir"
+
+  # shellcheck disable=2010
+  mapfile -t filenames < <(ls -h "${prefix}" | grep -P "${filename}")
+  for f in "${filenames[@]}"; do
+    absolute_path="${prefix}/${f}"
+    rm -rf "${absolute_path}"
+  done
+}
+alias remove_vim_undo='remove_vim_undof'
+alias rmvu='remove_vim_undof'
 
 alias ta='tmux a -t'
 alias tad='tmux a -d -t'
