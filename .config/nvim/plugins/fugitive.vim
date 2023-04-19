@@ -5,7 +5,7 @@ nnoremap <leader>gd  :Gvdiffsplit!<CR>
 nnoremap <leader>ge  :tab split<CR>:Gedit <right>
 nnoremap <leader>gf  :Git push --force-with-lease origin HEAD
 nnoremap <leader>gF  :Git push --force-with-lease github HEAD
-nnoremap <leader>gg  :Git<CR>:Git<CR><bar>" git status
+nnoremap <leader>gg  :tab split<CR>:Git<CR>:Git<CR><C-W>o
 nnoremap <leader>gh  :Git push github HEAD
 " vertical split (3 way merge) to resolve git merge conflict
 nnoremap <leader>g0  :0Gclog! -
