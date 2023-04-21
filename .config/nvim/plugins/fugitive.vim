@@ -12,7 +12,8 @@ nnoremap <leader>gh  :Git push github HEAD
 nnoremap <leader>g0  :0Gclog! -
 nnoremap <leader>gl  :Gclog! -
 nnoremap <leader>gL  :tab split<cr>:G log -10000000<CR><C-W>o
-nnoremap <leader>cm  :tabnew<cr>:Gclog! -50<CR>:call DeleteOrCloseBuffer(1)<cr>
+nnoremap <leader>cm  :Gclog! -50<CR>
+nnoremap <leader>cM  :tabnew<cr>:Gclog! -50<CR>:call DeleteOrCloseBuffer(1)<cr>
 nnoremap <leader>go  :execute 'Git push origin ' . FugitiveHead()
 nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
 nnoremap <leader>gr  :Git rebase -
