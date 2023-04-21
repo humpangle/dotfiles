@@ -20,7 +20,9 @@ nnoremap <leader>gr  :Git rebase -
 nnoremap <leader>gR  :tab split<CR>:Git reflog -100<CR><C-W>o
 " gs = git set / reset
 nnoremap <leader>gs  :Git reset --soft HEAD~
-nnoremap <leader>gS  :Git reset --hard HEAD~
+nnoremap <leader>gS  :Git reset --soft <right>
+nnoremap <leader>Gs  :Git reset --hard HEAD~
+nnoremap <leader>GS  :Git reset --hard <right>
 " gt = git take / pull
 nnoremap <leader>gt :Git fetch<bar>:execute 'Git pull origin ' . FugitiveHead()
 nnoremap <leader>gT  :Git pull <right>
