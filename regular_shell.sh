@@ -511,6 +511,8 @@ ELIXIR_LS_STABLE_HASH='15d0553'
 get-hash() {
   local args="${*}"
 
+  # args is equal to `some text --hash=git-hash` or `some text --hash git-hash`
+  # sed: may be some text --hash(=)(git-hash)
   local hash="$(
     echo "${args}" |
       sed -n -E "s/.*--hash(=|\s+)([a-zA-Z0-9]+)?.*/\2/p"
@@ -565,7 +567,9 @@ rel_asdf_elixir-build-current-f() {
 
 rel_asdf_elixir-install-f() {
   if ! [ "$(check-elixir_ls-vsn "${@}")" ]; then
-    printf "The elixir version is required.\n"
+    echo "The elixir version is required."
+    echo "Usages:"
+    echo "  rel_asdf_elixir-install-f elixir-ls-version [--hash git-hash]"
     return
   fi
 
@@ -585,8 +589,10 @@ rel_asdf_elixir-install-f() {
 
   (
     echo -e "\n=> Entering install directory ${install_dir} ===\n"
-    # shellcheck disable=SC2164
-    cd "$install_dir"
+
+    if ! cd "$install_dir"; then
+      return
+    fi
 
     git reset .
     git checkout "${hash}"
