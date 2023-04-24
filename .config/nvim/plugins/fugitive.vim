@@ -9,7 +9,7 @@ nnoremap <leader>gg  :Git<CR>
 nnoremap <leader>gG  :tab split<CR>:Git<CR><C-W>o
 nnoremap <leader>gh  :Git push github HEAD
 " vertical split (3 way merge) to resolve git merge conflict
-nnoremap <leader>g0  :0Gclog! -
+nnoremap <leader>g0  :0Gclog! -50<CR>
 nnoremap <leader>gl  :Gclog! -
 nnoremap <leader>gL  :tab split<cr>:G log -10000000<CR><C-W>o
 nnoremap <leader>cm  :Gclog! -50<CR>
