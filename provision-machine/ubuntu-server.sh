@@ -251,6 +251,7 @@ function install-golang {
     _install-deps "${GOLANG_DEPS[*]}"
   fi
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add golang
@@ -277,6 +278,7 @@ function install-rust {
     _install-deps "${RUST_DEPS[*]}"
   fi
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add rust
@@ -286,6 +288,7 @@ function install-rust {
   local rust_install_root
   rust_install_root="$(_asdf-plugin-install-root rust "$RUST_VERSION")"
 
+  # shellcheck source=/dev/null
   source "${rust_install_root}/env"
 
   "$(_asdf-bin-path)" reshim rust
@@ -629,6 +632,7 @@ function install-bins {
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/regular_shell.sh"
 
   echo "[ -f ${BASH_APPEND_PATH} ] && source ${BASH_APPEND_PATH}" >>"$HOME/.bashrc"
+  # shellcheck source=/dev/null
   source "$HOME/.bashrc"
 
   curl -fLo "$HOME/complete_alias.sh" \
@@ -760,6 +764,7 @@ function install-elixir {
   sudo apt-get install -y \
     unzip
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add elixir
@@ -789,6 +794,7 @@ function install-nodejs {
     _install-deps "${NODEJS_DEPS[*]}"
   fi
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add nodejs
@@ -834,6 +840,7 @@ function install-python {
     _install-deps "${PYTHON_DEPS[*]}"
   fi
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add python
@@ -841,6 +848,7 @@ function install-python {
   "$(_asdf-bin-path)" install python $PYTHON_VERSION
   "$(_asdf-bin-path)" global python $PYTHON_VERSION
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   if _is-dev "$@"; then
@@ -870,6 +878,7 @@ function install-ansible {
     install-py
   fi
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   pip install -U \
@@ -895,6 +904,7 @@ function install-lua {
       linux-headers-$(uname -r)
   fi
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add lua
@@ -903,7 +913,9 @@ function install-lua {
   "$(_asdf-bin-path)" global lua $version
 
   # We source scripts to bring stylua executable into shell
+  # shellcheck source=/dev/null
   . "$HOME/.bashrc"
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   if ! command -v stylua; then
@@ -929,12 +941,14 @@ function install-mysql {
     libncurses5 \
     numactl
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add mysql
   "$(_asdf-bin-path)" install mysql $version
   "$(_asdf-bin-path)" global mysql $version
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   export DATADIR="$HOME/mysql_data_${version//./_}"
@@ -984,6 +998,7 @@ function install-php {
     re2c \
     zlib1g-dev
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add php
@@ -991,6 +1006,7 @@ function install-php {
   "$(_asdf-bin-path)" install php $version
   "$(_asdf-bin-path)" global php $version
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   curl -fL \
@@ -999,9 +1015,11 @@ function install-php {
   sudo chmod a+x /tmp/php-cs-fixer
   sudo mv /tmp/php-cs-fixer /usr/local/bin/php-cs-fixer
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
   pecl install xdebug
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
   "$(_asdf-bin-path)" reshim php
 }
@@ -1122,6 +1140,7 @@ function setup-dev {
   # Installing lua will also install rust because of stylua
   install-lua dev || true
 
+  # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
   # Many times, installing rust will just error (mostly for network reasons)
