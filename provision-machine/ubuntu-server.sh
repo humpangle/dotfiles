@@ -136,7 +136,7 @@ function _asdf-bin-path {
 
 function _write-local-bin-path-to-paths {
   if ! grep -q "PATH=.*${LOCAL_BIN_PATH}" "$HOME/.bashrc"; then
-    echo -e "\nexport PATH=${LOCAL_BIN_PATH}:\$PATH" >>"$HOME/.bashrc"
+    echo "export PATH=${LOCAL_BIN_PATH}:\$PATH" >>"$HOME/.bashrc"
   fi
 }
 
@@ -307,7 +307,7 @@ function install-rust {
   local cargo_bin_dir="${HOME}/.cargo/bin"
 
   if [[ -d "${cargo_bin_dir}" ]]; then
-    echo -e "\nexport PATH=${cargo_bin_dir}:\$PATH" >>"${HOME}/.bashrc"
+    echo "export PATH=${cargo_bin_dir}:\$PATH" >>"${HOME}/.bashrc"
   fi
 }
 
@@ -347,7 +347,7 @@ function install-asdf-postgres {
 
   _may_be_install_asdf "$@"
 
-  local version=14.2
+  local version=15.2
 
   sudo apt-get update
 
@@ -638,7 +638,9 @@ function install-bins {
   curl -fLo "$HOME/complete_alias.sh" \
     https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
 
-  echo -e "\n. \$HOME/complete_alias.sh" >>"$HOME/.bash_completion"
+  echo ". ${HOME}/complete_alias.sh" >>"${HOME}/.bash_completion.sh"
+
+  echo '[ -f ~/.bash_completion.sh ] && . ~/.bash_completion.sh' >>"${HOME}/.bashrc"
 
   mkdir -p ~/.ssh
 }
@@ -757,7 +759,7 @@ function install-elixir {
 
   _echo "INSTALLING ELIXIR"
 
-  local version=1.14.3-otp-25
+  local version=1.14.4-otp-25
 
   sudo apt-get update
 
@@ -1078,6 +1080,8 @@ function setup-dev {
 
   _update-and-upgrade-os-packages dev
 
+  install-bins
+
   install-tmux dev
   install-vifm dev
 
@@ -1160,6 +1164,7 @@ function setup-dev {
   sed -i -e "s/username/$USER/g" ~/user_defaults
   sed -i -e "s|__NEOVIM_BIN__|$(which nvim)|g" ~/user_defaults
   sudo mv ~/user_defaults /etc/sudoers.d/
+  sudo chown root:root /etc/sudoers.d/user_defaults
 
   echo "${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --terminate"
 }
