@@ -1149,8 +1149,7 @@ function setup-dev {
 
   # Many times, installing rust will just error (mostly for network reasons)
   # So we try again just one more time.
-  # shellcheck disable=SC2076
-  if ! [[ "$(_asdf-bin-path current rust 2>/dev/null)" =~ "$RUST_VERSION" ]]; then
+  if ! [[ "$(_asdf-bin-path current rust 2>/dev/null | awk '{print $2}')" == "$RUST_VERSION" ]]; then
     install-rust dev
   fi
 
