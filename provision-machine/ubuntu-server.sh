@@ -1084,6 +1084,7 @@ function setup-dev {
 
   install-tmux dev
   install-vifm dev
+  install-chrome
 
   mkdir -p "${LOCAL_BIN_PATH}" \
     ~/projects/0 \
@@ -1180,6 +1181,13 @@ function install-terraform-lsp {
   sudo mv terraform-lsp /usr/local/bin/
 
   cd - >/dev/null
+}
+
+function install-chrome {
+  sudo apt-get install -y curl unzip xvfb libxi6 libgconf-2-4
+  curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  sudo dpkg --install google-chrome-stable_current_amd64.deb
+  rm -rf google-chrome-stable_current_amd64.deb
 }
 
 function help {
