@@ -1150,7 +1150,8 @@ function setup-dev {
 
   # Many times, installing rust will just error (mostly for network reasons)
   # So we try again just one more time.
-  if ! [[ "$(_asdf-bin-path current rust 2>/dev/null | awk '{print $2}')" == "$RUST_VERSION" ]]; then
+  rust_path="$(_asdf-plugin-install-root rust "${RUST_VERSION}")"
+  if ! [[ -e "${rust_path}" ]]; then
     install-rust dev
   fi
 
