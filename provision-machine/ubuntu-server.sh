@@ -1185,10 +1185,16 @@ function install-terraform-lsp {
 }
 
 function install-chrome {
-  sudo apt-get install -y curl unzip xvfb libxi6 libgconf-2-4
-  curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  sudo dpkg --install google-chrome-stable_current_amd64.deb
-  rm -rf google-chrome-stable_current_amd64.deb
+  _echo "Installing google chrome"
+
+  curl https://dl-ssl.google.com/linux/linux_signing_key.pub |
+    sudo apt-key add -
+
+  sudo add-apt-repository -y \
+    "deb http://dl.google.com/linux/chrome/deb/ stable main"
+
+  sudo apt-get update
+  sudo apt-get install google-chrome-stable -y
 }
 
 function help {
