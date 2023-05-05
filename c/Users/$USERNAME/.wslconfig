@@ -1,7 +1,7 @@
 [wsl2]
 memory=8GB # Limit VM Memory to specified amount in GB
 processors=6 # Limit virtual memories
-guiApplications=false
+guiApplications=true
 #swap=8GB # how much swap space to use. Default 0
 #swapFile=D:\\wsl2-swap.vhdx # An absolute path to the windows vhd file to use
 #localhostForwarding=<bool> # Whether to forward ports from wsl2 to windows host. Default =true
