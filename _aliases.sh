@@ -218,3 +218,11 @@ fi
 if ! command -v nps &>/dev/null; then
   alias nps='npm start'
 fi
+
+if command -v grep &>/dev/null; then
+  function g {
+    grep "${@}"
+  }
+
+  export -f g
+fi
