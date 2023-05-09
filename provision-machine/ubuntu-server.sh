@@ -322,6 +322,11 @@ function install-docker {
     _install-deps "${DOCKER_DEPS[*]}"
   fi
 
+  if _has-wsl; then
+    sudo mkdir -p /etc/docker
+    echo '{ "dns": ["10.0.0.2", "8.8.8.8"] }' | sudo tee -a /etc/docker/daemon.json
+  fi
+
   sudo mkdir -p /etc/apt/keyrings
 
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
