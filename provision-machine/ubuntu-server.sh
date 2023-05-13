@@ -324,7 +324,7 @@ function install-docker {
 
   if _has-wsl; then
     sudo mkdir -p /etc/docker
-    echo '{ "dns": ["10.0.0.2", "8.8.8.8"] }' | sudo tee -a /etc/docker/daemon.json
+    echo '{ "dns": ["1.1.1.1", "10.0.0.2", "8.8.8.8"] }' | sudo tee -a /etc/docker/daemon.json
   fi
 
   sudo mkdir -p /etc/apt/keyrings
