@@ -1172,7 +1172,12 @@ function setup-dev {
   sudo mv ~/user_defaults /etc/sudoers.d/
   sudo chown root:root /etc/sudoers.d/user_defaults
 
-  echo "${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --terminate"
+  if _has-wsl; then
+    echo -e "\n\n\nRun command below to terminate the WSL distribution"
+    echo "  ${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --terminate ${WSL_DISTRO_NAME}"
+  fi
+
+  echo -e "\n\n\n"
 }
 
 function install-terraform-lsp {
