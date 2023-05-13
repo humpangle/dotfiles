@@ -594,7 +594,7 @@ rel_asdf_elixir-install-f() {
       return
     fi
 
-    git reset .
+    git restore . &>/dev/null
     git checkout "${hash}"
 
     rm -rf mix.lock _build deps
