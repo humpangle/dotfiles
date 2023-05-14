@@ -1173,8 +1173,9 @@ function setup-dev {
   sudo chown root:root /etc/sudoers.d/user_defaults
 
   if _has-wsl; then
-    echo -e "\n\n\nRun command below to terminate the WSL distribution"
-    echo "  ${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --terminate ${WSL_DISTRO_NAME}"
+    echo -e "\n\n\nRun command below to shutdown the entire WSL and not just this distribution."
+    echo -e "\t\t***USE WITH CARE***"
+    echo "  ${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --shutdown"
   fi
 
   echo -e "\n\n\n"
