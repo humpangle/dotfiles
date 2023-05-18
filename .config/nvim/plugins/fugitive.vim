@@ -51,6 +51,7 @@ nnoremap <leader>ce  :Git commit --amend --no-edit
 nnoremap <leader>cz  :Git commit --allow-empty -m ""<left>
 
 nnoremap <leader>gu  :Git config user.name <right>
+nnoremap <leader>gU  :Git config user.email <right>
 
 " Auto-clean fugitive buffers
 autocmd BufReadPost fugitive://*
