@@ -55,14 +55,14 @@ if command -v docker &>/dev/null; then
   alias_map[dcrml]='dcps -aq | xargs drmlogs'
 
   # docker compose up --daemon and logs --follow
-  dcudlf() {
+  _dcudlf() {
     docker compose up -d "$@"
     docker compose logs -f "$@"
   }
 
-  alias_map[dcudl]='dcudlf'
-  alias_map[dcudfl]='dcudlf'
-  alias_map[dcudl__description]='docker up daemon and logs'
+  alias_map[dcudlf]='_dcudlf'
+  alias_map[dcudfl]='_dcudlf'
+  alias_map[dcudlf__description]='docker up daemon and logs'
 
   # docker compose restart and logs --follow
   dcrsf() {
