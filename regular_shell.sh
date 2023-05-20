@@ -591,8 +591,9 @@ rel_asdf_elixir-install-f() {
   (
     echo -e "\n=> Entering install directory ${install_dir} ===\n"
 
-    if ! cd "$install_dir"; then
-      return
+    if ! cd "${install_dir}"; then
+      echo -e "\n${install_dir} does not exist, exiting.\n"
+      exit 1
     fi
 
     git restore . &>/dev/null
