@@ -506,8 +506,8 @@ if [ -z "${PYENV_ROOT}" ] && [ -d "$HOME/.pyenv" ]; then
 fi
 
 ELIXIR_LS_SCRIPTS_BASE="$HOME/projects/elixir/elixir-ls/00scripts"
-# Release v0.13.0
-ELIXIR_LS_STABLE_HASH='15d0553'
+# Release v0.14.6
+ELIXIR_LS_STABLE_HASH='15c0052'
 
 get-hash() {
   local args="${*}"
