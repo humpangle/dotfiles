@@ -377,10 +377,26 @@ return packer.startup(function(use)
 
   use({"nelstrom/vim-visual-star-search"})
 
+  -- use({"easymotion/vim-easymotion"})
+
+  -- Easy motion alternative
   use({
-    "easymotion/vim-easymotion",
-    -- Easy motion alternative
-    -- "ggandor/lightspeed.nvim",
+    "ggandor/leap.nvim",
+    config = function()
+      -- https://github.com/kohane27/nvim-config/blob/main/lua/plugins/leap.lua
+      local status_ok, leap = pcall(require, "leap")
+      if status_ok then
+        leap.set_default_keymaps(true)
+
+        -- mark cursor location before jumping
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "LeapEnter",
+          callback = function()
+            vim.cmd("normal m'")
+          end,
+        })
+      end
+    end,
   })
 
   -- SYNTAX HIGHLIGHTING
