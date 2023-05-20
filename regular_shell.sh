@@ -379,12 +379,13 @@ fi
 
 function _ebnis-xclip {
   if command -v xclip &>/dev/null; then
-    xclip -selection c <<<"${1}"
+    xclip -selection c <<<"${*}"
   fi
 }
 
 alias xclip='xclip -selection c'
-alias cpath='pwd | xclip -selection c'
+alias cpath='pwd | xclip -selection c ; echo "${PWD}"'
+alias cpt='cpath'
 alias copy='_ebnis-xclip'
 
 _purge-systemd-service() {
