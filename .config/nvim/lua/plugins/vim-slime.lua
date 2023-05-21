@@ -3,6 +3,8 @@ local Vimg = vim.g
 Vimg.slime_target = "tmux"
 -- let g:slime_target = "neovim"
 
+-- Key to show slime config for the first time - <C-c><C-c>
+-- Key to update slime config after starting - <C-c>v
 -- Vim slime will prompt you for some config the first time it is ran.
 -- You will be presented with string of the form:
 --     tmux_session:
