@@ -24,22 +24,21 @@ function _wait_until {
   command="${1}"
   timeout="${2:-30}"
 
-  echo -e "\n\n\n=Running: $command=\n\n"
+  _echo "Running: ${command}"
 
   i=0
   until eval "${command}"; do
     ((i++))
 
     if [ "${i}" -gt "${timeout}" ]; then
-      echo -e "\n\n\n=Command: $command="
-      echo -e "failed, aborting due to ${timeout}s timeout!\n\n"
+      echo "Command '${command}' failed, aborting due to ${timeout}s timeout!"
       exit 1
     fi
 
     sleep 1
   done
 
-  echo -e "\n\n\n= Done successfully running: $command =\n\n"
+  _echo "Done successfully running: ${command}"
 }
 
 function _timestamp {
