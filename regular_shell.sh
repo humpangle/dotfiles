@@ -808,6 +808,8 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   # alias dpc="clear && sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
   # shellcheck disable=2139
   alias dpc="sudo $HOME/dotfiles/etc/wsl-drop-caches.sh"
+  # Reset clock. Sometimes, WSL time lags
+  alias rst="sudo ntpdate pool.ntp.org"
 
   if [[ -z "$USE_WSL_INTERNET_RESOLVER" ]]; then
     if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
