@@ -46,19 +46,17 @@ function _timestamp {
 }
 
 function _raise_on_no_env_file {
-  if [[ -n "$SOME_ENV_EXISTS" ]]; then
-    if [[ "$SOME_ENV_EXISTS" =~ .env.example ]]; then
-      printf "\nERROR: env filename can not be .env.example.\n\n"
-      exit 1
-    fi
-
-    return 0
+  if [[ -z "${ENV_FILENAME}" ]] ||
+    [[ ! -e "${ENV_FILENAME}" ]] ||
+    [[ "${ENV_FILENAME}" =~ .env.example ]]; then
+    echo -e "Environment file does not exist or it's the wrong one."
+    exit 1
   fi
 
-  if [[ -z "$1" ]] || [[ ! -e "$1" ]]; then
-    printf "\nERROR:env filename has not been provided or invalid.\n"
-    printf "You may also source your environment file.\n\n"
-    exit 1
+  # You can replace with any number of environment variables that need to be
+  # verified
+  if [[ -z "${PROJECT_TAG}" ]]; then
+    echo -e "'PROJECT_TAG' environment variable and similar, is missing"
   fi
 }
 
