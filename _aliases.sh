@@ -10,7 +10,11 @@ if command -v docker &>/dev/null; then
   export DOCKER_BUILDKIT=1
   export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 
-  _docker_bin="$(which docker)"
+  # shellcheck disable=2230
+  export _docker_bin="$(which docker)"
+
+  # We need to set this otherwise bash `set -o noclobber` will not work
+  export DOCKER_COMPOSE_FILENAME=
 
   # shellcheck disable=2032
   function docker {
