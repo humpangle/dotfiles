@@ -194,7 +194,7 @@ augroup filetypes
   au BufNewFile,BufRead *config set filetype=gitconfig
   au BufRead,BufNewFile *.heex,*.leex,*.sface,*.lexs set filetype=eelixir
   au BufNewFile,BufRead rebar.config,*/src/*.app.src set filetype=erlang
-  au BufNewFile,BufRead erlang_ls.config set filetype=yaml
+  au BufNewFile,BufRead erlang_ls.config,__dcy* set filetype=yaml
   au BufNewFile,BufRead *.service set filetype=systemd
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
