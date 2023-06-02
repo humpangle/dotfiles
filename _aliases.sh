@@ -10,6 +10,22 @@ if command -v docker &>/dev/null; then
   export DOCKER_BUILDKIT=1
   export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 
+  _docker_bin="$(which docker)"
+
+  # shellcheck disable=2032
+  function docker {
+    if [[ "${1}" == 'compose' ]] &&
+      [[ -n "${DOCKER_COMPOSE_FILENAME}" ]] &&
+      [[ -e "${DOCKER_COMPOSE_FILENAME}" ]]; then
+      "${_docker_bin}" compose \
+        --file "${DOCKER_COMPOSE_FILENAME}" \
+        "${@:2}"
+    else
+      "${_docker_bin}" "${@}"
+    fi
+  }
+  export -f docker
+
   function docker-compose {
     docker compose "${@}"
   }
