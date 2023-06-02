@@ -125,6 +125,7 @@ Session.vim
 *.___pid*
 *.pid
 *___bash*
+**/__dcy*
 
 *.netrwhist*
 .tool-versions
