@@ -1,6 +1,7 @@
 nnoremap <leader>g.  :Git add .<CR>
 nnoremap <leader>g%  :Git add %<CR>
 nnoremap <leader>gb  :Git blame<CR>
+nnoremap <leader>gB  :tabnew<cr>:Git branch -a<CR>:call DeleteAllBuffers('e')<CR>
 nnoremap <leader>gd  :Gvdiffsplit!<CR>
 nnoremap <leader>ge  :tab split<CR>:Gedit <right>
 nnoremap <leader>gf  :Git push --force-with-lease origin HEAD
