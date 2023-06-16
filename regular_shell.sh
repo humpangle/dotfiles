@@ -114,14 +114,25 @@ alias tap='cd ~/projects/php && tmux a -t php'
 alias tls='tmux ls'
 alias tp='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz'
 alias tn='rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz && tmux new -s'
-alias tndot='cd ~/dotfiles && tn dot'
-alias tdot='cd ~/dotfiles && tn dot'
-alias tnd='cd ~/dotfiles && tn dot'
 alias tadd='cd ~/dotfiles && ta dot'
 alias tks='tmux kill-session -t'
 alias tkss='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
 alias ts='ebnis-save-tmux.sh'
 alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+
+_start-tmux() {
+  if tmux ls &>/dev/null; then
+    cd "${HOME}/dotfiles" || exit 1
+    tmux a -d -t dot
+  else
+    cd "${HOME}/dotfiles" || exit 1
+    tn dot
+  fi
+}
+
+alias tndot=_start-tmux
+alias tdot=_start-tmux
+alias tnd=_start-tmux
 
 runf() {
   local name
