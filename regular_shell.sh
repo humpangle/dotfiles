@@ -782,8 +782,11 @@ function _set-display {
 
 if [[ "$(uname -r)" == *WSL2 ]]; then
   function _open-wsl-explorer {
-    if [ -n "$1" ]; then
-      /c/WINDOWS/explorer.exe "${1}"
+    if [ -e "$1" ]; then
+      (
+        cd "${1}" || exit 1
+        /c/WINDOWS/explorer.exe .
+      )
     else
       /c/WINDOWS/explorer.exe .
     fi
