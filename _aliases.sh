@@ -13,9 +13,6 @@ if command -v docker &>/dev/null; then
   # shellcheck disable=2230
   export _docker_bin="$(which docker)"
 
-  # We need to set this otherwise bash `set -o noclobber` will not work
-  export DOCKER_COMPOSE_FILENAME=
-
   # shellcheck disable=2032
   function docker {
     if [[ "${1}" == 'compose' ]] &&
