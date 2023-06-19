@@ -425,6 +425,9 @@ return packer.startup(function(use)
     "diepm/vim-rest-console",
     config = function()
       Cmd([[
+        " Line-by-line Request Body
+        let g:vrc_split_request_body = 1
+
         " bulk upload and external data file -
         " enable the Elasticsearch support flag.
         let g:vrc_elasticsearch_support = 1
