@@ -431,6 +431,7 @@ return packer.startup(function(use)
         " bulk upload and external data file -
         " enable the Elasticsearch support flag.
         let g:vrc_elasticsearch_support = 1
+        nnoremap ,MR :let b:vrc_split_request_body = <right>
 
         " n = new request/ trigger is <C-J> by default
         let g:vrc_trigger = '<C-n>'
