@@ -219,13 +219,23 @@ gsd() {
   git stash drop "stash@{$1}"
 }
 
-alias ..='cd ..'
-alias 2.='cd ../..'
-alias 3.='cd ../../..'
-alias 4.='cd ../../../..'
-alias .2=2.
-alias .3=3.
-alias .4=4.
+_do-cd() {
+  local level
+
+  if [[ -z "$1" ]] ||
+    [[ "$1" == "0" ]]; then
+    level=1
+  else
+    level="$1"
+  fi
+
+  for _l in $(seq $level); do
+    cd .. || exit 1
+  done
+}
+
+alias c='_do-cd'
+
 alias C="clear && printf '\e[3J'"
 # debian package `lrzsz`
 alias rb='sudo reboot'
