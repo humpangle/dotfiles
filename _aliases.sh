@@ -45,6 +45,7 @@ if command -v docker &>/dev/null; then
   alias_map[dps]='docker ps'
   alias_map[dpsa]='docker ps -a'
   alias_map[dc]='docker compose'
+  alias_map[dcp]='docker compose'
   alias_map[dce]='docker compose exec'
   alias_map[de]='docker exec -it'
   alias_map[dcu]='docker compose up'
