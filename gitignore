@@ -125,6 +125,8 @@ Session.vim
 *.___pid*
 *.pid
 *___bash*
+
+## Docker compose custom file
 **/__dcy*
 
 *.netrwhist*
