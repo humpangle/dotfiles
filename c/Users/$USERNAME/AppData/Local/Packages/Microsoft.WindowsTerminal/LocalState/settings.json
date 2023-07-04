@@ -45,6 +45,7 @@
     "defaults": {
       "bellStyle": ["window", "taskbar"],
       "closeOnExit": "always",
+      // "colorScheme": "Gruvbox Dark",
       "colorScheme": "Gruvbox Light",
       "cursorColor": "#000000",
       "cursorShape": "vintage",
