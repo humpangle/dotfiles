@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=2034,2209,2135,2155,2139,2086
+# shellcheck disable=2034,2209,2135,2155,2139,2086,2033
 
 declare -A alias_map=()
 
