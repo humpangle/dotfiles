@@ -109,6 +109,13 @@ if command -v docker &>/dev/null; then
   alias_map[dimg]='dimgf'
   alias_map[drimg]='drimgf'
   alias_map[dimg___description]='docker images grep'
+
+  _docker_compose_build_no_cache() {
+    docker compose build "${@}" --no-cache
+  }
+
+  alias_map[dcbn]='_docker_compose_build_no_cache'
+  alias_map[dcbn___description]='docker build no cache'
 fi
 
 # -----------------------------------------------------------------------------
