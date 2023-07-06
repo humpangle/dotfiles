@@ -518,6 +518,8 @@ return packer.startup(function(use)
     "jpalardy/vim-slime",
     config = function()
       require("plugins/vim-slime")
+      -- ctrl-c ctrl-c
+      -- ctrl-c v
     end,
   })
 
