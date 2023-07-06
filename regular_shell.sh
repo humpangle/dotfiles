@@ -659,6 +659,8 @@ rel_asdf_elixir_exists_f() {
   printf "\n%s\n\n" "$server_bin_path"
 
   if [[ -e "$server_bin_path" ]]; then
+    _ebnis-xclip "${server_bin_path}"
+
     printf "Exists\n\n"
   else
     printf "Does not exist\n\n"
