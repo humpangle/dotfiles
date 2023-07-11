@@ -1160,5 +1160,13 @@
       "{Task, fn -> :some_work end}"
     ],
     "description": ["Start task supervisor"]
+  },
+  "config-include file": {
+    "prefix": ["config_include_file", "include_config_file"],
+    "body": [
+      "{_result, binding} = Code.eval_file(Path.join(__DIR__, \"${1:file_name}\"))",
+      "b = Map.new(binding)"
+    ],
+    "description": ["Include file in config.exs"]
   }
 }
