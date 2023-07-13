@@ -1168,5 +1168,14 @@
       "b = Map.new(binding)"
     ],
     "description": ["Include file in config.exs"]
+  },
+  "debugger start": {
+    "prefix": ["debugger_start", "start_debugger"],
+    "body": [
+      ":debugger.start()",
+      ":int.ni(ModuleName)",
+      ":int.break(ModuleName, line_number)"
+    ],
+    "description": ["Debugger start"]
   }
 }
