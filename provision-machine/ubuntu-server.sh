@@ -821,6 +821,8 @@ function install-nodejs {
 }
 
 function install-nodejs-dev-pkgs {
+  # https://github.com/websockets/wscat - curl for websockets
+
   npm install --global \
     npm \
     yarn \
@@ -833,7 +835,8 @@ function install-nodejs-dev-pkgs {
     intelephense \
     chokidar-cli \
     graphql-language-service-cli \
-    @tailwindcss/language-server
+    @tailwindcss/language-server \
+    wscat
 }
 
 function install-python {
