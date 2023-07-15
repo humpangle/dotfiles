@@ -35,6 +35,7 @@ defmodule :_util do
   defdelegate q(), to: System, as: :halt
   defdelegate cls(), to: Util, as: :cls
   defdelegate restart(), to: System, as: :restart
+  defdelegate rs(), to: System, as: :restart
   defdelegate raw(any), to: Util, as: :raw
 end
 
