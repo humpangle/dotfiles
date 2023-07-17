@@ -459,6 +459,8 @@ if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json'
 fi
 
+# Erlang and elixir flags
+
 # skip the java dependency during installation
 export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
 # Do not build erlang docs when installing with
@@ -466,7 +468,9 @@ export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
 export KERL_BUILD_DOCS=yes
 export KERL_INSTALL_MANPAGES=
 export KERL_INSTALL_HTMLDOCS=
+
 alias rebar='rebar3'
+
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
 pathmunge "$GEM_HOME/bin"
