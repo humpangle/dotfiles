@@ -471,6 +471,9 @@ export KERL_INSTALL_HTMLDOCS=
 
 alias rebar='rebar3'
 
+# IEx Persistent History (https://tylerpachal.medium.com/iex-persistent-history-5d7d64e905d3)
+export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 10240000"
+
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
 pathmunge "$GEM_HOME/bin"
