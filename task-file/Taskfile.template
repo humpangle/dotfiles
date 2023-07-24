@@ -20,7 +20,7 @@ PATH=./node_modules/.bin:$PATH
 # Helper functions start with _ and aren't listed in this script's help menu.
 # -----------------------------------------------------------------------------
 
-function _wait_until {
+function _wait-until {
   command="${1}"
   timeout="${2:-30}"
 
