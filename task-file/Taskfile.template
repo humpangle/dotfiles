@@ -60,7 +60,7 @@ function _raise_on_no_env_file {
   fi
 }
 
-function _has_internet {
+function _has-internet {
   if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
     printf 0
   fi
