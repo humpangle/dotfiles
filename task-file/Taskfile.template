@@ -45,7 +45,7 @@ function _timestamp {
   date +'%s'
 }
 
-function _raise_on_no_env_file {
+function _raise-on-no-env {
   if [[ -z "${ENV_FILENAME}" ]] ||
     [[ ! -e "${ENV_FILENAME}" ]] ||
     [[ "${ENV_FILENAME}" =~ .env.example ]]; then
