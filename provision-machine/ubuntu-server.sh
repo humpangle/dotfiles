@@ -446,10 +446,10 @@ function install-tmux {
 function install-neovim {
   : "Install neovim"
 
-  neovim_version=v0.8.2
+  neovim_version=v0.9.1
   RIP_GREP_VERSION=13.0.0
   # `bat` is for syntax highlighting inside `fzf`
-  BAT_VERSION=0.22.1
+  BAT_VERSION=0.23.0
 
   _echo "INSTALLING NEOVIM VERSION ${neovim_version}"
 
