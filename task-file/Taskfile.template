@@ -118,11 +118,16 @@ function _raise-on-no-env {
     exit 1
   fi
 
-  # You can replace with any number of environment variables that need to be
-  # verified
-  if [[ -z "${PROJECT_TAG}" ]]; then
-    echo -e "'PROJECT_TAG' environment variable and similar, is missing"
-  fi
+  local _required_envs=('ENV1' 'ENV2')
+
+  for _env_name in "${_required_envs[@]}"; do
+    printf -v _env_val "%q" "${!_env_name}"
+
+    if [ "${_env_val}" == "''" ]; then
+      echo -e "'${_env_name}' environment variable is missing"
+      exit 1
+    fi
+  done
 }
 
 function _has-internet {
