@@ -730,7 +730,7 @@ function install-erlang {
   export KERL_INSTALL_MANPAGES=
   export KERL_INSTALL_HTMLDOCS=
 
-  "$(_asdf-bin-path)" plugin add erlang
+  "$(_asdf-bin-path)" plugin add erlang || true
   "$(_asdf-bin-path)" install erlang "$ERLANG_VERSION"
   "$(_asdf-bin-path)" global erlang "$ERLANG_VERSION"
 
@@ -774,7 +774,7 @@ function install-elixir {
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
-  "$(_asdf-bin-path)" plugin add elixir
+  "$(_asdf-bin-path)" plugin add elixir || true
 
   "$(_asdf-bin-path)" install elixir $version
   "$(_asdf-bin-path)" global elixir $version
