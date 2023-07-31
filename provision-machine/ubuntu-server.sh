@@ -5,7 +5,7 @@ set -o pipefail
 
 INITIAL_WSL_C_PATH=/mnt/c
 
-ERLANG_VERSION=25.3.2
+ERLANG_VERSION=25.3.2.4
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
@@ -764,7 +764,7 @@ function install-elixir {
 
   _echo "INSTALLING ELIXIR"
 
-  local version=1.14.4-otp-25
+  local version=1.15.4-otp-25
 
   sudo apt-get update
 
@@ -1170,7 +1170,7 @@ function setup-dev {
 
   cp ~/dotfiles/etc/sudoers.d/user_defaults "${HOME}"
 
-  sed -i -e "s/username/$USER/g" ~/user_defaults
+  sed -i -e "s/__USERNAME__/$USER/g" ~/user_defaults
   sed -i -e "s|__NEOVIM_BIN__|$(which nvim)|g" ~/user_defaults
   sudo mv ~/user_defaults /etc/sudoers.d/
   sudo chown root:root /etc/sudoers.d/user_defaults

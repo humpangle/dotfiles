@@ -9,10 +9,10 @@ Defaults	editor=__NEOVIM_BIN__
 
 Cmnd_Alias TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD = /usr/bin/tee /var/lib/docker/containers/*
 
-%username ALL=(ALL)  NOPASSWD: /home/username/dotfiles/etc/wsl-nameserver.sh
-%username ALL=(ALL)  NOPASSWD: /home/username/dotfiles/etc/wsl-drop-caches.sh
-%username ALL=(ALL)  NOPASSWD: /usr/bin/chown
-%username ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
-%username ALL=(ALL)  NOPASSWD: TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD
+%__USERNAME__ ALL=(ALL)  NOPASSWD: /home/__USERNAME__/dotfiles/etc/wsl-nameserver.sh
+%__USERNAME__ ALL=(ALL)  NOPASSWD: /home/__USERNAME__/dotfiles/etc/wsl-drop-caches.sh
+%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/chown
+%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
+%__USERNAME__ ALL=(ALL)  NOPASSWD: TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD
 # WSL reset clock
-%username ALL=(ALL)  NOPASSWD: /usr/sbin/ntpdate
+%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/ntpdate
