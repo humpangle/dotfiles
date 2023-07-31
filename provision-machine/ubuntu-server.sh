@@ -1110,6 +1110,7 @@ function setup-dev {
   ln -s ~/dotfiles/gitignore ~/.gitignore
   ln -s ~/dotfiles/gitconfig ~/.gitconfig
   ln -s ~/dotfiles/.config/nvim ~/.config
+  ln -s ~/dotfiles/.iex.exs ~/.iex.exs
   ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
   ln -s ~/dotfiles/.config/vifm/vifmrc ~/.config/vifm/vifmrc
   ln -s ~/dotfiles/.config/shellcheckrc ~/.config
