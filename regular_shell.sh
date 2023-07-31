@@ -534,7 +534,8 @@ if [ -z "${PYENV_ROOT}" ] && [ -d "$HOME/.pyenv" ]; then
   fi
 fi
 
-ELIXIR_LS_SCRIPTS_BASE="$HOME/projects/elixir/elixir-ls/00scripts"
+ELIXIR_LS_BASE="$HOME/.elixir-ls"
+ELIXIR_LS_SCRIPTS_BASE="${ELIXIR_LS_BASE}/ebnis-scripts"
 # Release v0.14.6
 ELIXIR_LS_STABLE_HASH='15c0052'
 
@@ -564,14 +565,14 @@ elixir_ls-install-dir() {
     return
   fi
 
-  local install_dir="$HOME/projects/elixir/elixir-ls/${1}/$(get-hash "${@}")"
+  local install_dir="${ELIXIR_LS_BASE}/${1}/$(get-hash "${@}")"
 
   printf '%s' "${install_dir}"
 }
 
 rel_asdf_elixir-build-f() {
   local elixir_version="$1"
-  local install_dir="$HOME/projects/elixir/elixir-ls/${elixir_version}"
+  local install_dir="${ELIXIR_LS_BASE}/${elixir_version}"
 
   rm -rf mix.lock _build deps
 
