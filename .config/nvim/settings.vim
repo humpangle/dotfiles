@@ -427,10 +427,10 @@ nmap ,yd :let @+=expand("%:p:h")<CR>
 " yank absolute File path
 nmap ,yf :let @+=expand("%:p")<CR>
 " copy relative path
-nmap ,cr :let @"=expand("%")<CR>
+nmap ,cr :let @a=expand("%")<CR>
 " copy absolute path
-nmap ,cf :let @"=expand("%:p")<CR>
-nmap ,cn :let @"=expand("%:t")<CR>
+nmap ,cf :let @a=expand("%:p")<CR>
+nmap ,cn :let @a=expand("%:t")<CR>
 " Yank current git branch
 nnoremap ,yg :execute "let @+=FugitiveHead()"<CR>
 " Yank current working directory
