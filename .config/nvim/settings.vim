@@ -471,14 +471,6 @@ nnoremap <Leader>RR :cfdo %s///g \| update<Left><Left><Left><Left><Left><Left><L
 " The same as above except it works with a visual selection.
 xmap <Leader>RR :cfdo %s/<C-r>s//g \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
-" BUFFERS
-" Delete all buffers
-nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
-" Delete all empty buffers
-nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
-" Delete all terminal buffers
-nnoremap <leader>bT :call DeleteAllBuffers('t')<cr>
-
 " Delete current buffer
 function DeleteOrCloseBuffer(flag)
   if &filetype == 'netrw'
@@ -666,6 +658,14 @@ function! DeleteAllBuffers(f) abort
     endif
   endif
 endfunction
+command! DeleteDbUi call DeleteAllBuffers('dbui')
+" BUFFERS
+" Delete all buffers
+nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
+" Delete all empty buffers
+nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
+" Delete all terminal buffers
+nnoremap <leader>bT :call DeleteAllBuffers('t')<cr>
 
 " https://github.com/clarke/vim-renumber
 function! Renumber() range
@@ -770,7 +770,6 @@ function! ClearRegisters()
 endfunction
 
 command! ClearRegisters call ClearRegisters()
-command! DeleteDbUi call DeleteAllBuffers('dbui')
 
 " Clear terminal buffer: https://superuser.com/a/1485854
 let s:scroll_value = 3000000
