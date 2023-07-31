@@ -21,24 +21,90 @@ PATH=./node_modules/.bin:$PATH
 # -----------------------------------------------------------------------------
 
 function _wait-until {
-  command="${1}"
-  timeout="${2:-30}"
+  local _command=
+  local _timeout=30
+  local _sleep=1
+  local _no_exit=
 
-  _echo "Running: ${command}"
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
 
-  i=0
-  until eval "${command}"; do
-    ((i++))
+  if ! parsed="$(
+    getopt \
+      --longoptions=timeout:,sleep:,no-exit \
+      --options=t:,s:,n \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
 
-    if [ "${i}" -gt "${timeout}" ]; then
-      echo "Command '${command}' failed, aborting due to ${timeout}s timeout!"
-      exit 1
-    fi
+  # Provides proper quoting
+  eval set -- "$parsed"
 
-    sleep 1
+  while true; do
+    case "$1" in
+      --timeout | -t)
+        _timeout="$2"
+        shift 2
+        ;;
+
+      --sleep | -s)
+        _sleep="$2"
+        shift 2
+        ;;
+
+      --no-exit | -n)
+        _no_exit=1
+        shift
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        exit 1
+        ;;
+    esac
   done
 
-  _echo "Done successfully running: ${command}"
+  # handle non-option arguments
+  if [[ $# -ne 1 ]]; then
+    echo "$0: Non optional argument XX is required."
+    exit 1
+  fi
+
+  _command=$1
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  _echo "Running: ${_command}"
+
+  i=0
+  until eval "${_command}"; do
+    ((i++))
+
+    if [ "${i}" -gt "${_timeout}" ]; then
+      echo "Command '${_command}' failed due to ${_timeout}s timeout!"
+
+      if [[ -z "${_no_exit}" ]]; then
+        echo "Aborting!"
+        exit 1
+      else
+        return
+      fi
+    fi
+
+    sleep "${_sleep}"
+  done
+
+  _echo "Done successfully running: ${_command}"
 }
 
 function _timestamp {
