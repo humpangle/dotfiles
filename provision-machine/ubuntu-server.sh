@@ -1176,6 +1176,10 @@ function setup-dev {
   sudo chown root:root /etc/sudoers.d/user_defaults
 
   if _has-wsl; then
+    # Date and time are not usually updated when WSL sleeps - this package
+    # is needed to sync date and time
+    sudo apt-get install -y ntpdate
+
     echo -e "\n\n\nRun command below to shutdown the entire WSL and not just this distribution."
     echo -e "\t\t***USE WITH CARE***"
     echo "  ${INITIAL_WSL_C_PATH}/WINDOWS/system32/wsl.exe --shutdown"
