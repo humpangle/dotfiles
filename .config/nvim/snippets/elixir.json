@@ -1177,5 +1177,18 @@
       ":int.break(ModuleName, line_number)"
     ],
     "description": ["Debugger start"]
+  },
+  "ecto ulid primary_key autogen": {
+    "prefix": [
+      "primary_key_ecto_ulid_gen",
+      "primary_key_ulid_ecto_gen",
+      "ecto_ulid_primary_key_gen",
+      "ulid_ecto_primary_key_gen"
+    ],
+    "body": [
+      "@primary_key {:id, Ecto.ULID, autogenerate: true}",
+      "@foreign_key_type Ecto.ULID"
+    ],
+    "description": ["Ecto ULID primary key autogenerate"]
   }
 }
