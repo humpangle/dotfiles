@@ -7,6 +7,10 @@
       "keys": "ctrl+shift+v"
     },
     {
+      "command": "tabSearch",
+      "keys": "ctrl+shift+s"
+    },
+    {
       "command": "find",
       "keys": "ctrl+shift+f"
     },
@@ -48,8 +52,8 @@
       // "colorScheme": "Gruvbox Dark",
       "colorScheme": "Gruvbox Light",
       "cursorColor": "#000000",
-      "cursorShape": "vintage",
       "cursorHeight": 36,
+      "cursorShape": "vintage",
       // Switch cursorColor to light color when bg is dark
       // "colorScheme": "Gruvbox Dark",
       // "cursorColor": "#FFB261",
@@ -75,6 +79,12 @@
         "hidden": false,
         "name": "Ubuntu",
         "source": "Windows.Terminal.Wsl"
+      },
+      {
+        "guid": "{d7b20cea-47a9-518c-95a4-c8bd91e2e1c6}",
+        "hidden": false,
+        "name": "Ubuntu 22.04.2 LTS",
+        "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
       },
       {
         "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -107,16 +117,10 @@
         "source": "Windows.Terminal.Azure"
       },
       {
-        "guid": "{59b72ad2-09f7-55ec-af87-65d062af8472}",
-        "hidden": true,
-        "name": "Ubuntu20.04",
-        "source": "CanonicalGroupLimited.Ubuntu20.04LTS_79rhkp1fndgsc"
-      },
-      {
-        "guid": "{f9ceaf27-504c-58d7-927c-d1d6a7ac7d3c}",
+        "guid": "{4dd1e689-b517-5f39-947d-78e8a8bdf958}",
         "hidden": false,
-        "name": "Ubuntu22.04",
-        "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
+        "name": "Ubuntu 20.04.6 LTS",
+        "source": "CanonicalGroupLimited.Ubuntu20.04LTS_79rhkp1fndgsc"
       }
     ]
   },
