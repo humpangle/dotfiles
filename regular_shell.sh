@@ -937,6 +937,28 @@ function _cert-etc {
 
 alias cert-etc='_cert-etc'
 
+function archive-projects-f {
+  (
+    cd ~ || exit 1
+
+    if [ -z "$1" ]; then
+      tar -czvf proj-archive.tar.gz \
+        --exclude "node_modules" \
+        --exclude "_build" \
+        --exclude "deps" \
+        --exclude "vendor" \
+        --exclude "docker/data" \
+        --exclude ".elixir_ls" \
+        projects/
+    else
+      tar -xzvf proj-archive.tar.gz
+    fi
+  )
+}
+
+alias archive_projects='archive-projects-f'
+alias unarchive_projects='archive-projects-f --unarchive'
+
 # -----------------------------------------------------------------------------
 # INTELLIJ IDEA IDE
 # -----------------------------------------------------------------------------
