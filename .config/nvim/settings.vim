@@ -203,6 +203,9 @@ augroup filetypes
   " Ansible
   au BufRead,BufNewFile */playbooks/*.y*ml,inventory.y*ml set filetype=yaml.ansible
 
+  autocmd FileType elixir
+    \ nnoremap <buffer> <leader>fc :Neoformat<CR>
+
   autocmd FileType eelixir
     \ nnoremap <buffer> <leader>fc :w! %<cr>:!mix format %<CR><cr>
 
