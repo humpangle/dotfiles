@@ -196,6 +196,7 @@ augroup filetypes
   au BufNewFile,BufRead rebar.config,*/src/*.app.src set filetype=erlang
   au BufNewFile,BufRead erlang_ls.config,__dcy* set filetype=yaml
   au BufNewFile,BufRead *.service set filetype=systemd
+  au BufNewFile,BufRead *.log set filetype=conf
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
   au BufReadPre *.doc,*.docx set ro
