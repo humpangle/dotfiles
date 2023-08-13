@@ -940,11 +940,20 @@ function _cert-etc {
 alias cert-etc='_cert-etc'
 
 function archive-projects-f {
-  (
-    cd ~ || exit 1
+  if [ -z "${ARCHIVE_PROJECT_OUTPUT_DIR}" ]; then
+    echo "You must provide a value for the 'ARCHIVE_PROJECT_OUTPUT_DIR' environment variable"
+    return
+  fi
 
-    if [ -z "$1" ]; then
-      tar -czvf proj-archive.tar.gz \
+  # Remove trailing '/'
+  local _output_dir="${ARCHIVE_PROJECT_OUTPUT_DIR%/}"
+  local _absolute_filename="${_output_dir}/proj-archive.tar.gz"
+
+  if [ -z "$1" ]; then
+    (
+      cd ~ || exit 1
+
+      tar -czvf "${_absolute_filename}" \
         --exclude "node_modules" \
         --exclude "_build" \
         --exclude "deps" \
@@ -952,14 +961,14 @@ function archive-projects-f {
         --exclude "docker/data" \
         --exclude ".elixir_ls" \
         projects/
-    else
-      tar -xzvf proj-archive.tar.gz
-    fi
-  )
+    )
+  else
+    tar -xzvf "${_absolute_filename}"
+  fi
 }
 
-alias archive_projects='archive-projects-f'
-alias unarchive_projects='archive-projects-f --unarchive'
+alias archive-projects='archive-projects-f'
+alias unarchive-projects='archive-projects-f --unarchive'
 
 # -----------------------------------------------------------------------------
 # INTELLIJ IDEA IDE
