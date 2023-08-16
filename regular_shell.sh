@@ -785,15 +785,17 @@ function check-wsl-distro-name {
 }
 
 function _edit-windows-terminal-settings {
-  local settings_path
+  local _settings_path
 
-  settings_path="$(
+  _settings_path="$(
     find \
       "/c/Users/$USERNAME/AppData/Local/Packages" \
       -type f -path '*/Microsoft.WindowsTerminal*/LocalState/settings.json'
   )"
 
-  echo "$settings_path"
+  xclip -selection c <<<"${_settings_path}" &>/dev/null
+
+  echo "$_settings_path"
 }
 
 alias edit_wt='nvim _edit-windows-terminal-settings'
