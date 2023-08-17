@@ -264,6 +264,7 @@ nnoremap <Leader>qq :q<cr>
 nnoremap <Leader>qf :q!<cr>
 nnoremap <Leader>qa :qa<cr>
 nnoremap <Leader>qF :qa!<cr>
+nnoremap <Leader>qA :qa!<cr>
 
 " better code indentations in visual mode.
 vnoremap < <gv
