@@ -165,15 +165,14 @@ alias rn='runf'
 alias r='runf'
 
 # Save bash history per tmux pane
-if [[ $TMUX_PANE ]]; then
-  hist_dir="$HOME/.bash_histories"
 
-  if [[ ! -d "$hist_dir" ]]; then
-    mkdir "$hist_dir"
-  fi
+hist_dir="$HOME/.bash_histories"
 
-  hist_file="$hist_dir/.bash_history_tmux_${TMUX_PANE:1}"
-  HISTFILE="$hist_file"
+mkdir -p "$hist_dir"
+
+if [ -n "${TMUX}" ]; then
+  hist_file="$hist_dir/tmux--$(tmux display-message -p '#{session_name}--#{window_index}')--${TMUX_PANE:1}"
+  export HISTFILE="$hist_file"
 
   if [[ ! -e "$hist_file" ]]; then
     touch "$hist_file"
@@ -263,12 +262,25 @@ export HISTCONTROL=ignoreboth:erasedups
 
 # https://unix.stackexchange.com/a/179852
 
-make_history_unique() {
-  tac "$HISTFILE" | awk '!x[$0]++' >/tmp/tmpfile &&
-    tac /tmp/tmpfile >"$HISTFILE" &&
-    rm /tmp/tmpfile
+make-bash-history-unique() {
+  _tmux_pane=""
+
+  if [ -n "${1}" ]; then
+    _tmux_pane="${1}"
+  elif [ -n "${TMUX_PANE}" ]; then
+    _tmux_pane="${TMUX_PANE:1}"
+  fi
+
+  _temp_file="/tmp/tmpfile-${_tmux_pane}"
+
+  touch "${_temp_file}"
+
+  tac "$HISTFILE" | awk '!x[$0]++' >"${_temp_file}"
+  tac "${_temp_file}" >"$HISTFILE"
+  rm "${_temp_file}"
 }
-alias hu='make_history_unique'
+export -f make-bash-history-unique
+alias hu='make-bash-history-unique'
 # also https://unix.stackexchange.com/a/613644
 
 setenvs() {
