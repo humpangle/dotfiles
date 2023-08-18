@@ -255,8 +255,13 @@ mdf() {
 alias mdc='mdf'
 alias md='mkdir -p'
 
-# https://unix.stackexchange.com/a/179852
 # Make bash history unique
+
+# https://unix.stackexchange.com/a/265649
+#   ignoreboth is actually just like doing ignorespace:ignoredups
+export HISTCONTROL=ignoreboth:erasedups
+
+# https://unix.stackexchange.com/a/179852
 
 make_history_unique() {
   tac "$HISTFILE" | awk '!x[$0]++' >/tmp/tmpfile &&
