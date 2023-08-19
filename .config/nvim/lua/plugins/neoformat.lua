@@ -16,7 +16,7 @@ vim.api.nvim_set_keymap("n", "<leader>N", ":Neoformat<CR>", {
 -- shell
 -- wget -O $HOME/.local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.4.0/shfmt_v3.4.0_linux_amd64 && chmod ugo+x $HOME/.local/bin/shfmt
 --
--- sjl
+-- sql
 -- wget -O pgFormatter-5.0.tar.gz \
 --   https://github.com/darold/pgFormatter/archive/refs/tags/v5.0.tar.gz && \
 --   tar xzf pgFormatter-5.0.tar.gz && \
