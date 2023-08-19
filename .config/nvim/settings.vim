@@ -208,10 +208,7 @@ augroup filetypes
     \ nnoremap <buffer> <leader>fc :Neoformat<CR>
 
   autocmd FileType eelixir
-    \ nnoremap <buffer> <leader>fc :w! %<cr>:!mix format %<CR><cr>
-
-  autocmd FileType eelixir
-    \ nnoremap <buffer> <leader>N :w! %<cr>:!mix format %<CR><cr>
+    \ nnoremap <buffer> <leader>fc :Neoformat<CR>
 
   autocmd FileType sh
     \ nnoremap <buffer> <leader>fc :Neoformat<CR>
