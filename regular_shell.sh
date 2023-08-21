@@ -243,7 +243,11 @@ alias scouser='sudo chown -R $USER:$USER'
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
 alias eshell='source ~/.bashrc'
-alias cpr='cp -r'
+# cp -r ./xx yy -> will create yy/xx
+# cp -rT ./xx yy -> will not create yy, but dump contents of xx into yy and
+# if yy does not exist, it will be created. This means cp -rT ./xx ../../xx
+# is the same as cp -r ./xx ../.. as ../../xx will be created if does not exist
+alias cpr='cp -rT'
 
 mdf() {
   mkdir -p "$1"
