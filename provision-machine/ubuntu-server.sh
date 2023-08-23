@@ -473,6 +473,7 @@ function install-neovim {
     ~/.fzf/install --all
   fi
 
+  rm -rf ripgrep_${RIP_GREP_VERSION}_amd64.deb
   curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RIP_GREP_VERSION}/ripgrep_${RIP_GREP_VERSION}_amd64.deb
   # shellcheck disable=SC1001
   sudo dpkg -i ripgrep*${RIP_GREP_VERSION}\_amd64.deb
@@ -480,12 +481,14 @@ function install-neovim {
   rm ripgrep*${RIP_GREP_VERSION}\_amd64.deb
 
   bat_deb="bat_${BAT_VERSION}_amd64.deb"
+  rm -rf $bat_deb
   curl -LO "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/${bat_deb}"
   sudo dpkg -i "${bat_deb}"
   rm "${bat_deb}"
 
   local shfmt_version=v3.5.1
 
+  rm -rf "$HOME/.local/bin/shfmt"
   curl -Lo \
     "$HOME/.local/bin/shfmt" \
     --create-dirs \
@@ -495,6 +498,7 @@ function install-neovim {
 
   if _is-dev "$@"; then
     local packer_install_dir=~/.local/share/nvim/site/pack/packer/start
+    rm -rf $packer_install_dir
 
     git clone --depth 1 \
       https://github.com/wbthomason/packer.nvim \
