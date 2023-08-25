@@ -25,6 +25,7 @@ out_file=
 format=
 verbose=
 in_file=
+_in_string=
 string=
 exec_cmd=
 cwd=
@@ -142,9 +143,26 @@ function no-write-to-file {
   [[ -n "${string}" ]] || [[ -n "$exec_cmd" ]] && echo "1"
 }
 
+function _write-env-filename {
+  local -n arr=$1
+
+  local names=(
+    ENV_FILENAME
+    ENV_FILE
+  )
+
+  for _name in "${names[@]}"; do
+    # shellcheck disable=2076
+    if [[ "${_in_string}" =~ "${_name}=" ]]; then
+      arr["${_name}"]=$2
+    fi
+  done
+}
+
 parse-args "$@"
 
 in_path="$(realpath "$in_file")"
+_in_string="$(cat "$in_path")"
 
 out_path="${in_path}.n"
 
@@ -172,14 +190,14 @@ while read -r line; do
 
     env_key_to_value_map["$key"]="${val}"
   fi
-done <<<$(cat "$in_path")
+done <<<"${_in_string}"
 
 if [[ -n "$out_file" ]]; then
   out_path=$(realpath "$out_file")
 fi
 
 if [[ "$(no-write-to-file)" ]]; then
-  env_key_to_value_map["ENV_FILE"]="${in_path}"
+  _write-env-filename env_key_to_value_map "${in_path}"
 else
   rm -rf "$out_path"
   touch "$out_path"
@@ -187,13 +205,13 @@ else
   #### Update value of ENV_FILE depending on args
   if [[ -n "${new_env_name}" ]]; then
     # We have a new name, let's use it
-    env_key_to_value_map["ENV_FILE"]="${new_env_name}"
+    _write-env-filename env_key_to_value_map "${new_env_name}"
   elif [[ -n "$no_change_name" ]]; then
     # We are told not to change the name, so we use input file name
-    env_key_to_value_map["ENV_FILE"]="${in_path}"
+    _write-env-filename env_key_to_value_map "${in_path}"
   else
     # BY default, we set value to output file name
-    env_key_to_value_map["ENV_FILE"]="${out_path}"
+    _write-env-filename env_key_to_value_map "${in_path}"
   fi
 fi
 
