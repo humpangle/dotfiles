@@ -306,11 +306,15 @@ setenvs() {
     fi
   done
 
+  local _output="${path}--$(date +'%s')--temp"
+
+  "${HOME}/dotfiles/scripts/p-env" "$path" --output "${_output}"
+
   set -o allexport
-  . "$path"
+  . "${_output}"
   set +o allexport
 
-  ENV_FILE="${path}"
+  rm -rf "${_output}"
 
   # set -o allexport; source "$1"; set +o allexport
 }
