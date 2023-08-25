@@ -21,6 +21,23 @@ PATH=./node_modules/.bin:$PATH
 # -----------------------------------------------------------------------------
 
 function _wait-until {
+  : "Run 'command_to_run' and try until 'timeout' is reached. Usage:"
+  : "  ./run.sh _wait-until [OPTIONS] command_to_run"
+  : "  ./run.sh _wait-until command_to_run [OPTIONS]"
+  : ""
+  : "Options:"
+  : "  --sleep/-s.   How long (in seconds) to wait before command is tried again"
+  : "                when it fails. Defaults to 1 second."
+  : "  --no-exit/-n. If true, we do not exit when timeout is reached but return."
+  : "                This is great for situations where we want do not want the"
+  : "                script to exit if '_wait-until' does not run successfully."
+  : "  --timeout/-t. How many retries before exiting/returning. Defaults to 30"
+  : ""
+  : "Examples:"
+  : "  ./run.sh _wait-until "echo 'something'""
+  : "  ./run.sh _wait-until "echo something" --sleep 1 --timeout 2 --no-exit"
+  : "  ./run.sh _wait-until command_to_run -s 1 -t 2 -n"
+
   local _command=
   local _timeout=30
   local _sleep=1
@@ -75,7 +92,7 @@ function _wait-until {
 
   # handle non-option arguments
   if [[ $# -ne 1 ]]; then
-    echo "$0: Non optional argument XX is required."
+    echo "$0: Non optional argument \"command\" is required."
     exit 1
   fi
 
@@ -118,7 +135,10 @@ function _raise-on-no-env {
     exit 1
   fi
 
-  local _required_envs=('ENV1' 'ENV2')
+  local _required_envs=(
+    'ENV1'
+    'ENV2'
+  )
 
   for _env_name in "${_required_envs[@]}"; do
     printf -v _env_val "%q" "${!_env_name}"
@@ -195,7 +215,11 @@ function build {
 function help {
   : "List available tasks."
 
-  mapfile -t names < <(compgen -A function | grep -v '^_')
+  if [[ -z "${1}" ]]; then
+    mapfile -t names < <(compgen -A function | grep -v '^_')
+  else
+    mapfile -t names < <(compgen -A function | grep '^_')
+  fi
 
   local len=0
   declare -A names_map=()
