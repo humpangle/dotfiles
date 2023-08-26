@@ -128,6 +128,7 @@ Session.vim
 
 ## Docker compose custom file
 **/__dcy*
+___logs/
 
 *.netrwhist*
 .tool-versions
