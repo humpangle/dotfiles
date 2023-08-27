@@ -221,6 +221,9 @@ function help {
     mapfile -t names < <(compgen -A function | grep '^_')
   fi
 
+  local _this_file_content
+  _this_file_content="$(cat "${0}")"
+
   local len=0
   declare -A names_map=()
 
@@ -233,6 +236,10 @@ function help {
   len=$((len + 10))
 
   for name in "${names[@]}"; do
+    if ! grep -qP "function\s+${name}\s+{" <<<"${_this_file_content}"; then
+      continue
+    fi
+
     local spaces=""
     _len="${names_map[$name]}"
     _len=$((len - _len))
