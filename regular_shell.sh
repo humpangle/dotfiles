@@ -1002,10 +1002,12 @@ alias unarchive-projects='archive-projects-f --unarchive'
 # -----------------------------------------------------------------------------
 # In `~/.bashrc`
 # export INTELLIJ_VERSION='IntelliJIdea2022.3'
-# export INTELLIJ_IDEA_BIN_PATH="${HOME}/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/223.8836.41/bin/idea.sh"
+# export INTELLIJ_IDEA_BIN_VERSION='intellij-idea-ultimate'
 
-if [[ -e "${INTELLIJ_IDEA_BIN_PATH}" ]]; then
-  pathmunge "$(dirname "${INTELLIJ_IDEA_BIN_PATH}")"
+_intellij_idea_bin_path="${HOME}/.local/share/JetBrains/Toolbox/apps/${INTELLIJ_IDEA_BIN_VERSION}/bin/idea.sh"
+
+if [[ -e "${_intellij_idea_bin_path}" ]]; then
+  pathmunge "$(dirname "${_intellij_idea_bin_path}")"
 
   function _intellij {
     local settings_sync_dir="${HOME}/.config/JetBrains/${INTELLIJ_VERSION:-bahridarnish}/settingsSync"
@@ -1031,7 +1033,7 @@ if [[ -e "${INTELLIJ_IDEA_BIN_PATH}" ]]; then
       fi
     )
 
-    "${INTELLIJ_IDEA_BIN_PATH}" &>/dev/null &
+    "${_intellij_idea_bin_path}" &>/dev/null &
     disown
   }
 
