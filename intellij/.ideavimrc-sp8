@@ -66,8 +66,8 @@ nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
 nnoremap ,tc :tabclose<CR>
 nnoremap ,td :execute 'bwipeout! '.join(tabpagebuflist())<cr>
-nnoremap ,vn :vnew<cr>
-nnoremap ,sn :new<cr>
+map ,vn <Action>(NewFile)<CR>
+map ,sn <Action>(NewFile)<CR>
 
 " edit init.vim
 nnoremap ,ec :tab split<cr>:e ~/.ideavimrc<CR>
@@ -125,16 +125,19 @@ nnoremap c= :e! %<cr><bar>:%delete_<cr>i
 
 " Dump vim register into a buffer in vertical split.
 nnoremap <leader>re :reg<CR>
+
 nnoremap yoh :noh<cr>
+nnoremap yob <Action>(QuickChangeScheme)
 
 " map <leader>z <Action>(ToggleDistractionFreeMode)
 map ]d <Action>(GotoNextError)
 map [d <Action>(GotoPreviousError)
 
-"""""" Do not work for git diff
+"""""" Do not work for git
 map ]c <Action>(NextDiff)
 map [c <Action>(PreviousDiff)
-"""""" Do not work for git diff
+map <leader>g% <Action>(VimFindActionIdAction)
+"""""" Do not work for git
 
 map <leader>fc <Action>(ReformatCode)
 map <leader>N <Action>(ReformatCode)
@@ -160,6 +163,7 @@ map ,dd <Action>(ActivateDebugToolWindow)
 map <leader>du <Action>(ActivateDatabaseToolWindow)
 map <C-w>T <Action>(MoveEditorToOppositeTabGroup)
 map ,aw <Action>(ShowIntentionActions)
+" Open files sidebar
 map <leader>sp <Action>(SelectInProjectView)
 map ,rm <Action>(Delete)
 map <leader>gg <Action>(ActivateVersionControlToolWindow)
