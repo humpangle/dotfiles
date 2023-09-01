@@ -243,11 +243,29 @@ alias scouser='sudo chown -R $USER:$USER'
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
 alias eshell='source ~/.bashrc'
+
 # cp -r ./xx yy -> will create yy/xx
 # cp -rT ./xx yy -> will not create yy, but dump contents of xx into yy and
 # if yy does not exist, it will be created. This means cp -rT ./xx ../../xx
 # is the same as cp -r ./xx ../.. as ../../xx will be created if does not exist
-alias cpr='cp -rT'
+# alias cpr='cp -rT' # The above may not work in some shell - hence _cpr below
+
+function _cpr {
+  if [[ $# -lt 2 ]]; then
+    echo "source and destination required"
+    return
+  fi
+
+  local _source=$1
+  local _destination=$2
+
+  mkdir -p "${_destination}"
+
+  # Remove trailing '/' from source otherwise source will be deleted
+  cp -rT "${_source%/}" "${_destination}"
+}
+
+alias cpr=_cpr
 
 mdf() {
   mkdir -p "$1"
