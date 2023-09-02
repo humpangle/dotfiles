@@ -756,37 +756,41 @@ alias iexmx='iex -S mix'
 ##################### mysql
 
 _mysql-dir() {
-  local current
+  local _data_dir="${MYSQL_DATA_DIR}"
 
-  current="$(asdf current mysql | awk '{print $2}')"
+  if [[ -n "${_data_dir}" ]]; then
+    echo -n "${_data_dir}"
+  fi
 
-  printf '%s' "$HOME/mysql_data_${current//./_}"
+  _data_dir="$(asdf current mysql | awk '{print $2}')"
+
+  printf '%s' "$HOME/mysql_data_${_data_dir//./_}"
 }
 
 mysql-setupf() {
-  local DATADIR
+  local _data_dir
 
-  DATADIR="$(_mysql-dir)"
+  _data_dir="$(_mysql-dir)"
 
-  mkdir -p "$DATADIR"
-  mysqld --initialize-insecure --datadir="$DATADIR"
-  mysql_ssl_rsa_setup --datadir="$DATADIR"
+  mkdir -p "${_data_dir}"
+  mysqld --initialize-insecure --datadir="${_data_dir}"
+  mysql_ssl_rsa_setup --datadir="${_data_dir}"
 }
 
 alias mysql-setup='mysql-setupf'
 alias setup-mysql='mysql-setupf'
 
 mysql-startf() {
-  local path
+  local _data_dir
 
-  path="$(_mysql-dir)"
+  _data_dir="$(_mysql-dir)"
 
-  if [[ ! -e "$path" ]]; then
-    printf "\n\nDirectory data of the mysql version, '%s', does not exist.\n\n" "${path}"
+  if [[ ! -e "${_data_dir}" ]]; then
+    printf "\n\nDirectory data of the mysql version, '%s', does not exist.\n\n" "${_data_dir}"
     return
   fi
 
-  mysqld_safe --datadir="$path" &
+  mysqld_safe --datadir="${_data_dir}" &
   disown
 }
 
