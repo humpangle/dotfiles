@@ -449,9 +449,64 @@ function _ebnis-xclip {
 }
 
 alias xclip='xclip -selection c'
-alias cpath='pwd | xclip -selection c ; echo "${PWD}"'
-alias cpt='cpath'
 alias copy='_ebnis-xclip'
+
+function _cpath {
+  local _base_only=
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=basename \
+      --options=b \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+      --basename | -b)
+        _base_only=1
+        shift
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        exit 1
+        ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  local _path="${PWD}"
+
+  if [[ -n "${_base_only}" ]]; then
+    _path="$(basename "${_path}")"
+  fi
+
+  echo -n "${_path}" | xclip -selection c
+  echo "${_path}"
+}
+
+alias cpath=_cpath
+alias cpt=_cpath
 
 _purge-systemd-service() {
   sudo systemctl stop "$1"
