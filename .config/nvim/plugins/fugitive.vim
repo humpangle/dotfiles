@@ -46,7 +46,8 @@ nnoremap <leader>su  :Git stash -u push -m ''<left>
 
 nnoremap <leader>ca  :Git commit --amend
 
-nnoremap <leader>gc  :Git commit<CR>
+nnoremap <leader>gc  :tabnew<CR>:Git commit<CR>
+" :echo bufnr('%')<CR>
 
 nnoremap <leader>ce  :Git commit --amend --no-edit
 " -z means empty in bash - hence cz means allow empty
