@@ -522,83 +522,80 @@ function install-neovim {
     --create-dirs \
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/nvim/settings-min.vim"
 
-  shared_path=~/.local/share/nvim
+  local _shared_path=~/.local/share/nvim
 
-  read -r -d '' xx <<'eof'
-szw/vim-maximizer
-tpope/vim-obsession
-tpope/vim-unimpaired
-tpope/vim-fugitive
-tpope/vim-surround
-sbdchd/neoformat
-jpalardy/vim-slime
-junegunn/fzf
-junegunn/fzf.vim
-stsewd/fzf-checkout.vim
-dhruvasagar/vim-prosession
-tomtom/tcomment_vim
-nelstrom/vim-visual-star-search
-voldikss/vim-floaterm
-voldikss/fzf-floaterm
-airblade/vim-gitgutter
-itchyny/lightline.vim
-easymotion/vim-easymotion
-elixir-editors/vim-elixir
-rakr/vim-one
-eof
+  # Each line is `owner plugin_name config_file`
+  local plugins=(
+    'szw vim-maximizer vim-maximizer.vim'
+    'tpope vim-obsession'
+    'tpope vim-unimpaired'
+    'tpope vim-fugitive fugitive.vim'
+    'tpope vim-surround'
+    'sbdchd neoformat neoformat.lua'
+    'jpalardy vim-slime vim-slime.lua'
+    'junegunn fzf'
+    'junegunn fzf.vim fzf.vim'
+    'stsewd fzf-checkout.vim'
+    'dhruvasagar vim-prosession'
+    'tomtom tcomment_vim'
+    'nelstrom vim-visual-star-search'
+    'voldikss vim-floaterm floaterm.lua'
+    'voldikss fzf-floaterm'
+    'airblade vim-gitgutter'
+    'itchyny lightline.vim lightline.vim'
+    'easymotion vim-easymotion vim-easymotion.vim'
+    'elixir-editors vim-elixir'
+    'rakr vim-one vim-one.vim'
+  )
 
-  for line in ${xx}; do
-    local plugin_owner=${line%%/*}
-    local plugin_path="${line#*/}"
-    local path_prefix="${shared_path}/site/pack/$plugin_path/start"
-    local full_install_path="$path_prefix/$plugin_path"
+  for _entry in "${plugins[@]}"; do
+    read -r -d '' -a _value <<<"${_entry}"
+
+    local plugin_owner="${_value[0]}"
+    local plugin_path="${_value[1]}"
+    local _plugin_file="${_value[2]}"
+
+    local _path_prefix="${_shared_path}/site/pack/$plugin_path/start"
+    local full_install_path="${_path_prefix}/$plugin_path"
 
     if [[ ! -d "$full_install_path" ]]; then
-      mkdir -p "$path_prefix"
+      mkdir -p "${_path_prefix}"
       echo "Installing neovim plugin ${plugin_owner}/${plugin_path}"
 
-      git clone "https://github.com/${plugin_owner}/${plugin_path}" \
+      git clone \
+        "https://github.com/${plugin_owner}/${plugin_path}" \
         "$full_install_path"
-
     else
       cd "$full_install_path"
       git pull origin master
       cd -
     fi
+
+    if [[ -z "${_plugin_file}" ]]; then
+      continue
+    fi
+
+    local _plugin_config_path_prefix=.config/nvim/lua/plugins
+
+    if [[ "${_plugin_file}" =~ .vim ]]; then
+      _plugin_config_path_prefix=.config/nvim/plugins
+    fi
+
+    local _plugin_config_abs_path="${HOME}/${_plugin_config_path_prefix}/${_plugin_file}"
+    rm -rf "${_plugin_config_abs_path}"
+
+    local url="$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/${_plugin_config_path_prefix}/${_plugin_file}"
+
+    echo "Downloading neovim plugin config"
+    echo "  from         ${url}"
+    echo "  into file    ${_plugin_config_abs_path}"
+    echo
+
+    curl --create-dirs -fLo "${_plugin_config_abs_path}" "${url}"
+    # curl -fL "${_plugin_config_abs_path}" "${url}"
   done
 
-  install-neovim-plugins-configs
-}
-
-function install-neovim-plugins-configs {
-  : "Install configuration files of neovim plugins"
-
-  read -r -d '' plug_configs <<'eof'
-config/nvim/lua/plugins___neoformat.lua
-config/nvim/lua/plugins___vim-slime.lua
-config/nvim/lua/plugins___floaterm.lua
-config/nvim/plugins___fzf.vim
-config/nvim/plugins___fugitive.vim
-config/nvim/plugins___lightline.vim
-config/nvim/plugins___vim-easymotion.vim
-config/nvim/plugins___vim-maximizer.vim
-config/nvim/plugins___vim-one.vim
-eof
-
-  for line in ${plug_configs}; do
-    plugin_path=${line%%___*}
-    plugin_file="${line#*___}"
-
-    local install_path="${HOME}/.${plugin_path}/${plugin_file}"
-
-    local url="$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.${plugin_path}/${plugin_file}"
-
-    echo "Downloading neovim plugin config file .${plugin_path}/${plugin_file}"
-
-    curl --create-dirs -fLo "${install_path}" "${url}"
-    # curl -fL "${install_path}" "${url}"
-  done
-
+  rm -rf "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/nvim/lua/util.lua"
   curl -fLo ~/.config/nvim/lua/util.lua \
     --create-dirs \
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/nvim/lua/util.lua"
@@ -630,11 +627,13 @@ function install-bins {
 
   declare -a local_bin_scripts=(p-env ebnis-save-tmux.sh)
 
-  for script in "${local_bin_scripts[@]}"; do
-    curl -fLo "${LOCAL_BIN_PATH}/p-env" \
-      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/scripts/$script"
+  for _script in "${local_bin_scripts[@]}"; do
+    local _script_output_path="${LOCAL_BIN_PATH}/${_script}"
 
-    chmod u+x "${LOCAL_BIN_PATH}/$script"
+    curl -fLo "${_script_output_path}" \
+      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/scripts/${_script}"
+
+    chmod u+x "${_script_output_path}"
   done
 
   curl -fLo "${BASH_APPEND_PATH}" \
@@ -647,9 +646,7 @@ function install-bins {
   curl -fLo "$HOME/complete_alias.sh" \
     https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
 
-  echo ". ${HOME}/complete_alias.sh" >>"${HOME}/.bash_completion.sh"
-
-  echo '[ -f ~/.bash_completion.sh ] && . ~/.bash_completion.sh' >>"${HOME}/.bashrc"
+  echo ". ${HOME}/complete_alias.sh" >>"${HOME}/.bash_completion"
 
   mkdir -p ~/.ssh
 }
@@ -1223,7 +1220,14 @@ function install-chrome {
 function help {
   : "List available tasks."
 
-  mapfile -t names < <(compgen -A function | grep -v '^_')
+  if [[ -z "${1}" ]]; then
+    mapfile -t names < <(compgen -A function | grep -v '^_')
+  else
+    mapfile -t names < <(compgen -A function | grep '^_')
+  fi
+
+  local _this_file_content
+  _this_file_content="$(cat "${0}")"
 
   local len=0
   declare -A names_map=()
@@ -1237,6 +1241,10 @@ function help {
   len=$((len + 10))
 
   for name in "${names[@]}"; do
+    if ! grep -qP "function\s+${name}\s+{" <<<"${_this_file_content}"; then
+      continue
+    fi
+
     local spaces=""
     _len="${names_map[$name]}"
     _len=$((len - _len))
