@@ -13,7 +13,7 @@ Vimf = Vim.fn
 PACKER_BOOTSTRAP = false
 
 local install_path = Vimf.stdpath("data") ..
-                       "/site/pack/packer/start/packer.nvim"
+    "/site/pack/packer/start/packer.nvim"
 if Vimf.empty(Vimf.glob(install_path)) > 0 then
   PACKER_BOOTSTRAP = Vimf.system({
     "git",
@@ -50,7 +50,7 @@ packer.init({
   display = {
     -- Have packer use a popup window
     open_fn = function()
-      return require("packer.util").float({border = "rounded"})
+      return require("packer.util").float({ border = "rounded" })
     end,
 
     prompt_border = "double", -- Border style of prompt popups
@@ -60,13 +60,13 @@ packer.init({
 -- Install your plugins here
 return packer.startup(function(use)
   -- Have packer manage itself, eager load
-  use({"wbthomason/packer.nvim", opt = false})
+  use({ "wbthomason/packer.nvim", opt = false })
 
   -- Useful lua functions used by lots of plugins
-  use({"nvim-lua/plenary.nvim"})
+  use({ "nvim-lua/plenary.nvim" })
 
   -- THEMES / COLORSCHEME
-  use({"rakr/vim-one", "lifepillar/vim-gruvbox8", "lifepillar/vim-solarized8"})
+  use({ "rakr/vim-one", "lifepillar/vim-gruvbox8", "lifepillar/vim-solarized8" })
 
   -- LANGUAGE SERVERS / SYNTAX CHECKING
   use({
@@ -97,7 +97,7 @@ return packer.startup(function(use)
     -- cmd = { "CocActionAsync" },
 
     requires = {
-      {"neoclide/jsonc.vim"},
+      { "neoclide/jsonc.vim" },
 
       -- Laravel blade
       {
@@ -164,13 +164,13 @@ return packer.startup(function(use)
         "L3MON4D3/LuaSnip",
         config = function()
           require("luasnip.loaders.from_vscode").lazy_load({
-            paths = {"~/.config/nvim/snippets"},
+            paths = { "~/.config/nvim/snippets" },
           })
         end,
       },
 
       -- a bunch of snippets to use
-      {"rafamadriz/friendly-snippets", disable = true},
+      { "rafamadriz/friendly-snippets",        disable = true },
 
       -- {
       --   "windwp/nvim-autopairs",
@@ -212,7 +212,8 @@ return packer.startup(function(use)
         disable = true,
         branch = "master",
         ft = "php",
-        run = "composer install --no-dev -o && ./vendor/bin/phpactor extension:install \"phpactor/language-server-phpstan-extension\"",
+        run =
+        "composer install --no-dev -o && ./vendor/bin/phpactor extension:install \"phpactor/language-server-phpstan-extension\"",
       },
 
       -- Treesitter
@@ -232,7 +233,7 @@ return packer.startup(function(use)
                 context_commentstring = {
                   enable = true,
                   enable_autocmd = false,
-                  config = {css = "// %s"},
+                  config = { css = "// %s" },
                 },
               })
             end,
@@ -265,7 +266,7 @@ return packer.startup(function(use)
         },
       },
 
-      {"jose-elias-alvarez/nvim-lsp-ts-utils"},
+      { "jose-elias-alvarez/nvim-lsp-ts-utils" },
 
       {
         -- Neovim plugin for sqls that leverages the built-in LSP client
@@ -287,7 +288,7 @@ return packer.startup(function(use)
           Vimg.enable_spelunker_vim_on_readonly = 1
         end,
 
-        requires = {"kamykn/popup-menu.nvim"},
+        requires = { "kamykn/popup-menu.nvim" },
       },
     },
   })
@@ -302,7 +303,7 @@ return packer.startup(function(use)
   })
 
   -- GIT
-  use({"airblade/vim-gitgutter"})
+  use({ "airblade/vim-gitgutter" })
   use({
     "tpope/vim-fugitive",
     requires = {
@@ -312,7 +313,7 @@ return packer.startup(function(use)
   })
 
   -- Statusline
-  use({"itchyny/lightline.vim"})
+  use({ "itchyny/lightline.vim" })
 
   -- Terminal
   use({
@@ -320,7 +321,7 @@ return packer.startup(function(use)
     config = function()
       require("plugins/floaterm")
     end,
-    requires = {"voldikss/fzf-floaterm"},
+    requires = { "voldikss/fzf-floaterm" },
   })
 
   -- Better undo diff
@@ -337,16 +338,16 @@ return packer.startup(function(use)
     end,
   })
 
-  use({"tomtom/tcomment_vim"})
+  use({ "tomtom/tcomment_vim" })
 
   -- Surround text with quotes, parenthesis, brackets, and more.
-  use({"tpope/vim-surround"})
+  use({ "tpope/vim-surround" })
 
   -- A number of useful motions for the quickfix list, pasting and more.
-  use({"tpope/vim-unimpaired"})
+  use({ "tpope/vim-unimpaired" })
 
   -- MANAGE VIM SESSIONS AUTOMACTICALLY
-  use({"tpope/vim-obsession", "dhruvasagar/vim-prosession"})
+  use({ "tpope/vim-obsession", "dhruvasagar/vim-prosession" })
 
   -- Color highlighter - superior
   -- requires golang (asdf plugin-add golang && asdf install golang <version>)
@@ -375,7 +376,7 @@ return packer.startup(function(use)
     end,
   })
 
-  use({"nelstrom/vim-visual-star-search"})
+  use({ "nelstrom/vim-visual-star-search" })
 
   -- use({"easymotion/vim-easymotion"})
 
@@ -383,19 +384,7 @@ return packer.startup(function(use)
   use({
     "ggandor/leap.nvim",
     config = function()
-      -- https://github.com/kohane27/nvim-config/blob/main/lua/plugins/leap.lua
-      local status_ok, leap = pcall(require, "leap")
-      if status_ok then
-        leap.set_default_keymaps(true)
-
-        -- mark cursor location before jumping
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "LeapEnter",
-          callback = function()
-            vim.cmd("normal m'")
-          end,
-        })
-      end
+      require("plugins/ggandor-leap")
     end,
   })
 
@@ -476,7 +465,7 @@ return packer.startup(function(use)
 
   -- Image preview
   -- pip install -U Pillow
-  use({"mi60dev/image.vim"})
+  use({ "mi60dev/image.vim" })
 
   -- tmux-like window navigation
   use({
@@ -484,19 +473,19 @@ return packer.startup(function(use)
       "s1n7ax/nvim-window-picker",
       tag = "v1.*",
       config = function()
-        require"window-picker".setup({
+        require "window-picker".setup({
           include_current_win = true,
           show_prompt = false,
-          filter_rules = {bo = {buftype = {}}},
+          filter_rules = { bo = { buftype = {} } },
         })
 
         local picker = require("window-picker")
 
         vim.keymap.set("n", "<leader>-", function()
           local picked_window_id = picker.pick_window() or
-                                     vim.api.nvim_get_current_win()
+              vim.api.nvim_get_current_win()
           vim.api.nvim_set_current_win(picked_window_id)
-        end, {desc = "Pick a window"})
+        end, { desc = "Pick a window" })
       end,
     },
     {
@@ -528,7 +517,7 @@ return packer.startup(function(use)
     "iamcco/markdown-preview.nvim",
     opt = true,
     run = "cd app && yarn install",
-    ft = {"markdown"},
+    ft = { "markdown" },
     config = function()
       Vimg.mkdp_refresh_slow = 1
       Cmd([[
@@ -549,7 +538,7 @@ return packer.startup(function(use)
   })
 
   -- Align Markdown table
-  use({"godlygeek/tabular"})
+  use({ "godlygeek/tabular" })
 
   -- Tag generation - browse tags with FZF - keymap: `,bt` / `,pt`
   use({
@@ -559,15 +548,15 @@ return packer.startup(function(use)
     -- disable = false,
     setup = function()
       Vimg.gutentags_add_default_project_roots = 0
-      Vimg.gutentags_project_root = {".git", "package.json"}
+      Vimg.gutentags_project_root = { ".git", "package.json" }
       Vimg.gutentags_trace = 0
     end,
   })
 
   -- Quickly toggle maximaize a tab
-  use({"szw/vim-maximizer"})
+  use({ "szw/vim-maximizer" })
 
-  use({"editorconfig/editorconfig-vim"})
+  use({ "editorconfig/editorconfig-vim" })
 
   -- Debugging
   use({
@@ -584,7 +573,7 @@ return packer.startup(function(use)
   -- octal,
   -- hex
   -- Unicode character names
-  use({"tpope/vim-characterize"})
+  use({ "tpope/vim-characterize" })
 
   -- FORMATTERS
   use({
