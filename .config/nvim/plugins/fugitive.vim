@@ -20,7 +20,7 @@ nnoremap <leader>cm  :tabnew<cr>:Gclog! -50<CR>:call DeleteOrCloseBuffer(1)<cr>
 nnoremap <leader>CM  :tabnew<cr>:Git log -500000<CR>:call DeleteAllBuffers('e')<CR>
 nnoremap <leader>go  :execute 'Git push origin ' . FugitiveHead()
 nnoremap <leader>gp  :Git push  HEAD<left><left><left><left><left>
-nnoremap <leader>grs  :Git rebase -i <right>
+nnoremap <leader>grs  :Gclog! -50<CR>:Git rebase -i <right>
 nnoremap <leader>grc  :Git rebase --continue
 nnoremap <leader>gra  :Git rebase --abort
 nnoremap <leader>gR  :tab split<CR>:Git reflog -100<CR><C-W>o
