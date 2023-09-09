@@ -250,19 +250,101 @@ alias eshell='source ~/.bashrc'
 # is the same as cp -r ./xx ../.. as ../../xx will be created if does not exist
 # alias cpr='cp -rT' # The above may not work in some shell - hence _cpr below
 
+function _cpr-help {
+  echo "
+Usage:
+  cpr [ -h | --help ] \\
+      [ -s | --same ] \\
+      source \\
+      destination
+
+Examples:
+  cpr -h
+  cpr /some/source/a /some/dest/b
+  cpr /some/source/a/ /some/dest/ -s
+
+Options:
+  --help/-h
+      Print usage information and exit.
+  --same/-s
+      Make the destination basename same as source
+"
+}
+
 function _cpr {
+  local _same
+  local _help
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=same,help \
+      --options=s,h \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+      --help | -h)
+        _cpr-help
+        return
+        ;;
+
+      --same | -s)
+        _same=1
+        shift
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        exit 1
+        ;;
+    esac
+  done
+
+  # handle non-option arguments
+
   if [[ $# -lt 2 ]]; then
     echo "source and destination required"
     return
   fi
 
-  local _source=$1
+  local _source="$(realpath $1)"
   local _destination=$2
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  # Remove trailing '/' from source otherwise source will be deleted
+  _source="${_source%/}"
+
+  _destination="${_destination%/}"
+  _destination="$(realpath "${_destination}")"
+
+  if [ -n "${_same}" ]; then
+    local _source_base="$(basename "${_source}")"
+    _destination+="/${_source_base}"
+    echo "Destination => ${_destination}"
+  fi
 
   mkdir -p "${_destination}"
 
-  # Remove trailing '/' from source otherwise source will be deleted
-  cp -rT "${_source%/}" "${_destination}"
+  cp -rT "${_source}" "${_destination}"
 }
 
 alias cpr=_cpr
