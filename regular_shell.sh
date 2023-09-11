@@ -897,6 +897,7 @@ _mysql-dir() {
 
   if [[ -n "${_data_dir}" ]]; then
     echo -n "${_data_dir}"
+    return
   fi
 
   _data_dir="$(asdf current mysql | awk '{print $2}')"
