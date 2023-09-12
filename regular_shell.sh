@@ -312,7 +312,7 @@ function _cpr {
 
       *)
         Echo "Unknown option ${1}."
-        exit 1
+        return
         ;;
     esac
   done
@@ -548,7 +548,7 @@ function _cpath {
       --name "$0" \
       -- "$@"
   )"; then
-    exit 1
+    return
   fi
 
   # Provides proper quoting
@@ -568,7 +568,7 @@ function _cpath {
 
       *)
         Echo "Unknown option ${1}."
-        exit 1
+        return
         ;;
     esac
   done
@@ -805,7 +805,7 @@ rel_asdf_elixir-install-f() {
 
     if ! cd "${install_dir}"; then
       echo -e "\n${install_dir} does not exist, exiting.\n"
-      exit 1
+      return
     fi
 
     git restore . &>/dev/null
@@ -965,7 +965,7 @@ function check-wsl-distro-name {
 
   if [[ -z "$WSL_DISTRO_NAME" ]]; then
     echo -e "\n Please set WSL_DISTRO_NAME environment variable\n"
-    exit 1
+    return
   fi
 }
 
