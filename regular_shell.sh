@@ -254,25 +254,26 @@ function _cpr-help {
   echo "
 Usage:
   cpr [ -h | --help ] \\
-      [ -s | --same ] \\
       source \\
-      destination
+      destination-prefix \\
+      -o | --out   \\
 
 Examples:
   cpr -h
-  cpr /some/source/a /some/dest/b
-  cpr /some/source/a/ /some/dest/ -s
+  cpr /some/source/a /some/dirname --out some_name
+  cpr /some/source/a/ /some/dirname -o s
 
 Options:
   --help/-h
       Print usage information and exit.
-  --same/-s
-      Make the destination basename same as source
+  --out/-o
+      The output folder name. Use character 's' to make same as source'
+      basename
 "
 }
 
 function _cpr {
-  local _same
+  local _out
   local _help
 
   # --------------------------------------------------------------------------
@@ -282,8 +283,8 @@ function _cpr {
 
   if ! parsed="$(
     getopt \
-      --longoptions=same,help \
-      --options=s,h \
+      --longoptions=out:,help \
+      --options=o:,h \
       --name "$0" \
       -- "$@"
   )"; then
@@ -300,9 +301,9 @@ function _cpr {
         return
         ;;
 
-      --same | -s)
-        _same=1
-        shift
+      --out | -o)
+        _out="$2"
+        shift 2
         ;;
 
       --)
@@ -324,8 +325,13 @@ function _cpr {
     return
   fi
 
+  if [[ -z "${_out}" ]]; then
+    echo "--out/-o option is required to be output folder or character 's'"
+    return
+  fi
+
   local _source="$(realpath $1)"
-  local _destination=$2
+  local _destination_prefix=$2
   # --------------------------------------------------------------------------
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
@@ -333,13 +339,16 @@ function _cpr {
   # Remove trailing '/' from source otherwise source will be deleted
   _source="${_source%/}"
 
-  _destination="${_destination%/}"
-  _destination="$(realpath "${_destination}")"
+  _destination_prefix="${_destination_prefix%/}"
+  _destination_prefix="$(realpath "${_destination_prefix}")"
+  local _destination
 
-  if [ -n "${_same}" ]; then
+  if [[ "${_out}" == 's' ]]; then
     local _source_base="$(basename "${_source}")"
-    _destination+="/${_source_base}"
+    _destination="${_destination_prefix}/${_source_base}"
     echo "Destination => ${_destination}"
+  else
+    _destination="${_destination_prefix}/${_out}"
   fi
 
   mkdir -p "${_destination}"
