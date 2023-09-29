@@ -1031,24 +1031,29 @@ function install-php {
   _php_version_install_root="$(_asdf-plugin-install-root php "$version")"
 
   local _ini_file="${_php_version_install_root}/conf.d/php.ini"
-  local _extensions_root="${_php_version_install_root}/lib/php/extensions"
+  # local _extensions_root="${_php_version_install_root}/lib/php/extensions"
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
   "$(_asdf-bin-path)" reshim php
+
+  pear config-set php_ini "${_ini_file}"
+  pecl config-set php_ini "${_ini_file}"
+  "$(_asdf-bin-path)" reshim php
+
   pecl channel-update pecl.php.net
   pecl install xdebug
 
-  local _xdebug_extension_path
-  _xdebug_extension_path="$(find "${_extensions_root}" -type f -name xdebug.so)"
+  # local _xdebug_extension_path
+  # _xdebug_extension_path="$(find "${_extensions_root}" -type f -name xdebug.so)"
 
-  if [[ -n "${_xdebug_extension_path}" ]]; then
-    echo "zend_extension=${_xdebug_extension_path}" >>"${_ini_file}"
-  else
-    _echo ""
-    _echo "xdebug extension path not found"
-    _echo ""
-  fi
+  # if [[ -n "${_xdebug_extension_path}" ]]; then
+  #   echo "zend_extension=${_xdebug_extension_path}" >>"${_ini_file}"
+  # else
+  #   _echo ""
+  #   _echo "xdebug extension path not found"
+  #   _echo ""
+  # fi
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
