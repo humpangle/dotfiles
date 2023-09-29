@@ -979,7 +979,7 @@ function install-php {
 
   _echo "INSTALLING PHP"
 
-  local version=8.2.2
+  local version=8.2.11
 
   sudo apt-get update
 
@@ -1007,7 +1007,8 @@ function install-php {
     openssl \
     pkg-config \
     re2c \
-    zlib1g-dev
+    zlib1g-dev \
+    plocate
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
@@ -1026,9 +1027,28 @@ function install-php {
   sudo chmod a+x /tmp/php-cs-fixer
   sudo mv /tmp/php-cs-fixer /usr/local/bin/php-cs-fixer
 
+  local _php_version_install_root
+  _php_version_install_root="$(_asdf-plugin-install-root php "$version")"
+
+  local _ini_file="${_php_version_install_root}/conf.d/php.ini"
+  local _extensions_root="${_php_version_install_root}/lib/php/extensions"
+
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
+  "$(_asdf-bin-path)" reshim php
+  pecl channel-update pecl.php.net
   pecl install xdebug
+
+  local _xdebug_extension_path
+  _xdebug_extension_path="$(find "${_extensions_root}" -type f -name xdebug.so)"
+
+  if [[ -n "${_xdebug_extension_path}" ]]; then
+    echo "zend_extension=${_xdebug_extension_path}" >>"${_ini_file}"
+  else
+    _echo ""
+    _echo "xdebug extension path not found"
+    _echo ""
+  fi
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
