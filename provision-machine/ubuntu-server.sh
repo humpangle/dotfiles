@@ -1031,7 +1031,7 @@ function install-php {
   _php_version_install_root="$(_asdf-plugin-install-root php "$version")"
 
   local _ini_file="${_php_version_install_root}/conf.d/php.ini"
-  # local _extensions_root="${_php_version_install_root}/lib/php/extensions"
+  local _extensions_root="${_php_version_install_root}/lib/php/extensions"
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
@@ -1044,16 +1044,15 @@ function install-php {
   pecl channel-update pecl.php.net
   pecl install xdebug
 
-  # local _xdebug_extension_path
-  # _xdebug_extension_path="$(find "${_extensions_root}" -type f -name xdebug.so)"
+  local _opcache_extension_path
+  _opcache_extension_path="$(find "${_extensions_root}" -type f -name opcache.so)"
 
-  # if [[ -n "${_xdebug_extension_path}" ]]; then
-  #   echo "zend_extension=${_xdebug_extension_path}" >>"${_ini_file}"
-  # else
-  #   _echo ""
-  #   _echo "xdebug extension path not found"
-  #   _echo ""
-  # fi
+  if [[ -n "${_opcache_extension_path}" ]]; then
+    # opcache extension needs to be the first line
+    echo -e "zend_extension=${_opcache_extension_path}\n$(cat "${_ini_file}")" >"${_ini_file}"
+  else
+    _echo "opcache extension path not found"
+  fi
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
