@@ -1172,6 +1172,8 @@ alias unarchive-projects='archive-projects-f --unarchive'
 # In `~/.bashrc`
 # export INTELLIJ_VERSION='IntelliJIdea2022.3' # Found at /home/kanmii/.config/JetBrains/IntelliJIdea2023.2
 # export INTELLIJ_IDEA_BIN_VERSION='intellij-idea-ultimate'
+# export GIT_USER='your-name'
+# export GIT_EMAIL='your-email@email.email'
 
 _intellij_idea_bin_path="${HOME}/.local/share/JetBrains/Toolbox/apps/${INTELLIJ_IDEA_BIN_VERSION}/bin/idea.sh"
 
@@ -1183,6 +1185,18 @@ if [[ -e "${_intellij_idea_bin_path}" ]]; then
 
     (
       if cd "${settings_sync_dir}" &>/dev/null; then
+        local _git_config="${settings_sync_dir}/.git/config"
+
+        if ! grep -q "name = Kanmii" "${_git_config}"; then
+          if [[ -n "${GIT_USER}" ]]; then
+            git config user.name "${GIT_USER}"
+          fi
+
+          if [[ -n "${GIT_EMAIL}" ]]; then
+            git config user.email "${GIT_EMAIL}"
+          fi
+        fi
+
         local timestamp
         timestamp="$(date +'%s')"
 
