@@ -1170,7 +1170,7 @@ alias unarchive-projects='archive-projects-f --unarchive'
 # INTELLIJ IDEA IDE
 # -----------------------------------------------------------------------------
 # In `~/.bashrc`
-# export INTELLIJ_VERSION='IntelliJIdea2022.3'
+# export INTELLIJ_VERSION='IntelliJIdea2022.3' # Found at /home/kanmii/.config/JetBrains/IntelliJIdea2023.2
 # export INTELLIJ_IDEA_BIN_VERSION='intellij-idea-ultimate'
 
 _intellij_idea_bin_path="${HOME}/.local/share/JetBrains/Toolbox/apps/${INTELLIJ_IDEA_BIN_VERSION}/bin/idea.sh"
