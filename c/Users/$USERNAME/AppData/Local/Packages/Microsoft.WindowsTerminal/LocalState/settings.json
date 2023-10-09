@@ -22,10 +22,6 @@
       "keys": "ctrl+shift+c"
     },
     {
-      "command": "tabSearch",
-      "keys": "ctrl+shift+s"
-    },
-    {
       "command": {
         "action": "splitPane",
         "split": "auto",
