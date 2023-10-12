@@ -25,6 +25,7 @@ nnoremap <leader>grS  :Git rebase -i <right>
 nnoremap <leader>grc  :Git rebase --continue
 nnoremap <leader>gra  :Git rebase --abort
 nnoremap <leader>gR  :tab split<CR>:Git reflog -100<CR><C-W>o
+nnoremap <leader>gRR :Git reflog -
 " gs = git set / reset
 nnoremap <leader>gs  :Git reset --soft HEAD~
 nnoremap <leader>Gs  :Git reset --hard HEAD~
