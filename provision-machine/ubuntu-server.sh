@@ -1241,6 +1241,29 @@ function install-chrome {
   sudo apt-get install google-chrome-stable -y
 }
 
+function install-sqlite {
+  local version=3.43.2
+
+  _echo "Installing sqlite version: ${version}"
+
+  sudo apt-get update
+
+  sudo apt-get install -y \
+    curl \
+    build-essential \
+    file
+
+  # shellcheck source=/dev/null
+  . "$HOME/.asdf/asdf.sh"
+
+  "$(_asdf-bin-path)" plugin add sqlite || true
+
+  "$(_asdf-bin-path)" install sqlite "${version}"
+  "$(_asdf-bin-path)" global sqlite "${version}"
+
+  "$(_asdf-bin-path)" reshim sqlite
+}
+
 function help {
   : "List available tasks."
 
