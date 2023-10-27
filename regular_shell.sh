@@ -1042,6 +1042,7 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   # shellcheck disable=2139
   alias dpc="sudo $HOME/dotfiles/etc/wsl-drop-caches.sh"
   # Reset/update clock/time. Sometimes, WSL time lags
+  # sudo apt-get install -y ntpdate
   alias rst="sudo ntpdate pool.ntp.org"
   alias rsc='rst'
   alias uc='rst'
