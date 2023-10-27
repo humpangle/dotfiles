@@ -435,7 +435,7 @@ return packer.startup(function(use)
         " all *.rest buffers.
         " Rename the output buffer if you don't want your output to write to
         " the `__REST_response__` buffer
-        nnoremap ,mr :let b:vrc_output_buffer_name = '-Rest'<Left><Left><Left><Left><left><left>
+        nnoremap ,rr :let b:vrc_output_buffer_name = '-Rest'<Left><Left><Left><Left><left><left>
      ]])
     end,
   })
