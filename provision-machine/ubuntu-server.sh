@@ -1039,6 +1039,8 @@ function install-python {
       pip \
       pynvim \
       jupyterlab \
+      jedi-language-server \
+      black \
       2>/dev/null ||
       true
   else
