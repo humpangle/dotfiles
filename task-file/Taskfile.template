@@ -207,9 +207,10 @@ function _echo {
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
 
-function build {
-  : "Build the project"
-  echo "build task not implemented"
+function d {
+  : "Start development server"
+
+  echo "dev task not implemented"
 }
 
 function help {
