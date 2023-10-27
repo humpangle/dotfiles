@@ -620,6 +620,30 @@ return packer.startup(function(use)
     end,
   })
 
+  use({
+    "emmanueltouzery/elixir-extras.nvim",
+    requires = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      -- Vim.keymap.set(
+      --   "n", "<leader>EE", "", {
+      --     noremap = true,
+      --     callback = function()
+      --       require('elixir-extras').elixir_view_docs({
+      --         include_mix_libs = true
+      --       })
+      --     end,
+      --     desc = 'Bring up elixir doc',
+      --   }
+      -- )
+
+      Cmd([[
+          nnoremap <Leader>EE :lua require('elixir-extras').elixir_view_docs({include_mix_libs=true})<cr>
+      ]])
+
+      -- require('elixir-extras').setup_multiple_clause_gutter()
+    end
+  })
+
   -- Use <ctrl-h> <ctrl-j> <ctrl-k> <ctrl-l> <ctrl-\> to switch between vim
   -- and tmux splits
   -- use {"christoomey/vim-tmux-navigator"}
