@@ -234,6 +234,10 @@ function _install-deps {
   eval "$cmd"
 }
 
+function _extract-version {
+  awk -v word="${1}" 'match($0, word "\\s+([.a-zA-Z0-9_-]+)", a) {print a[1]}' "${2}"
+}
+
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -718,7 +722,52 @@ function install-erlang {
 
   _may_be_install_asdf
 
-  _echo "INSTALLING ERLANG"
+  local version="${ERLANG_VERSION}"
+  local _no_set_global
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=erlang: \
+      --options=e: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+      --erlang | -e)
+        version="$2"
+        _no_set_global=1
+        shift 2
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        exit 1
+        ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  _echo "INSTALLING ERLANG version: ${version}"
 
   _install-deps "${ERLANG_DEPS[*]}"
 
@@ -732,8 +781,11 @@ function install-erlang {
   export KERL_INSTALL_HTMLDOCS=
 
   "$(_asdf-bin-path)" plugin add erlang || true
-  "$(_asdf-bin-path)" install erlang "$ERLANG_VERSION"
-  "$(_asdf-bin-path)" global erlang "$ERLANG_VERSION"
+  "$(_asdf-bin-path)" install erlang "${version}"
+
+  if [[ -z "${_no_set_global}" ]]; then
+    "$(_asdf-bin-path)" global erlang "${version}"
+  fi
 
   install-rebar3
 }
@@ -754,18 +806,99 @@ function install-rebar3 {
   _write-local-bin-path-to-paths
 }
 
+function i-elixir {
+  : "Install elixir"
+
+  install-elixir "${@}"
+}
+
 function install-elixir {
   : "Install elixir"
 
   _may_be_install_asdf
 
-  if ! "$(_asdf-bin-path)" current erlang 2>/dev/null | grep -q "$ERLANG_VERSION"; then
-    install-erlang
+  local version=1.15.4-otp-25
+  local erlang_version
+  local _no_set_global
+  local _file
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help,file:,elixir:,erlang: \
+      --options=h,f:,x:,e: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
   fi
 
-  _echo "INSTALLING ELIXIR"
+  # Provides proper quoting
+  eval set -- "$parsed"
 
-  local version=1.15.4-otp-25
+  while true; do
+    case "$1" in
+      --help | -h)
+        _elixir-help
+        return
+        ;;
+
+      --elixir | -x)
+        version="${2}"
+        _no_set_global=1
+        shift 2
+        ;;
+
+      --erlang | -e)
+        erlang_version="$2"
+        shift 2
+        ;;
+
+      --file | -f)
+        _file="${2}"
+        _no_set_global=1
+        shift 2
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        exit 1
+        ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  if [[ -n "${_file}" ]] && [[ -e "${_file}" ]]; then
+    local _content
+    _content="$(cat "${_file}")"
+
+    version="$(
+      _extract-version elixir "${_file}"
+    )"
+
+    erlang_version="$(
+      _extract-version erlang "${_file}"
+    )"
+  fi
+
+  if [[ -n "${erlang_version}" ]] ||
+    ! "$(_asdf-bin-path)" current erlang 2>/dev/null | grep -q "$ERLANG_VERSION"; then
+    install-erlang --erlang="${erlang_version}"
+  fi
+
+  _echo "INSTALLING ELIXIR ${version}"
 
   sudo apt-get update
 
@@ -777,8 +910,20 @@ function install-elixir {
 
   "$(_asdf-bin-path)" plugin add elixir || true
 
-  "$(_asdf-bin-path)" install elixir $version
-  "$(_asdf-bin-path)" global elixir $version
+  "$(_asdf-bin-path)" install elixir "$version"
+
+  if [[ -z "${_no_set_global}" ]]; then
+    "$(_asdf-bin-path)" global elixir "$version"
+  fi
+
+  if [[ -e ./.tool-versions ]]; then
+    _echo "Rename local .tool-versions to .tool-versions-bak"
+    mv ./.tool-versions ./.tool-versions-bak
+  fi
+
+  _echo "Creating local .tool-versions for elixir and erlang"
+  "$(_asdf-bin-path)" local elixir "$version"
+  "$(_asdf-bin-path)" local erlang "${erlang_version}"
 
   local mix_bin_path
   mix_bin_path="$(_asdf-plugin-install-root elixir "$version")/bin/mix"
@@ -787,6 +932,33 @@ function install-elixir {
   "$mix_bin_path" local.rebar --force --if-missing
 
   "$(_asdf-bin-path)" reshim elixir
+
+  rm -rf ./.tool-versions
+
+  if [[ -e ./.tool-versions-bak ]]; then
+    _echo "Rename local .tool-versions-bak to .tool-versions"
+    mv ./.tool-versions-bak ./.tool-versions
+  fi
+}
+
+function _elixir-help {
+  read -r -d '' var <<'eof'
+Install elixir with ASDF. Usage:
+  ./run.sh install-elixir [OPTIONS]
+
+Options:
+  --help/-h.   Print help message and exit
+  --elixir/-x. Elixir version.
+  --erlang/-e. Erlang version.
+
+Examples:
+  ./run.sh install-elixir --help
+  ./run.sh install-elixir
+  ./run.sh i-elixir
+  ./run.sh install-elixir --elixir=1.14.3 --erlang=25.2
+eof
+
+  echo "${var}"
 }
 
 function install-nodejs {
