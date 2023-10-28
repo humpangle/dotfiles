@@ -5,7 +5,7 @@ set -o pipefail
 
 INITIAL_WSL_C_PATH=/mnt/c
 
-ERLANG_VERSION=25.3.2.5
+ERLANG_VERSION=26.1.2
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
@@ -817,7 +817,7 @@ function install-elixir {
 
   _may_be_install_asdf
 
-  local version=1.15.4-otp-25
+  local version=1.15.7-otp-26
   local erlang_version
   local _no_set_global
   local _file
