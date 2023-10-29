@@ -221,5 +221,29 @@
       "# --------------------------------------------------------------------------"
     ],
     "description": ["getopt parse options"]
+  },
+  "define helper function": {
+    "prefix": ["def_help_fun", "help_fun_def"],
+    "body": [
+      "function ___${1:name}-help {",
+      "  : \"___help___ ___$1-help\"",
+      "  read -r -d '' var <<'eof'",
+      "What does function do. Usage:",
+      "  ./run.sh ${2:func} [OPTIONS]",
+      "",
+      "Options:",
+      "  --verbose/-v. Description should be capitalized and end in a period.",
+      "  --timeout/-t. Super long",
+      "                              description's subsequent lines should start at same column as",
+      "                              first line.",
+      "",
+      "Examples:",
+      "  ./run.sh ${2:func}",
+      "eof",
+      "",
+      "  echo -e \"\\${var}\"",
+      "}"
+    ],
+    "description": ["define helper function"]
   }
 }
