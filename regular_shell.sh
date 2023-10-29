@@ -727,8 +727,9 @@ ELIXIR_LS_BASE="$HOME/.elixir-ls"
 ELIXIR_LS_SCRIPTS_BASE="${ELIXIR_LS_BASE}/ebnis-scripts"
 # Release v0.14.6
 # ELIXIR_LS_STABLE_HASH='15c0052'
-# Release v0.15.1
-ELIXIR_LS_STABLE_HASH='9427f7f'
+# Release v0.15.1 hash 9427f7f
+# v0.17.3 hash d2eb6f3
+ELIXIR_LS_STABLE_HASH='d2eb6f3'
 
 get-hash() {
   local args="${*}"
