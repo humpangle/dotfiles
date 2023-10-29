@@ -238,6 +238,99 @@ function _extract-version {
   awk -v word="${1}" 'match($0, word "\\s+([.a-zA-Z0-9_-]+)", a) {print a[1]}' "${2}"
 }
 
+function _tool-versions-backup {
+  local _create
+  local _remove
+  local _doc
+  local _tools
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=create,remove,doc:,tools: \
+      --options=c,r,d:,t: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+      --create | -c)
+        _create=1
+        shift
+        ;;
+
+      --remove | -r)
+        _remove=1
+        shift
+        ;;
+
+      --doc | -d)
+        _doc="${2}"
+        shift 2
+        ;;
+
+      --tools | -t)
+        _tools="${2}"
+        shift 2
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        exit 1
+        ;;
+    esac
+  done
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  # If caller did not provide a documentation string, use the tools as
+  # documentation string
+  if [[ -z "${_doc}" ]]; then
+    _doc="${_tools}"
+  fi
+
+  if [[ -n "${remove}" ]]; then
+    if [[ -n "${_tools}" ]]; then
+      IFS=, read -r -a _tools_array <<<"${_tools}"
+
+      for _el in "${_tools_array[@]}"; do
+        "$(_asdf-bin-path)" reshim "${_el}"
+      done
+    fi
+
+    _echo "Removing temporary local .tool-versions created for ${_doc}"
+    rm -rf ./.tool-versions
+
+    if [[ -e ./.tool-versions-bak ]]; then
+      _echo "Rename local .tool-versions-bak to .tool-versions"
+      mv ./.tool-versions-bak ./.tool-versions
+    fi
+  else
+    _echo "Creating temporary local .tool-versions for ${_doc}"
+
+    if [[ -e ./.tool-versions ]]; then
+      _echo "Rename local .tool-versions to .tool-versions-bak"
+      mv ./.tool-versions ./.tool-versions-bak
+    fi
+  fi
+}
+
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -724,6 +817,7 @@ function install-erlang {
 
   local version="${ERLANG_VERSION}"
   local _no_set_global
+  local _dev
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -732,8 +826,8 @@ function install-erlang {
 
   if ! parsed="$(
     getopt \
-      --longoptions=erlang: \
-      --options=e: \
+      --longoptions=dev,erlang:,elixir: \
+      --options=d,e:,x: \
       --name "$0" \
       -- "$@"
   )"; then
@@ -746,9 +840,21 @@ function install-erlang {
   while true; do
     case "$1" in
       --erlang | -e)
-        version="$2"
-        _no_set_global=1
+        if [[ "$2" != "latest" ]]; then
+          version="$2"
+          _no_set_global=1
+        fi
+
         shift 2
+        ;;
+
+      --elixir | -x)
+        shift 2
+        ;;
+
+      --dev | -d)
+        _dev=1
+        shift 1
         ;;
 
       --)
@@ -766,6 +872,10 @@ function install-erlang {
   # --------------------------------------------------------------------------
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
+
+  if [[ -n "${_dev}" ]]; then
+    _no_set_global=
+  fi
 
   _echo "INSTALLING ERLANG version: ${version}"
 
@@ -787,7 +897,11 @@ function install-erlang {
     "$(_asdf-bin-path)" global erlang "${version}"
   fi
 
+  _tool-versions-backup --tools=erlang
+  "$(_asdf-bin-path)" local erlang "${version}"
   install-rebar3
+
+  _tool-versions-backup --remove --tools=erlang
 }
 
 function install-rebar3 {
@@ -821,6 +935,7 @@ function install-elixir {
   local erlang_version
   local _no_set_global
   local _file
+  local _dev
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -829,11 +944,12 @@ function install-elixir {
 
   if ! parsed="$(
     getopt \
-      --longoptions=help,file:,elixir:,erlang: \
-      --options=h,f:,x:,e: \
+      --longoptions=help,dev,file:,elixir:,erlang: \
+      --options=h,d,f:,x:,e: \
       --name "$0" \
       -- "$@"
   )"; then
+    ___elixir-help
     exit 1
   fi
 
@@ -843,7 +959,7 @@ function install-elixir {
   while true; do
     case "$1" in
       --help | -h)
-        _elixir-help
+        ___elixir-help
         return
         ;;
 
@@ -864,6 +980,11 @@ function install-elixir {
         shift 2
         ;;
 
+      --dev | -d)
+        _dev=1
+        shift 1
+        ;;
+
       --)
         shift
         break
@@ -871,6 +992,7 @@ function install-elixir {
 
       *)
         Echo "Unknown option ${1}."
+        ___elixir-help
         exit 1
         ;;
     esac
@@ -879,6 +1001,10 @@ function install-elixir {
   # --------------------------------------------------------------------------
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
+
+  if [[ -n "${_dev}" ]]; then
+    _no_set_global=
+  fi
 
   if [[ -n "${_file}" ]] && [[ -e "${_file}" ]]; then
     local _content
@@ -893,9 +1019,12 @@ function install-elixir {
     )"
   fi
 
+  # We install erlang if no erlang previously installed on this machine or
+  # user specifies an erlang version
   if [[ -n "${erlang_version}" ]] ||
+    [[ "${erlang_version}" == "latest" ]] ||
     ! "$(_asdf-bin-path)" current erlang 2>/dev/null | grep -q "$ERLANG_VERSION"; then
-    install-erlang --erlang="${erlang_version}"
+    install-erlang "${@}"
   fi
 
   _echo "INSTALLING ELIXIR ${version}"
@@ -916,12 +1045,7 @@ function install-elixir {
     "$(_asdf-bin-path)" global elixir "$version"
   fi
 
-  if [[ -e ./.tool-versions ]]; then
-    _echo "Rename local .tool-versions to .tool-versions-bak"
-    mv ./.tool-versions ./.tool-versions-bak
-  fi
-
-  _echo "Creating local .tool-versions for elixir and erlang"
+  _tool-versions-backup --doc="elixir and erlang"
   "$(_asdf-bin-path)" local elixir "$version"
   "$(_asdf-bin-path)" local erlang "${erlang_version}"
 
@@ -931,14 +1055,7 @@ function install-elixir {
   "$mix_bin_path" local.hex --force --if-missing
   "$mix_bin_path" local.rebar --force --if-missing
 
-  "$(_asdf-bin-path)" reshim elixir
-
-  rm -rf ./.tool-versions
-
-  if [[ -e ./.tool-versions-bak ]]; then
-    _echo "Rename local .tool-versions-bak to .tool-versions"
-    mv ./.tool-versions-bak ./.tool-versions
-  fi
+  _tool-versions-backup --remove --tools=elixir,erlang
 }
 
 function ___elixir-help {
@@ -947,15 +1064,18 @@ Install elixir with ASDF. Usage:
   ./run.sh install-elixir [OPTIONS]
 
 Options:
-  --help/-h.   Print help message and exit
-  --elixir/-x. Elixir version.
-  --erlang/-e. Erlang version.
+  --help/-h.                    Print help message and exit
+  --dev/-d.                     Set specified elixir and erlang versions as
+                                global versions
+  --elixir/-x elixir_version.   Specify elixir version.
+  --erlang/-e erlang_version.   Specify erlang version.
 
 Examples:
   ./run.sh install-elixir --help
   ./run.sh install-elixir
   ./run.sh i-elixir
   ./run.sh install-elixir --elixir=1.14.3 --erlang=25.2 --dev
+  ./run.sh install-elixir --elixir=1.14.3 --erlang=latest
 eof
 
   echo "${var}"
