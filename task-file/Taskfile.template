@@ -6,6 +6,26 @@ set -o pipefail
 set -o noclobber
 
 # -----------------------------------------------------------------------------
+# For help text, you may use the form:
+# function func_name {
+#   : "Some text 1"
+#   : "Some text 2"
+# }
+#
+######## OR##################
+# function func_name {
+#   : "___help___ ___some-func-help"
+# }
+# The pattern is ___help___ ___name-help - the help function name must start
+# with `___` and end with `-help`
+#
+# For aliases:
+# function func_name {
+#   : "___alias___ some-other-func"
+# }
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # See also for inspiration:
 # https://github.com/nickjj/docker-flask-example/blob/main/run
 # -----------------------------------------------------------------------------
@@ -136,8 +156,8 @@ function _raise-on-no-env {
   fi
 
   local _required_envs=(
-    'ENV1'
-    'ENV2'
+    ENV1
+    ENV2
   )
 
   for _env_name in "${_required_envs[@]}"; do
@@ -226,13 +246,17 @@ function help {
   _this_file_content="$(cat "${0}")"
 
   local len=0
-  declare -A names_map=()
+  declare -A name_to_len_map=()
 
   for name in "${names[@]}"; do
     _len="${#name}"
-    names_map["$name"]="${_len}"
+    name_to_len_map["$name"]="${_len}"
     if [[ "${_len}" -gt "${len}" ]]; then len=${_len}; fi
   done
+
+  declare -A _all_output=()
+  declare -A _aliases=()
+  declare -A _name_spaces_map=()
 
   len=$((len + 10))
 
@@ -242,7 +266,7 @@ function help {
     fi
 
     local spaces=""
-    _len="${names_map[$name]}"
+    _len="${name_to_len_map[$name]}"
     _len=$((len - _len))
 
     for _ in $(seq "${_len}"); do
@@ -250,21 +274,65 @@ function help {
       ((++t))
     done
 
-    mapfile -t doc1 < <(
-      type "$name" |
-        sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p"
+    local _function_def_text
+    _function_def_text="$(type "${name}")"
 
-    )
+    local _alias_name
 
-    if [[ -n "${doc1[*]}" ]]; then
-      for _doc in "${doc1[@]}"; do
-        echo -e "${name} ${spaces} ${_doc}"
-      done
-    else
-      echo "${name} ${spaces} *************"
+    # Matching pattern example:
+    # `: "___alias___ install-elixir"`
+    _alias_name="$(awk \
+      'match($0, /^ +: *"___alias___ +([a-zA-Z_-][a-zA-Z0-9_-]*)/, a) {print a[1]}' \
+      <<<"${_function_def_text}")"
+
+    if [[ -n "${_alias_name}" ]]; then
+      _aliases["${_alias_name}"]="${_aliases["${_alias_name}"]} ${name}"
+      continue
     fi
 
-    echo
+    local _help_func=''
+
+    # Matching pattern example:
+    # `: "___help___ ___elixir-help"`
+    _help_func="$(awk \
+      'match($0, /^ +: *"___help___ +(___[a-zA-Z][a-zA-Z0-9_-]+-help)/, a) {print a[1]}' \
+      <<<"${_function_def_text}")"
+
+    # Get the whole function definition text and extract only the documentation
+    # part.
+    if [[ -n "${_help_func}" ]]; then
+      mapfile -t _doc_lines < <(
+        eval "${_help_func}" 2>/dev/null
+      )
+    else
+      mapfile -t _doc_lines < <(
+        sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p" <<<"${_function_def_text}"
+      )
+    fi
+
+    local _output=""
+
+    if [[ -n "${_doc_lines[*]}" ]]; then
+      for _doc in "${_doc_lines[@]}"; do
+        _output+="${name} ${spaces} ${_doc}\n"
+      done
+    else
+      _output="${name} ${spaces} *************\n"
+    fi
+
+    _all_output["${name}"]="${_output}"
+    _name_spaces_map["${name}"]="${name} ${spaces}"
+  done
+
+  for name in "${!_all_output[@]}"; do
+    _output="${_all_output["${name}"]}"
+    echo -e "${_output}"
+
+    local _alias_names="${_aliases["${name}"]}"
+
+    if [[ -n "${_alias_names}" ]]; then
+      echo -e "${_name_spaces_map["${name}"]} ALIASES: ${_alias_names}\n\n"
+    fi
   done
 }
 

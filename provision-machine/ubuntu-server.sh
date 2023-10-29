@@ -955,7 +955,7 @@ Examples:
   ./run.sh install-elixir --help
   ./run.sh install-elixir
   ./run.sh i-elixir
-  ./run.sh install-elixir --elixir=1.14.3 --erlang=25.2
+  ./run.sh install-elixir --elixir=1.14.3 --erlang=25.2 --dev
 eof
 
   echo "${var}"
