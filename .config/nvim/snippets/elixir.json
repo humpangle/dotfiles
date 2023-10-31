@@ -471,14 +471,16 @@
     "description": "Ecto aliases"
   },
   "elixirc_paths": {
-    "prefix": "elixirc_paths",
+    "prefix": ["elixirc_paths_def"],
     "body": [
-      "# Specifies which paths to compile per environment.",
-      "defp elixirc_paths(:dev), do: [\"lib\"${1:, \"another_path\"}]",
+      "defp elixirc_paths(:prod), do: [\"lib\"]",
+      "defp elixirc_paths(:dev), do: [\"lib\", \"lib_dev\"]",
       "defp elixirc_paths(:test), do: elixirc_paths(:dev) ++ [\"test/support\"]",
-      "defp elixirc_paths(_), do: [\"lib\"]"
+      "defp elixirc_paths(:e2e), do: elixirc_paths(:dev) ++ [\"lib_e2e\"]",
+      "# Mostly for IDE - to signal all compilation folders",
+      "defp elixirc_paths(:all), do: [\"lib\", \"lib_dev\", \"test/support\", \"lib_e2e\"]"
     ],
-    "description": "elixirc_paths"
+    "description": ["elixirc_paths"]
   },
   "absinthe child schema": {
     "prefix": "absinthe_child_schema_definition",
