@@ -820,10 +820,14 @@
       "  \"~> 1.2\",",
       "  only: [:dev, :test], runtime: false",
       "}",
-      "if Mix.env() == :dev || Mix.env() == :test do",
+      "if Mix.env() != :prod do",
       "  config :mix_test_interactive,",
       "    clear: true,",
-      "    exclude: [~r/___scratch/]",
+      "    exclude: [",
+      "      ~r/___scratch/,",
+      "      ~r/\\.db\\$/,",
+      "      ~r/\\.db-.+/",
+      "    ]",
       "end"
     ],
     "description": "Mix test interactive"
