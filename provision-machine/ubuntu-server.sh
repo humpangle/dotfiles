@@ -1157,6 +1157,7 @@ function install-python {
   if _is-dev "$@"; then
     pip install -U \
       pip \
+      yt-dlp \
       pynvim \
       jupyterlab \
       jedi-language-server \
