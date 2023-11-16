@@ -14,5 +14,6 @@ Cmnd_Alias TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD = /usr/bin/tee /var/lib/docker/c
 %__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/chown
 %__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
 %__USERNAME__ ALL=(ALL)  NOPASSWD: TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD
+%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/systemctl
 # WSL reset clock
 %__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/ntpdate
