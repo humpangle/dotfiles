@@ -245,5 +245,15 @@
       "}"
     ],
     "description": ["define helper function"]
+  },
+  "define alias function": {
+    "prefix": ["def_alias_func", "alias_func_def"],
+    "body": [
+      "function ${1:alias_name} {",
+      "  : \"___alias___ ${2:main_func_name}\"",
+      "    $2 \"\\${@}\"",
+      "}"
+    ],
+    "description": [""]
   }
 }
