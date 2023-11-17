@@ -40,3 +40,5 @@ defmodule :_util do
 end
 
 import :_util
+
+IEx.configure(inspect: [charlists: :as_lists])
