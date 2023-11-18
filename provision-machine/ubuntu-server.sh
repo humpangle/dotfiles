@@ -1088,7 +1088,7 @@ function install-nodejs {
 
   _echo "INSTALLING NODEJS"
 
-  local version=18.14.0
+  local version=18.17.1
 
   if ! _is-dev "$@"; then
     _install-deps "${NODEJS_DEPS[*]}"
