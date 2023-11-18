@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# shellcheck disable=2034,2209,2135,2155,2120
+
+# .___scratch-curl.sh
+
+_out_dir='/c/0000-shared/wiki/mongodb'
+if [[ -z "${_out_dir}" ]]; then
+  echo "Output directory is required"
+  exit
+fi
+function _d {
+  find "${_out_dir}" \
+    -type f \
+    -name "*.___scratch-curl-out*" \
+    -exec rm -rf {} +
+}
+function _timestamp {
+  date +'%s'
+}
+function _o {
+  local _out="${2}"
+  local _ext="${1}"
+  if [[ -z "${_ext}" ]]; then
+    _ext='json'
+  fi
+  if [[ -z "${_out}" ]]; then
+    _out='.___scratch-curl-out'
+  fi
+  echo -n "${_out_dir}/$(_timestamp)---${_out}.${_ext}"
+}
+_url_prefix='https://us-east-1.aws.data.mongodb-api.com/app/data-drdnb/endpoint/data/v1/action'
+if [[ -z "${_url_prefix}" ]]; then
+  echo "URL Prefix is required"
+  exit
+fi
+read -r -d '' _headers <<'eof'
+\
+    -H 'Content-Type: application/json' \
+    -H 'Access-Control-Request-Headers: *' \
+    -H 'api-key: 4wtarjWtReSbfHlC5h9uTU3dXVVCLtZ6hjwEWdzQVoAcPgTmlpV2id1L2WNfVO8C'
+eof
+function _c {
+  local __headers="${1}"
+  local _url="${2}"
+  local _c_prefix='=COMMAND============================================='
+  local _out_file
+  _out_file="$(_o)"
+  local _cmd="curl \\
+    -fLo ${_out_file} ${__headers} \\
+    -X POST ${_url} ${3}"
+  echo -e "\n${_c_prefix}\n$_cmd\n${_c_prefix}\n"
+  eval "$_cmd"
+  echo
+  echo
+  cat "${_out_file}"
+  echo
+}
+
+### sample data
+read -r -d '' _var <<'eof'
+eof
+read -r -d '' _json <<'eof'
+\
+    --data-raw \
+      '{
+      }'
+eof
+
+_c "${_headers}" "${_url_prefix}/"
+
+# -----------------------------------------------------------------------------
+# Use _c command
+# -----------------------------------------------------------------------------
+
+read -r -d '' _json <<'eof'
+\
+    --data-raw \
+      '{
+        "projection": {"_id": 1}
+      }'
+eof
+_c "${_headers}" "${_url_prefix}/find" "$_json"
