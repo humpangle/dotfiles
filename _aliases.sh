@@ -255,3 +255,12 @@ if command -v grep &>/dev/null; then
 
   export -f g
 fi
+
+if command -v mongodb-compass &>/dev/null; then
+  function mongoc {
+    mongodb-compass &>/dev/null &
+    disown
+  }
+
+  export -f mongoc
+fi

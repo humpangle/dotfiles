@@ -1559,6 +1559,109 @@ function install-sqlite {
   "$(_asdf-bin-path)" reshim sqlite
 }
 
+function install-mongo-db {
+  : "Install Mongo DB Community edition"
+
+  sudo apt-get install -y \
+    gnupg \
+    curl
+
+  curl -fL \
+    https://pgp.mongodb.com/server-7.0.asc |
+    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+      --dearmor
+
+  local _lsb
+  _lsb="$(cat /etc/lsb-release)"
+
+  # Create the /etc/apt/sources.list.d/mongodb-org-7.0.list file
+  if [[ "${_lsb}" =~ DISTRIB_CODENAME=jammy ]]; then
+    echo \
+      "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" |
+      sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+  else
+    echo \
+      "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" |
+      sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+  fi
+
+  sudo apt-get update
+
+  # To install the latest stable version
+
+  sudo apt-get install -y \
+    mongodb-org
+
+  return
+
+  # To prevent unintended upgrades, you can pin the package at the currently
+  # installed version
+  echo "mongodb-org hold" | sudo dpkg --set-selections
+  echo "mongodb-org-database hold" | sudo dpkg --set-selections
+  echo "mongodb-org-server hold" | sudo dpkg --set-selections
+  echo "mongodb-mongosh hold" | sudo dpkg --set-selections
+  echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+  echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+}
+
+function install-mongosh {
+  : "___alias___ install-mongo-db-shell"
+  install-mongo-db-shell
+}
+
+function install-mongo-db-shell {
+  : "Install Mongo DB Shell"
+
+  local _version=2.0.2
+
+  _echo "Installing Mongo DB Shell Version ${_version}"
+
+  local _filename="mongodb-mongosh_${_version}_amd64.deb"
+
+  curl -fLO \
+    https://downloads.mongodb.com/compass/${_filename}
+
+  sudo dpkg -i "${_filename}"
+  rm -rf "${_filename}"
+}
+
+function install-mongo-db-atlas-cli {
+  : "Install Mongo DB Atlas CLI"
+
+  local _version=1.13.0
+
+  _echo "Installing Mongo DB Atlas CLI version ${_version}"
+
+  local _filename="mongodb-atlas-cli_${_version}_linux_x86_64.deb"
+
+  curl -fLO \
+    https://fastdl.mongodb.org/mongocli/${_filename}
+
+  sudo dpkg -i "${_filename}"
+  rm -rf "${_filename}"
+
+  if command -v atlas &>/dev/null; then
+    atlas completion bash |
+      sudo tee /etc/bash_completion.d/mongo-db-atlas
+  fi
+}
+
+function install-mongo-db-compass {
+  : "Install Mongo DB Atlas CLI"
+
+  local _version=1.40.4
+
+  _echo "Installing Mongo DB Compass version ${_version}"
+
+  local _filename="mongodb-compass_${_version}_amd64.deb"
+
+  curl -fLO \
+    https://downloads.mongodb.com/compass/${_filename}
+
+  sudo dpkg -i "${_filename}"
+  rm -rf "${_filename}"
+}
+
 function help {
   : "List available tasks."
 
