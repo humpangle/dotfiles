@@ -449,6 +449,8 @@ _ggc() {
 
 alias ggc='_ggc'
 
+export TP="${TMUX_PANE}"
+
 # TMUX split panes and windows
 splitp() {
   if [[ "$1" == '-h' ]]; then
