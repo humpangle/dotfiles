@@ -17,4 +17,5 @@ Vimg.slime_target = "tmux"
 Vimg.slime_default_config = {
   socket_name = "default",
   target_pane = "dot:",
+  jobid = ""
 }
