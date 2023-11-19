@@ -19,3 +19,9 @@ Vimg.slime_default_config = {
   target_pane = "dot:",
   jobid = ""
 }
+
+-- Some REPLs can interfere with your text pasting. The
+-- [bracketed-paste](https://cirw.in/blog/bracketed-paste) mode exists to allow
+-- raw pasting.
+
+Vimg.slime_bracketed_paste = 1
