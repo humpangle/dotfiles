@@ -25,3 +25,5 @@ Vimg.slime_default_config = {
 -- raw pasting.
 
 Vimg.slime_bracketed_paste = 1
+
+vim.keymap.set('n', ',sl', ":let g:slime_target=''<left>")
