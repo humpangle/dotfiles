@@ -793,9 +793,9 @@ rel_asdf_elixir-build-current-f() {
 
 rel_asdf_elixir-install-f() {
   if ! [ "$(check-elixir_ls-vsn "${@}")" ]; then
-    echo "The elixir version is required."
+    echo "The elixir asdf version is required."
     echo "Usages:"
-    echo "  rel_asdf_elixir-install-f elixir-ls-version [--hash git-hash]"
+    echo "  rel_asdf_elixir-install-f elixir-asdf-version [--hash git-hash]"
     return
   fi
 
