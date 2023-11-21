@@ -727,10 +727,11 @@ fi
 
 ELIXIR_LS_BASE="$HOME/.elixir-ls"
 ELIXIR_LS_SCRIPTS_BASE="${ELIXIR_LS_BASE}/ebnis-scripts"
-# Release v0.14.6
-# ELIXIR_LS_STABLE_HASH='15c0052'
-# Release v0.15.1 hash 9427f7f
-# v0.17.3 hash d2eb6f3
+# Aug 14, 2022 v0.11.0 fe11910
+# Nov 8, 2022 v0.12.0 77670d5
+# May 6, 2023 v0.14.6 15c0052
+# Jun 29, 2023 v0.15.1 9427f7f
+# Oct 24, 2023 v0.17.3 d2eb6f3
 ELIXIR_LS_STABLE_HASH='d2eb6f3'
 
 get-hash() {
