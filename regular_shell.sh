@@ -807,8 +807,6 @@ rel_asdf_elixir-install-f() {
   local install_dir
   install_dir="$(elixir_ls-install-dir "${@}")"
 
-  echo "$install_dir"
-
   if ! [[ -d "$install_dir" ]]; then
     git clone https://github.com/elixir-lsp/elixir-ls.git "$install_dir"
   fi
