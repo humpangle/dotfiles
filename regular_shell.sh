@@ -826,6 +826,17 @@ rel_asdf_elixir-install-f() {
 
     rm -rf _build deps
 
+    # There is this situation where `mix.lock` file with the `jason_vendored`
+    # dependency is wrongly configured. Let's fix it.
+    # ***NOTE*** The `e23c65b98411a3066ca73534b4aed1d23bcf0356` hash is gotten
+    # from:
+    #  git https://github.com/elixir-lsp/jason.git
+    #  git checkout vendored
+    #  Copy the hash from where the app name in mix.exs is jason_vendored
+    sed -i -E \
+      "s/(.*jason_vendored.+jason\.git\", +)\"([^,]+)\"(.*)/\1\"e23c65b98411a3066ca73534b4aed1d23bcf0356\"\3/" \
+      mix.lock
+
     mix deps.get
     mix compile
 
