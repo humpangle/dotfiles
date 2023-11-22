@@ -1082,42 +1082,147 @@ eof
 }
 
 function install-nodejs {
-  : "Install nodejs"
+  : "___help___ ___nodejs-help"
+
+  local version
+  local _dev
+  local _set_global=1
+  local _set_local
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help,dev,local,version: \
+      --options=h,d,l,a: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ___nodejs-help
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+      --help | -h)
+        ___nodejs-help
+        return
+        ;;
+
+      --version | -a)
+        version="${2}"
+        _set_global=
+        shift 2
+        ;;
+
+      --local | -l)
+        _set_local=1
+        shift 1
+        ;;
+
+      --dev | -d)
+        _dev=1
+        shift 1
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        ___nodejs-help
+        exit 1
+        ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  if [[ -z "${version}" ]]; then
+    version=18.17.1
+    _set_global=1
+    _set_local=
+  fi
 
   _may_be_install_asdf "$@"
 
-  _echo "INSTALLING NODEJS"
+  _echo "INSTALLING NODEJS version ${version}"
 
-  local version=18.17.1
-
-  if ! _is-dev "$@"; then
+  if [[ -n "${_dev}" ]]; then
     _install-deps "${NODEJS_DEPS[*]}"
   fi
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
-  "$(_asdf-bin-path)" plugin add nodejs
+  "$(_asdf-bin-path)" plugin add nodejs || true
 
-  "$(_asdf-bin-path)" install nodejs $version
-  "$(_asdf-bin-path)" global nodejs $version
+  "$(_asdf-bin-path)" install nodejs "${version}"
 
-  "$(_asdf-bin-path)" reshim nodejs
+  if [[ -n "${_set_global}" ]]; then
+    "$(_asdf-bin-path)" global nodejs "${version}"
+  fi
 
-  if _is-dev "$@"; then
+  if [[ -z "${_set_local}" ]]; then
+    _tool-versions-backup --doc="nodejs"
+  fi
+
+  "$(_asdf-bin-path)" local nodejs "${version}"
+
+  if [[ -n "${_dev}" ]]; then
     install-nodejs-dev-pkgs
   else
     npm install --global \
       npm \
       yarn
   fi
+
+  "$(_asdf-bin-path)" reshim nodejs
+
+  if [[ -z "${_set_local}" ]]; then
+    _tool-versions-backup --remove --tools=nodejs
+  fi
+}
+
+function ___nodejs-help {
+  read -r -d '' var <<'eof'
+Install nodejs with ASDF. Usage:
+  ./run.sh install-nodejs [OPTIONS]
+
+Options:
+  --help/-h.                   Print help message and exit
+  --local/-l.                  Whether to set the nodejs version we are
+                               installing as the version for the folder from
+                               where we are installing. If you do not specify
+                               --version/-a option, this option will be ignored.
+  --dev/-d.                    Set specified nodejs and erlang versions as
+                               global versions
+  --version/-a nodejs_version. Install specific nodejs version
+
+Examples:
+  ./run.sh install-nodejs --help
+  ./run.sh install-nodejs # install default nodejs version
+  ./run.sh install-nodejs --version=17.9.1
+  ./run.sh install-nodejs -a 17.9.1 --local
+eof
+
+  echo "${var}"
 }
 
 function install-nodejs-dev-pkgs {
   # https://github.com/websockets/wscat - curl for websockets
 
   npm install --global \
-    npm \
     yarn \
     eslint_d \
     goops \
