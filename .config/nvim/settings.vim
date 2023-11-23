@@ -318,6 +318,7 @@ nnoremap ,vn :vnew<cr>
 nnoremap ,sn :new<cr>
 nnoremap ,tt :tab split<bar>:term<cr><C-\><C-n><bar>:echo &channel<cr>
 nnoremap ,tv :vertical split<bar>:term<cr><C-\><C-n><bar>:echo &channel<cr>
+nnoremap ,ts :split<bar>:term<cr><C-\><C-n><bar>:echo &channel<cr>
 
 " Reorder tabs
 noremap <A-Left>  :-tabmove<cr>
