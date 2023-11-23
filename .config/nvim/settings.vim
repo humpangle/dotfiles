@@ -219,7 +219,7 @@ augroup terminal_settings
 
   " start terminal in insert mode
   " autocmd BufWinEnter,WinEnter term://* startinsert
-  autocmd TermOpen * startinsert
+  " autocmd TermOpen * startinsert
   " autocmd BufLeave term://* stopinsert
 
   " Ignore various filetypes as those will close terminal automatically
@@ -316,9 +316,9 @@ nnoremap ,tc :tabclose<CR>
 nnoremap ,td :execute 'bwipeout! '.join(tabpagebuflist())<cr>
 nnoremap ,vn :vnew<cr>
 nnoremap ,sn :new<cr>
-nnoremap ,tt :tab split<bar>:term<cr><C-\><C-n><bar>:echo &channel<cr>
-nnoremap ,tv :vertical split<bar>:term<cr><C-\><C-n><bar>:echo &channel<cr>
-nnoremap ,ts :split<bar>:term<cr><C-\><C-n><bar>:echo &channel<cr>
+nnoremap ,tt :tab split<bar>:term<cr>:echo &channel<cr>
+nnoremap ,tv :vertical split<bar>:term<cr>:echo &channel<cr>
+nnoremap ,ts :split<bar>:term<cr>:echo &channel<cr>
 
 " Reorder tabs
 noremap <A-Left>  :-tabmove<cr>
