@@ -1,7 +1,7 @@
 local Vimg = vim.g
 
-Vimg.slime_target = "tmux"
--- let g:slime_target = "neovim"
+Vimg.slime_target = "neovim"
+-- let g:slime_target = "tmux"
 
 -- Key to show slime config for the first time - <C-c><C-c>
 -- Key to update slime config after starting - <C-c>v
