@@ -671,7 +671,7 @@ nnoremap <leader>bA :call DeleteAllBuffers('a')<cr>
 nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 " Delete all terminal buffers
 nnoremap <leader>bT :call DeleteAllBuffers('t')<cr>
-# Echo current date into buffer
+" Echo current date into buffer
 nnoremap ,tm :r!date +"\%F \%T"<cr>
 
 " https://github.com/clarke/vim-renumber
