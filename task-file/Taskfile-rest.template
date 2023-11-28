@@ -42,7 +42,8 @@ eof
 function _c {
   local __headers="${1}"
   local _url="${2}"
-  local _c_prefix='=COMMAND============================================='
+  local _c_prefix='= COMMAND ============================================='
+  local _r_prefix='= RESULT ============================================='
   local _out_file
   _out_file="$(_o)"
   local _cmd="curl \\
@@ -50,10 +51,7 @@ function _c {
     -X POST ${_url} ${3}"
   echo -e "\n${_c_prefix}\n$_cmd\n${_c_prefix}\n"
   eval "$_cmd"
-  echo
-  echo
-  cat "${_out_file}"
-  echo
+  echo -e "\n${_r_prefix}\n\n$(cat "${_out_file}")\n\n${_r_prefix}"
 }
 
 ### sample data
