@@ -1767,6 +1767,36 @@ function install-mongo-db-compass {
   rm -rf "${_filename}"
 }
 
+function install-aws-cli {
+  : "___help___ ___install-aws-cli-help"
+
+  curl \
+    -o "awscliv2.zip" \
+    "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+
+  unzip awscliv2.zip
+  sudo ./aws/install
+
+  local _completer_path
+  _completer_path="$(which aws_completer)"
+
+  if [[ -n "${_completer_path}" ]]; then
+    complete -C "${_completer_path}" aws
+  fi
+}
+
+function ___install-aws-cli-help {
+  read -r -d '' var <<'eof'
+Install aws cli including configuring auto completion for /bin/bash. Usage:
+  ./run.sh install-aws-cli
+
+Examples:
+  ./run.sh install-aws-cli
+eof
+
+  echo -e "${var}"
+}
+
 function help {
   : "List available tasks."
 
