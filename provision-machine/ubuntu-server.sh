@@ -1615,17 +1615,153 @@ function setup-dev {
 }
 
 function install-terraform-lsp {
-  : "Install terraform"
+  : "___help___ ___install-terraform-lsp-help"
+
+  local _flavor
+  local _print_version
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=version,help \
+      --options=v,h \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+      --help | -h)
+        ___install-terraform-lsp-help
+        return
+        ;;
+
+      --version | -v)
+        _print_version=1
+        shift
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        exit 1
+        ;;
+    esac
+  done
+
+  # handle non-option arguments
+  if [[ $# -ne 1 ]]; then
+    echo "$0: Flavor is required."
+    return
+  fi
+
+  _flavor="$1"
+
+  if [[ $# -ne 1 ]]; then
+    echo "$0: Flavor is required."
+    return
+  fi
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  local _ls_version=0.32.3
+
+  # This one works with COC-nvim
+  local _lsp_version=0.0.12 # 2021-05-13
+
+  if [[ "${_flavor}" == 'ls' ]]; then
+    version="${_ls_version}"
+  else
+    version="${_lsp_version}"
+  fi
+
+  if [[ -n "${_print_version}" ]]; then
+    echo "Version of terraform ${_flavor}: ${version}"
+    return
+  fi
 
   cd ~/projects/0
 
-  local version=0.0.12
+  local _binary="terraform-${_flavor}"
 
-  curl -fLO "https://github.com/juliosueiras/terraform-lsp/releases/download/v${version}/terraform-lsp_${version}_linux_amd64.tar.gz"
-  tar xzf "terraform-lsp_${version}_linux_amd64.tar.gz"
-  sudo mv terraform-lsp /usr/local/bin/
+  if [[ "${_flavor}" == 'ls' ]]; then
+    sudo apt-get install -y \
+      unzip
+
+    local _output="${_binary}_${version}_linux_amd64.zip"
+
+    curl -fLO \
+      "https://releases.hashicorp.com/${_binary}/0.32.3/${_output}"
+
+    unzip "${_output}"
+    chmod 755 "${_binary}"
+    sudo mv "${_binary}" /usr/local/bin/
+  else
+    local _output="${_binary}_${version}_linux_amd64.tar.gz"
+
+    curl -fLO \
+      "https://github.com/juliosueiras/${_binary}/releases/download/v${version}/${_output}"
+
+    tar xzf "${_output}"
+    chmod 755 "${_binary}"
+    sudo mv "${_binary}" /usr/local/bin/
+  fi
 
   cd - >/dev/null
+
+  # Usage with neovim:
+  # https://github.com/hashicorp/terraform-ls/blob/main/docs/USAGE.md#vim--neovim
+  # {
+  #   "languageserver": {
+  #     "terraform": {
+  #       "command": "terraform-ls",
+  #       "args": ["serve"],
+  #       "filetypes": ["terraform", "tf"],
+  #       "initializationOptions": {},
+  #       "settings": {}
+  #     }
+  #   }
+  # }
+}
+
+function ___install-terraform-lsp-help {
+  read -r -d '' var <<'eof'
+Install terraform language server protocol binary.
+There are two flavors of the LSP:
+    terraform-ls: the official binary.
+    terraform-lsp: the older project.
+For this reason, you must specify the flavor you wish to install.
+
+Usage:
+  ./run.sh install-terraform-lsp flavor [OPTIONS]
+
+Options:
+  --version/-v. Print version information and exit.
+  --help/-h.    Print this help information and exit.
+  --flavor/-f.  The flavor you wish to install. The possible values are ls|lsp
+
+Examples:
+  ./run.sh install-terraform-lsp --help
+  ./run.sh install-terraform-lsp --version
+  ./run.sh install-terraform-lsp lsp
+eof
+
+  echo -e "${var}"
 }
 
 function install-chrome {
