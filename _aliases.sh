@@ -264,3 +264,53 @@ if command -v mongodb-compass &>/dev/null; then
 
   export -f mongoc
 fi
+
+##################### mysql
+
+_mysql-dir() {
+  local _data_dir="${MYSQL_DATA_DIR}"
+
+  if [[ -n "${_data_dir}" ]]; then
+    echo -n "${_data_dir}"
+    return
+  fi
+
+  _data_dir="$(asdf current mysql | awk '{print $2}')"
+
+  printf '%s' "$HOME/mysql_data_${_data_dir//./_}"
+}
+
+mysql-setupf() {
+  local _data_dir
+
+  _data_dir="$(_mysql-dir)"
+
+  mkdir -p "${_data_dir}"
+  mysqld --initialize-insecure --datadir="${_data_dir}"
+  mysql_ssl_rsa_setup --datadir="${_data_dir}"
+}
+
+alias mysql-setup='mysql-setupf'
+alias setup-mysql='mysql-setupf'
+
+mysql-startf() {
+  local _data_dir
+
+  _data_dir="$(_mysql-dir)"
+
+  if [[ ! -e "${_data_dir}" ]]; then
+    printf "\n\nDirectory data of the mysql version, '%s', does not exist.\n\n" "${_data_dir}"
+    return
+  fi
+
+  mysqld_safe --datadir="${_data_dir}" &
+  disown
+}
+
+alias mysql-start='mysql-startf'
+alias mysqls='mysql-startf'
+alias start-mysql='mysql-startf'
+alias smysql='mysql-startf'
+# -----------------------------------------------------------------------------
+# END MYSQL
+# -----------------------------------------------------------------------------
