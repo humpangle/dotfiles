@@ -236,7 +236,8 @@ _do-cd() {
 alias c='_do-cd'
 alias ..='cd ..'
 
-alias C="clear && printf '\e[3J'"
+# alias C="clear && printf '\e[3J'"
+
 # debian package `lrzsz`
 alias rb='sudo reboot'
 alias scouser='sudo chown -R $USER:$USER'
