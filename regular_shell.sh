@@ -1100,35 +1100,106 @@ function _cert-etc {
 alias cert-etc='_cert-etc'
 
 function archive-projects-f {
+  local _extract_path
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=extract: \
+      --options=x: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    return
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+      --extract | -x)
+        _extract_path="$2"
+        shift 2
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        exit 1
+        ;;
+    esac
+  done
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  # Remove trailing '/'
+  local _output_dir="${ARCHIVE_PROJECT_OUTPUT_DIR%/}"
+
   if [ -z "${ARCHIVE_PROJECT_OUTPUT_DIR}" ]; then
     echo "You must provide a value for the 'ARCHIVE_PROJECT_OUTPUT_DIR' environment variable"
     return
   fi
 
-  # Remove trailing '/'
-  local _output_dir="${ARCHIVE_PROJECT_OUTPUT_DIR%/}"
   local _absolute_filename="${_output_dir}/proj-archive.tar.gz"
 
-  if [ -z "$1" ]; then
-    (
-      cd ~ || exit 1
+  if [[ -n "${_extract_path}" ]]; then
+    local _prefix='Extraction location'
 
-      tar -czvf "${_absolute_filename}" \
-        --exclude "node_modules" \
-        --exclude "_build" \
-        --exclude "deps" \
-        --exclude "vendor" \
-        --exclude "docker/data" \
-        --exclude ".elixir_ls" \
-        projects/
+    # Extraction location must be an absolute path
+    if [[ ! "${_extract_path}" == /* ]]; then
+      echo "${_prefix} '${_extract_path}' is not an absolute path."
+
+      return
+    fi
+
+    if echo "${_extract_path}" | grep -q "${_output_dir}"; then
+      echo "${_prefix} '${_extract_path}' must not contain '${_output_dir}'."
+
+      return
+    fi
+
+    (
+      if ! cd "${_extract_path}"; then
+        echo "'${_extract_path}' can not be read. Exiting."
+        return
+      fi
+
+      tar -xzvf "${_absolute_filename}"
     )
-  else
-    tar -xzvf "${_absolute_filename}"
+
+    return
   fi
+
+  (
+    if ! cd "${HOME}"; then
+      echo "'${HOME}' can not be read. Exiting."
+      return
+    fi
+
+    tar -czvf "${_absolute_filename}" \
+      --exclude "**/node_modules/**" \
+      --exclude "**/_build/**" \
+      --exclude "**/deps/**" \
+      --exclude "**/vendor/**" \
+      --exclude "**/docker/data/**" \
+      --exclude "**/.elixir_ls/**" \
+      --exclude "**/.terraform/providers/**" \
+      --exclude "**/*cache/**" \
+      projects/
+  )
 }
 
 alias archive-projects='archive-projects-f'
-alias unarchive-projects='archive-projects-f --unarchive'
 
 # -----------------------------------------------------------------------------
 # INTELLIJ IDEA IDE
