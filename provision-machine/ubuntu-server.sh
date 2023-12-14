@@ -740,10 +740,7 @@ function install-bins {
   # shellcheck source=/dev/null
   source "$HOME/.bashrc"
 
-  curl -fLo "$HOME/complete_alias.sh" \
-    https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
-
-  echo ". ${HOME}/complete_alias.sh" >>"${HOME}/.bash_completion"
+  install-complete-alias
 
   mkdir -p ~/.ssh
 }
@@ -1507,7 +1504,8 @@ function setup-dev {
 
   _update-and-upgrade-os-packages dev
 
-  install-bins
+  mkdir -p ~/.ssh
+  install-complete-alias
 
   install-tmux dev
   install-vifm dev
@@ -1607,6 +1605,13 @@ function setup-dev {
   fi
 
   echo -e "\n\n\n"
+}
+
+function install-complete-alias {
+  curl -fLo "$HOME/complete_alias.sh" \
+    https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
+
+  echo ". ${HOME}/complete_alias.sh" >>"${HOME}/.bash_completion"
 }
 
 function install-terraform-lsp {
