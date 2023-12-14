@@ -793,7 +793,7 @@ function install-git {
 function install-asdf {
   : "Install asdf"
 
-  local version=v0.10.2
+  local version=v0.13.1
 
   _echo "INSTALLING ASDF"
 
@@ -802,12 +802,6 @@ function install-asdf {
   fi
 
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch $version
-
-  # shellcheck disable=SC2016
-  if [[ ! -e "$BASH_APPEND_PATH" ]] && [[ ! "$(grep -q '. $HOME/.asdf/asdf.sh' "$HOME/.bashrc")" ]]; then
-    echo ". \$HOME/.asdf/asdf.sh" >>"$HOME/.bashrc"
-    echo ". \$HOME/.asdf/completions/asdf.bash" >>"$HOME/.bashrc"
-  fi
 }
 
 function install-erlang {
