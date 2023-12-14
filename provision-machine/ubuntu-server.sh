@@ -1566,7 +1566,7 @@ function setup-dev {
   echo "export INTELEPHENSE_LICENCE=''" >>~/.bashrc
 
   install-golang dev || true
-  install-nodejs dev || true
+  install-nodejs --dev || true
   install-python dev || true
 
   # Installing lua will also install rust because of stylua
