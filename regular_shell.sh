@@ -263,6 +263,7 @@ Examples:
   cpr -h
   cpr /some/source/a /some/dirname --out some_name
   cpr /some/source/a/ /some/dirname -o s
+  cpr /some/source/a/ . -o s          # Will copy to ./a
 
 Options:
   --help/-h
