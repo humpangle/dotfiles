@@ -10,3 +10,9 @@ guiApplications=true
 # <size> must be number followed by unit e.g. 6GB
 
 ### Then start  powershell in admin and enter: `Restart-Service LxssManager`
+networkingMode=mirrored # | nat
+dnsTunneling=true
+firewall=true
+autoProxy=true
+[experimental]
+autoMemoryReclaim=gradual # dropcache | disabled

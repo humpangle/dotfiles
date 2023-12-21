@@ -959,10 +959,6 @@ function _edit-windows-terminal-settings {
 alias edit_wt='nvim _edit-windows-terminal-settings'
 alias wt='_edit-windows-terminal-settings'
 
-function _set-display {
-  echo "$(ip route | awk '/default/ {print $3}'):0.0"
-}
-
 if [[ "$(uname -r)" == *WSL2 ]]; then
   function _open-wsl-explorer {
     if [ -e "$1" ]; then
@@ -976,11 +972,6 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   }
 
   export HAS_WSL2=1
-  # following needed so that cypress browser testing can work in WSL2
-  # WSL_HOST_IP environment var no longer works in microsoft version of WLS If
-  # using WSLg, you must not set DISPLAY env var and in
-  # `/c/Users/username/.wslconfig`, set `guiApplications` to `true`
-  export DISPLAY="$(ip route | awk '/default/ {print $3}'):0.0"
 
   # Without the next line, linux executables randomly fail in TMUX in WSL
   # (**NOT ANY MORE**)
@@ -998,7 +989,6 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   alias ubuntu22="$WSL_EXE --distribution Ubuntu-22.04"
   alias nameserver="sudo $SETUP_DNS_RESOLVER_SCRIPT_NAME"
   alias _dns="sudo $SETUP_DNS_RESOLVER_SCRIPT_NAME"
-  alias set-display="export DISPLAY=$(_set-display)"
 
   # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
   # up memory, this command will free your memory after about 20-30 seconds.
