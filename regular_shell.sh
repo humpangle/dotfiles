@@ -1012,15 +1012,6 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   alias rsc='rst'
   alias uc='rst'
   alias ut='rst'
-
-  if [[ -z "$USE_WSL_INTERNET_RESOLVER" ]]; then
-    if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
-      if [[ -x "$SETUP_DNS_RESOLVER_SCRIPT_NAME" ]]; then
-        sudo "$SETUP_DNS_RESOLVER_SCRIPT_NAME" --cloudflare
-      fi
-    fi
-  fi
-
 fi
 
 # Start postgres automatically when logging in.
