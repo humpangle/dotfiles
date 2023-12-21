@@ -275,6 +275,11 @@ Options:
 }
 
 function _cpr {
+  if [[ -z "${*}" ]]; then
+    _cpr-help
+    return
+  fi
+
   local _out
   local _help
 
