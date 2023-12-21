@@ -986,7 +986,7 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   # (**NOT ANY MORE**)
   # export PATH="$PATH:/c/WINDOWS/system32"
 
-  NAME_SERVER_SCRIPT="$HOME/dotfiles/etc/wsl-nameserver.sh"
+  SETUP_DNS_RESOLVER_SCRIPT_NAME="$HOME/dotfiles/etc/wsl-nameserver.sh"
 
   export WSL_EXE='/c/WINDOWS/system32/wsl.exe'
 
@@ -996,7 +996,8 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   alias ubuntu18="$WSL_EXE --distribution Ubuntu"
   alias ubuntu20="$WSL_EXE --distribution Ubuntu-20.04"
   alias ubuntu22="$WSL_EXE --distribution Ubuntu-22.04"
-  alias nameserver="sudo $NAME_SERVER_SCRIPT"
+  alias nameserver="sudo $SETUP_DNS_RESOLVER_SCRIPT_NAME"
+  alias _dns="sudo $SETUP_DNS_RESOLVER_SCRIPT_NAME"
   alias set-display="export DISPLAY=$(_set-display)"
 
   # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
@@ -1014,8 +1015,8 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
 
   if [[ -z "$USE_WSL_INTERNET_RESOLVER" ]]; then
     if { ! [[ -e /etc/resolv.conf ]]; } || { ! grep -q 1.1.1.1 /etc/resolv.conf; }; then
-      if [[ -x "$NAME_SERVER_SCRIPT" ]]; then
-        sudo "$NAME_SERVER_SCRIPT"
+      if [[ -x "$SETUP_DNS_RESOLVER_SCRIPT_NAME" ]]; then
+        sudo "$SETUP_DNS_RESOLVER_SCRIPT_NAME" --cloudflare
       fi
     fi
   fi
