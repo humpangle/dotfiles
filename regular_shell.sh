@@ -986,7 +986,7 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   # (**NOT ANY MORE**)
   # export PATH="$PATH:/c/WINDOWS/system32"
 
-  SETUP_DNS_RESOLVER_SCRIPT_NAME="$HOME/dotfiles/etc/wsl-nameserver.sh"
+  SETUP_DNS_RESOLVER_SCRIPT_NAME="$HOME/dotfiles/etc/wsl-dns-resolver.sh"
 
   export WSL_EXE='/c/WINDOWS/system32/wsl.exe'
 
