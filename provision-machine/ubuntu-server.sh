@@ -1767,14 +1767,11 @@ eof
 function install-chrome {
   _echo "Installing google chrome"
 
-  curl https://dl-ssl.google.com/linux/linux_signing_key.pub |
-    sudo apt-key add -
+  curl --remote-name \
+    https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-  sudo add-apt-repository -y \
-    "deb http://dl.google.com/linux/chrome/deb/ stable main"
-
-  sudo apt-get update
-  sudo apt-get install google-chrome-stable -y
+  sudo dpkg -i google-chrome-stable_current_amd64.deb
+  sudo apt -y -f install
 }
 
 function install-sqlite {
