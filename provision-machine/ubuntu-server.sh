@@ -305,7 +305,7 @@ function _tool-versions-backup {
     _doc="${_tools}"
   fi
 
-  if [[ -n "${remove}" ]]; then
+  if [[ -n "${_remove}" ]]; then
     if [[ -n "${_tools}" ]]; then
       IFS=, read -r -a _tools_array <<<"${_tools}"
 
@@ -321,13 +321,15 @@ function _tool-versions-backup {
       _echo "Rename local .tool-versions-bak to .tool-versions"
       mv ./.tool-versions-bak ./.tool-versions
     fi
-  else
-    _echo "Creating temporary local .tool-versions for ${_doc}"
 
-    if [[ -e ./.tool-versions ]]; then
-      _echo "Rename local .tool-versions to .tool-versions-bak"
-      mv ./.tool-versions ./.tool-versions-bak
-    fi
+    return
+  fi
+
+  _echo "Creating temporary local .tool-versions for ${_doc}"
+
+  if [[ -e ./.tool-versions ]]; then
+    _echo "Rename local .tool-versions to .tool-versions-bak"
+    mv ./.tool-versions ./.tool-versions-bak
   fi
 }
 
