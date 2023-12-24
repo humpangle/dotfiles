@@ -262,15 +262,23 @@ Usage:
 Examples:
   cpr -h
   cpr /some/source/a /some/dirname --out some_name
+
+  # WIll copy to /some/dirname/a
   cpr /some/source/a/ /some/dirname -o s
-  cpr /some/source/a/ . -o s          # Will copy to ./a
+
+  # WIll copy to /some/dirname - /some/dirname must not exist
+  cpr /some/source/a/ /some/dirname -o d
+
+  # Will copy to ./a
+  cpr /some/source/a/ . -o s
 
 Options:
   --help/-h
       Print usage information and exit.
   --out/-o
-      The output folder name. Use character 's' to make same as source'
-      basename
+      The output folder name.
+      Use character 's' to make destination basename same as source basename
+      Use character 'd' to write to destination basename
 "
 }
 
@@ -353,11 +361,21 @@ function _cpr {
   if [[ "${_out}" == 's' ]]; then
     local _source_base="$(basename "${_source}")"
     _destination="${_destination_prefix}/${_source_base}"
-    echo "Destination => ${_destination}"
+  elif [[ "${_out}" == 'd' ]]; then
+
+    # The destination must not already exist
+    if [[ -e "${_destination_prefix}" ]]; then
+      echo "Destination '${_destination_prefix}' must not exist with '-o d' "
+      echo "argument. Exiting!"
+      return
+    fi
+
+    _destination="${_destination_prefix}"
   else
     _destination="${_destination_prefix}/${_out}"
   fi
 
+  echo "Destination => ${_destination}"
   mkdir -p "${_destination}"
 
   cp -rT "${_source}" "${_destination}"
