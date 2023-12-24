@@ -30,18 +30,17 @@ else
   endif
 endif
 
+call plug#begin(s:plugins_path)
+" Surround text with quotes, parenthesis, brackets, and more.
+Plug 'tpope/vim-surround'
+Plug 'nelstrom/vim-visual-star-search'
+call plug#end()
+
 augroup MyMiscGroup
   " highlight yank
   " :h lua-highlight
   au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
 augroup END
-
-call plug#begin(s:plugins_path)
-" Surround text with quotes, parenthesis, brackets, and more.
-Plug 'tpope/vim-surround'
-Plug 'nelstrom/vim-visual-star-search'
-
-call plug#end()
 
 nnoremap <Space> <Nop>
 let mapleader=" "
