@@ -295,7 +295,7 @@ function _cpr {
       --name "$0" \
       -- "$@"
   )"; then
-    exit 1
+    return
   fi
 
   # Provides proper quoting
