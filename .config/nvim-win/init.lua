@@ -1,6 +1,11 @@
 vim = vim or {}
 
 local plugins_path
+local vscode = require('vscode-neovim')
+local vcall = vscode.call
+local keyset = vim.keymap.set
+local noReMapSilentOpts = { noremap = true, silent = true }
+local noReMapOpts = { noremap = true }
 
 if vim.fn.has('win32') == 1 then
   vim.cmd('language en_US')
@@ -20,7 +25,10 @@ else
 
   vim.opt.packpath = vim.opt.runtimepath:get()
 
-  vim.fn.setenv('MYVIMRC', vim.fn.expand('$HOME/.config/nvim-win/init.lua'))
+  vim.fn.setenv(
+    'MYVIMRC',
+    vim.fn.expand('$HOME/.config/nvim-win/init.lua')
+  )
 
   plugins_path = vim.fn.expand('$HOME/.local/share/nvim-win/site/autoload')
   local plug_install_path = plugins_path .. '/plug.vim'
@@ -49,7 +57,7 @@ vim.cmd([[
   augroup END
 ]])
 
-vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', {})
+keyset('n', '<Space>', '<Nop>', {})
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
@@ -94,72 +102,222 @@ vim.o.undodir = vim.fn.expand('$HOME/.vim/undodir/')
 vim.o.paste = true
 vim.o.nopaste = false
 
-vim.api.nvim_set_keymap(
-  'n', '<leader>fc', '<Cmd>call VSCodeNotify("editor.action.formatDocument")<CR>',
-  { noremap = true, silent = true }
+keyset(
+  'n', '<leader>fc', function()
+    vcall("editor.action.formatDocument")
+  end,
+  noReMapSilentOpts
 )
 
 -- format paragraphs/lines to 80 chars
-vim.api.nvim_set_keymap(
-  'n', '<Leader>pp', 'gqap', { noremap = true, silent = true }
+keyset(
+  'n', '<Leader>pp', 'gqap', noReMapSilentOpts
 )
 
-vim.api.nvim_set_keymap(
-  'x', '<Leader>pp', 'gqa', { noremap = true, silent = true }
+keyset(
+  'x', '<Leader>pp', 'gqa', noReMapSilentOpts
 )
 
 -- ------------------------ Save file
-vim.api.nvim_set_keymap(
-  'n', '<Leader>ww', ':Write<CR>', { noremap = true, silent = true }
+keyset(
+  'n', '<Leader>ww', ':Write<CR>', noReMapSilentOpts
 )
 
-vim.api.nvim_set_keymap(
-  'n', '<Leader>wa', ':Wall<CR>', { noremap = true, silent = true }
+keyset(
+  'n', '<Leader>wa', ':Wall<CR>', noReMapSilentOpts
 )
 
-vim.api.nvim_set_keymap(
-  'n', '<Leader>wq', ':Wq<CR>', { noremap = true, silent = true }
+keyset(
+  'n', '<Leader>wq', ':Wq<CR>', noReMapSilentOpts
 )
 -- ---------------------- END Save file
 
 -- ---------------------- Quit vim
-vim.api.nvim_set_keymap(
-  'n', '<leader>qq', '<Cmd>call VSCodeNotify("workbench.action.closeActiveEditor")<CR>',
-  { noremap = true, silent = true }
+keyset(
+  'n',
+  '<leader>qq',
+  function()
+    vcall("workbench.action.closeActiveEditor")
+  end,
+  noReMapSilentOpts
 )
 
-vim.api.nvim_set_keymap(
-  'n', '<leader>qA', '<Cmd>call VSCodeNotify("workbench.action.closeWindow")<CR>',
-  { noremap = true, silent = true }
+keyset(
+  'n',
+  '<leader>bd',
+  function()
+    vcall("workbench.action.closeActiveEditor")
+  end,
+  noReMapSilentOpts
+)
+
+keyset(
+  'n',
+  '<leader>qA',
+  function()
+    vcall("workbench.action.closeWindow")
+  end,
+  noReMapSilentOpts
+)
+
+keyset(
+  'n',
+  '<leader>qg',
+  function()
+    vcall("workbench.action.closeEditorsInGroup")
+  end,
+  noReMapSilentOpts
+)
+
+keyset(
+  'n',
+  '<leader>qG',
+  function()
+    vcall("workbench.action.closeEditorsInOtherGroups")
+  end,
+  noReMapSilentOpts
 )
 -- ---------------------- END Quit vim
 
 -- ---------------------- better code indentations in visual mode.
-vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true, silent = true })
+keyset('x', '<', '<gv', noReMapSilentOpts)
+keyset('x', '>', '>gv', noReMapSilentOpts)
 -- ---------------------- END better code indentations in visual mode.
 
 -- ---------------------- Yank to system clipboard
-vim.api.nvim_set_keymap('n', '"+yy', '0"+yg_', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<Leader>Y', '"+y', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<Leader>x', '"+x', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>x', '"+x', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>P', '"+P', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<Leader>P', '"+P', { noremap = true, silent = true })
+keyset('n', '"+yy', '0"+yg_', noReMapSilentOpts)
+keyset('v', '<Leader>Y', '"+y', noReMapSilentOpts)
+keyset('v', '<Leader>x', '"+x', noReMapSilentOpts)
+keyset('n', '<Leader>x', '"+x', noReMapSilentOpts)
+keyset('n', '<Leader>P', '"+P', noReMapSilentOpts)
+keyset('v', '<Leader>P', '"+P', noReMapSilentOpts)
 -- ---------------------- END Yank to system clipboard
 
 -- ---------------------- Yank all
-vim.api.nvim_set_keymap('n', '<Leader>y+', ':%y<bar>:let @+=@"<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>YY', ':%y<bar>:let @+=@"<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>ya', ':%y<bar>:let @a=@"<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ',yy', 'vgny<bar>:let @+=@"<CR> <bar>"', { noremap = true, silent = true }) -- Yank highlighted
-vim.api.nvim_set_keymap('n', ',cc', 'vgny<bar>:let @a=@"<CR> <bar>"', { noremap = true, silent = true }) -- Yank highlighted
+keyset('n', '<Leader>y+', ':%y<bar>:let @+=@"<CR>', noReMapSilentOpts)
+keyset('n', '<Leader>YY', ':%y<bar>:let @+=@"<CR>', noReMapSilentOpts)
+keyset('n', '<Leader>ya', ':%y<bar>:let @a=@"<CR>', noReMapSilentOpts)
+-- Yank highlighted
+keyset('n', ',yy', 'vgny<bar>:let @+=@"<CR> <bar>"', noReMapSilentOpts)
+-- Yank highlighted
+keyset('n', ',cc', 'vgny<bar>:let @a=@"<CR> <bar>"', noReMapSilentOpts)
 -- ---------------------- END Yank all
 
--- Copy file path
-vim.api.nvim_set_keymap('n', ',yr', '<Cmd>call VSCodeNotify("copyRelativeFilePath")<CR>',
-  { noremap = true, silent = true })                                                                                 -- Yank relative file path
-vim.api.nvim_set_keymap('n', ',yf', '<Cmd>call VSCodeNotify("copyFilePath")<CR>', { noremap = true, silent = true }) -- Yank absolute file path
+-- ------------------------ Copy file path
+-- Yank relative file path
+keyset(
+  'n', ',yr', function()
+    vcall("copyRelativeFilePath")
+  end,
+  noReMapOpts
+)
+
+-- Yank absolute file path
+keyset(
+  'n', ',yf', function()
+    vcall("copyFilePath")
+  end,
+  noReMapOpts
+)
+
+-- Yank absolute directory
+keyset(
+  'n', ',yd', function()
+    local absolute_file_path = vcall("copyFilePath")
+    return absolute_file_path
+  end,
+  noReMapOpts
+)
+-- ------------------------ END Copy file path
 
 -- ---------------------- Dump vim register into a buffer in vertical split.
-vim.api.nvim_set_keymap('n', '<leader>re', ':reg<CR>', { noremap = true, silent = true })
+keyset(
+  'n',
+  '<leader>re',
+  ':reg<CR>',
+  noReMapSilentOpts
+)
+
+keyset(
+  'n',
+  ',o',
+  function()
+    vcall("editor.action.organizeImports")
+  end,
+  noReMapSilentOpts
+)
+
+-- Rename variable
+keyset(
+  'n',
+  '<leader>rn',
+  function()
+    vcall("editor.action.rename")
+  end,
+  noReMapSilentOpts
+)
+
+-- ------------------------ Go to problem
+keyset(
+  'n',
+  ']d',
+  function()
+    vcall("editor.action.marker.next")
+  end,
+  noReMapSilentOpts
+)
+
+keyset(
+  'n',
+  '[d',
+  function()
+    vcall("editor.action.marker.prev")
+  end,
+  noReMapSilentOpts
+)
+-- ------------------------ END Go to problem
+
+keyset(
+  'n',
+  'gr',
+  function()
+    vcall("editor.action.referenceSearch.trigger")
+  end,
+  noReMapSilentOpts
+)
+
+keyset(
+  'x',
+  'gr',
+  function()
+    vcall("editor.action.referenceSearch.trigger")
+  end,
+  noReMapSilentOpts
+)
+
+-- ------------------------ Folds
+keyset(
+  'n',
+  'zM',
+  function()
+    vcall("editor.foldAll")
+  end,
+  noReMapSilentOpts
+)
+
+keyset(
+  'n',
+  'zR',
+  function()
+    vcall("editor.unfoldAll")
+  end,
+  noReMapSilentOpts
+)
+-- ------------------------ END Folds
+
+keyset(
+  'n',
+  ',ec',
+  ":Edit " .. vim.fn.expand("$MYVIMRC") .. '<CR>',
+  noReMapSilentOpts
+)
