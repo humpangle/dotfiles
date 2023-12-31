@@ -151,3 +151,4 @@ ___logs/
 # cloudflare
 .cloudflare-tunnel-config*
 *dump.tar.*
+**/lazy-lock.json

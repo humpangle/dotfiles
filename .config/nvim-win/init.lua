@@ -1,6 +1,5 @@
 vim = vim or {}
 
-local plugins_path
 local vscode = require('vscode-neovim')
 local vcall = vscode.call
 local keyset = vim.keymap.set
@@ -10,56 +9,38 @@ local noReMapOpts = { noremap = true }
 if vim.fn.has('win32') == 1 then
   vim.cmd('language en_US')
   vim.cmd('set fileformat=unix')
-  vim.g.plugins_path = '~\\AppData\\Local\\nvim\\autoload'
 else
-  vim.cmd([[
-    set runtimepath-=~/.config/nvim
-    set runtimepath-=~/.config/nvim/after
-    set runtimepath-=~/.local/share/nvim/site
-    set runtimepath-=~/.local/share/nvim/site/after
-    set runtimepath+=~/.config/nvim-win/after
-    set runtimepath^=~/.config/nvim-win
-    set runtimepath+=~/.local/share/nvim-win/site/after
-    set runtimepath^=~/.local/share/nvim-win/site
-  ]])
-
-  vim.opt.packpath = vim.opt.runtimepath:get()
-
   vim.fn.setenv(
-    'MYVIMRC',
-    vim.fn.expand('$HOME/.config/nvim-win/init.lua')
+    "MYVIMRC",
+    vim.fn.expand("$HOME/.config/nvim-win/init.lua")
   )
-
-  plugins_path = vim.fn.expand('$HOME/.local/share/nvim-win/site/autoload')
-  local plug_install_path = plugins_path .. '/plug.vim'
-
-  plugins_path = plugins_path .. '/plug'
-
-  if vim.fn.filereadable(plug_install_path) == 0 then
-    vim.fn.system(
-      'curl -fLo ' ..
-      plug_install_path .. ' --create-dir https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    )
-
-    vim.cmd('autocmd VimEnter * PlugInstall | source ' .. vim.fn.expand('$MYVIMRC'))
-  end
 end
 
-local Plug = vim.fn['plug#']
-vim.fn["plug#begin"](plugins_path)
-Plug('tpope/vim-surround')
-Plug('nelstrom/vim-visual-star-search')
-vim.fn["plug#end"]()
+-- lazy.nvim requires that we set leader keys before requiring lazy
+keyset('n', '<Space>', '<Nop>', {})
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup("plugins")
 
 vim.cmd([[
   augroup MyMiscGroup
     au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
   augroup END
 ]])
-
-keyset('n', '<Space>', '<Nop>', {})
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
 
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
