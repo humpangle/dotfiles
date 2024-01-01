@@ -311,25 +311,25 @@ function _cpr {
 
   while true; do
     case "$1" in
-      --help | -h)
-        _cpr-help
-        return
-        ;;
+    --help | -h)
+      _cpr-help
+      return
+      ;;
 
-      --out | -o)
-        _out="$2"
-        shift 2
-        ;;
+    --out | -o)
+      _out="$2"
+      shift 2
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        return
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      return
+      ;;
     esac
   done
 
@@ -592,20 +592,20 @@ function _cpath {
 
   while true; do
     case "$1" in
-      --basename | -b)
-        _base_only=1
-        shift
-        ;;
+    --basename | -b)
+      _base_only=1
+      shift
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        return
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      return
+      ;;
     esac
   done
 
@@ -750,6 +750,13 @@ if [ -z "${PYENV_ROOT}" ] && [ -d "$HOME/.pyenv" ]; then
   fi
 fi
 
+function rel-asdf-plugin-version {
+  local _plugin="${1}"
+
+  asdf current "${_plugin}" |
+    awk '{print $2}'
+}
+
 ELIXIR_LS_BASE="$HOME/.elixir-ls"
 ELIXIR_LS_SCRIPTS_BASE="${ELIXIR_LS_BASE}/ebnis-scripts"
 # Aug 14, 2022 v0.11.0 fe11910
@@ -759,7 +766,7 @@ ELIXIR_LS_SCRIPTS_BASE="${ELIXIR_LS_BASE}/ebnis-scripts"
 # Oct 24, 2023 v0.17.3 d2eb6f3
 ELIXIR_LS_STABLE_HASH='d2eb6f3'
 
-get-hash() {
+function get-hash {
   local args="${*}"
 
   # args is equal to `some text --hash=git-hash` or `some text --hash git-hash`
@@ -780,17 +787,13 @@ check-elixir_ls-vsn() {
   if [ -n "${1}" ]; then printf y; fi
 }
 
-elixir_ls-install-dir() {
-  if ! [ "$(check-elixir_ls-vsn "${@}")" ]; then
-    return
-  fi
-
-  local install_dir="${ELIXIR_LS_BASE}/${1}/$(get-hash "${@}")"
+function elixir_ls-install-dir {
+  local install_dir="${ELIXIR_LS_BASE}/$(rel-asdf-plugin-version elixir)___$(rel-asdf-plugin-version erlang)/$(get-hash "${@}")"
 
   printf '%s' "${install_dir}"
 }
 
-rel_asdf_elixir-build-f() {
+function rel_asdf_elixir-build-f {
   local elixir_version="$1"
   local install_dir="${ELIXIR_LS_BASE}/${elixir_version}"
 
@@ -812,20 +815,7 @@ rel_asdf_elixir-build-f() {
   cd - >/dev/null
 }
 
-rel_asdf_elixir-build-current-f() {
-  rel_asdf_elixir-build-f "$(rel-asdf-elixir-current-f)"
-}
-
-rel_asdf_elixir-install-f() {
-  if ! [ "$(check-elixir_ls-vsn "${@}")" ]; then
-    echo "The elixir asdf version is required."
-    echo "Usages:"
-    echo "  rel_asdf_elixir-install-f elixir-asdf-version [--hash git-hash]"
-    return
-  fi
-
-  local elixir_version="$1"
-
+function rel_asdf_elixir-install-f {
   local hash
   hash="$(get-hash "${@}")"
 
@@ -835,6 +825,11 @@ rel_asdf_elixir-install-f() {
   if ! [[ -d "$install_dir" ]]; then
     git clone https://github.com/elixir-lsp/elixir-ls.git "$install_dir"
   fi
+
+  local _elixir_version
+  local _erlang_version
+  _elixir_version="$(rel-asdf-plugin-version elixir)"
+  _erlang_version="$(rel-asdf-plugin-version erlang)"
 
   (
     echo -e "\n=> Entering install directory ${install_dir} ===\n"
@@ -860,6 +855,15 @@ rel_asdf_elixir-install-f() {
       "s/(.*jason_vendored.+jason\.git\", +)\"([^,]+)\"(.*)/\1\"e23c65b98411a3066ca73534b4aed1d23bcf0356\"\3/" \
       mix.lock
 
+    asdf local elixir "${_elixir_version}"
+    asdf local erlang "${_erlang_version}"
+
+    mix local.hex --force --if-missing
+    mix local.rebar --force --if-missing
+
+    asdf reshim elixir
+    asdf reshim erlang
+
     mix deps.get
     mix compile
 
@@ -879,18 +883,16 @@ rel_asdf_elixir-install-f() {
   )
 }
 
-elixir_ls-rel-bin-dir() {
+function elixir_ls-rel-bin-dir {
   local hash
   hash="$(get-hash "${@}")"
 
   local elixir_version="${1}"
 
-  echo -n "${ELIXIR_LS_SCRIPTS_BASE}/${elixir_version}/${hash}"
+  echo -n "${ELIXIR_LS_SCRIPTS_BASE}/$(rel-asdf-plugin-version elixir)___$(rel-asdf-plugin-version erlang)/${hash}"
 }
 
-rel_asdf_elixir_exists_f() {
-  local elixir_version="$1"
-
+function rel_asdf_elixir_exists_f {
   local server_bin_path="$(elixir_ls-rel-bin-dir "${@}")/language_server.sh"
 
   printf "\n%s\n\n" "$server_bin_path"
@@ -904,24 +906,8 @@ rel_asdf_elixir_exists_f() {
   fi
 }
 
-rel-asdf-elixir-current-f() {
-  asdf current elixir | awk '{print $2}'
-}
-
-rel-asdf-elixir-install-current-f() {
-  rel_asdf_elixir-install-f "$(rel-asdf-elixir-current-f)" "${@}"
-}
-
-rel-asdf-elixir-exists-current-f() {
-  rel_asdf_elixir_exists_f "$(rel-asdf-elixir-current-f)" "${@}"
-}
-
-alias rel-asdf-elixir-current='rel-asdf-elixir-current-f'
 alias rel-asdf-elixir-install='rel_asdf_elixir-install-f'
-alias rel-asdf-elixir-install-current='rel-asdf-elixir-install-current-f'
 alias rel-asdf-elixir-exists=rel_asdf_elixir_exists_f
-alias rel-asdf-elixir-exists-current=rel-asdf-elixir-exists-current-f
-alias rel-asdf-elixir-current-exists=rel-asdf-elixir-exists-current-f
 
 alias ng="sudo nginx -g 'daemon off; master_process on;' &"
 alias ngd="sudo nginx -g 'daemon on; master_process on;'"
@@ -1115,20 +1101,20 @@ function archive-projects-f {
 
   while true; do
     case "$1" in
-      --extract | -x)
-        _extract_path="$2"
-        shift 2
-        ;;
+    --extract | -x)
+      _extract_path="$2"
+      shift 2
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        exit 1
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      exit 1
+      ;;
     esac
   done
   # --------------------------------------------------------------------------
