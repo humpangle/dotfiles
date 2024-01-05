@@ -1,7 +1,10 @@
 local keyset = vim.keymap.set
 
 return {
+  -- Surround text with quotes, parenthesis, brackets, and more.
   "tpope/vim-surround",
+  -- A number of useful motions for the quickfix list, pasting and more.
+  "tpope/vim-unimpaired",
   "nelstrom/vim-visual-star-search",
 
   -- Easy motion alternative - jump to any where in the buffer by typing 2 chars
