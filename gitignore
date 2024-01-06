@@ -147,6 +147,7 @@ ___logs/
 
 **/.idea/
 **/*.iml
+**/___outs
 
 # cloudflare
 .cloudflare-tunnel-config*
