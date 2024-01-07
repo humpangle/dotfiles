@@ -8,30 +8,48 @@ set -o pipefail
 set -o noclobber
 # set -o nounset
 
-usage() {
-  echo "Usage: p-env [ -s | --string ]
-                  [ --cwd some/path ]
-                  [ -e | --exec 'command' ]
-                  [ -f | --format yaml|yml ]
-                  [ -o | --output   /some/path ]
-                  [ -d | --debug ]
-                  [ -n | --no-change-name ]
-                  [ -a | --env-name 'name-for-env-file' ]
-                  env-file"
+function usage {
+  set +o errexit
+
+  read -r -d '' var <<'eof'
+Usage:
+  p-env input-env-file [OPTIONS]
+
+Options:
+  --help/-h                         Print this help text and exit.
+  --debug/-d                        Print each line of `variable=value` as it is read.
+  --string/-s                       Output string to stdout instead of writing to a file.
+  --output/-o /some/file            Specify output file. If `--string` option is specified, this option will be ignored.
+                                    If this option is not specified, we do not want to output to stdout and we are not
+                                    executing a command, we will set the output filename to the input filename suffixed
+                                    with `.n`
+  --format/-f format-name           Specify output format. Valid format names are yaml,yml,json.
+  --exec/-e command                 Execute a command, passing the environment variables to the command.
+  --cwd                             Works with `--exec` option. Change current working directory before executing command.
+  --env-name/-a new-variable-value  If `input-env-file` contains a variable for the environment filename, change the
+                                    variable name to `new-variable-value`.
+  --no-change-name/-n               If `input-env-file` contains a variable for the environment filename, then this must
+                                    be set to `input-env-file` and must never be changed.
+
+Examples:
+  p-env --help
+  p-env input-env-file --output /output/file --format json
+eof
+
+  echo -e "${var}"
   exit "${1:-2}"
 }
 
-out_file=
-format=
-verbose=
-in_file=
-_in_string=
-string=
-exec_cmd=
+_out_filename=
+_format=
+_in_filename=
+_in_file_content=
+_should_output_to_stdout=
+_command_to_exec=
 cwd=
 debug=
-no_change_name=
-new_env_name=
+_no_change_filename_variable_value=
+_new_filename_variable_value=
 
 function parse-args {
   # -allow a command to fail with !’s side effect on errexit
@@ -42,17 +60,8 @@ function parse-args {
     exit 1
   fi
 
-  # options:
-  #   --format/f  requires 1 argument
-  #   --output/-o requires 1 argument
-  #   --exec/-e   requires 1 argument
-  #   --cwd       requires 1 argument
-  #   string/s
-  #   debug/d
-  #   verbose/v
-  #   no-change-name/n
-  long_options=string,debug,format:,output:,exec:,cwd:,verbose,no-change-name,env-name:
-  short_options=sdf:o:e:v,n,a:
+  long_options=string,debug,format:,output:,exec:,cwd:,no-change-name,env-name:,help
+  short_options=sdf:o:e:v,n,a:,h
 
   # -regarding ! and PIPESTATUS see above
   # -temporarily store output to be able to check for errors
@@ -71,62 +80,61 @@ function parse-args {
   # now enjoy the options in order and nicely split until we see --
   while true; do
     case "$1" in
-      -s | --string)
-        string=y
-        shift
-        ;;
+    -h | --help)
+      usage 0
+      ;;
 
-      -d | --debug)
-        debug=y
-        shift
-        ;;
+    -s | --string)
+      _should_output_to_stdout=y
+      shift
+      ;;
 
-      -f | --format)
-        format="$2"
-        shift 2
-        ;;
+    -d | --debug)
+      debug=y
+      shift
+      ;;
 
-      -n | --no-change-name)
-        no_change_name=y
-        shift
-        ;;
+    -f | --format)
+      _format="$2"
+      shift 2
+      ;;
 
-      -v | --verbose)
-        verbose=y
-        shift
-        ;;
+    -n | --no-change-name)
+      _no_change_filename_variable_value=y
+      shift
+      ;;
 
-      -o | --output)
-        out_file="$2"
-        shift 2
-        ;;
+    -o | --output)
+      _out_filename="$2"
+      shift 2
+      ;;
 
-      -e | --exec)
-        exec_cmd="$2"
-        shift 2
-        ;;
+    -e | --exec)
+      _command_to_exec="$2"
+      shift 2
+      ;;
 
-      --cwd)
-        cwd="$2"
-        shift 2
-        ;;
+    --cwd)
+      cwd="$2"
+      shift 2
+      ;;
 
-      --env-name | -a)
-        new_env_name="$2"
-        shift 2
-        ;;
+    --env-name | -a)
+      _new_filename_variable_value="$2"
+      shift 2
+      ;;
 
-        # -- means the end of the arguments; drop this, and break out of the
-        # while loop
-      --)
-        shift
-        break
-        ;;
+      # -- means the end of the arguments; drop this, and break out of the
+      # while loop
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        echo "Unexpected option: $1."
-        usage
-        ;;
+    *)
+      echo "Unexpected option: $1."
+      usage
+      ;;
     esac
   done
 
@@ -136,37 +144,42 @@ function parse-args {
     usage 4
   fi
 
-  in_file=$1
+  _in_filename="$1"
 }
 
-function no-write-to-file {
-  [[ -n "${string}" ]] || [[ -n "$exec_cmd" ]] && echo "1"
+function _should_not_output_to_file {
+  if [[ -n "${_should_output_to_stdout}" ]] || [[ -n "$_command_to_exec" ]]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
-function _write-env-filename {
-  local -n arr=$1
+function _write-env-filename-variable-value {
+  local -n _input_map=$1
+  local _value="$2"
 
-  local names=(
+  local _variable_names=(
     ENV_FILENAME
     ENV_FILE
   )
 
-  for _name in "${names[@]}"; do
+  for _variable_name in "${_variable_names[@]}"; do
     # shellcheck disable=2076
-    if [[ "${_in_string}" =~ "${_name}=" ]]; then
-      arr["${_name}"]=$2
+    if [[ "${_in_file_content}" =~ "${_variable_name}=" ]]; then
+      _input_map["${_variable_name}"]="$_value"
     fi
   done
 }
 
 parse-args "$@"
 
-in_path="$(realpath "$in_file")"
-_in_string="$(cat "$in_path")"
+_in_file_full_path_name="$(realpath "$_in_filename")"
+_in_file_content="$(cat "$_in_file_full_path_name")"
 
-out_path="${in_path}.n"
+_out_file_full_path_name="${_in_file_full_path_name}.n"
 
-declare -A env_key_to_value_map=()
+declare -A _env_key_to_value_map=()
 
 line_regex="^[^#]+.+"
 
@@ -177,72 +190,107 @@ while read -r line; do
 
     [[ -n "$debug" ]] && echo "$key=$val"
 
-    for line_with_varirables in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
-      variable_text="\${$line_with_varirables}"
-      variable_val="${env_key_to_value_map[$line_with_varirables]:-}"
+    # Imagine we have a line: HOST=my-host
+    # And another line USER_HOME=/home/${HOST} = this a line with interpolated variables. And each `${}` is an
+    #   interpolated variable.
+    # We wish to parse `/home/${HOST}` such that the final result will be `USER_HOME=/home/my-host`. This
+    # means each interpolated variable will be replaced by its concrete value. We assume that the concrete value must
+    # have been read and parsed from a preceeding line.
 
-      if [[ -z "$variable_val" ]]; then
-        variable_val=${!line_with_varirables}
+    # _interpolated_variable_without_brackets=HOST
+    for _interpolated_variable_without_brackets in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
+      # _interpolated_variable_with_brackets=${HOST}
+      _interpolated_variable_with_brackets="\${$_interpolated_variable_without_brackets}"
+
+      _interpolated_variable_concrete_value="${_env_key_to_value_map[$_interpolated_variable_without_brackets]:-}"
+
+      # Imagine you have interpolated variable _interpolated_variable_without_brackets=PWD. PWD is a bash variable
+      # which means we may not have the value from preceeding lines.
+      # The following expression will turn the value stored in `_interpolated_variable_without_brackets` into a
+      # variable ($PWD) and expand it (so we get /some/path).
+      if [[ -z "$_interpolated_variable_concrete_value" ]]; then
+        _interpolated_variable_concrete_value=${!_interpolated_variable_without_brackets}
       fi
 
-      val="${val//$variable_text/$variable_val}"
+      # Replace each interpolated variable with its concrete value.
+      val="${val//$_interpolated_variable_with_brackets/$_interpolated_variable_concrete_value}"
     done
 
-    env_key_to_value_map["$key"]="${val}"
+    _env_key_to_value_map["$key"]="${val}"
   fi
-done <<<"${_in_string}"
+done <<<"${_in_file_content}"
 
-if [[ -n "$out_file" ]]; then
-  out_path=$(realpath "$out_file")
+if [[ -n "$_out_filename" ]]; then
+  _out_file_full_path_name=$(realpath "$_out_filename")
 fi
 
-if [[ "$(no-write-to-file)" ]]; then
-  _write-env-filename env_key_to_value_map "${in_path}"
+if _should_not_output_to_file; then
+  _write-env-filename-variable-value _env_key_to_value_map "${_in_file_full_path_name}"
 else
-  rm -rf "$out_path"
-  touch "$out_path"
+  rm -rf "$_out_file_full_path_name"
+  touch "$_out_file_full_path_name"
 
-  #### Update value of ENV_FILE depending on args
-  if [[ -n "${new_env_name}" ]]; then
+  #### Update value of ENV_FILE variable depending on args
+  if [[ -n "${_new_filename_variable_value}" ]]; then
     # We have a new name, let's use it
-    _write-env-filename env_key_to_value_map "${new_env_name}"
-  elif [[ -n "$no_change_name" ]]; then
-    # We are told not to change the name, so we use input file name
-    _write-env-filename env_key_to_value_map "${in_path}"
+    _write-env-filename-variable-value _env_key_to_value_map "${_new_filename_variable_value}"
+  elif [[ -n "$_no_change_filename_variable_value" ]]; then
+    # We are told not to change the value, so we use input file name
+    _write-env-filename-variable-value _env_key_to_value_map "${_in_file_full_path_name}"
   else
-    # BY default, we set value to output file name
-    _write-env-filename env_key_to_value_map "${in_path}"
+    # By default, we set value to output file name
+    _write-env-filename-variable-value _env_key_to_value_map "${_in_file_full_path_name}"
   fi
 fi
 
-text=
+_out_file_content_accumulator=
 
-for key in "${!env_key_to_value_map[@]}"; do
-  val="${env_key_to_value_map[$key]}"
+for key in "${!_env_key_to_value_map[@]}"; do
+  _value="${_env_key_to_value_map[$key]}"
 
-  out="${key}=${val}"
+  # Sometimes, we will get a `_value` such as `""/app/___outs"/cert"/selfsigned_key.pem` where the `"` are messed up.
+  # We just strip all `"` from all values.
+  _value="${_value//\"/}"
 
-  if [[ "$format" = yml ]] || [[ "$format" = yaml ]]; then
-    out="${key}: ${env_key_to_value_map[$key]}"
+  # If the value is not all numeric characters, surround with `""`
+  if ! echo "$_value" | grep -q -P "^ *\d+ *$"; then
+    _value="\"$_value\""
   fi
 
-  if [[ "$(no-write-to-file)" ]]; then
-    text="$out $text"
+  # Formatting
+  if [[ "$_format" = yml ]] || [[ "$_format" = yaml ]]; then
+    # key: value
+    _key_value_line="${key}: $_value"
+  elif [[ "$_format" = json ]]; then
+    # "key": value
+    _key_value_line="\"$key\": $_value,"
   else
-    echo "$out" >>"$out_path"
+    _key_value_line="${key}=${_value}"
+  fi
+
+  if _should_not_output_to_file; then
+    _out_file_content_accumulator="$_key_value_line $_out_file_content_accumulator"
+  else
+    echo "$_key_value_line" >>"$_out_file_full_path_name"
   fi
 done
 
-if [[ -n "$exec_cmd" ]]; then
-  cmd="$text $exec_cmd"
+# Output/exec
+if [[ -n "$_command_to_exec" ]]; then
+  cmd="$_out_file_content_accumulator $_command_to_exec"
 
   if [[ -n "$cwd" ]]; then
     cmd="( cd $cwd; $cmd  )"
   fi
 
   eval "$cmd"
-elif [[ -z "$string" ]]; then
-  sort "$out_path" -o "$out_path"
+
+elif [[ -n "$_should_output_to_stdout" ]]; then
+  # Output to stdout
+
+  echo "$_out_file_content_accumulator"
 else
-  echo "$text"
+  # Output to file.
+
+  sort "$_out_file_full_path_name" -o "$_out_file_full_path_name"
 fi
