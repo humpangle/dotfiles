@@ -9,8 +9,7 @@ Defaults	editor=__NEOVIM_BIN__
 
 Cmnd_Alias TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD = /usr/bin/tee /var/lib/docker/containers/*
 
-%__USERNAME__ ALL=(ALL)  NOPASSWD: /home/__USERNAME__/dotfiles/etc/wsl-dns-resolver.sh
-%__USERNAME__ ALL=(ALL)  NOPASSWD: /home/__USERNAME__/dotfiles/etc/wsl-drop-caches.sh
+%__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV /home/__USERNAME__/dotfiles/etc/wsl-dns-resolver.sh, /home/__USERNAME__/dotfiles/etc/wsl-drop-caches.sh
 %__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/chown
 %__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
 %__USERNAME__ ALL=(ALL)  NOPASSWD: TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD

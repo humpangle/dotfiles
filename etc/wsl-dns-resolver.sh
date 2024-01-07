@@ -127,6 +127,8 @@ function _query {
 
   _echo "/etc/wsl.conf"
   cat /etc/wsl.conf || true
+
+  _echo "/c/Users/\$USERNAME/.wslconfig"
 }
 
 full_line_len=$(tput cols)
