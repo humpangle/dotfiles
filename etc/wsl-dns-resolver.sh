@@ -96,7 +96,7 @@ function ___set-up-dns-resolver-help {
   : "___help___ ___set-up-dns-resolver-help"
   read -r -d '' var <<'eof'
 Set up and query DNS resolver for WSL2. Usage:
-  ./run.sh set-up-dns-resolver [OPTIONS]
+  wsl-dns-resolver.sh [OPTIONS]
 
 Options:
   --help/-h.        Print help message and exit
@@ -111,11 +111,11 @@ So if both options --native and --cloudflare are provided,
 --cloudflare will take precedence.
 
 Examples:
-  ./run.sh set-up-dns-resolver
-  ./run.sh set-up-dns-resolver --help
-  ./run.sh set-up-dns-resolver --native
-  ./run.sh set-up-dns-resolver --cloudflare
-  ./run.sh set-up-dns-resolver --query
+  wsl-dns-resolver.sh
+  wsl-dns-resolver.sh --help
+  wsl-dns-resolver.sh --native
+  wsl-dns-resolver.sh --cloudflare
+  wsl-dns-resolver.sh --query
 eof
 
   echo -e "${var}"
