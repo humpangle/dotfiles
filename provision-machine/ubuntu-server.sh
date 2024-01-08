@@ -345,7 +345,7 @@ function install-golang {
 
   _echo "INSTALLING GOLANG"
 
-  local version=1.19.3
+  local version=1.21.5
 
   if ! _is-dev "$@"; then
     _install-deps "${GOLANG_DEPS[*]}"
