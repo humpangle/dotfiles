@@ -72,7 +72,7 @@ return packer.startup(function(use)
   use({
     "neoclide/coc.nvim",
     branch = "release",
-    disable = false,
+    disable = true,
     config = function()
       require("plugins/coc")
     end,
