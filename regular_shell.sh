@@ -984,7 +984,7 @@ if [[ "$(uname -r)" == *WSL2 ]]; then
   alias ubuntu20="$WSL_EXE --distribution Ubuntu-20.04"
   alias ubuntu22="$WSL_EXE --distribution Ubuntu-22.04"
   alias nameserver="sudo $SETUP_DNS_RESOLVER_SCRIPT_NAME"
-  alias _dns="sudo $SETUP_DNS_RESOLVER_SCRIPT_NAME"
+  alias _dns="sudo -E $SETUP_DNS_RESOLVER_SCRIPT_NAME"
 
   # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
   # up memory, this command will free your memory after about 20-30 seconds.

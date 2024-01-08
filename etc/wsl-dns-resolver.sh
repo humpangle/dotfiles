@@ -11,6 +11,7 @@ function set-up-dns-resolver {
   local _use_native_resolver
   local _use_cloudflare_resolver
   local _help
+  local _networking_mode
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -19,8 +20,8 @@ function set-up-dns-resolver {
 
   if ! parsed="$(
     getopt \
-      --longoptions=native,cloudflare,help,query \
-      --options=n,c,h,q \
+      --longoptions=native,cloudflare,help,query,networking: \
+      --options=n,c,h,q,t: \
       --name "$0" \
       -- "$@"
   )"; then
@@ -32,36 +33,42 @@ function set-up-dns-resolver {
 
   while true; do
     case "$1" in
-      --help | -h)
-        ___set-up-dns-resolver-help
-        return
-        ;;
+    --help | -h)
+      ___set-up-dns-resolver-help
+      return
+      ;;
 
-      --query | -q)
-        _query
-        return
-        ;;
+    --query | -q)
+      _query
+      return
+      ;;
 
-      --native | -n)
-        _use_native_resolver=1
-        shift
-        ;;
+    --native | -n)
+      _use_native_resolver=1
+      shift
+      ;;
 
-      --cloudflare | -c)
-        _use_cloudflare_resolver=1
-        _use_native_resolver=
-        shift
-        ;;
+    --cloudflare | -c)
+      _use_cloudflare_resolver=1
+      _use_native_resolver=
+      shift
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --networking | -t)
+      _validate_networking_mode "$2"
+      _networking_mode="$2"
+      shift 2
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        exit 1
-        ;;
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      exit 1
+      ;;
     esac
   done
 
@@ -84,6 +91,12 @@ function set-up-dns-resolver {
 
     _echo "Restart WSL so we can regenerate /etc/resolve.conf"
     set-up-dns-resolver --query
+    return
+  fi
+
+  if [[ -n "${_networking_mode}" ]]; then
+    _setup_networking "$_networking_mode"
+    return
   fi
 }
 
@@ -103,6 +116,7 @@ Options:
   --query/-q.       Ask which DNS resolver is in use.
   --native/-n.      Use WSL native NAT resolver
   --cloudflare/-c.  Use Cloudflare resolver
+  --networking/-t.  Networking mode. Values are nat|mirrored
 
 * Without an option - print this help message and exit
 
@@ -121,6 +135,8 @@ eof
   echo -e "${var}"
 }
 
+_win_wsl_conf_filename="/c/Users/$USERNAME/.wslconfig"
+
 function _query {
   _echo "/etc/resolv.conf"
   cat /etc/resolv.conf || true
@@ -129,6 +145,7 @@ function _query {
   cat /etc/wsl.conf || true
 
   _echo "/c/Users/\$USERNAME/.wslconfig"
+  cat "$_win_wsl_conf_filename"
 }
 
 full_line_len=$(tput cols)
@@ -148,6 +165,29 @@ function _echo {
   done
 
   echo -e "\n${text} ${equal}${line}${line}"
+}
+
+function _setup_networking {
+  local _mode="$1"
+
+  if [ "$_mode" == "nat" ]; then
+    sed -i '/####== NETWORKING ==####/,/####== END NETWORKING ==####/ s/^/#/' "$_win_wsl_conf_filename"
+  else
+    sed -i '/####== NETWORKING ==####/,/####== END NETWORKING ==####/ s/^#//' "$_win_wsl_conf_filename"
+  fi
+
+  set-up-dns-resolver --query
+}
+
+function _validate_networking_mode {
+  local _networking_mode="$1"
+
+  if [[ "$_networking_mode" != nat ]] &&
+    [[ "$_networking_mode" != mirrored ]]; then
+    echo "Invalid networking mode specified."
+    ___set-up-dns-resolver-help
+    exit 2
+  fi
 }
 
 set-up-dns-resolver "${@}"
