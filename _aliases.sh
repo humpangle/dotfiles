@@ -219,8 +219,8 @@ if command -v terraform &>/dev/null; then
   alias tfa='terraform apply'
   alias tfar='terraform apply -replace'
   alias tfaa='terraform apply -auto-approve'
-  alias tfsl='terraform state list'
-  alias tfss='terraform state show'
+  alias tfstl='terraform state list'
+  alias tfsts='terraform state show' # terraform state show [options] ADDRESS
   alias tfs='terraform show'
   alias tfd='terraform destroy'
   alias tfdt='terraform destroy -target'
