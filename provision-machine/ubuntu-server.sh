@@ -265,35 +265,35 @@ function _tool-versions-backup {
 
   while true; do
     case "$1" in
-      --create | -c)
-        _create=1
-        shift
-        ;;
+    --create | -c)
+      _create=1
+      shift
+      ;;
 
-      --remove | -r)
-        _remove=1
-        shift
-        ;;
+    --remove | -r)
+      _remove=1
+      shift
+      ;;
 
-      --doc | -d)
-        _doc="${2}"
-        shift 2
-        ;;
+    --doc | -d)
+      _doc="${2}"
+      shift 2
+      ;;
 
-      --tools | -t)
-        _tools="${2}"
-        shift 2
-        ;;
+    --tools | -t)
+      _tools="${2}"
+      shift 2
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        exit 1
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      exit 1
+      ;;
     esac
   done
   # --------------------------------------------------------------------------
@@ -831,20 +831,20 @@ function install-erlang {
 
   while true; do
     case "$1" in
-      --erlang | -e)
-        version="$2"
-        shift 2
-        ;;
+    --erlang | -e)
+      version="$2"
+      shift 2
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        exit 1
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      exit 1
+      ;;
     esac
   done
 
@@ -933,37 +933,37 @@ function install-elixir {
 
   while true; do
     case "$1" in
-      --help | -h)
-        ___elixir-help
-        return
-        ;;
+    --help | -h)
+      ___elixir-help
+      return
+      ;;
 
-      --elixir | -x)
-        version="${2}"
-        _no_set_global=1
-        shift 2
-        ;;
+    --elixir | -x)
+      version="${2}"
+      _no_set_global=1
+      shift 2
+      ;;
 
-      --erlang | -e)
-        _erlang_version="$2"
-        shift 2
-        ;;
+    --erlang | -e)
+      _erlang_version="$2"
+      shift 2
+      ;;
 
-      --file | -f)
-        _file="${2}"
-        shift 2
-        ;;
+    --file | -f)
+      _file="${2}"
+      shift 2
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        ___elixir-help
-        return
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      ___elixir-help
+      return
+      ;;
     esac
   done
 
@@ -1071,37 +1071,37 @@ function install-nodejs {
 
   while true; do
     case "$1" in
-      --help | -h)
-        ___nodejs-help
-        return
-        ;;
+    --help | -h)
+      ___nodejs-help
+      return
+      ;;
 
-      --version | -a)
-        version="${2}"
-        _set_global=
-        shift 2
-        ;;
+    --version | -a)
+      version="${2}"
+      _set_global=
+      shift 2
+      ;;
 
-      --local | -l)
-        _set_local=1
-        shift 1
-        ;;
+    --local | -l)
+      _set_local=1
+      shift 1
+      ;;
 
-      --dev | -d)
-        _dev=1
-        shift 1
-        ;;
+    --dev | -d)
+      _dev=1
+      shift 1
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        ___nodejs-help
-        exit 1
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      ___nodejs-help
+      exit 1
+      ;;
     esac
   done
 
@@ -1610,25 +1610,25 @@ function install-terraform-lsp {
 
   while true; do
     case "$1" in
-      --help | -h)
-        ___install-terraform-lsp-help
-        return
-        ;;
+    --help | -h)
+      ___install-terraform-lsp-help
+      return
+      ;;
 
-      --version | -v)
-        _print_version=1
-        shift
-        ;;
+    --version | -v)
+      _print_version=1
+      shift
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        exit 1
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      exit 1
+      ;;
     esac
   done
 
@@ -1649,19 +1649,24 @@ function install-terraform-lsp {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
+  # Official binary from hashicorp
   local _ls_version=0.32.3
 
   # This one works with COC-nvim
   local _lsp_version=0.0.12 # 2021-05-13
 
-  if [[ "${_flavor}" == 'ls' ]]; then
-    version="${_ls_version}"
-  else
+  local _flavor_description
+
+  if [[ "${_flavor}" == 'lsp' ]]; then
     version="${_lsp_version}"
+    _flavor_description='unofficial'
+  else
+    version="${_ls_version}"
+    _flavor_description='official'
   fi
 
   if [[ -n "${_print_version}" ]]; then
-    echo "Version of terraform ${_flavor}: ${version}"
+    echo "Version of terraform ${_flavor} - $_flavor_description binary: ${version}"
     return
   fi
 
@@ -1723,7 +1728,10 @@ Usage:
 Options:
   --version/-v. Print version information and exit.
   --help/-h.    Print this help information and exit.
-  --flavor/-f.  The flavor you wish to install. The possible values are ls|lsp
+  --flavor/-f.  The flavor you wish to install. The possible values are:
+                  ls - the official terraform binary from hashicorp -
+                    does not work with COC-nvim
+                  lsp - the unofficial binary that works with COC-nvim
 
 Examples:
   ./run.sh install-terraform-lsp --help
