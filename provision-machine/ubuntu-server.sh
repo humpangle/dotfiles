@@ -1742,6 +1742,15 @@ eof
   echo -e "${var}"
 }
 
+function install-terraform {
+  local _version=1.6.6
+
+  _may_be_install_asdf
+
+  "$(_asdf-bin-path)" plugin add terraform https://github.com/asdf-community/asdf-hashicorp.git
+  "$(_asdf-bin-path)" install terraform "$_version"
+}
+
 function install-chrome {
   _echo "Installing google chrome"
 
