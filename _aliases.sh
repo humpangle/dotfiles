@@ -227,6 +227,7 @@ if command -v terraform &>/dev/null; then
   alias tfda='terraform destroy -auto-approve'
   alias tfc='terraform console'
   alias tfv='terraform validate'
+  alias tfo='terraform output'
 fi
 
 # -----------------------------------------------------------------------------
