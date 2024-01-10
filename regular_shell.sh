@@ -233,7 +233,6 @@ _do-cd() {
   done
 }
 
-alias c='_do-cd'
 alias ..='cd ..'
 
 alias C="clear && printf '\e[3J'"
