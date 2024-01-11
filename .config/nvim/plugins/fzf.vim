@@ -1,5 +1,6 @@
 " Search file from root directory
 nnoremap <c-p> :Files!<CR>
+nnoremap <leader>fW :Files!<CR>
 " Search file from current directory
 nnoremap <Leader>f. :Files! <C-r>=expand("%:h")<CR>/<CR>
 " find open buffers
