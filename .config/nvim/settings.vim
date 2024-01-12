@@ -417,9 +417,6 @@ inoremap <A-l> <C-\><C-N><C-w>l
 " nnoremap <leader>tt :tab split<cr>:term <right>
 nnoremap <leader>tv :vsplit<cr>:term <right>
 
-" Clear terminal buffer: https://superuser.com/a/1485854
-nnoremap <c-w><c-l> :call ClearTerminal()<cr>
-
 " COPY FILE PATH
 " yank relative File path
 nmap ,yr :let @+=expand("%")<CR>
@@ -777,20 +774,6 @@ function! ClearRegisters()
 endfunction
 
 command! ClearRegisters call ClearRegisters()
-
-" Clear terminal buffer: https://superuser.com/a/1485854
-let s:scroll_value = 3000000
-function! ClearTerminal()
-  set scrollback=1
-  let &g:scrollback=1
-  echo &scrollback
-  call feedkeys("\i")
-  call feedkeys("clear\<CR>")
-  call feedkeys("\<C-\>\<C-n>")
-  call feedkeys("\i")
-  sleep 100m
-  let &scrollback=s:scroll_value
-endfunction
 
 " https://vim.fandom.com/wiki/Move_current_window_between_tabs
 function MoveToNextTab()

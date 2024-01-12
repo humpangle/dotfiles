@@ -36,4 +36,13 @@ lua <<EOF
   -- vim.lsp.set_log_level('debug') -- info/debug/error/trace
   -- Open log file with:
   -- :lua vim.cmd('e'..vim.lsp.get_log_path())
+
+  local term_clear = function()
+    vim.fn.feedkeys("", 'n') -- control-L
+    local sb = vim.bo.scrollback
+    vim.bo.scrollback = 1
+    vim.bo.scrollback = sb
+  end
+
+  vim.keymap.set('t', '<C-l>', term_clear)
 EOF
