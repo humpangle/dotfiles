@@ -753,6 +753,11 @@ function _cpath {
   # --------------------------------------------------------------------------
 
   local _path="${PWD}"
+  local _filename="$1"
+
+  if [[ -n "$_filename" ]]; then
+    _path="$_path/$_filename"
+  fi
 
   if [[ -n "${_base_only}" ]]; then
     _path="$(basename "${_path}")"
