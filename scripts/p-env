@@ -257,10 +257,6 @@ for key in "${!_env_key_to_value_map[@]}"; do
     if ! echo "$_value" | grep -q -P "^ *\d+ *$"; then
       _value="\"$_value\""
     fi
-  elif [[ -n "$_value" ]] &&
-    ! echo "$_value" | grep -q -P "^ *\d+ *$"; then
-    # Surround with `''`
-    _value="'$_value'"
   fi
 
   # Formatting
