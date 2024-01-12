@@ -126,170 +126,27 @@ return packer.startup(function(use)
   -- NATIVE NEOVIM LSP / COMPLETION ENGINE
   use({
     "hrsh7th/nvim-cmp",
-    disable = true,
+    disable = false,
     config = function()
       require("plugins/nvim-cmp")
     end,
 
     requires = {
+      -- snippet engine THIS REQUIRED BY THE PLUGIN
+      {
+        "L3MON4D3/LuaSnip",
+      },
+
       -- COMPLETION SOURCES
 
       -- snippet completions
       "saadparwaiz1/cmp_luasnip",
-
-      -- "hrsh7th/vim-vsnip", -- snippet completions
-
       -- buffer completions
       "hrsh7th/cmp-buffer",
 
       -- path completions
       "hrsh7th/cmp-path",
-
-      -- cmdline completions
-      "hrsh7th/cmp-cmdline",
-
-      -- lsp completions
-      "hrsh7th/cmp-nvim-lsp",
-
-      -- source for neovim Lua API.
-      "hrsh7th/cmp-nvim-lua",
-
-      -- uses `look` command line tool for dictionary word
-      "octaltree/cmp-look",
-
       -- / COMPLETION SOURCES
-
-      -- snippet engine
-      {
-        "L3MON4D3/LuaSnip",
-        config = function()
-          require("luasnip.loaders.from_vscode").lazy_load({
-            paths = { "~/.config/nvim/snippets" },
-          })
-        end,
-      },
-
-      -- a bunch of snippets to use
-      { "rafamadriz/friendly-snippets",        disable = true },
-
-      -- {
-      --   "windwp/nvim-autopairs",
-      --   config = function()
-      --     return require("plugins/nvim-autopairs")
-      --   end,
-      -- },
-
-      -- LSP
-      {
-        "neovim/nvim-lspconfig",
-        config = function()
-          require("lsp")
-        end,
-      },
-
-      -- simple to use language server installer
-      {
-        "williamboman/nvim-lsp-installer",
-        config = function()
-          Cmd([[
-            nnoremap <C-X> :LspInstallInfo<cr>
-          ]])
-        end,
-      },
-
-      -- Code actions, diagnostics = linters, formatters, hover,  completion
-      {
-        "jose-elias-alvarez/null-ls.nvim",
-        config = function()
-          require("plugins/null-ls")
-        end,
-      },
-
-      -- LSP PHP
-
-      {
-        "phpactor/phpactor",
-        disable = true,
-        branch = "master",
-        ft = "php",
-        run =
-        "composer install --no-dev -o && ./vendor/bin/phpactor extension:install \"phpactor/language-server-phpstan-extension\"",
-      },
-
-      -- Treesitter
-      {
-        "nvim-treesitter/nvim-treesitter",
-        disable = true,
-        run = ":TSUpdate",
-        config = function()
-          require("plugins/treesitter")
-        end,
-
-        requires = {
-          {
-            "JoosepAlviste/nvim-ts-context-commentstring",
-            config = function()
-              require("nvim-treesitter.configs").setup({
-                context_commentstring = {
-                  enable = true,
-                  enable_autocmd = false,
-                  config = { css = "// %s" },
-                },
-              })
-            end,
-          },
-
-          {
-            "terrortylor/nvim-comment",
-            config = function()
-              Cmd([[
-                augroup set-commentstring-ag
-                  autocmd!
-
-                  " when you enter a (new) buffer
-                  autocmd BufEnter *.sql :lua vim.api.nvim_buf_set_option(0, "commentstring", "-- %s")
-
-                  " when you've changed the name of a file opened in a buffer, the file type may have changed
-                  autocmd BufFilePost *.sql :lua vim.api.nvim_buf_set_option(0, "commentstring", "-- %s")
-                augroup END
-              ]])
-
-              require("nvim_comment").setup({
-                -- Ignore Empty Lines
-                comment_empty = false,
-                hook = function()
-                  require("ts_context_commentstring.internal").update_commentstring()
-                end,
-              })
-            end,
-          },
-        },
-      },
-
-      { "jose-elias-alvarez/nvim-lsp-ts-utils" },
-
-      {
-        -- Neovim plugin for sqls that leverages the built-in LSP client
-        "nanotee/sqls.nvim",
-        config = function()
-          Cmd([[
-                nnoremap <Leader>qs :SqlsExecuteQuery<cr>
-                xnoremap <Leader>qs :SqlsExecuteQuery<cr>
-                nnoremap <Leader>qv :SqlsExecuteQueryVertical<cr>
-                xnoremap <Leader>qv :SqlsExecuteQueryVertical<cr>
-            ]])
-        end,
-      },
-
-      {
-        "kamykn/spelunker.vim",
-        disable = true,
-        config = function()
-          Vimg.enable_spelunker_vim_on_readonly = 1
-        end,
-
-        requires = { "kamykn/popup-menu.nvim" },
-      },
     },
   })
 
