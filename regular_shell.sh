@@ -164,6 +164,145 @@ alias runn='runf'
 alias rn='runf'
 alias r='runf'
 
+function _____run-well-known-paths-help {
+  : "___help___ _____run-well-known-paths-help"
+  read -r -d '' var <<'eof'
+Run a program against some well known filesystem paths. Usage:
+  __run-well-known-paths program path
+
+The program we want to run: may be a binary or an alias. E.g.
+  alias c = $HOME/.vscode-server/bin/0ee/bin/remote-cli/code
+  alias v=/usr/bin/nvim
+
+Available paths:
+dot
+wiki
+py
+web
+
+Examples:
+  __run-well-known-paths code wiki
+  __run-well-known-paths c py
+eof
+
+  echo -e "${var}"
+}
+
+function __run-well-known-paths {
+  if [[ "$1" == '-h' ]] ||
+    [[ "$1" == '--help' ]]; then
+    _____run-well-known-paths-help
+    return
+  fi
+
+  local _user_supplied_program_to_run="$1"
+
+  if [[ -z "$_user_supplied_program_to_run" ]]; then
+    echo -e "Program to run is required. Exiting!\n"
+
+    _____run-well-known-paths-help
+    return
+  fi
+
+  # The path we wish to run program against
+  local _app="$2"
+
+  if [[ -z "$_app" ]]; then
+    echo -e "Path to run program against is required. Exiting!\n"
+
+    _____run-well-known-paths-help
+    return
+  fi
+
+  # Here is the shared directory where we keep our most popular app
+  local _shared_0_prefix='/c/0000-shared'
+
+  # The apps we are interested in
+  local _dot='dot'
+  local _wiki='wiki'
+  local _py='py'
+  local _web='web'
+
+  # A mapping of apps to directory where they are located
+  declare -A _app_to_path_mapping=()
+
+  _app_to_path_mapping["$_dot"]="$HOME/dotfiles"
+  _app_to_path_mapping["$_wiki"]="$_shared_0_prefix/wiki"
+  _app_to_path_mapping["$_py"]="$_shared_0_prefix/py"
+  _app_to_path_mapping["$_web"]="$_shared_0_prefix/web-pages"
+
+  # If the program to run is visual studio code, the app may contain a file *.code-workspace. This will be
+  # appended to the app's path
+  declare -A _app_to_code_workspace_file_mapping=()
+
+  _app_to_code_workspace_file_mapping["$_dot"]='dotfiles.code-workspace'
+  _app_to_code_workspace_file_mapping["$_wiki"]='wiki.code-workspace'
+  _app_to_code_workspace_file_mapping["$_py"]='py.code-workspace'
+  _app_to_code_workspace_file_mapping["$_web"]='web-pages.code-workspace'
+
+  # The filesystem path to the app
+  local _app_path="${_app_to_path_mapping["$_app"]}"
+
+  # If we are running visual studio code, append code workspace path (if it exists)
+  if {
+    echo "$_user_supplied_program_to_run" | grep -qP "code$" ||
+      [[ "$_user_supplied_program_to_run" == 'c' ]]
+  }; then
+    _app_path="$_app_path/${_app_to_code_workspace_file_mapping["$_app"]}"
+  fi
+
+  local _program_to_run
+  _parse-command-to-run _program_to_run "$_user_supplied_program_to_run"
+
+  if [[ -z "$_program_to_run" ]]; then
+    echo "'$_user_supplied_program_to_run' is not a valid program or shell alias"
+    return
+  fi
+
+  eval "$_program_to_run $_app_path"
+}
+
+alias rr='__run-well-known-paths'
+alias rrv='__run-well-known-paths v'
+alias rrc='__run-well-known-paths code'
+
+function _parse-command-to-run {
+  local -n _result=$1
+
+  # The value to parse may be a program binary or shell alias
+  local _to_parse="$2"
+
+  local _command_v_result
+  _command_v_result="$(command -v "$_to_parse")"
+
+  if [[ -z "$_command_v_result" ]]; then return; fi
+
+  # Check if command to parse is a shell alias and extract values.
+  # We will have a pattern such as:
+  #   `alias c=code`
+  #   `alias c='code'`
+  #   `alias   c="code"`
+  # This will be extracted into (alias, c, code) where _not_used=alias
+  read -r _not_used _alias_name _suffix \
+    <<<"$(
+      echo "$_command_v_result" |
+        awk -F"[='\"]" '/^alias/{print $1, $2, $3}'
+    )"
+
+  # If we have an alias, ensure it is the same as _to_parse
+  if [[ -n $_alias_name ]]; then
+    # First trim
+    _alias_name=$(echo "$_alias_name" | awk '{$1=$1};1')
+
+    if [[ "$_alias_name" != "$_to_parse" ]]; then return; fi
+
+    _result="$_suffix"
+    return
+  fi
+
+  _result="$_command_v_result"
+}
+
 # Save bash history per tmux pane
 
 hist_dir="$HOME/.bash_histories"
