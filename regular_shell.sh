@@ -708,7 +708,28 @@ function _ebnis-xclip {
 alias xclip='xclip -selection c'
 alias copy='_ebnis-xclip'
 
+function ____cpath-help {
+  read -r -d '' var <<'eof'
+Copy path to current working directory or file name to system clipboard. Usage:
+  _cpath [OPTIONS] [filename]
+
+Options:
+  --basename/-b
+      Copy only the basename
+  --help/-h
+      Print this help text and exit
+Examples:
+  _cpath
+  _cpath -h
+  _cpath some-file
+eof
+
+  echo -e "${var}"
+}
+
 function _cpath {
+  : "___help___ ____cpath-help"
+
   local _base_only=
 
   # --------------------------------------------------------------------------
@@ -718,8 +739,8 @@ function _cpath {
 
   if ! parsed="$(
     getopt \
-      --longoptions=basename \
-      --options=b \
+      --longoptions=basename,help \
+      --options=b,h \
       --name "$0" \
       -- "$@"
   )"; then
@@ -731,6 +752,11 @@ function _cpath {
 
   while true; do
     case "$1" in
+    --help | -h)
+      ____cpath-help
+      return
+      ;;
+
     --basename | -b)
       _base_only=1
       shift
