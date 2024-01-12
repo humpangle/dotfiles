@@ -252,9 +252,15 @@ for key in "${!_env_key_to_value_map[@]}"; do
   # We just strip all `"` from all values.
   _value="${_value//\"/}"
 
-  # If the value is not all numeric characters, surround with `""`
-  if ! echo "$_value" | grep -q -P "^ *\d+ *$"; then
-    _value="\"$_value\""
+  if [[ -n "$_format" ]]; then
+    # If the value is not all numeric characters and we are formatting in yaml|json, surround with `""`
+    if ! echo "$_value" | grep -q -P "^ *\d+ *$"; then
+      _value="\"$_value\""
+    fi
+  elif [[ -n "$_value" ]] &&
+    ! echo "$_value" | grep -q -P "^ *\d+ *$"; then
+    # Surround with `''`
+    _value="'$_value'"
   fi
 
   # Formatting
