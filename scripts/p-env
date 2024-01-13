@@ -56,6 +56,7 @@ _should_output_to_stdout=
 _command_to_exec=
 cwd=
 debug=
+_level=2
 
 function parse-args {
   # -allow a command to fail with !’s side effect on errexit
@@ -66,8 +67,8 @@ function parse-args {
     exit 1
   fi
 
-  long_options=string,debug,format:,output:,exec:,cwd:,no-change-name,env-name:,help
-  short_options=sdf:o:e:v,n,a:,h
+  long_options=string,debug,format:,output:,exec:,cwd:,no-change-name,env-name:,help,level:
+  short_options=sdf:o:e:v,n,a:,h,l:
 
   # -regarding ! and PIPESTATUS see above
   # -temporarily store output to be able to check for errors
@@ -120,6 +121,11 @@ function parse-args {
       shift 2
       ;;
 
+    --level | -l)
+      _level=$2
+      shift 2
+      ;;
+
       # -- means the end of the arguments; drop this, and break out of the
       # while loop
     --)
@@ -152,9 +158,46 @@ function _should_output_to_file {
   fi
 }
 
+function _compute_path_to_use {
+  local _path_to_use=$1
+  local _exists
+
+  for _l in $(seq "$_level"); do
+    if [[ -e "$_path_to_use" ]]; then
+      _exists=1
+      break
+    fi
+
+    _path_to_use="../$_path_to_use"
+  done
+
+  if [[ -z "$_exists" ]]; then
+    return
+  fi
+
+  echo "$_path_to_use"
+}
+
 parse-args "$@"
 
+if [[ "$_level" -gt 5 ]]; then
+  echo -e "Maximum level of 5 allowed. Got $_level\n"
+  usage
+fi
+
+_path_to_use="$(
+  _compute_path_to_use "$_in_filename"
+)"
+
+if [[ -z "$_path_to_use" ]]; then
+  echo "$_in_filename does not exist."
+  exit 1
+fi
+
+_in_filename="$_path_to_use"
+
 _in_file_full_path_name="$(realpath "$_in_filename")"
+
 _in_file_content="$(cat "$_in_file_full_path_name")"
 
 _out_file_full_path_name="${_in_file_full_path_name}.n"
