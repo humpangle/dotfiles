@@ -676,8 +676,7 @@ function _setenvs {
   local _p_env="${HOME}/dotfiles/scripts/p-env"
 
   "$_p_env" "$_path_to_use" \
-    --output "${_output}" \
-    --no-change-name
+    --output "${_output}"
 
   set -o allexport
   . "${_output}"
