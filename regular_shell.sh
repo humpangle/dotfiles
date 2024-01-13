@@ -159,9 +159,6 @@ _run_f() {
   bash "$name" "$@"
 }
 
-alias rrun='_run_f'
-alias runn='_run_f'
-alias rn='_run_f'
 alias r='_run_f'
 
 function _____run-well-known-paths-help {
