@@ -26,10 +26,6 @@ Options:
   --format/-f format-name           Specify output format. Valid format names are yaml,yml,json.
   --exec/-e command                 Execute a command, passing the environment variables to the command.
   --cwd                             Works with `--exec` option. Change current working directory before executing command.
-  --env-name/-a new-variable-value  If `input-env-file` contains a variable for the environment filename, change the
-                                    variable name to `new-variable-value`.
-  --no-change-name/-n               If `input-env-file` contains a variable for the environment filename, then this must
-                                    be set to `input-env-file` and must never be changed.
 
 Examples:
   p-env --help
@@ -48,8 +44,6 @@ _should_output_to_stdout=
 _command_to_exec=
 cwd=
 debug=
-_no_change_filename_variable_value=
-_new_filename_variable_value=
 
 function parse-args {
   # -allow a command to fail with !’s side effect on errexit
@@ -99,11 +93,6 @@ function parse-args {
       shift 2
       ;;
 
-    -n | --no-change-name)
-      _no_change_filename_variable_value=y
-      shift
-      ;;
-
     -o | --output)
       _out_filename="$2"
       shift 2
@@ -116,11 +105,6 @@ function parse-args {
 
     --cwd)
       cwd="$2"
-      shift 2
-      ;;
-
-    --env-name | -a)
-      _new_filename_variable_value="$2"
       shift 2
       ;;
 
@@ -147,29 +131,13 @@ function parse-args {
   _in_filename="$1"
 }
 
-function _should_not_output_to_file {
-  if [[ -n "${_should_output_to_stdout}" ]] || [[ -n "$_command_to_exec" ]]; then
+function _should_output_to_file {
+  if [[ -z "${_should_output_to_stdout}" ]] &&
+    [[ -z "$_command_to_exec" ]]; then
     return 0
   else
     return 1
   fi
-}
-
-function _write-env-filename-variable-value {
-  local -n _input_map=$1
-  local _value="$2"
-
-  local _variable_names=(
-    ENV_FILENAME
-    ENV_FILE
-  )
-
-  for _variable_name in "${_variable_names[@]}"; do
-    # shellcheck disable=2076
-    if [[ "${_in_file_content}" =~ "${_variable_name}=" ]]; then
-      _input_map["${_variable_name}"]="$_value"
-    fi
-  done
 }
 
 parse-args "$@"
@@ -224,23 +192,9 @@ if [[ -n "$_out_filename" ]]; then
   _out_file_full_path_name=$(realpath "$_out_filename")
 fi
 
-if _should_not_output_to_file; then
-  _write-env-filename-variable-value _env_key_to_value_map "${_in_file_full_path_name}"
-else
+if _should_output_to_file; then
   rm -rf "$_out_file_full_path_name"
   touch "$_out_file_full_path_name"
-
-  #### Update value of ENV_FILE variable depending on args
-  if [[ -n "${_new_filename_variable_value}" ]]; then
-    # We have a new name, let's use it
-    _write-env-filename-variable-value _env_key_to_value_map "${_new_filename_variable_value}"
-  elif [[ -n "$_no_change_filename_variable_value" ]]; then
-    # We are told not to change the value, so we use input file name
-    _write-env-filename-variable-value _env_key_to_value_map "${_in_file_full_path_name}"
-  else
-    # By default, we set value to output file name
-    _write-env-filename-variable-value _env_key_to_value_map "${_in_file_full_path_name}"
-  fi
 fi
 
 _out_file_content_accumulator=
@@ -270,10 +224,10 @@ for key in "${!_env_key_to_value_map[@]}"; do
     _key_value_line="${key}=${_value}"
   fi
 
-  if _should_not_output_to_file; then
-    _out_file_content_accumulator="$_key_value_line $_out_file_content_accumulator"
-  else
+  if _should_output_to_file; then
     echo "$_key_value_line" >>"$_out_file_full_path_name"
+  else
+    _out_file_content_accumulator="$_key_value_line $_out_file_content_accumulator"
   fi
 done
 
