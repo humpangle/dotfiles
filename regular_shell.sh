@@ -560,38 +560,135 @@ export -f make-bash-history-unique
 alias hu='make-bash-history-unique'
 # also https://unix.stackexchange.com/a/613644
 
+function ____setenvs-help {
+  read -r -d '' var <<'eof'
+Set environment variables from a file into the shell. Usage:
+  _setenvs env_file_name [OPTIONS]
+
+Options:
+  --help/-h
+       Print this help text and exit.
+
+  --level/-l level
+       How many levels, in integer, deep should we search parent directories if environment file can not be found in the
+       current directory.
+       Maximum levels is 5
+
+Examples:
+  _setenvs
+  _setenvs --help
+  _setenvs --level 5
+eof
+
+  echo -e "${var}"
+}
+
 function _setenvs {
   # TODO: can I write a project such as
   # https://github.com/andrewmclagan/react-env so users can set environment
   # vars based on shell type on different OSes - linux, Mac, windows?
+  : "___help___ ____setenvs-help"
 
-  local path
-  path="$1"
+  local _path
+  local _level=2
+  local _path_to_use
 
-  # Check for path 2 parent levels deep.
-  local search_paths=("$path" "../${path}" "../../${path}")
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
 
-  for search_path in "${search_paths[@]}"; do
-    if [[ -e "$search_path" ]]; then
-      path="$(realpath "$search_path")"
+  if ! parsed="$(
+    getopt \
+      --longoptions=level:,help \
+      --options=l:,h \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ____setenvs-help
+      return
+      ;;
+
+    --level | -l)
+      _level=$2
+      shift 2
+      ;;
+
+    --)
+      shift
       break
-    fi
+      ;;
+
+    *)
+      echo "Unknown option ${1}."
+      ____setenvs-help
+      return
+      ;;
+    esac
   done
 
-  local _output="${path}--$(date +'%s')--temp"
+  # handle non-option arguments
+  if [[ $# -ne 1 ]]; then
+    echo "Non optional argument environment file to set is required."
+    ____setenvs-help
+    return
+  fi
 
-  "${HOME}/dotfiles/scripts/p-env" "$path" --output "${_output}"
+  if [[ "$_level" -gt 5 ]]; then
+    echo -e "Maximum level of 5 allowed. Got '$_level'\n"
+    ____setenvs-help
+    return
+  fi
+
+  _path=$1
+  _path_to_use=$1
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  local _exists
+
+  for _l in $(seq $_level); do
+    if [[ -e "$_path_to_use" ]]; then
+      _exists=1
+      break
+    fi
+
+    _path_to_use="../$_path_to_use"
+  done
+
+  if [[ -z "$_exists" ]]; then
+    echo "$_path does not exist."
+    return
+  fi
+
+  local _output="$_path_to_use--$(date +'%s')--temp"
+
+  local _p_env="${HOME}/dotfiles/scripts/p-env"
+
+  "$_p_env" "$_path_to_use" \
+    --output "${_output}" \
+    --no-change-name
 
   set -o allexport
   . "${_output}"
   set +o allexport
 
   rm -rf "${_output}"
-
-  # set -o allexport; source "$1"; set +o allexport
 }
-alias se='setenvs'
-alias e='setenvs'
+
+alias se='_setenvs'
+alias e='_setenvs'
+
 # p-env = parse env script
 alias pe='p-env'
 alias p='p-env'
