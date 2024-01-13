@@ -16,16 +16,28 @@ Usage:
   p-env input-env-file [OPTIONS]
 
 Options:
-  --help/-h                         Print this help text and exit.
-  --debug/-d                        Print each line of `variable=value` as it is read.
-  --string/-s                       Output string to stdout instead of writing to a file.
-  --output/-o /some/file            Specify output file. If `--string` option is specified, this option will be ignored.
-                                    If this option is not specified, we do not want to output to stdout and we are not
-                                    executing a command, we will set the output filename to the input filename suffixed
-                                    with `.n`
-  --format/-f format-name           Specify output format. Valid format names are yaml,yml,json.
-  --exec/-e command                 Execute a command, passing the environment variables to the command.
-  --cwd                             Works with `--exec` option. Change current working directory before executing command.
+  --help/-h
+      Print this help text and exit.
+
+  --debug/-d
+      Print each line of `variable=value` as it is read.
+
+  --string/-s
+      Output string to stdout instead of writing to a file.
+
+  --output/-o /some/file
+      Specify output file. If `--string` option is specified, this option will be ignored. If this option is not
+      specified, we do not want to output to stdout and we are not executing a command, we will set the output filename
+      to the input filename suffixed with `.n`
+
+  --format/-f format-name
+      Specify output format. Valid format names are yaml,yml,json.
+
+  --exec/-e command
+      Execute a command, passing the environment variables to the command.
+
+  --cwd
+      Works with `--exec` option. Change current working directory before executing command.
 
 Examples:
   p-env --help
