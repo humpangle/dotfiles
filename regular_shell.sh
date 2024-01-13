@@ -134,7 +134,7 @@ alias tndot=_start-tmux
 alias tdot=_start-tmux
 alias tnd=_start-tmux
 
-runf() {
+_run_f() {
   local name
   local search_paths=(run run.sh .run .run.sh do-run.sh)
   local parent_dirs=(. .. ../../z ../../../z "${HOME}")
@@ -159,10 +159,10 @@ runf() {
   bash "$name" "$@"
 }
 
-alias rrun='runf'
-alias runn='runf'
-alias rn='runf'
-alias r='runf'
+alias rrun='_run_f'
+alias runn='_run_f'
+alias rn='_run_f'
+alias r='_run_f'
 
 function _____run-well-known-paths-help {
   : "___help___ _____run-well-known-paths-help"
