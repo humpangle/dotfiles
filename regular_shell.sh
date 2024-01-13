@@ -560,8 +560,7 @@ export -f make-bash-history-unique
 alias hu='make-bash-history-unique'
 # also https://unix.stackexchange.com/a/613644
 
-setenvs() {
-
+function _setenvs {
   # TODO: can I write a project such as
   # https://github.com/andrewmclagan/react-env so users can set environment
   # vars based on shell type on different OSes - linux, Mac, windows?
