@@ -134,7 +134,7 @@ alias tndot=_start-tmux
 alias tdot=_start-tmux
 alias tnd=_start-tmux
 
-_run_f() {
+function _run_f {
   local name
   local search_paths=(run run.sh .run .run.sh do-run.sh)
   local parent_dirs=(. .. ../../z ../../../z "${HOME}")
