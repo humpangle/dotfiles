@@ -655,18 +655,12 @@ function _setenvs {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  local _exists
+  _path_to_use="$(
+    _compute_path_to_use \
+      "$_path_to_use" "$_level"
+  )"
 
-  for _l in $(seq $_level); do
-    if [[ -e "$_path_to_use" ]]; then
-      _exists=1
-      break
-    fi
-
-    _path_to_use="../$_path_to_use"
-  done
-
-  if [[ -z "$_exists" ]]; then
+  if [[ -z "$_path_to_use" ]]; then
     echo "$_path does not exist."
     return
   fi
@@ -683,6 +677,27 @@ function _setenvs {
   set +o allexport
 
   rm -rf "${_output}"
+}
+
+function _compute_path_to_use {
+  local _path_to_use=$1
+  local _level=$2
+  local _exists
+
+  for _l in $(seq $_level); do
+    if [[ -e "$_path_to_use" ]]; then
+      _exists=1
+      break
+    fi
+
+    _path_to_use="../$_path_to_use"
+  done
+
+  if [[ -z "$_exists" ]]; then
+    return
+  fi
+
+  echo "$_path_to_use"
 }
 
 alias se='_setenvs'
