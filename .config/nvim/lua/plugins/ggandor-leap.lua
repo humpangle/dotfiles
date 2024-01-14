@@ -4,8 +4,8 @@ local status_ok, leap = pcall(require, "leap")
 if status_ok then
   leap.set_default_keymaps()
 
-  vim.keymap.set({ "n", "x", "o" }, "<leader>j", "<Plug>(leap-forward-to)")
-  vim.keymap.set({ "n", "x", "o" }, "<leader>J", "<Plug>(leap-backward-to)")
+  vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward-to)")
+  vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward-to)")
 
   -- mark cursor location before jumping
   vim.api.nvim_create_autocmd("User", {

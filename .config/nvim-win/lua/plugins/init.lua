@@ -19,13 +19,13 @@ return {
 
         keyset(
           { "n", "x", "o" },
-          "<leader>j",
+          "s",
           "<Plug>(leap-forward-to)"
         )
 
         keyset(
           { "n", "x", "o" },
-          "<leader>J",
+          "S",
           "<Plug>(leap-backward-to)"
         )
 
