@@ -135,19 +135,37 @@ alias tdot=_start-tmux
 alias tnd=_start-tmux
 
 function _run_f {
-  local name
-  local search_paths=(run run.sh .run .run.sh do-run.sh)
-  local parent_dirs=(. .. ../../z ../../../z "${HOME}")
+  local _script_name
+
+  local _script_pattern=(
+    run
+    run.sh
+    .run
+    .run.sh
+    do-run.sh
+  )
+
+  # Let us search 4 directories level deep for the environment file
+  local _parent_search_paths=(
+    .
+    ..
+    ../..
+    ../../..
+    ../../z
+    ../../../z
+    "${HOME}"
+  )
+
   local exit_parent
 
-  for parent_dir in "${parent_dirs[@]}"; do
+  for parent_dir in "${_parent_search_paths[@]}"; do
     unset exit_parent
 
-    for path in "${search_paths[@]}"; do
+    for path in "${_script_pattern[@]}"; do
       complete_path="${parent_dir}/$path"
 
       if [[ -e "$complete_path" ]]; then
-        name="$complete_path"
+        _script_name="$complete_path"
         exit_parent=1
         break
       fi
@@ -156,7 +174,7 @@ function _run_f {
     if [[ -n "${exit_parent}" ]]; then break; fi
   done
 
-  bash "$name" "$@"
+  bash "$_script_name" "$@"
 }
 
 alias r='_run_f'
