@@ -311,8 +311,7 @@ function _parse-command-to-run {
 
     if [[ "$_alias_name" != "$_to_parse" ]]; then return; fi
 
-    _result="$_suffix"
-    return
+    _command_v_result="$_suffix"
   fi
 
   _result="$_command_v_result"
