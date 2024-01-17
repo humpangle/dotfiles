@@ -8,71 +8,35 @@ Vimo = Vim.o
 Vimw = Vim.wo
 Vimf = Vim.fn
 
--- Automatically install packer
-
-PACKER_BOOTSTRAP = false
-
-local install_path = Vimf.stdpath("data") ..
-    "/site/pack/packer/start/packer.nvim"
-if Vimf.empty(Vimf.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = Vimf.system({
+-- Automatically install lazy
+local lazy_dir = vim.fn.stdpath("data") .. "/lazy"
+local lazypath = lazy_dir .. "/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
     "git",
     "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
   })
-
-  print("Installing packer...... ")
-  -- Only required if you have packer configured as `opt`
-  Cmd([[packadd packer.nvim]])
-  print("Done installing packer...... close and reopen Neovim....")
 end
-
--- Autocommand that reloads neovim whenever you save the plugins.lua file
--- Cmd([[
---   augroup packer_user_config
---     autocmd!
---     autocmd BufWritePost plugins.lua source <afile> | PackerSync
---   augroup end
--- ]])
-
--- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  return
-end
-
-packer.init({
-  -- opt_default = true, -- Lazy load plugins
-  opt_default = false, -- Lazy load plugins
-  display = {
-    -- Have packer use a popup window
-    open_fn = function()
-      return require("packer.util").float({ border = "rounded" })
-    end,
-
-    prompt_border = "double", -- Border style of prompt popups
-  },
-})
+vim.opt.rtp:prepend(lazypath)
 
 -- Install your plugins here
-return packer.startup(function(use)
-  -- Have packer manage itself, eager load
-  use({ "wbthomason/packer.nvim", opt = false })
-
-  -- Useful lua functions used by lots of plugins
-  use({ "nvim-lua/plenary.nvim" })
-
+local plugins = {
   -- THEMES / COLORSCHEME
-  use({ "rakr/vim-one", "lifepillar/vim-gruvbox8", "lifepillar/vim-solarized8" })
+  {
+    "rakr/vim-one",
+    "lifepillar/vim-gruvbox8",
+    "lifepillar/vim-solarized8"
+  },
 
   -- LANGUAGE SERVERS / SYNTAX CHECKING
-  use({
+  {
     "neoclide/coc.nvim",
     branch = "release",
-    disable = true,
+    enabled = false,
     config = function()
       require("plugins/coc")
     end,
@@ -96,42 +60,40 @@ return packer.startup(function(use)
     -- },
     -- cmd = { "CocActionAsync" },
 
-    requires = {
+    dependencies = {
       { "neoclide/jsonc.vim" },
 
       -- Laravel blade
       {
         "jwalton512/vim-blade",
-        -- disable = false,
       },
 
       {
         "kristijanhusak/vim-dadbod-completion",
-        -- disable = true, -- favor sqls
+        -- enabled = false, -- favor sqls
       },
 
       -- Laravel
       {
         "noahfrederick/vim-laravel",
-        disable = false,
-        requires = {
+        enabled = true,
+        dependencies = {
           "noahfrederick/vim-composer",
           "tpope/vim-projectionist",
           "tpope/vim-dispatch",
         },
       },
     },
-  })
+  },
 
   -- NATIVE NEOVIM LSP / COMPLETION ENGINE
-  use({
+  {
     "hrsh7th/nvim-cmp",
-    disable = false,
     config = function()
       require("plugins/nvim-cmp")
     end,
 
-    requires = {
+    dependencies = {
       -- snippet engine THIS REQUIRED BY THE PLUGIN
       {
         "L3MON4D3/LuaSnip",
@@ -148,43 +110,41 @@ return packer.startup(function(use)
       "hrsh7th/cmp-path",
       -- / COMPLETION SOURCES
     },
-  })
+  },
 
   -- FUZZY FINDER
   -- sudo apt install bat -- Syntax highlighting
-  use({
-    "junegunn/fzf",
-    "junegunn/fzf.vim",
-    "stsewd/fzf-checkout.vim",
-    -- "chengzeyi/fzf-preview.vim", -- requires COC
-  })
+  "junegunn/fzf",
+  "junegunn/fzf.vim",
+  "stsewd/fzf-checkout.vim",
+  -- "chengzeyi/fzf-preview.vim", -- requires COC
 
   -- GIT
-  use({ "airblade/vim-gitgutter" })
-  use({
+  "airblade/vim-gitgutter",
+  {
     "tpope/vim-fugitive",
-    requires = {
+    dependencies = {
       -- Enable fugitive :GBrowse to open git objects on github
       "tpope/vim-rhubarb",
     },
-  })
+  },
 
   -- Statusline
-  use({ "itchyny/lightline.vim" })
+  "itchyny/lightline.vim",
 
   -- Terminal
-  use({
+  {
     "voldikss/vim-floaterm",
     config = function()
       require("plugins/floaterm")
     end,
-    requires = { "voldikss/fzf-floaterm" },
-  })
+    dependencies = { "voldikss/fzf-floaterm" },
+  },
 
   -- Better undo diff
-  use({
+  {
     "simnalamburt/vim-mundo",
-    -- disable = true,
+    -- enabled = false,
     config = function()
       Cmd([[
         " mbbill/undotree
@@ -193,28 +153,33 @@ return packer.startup(function(use)
         nnoremap <A-u> :MundoToggle<CR>
       ]])
     end,
-  })
+  },
 
-  use({ "tomtom/tcomment_vim" })
+  "tomtom/tcomment_vim",
 
   -- Surround text with quotes, parenthesis, brackets, and more.
-  use({ "tpope/vim-surround" })
+  "tpope/vim-surround",
 
   -- A number of useful motions for the quickfix list, pasting and more.
-  use({ "tpope/vim-unimpaired" })
+  "tpope/vim-unimpaired",
 
   -- MANAGE VIM SESSIONS AUTOMACTICALLY
-  use({ "tpope/vim-obsession", "dhruvasagar/vim-prosession" })
+  {
+    "dhruvasagar/vim-prosession",
+    dependencies = {
+      "tpope/vim-obsession",
+    }
+  },
 
   -- Color highlighter - superior
   -- requires golang (asdf plugin-add golang && asdf install golang <version>)
-  use({
+  {
     "rrethy/vim-hexokinase",
-    run = "cd ~/.local/share/nvim/site/pack/packer/start/vim-hexokinase && make hexokinase",
-  })
+    build = "make hexokinase",
+  },
 
   -- color picker
-  use({
+  {
     "KabbAmine/vCoolor.vim",
     config = function()
       Cmd([[
@@ -229,45 +194,36 @@ return packer.startup(function(use)
         let g:vcool_ins_rgba_map = '<a-z>'
         " Insert hsl color
         let g:vcool_ins_hsl_map = '<a-h>'
-     ]])
+      ]])
     end,
-  })
+  },
 
-  use({ "nelstrom/vim-visual-star-search" })
+  "nelstrom/vim-visual-star-search",
 
-  -- use({"easymotion/vim-easymotion"})
-
+  -- "easymotion/vim-easymotion",
   -- Easy motion alternative
-  use({
+  {
     "ggandor/leap.nvim",
     config = function()
       require("plugins/ggandor-leap")
     end,
-  })
+  },
 
   -- SYNTAX HIGHLIGHTING
-  use({
-    "elixir-editors/vim-elixir",
-
-    "jparise/vim-graphql",
-
-    -- Powershell
-    "pprovost/vim-ps1",
-
-    -- kotlin
-    "udalov/kotlin-vim",
-
-    -- Highlight, navigate, and operate on sets of matching text.
-    "andymass/vim-matchup",
-
-    "hashivim/vim-terraform",
-
-    "pearofducks/ansible-vim",
-    "nelsyeung/twig.vim",
-  })
+  "elixir-editors/vim-elixir",
+  "jparise/vim-graphql",
+  -- Powershell
+  "pprovost/vim-ps1",
+  -- kotlin
+  "udalov/kotlin-vim",
+  -- Highlight, navigate, and operate on sets of matching text.
+  "andymass/vim-matchup",
+  "hashivim/vim-terraform",
+  "pearofducks/ansible-vim",
+  "nelsyeung/twig.vim",
 
   -- making rest api call
-  use({
+  {
     "diepm/vim-rest-console",
     config = function()
       Cmd([[
@@ -293,136 +249,130 @@ return packer.startup(function(use)
         " Rename the output buffer if you don't want your output to write to
         " the `__REST_response__` buffer
         nnoremap ,rr :let b:vrc_output_buffer_name = '-Rest'<Left><Left><Left><Left><left><left>
-     ]])
+      ]])
     end,
-  })
+  },
 
   -- Database management
-  use({
-    "tpope/vim-dadbod",
+  "tpope/vim-dadbod",
+  -- https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    config = function()
+      Cmd([[
+        " postgres — postgresql://user1:userpwd@localhost:5432/testdb
+        " mysql — mysql://user1:userpwd@127.0.0.1:3306/testdb
+        " sqlite - sqlite:path-to-sqlite-database
+        " :w = execute query in open buffer
 
-    -- https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
-    {
-      "kristijanhusak/vim-dadbod-ui",
-      config = function()
-        Cmd([[
-          " postgres — postgresql://user1:userpwd@localhost:5432/testdb
-          " mysql — mysql://user1:userpwd@127.0.0.1:3306/testdb
-          " sqlite - sqlite:path-to-sqlite-database
-          " :w = execute query in open buffer
-
-          nnoremap <leader>du :tab new<CR>:DBUI<CR><C-w>o<bar><C-w>v<bar>:e ~/.local/share/db_ui/connections.json<CR>
-          nnoremap <leader>df :DBUIFindBuffer<CR>
-          nnoremap <leader>dr :DBUIRenameBuffer<CR>
-          nnoremap <leader>dl :DBUILastQueryInfo<CR>
-        ]])
-      end,
-    },
-  })
+        nnoremap <leader>du :tab new<CR>:DBUI<CR><C-w>o<bar><C-w>v<bar>:e ~/.local/share/db_ui/connections.json<CR>
+        nnoremap <leader>df :DBUIFindBuffer<CR>
+        nnoremap <leader>dr :DBUIRenameBuffer<CR>
+        nnoremap <leader>dl :DBUILastQueryInfo<CR>
+      ]])
+    end,
+  },
 
   -- Image preview
   -- pip install -U Pillow
-  use({ "mi60dev/image.vim" })
+  "mi60dev/image.vim",
 
   -- tmux-like window navigation
-  use({
-    use {
-      "s1n7ax/nvim-window-picker",
-      tag = "v1.*",
-      config = function()
-        require "window-picker".setup({
-          include_current_win = true,
-          show_prompt = false,
-          filter_rules = { bo = { buftype = {} } },
-        })
+  {
+    "s1n7ax/nvim-window-picker",
+    tag = "v1.*",
+    enabled = false,
+    config = function()
+      require "window-picker".setup({
+        include_current_win = true,
+        show_prompt = false,
+        filter_rules = { bo = { buftype = {} } },
+      })
 
-        local picker = require("window-picker")
+      local picker = require("window-picker")
 
-        vim.keymap.set("n", "<leader>-", function()
-          local picked_window_id = picker.pick_window() or
-              vim.api.nvim_get_current_win()
-          vim.api.nvim_set_current_win(picked_window_id)
-        end, { desc = "Pick a window" })
-      end,
-    },
-    {
-      "t9md/vim-choosewin",
-      disable = true,
-      config = function()
-        Cmd([[
+      vim.keymap.set("n", "<leader>-", function()
+        local picked_window_id = picker.pick_window() or
+            vim.api.nvim_get_current_win()
+        vim.api.nvim_set_current_win(picked_window_id)
+      end, { desc = "Pick a window" })
+    end,
+  },
+  {
+    "t9md/vim-choosewin",
+    enabled = false,
+    config = function()
+      Cmd([[
       " if you want to use overlay feature
       let g:choosewin_overlay_enable = 1
       " invoke with '-'
       nmap <Leader>- <Plug>(choosewin)
       ]])
-      end,
-    },
-  })
+    end,
+  },
 
   -- Send text from vim to tmux/NeoVim :terminal etc
-  use({
+  {
     "jpalardy/vim-slime",
     config = function()
       require("plugins/vim-slime")
       -- ctrl-c ctrl-c
       -- ctrl-c v
     end,
-  })
+  },
 
   -- MARKDOWN
-  use({
+  {
     "iamcco/markdown-preview.nvim",
-    opt = true,
-    run = "cd app && yarn install",
+    build = "cd app && yarn install",
     ft = { "markdown" },
     config = function()
       Vimg.mkdp_refresh_slow = 1
       Cmd([[
-        nnoremap <leader>mt :MarkdownPreviewToggle<CR>
-        let g:mkdp_open_to_the_world = 1
+      nnoremap <leader>mt :MarkdownPreviewToggle<CR>
+      let g:mkdp_open_to_the_world = 1
       ]])
     end,
-  })
+  },
 
   -- Another markdown preview
-  use({
+  {
     "ellisonleao/glow.nvim",
     opt = true,
-    disable = true,
+    enabled = false,
     setup = function()
       -- Vimg.glow_binary_path = "~\\scoop\\apps\\glow\\current"
     end,
-  })
+  },
 
   -- Align Markdown table
-  use({ "godlygeek/tabular" })
+  "godlygeek/tabular",
 
   -- Tag generation - browse tags with FZF - keymap: `,bt` / `,pt`
-  use({
+  {
     "ludovicchabant/vim-gutentags",
     opt = false,
-    disable = true,
-    -- disable = false,
+    enabled = false,
     setup = function()
       Vimg.gutentags_add_default_project_roots = 0
       Vimg.gutentags_project_root = { ".git", "package.json" }
       Vimg.gutentags_trace = 0
     end,
-  })
+  },
 
   -- Quickly toggle maximaize a tab
-  use({ "szw/vim-maximizer" })
+  "szw/vim-maximizer",
 
-  use({ "editorconfig/editorconfig-vim" })
+  "editorconfig/editorconfig-vim",
 
   -- Debugging
-  use({
+  {
     "puremourning/vimspector",
-    disable = true,
+    enabled = false,
     setup = function()
       Vimg.vimspector_enable_mappings = "HUMAN"
     end,
-  })
+  },
 
   -- Enhances vim ga with Unicode character names, Vim digraphs, emoji codes
   -- Pressing ga on a character reveals its representation in
@@ -430,86 +380,67 @@ return packer.startup(function(use)
   -- octal,
   -- hex
   -- Unicode character names
-  use({ "tpope/vim-characterize" })
+  "tpope/vim-characterize",
 
   -- FORMATTERS
-  use({
-    -- Works for many files as far as binary that can format the file exists
-    {
-      "sbdchd/neoformat",
-      config = function()
-        require("plugins/neoformat")
-      end,
-    },
-
-    "dart-lang/dart-vim-plugin",
-
-    {
-      "aeke/vim-phpfmt",
-      disable = true,
-      config = function()
-        Cmd([[
-            let g:phpfmt_psr2 = 1
-            " let g:phpfmt_enable_auto_align = 1
-            let g:phpfmt_on_save = 0
-            nmap <leader>pc1 :w<CR>:call PhpFmtFixFile()<CR>
+  -- Works for many files as far as binary that can format the file exists
+  {
+    "sbdchd/neoformat",
+    config = function()
+      require("plugins/neoformat")
+    end,
+  },
+  "dart-lang/dart-vim-plugin",
+  {
+    "aeke/vim-phpfmt",
+    enabled = false,
+    config = function()
+      Cmd([[
+        let g:phpfmt_psr2 = 1
+        " let g:phpfmt_enable_auto_align = 1
+        let g:phpfmt_on_save = 0
+        nmap <leader>pc1 :w<CR>:call PhpFmtFixFile()<CR>
         ]])
-      end,
-    },
-  })
+    end,
+  },
 
   -- Generate random paragraph/country/word/nonsense
-  use({
+  {
     "tkhren/vim-fake",
     config = function()
       Cmd([[
-          "" Get a nonsense text like Lorem ipsum
-          call fake#define('sentence', 'fake#capitalize('
-                  \ . 'join(map(range(fake#int(3,15)),"fake#gen(\"nonsense\")"))'
-                  \ . ' . fake#chars(1,"..............!?"))')
+      "" Get a nonsense text like Lorem ipsum
+      call fake#define('sentence', 'fake#capitalize('
+      \ . 'join(map(range(fake#int(3,15)),"fake#gen(\"nonsense\")"))'
+      \ . ' . fake#chars(1,"..............!?"))')
 
-          call fake#define('paragraph', 'join(map(range(fake#int(3,10)),"fake#gen(\"sentence\")"))')
+      call fake#define('paragraph', 'join(map(range(fake#int(3,10)),"fake#gen(\"sentence\")"))')
 
-          "" Alias
-          call fake#define('p', 'fake#gen("paragraph")')
-          call fake#define('lorem', 'fake#gen("paragraph")')
-        ]])
+      "" Alias
+      call fake#define('p', 'fake#gen("paragraph")')
+      call fake#define('lorem', 'fake#gen("paragraph")')
+      ]])
     end,
-  })
+  },
 
-  use({
+  {
     "emmanueltouzery/elixir-extras.nvim",
-    requires = { "nvim-telescope/telescope.nvim" },
+    dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
-      -- Vim.keymap.set(
-      --   "n", "<leader>EE", "", {
-      --     noremap = true,
-      --     callback = function()
-      --       require('elixir-extras').elixir_view_docs({
-      --         include_mix_libs = true
-      --       })
-      --     end,
-      --     desc = 'Bring up elixir doc',
-      --   }
-      -- )
-
       Cmd([[
-          nnoremap <Leader>EE :lua require('elixir-extras').elixir_view_docs({include_mix_libs=true})<cr>
+        nnoremap <Leader>EE :lua require('elixir-extras').elixir_view_docs({include_mix_libs=true})<cr>
       ]])
 
       -- require('elixir-extras').setup_multiple_clause_gutter()
     end
-  })
+  },
 
   -- Use <ctrl-h> <ctrl-j> <ctrl-k> <ctrl-l> <ctrl-\> to switch between vim
   -- and tmux splits
   -- use {"christoomey/vim-tmux-navigator"}
   -- An ASCII math generator from LaTeX equations.
   -- use {"jbyuki/nabla.nvim"}
+}
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
-  end
-end)
+local lazy_opts = {}
+require("lazy").setup(plugins, lazy_opts)

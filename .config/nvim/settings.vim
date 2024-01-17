@@ -176,8 +176,6 @@ augroup END
 augroup filetypes
   au!
 
-  autocmd VimEnter * PackerCompile
-
   autocmd! FileType json set filetype=jsonc
   autocmd! FileType vifm set filetype=vim
   " autocmd! FileType mysql set filetype=sql
@@ -518,8 +516,7 @@ nnoremap <localleader>re :VMessage reg<CR>
 """""""""""""""""""""""""""""""""""""
 
 nnoremap ,rm :call DeleteFile()<CR>
-nnoremap <Leader>ps :PackerSync<CR>
-nnoremap <Leader>pc :PackerCompile<CR>
+nnoremap <Leader>ps :Lazy update<CR>
 
 if !empty($HAS_WSL2)
   nnoremap ,e. :silent !open-wsl-explorer.sh %:p:h<CR>

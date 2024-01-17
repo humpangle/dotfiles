@@ -537,8 +537,6 @@ nnoremap <localleader>re :VMessage reg<CR>
 """""""""""""""""""""""""""""""""""""
 
 nnoremap ,rm :call DeleteFile()<CR>
-nnoremap <Leader>ps :PackerSync<CR>
-nnoremap <Leader>pc :PackerCompile<CR>
 
 " Inverted cursor workaround for windows terminal
 " https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268

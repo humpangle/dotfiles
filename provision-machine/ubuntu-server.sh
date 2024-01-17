@@ -596,23 +596,6 @@ function install-neovim {
 
   chmod ugo+x "$HOME/.local/bin/shfmt"
 
-  if _is-dev "$@"; then
-    local packer_install_dir=~/.local/share/nvim/site/pack/packer/start
-    rm -rf $packer_install_dir
-
-    git clone --depth 1 \
-      https://github.com/wbthomason/packer.nvim \
-      "${packer_install_dir}/packer.nvim"
-
-    nvim \
-      --headless \
-      -c 'autocmd User PackerComplete quitall' \
-      -c 'PackerSync' 2>/dev/null
-
-    _echo "WE'LL BE USING DOTFILES FOR NEOVIM CONFIG. RETURNING."
-    return
-  fi
-
   # shellcheck disable=2016
   printf 'export DISPLAY="$(%s):0"' "ip route | awk '/default/ {print \$3}'"
 

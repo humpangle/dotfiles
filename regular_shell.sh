@@ -40,13 +40,9 @@ pathmunge() {
 alias ug='clear && sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 
 # vim
-PACKER_COMPILED_PATH="$HOME/dotfiles/config/nvim/plugin/packer_compiled.lua"
-alias packerdelete="rm -rf $PACKER_COMPILED_PATH; echo $PACKER_COMPILED_PATH"
-alias packerremove='packerdelete'
-
 alias vi='/usr/bin/vim'
 alias vimdiff="nvim -d"
-alias v="packerdelete &>/dev/null; nvim"
+alias v="nvim"
 alias v.="v ."
 alias svim='sudo -E nvim'
 alias sv='sudo -E nvim'
@@ -69,9 +65,6 @@ alias vtsl='export EBNIS_VIM_THEME=vim-solarized8 EBNIS_VIM_THEME_BG=l'
 alias vff.='export EBNIS_VIM_FUZZY_FINDER='
 alias vfff='export EBNIS_VIM_FUZZY_FINDER=fzf'
 alias vffc='export EBNIS_VIM_FUZZY_FINDER=vim-clap'
-alias npacker="nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
-alias packerinstall="rm -rf $HOME/.local/share/nvim \
-  && rm -rf $PACKER_COMPILED_PATH"
 
 remove_vim_sessionf() {
   local ME
