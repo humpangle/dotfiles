@@ -138,12 +138,14 @@ function _run_f {
     do-run.sh
   )
 
-  # Let us search 4 directories level deep for the environment file
+  # Let us search 5 directories level deep for the environment file
   local _parent_search_paths=(
     .
     ..
     ../..
     ../../..
+    ../../../..
+    ../../../../..
     ../../z
     ../../../z
     "${HOME}"
