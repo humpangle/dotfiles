@@ -160,7 +160,7 @@ function _run_f {
       complete_path="${parent_dir}/$path"
 
       if [[ -e "$complete_path" ]]; then
-        _script_name="$complete_path"
+        _script_name="$(realpath "$complete_path")"
         exit_parent=1
         break
       fi
@@ -169,7 +169,12 @@ function _run_f {
     if [[ -n "${exit_parent}" ]]; then break; fi
   done
 
+  local _script_dir="$(dirname "$_script_name")"
+
+  # Let us run the script at the root of script file
+  cd "$_script_dir" || true
   bash "$_script_name" "$@"
+  cd - &>/dev/null || true
 }
 
 alias r='_run_f'
