@@ -307,7 +307,11 @@ function _parse-command-to-run {
     _command_v_result="$_suffix"
   fi
 
-  _result="$_command_v_result"
+  # Replace all whitespace with '\ '. Why?
+  # When using WSL, windows binaries sometimes contain space which is frowned up in path names for unix
+  local _find=" "
+  local _replace="\ "
+  _result="${_command_v_result//$_find/$_replace}"
 }
 
 # Save bash history per tmux pane
