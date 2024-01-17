@@ -197,6 +197,7 @@ fi
 _in_filename="$_path_to_use"
 
 _in_file_full_path_name="$(realpath "$_in_filename")"
+_in_file_dir="$(dirname "$_in_file_full_path_name")"
 
 _in_file_content="$(cat "$_in_file_full_path_name")"
 
@@ -204,44 +205,54 @@ _out_file_full_path_name="${_in_file_full_path_name}.n"
 
 declare -A _env_key_to_value_map=()
 
-line_regex="^[^#]+.+"
+function _parse_variables_in_in_infile {
+  _line_regex="^[^#]+.+"
 
-while read -r line; do
-  if [[ "$line" =~ $line_regex ]]; then
-    key=$(echo "$line" | cut -d '=' -f 1)
-    val=$(echo "$line" | cut -d'=' -f 2-)
+  # Change directory to root of the environment. Why?
+  # We may call this script at as many as $_level up the root of in_file, but we want to make sure we are working only in the root of in_file
+  cd "$_in_file_dir"
 
-    [[ -n "$debug" ]] && echo "$key=$val"
+  while read -r line; do
+    if [[ "$line" =~ $_line_regex ]]; then
+      key=$(echo "$line" | cut -d '=' -f 1)
+      val=$(echo "$line" | cut -d'=' -f 2-)
 
-    # Imagine we have a line: HOST=my-host
-    # And another line USER_HOME=/home/${HOST} = this a line with interpolated variables. And each `${}` is an
-    #   interpolated variable.
-    # We wish to parse `/home/${HOST}` such that the final result will be `USER_HOME=/home/my-host`. This
-    # means each interpolated variable will be replaced by its concrete value. We assume that the concrete value must
-    # have been read and parsed from a preceeding line.
+      [[ -n "$debug" ]] && echo "$key=$val"
 
-    # _interpolated_variable_without_brackets=HOST
-    for _interpolated_variable_without_brackets in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
-      # _interpolated_variable_with_brackets=${HOST}
-      _interpolated_variable_with_brackets="\${$_interpolated_variable_without_brackets}"
+      # Imagine we have a line: HOST=my-host
+      # And another line USER_HOME=/home/${HOST} = this a line with interpolated variables. And each `${}` is an
+      #   interpolated variable.
+      # We wish to parse `/home/${HOST}` such that the final result will be `USER_HOME=/home/my-host`. This
+      # means each interpolated variable will be replaced by its concrete value. We assume that the concrete value must
+      # have been read and parsed from a preceeding line.
 
-      _interpolated_variable_concrete_value="${_env_key_to_value_map[$_interpolated_variable_without_brackets]:-}"
+      # _interpolated_variable_without_brackets=HOST
+      for _interpolated_variable_without_brackets in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
+        # _interpolated_variable_with_brackets=${HOST}
+        _interpolated_variable_with_brackets="\${$_interpolated_variable_without_brackets}"
 
-      # Imagine you have interpolated variable _interpolated_variable_without_brackets=PWD. PWD is a bash variable
-      # which means we may not have the value from preceeding lines.
-      # The following expression will turn the value stored in `_interpolated_variable_without_brackets` into a
-      # variable ($PWD) and expand it (so we get /some/path).
-      if [[ -z "$_interpolated_variable_concrete_value" ]]; then
-        _interpolated_variable_concrete_value=${!_interpolated_variable_without_brackets}
-      fi
+        _interpolated_variable_concrete_value="${_env_key_to_value_map[$_interpolated_variable_without_brackets]:-}"
 
-      # Replace each interpolated variable with its concrete value.
-      val="${val//$_interpolated_variable_with_brackets/$_interpolated_variable_concrete_value}"
-    done
+        # Imagine you have interpolated variable _interpolated_variable_without_brackets=PWD. PWD is a bash variable
+        # which means we may not have the value from preceeding lines.
+        # The following expression will turn the value stored in `_interpolated_variable_without_brackets` into a
+        # variable ($PWD) and expand it (so we get /some/path).
+        if [[ -z "$_interpolated_variable_concrete_value" ]]; then
+          _interpolated_variable_concrete_value=${!_interpolated_variable_without_brackets}
+        fi
 
-    _env_key_to_value_map["$key"]="${val}"
-  fi
-done <<<"${_in_file_content}"
+        # Replace each interpolated variable with its concrete value.
+        val="${val//$_interpolated_variable_with_brackets/$_interpolated_variable_concrete_value}"
+      done
+
+      _env_key_to_value_map["$key"]="${val}"
+    fi
+  done <<<"${_in_file_content}"
+
+  cd - &>/dev/null
+}
+
+_parse_variables_in_in_infile
 
 if [[ -n "$_out_filename" ]]; then
   _out_file_full_path_name=$(realpath "$_out_filename")
