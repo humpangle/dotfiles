@@ -435,6 +435,12 @@ local plugins = {
     end
   },
 
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {} -- this is equalent to setup({}) function
+  }
+
   -- Use <ctrl-h> <ctrl-j> <ctrl-k> <ctrl-l> <ctrl-\> to switch between vim
   -- and tmux splits
   -- use {"christoomey/vim-tmux-navigator"}
