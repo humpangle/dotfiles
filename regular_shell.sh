@@ -1254,10 +1254,90 @@ alias edit_wt='nvim _edit-windows-terminal-settings'
 alias wt='_edit-windows-terminal-settings'
 
 if [[ "$(uname -r)" == *WSL2 ]]; then
+
+  function ____open-wsl-explorer-help {
+    read -r -d '' var <<'eof'
+What does function do. Usage:
+  _open-wsl-explorer [OPTIONS]
+
+Options:
+  --verbose/-v
+       Description should be capitalized and end in a period.
+
+Examples:
+  _open-wsl-explorer
+eof
+
+    echo -e "${var}"
+  }
+
   function _open-wsl-explorer {
-    if [ -e "$1" ]; then
+    : "___help___ ____open-wsl-explorer-help"
+
+    local _path="$PWD"
+    local _should_copy
+
+    # --------------------------------------------------------------------------
+    # PARSE ARGUMENTS
+    # --------------------------------------------------------------------------
+    local parsed
+
+    if ! parsed="$(
+      getopt \
+        --longoptions=help,copy,path: \
+        --options=h,c,p: \
+        --name "$0" \
+        -- "$@"
+    )"; then
+      exit 1
+    fi
+
+    # Provides proper quoting
+    eval set -- "$parsed"
+
+    while true; do
+      case "$1" in
+      --help | -h)
+        ____open-wsl-explorer-help
+        return
+        ;;
+
+      --copy | -c)
+        _should_copy=1
+        shift
+        ;;
+
+      --path | -p)
+        _path="$(realpath $2)"
+        shift 2
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        return
+        ;;
+      esac
+    done
+
+    # --------------------------------------------------------------------------
+    # END PARSE ARGUMENTS
+    # --------------------------------------------------------------------------
+
+    local _windows_path="$(wslpath -w "$_path")"
+    echo -n "$_windows_path" | xclip -selection c
+
+    if [[ -n "$_should_copy" ]]; then
+      return
+    fi
+
+    if [ -e "$_path" ]; then
       (
-        cd "${1}" || exit 1
+        cd "$_path" || true
         /c/WINDOWS/explorer.exe .
       )
     else
