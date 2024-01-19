@@ -241,7 +241,8 @@ fi
 # -----------------------------------------------------------------------------
 
 if command -v ansible &>/dev/null; then
-  alias an='ansible-playbook'
+  alias an='ansible'
+  alias ap='ansible-playbook'
 fi
 
 # -----------------------------------------------------------------------------
