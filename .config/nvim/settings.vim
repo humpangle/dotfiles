@@ -1,8 +1,3 @@
-" Set <leader> key to <Space>
-nnoremap <Space> <Nop>
-let mapleader=" "
-let maplocalleader=","
-
 " Alter the shape of the cursor
 " set guicursor=
 " augroup Shape

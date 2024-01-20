@@ -4,6 +4,13 @@ vim.o.shell = "/bin/bash"
 -- editorconfig/editorconfig-vim
 vim.g.EditorConfig_exclude_patterns = { "fugitive://.*" }
 
+-- lazy.nvim requires that we set leader keys before requiring lazy
+vim.keymap.set('n', '<Space>', '<Nop>', {})
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+
+require('plugins/plugins')
+
 vim.cmd("source ~/.config/nvim/settings.vim")
 vim.cmd("source ~/.config/nvim/plugins/lightline.vim")
 vim.cmd("source ~/.config/nvim/plugins/fugitive.vim")
@@ -11,8 +18,6 @@ vim.cmd("source ~/.config/nvim/plugins/fzf.vim")
 vim.cmd("source ~/.config/nvim/plugins/vimspector.vim")
 -- vim.cmd("source ~/.config/nvim/plugins/vim-easymotion.vim")
 vim.cmd("source ~/.config/nvim/plugins/vim-maximizer.vim")
-
-require('plugins/plugins')
 
 -- THEME SELECTION
 local env_vim_theme = os.getenv("EBNIS_VIM_THEME")
@@ -33,7 +38,7 @@ end
 -- vim.o.shellcmdflag = "-ic"
 
 local term_clear = function()
-  vim.fn.feedkeys("", 'n')   -- control-L
+  vim.fn.feedkeys("", 'n') -- control-L
   local sb = vim.bo.scrollback
   vim.bo.scrollback = 1
   vim.bo.scrollback = sb
