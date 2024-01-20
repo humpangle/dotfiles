@@ -9,7 +9,7 @@ tags.lock
 *.7z
 erl_crash.dump
 .gutctags
-*.code-workspace
+**/*.code-workspace
 .vimspector.json
 *.rest
 
