@@ -400,6 +400,7 @@ alias rb='sudo reboot'
 alias scouser='sudo chown -R $USER:$USER'
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
+alias cds='cd /c/0000-shared'
 alias shl='source ~/.bashrc'
 
 # cp -r ./xx yy -> will create yy/xx
