@@ -18,13 +18,13 @@ return {
         leap.set_default_keymaps()
 
         keyset(
-          { "n", "x", "o" },
+          { "n", "o" },
           "s",
           "<Plug>(leap-forward-to)"
         )
 
         keyset(
-          { "n", "x", "o" },
+          { "n", "o" },
           "S",
           "<Plug>(leap-backward-to)"
         )
