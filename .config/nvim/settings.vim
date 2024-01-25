@@ -511,6 +511,7 @@ nnoremap <localleader>re :VMessage reg<CR>
 """""""""""""""""""""""""""""""""""""
 
 nnoremap ,rm :call DeleteFile()<CR>
+nnoremap ,rd :call DeleteFile('d')<CR>
 nnoremap <Leader>ps :Lazy update<CR>
 
 if !empty($HAS_WSL2)
@@ -569,11 +570,19 @@ endif
 
 """""""""""""""""""" Functions """"""""""""""""""""
 " DELETE CURRENT FILE
-function! DeleteFile()
-  let l:delprompt = input('Sure to delete: "' . expand('%') . '"? ')
+function! DeleteFile(which)
+  let l:to_delete = a:which == 'd' ? expand('%:p:h') : expand('%')
+
+  let l:delprompt = input('Sure to delete: "' . l:to_delete . '"? ')
+
   if l:delprompt == "y" || "Y"
-    :echo delete(@%)
-    execute 'bdelete!'
+    if a:which == 'd'
+      execute('!rm -rf ' . l:to_delete)
+      execute 'bdelete!'
+    else
+      :echo delete(@%)
+      execute 'bdelete!'
+    endif
   else
     redraw!
     return
