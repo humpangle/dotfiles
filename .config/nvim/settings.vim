@@ -592,7 +592,7 @@ endfunction
 " RENAME CURRENT FILE
 function! RenameFile()
   let old_name = expand('%')
-  let new_name = input('New file name: ', expand('%'), 'file')
+  let new_name = input('New file name: ', old_name, 'file')
   if new_name != '' && new_name != old_name
     let _dirname =  fnamemodify(new_name, ':p:h')
     execute("!mkdir -p " . _dirname)
