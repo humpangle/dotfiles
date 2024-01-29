@@ -570,7 +570,7 @@ endif
 
 """""""""""""""""""" Functions """"""""""""""""""""
 " DELETE CURRENT FILE
-function! DeleteFile(which)
+function! DeleteFile(which = 'f')
   let l:to_delete = a:which == 'd' ? expand('%:p:h') : expand('%')
 
   let l:delprompt = input('Sure to delete: "' . l:to_delete . '"? ')
