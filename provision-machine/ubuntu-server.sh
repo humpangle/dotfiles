@@ -1902,7 +1902,7 @@ eof
 
 function install-kind {
   cd ~/projects/0 || exit 1
-  curl -Lfso ./kind \
+  curl -Lfo ./kind \
     https://github.com/kubernetes-sigs/kind/releases/download/v0.20.0/kind-linux-amd64
 
   chmod 755 ./kind
