@@ -1907,6 +1907,8 @@ function install-kind {
 
   chmod 755 ./kind
   mv ./kind "$LOCAL_BIN_PATH"
+
+  cd - &>/dev/null
 }
 
 function help {
