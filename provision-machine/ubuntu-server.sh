@@ -1900,6 +1900,15 @@ eof
   echo -e "${var}"
 }
 
+function install-kind {
+  cd ~/projects/0 || exit 1
+  curl -Lfso ./kind \
+    https://github.com/kubernetes-sigs/kind/releases/download/v0.20.0/kind-linux-amd64
+
+  chmod 755 ./kind
+  mv ./kind "$LOCAL_BIN_PATH"
+}
+
 function help {
   : "List available tasks."
 
