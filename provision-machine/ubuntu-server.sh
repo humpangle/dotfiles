@@ -1912,6 +1912,23 @@ function install-kind {
   cd - &>/dev/null
 }
 
+function install-kubectl {
+  cd "$PROJECT_0_PATH" || exit 1
+
+  local latest_version
+  latest_version="$(
+    curl -L -s https://dl.k8s.io/release/stable.txt
+  )"
+
+  curl -LfO \
+    "https://dl.k8s.io/release/$latest_version/bin/linux/amd64/kubectl"
+
+  chmod 755 kubectl
+  mv kubectl "$LOCAL_BIN_PATH"
+
+  cd - &>/dev/null
+}
+
 function help {
   : "List available tasks."
 
