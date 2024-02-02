@@ -9,6 +9,7 @@ ERLANG_VERSION=26.1.2
 ELIXIR_VERSION=1.15.7-otp-26
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
+PROJECT_0_PATH="$HOME/projects/0"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
 PYTHON_VERSION=3.10.8
 RUST_VERSION=1.65.0
@@ -1465,7 +1466,7 @@ function setup-dev {
   install-chrome
 
   mkdir -p "${LOCAL_BIN_PATH}" \
-    ~/projects/0 \
+    "$PROJECT_0_PATH" \
     ~/.ssh \
     ~/.config \
     ~/.config/erlang_ls
@@ -1653,7 +1654,7 @@ function install-terraform-lsp {
     return
   fi
 
-  cd ~/projects/0
+  cd "$PROJECT_0_PATH"
 
   local _binary="terraform-${_flavor}"
 
@@ -1901,7 +1902,7 @@ eof
 }
 
 function install-kind {
-  cd ~/projects/0 || exit 1
+  cd "$PROJECT_0_PATH" || exit 1
   curl -Lfo ./kind \
     https://github.com/kubernetes-sigs/kind/releases/download/v0.20.0/kind-linux-amd64
 
