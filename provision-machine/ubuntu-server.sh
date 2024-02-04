@@ -1223,8 +1223,11 @@ function install-python {
 
   "$(_asdf-bin-path)" reshim python || true
 
+  local _python_bin_path
+  _python_bin_path="$(asdf which python 2>/dev/null)"
+
   # shellcheck disable=SC2016
-  echo 'export PYTHON3="$( asdf which python 2>/dev/null )"' >>~/.bashrc
+  echo 'export PYTHON3="$_python_bin_path"' >>~/.bashrc
 }
 
 function install-ansible {
