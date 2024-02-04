@@ -1174,26 +1174,84 @@ function install-nodejs-dev-pkgs {
 function install-python {
   : "Install python"
 
-  _may_be_install_asdf "$@"
+  local _version="$PYTHON_VERSION"
+  local _dev
+  local _global
 
-  _echo "INSTALLING PYTHON"
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
 
-  if ! _is-dev "$@"; then
+  if ! parsed="$(
+    getopt \
+      --longoptions=global,dev,version: \
+      --options=g,d,v: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --dev | -d)
+      _dev='dev'
+      shift
+      ;;
+
+    --version | -v)
+      _version="$2"
+      shift 2
+      ;;
+
+    --global | -g)
+      _global=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      return
+      ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  _may_be_install_asdf "$_dev"
+
+  _echo "INSTALLING PYTHON $_version"
+
+  if [[ -z "$_dev" ]]; then
     _install-deps "${PYTHON_DEPS[*]}"
   fi
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
-  "$(_asdf-bin-path)" plugin add python
+  "$(_asdf-bin-path)" plugin add python 2>/dev/null
 
-  "$(_asdf-bin-path)" install python $PYTHON_VERSION
-  "$(_asdf-bin-path)" global python $PYTHON_VERSION
+  "$(_asdf-bin-path)" install python "$_version"
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
-  if _is-dev "$@"; then
+  _tool-versions-backup --backup=python
+
+  "$(_asdf-bin-path)" local python "$_version"
+
+  if [[ -n "$_dev" ]]; then
     pip install -U \
       pip \
       yt-dlp \
@@ -1212,11 +1270,20 @@ function install-python {
 
   "$(_asdf-bin-path)" reshim python || true
 
-  local _python_bin_path
-  _python_bin_path="$(asdf which python 2>/dev/null)"
+  _tool-versions-backup --restore=python
 
-  # shellcheck disable=SC2016
-  echo 'export PYTHON3="$_python_bin_path"' >>~/.bashrc
+  if [[ -n "$_global" ]]; then
+    local _python_bin_path
+
+    "$(_asdf-bin-path)" global python "$_version"
+
+    local _exp='export PYTHON3="\$\(asdf which python 2>/dev/null\)"'
+
+    if ! grep -qP "$_exp" .bashrc &>/dev/null; then
+      # shellcheck disable=SC2016
+      echo 'export PYTHON3="$(asdf which python 2>/dev/null)"' >>~/.bashrc
+    fi
+  fi
 }
 
 function install-ansible {
@@ -1513,7 +1580,7 @@ function setup-dev {
 
   install-golang dev || true
   install-nodejs --dev || true
-  install-python dev || true
+  install-python --dev --global || true
 
   # Installing lua will also install rust because of stylua
   install-lua dev || true
