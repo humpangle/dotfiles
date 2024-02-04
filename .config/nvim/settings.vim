@@ -515,9 +515,15 @@ nnoremap ,rd :call DeleteFile('d')<CR>
 nnoremap <Leader>ps :Lazy update<CR>
 
 if !empty($HAS_WSL2)
+  function! WslPath() abort
+    let l:path = execute('!wslpath -w %')->split('\n')[-1]
+    redraw!
+    let @+ = l:path
+    echo @+
+  endfunction
+
   nnoremap ,e. :silent !open-wsl-explorer.sh %:p:h<CR>
-  nnoremap ,ef : !wslpath -w % \| xclip -selection c<CR><CR>
-  nnoremap ,eF : !wslpath -w %<CR>
+  nnoremap ,ef :call WslPath()<CR>
   nnoremap <leader>TT :execute("!ebnis-save-tmux.sh && $WSL_EXE --shutdown")
   nnoremap ,TT :execute("! ebnis-save-tmux.sh && $WSL_EXE --terminate $WSL_DISTRO_NAME")
 endif
