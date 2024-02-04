@@ -241,10 +241,14 @@ function _extract-version {
 }
 
 function _tool-versions-backup {
-  local _create
-  local _remove
-  local _doc
-  local _tools
+  : "Examples: "
+  : " _tool-versions-backup --backup=nodejs"
+  : " _tool-versions-backup --restore=nodejs"
+  : " _tool-versions-backup --backup=elixir,erlang"
+  : " _tool-versions-backup --restore=elixir,erlang"
+
+  local _backup
+  local _restore
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -253,8 +257,8 @@ function _tool-versions-backup {
 
   if ! parsed="$(
     getopt \
-      --longoptions=create,remove,doc:,tools: \
-      --options=c,r,d:,t: \
+      --longoptions=restore:,backup: \
+      --options=r:,b: \
       --name "$0" \
       -- "$@"
   )"; then
@@ -266,23 +270,13 @@ function _tool-versions-backup {
 
   while true; do
     case "$1" in
-    --create | -c)
-      _create=1
-      shift
-      ;;
-
-    --remove | -r)
-      _remove=1
-      shift
-      ;;
-
-    --doc | -d)
-      _doc="${2}"
+    --backup | -b)
+      _backup=$2
       shift 2
       ;;
 
-    --tools | -t)
-      _tools="${2}"
+    --restore | -r)
+      _restore=$2
       shift 2
       ;;
 
@@ -301,37 +295,32 @@ function _tool-versions-backup {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  # If caller did not provide a documentation string, use the tools as
-  # documentation string
-  if [[ -z "${_doc}" ]]; then
-    _doc="${_tools}"
-  fi
+  local _tool_version_bak=./.tool-versions-bak
+  local _tool_version_original=./.tool-versions
 
-  if [[ -n "${_remove}" ]]; then
-    if [[ -n "${_tools}" ]]; then
-      IFS=, read -r -a _tools_array <<<"${_tools}"
+  if [[ -n "${_restore}" ]]; then
+    IFS=, read -r -a _tools_array <<<"${_restore}"
 
-      for _el in "${_tools_array[@]}"; do
-        "$(_asdf-bin-path)" reshim "${_el}"
-      done
-    fi
+    for _el in "${_tools_array[@]}"; do
+      "$(_asdf-bin-path)" reshim "${_el}"
+    done
 
-    _echo "Removing temporary local .tool-versions created for ${_doc}"
-    rm -rf ./.tool-versions
+    _echo "Removing temporary local .tool-versions created for ${_restore}"
+    rm -rf "$_tool_version_original"
 
-    if [[ -e ./.tool-versions-bak ]]; then
-      _echo "Rename local .tool-versions-bak to .tool-versions"
-      mv ./.tool-versions-bak ./.tool-versions
+    if [[ -e "$_tool_version_bak" ]]; then
+      _echo "Rename local $_tool_version_bak to $_tool_version_original"
+      mv "$_tool_version_bak" "$_tool_version_original"
     fi
 
     return
   fi
 
-  _echo "Creating temporary local .tool-versions for ${_doc}"
+  # CREATING = backup
+  _echo "Backing up $_tool_version_original (if it exists) to $_tool_version_bak for ${_backup}"
 
-  if [[ -e ./.tool-versions ]]; then
-    _echo "Rename local .tool-versions to .tool-versions-bak"
-    mv ./.tool-versions ./.tool-versions-bak
+  if [[ -e "$_tool_version_original" ]]; then
+    mv "$_tool_version_original" "$_tool_version_bak"
   fi
 }
 
@@ -1119,7 +1108,7 @@ function install-nodejs {
   fi
 
   if [[ -z "${_set_local}" ]]; then
-    _tool-versions-backup --doc="nodejs"
+    _tool-versions-backup --backup=nodejs
   fi
 
   "$(_asdf-bin-path)" local nodejs "${version}"
@@ -1135,7 +1124,7 @@ function install-nodejs {
   "$(_asdf-bin-path)" reshim nodejs
 
   if [[ -z "${_set_local}" ]]; then
-    _tool-versions-backup --remove --tools=nodejs
+    _tool-versions-backup --restore=nodejs
   fi
 }
 
