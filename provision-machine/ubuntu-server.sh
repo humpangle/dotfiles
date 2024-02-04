@@ -11,7 +11,7 @@ BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 PROJECT_0_PATH="$HOME/projects/0"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
-PYTHON_VERSION=3.10.8
+PYTHON_VERSION=3.12.1
 RUST_VERSION=1.65.0
 
 LUA_DEPS=(
