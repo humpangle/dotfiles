@@ -129,7 +129,7 @@ function _echo {
     line="${line}${equal}"
   done
 
-  echo -e "\n${text}  ${line}${line}"
+  echo -e "\n${text}  ${line}${line}\n"
 }
 
 function _asdf-bin-path {
