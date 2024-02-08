@@ -401,7 +401,14 @@ alias scouser='sudo chown -R $USER:$USER'
 alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
 alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
 alias cds='cd /c/0000-shared'
+alias cdd='cd $HOME/dotfiles'
 alias shl='source ~/.bashrc'
+alias exshell='export SHELL=/usr/bin/bash'
+alias rmvimswap='rm ~/.local/share/nvim/swap/*'
+alias pw='prettier --write'
+alias hb='sudo systemctl hibernate'
+alias sd='sudo shutdown now'
+alias sb='sudo reboot now'
 
 # cp -r ./xx yy -> will create yy/xx
 # cp -rT ./xx yy -> will not create yy, but dump contents of xx into yy and
@@ -792,14 +799,6 @@ splitp() {
     \; select-pane -t 1 \
     \; send-keys 'clear' C-m
 }
-
-alias exshell='export SHELL=/usr/bin/bash'
-alias rmvimswap='rm ~/.local/share/nvim/swap/*'
-alias cdd='cd $HOME/dotfiles'
-alias pw='prettier --write'
-alias hb='sudo systemctl hibernate'
-alias sd='sudo shutdown now'
-alias sb='sudo reboot now'
 
 if [ -d "$HOME/.fzf" ]; then
   # ripgrep
