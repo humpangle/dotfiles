@@ -1974,16 +1974,33 @@ function install-kind {
 function install-kubectl {
   cd "$PROJECT_0_PATH" || exit 1
 
+  # We will write kubectl completion script into this file.
+  local _completion_dir=/etc/bash_completion.d
+  local _completion_file_path="$_completion_dir/kubectl"
+
+  sudo mkdir -p "$_completion_dir"
+  sudo rm -rf "$_completion_file_path"
+  sudo touch "$_completion_file_path"
+
   local latest_version
   latest_version="$(
     curl -L -s https://dl.k8s.io/release/stable.txt
   )"
 
+  _echo "Downloading \"kubectl\" version \"$latest_version\" "
+
   curl -LfO \
     "https://dl.k8s.io/release/$latest_version/bin/linux/amd64/kubectl"
 
+  _echo "kubectl downloaded, moving to local bin."
+
   chmod 755 kubectl
   mv kubectl "$LOCAL_BIN_PATH"
+
+  _echo "Installing bash completion for kubectl"
+
+  kubectl completion bash |
+    sudo tee "$_completion_file_path" >/dev/null
 
   cd - &>/dev/null
 }

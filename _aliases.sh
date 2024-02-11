@@ -188,6 +188,9 @@ if command -v kubectl &>/dev/null; then
   alias_map[kbcg]='kubectl config --namespace'
   alias_map[kbs]='kubectl scale --namespace'
   alias_map[kbsd]='kubectl scale --namespace default'
+
+  # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#enable-shell-autocompletion
+  # complete -o default -F __start_kubectl kb
 fi
 
 alias_map[ctl]='systemctl --user'
