@@ -1289,9 +1289,9 @@ function install-python {
 function install-ansible {
   : "Install ansible"
 
-  if [[ ! -d "$(_asdf-plugin-install-root python "$PYTHON_VERSION")" ]]; then
-    install-py
-  fi
+  # if [[ ! -d "$(_asdf-plugin-install-root python "$PYTHON_VERSION")" ]]; then
+  #   install-py
+  # fi
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
