@@ -341,6 +341,7 @@ function __pm {
 }
 
 alias _pm='__pm'
+alias _pm----help='provison machine'
 
 # -----------------------------------------------------------------------------
 # END PROVISION MACHINE
