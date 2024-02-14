@@ -143,7 +143,7 @@ fi
 # # KUBERNETES
 # # -----------------------------------------------------------------------------
 if command -v kubectl &>/dev/null; then
-  alias_map[kb]='kubectl'
+  alias_map[k]='kubectl'
   alias_map[kbg]='kubectl get --namespace'
   alias_map[kbgp]='kubectl get pod --namespace'
   alias_map[kbgpd]='kubectl get pod --namespace default'
