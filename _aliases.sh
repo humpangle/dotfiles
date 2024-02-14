@@ -193,6 +193,18 @@ if command -v kubectl &>/dev/null; then
   # complete -o default -F __start_kubectl kb
 fi
 
+# -----------------------------------------------------------------------------
+# START Kind for Kubernettes
+# -----------------------------------------------------------------------------
+
+if command -v kind &>/dev/null; then
+  alias_map[kd]='kind'
+fi
+
+# -----------------------------------------------------------------------------
+# END Kind for Kubernettes
+# -----------------------------------------------------------------------------
+
 alias_map[ctl]='systemctl --user'
 alias_map[sctl]='sudo systemctl'
 
