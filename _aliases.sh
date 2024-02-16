@@ -208,7 +208,7 @@ fi
 alias_map[ctl]='systemctl --user'
 alias_map[sctl]='sudo systemctl'
 
-if ! command -v sqlite3 &>/dev/null; then
+if command -v sqlite3 &>/dev/null; then
   alias_map[sq3]='sqlite3'
 fi
 
