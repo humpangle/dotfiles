@@ -183,10 +183,10 @@ function _____run-well-known-paths-help {
   : "___help___ _____run-well-known-paths-help"
   read -r -d '' var <<'eof'
 Run a program against some well known filesystem paths. Usage:
-  __run-well-known-paths program path
+  __run-well-known-paths program_o_run path
 
 The program we want to run: may be a binary or an alias. E.g.
-  alias c = $HOME/.vscode-server/bin/0ee/bin/remote-cli/code
+  alias c=$HOME/.vscode-server/bin/0ee/bin/remote-cli/code
   alias v=/usr/bin/nvim
 
 Available paths:
@@ -196,7 +196,10 @@ py
 web
 
 Examples:
+  # Run vscode (binary) with path `wiki`
   __run-well-known-paths code wiki
+
+  # Run vscode (alias) with the path `py`
   __run-well-known-paths c py
 eof
 
