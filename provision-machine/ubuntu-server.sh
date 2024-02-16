@@ -1792,6 +1792,10 @@ function install-terraform {
 
   "$(_asdf-bin-path)" plugin add terraform https://github.com/asdf-community/asdf-hashicorp.git
   "$(_asdf-bin-path)" install terraform "$_version"
+
+  _echo "Install terraform auto completion"
+  curl -fL "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/terraform_bash_completion.sh" |
+    sudo tee /etc/bash_completion.d/terraform_bash_completion.sh >/dev/null
 }
 
 function install-chrome {

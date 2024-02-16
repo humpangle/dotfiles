@@ -212,6 +212,35 @@ if ! command -v sqlite3 &>/dev/null; then
   alias_map[sq3]='sqlite3'
 fi
 
+# -----------------------------------------------------------------------------
+# TERRAFORM
+# -----------------------------------------------------------------------------
+
+if command -v terraform &>/dev/null; then
+  alias_map[tf]='terraform'
+  alias_map[tfi]='terraform init'
+  alias_map[tfp]='terraform plan'
+  alias_map[tfpd]='terraform plan -destroy'
+  alias_map[tfa]='terraform apply'
+  alias_map[tfar]='terraform apply -replace'
+  alias_map[tfaa]='terraform apply -auto-approve'
+  alias_map[tfstl]='terraform state list'
+  alias_map[tfsts]='terraform state show' # terraform state show [options] ADDRESS
+  alias_map[tfs]='terraform show'
+  alias_map[tfd]='terraform destroy'
+  alias_map[tfdt]='terraform destroy -target'
+  alias_map[tfda]='terraform destroy -auto-approve'
+  alias_map[tfdta]='terraform destroy -auto-approve -target'
+  alias_map[tfdat]='tfdta'
+  alias_map[tfc]='terraform console'
+  alias_map[tfv]='terraform validate'
+  alias_map[tfo]='terraform output'
+fi
+
+# -----------------------------------------------------------------------------
+# END TERRAFORM
+# -----------------------------------------------------------------------------
+
 #------------------------------------------------------------------------------
 # Complete all bash aliases
 # See https://github.com/cykerway/complete-alias#faq
@@ -221,35 +250,6 @@ for key in "${!alias_map[@]}"; do
   eval "alias $key='$val'"
   complete -F _complete_alias "$key" 2</dev/null || true
 done
-
-# -----------------------------------------------------------------------------
-# TERRAFORM
-# -----------------------------------------------------------------------------
-
-if command -v terraform &>/dev/null; then
-  alias tf='terraform'
-  alias tfi='terraform init'
-  alias tfp='terraform plan'
-  alias tfpd='terraform plan -destroy'
-  alias tfa='terraform apply'
-  alias tfar='terraform apply -replace'
-  alias tfaa='terraform apply -auto-approve'
-  alias tfstl='terraform state list'
-  alias tfsts='terraform state show' # terraform state show [options] ADDRESS
-  alias tfs='terraform show'
-  alias tfd='terraform destroy'
-  alias tfdt='terraform destroy -target'
-  alias tfda='terraform destroy -auto-approve'
-  alias tfdta='terraform destroy -auto-approve -target'
-  alias tfdat='tfdta'
-  alias tfc='terraform console'
-  alias tfv='terraform validate'
-  alias tfo='terraform output'
-fi
-
-# -----------------------------------------------------------------------------
-# END TERRAFORM
-# -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 # ANSIBLE
