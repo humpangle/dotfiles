@@ -324,6 +324,13 @@ function _tool-versions-backup {
   fi
 }
 
+function _get_script_version {
+  echo -n "$(
+    type "${FUNCNAME[1]}" |
+      awk -F'=' '/local\s+__VERSION__=/ { match($2, "\"?([^;\"]+)\"?", a) } END {print a[1]}'
+  )"
+}
+
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -1785,17 +1792,153 @@ eof
   echo -e "${var}"
 }
 
+function ___install-terraform-help {
+  : "___help___ ___install-terraform-help"
+  read -r -d '' var <<'eof'
+Install hashicorp terraform binary. Usage:
+  pm install-terraform [OPTIONS]
+
+Options:
+  --help/-h
+      Print this help function and exit.
+  --replace/-r
+      Replace current script's version with latest remote version. This will
+      be done even if `--version` specifies a lower version number.
+  --version/-v
+      Specify version to install. If user specifies `--version=latest`, then we
+      will install latest remote version.
+  --script-version/-s
+      Print the version in this script.
+
+Examples:
+  # Get help
+  pm install-terraform --help
+
+  # Install the version in this script
+  pm install-terraform
+
+  # Upgrade to the latest version.
+  pm install-terraform --version=latest
+
+  # Install specified version.
+  pm install-terraform --version 5.5.5
+
+  # Install specified version and update script's version to latest remote
+  # version.
+  pm install-terraform --version 5.5.5 --replace
+
+  # Print the terraform version in this script.
+  pm install-terraform --script-version
+
+eof
+
+  echo -e "${var}\n"
+}
+
 function install-terraform {
-  local _version=1.6.6
+  : "___install-terraform-help"
+
+  local __VERSION__="1.7.3" # TERRAFORM VERSION
+  local _version_to_install="$__VERSION__"
+  local _replace
+  local _print_script_version
+  local _script_version_number
+  local _latest_remote_version
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help,version:,replace,script-version \
+      --options=h,v:,r,s \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ___install-terraform-help
+      exit 0
+      ;;
+
+    --replace | -r)
+      _replace=1
+      shift
+      ;;
+
+    --script-version | -s)
+      _print_script_version=1
+      shift
+      ;;
+
+    --version | -v)
+      _version_to_install=$2
+      shift 2
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      exit 1
+      ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  if [[ -n "$_print_script_version" ]]; then
+    _script_version_number="$(_get_script_version)"
+
+    echo -e \
+      "Script's terraform version is \"$_script_version_number\"\n"
+    return
+  fi
 
   _may_be_install_asdf
 
-  "$(_asdf-bin-path)" plugin add terraform https://github.com/asdf-community/asdf-hashicorp.git
-  "$(_asdf-bin-path)" install terraform "$_version"
+  "$(_asdf-bin-path)" plugin add terraform https://github.com/asdf-community/asdf-hashicorp.git &>/dev/null
+
+  _latest_remote_version="$(
+    "$(_asdf-bin-path)" list all terraform |
+      grep -P "^\d+\.\d+\.\d+$" |
+      tail -1
+  )"
+
+  if [[ "$_version_to_install" == "latest" ]]; then
+    _version_to_install="$_latest_remote_version"
+  fi
+
+  _echo "Installing terraform version $_version_to_install"
+  "$(_asdf-bin-path)" install terraform "$_version_to_install"
 
   _echo "Install terraform auto completion"
   curl -fL "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/terraform_bash_completion.sh" |
     sudo tee /etc/bash_completion.d/terraform_bash_completion.sh >/dev/null
+
+  if [[ -n "$_replace" ]]; then
+    local _this_file
+    _this_file="$(realpath "$0")"
+
+    _echo "Changing this script's terraform version $__VERSION__ -> $_version_to_install"
+    sed -i -E \
+      "s/local __VERSION__=\"$__VERSION__\" # TERRAFORM VERSION/local __VERSION__=\"$_latest_remote_version\" # TERRAFORM VERSION"/ \
+      "$_this_file"
+  fi
 }
 
 function install-chrome {
