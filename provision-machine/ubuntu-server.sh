@@ -2152,6 +2152,26 @@ function install-kubectl {
   cd - &>/dev/null
 }
 
+function install-helm {
+  cd "$PROJECT_0_PATH" || exit 1
+
+  local __VERSION__="v3.14.1"
+  local _dirname='linux-amd64'
+  local _filename="helm-$__VERSION__-$_dirname.tar.gz"
+
+  rm -rf "$_filename"
+  curl -fLO "https://get.helm.sh/$_filename"
+
+  tar xvzf "$_filename"
+
+  chmod +x "$_dirname/helm"
+  mv "$_dirname/helm" "$LOCAL_BIN_PATH"
+
+  rm -rf "$_dirname" "$_filename"
+
+  cd - &>/dev/null
+}
+
 function help {
   : "List available tasks."
 
