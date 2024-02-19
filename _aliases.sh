@@ -116,6 +116,29 @@ if command -v docker &>/dev/null; then
 
   alias_map[dcbn]='_docker_compose_build_no_cache'
   alias_map[dcbn___description]='docker build no cache'
+
+  _docker_image_repo_tag_merge_func() {
+    local _result
+    _result="$(
+      docker image ls |
+        awk -v p="$1" '
+          BEGIN{
+              OFS=":";
+          }
+          match($0, p) {print $1,$2}
+        '
+    )"
+
+    if [[ -n "$_result" ]]; then
+      echo -n "$_result" |
+        xclip -selection c
+
+      echo "$_result"
+    fi
+  }
+
+  alias dimrt='_docker_image_repo_tag_merge_func'
+  alias dimrt__description='_docker_image_repo_tag_merge_func dimm docker image repo tag merge/join'
 fi
 
 # -----------------------------------------------------------------------------
