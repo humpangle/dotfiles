@@ -1509,13 +1509,16 @@ function provision-dev {
 function setup-dev {
   : "Setup dev machine with dotfiles"
 
-  USERNAME="$(cmd.exe /c echo %USERNAME% 2>/dev/null)"
+  USERNAME="$(
+    cmd.exe /c echo %USERNAME% 2>/dev/null |
+      tr -d '\r\n '
+  )"
 
   if _has-wsl && [[ -z "$USERNAME" ]]; then
     echo -e "\nWindows OS username is required as USERNAME environment variable"
     exit
   else
-    echo "export USERNAME=${USERNAME}" >>~/.bashrc
+    echo "export USERNAME='$USERNAME'" >>~/.bashrc
   fi
 
   _echo "SETUP DEV MACHINE WITH DOTFILE"
