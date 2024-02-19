@@ -356,7 +356,7 @@ function! NetrwVExplore(f)
     execute 'vertical resize +30'
   endif
 endfunction
-nnoremap <C-E> :call NetrwVExplore(1)<CR>
+command! Vexplore1 :call NetrwVExplore(1)
 
 function! NetrwMapping()
   " Show a list of marked files.
