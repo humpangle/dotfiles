@@ -408,7 +408,6 @@ inoremap <A-l> <C-\><C-N><C-w>l
 " tnoremap <ESC><ESC> <C-\><C-n>
 " launch terminal in new spit
 " nnoremap <leader>tt :tab split<cr>:term <right>
-nnoremap <leader>tv :vsplit<cr>:term <right>
 
 " COPY FILE PATH
 " yank relative File path
