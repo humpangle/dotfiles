@@ -1,7 +1,7 @@
 " Alter the shape of the cursor
 " set guicursor=
 " augroup Shape
-  au!
+  " au!
   " au ExitPre * set guicursor=a:ver90
   " au ExitPre * set guicursor=a:hor200
 " augroup END
