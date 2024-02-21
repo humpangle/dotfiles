@@ -303,10 +303,10 @@ local plugins = {
     enabled = true,
     config = function()
       Cmd([[
-      " if you want to use overlay feature
-      let g:choosewin_overlay_enable = 1
-      " invoke with '-'
-      nmap <Leader>- <Plug>(choosewin)
+        " if you want to use overlay feature
+        let g:choosewin_overlay_enable = 1
+        " invoke with '-'
+        nmap <Leader>- <Plug>(choosewin)
       ]])
     end,
   },
