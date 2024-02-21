@@ -300,7 +300,7 @@ local plugins = {
   },
   {
     "t9md/vim-choosewin",
-    enabled = false,
+    enabled = true,
     config = function()
       Cmd([[
       " if you want to use overlay feature
