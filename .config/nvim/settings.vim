@@ -85,7 +85,7 @@ set softtabstop=2
 set expandtab " converts tabs to white space
 set shiftwidth=2 " default indent = 2 spaces
 set encoding=utf8
-set cc=80  " column width
+set cc=80,120  " column width
 set incsearch    " Incremental search, search as you type
 set ignorecase   " Make searching case insensitive
 set smartcase    " ... unless the query has capital letters
