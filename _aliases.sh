@@ -118,10 +118,16 @@ if command -v docker &>/dev/null; then
   alias_map[dcbn___description]='docker build no cache'
 
   _docker_image_repo_tag_merge_func() {
+    local _pattern=""
+
+    for arg in "$@"; do
+      _pattern+="($arg).*"
+    done
+
     local _result
     _result="$(
       docker image ls |
-        awk -v p="$1" '
+        awk -v p="$_pattern" '
           BEGIN{
               OFS=":";
           }
