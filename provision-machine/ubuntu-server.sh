@@ -2175,6 +2175,36 @@ function install-helm {
   cd - &>/dev/null
 }
 
+function ___get_latest_github_release-help {
+  read -r -d '' var <<'eof'
+Get the latest release from github. Usage:
+  _pm get_latest_github_release user/repo [OPTIONS]
+
+Options:
+  --help/-h
+    Print this help text and quit.
+
+Examples:
+  # Get help.
+  _pm get_latest_github_release --help
+
+  # Get latest for user/repo.
+  _pm get_latest_github_release kubernetes-sigs/kind
+eof
+
+  echo -e "${var}\n"
+}
+
+function get_latest_github_release {
+  : "___help___ ___get_latest_github_release-help"
+
+  local _user_repo=$1
+
+  curl --silent "https://api.github.com/repos/$_user_repo/releases/latest" | # Get latest release from GitHub api
+    grep '"tag_name":' |                                                     # Get tag line
+    sed -E 's/.*"([^"]+)".*/\1/'                                             # Pluck JSON value
+}
+
 function help {
   : "List available tasks."
 
