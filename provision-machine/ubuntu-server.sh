@@ -2112,8 +2112,14 @@ eof
 
 function install-kind {
   cd "$PROJECT_0_PATH" || exit 1
+
+  local _latest_version
+  _latest_version="$(
+    get_latest_github_release kubernetes-sigs/kind
+  )"
+
   curl -Lfo ./kind \
-    https://github.com/kubernetes-sigs/kind/releases/download/v0.20.0/kind-linux-amd64
+    "https://github.com/kubernetes-sigs/kind/releases/download/$_latest_version/kind-linux-amd64"
 
   chmod 755 ./kind
   mv ./kind "$LOCAL_BIN_PATH"
