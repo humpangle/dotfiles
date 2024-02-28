@@ -13,6 +13,7 @@ PROJECT_0_PATH="$HOME/projects/0"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
 PYTHON_VERSION=3.12.1
 RUST_VERSION=1.65.0
+BASH_COMPLETION_DIR=/etc/bash_completion.d
 
 LUA_DEPS=(
   'unzip'
@@ -1931,7 +1932,7 @@ function install-terraform {
 
   _echo "Install terraform auto completion"
   curl -fL "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/terraform_bash_completion.sh" |
-    sudo tee /etc/bash_completion.d/terraform_bash_completion.sh >/dev/null
+    sudo tee "$BASH_COMPLETION_DIR/terraform_bash_completion.sh" >/dev/null
 
   if [[ -n "$_replace" ]]; then
     local _this_file
@@ -2060,7 +2061,7 @@ function install-mongo-db-atlas-cli {
 
   if command -v atlas &>/dev/null; then
     atlas completion bash |
-      sudo tee /etc/bash_completion.d/mongo-db-atlas
+      sudo tee "$BASH_COMPLETION_DIR/mongo-db-atlas"
   fi
 }
 
