@@ -2157,9 +2157,15 @@ function install-kubectl {
 function install-helm {
   cd "$PROJECT_0_PATH" || exit 1
 
-  local __VERSION__="v3.14.1"
+  local _latest_version
+  _latest_version="$(
+    get_latest_github_release helm/helm
+  )"
+
+  _echo "Installing helm version \"$_latest_version\""
+
   local _dirname='linux-amd64'
-  local _filename="helm-$__VERSION__-$_dirname.tar.gz"
+  local _filename="helm-$_latest_version-$_dirname.tar.gz"
 
   rm -rf "$_filename"
   curl -fLO "https://get.helm.sh/$_filename"
