@@ -2171,6 +2171,11 @@ function install-helm {
 
   rm -rf "$_dirname" "$_filename"
 
+  _echo "Installing bash completion for helm"
+
+  helm completion bash |
+    sudo tee "$BASH_COMPLETION_DIR/helm.sh" >/dev/null
+
   cd - &>/dev/null
 }
 
