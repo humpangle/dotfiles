@@ -220,19 +220,17 @@ if command -v kubectl &>/dev/null; then
 
   # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#enable-shell-autocompletion
   # complete -o default -F __start_kubectl kb
+
+  # -----------------------------------------------------------------------------
+  # START Kind for Kubernettes
+  # -----------------------------------------------------------------------------
+  if command -v kind &>/dev/null; then
+    alias_map[kd]='kind'
+  fi
+  # -----------------------------------------------------------------------------
+  # END Kind for Kubernettes
+  # -----------------------------------------------------------------------------
 fi
-
-# -----------------------------------------------------------------------------
-# START Kind for Kubernettes
-# -----------------------------------------------------------------------------
-
-if command -v kind &>/dev/null; then
-  alias_map[kd]='kind'
-fi
-
-# -----------------------------------------------------------------------------
-# END Kind for Kubernettes
-# -----------------------------------------------------------------------------
 
 alias_map[ctl]='systemctl --user'
 alias_map[sctl]='sudo systemctl'
