@@ -37,7 +37,7 @@ pathmunge() {
   fi
 }
 
-alias ug='clear && sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
+alias ug='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 
 # vim
 alias vi='/usr/bin/vim'
