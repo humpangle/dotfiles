@@ -1026,14 +1026,6 @@ fi
 
 pathmunge "/usr/lib/dart/bin" "after"
 
-function python-current {
-  asdf current python | awk '{print $2}'
-}
-
-function current-python {
-  python-current
-}
-
 function rel-asdf-plugin-version {
   local _plugin="${1}"
 
