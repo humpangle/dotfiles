@@ -997,15 +997,15 @@ pathmunge "$GEM_HOME/bin"
 # Do not use PHP PEAR when installing PHP with asdf
 # export PHP_WITHOUT_PEAR='yes'
 
-function _phpunit {
-  if command -v phpunit >/dev/null; then
-    phpunit --testdox "$@"
-  else
-    ./vendor/bin/phpunit --testdox "$@"
-  fi
-}
+if command -v php &>/dev/null; then
+  _phpunit() {
+    if command -v phpunit >/dev/null; then
+      phpunit --testdox "$@"
+    else
+      ./vendor/bin/phpunit --testdox "$@"
+    fi
+  }
 
-if [ -x "$(command -v php)" ]; then
   alias php-unit='_phpunit'
   alias pu='_phpunit'
 
