@@ -1034,21 +1034,6 @@ function current-python {
   python-current
 }
 
-function pyenv-install-current {
-  pyenv install "$(python-current)"
-}
-
-if [ -z "${PYENV_ROOT}" ] && [ -d "$HOME/.pyenv" ]; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:${PATH}"
-
-  eval "$(pyenv init -)"
-
-  if [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
-    eval "$(pyenv virtualenv-init -)"
-  fi
-fi
-
 function rel-asdf-plugin-version {
   local _plugin="${1}"
 
