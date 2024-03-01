@@ -941,8 +941,6 @@ alias purge-systemd-service='_purge-systemd-service'
 # END COMMONS
 # -----------------------------------------------------------------------------
 
-alias ngrokd='ngrok http'
-
 [[ -e "$HOME/dotfiles/_aliases.sh" ]] && source "$HOME/dotfiles/_aliases.sh"
 
 # -----------------------------------------------------------------------------
