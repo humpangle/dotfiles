@@ -317,6 +317,12 @@ function _parse-command-to-run {
     _command_v_result="$_suffix"
   fi
 
+  # If the version of vscode invoked is from WSL, replace with version installed on windows OS. Why?
+  # WSL version of the binary does not work when invoked from tmux launched inside vscode.
+  if echo "$_command_v_result" | grep -qP "/home/.+\.vscode-server/bin.+bin/remote-cli/code"; then
+    _command_v_result="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft VS Code/bin/code"
+  fi
+
   # Replace all whitespace with '\ '. Why?
   # When using WSL, windows binaries sometimes contain space which is frowned up in path names for unix
   local _find=" "
