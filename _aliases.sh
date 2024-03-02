@@ -407,4 +407,5 @@ alias _pm----help='provison machine'
 # END PROVISION MACHINE
 # -----------------------------------------------------------------------------
 
-alias c=code # vs code
+export VSCODE_BINARY="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
+alias c="$VSCODE_BINARY" # vs code
