@@ -260,6 +260,34 @@ if command -v sqlite3 &>/dev/null; then
   alias_map[sq3]='sqlite3'
 fi
 
+if command -v tmux &>/dev/null; then
+  alias tls='tmux ls'
+  alias tkss='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
+  alias ts='ebnis-save-tmux.sh'
+  alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+
+  _start-tmux() {
+    if tmux ls &>/dev/null; then
+      cd "${HOME}/dotfiles" || exit 1
+      tmux a -d -t dot
+    else
+      cd "${HOME}/dotfiles" || exit 1
+      rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
+      tmux new -s
+    fi
+  }
+
+  alias tnd=_start-tmux
+
+  __tks() {
+    for _session in "${@}"; do
+      tmux kill-session -t "$_session"
+    done
+  }
+
+  alias tks='__tks'
+fi
+
 #------------------------------------------------------------------------------
 # Complete all bash aliases
 # See https://github.com/cykerway/complete-alias#faq
