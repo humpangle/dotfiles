@@ -260,35 +260,6 @@ if command -v sqlite3 &>/dev/null; then
   alias_map[sq3]='sqlite3'
 fi
 
-# -----------------------------------------------------------------------------
-# TERRAFORM
-# -----------------------------------------------------------------------------
-
-if command -v terraform &>/dev/null; then
-  alias_map[tf]='terraform'
-  alias_map[tfi]='terraform init'
-  alias_map[tfp]='terraform plan'
-  alias_map[tfpd]='terraform plan -destroy'
-  alias_map[tfa]='terraform apply'
-  alias_map[tfar]='terraform apply -replace'
-  alias_map[tfaa]='terraform apply -auto-approve'
-  alias_map[tfstl]='terraform state list'
-  alias_map[tfsts]='terraform state show' # terraform state show [options] ADDRESS
-  alias_map[tfs]='terraform show'
-  alias_map[tfd]='terraform destroy'
-  alias_map[tfdt]='terraform destroy -target'
-  alias_map[tfda]='terraform destroy -auto-approve'
-  alias_map[tfdta]='terraform destroy -auto-approve -target'
-  alias_map[tfdat]='tfdta'
-  alias_map[tfc]='terraform console'
-  alias_map[tfv]='terraform validate'
-  alias_map[tfo]='terraform output'
-fi
-
-# -----------------------------------------------------------------------------
-# END TERRAFORM
-# -----------------------------------------------------------------------------
-
 #------------------------------------------------------------------------------
 # Complete all bash aliases
 # See https://github.com/cykerway/complete-alias#faq
@@ -302,12 +273,10 @@ done
 # -----------------------------------------------------------------------------
 # ANSIBLE
 # -----------------------------------------------------------------------------
-
 if command -v ansible &>/dev/null; then
   alias an='ansible'
   alias ap='ansible-playbook'
 fi
-
 # -----------------------------------------------------------------------------
 # END ANSIBLE
 # -----------------------------------------------------------------------------
@@ -409,3 +378,30 @@ alias _pm----help='provison machine'
 
 export VSCODE_BINARY="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
 alias c="$VSCODE_BINARY" # vs code
+
+# -----------------------------------------------------------------------------
+# TERRAFORM
+# -----------------------------------------------------------------------------
+if command -v terraform &>/dev/null; then
+  alias_map[tf]='terraform'
+  alias_map[tfi]='terraform init'
+  alias_map[tfp]='terraform plan'
+  alias_map[tfpd]='terraform plan -destroy'
+  alias_map[tfa]='terraform apply'
+  alias_map[tfar]='terraform apply -replace'
+  alias_map[tfaa]='terraform apply -auto-approve'
+  alias_map[tfstl]='terraform state list'
+  alias_map[tfsts]='terraform state show' # terraform state show [options] ADDRESS
+  alias_map[tfs]='terraform show'
+  alias_map[tfd]='terraform destroy'
+  alias_map[tfdt]='terraform destroy -target'
+  alias_map[tfda]='terraform destroy -auto-approve'
+  alias_map[tfdta]='terraform destroy -auto-approve -target'
+  alias_map[tfdat]='tfdta'
+  alias_map[tfc]='terraform console'
+  alias_map[tfv]='terraform validate'
+  alias_map[tfo]='terraform output'
+fi
+# -----------------------------------------------------------------------------
+# END TERRAFORM
+# -----------------------------------------------------------------------------
