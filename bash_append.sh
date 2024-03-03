@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # export HISTCONTROL=ignoreboth:erasedups
-# export PROMPT_COMMAND="history -n; history -w; history -c; history -r"
+export PROMPT_COMMAND="history -n; history -w; history -c; history -r;"
 # tac "$HISTFILE" | awk '!x[$0]++' > /tmp/tmpfile  &&
 #                 tac /tmp/tmpfile > "$HISTFILE"
 # rm /tmp/tmpfile
