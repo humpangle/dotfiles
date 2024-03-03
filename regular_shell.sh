@@ -310,13 +310,12 @@ hist_dir="$HOME/.bash_histories"
 
 mkdir -p "$hist_dir"
 
-if [ -n "${TMUX}" ]; then
-  hist_file="$hist_dir/tmux--$(tmux display-message -p '#{session_name}--#{window_index}')--${TMUX_PANE:1}"
-  export HISTFILE="$hist_file"
+# hist_file="$hist_dir/tmux--$(tmux display-message -p '#{session_name}--#{window_index}')--${TMUX_PANE:1}"
+hist_file="$HOME/.bash_history"
+export HISTFILE="$hist_file"
 
-  if [[ ! -e "$hist_file" ]]; then
-    touch "$hist_file"
-  fi
+if [[ ! -e "$hist_file" ]]; then
+  touch "$hist_file"
 fi
 
 # rsync
