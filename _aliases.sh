@@ -279,10 +279,115 @@ if command -v tmux &>/dev/null; then
 
   alias tnd=_start-tmux
 
+  function _____tks-help {
+    read -r -d '' var <<'eof'
+Helper for killing tmux session(s). Usage:
+  __tks [OPTIONS]
+
+Options:
+  --help/-h
+    Print this help text and quit.
+  --all-but/-a
+    Kill all but session from which command was invoked.
+
+Examples:
+  # Get help.
+  __tks --help
+  __tks # Call with no argument.
+
+  # Kill all sessions except session from which this command is called.
+  __tks --all-but
+  __tks -a
+
+  # Kill one or more specified sessions
+  __tks session-1 session2 ... session-n
+eof
+
+    echo -e "${var}\n"
+  }
+
   __tks() {
-    for _session in "${@}"; do
-      tmux kill-session -t "$_session"
+    : "___help___ _____tks-help"
+
+    local _all_but
+
+    # --------------------------------------------------------------------------
+    # PARSE ARGUMENTS
+    # --------------------------------------------------------------------------
+    local parsed
+
+    if ! parsed="$(
+      getopt \
+        --longoptions=help,all-but \
+        --options=h,a \
+        --name "$0" \
+        -- "$@"
+    )"; then
+      exit 1
+    fi
+
+    # Provides proper quoting
+    eval set -- "$parsed"
+
+    while true; do
+      case "$1" in
+      --help | -h)
+        _____tks-help
+        return
+        ;;
+
+      --all-but | -a)
+        _all_but=1
+        shift
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        echo "Unknown option ${1}."
+        return
+        ;;
+      esac
     done
+
+    local _other_args=()
+    _other_args=("$@")
+    # --------------------------------------------------------------------------
+    # END PARSE ARGUMENTS
+    # --------------------------------------------------------------------------
+
+    if [[ -n "$_all_but" ]]; then
+      local _this_session
+
+      _this_session="$(
+        tmux list-panes -t $TMUX_PANE -F '#S' |
+          head -n1
+      )"
+
+      while IFS= read -r _session; do
+        if [[ "$_session" == "$_this_session" ]]; then continue; fi
+
+        echo "Killing session \"$_session\""
+        tmux kill-session -t "$_session"
+      done < <(tmux list-sessions -F '#S')
+
+      return
+    fi
+
+    if [[ -n "${_other_args[*]}" ]]; then
+      for _session in "${_other_args[@]}"; do
+        echo "Killing session \"$_session\""
+
+        tmux kill-session -t "$_session"
+      done
+
+      return
+    fi
+
+    _____tks-help
   }
 
   alias tks='__tks'
