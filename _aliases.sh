@@ -289,6 +289,8 @@ Options:
     Print this help text and quit.
   --all-but/-a
     Kill all but session from which command was invoked.
+  --current/-c
+    Kill session from which command was invoked (current session).
 
 Examples:
   # Get help.
@@ -298,6 +300,10 @@ Examples:
   # Kill all sessions except session from which this command is called.
   __tks --all-but
   __tks -a
+
+  # Kill session from which this command is called (current session).
+  __tks --current
+  __tks -c
 
   # Kill one or more specified sessions
   __tks session-1 session2 ... session-n
@@ -310,6 +316,7 @@ eof
     : "___help___ _____tks-help"
 
     local _all_but
+    local _current
 
     # --------------------------------------------------------------------------
     # PARSE ARGUMENTS
@@ -318,8 +325,8 @@ eof
 
     if ! parsed="$(
       getopt \
-        --longoptions=help,all-but \
-        --options=h,a \
+        --longoptions=help,all-but,current \
+        --options=h,a,c \
         --name "$0" \
         -- "$@"
     )"; then
@@ -341,6 +348,11 @@ eof
         shift
         ;;
 
+      --current | -c)
+        _current=1
+        shift
+        ;;
+
       --)
         shift
         break
@@ -359,14 +371,20 @@ eof
     # END PARSE ARGUMENTS
     # --------------------------------------------------------------------------
 
+    local _this_session
+
+    _this_session="$(
+      tmux list-panes -t $TMUX_PANE -F '#S' |
+        head -n1
+    )"
+
+    if [[ -n "$_current" ]]; then
+      echo "Killing current session \"$_this_session\""
+      tmux kill-session -t "$_this_session"
+      return
+    fi
+
     if [[ -n "$_all_but" ]]; then
-      local _this_session
-
-      _this_session="$(
-        tmux list-panes -t $TMUX_PANE -F '#S' |
-          head -n1
-      )"
-
       while IFS= read -r _session; do
         if [[ "$_session" == "$_this_session" ]]; then continue; fi
 
