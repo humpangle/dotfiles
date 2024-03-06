@@ -371,6 +371,16 @@ eof
     # END PARSE ARGUMENTS
     # --------------------------------------------------------------------------
 
+    if [[ -n "${_other_args[*]}" ]]; then
+      for _session in "${_other_args[@]}"; do
+        echo "Killing session \"$_session\""
+
+        tmux kill-session -t "$_session"
+      done
+
+      return
+    fi
+
     local _this_session
 
     _this_session="$(
@@ -391,16 +401,6 @@ eof
         echo "Killing session \"$_session\""
         tmux kill-session -t "$_session"
       done < <(tmux list-sessions -F '#S')
-
-      return
-    fi
-
-    if [[ -n "${_other_args[*]}" ]]; then
-      for _session in "${_other_args[@]}"; do
-        echo "Killing session \"$_session\""
-
-        tmux kill-session -t "$_session"
-      done
 
       return
     fi
