@@ -292,6 +292,9 @@ Options:
   --current/-c
     Kill session from which command was invoked (current session).
 
+  --numbered/-n
+    Kill sessions with only numerical names.
+
 Examples:
   # Get help.
   __tks --help
@@ -305,6 +308,10 @@ Examples:
   __tks --current
   __tks -c
 
+  # Kill sessions with only numerical names. (Will kill sessions named 1, 2, 3, .. 10, 11, ..)
+  __tks --numbered
+  __tks -n
+
   # Kill one or more specified sessions
   __tks session-1 session2 ... session-n
 eof
@@ -317,6 +324,7 @@ eof
 
     local _all_but
     local _current
+    local _numbered
 
     # --------------------------------------------------------------------------
     # PARSE ARGUMENTS
@@ -325,8 +333,8 @@ eof
 
     if ! parsed="$(
       getopt \
-        --longoptions=help,all-but,current \
-        --options=h,a,c \
+        --longoptions=help,all-but,current,numbered \
+        --options=h,a,c,n \
         --name "$0" \
         -- "$@"
     )"; then
@@ -350,6 +358,11 @@ eof
 
       --current | -c)
         _current=1
+        shift
+        ;;
+
+      --numbered | -n)
+        _numbered=1
         shift
         ;;
 
@@ -394,13 +407,30 @@ eof
       return
     fi
 
+    local _all_sessions
+
+    _all_sessions="$(
+      tmux list-sessions -F '#S'
+    )"
+
+    if [[ -n "$_numbered" ]]; then
+      while IFS= read -r _session; do
+        if [[ "$_session" == "$_this_session" ]]; then continue; fi
+
+        echo "Killing session \"$_session\""
+        tmux kill-session -t "$_session"
+      done < <(grep -P "\d+" <<<"$_all_sessions")
+
+      return
+    fi
+
     if [[ -n "$_all_but" ]]; then
       while IFS= read -r _session; do
         if [[ "$_session" == "$_this_session" ]]; then continue; fi
 
         echo "Killing session \"$_session\""
         tmux kill-session -t "$_session"
-      done < <(tmux list-sessions -F '#S')
+      done <<<"$_all_sessions"
 
       return
     fi
