@@ -1,6 +1,7 @@
 local Vimg = vim.g
+local Vimb = vim.b
 
-Vimg.slime_target = "neovim"
+Vimb.slime_target = "neovim"
 -- let g:slime_target = "tmux"
 
 -- Key to show slime config for the first time - <C-c><C-c>
@@ -14,7 +15,7 @@ Vimg.slime_target = "neovim"
 -- E.g. if terminal is on 6th window, 4th pane, and session is `dot` you
 -- should have
 --     dot:6.4
-Vimg.slime_default_config = {
+Vimb.slime_default_config = {
   socket_name = "default",
   target_pane = "dot:",
   jobid = ""
@@ -26,4 +27,4 @@ Vimg.slime_default_config = {
 
 Vimg.slime_bracketed_paste = 1
 
-vim.keymap.set('n', ',sl', ":let g:slime_target=''<left>")
+vim.keymap.set('n', ',sl', ":let b:slime_target=''<left>")
