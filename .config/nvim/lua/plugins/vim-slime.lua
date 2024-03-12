@@ -1,7 +1,4 @@
-local Vimg = vim.g
-local Vimb = vim.b
-
-Vimb.slime_target = "neovim"
+vim.b.slime_target = "neovim"
 -- let g:slime_target = "tmux"
 
 -- Key to show slime config for the first time - <C-c><C-c>
@@ -15,16 +12,39 @@ Vimb.slime_target = "neovim"
 -- E.g. if terminal is on 6th window, 4th pane, and session is `dot` you
 -- should have
 --     dot:6.4
-Vimb.slime_default_config = {
+
+local slime_config = {
   socket_name = "default",
   target_pane = "dot:",
   jobid = ""
 }
 
+vim.g.slime_default_config = slime_config
+
 -- Some REPLs can interfere with your text pasting. The
 -- [bracketed-paste](https://cirw.in/blog/bracketed-paste) mode exists to allow
 -- raw pasting.
 
-Vimg.slime_bracketed_paste = 1
+vim.g.slime_bracketed_paste = 1
 
-vim.keymap.set('n', ',sl', ":let b:slime_target=''<left>")
+local helper_func = function(target)
+  vim.b.slime_target = target
+  vim.b.slime_config = slime_config
+  print("slime_target = '" .. target .. "'")
+end
+
+vim.keymap.set(
+  'n',
+  ',sln',
+  function()
+    helper_func("neovim")
+  end
+)
+
+vim.keymap.set(
+  'n',
+  ',slt',
+  function()
+    helper_func("tmux")
+  end
+)
