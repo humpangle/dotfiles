@@ -2194,6 +2194,12 @@ Options:
   --help/-h
     Print this help text and quit.
 
+Available user/repo (the indented identifiers are the repos):
+  kubernetes-sigs
+    kind
+  helm
+    helm
+
 Examples:
   # Get help.
   _pm get_latest_github_release --help
@@ -2208,7 +2214,55 @@ eof
 function get_latest_github_release {
   : "___help___ ___get_latest_github_release-help"
 
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help \
+      --options=h \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ___get_latest_github_release-help
+    return
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ___get_latest_github_release-help
+      return
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      ___get_latest_github_release-help
+      return
+      ;;
+    esac
+  done
+
+  # handle non-option arguments
+  if [[ $# -ne 1 ]]; then
+    echo "$0: Non optional user/repo is required."
+    return
+  fi
+
   local _user_repo=$1
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
 
   curl --silent "https://api.github.com/repos/$_user_repo/releases/latest" | # Get latest release from GitHub api
     grep '"tag_name":' |                                                     # Get tag line
