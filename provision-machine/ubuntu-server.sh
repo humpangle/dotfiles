@@ -5,14 +5,25 @@ set -o pipefail
 
 INITIAL_WSL_C_PATH=/mnt/c
 
-ERLANG_VERSION=26.1.2
-ELIXIR_VERSION=1.15.7-otp-26
+# -----------------------------------------------------------------------------
+# START version identifier
+# -----------------------------------------------------------------------------
+
+# Version Identifiers. Syntax is:
+#   WHATEVER_VERSION="version number"
+ERLANG_VERSION="26.1.2"
+ELIXIR_VERSION="1.15.7-otp-26"
+PYTHON_VERSION="3.12.1"
+RUST_VERSION="1.65.0"
+
+# -----------------------------------------------------------------------------
+# END version identifier
+# -----------------------------------------------------------------------------
+
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
 PROJECT_0_PATH="$HOME/projects/0"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
-PYTHON_VERSION=3.12.1
-RUST_VERSION=1.65.0
 BASH_COMPLETION_DIR=/etc/bash_completion.d
 
 LUA_DEPS=(
@@ -2267,6 +2278,96 @@ function get_latest_github_release {
   curl --silent "https://api.github.com/repos/$_user_repo/releases/latest" | # Get latest release from GitHub api
     grep '"tag_name":' |                                                     # Get tag line
     sed -E 's/.*"([^"]+)".*/\1/'                                             # Pluck JSON value
+}
+
+function ___update_latest_global_version-help {
+  read -r -d '' var <<'eof'
+Update a binary's global version. Usage:
+  _pm update_latest_global_version [OPTIONS]
+  _pm update_latest_global_version version_identifier version
+
+Options:
+  --help/-h
+    Print this help text and quit.
+
+Available version identifiers:
+  ELIXIR_VERSION
+  ERLANG_VERSION
+  PYTHON_VERSION
+  RUST_VERSION
+
+Examples:
+  # Get help.
+  _pm update_latest_global_version --help
+
+  # Specify version identifier to upgrade.
+  _pm update_latest_global_version ELIXIR_VERSION 1.15.7-otp-26
+  _pm update_latest_global_version ERLANG_VERSION 26.1.2
+eof
+
+  echo -e "${var}\n"
+}
+
+function update_latest_global_version {
+  : "___help___ ___update_latest_global_version-help"
+
+  local _this_file="$0"
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help,version: \
+      --options=h,v: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ___update_latest_global_version-help
+    return
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ___update_latest_global_version-help
+      return
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      ___update_latest_global_version-help
+      return
+      ;;
+    esac
+  done
+
+  # handle non-option arguments
+  if [[ $# -ne 2 ]]; then
+    echo "$0: Non optional argument version identifier and version are required."
+    ___update_latest_global_version-help
+    return
+  fi
+
+  local _version_identifier=$1
+  local _user_version=$2
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  sed -E -i \
+    "s|(${_version_identifier}=\")(.+)(\")|\1${_user_version}\3|" \
+    "$_this_file"
 }
 
 function help {
