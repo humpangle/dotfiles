@@ -2210,6 +2210,8 @@ Available user/repo (the indented identifiers are the repos):
     kind
   helm
     helm
+  kubernetes
+    kubernetes
 
 Examples:
   # Get help.
