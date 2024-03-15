@@ -1,3 +1,5 @@
+vim.g.slime_last_channel = {}
+
 vim.b.slime_target = "neovim"
 -- let g:slime_target = "tmux"
 
