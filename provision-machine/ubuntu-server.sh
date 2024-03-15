@@ -13,7 +13,7 @@ INITIAL_WSL_C_PATH=/mnt/c
 #   WHATEVER_VERSION="version number"
 ERLANG_VERSION="26.2.3"
 ELIXIR_VERSION="1.16.2-otp-26"
-PYTHON_VERSION="3.12.1"
+PYTHON_VERSION="3.12.2"
 RUST_VERSION="1.65.0"
 
 # -----------------------------------------------------------------------------
