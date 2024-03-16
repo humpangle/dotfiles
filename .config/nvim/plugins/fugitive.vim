@@ -50,15 +50,12 @@ nnoremap <leader>sP  :Git stash pop
 nnoremap <leader>ss  :Git stash show -p stash@{}<left>
 nnoremap <leader>su  :Git stash -u push -m ''<left>
 
-nnoremap <leader>ca  :Git commit --amend
-
-nnoremap <leader>gc  :Git commit<CR>
-nnoremap <leader>gC  :tabnew<CR>:Git commit<CR>
-" :echo bufnr('%')<CR>
-
-nnoremap <leader>ce  :Git commit --amend --no-edit
+nnoremap <leader>gcc  :Git commit<CR>
+nnoremap <leader>gca  :Git commit --amend
+nnoremap <leader>gce  :Git commit --amend --no-edit
 " -z means empty in bash - hence cz means allow empty
-nnoremap <leader>cz  :Git commit --allow-empty -m ""<left>
+nnoremap <leader>gcz  :Git commit --allow-empty -m ""<left>
+nnoremap <leader>gcn  :tabnew<CR>:Git commit<CR>
 
 nnoremap <leader>gu  :Git config user.name <right>
 nnoremap <leader>gU  :Git config user.email <right>
