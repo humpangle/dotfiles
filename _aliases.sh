@@ -260,6 +260,16 @@ if command -v sqlite3 &>/dev/null; then
   alias_map[sq3]='sqlite3'
 fi
 
+# -----------------------------------------------------------------------------
+# START PYTHON POETRY
+# -----------------------------------------------------------------------------
+if command -v poetry &>/dev/null; then
+  alias_map['pt']='poetry'
+fi
+# -----------------------------------------------------------------------------
+# END PYTHON POETRY
+# -----------------------------------------------------------------------------
+
 if command -v tmux &>/dev/null; then
   alias tls='tmux ls'
   alias tkss='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
