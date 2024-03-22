@@ -43,7 +43,10 @@
   ],
   "profiles": {
     "defaults": {
-      "bellStyle": ["window", "taskbar"],
+      "bellStyle": [
+        "window",
+        "taskbar"
+      ],
       "closeOnExit": "always",
       // "colorScheme": "Gruvbox Dark",
       "colorScheme": "Gruvbox Light",
