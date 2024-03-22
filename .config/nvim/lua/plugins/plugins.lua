@@ -275,7 +275,10 @@ local plugins = {
 
   -- Image preview
   -- pip install -U Pillow
-  "mi60dev/image.vim",
+  {
+    "mi60dev/image.vim",
+    enabled = false,
+  },
 
   -- tmux-like window navigation
   {
