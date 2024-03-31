@@ -1,6 +1,25 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155,2139,2086,1090
 
+# Add to $PATH only if `it` does not exist in the $PATH
+# fish shell has the `fish_add_path` function which does something similar
+# CREDIT: https://unix.stackexchange.com/a/217629
+# USAGE:
+#     pathmunge /sbin/             ## Add to the start; default
+#     pathmunge /usr/sbin/ after   ## Add to the end
+pathmunge() {
+  # first check if folder exists on filesystem
+  if [ -d "$1" ]; then
+    if ! echo "$PATH" | grep -Eq "(^|:)$1($|:)"; then
+      if [ "$2" = "after" ]; then
+        PATH="$PATH:$1"
+      else
+        PATH="$1:$PATH"
+      fi
+    fi
+  fi
+}
+
 _PS1_APPEND='\n\$ '
 # Inverted cursor workaround for windows terminal
 # https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268
@@ -20,25 +39,6 @@ export EDITOR="nvim"
 # install with: `sudo apt-get install ssh-askpass-gnome ssh-askpass -y`
 # shellcheck disable=2155
 export SUDO_ASKPASS=$(command -v ssh-askpass)
-
-# Add to $PATH only if `it` does not exist in the $PATH
-# fish shell has the `fish_add_path` function which does something similar
-# CREDIT: https://unix.stackexchange.com/a/217629
-# USAGE:
-#     pathmunge /sbin/             ## Add to the start; default
-#     pathmunge /usr/sbin/ after   ## Add to the end
-pathmunge() {
-  # first check if folder exists on filesystem
-  if [ -d "$1" ]; then
-    if ! echo "$PATH" | grep -Eq "(^|:)$1($|:)"; then
-      if [ "$2" = "after" ]; then
-        PATH="$PATH:$1"
-      else
-        PATH="$1:$PATH"
-      fi
-    fi
-  fi
-}
 
 alias ug='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 
