@@ -36,6 +36,17 @@ _is_darwin() {
   fi
 }
 
+copy() {
+  if _is_darwin; then
+    pbcopy <<<"${*}"
+  elif command -v xclip &>/dev/null; then
+    xclip -selection c <<<"${*}"
+  fi
+}
+
+export -f copy
+alias xclip='copy'
+
 if _is_linux; then
   __shell_path='/usr/bin/bash'
   google_chrome_bin="$(which google-chrome)"
@@ -845,16 +856,7 @@ if [ -d "$HOME/.fzf" ]; then
   alias aff='alias | fzf'
 fi
 
-function _ebnis-xclip {
-  if command -v xclip &>/dev/null; then
-    xclip -selection c <<<"${*}"
-  fi
-}
-
-alias xclip='xclip -selection c'
-alias copy='_ebnis-xclip'
-
-function ____cpath-help {
+____cpath-help() {
   read -r -d '' var <<'eof'
 Copy path to current working directory or file name to system clipboard. Usage:
   _cpath [OPTIONS] [filename]
@@ -873,7 +875,7 @@ eof
   echo -e "${var}"
 }
 
-function _cpath {
+_cpath() {
   : "___help___ ____cpath-help"
 
   local _base_only=
@@ -935,8 +937,8 @@ function _cpath {
     _path="$(basename "${_path}")"
   fi
 
-  echo -n "${_path}" | xclip -selection c
-  echo "${_path}"
+  copy ${_path}
+  echo ${_path}
 }
 
 alias cpath=_cpath
