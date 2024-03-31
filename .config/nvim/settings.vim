@@ -291,15 +291,7 @@ nnoremap <c-h> <C-w>h
 " nnoremap <c-j> <C-w>j
 " nnoremap <c-k> <C-w>k
 " nnoremap <c-l> <C-w>l
-"
 
-" use <c-f>
-" inoremap <c-l> <Right>
-" split windows
-" split window bottom
-" nnoremap <silent> <leader>th :split<CR>
-" split window right
-" nnoremap <silent> <leader>tv :vsp<CR>
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ts :tab split<cr>
 " You may also use CTRL-W_T builtin instead of the custom function
