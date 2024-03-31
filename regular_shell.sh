@@ -965,12 +965,6 @@ alias purge-systemd-service='_purge-systemd-service'
 # -----------------------------------------------------------------------------
 alias py='python'
 
-alias py-activate='. venv/bin/activate || . .venv/bin/activate'
-alias pyactivate='py-activate'
-alias pyactivate.='py-activate'
-alias activatepy='py-activate'
-alias activatepy.='py-activate'
-
 # yarn
 alias y='yarn'
 alias yw='yarn workspace'
