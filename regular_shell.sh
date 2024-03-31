@@ -421,7 +421,7 @@ alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
 alias cds='cd /c/0000-shared'
 alias cdd='cd $HOME/dotfiles'
 alias shl='source ~/.bashrc'
-alias exshell='export SHELL=/usr/bin/bash'
+alias exshell="export SHELL=$__shell_path"
 alias rmvimswap='rm ~/.local/share/nvim/swap/*'
 alias pw='prettier --write'
 alias hb='sudo systemctl hibernate'
