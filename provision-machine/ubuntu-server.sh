@@ -555,7 +555,11 @@ function install-tmux {
 function install-neovim {
   : "Install neovim"
 
-  neovim_version=v0.9.2
+  local neovim_version
+  _latest_version="$(
+    get_latest_github_release neovim/neovim
+  )"
+
   RIP_GREP_VERSION=13.0.0
   # `bat` is for syntax highlighting inside `fzf`
   BAT_VERSION=0.23.0
@@ -2212,6 +2216,8 @@ Available user/repo (the indented identifiers are the repos):
     helm
   kubernetes
     kubernetes
+  neovim
+    neovim
 
 Examples:
   # Get help.
