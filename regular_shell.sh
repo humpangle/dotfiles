@@ -20,6 +20,22 @@ pathmunge() {
   fi
 }
 
+_is_linux() {
+  if [[ "$(uname -s)" == "Linux" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+_is_darwin() {
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 _PS1_APPEND='\n\$ '
 # Inverted cursor workaround for windows terminal
 # https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268
