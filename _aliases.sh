@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155,2139,2086,2033
 
+# Alacritty allows us to invoke only one instance from macos applications. This workaround is needed so we can have
+# multiple instances.
+if command -v Alacritty &>/dev/null; then
+  __alacritty() {
+    env -i \
+      HOME="$HOME" \
+      bash -l -c \
+        'Alacritty &>/dev/null' &
+    disown
+  }
+
+  alias ala='__alacritty'
+fi
+
 declare -A alias_map=()
 
 # -----------------------------------------------------------------------------
