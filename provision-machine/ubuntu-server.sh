@@ -346,6 +346,22 @@ function _get_script_version {
   )"
 }
 
+_is_linux() {
+  if [ "$(uname -s)" = "Linux" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+_is_darwin() {
+  if [ "$(uname -s)" = "Darwin" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
