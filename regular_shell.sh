@@ -1212,9 +1212,8 @@ if [ -d "$HOME/.asdf" ]; then
   . $HOME/.asdf/asdf.sh
   . $HOME/.asdf/completions/asdf.bash
 
-  if command -v asdf 1>/dev/null 2>&1; then
-    TS_SERVER_GBLOBAL_LIBRARY_PATH="$HOME/.asdf/installs/nodejs/$(asdf current nodejs | awk '{print $2}')/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
-    export TS_SERVER_GBLOBAL_LIBRARY_PATH
+  if asdf current nodejs &>/dev/null; then
+    export TS_SERVER_GBLOBAL_LIBRARY_PATH="$HOME/.asdf/installs/nodejs/$(asdf current nodejs | awk '{print $2}')/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
   fi
 
   if [[ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]]; then
