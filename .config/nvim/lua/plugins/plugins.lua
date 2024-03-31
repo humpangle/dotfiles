@@ -363,7 +363,7 @@ local plugins = {
     end,
   },
 
-  -- Quickly toggle maximaize a tab
+  -- Quickly toggle maximaize a window
   "szw/vim-maximizer",
 
   "editorconfig/editorconfig-vim",
