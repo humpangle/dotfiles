@@ -408,6 +408,8 @@ _do-cd() {
 
 alias _c='_do-cd'
 alias ..='cd ..'
+alias ls='ls --color=auto'
+alias ll='ls -AlhF'
 
 alias C="clear && printf '\e[3J'"
 
