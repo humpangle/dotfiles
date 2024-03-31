@@ -22,7 +22,10 @@ RUST_VERSION="1.65.0"
 
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
 LOCAL_BIN_PATH="$HOME/.local/bin"
+
 PROJECT_0_PATH="$HOME/projects/0"
+mkdir -p "$PROJECT_0_PATH"
+
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
 BASH_COMPLETION_DIR=/etc/bash_completion.d
 
@@ -1551,7 +1554,6 @@ function setup-dev {
   install-chrome
 
   mkdir -p "${LOCAL_BIN_PATH}" \
-    "$PROJECT_0_PATH" \
     ~/.ssh \
     ~/.config \
     ~/.config/erlang_ls
