@@ -2396,6 +2396,48 @@ function update_latest_global_version {
     "$_this_file"
 }
 
+darwin_bash_profile() {
+  local _profile_path="$HOME/.bash_profile"
+
+  if ! _is_darwin ||
+    ! [[ -s "$_profile_path" ]] ||
+    grep -qP 'PATH="\$_joined_paths\$PATH"' "$_profile_path"; then
+    return
+  fi
+
+  local _temp_profile_path="$PROJECT_0_PATH/.bash_profile"
+
+  trap "rm -rf $_temp_profile_path" EXIT
+
+  cat "$_profile_path" > "$_temp_profile_path"
+
+  cat <<'EOF' > "$_profile_path"
+######################################################################
+# Prepend the GNU binaries
+_paths=(
+  '/opt/homebrew/opt/gawk/libexec/gnubin'
+  '/opt/homebrew/opt/grep/libexec/gnubin'
+  '/opt/homebrew/opt/gnu-getopt/bin'
+  "$HOME/.local/bin"
+  "$HOME/dotfiles/scripts"
+)
+
+_joined_paths=''
+
+for __path in "${_paths[@]}"; do
+  _joined_paths="$__path:$_joined_paths"
+done
+
+# Remove our custom paths if already exists.
+PATH="${PATH//$_joined_paths/''}"
+PATH="$_joined_paths$PATH"
+######################################################################
+
+EOF
+
+  cat "$_temp_profile_path" >> "$_profile_path"
+}
+
 function help {
   : "List available tasks."
 
