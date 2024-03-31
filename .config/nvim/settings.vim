@@ -366,18 +366,12 @@ function! NetrwMapping()
   nmap <buffer> fl :echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
 endfunction
 
-let g:ebnis_netrw_loaded = 0
-augroup netrw_mapping
-  autocmd!
-
-  autocmd BufEnter * if ( g:ebnis_netrw_loaded == 0 && expand("%") == "NetrwTreeListing"  ) |
-        \ set ft=netrw |
-        \ call NetrwVExplore('n') |
-        \ call NetrwMapping() |
-        \ let g:ebnis_netrw_loaded = 1 |
-        \ endif
-augroup END
-
+autocmd BufEnter * if ( g:ebnis_netrw_loaded == 0 && expand("%") == "NetrwTreeListing"  ) |
+  \ set ft=netrw |
+  \ call NetrwVExplore('n') |
+  \ call NetrwMapping() |
+  \ let g:ebnis_netrw_loaded = 1 |
+  \ endif
 " END Netrw
 
 " edit init.vim
