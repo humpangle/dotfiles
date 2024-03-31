@@ -36,7 +36,29 @@ _is_darwin() {
   fi
 }
 
+if _is_linux; then
+  __shell_path='/usr/bin/bash'
+  google_chrome_bin="$(which google-chrome)"
+elif _is_darwin; then
+  # Cnfigure shell prompt
+  # PS1='\h:\W \u\$ \n\$' # [default] - host:short_path user
+  PS1='\u@\h:\w\$' # user@host:full_path
+
+  # TODO:configure VsCode
+  # ~/Library/Application Support/Code/User/settings.json
+  # ~/Library/Application Support/Code/User/settings.json
+  # /Users/kanmii/Library/Application Support/Google/Chrome/Profile 2
+
+  __shell_path='/opt/homebrew/bin/bash'
+
+  # Export google chrome binary so we can launch google chrome from command line.
+  export google_chrome_bin='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+  export google_chrome_bin="open -na 'Google Chrome' --args"
+fi
+
+# Put the prompt on a new line in case we have very long PWD pathname.
 _PS1_APPEND='\n\$ '
+
 # Inverted cursor workaround for windows terminal
 # https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268
 if [ -n "$WT_SESSION" ]; then
