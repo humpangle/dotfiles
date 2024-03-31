@@ -316,9 +316,6 @@ nnoremap ,ts :split<bar>:term<cr>:echo &channel<cr>
 " Reorder tabs
 noremap <A-Left>  :-tabmove<cr>
 noremap <A-Right> :+tabmove<cr>
-" Use these mappings only when not in TMUX since I have mapped the same in TMUX
-noremap <S-Left>  :-tabmove<cr>
-noremap <S-Right> :+tabmove<cr>
 
 " Switch between last active and current tab
 " https://stackoverflow.com/a/2120168
