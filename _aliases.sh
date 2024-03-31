@@ -8,7 +8,6 @@ declare -A alias_map=()
 # -----------------------------------------------------------------------------
 if command -v docker &>/dev/null; then
   export DOCKER_BUILDKIT=1
-  export DOCKER0="$(ip route | awk '/docker0/ { print $9 }')"
 
   # shellcheck disable=2230
   export _docker_bin="$(which docker)"
