@@ -762,21 +762,193 @@ alias e='_setenvs'
 alias pe='p-env'
 alias p='p-env'
 
+____ggc-help() {
+  read -r -d '' var <<'eof'
+Launch google chrome browser. Usage:
+  _ggc [OPTIONS]
+
+Options:
+  --help/-h
+      Print this help text and quit (same as called with no arguments).
+  --default/-o
+      Open the default profile.
+  --new/-n profile
+      New profile.
+  --user/-u profile
+      Exisiting user profile.
+  --delete/-d profile
+      Delete a profile.
+  --profiles/-p
+      List profiles
+  --debug/-D
+      See what arguments and flags we are sending to the google chrome binary.
+
+Examples:
+  # Get help
+  _ggc
+  _ggc -h
+
+  # Open default profile
+  _ggc --default
+
+  # Create new `some-user` profile
+  _ggc --new some-user
+
+  # Open `some-user` profile
+  _ggc --user some-user
+
+  # Delete `some-user` profile
+  _ggc --delete some-user
+
+  # List profiles
+  _ggc --profiles
+
+  # Debug
+  _ggc --debug
+eof
+
+  echo -e "\n${var}\n\n\n"
+}
+
 _ggc() {
-  if [[ "${1}" == "-h" ]]; then
-    echo "Usage:"
-    echo "  ggc"
-    echo "  ggc -h"
-    echo "  ggc --incognito"
-    echo "  ggc --user-data-dir=\$HOME/.config/google-chrome/some-profile"
+  if [[ -z "$*" ]];  then
+    ____ggc-help
     return
   fi
 
-  google-chrome "${@}" &>/dev/null &
-  disown
+  local _profile_directory_base="$HOME/.config/google-chrome/profiles"
+
+  local _user_dir
+  local _new_user
+  local _debug
+  local _args=''
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help,default,delete:,user:,profiles,debug,new:,incognito \
+      --options=h,o,d:,u:,p,D,n:,i \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ____ggc-help
+    return
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ____ggc-help
+      return
+      ;;
+
+    --profiles | -p)
+      echo -e "\nBase profile directory:\n  $_profile_directory_base\n"
+
+      # Copy the path to the clipboard (why ??)
+      copy "$_profile_directory_base"
+
+      echo "Available Profiles:"
+
+      ls -1 "$_profile_directory_base"
+
+      echo
+
+      return
+      ;;
+
+    --new | -n)
+      _new_user=$2
+      shift 2
+      ;;
+
+    --user | -u)
+      _user=$2
+      shift 2
+      ;;
+
+    --delete | -d)
+      mv "$_profile_directory_base/$2" /tmp
+
+      echo -e "\n$_profile_directory_base/$2 Profile deleted successfully.\n"
+
+      return
+      ;;
+
+    --debug | -D)
+      _debug=1
+      shift
+      ;;
+
+    --incognito | -i)
+      _args+=' -incognito'
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      ____ggc-help
+      return
+      ;;
+    esac
+  done
+
+  local _other_args="$*"
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  if [[ -n "$_user" ]] ||
+      [[ -n "$_new_user" ]]; then
+
+    if [[ -n "$_new_user" ]]; then
+      _user="$_new_user"
+    else
+      if ! grep -q "$_user" <<<"$(ls $_profile_directory_base)" ; then
+        echo -e "\nProfile \"$_user\" does not exist. Tyep \"_ggc --help\" to get help.\n"
+        return
+      fi
+    fi
+
+    _user="$_profile_directory_base/$_user"
+
+    mkdir -p "$_user"
+
+    _args+=" --user-data-dir=$_user"
+  fi
+
+  _args+=" $_other_args"
+
+  if [[ -n "$_debug" ]]; then
+    echo -e "\n$_args\n"
+    return
+  fi
+
+  if _is_darwin; then
+    bash -c "$google_chrome_bin $_args"
+  else
+    "$google_chrome_bin" "$_args" \
+      &>/dev/null &
+
+    disown
+  fi
 }
 
 alias ggc='_ggc'
+alias ggcbin="$google_chrome_bin"
 
 export TP="${TMUX_PANE}"
 
