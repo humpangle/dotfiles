@@ -283,7 +283,7 @@ if command -v tmux &>/dev/null; then
     else
       cd "${HOME}/dotfiles" || exit 1
       rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
-      tmux new -s
+      tmux new -s dot
     fi
   }
 
