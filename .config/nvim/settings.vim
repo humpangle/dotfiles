@@ -283,8 +283,6 @@ nnoremap ,rs :rsh<cr>
 " Move between windows in a tab
 nmap <tab> <C-w>w
 nnoremap <c-h> <C-w>h
-" use <c-b>
-" inoremap <c-h> <Left>
 
 " These mappings are supposed to activate down/left/right windows in a tab -
 " but they work against terminal buffer
