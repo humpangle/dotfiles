@@ -69,11 +69,8 @@ fi
 
 ###### START COMMONS ##################
 
-if [[ -e /usr/local/bin/aws_completer ]]; then
-  complete -C '/usr/local/bin/aws_completer' aws
-fi
-
 export EDITOR="nvim"
+
 # install with: `sudo apt-get install ssh-askpass-gnome ssh-askpass -y`
 # shellcheck disable=2155
 export SUDO_ASKPASS=$(command -v ssh-askpass)
