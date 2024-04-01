@@ -22,4 +22,20 @@ function M.cmp()
   return (not M.has_vscode() and not has_coc())
 end
 
+function M.lsp()
+  return (not M.has_vscode() and not has_coc())
+end
+
+function M.treesitter()
+  return (not M.has_vscode() and not has_coc())
+end
+
+function M.telescope()
+  return (not M.has_vscode() and not has_coc())
+end
+
+function M.dap()
+  return not M.has_vscode()
+end
+
 return M

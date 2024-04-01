@@ -51,6 +51,13 @@ local plugins_table = {
 
   require("plugins/cmp"),
 
+  -- Highlight, edit, and navigate code
+  require("plugins/treesitter"),
+  require("plugins/lsp"),
+  require("plugins/dap"),
+  -- Fuzzy Finder (files, lsp, etc)
+  require("plugins/telescope"),
+
   -- FUZZY FINDER
   -- sudo apt install bat -- Syntax highlighting
   --  brew install bat
