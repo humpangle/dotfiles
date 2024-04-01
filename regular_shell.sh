@@ -98,18 +98,22 @@ alias sv='sudo -E nvim'
 alias vmin='v -u ~/.config/nvim/settings-min.vim'
 alias vm='v -u ~/.config/nvim/settings-min.vim'
 alias nvl="VIM_USE_COC=1 nvim "
+
 # set vim theme and background per shell session
 # unset
-alias vt.='export EBNIS_VIM_THEME='
-# vim-one
-alias vt1d='export EBNIS_VIM_THEME=vim-one EBNIS_VIM_THEME_BG=d'
-alias vt1l='export EBNIS_VIM_THEME="vim-one" EBNIS_VIM_THEME_BG=l'
-# vim-gruvbox8
-alias vt8d='export EBNIS_VIM_THEME=vim-gruvbox8 EBNIS_VIM_THEME_BG=d'
-alias vt8l='export EBNIS_VIM_THEME=vim-gruvbox8 EBNIS_VIM_THEME_BG=l'
-# vim-solarized8
-alias vtsd='export EBNIS_VIM_THEME=vim-solarized8 EBNIS_VIM_THEME_BG=d'
-alias vtsl='export EBNIS_VIM_THEME=vim-solarized8 EBNIS_VIM_THEME_BG=l'
+# one theme
+alias vt1d='export EBNIS_VIM_THEME=one EBNIS_VIM_THEME_BG=d'
+alias vt1l='export EBNIS_VIM_THEME="one" EBNIS_VIM_THEME_BG=l'
+# gruvbox8 themes
+alias vtg8sd='export EBNIS_VIM_THEME=gruvbox8_soft EBNIS_VIM_THEME_BG=d'
+alias vtg8sl='export EBNIS_VIM_THEME=gruvbox8_soft EBNIS_VIM_THEME_BG=l'
+alias vtg8hd='export EBNIS_VIM_THEME=gruvbox8_hard EBNIS_VIM_THEME_BG=d'
+alias vtg8hl='export EBNIS_VIM_THEME=gruvbox8_hard EBNIS_VIM_THEME_BG=l'
+# solarized8 themes
+alias vts8d='export EBNIS_VIM_THEME=solarized8 EBNIS_VIM_THEME_BG=d'
+alias vts8l='export EBNIS_VIM_THEME=solarized8 EBNIS_VIM_THEME_BG=l'
+alias vts8hd='export EBNIS_VIM_THEME=solarized8_high EBNIS_VIM_THEME_BG=d'
+alias vts8hl='export EBNIS_VIM_THEME=solarized8_high EBNIS_VIM_THEME_BG=l'
 
 remove_vim_sessionf() {
   local ME

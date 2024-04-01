@@ -197,22 +197,6 @@ augroup filetypes
     \ nnoremap <buffer> <leader>fc :Neoformat<CR>
 augroup END
 
-augroup terminal_settings
-  autocmd!
-
-  " start terminal in insert mode
-  " autocmd BufWinEnter,WinEnter term://* startinsert
-  " autocmd TermOpen * startinsert
-  " autocmd BufLeave term://* stopinsert
-
-  " Ignore various filetypes as those will close terminal automatically
-  " Ignore fzf, ranger, coc
-  " autocmd TermClose term://*
-  "   \ if (expand('<afile>') !~ "fzf") && (expand('<afile>') !~ "ranger") && (expand('<afile>') !~ "coc") |
-  "   \   call nvim_input('<CR>')  |
-  "   \ endif
-augroup END
-
 " Save key strokes (now we do not need to press shift to enter command mode).
 " Vim-sneak has also mapped `;`, so using the below mapping will break the map
 " used by vim-sneak
