@@ -206,7 +206,6 @@ augroup END
 " format paragraphs/lines to 80 chars
 nnoremap <Leader>pp gqap
 xnoremap <Leader>pp gqa
-xnoremap <Leader>pn :call Renumber()<CR>
 " Save file
 nnoremap <Leader>ww :w<CR>
 nnoremap <Leader>wa :wa<CR>
@@ -627,22 +626,6 @@ nnoremap <leader>be :call DeleteAllBuffers('e')<cr>
 nnoremap <leader>bT :call DeleteAllBuffers('t')<cr>
 " Echo current date into buffer
 nnoremap ,tm :r!date +"\%F \%T"<cr>
-
-" https://github.com/clarke/vim-renumber
-function! Renumber() range
-  let n=1
-
-  " E486 Pattern not found
-  for linenum in range(a:firstline, a:lastline)
-    try
-      " execute linenum . 's/\([\s\t])\d\+/' . n . '/'
-      execute linenum . 's/^\([ 	]\+\)\?\([0-9]\+\)/\1' . n . '/'
-      let n=n+1
-    catch "Pattern not found"
-      " Skipping lines that don't match our pattern
-    endtry
-  endfor
-endfunction
 
 " https://stackoverflow.com/a/2573758
 function! RedirMessages(msgcmd, destcmd)
