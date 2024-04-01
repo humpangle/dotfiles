@@ -1039,7 +1039,7 @@ function elixir-post-install {
 function ___elixir-help {
   read -r -d '' var <<'eof'
 Install elixir with ASDF. Usage:
-  ./run.sh install-elixir [OPTIONS]
+  pm install-elixir [OPTIONS]
 
 Options:
   --help/-h.                    Print help message and exit
@@ -1047,11 +1047,11 @@ Options:
   --erlang/-e erlang_version.   Specify erlang version.
 
 Examples:
-  ./run.sh install-elixir --help
-  ./run.sh install-elixir
-  ./run.sh i-elixir
-  ./run.sh install-elixir --elixir=1.14.3 --erlang=25.2
-  ./run.sh install-elixir --elixir=1.14.3 --erlang=latest
+  pm install-elixir --help
+  pm install-elixir
+  pm i-elixir
+  pm install-elixir --elixir=1.14.3 --erlang=25.2
+  pm install-elixir --elixir=1.14.3 --erlang=latest
 eof
 
   echo "${var}"
@@ -1173,7 +1173,7 @@ function install-nodejs {
 function ___nodejs-help {
   read -r -d '' var <<'eof'
 Install nodejs with ASDF. Usage:
-  ./run.sh install-nodejs [OPTIONS]
+  pm install-nodejs [OPTIONS]
 
 Options:
   --help/-h.                   Print help message and exit
@@ -1186,10 +1186,10 @@ Options:
   --version/-a nodejs_version. Install specific nodejs version
 
 Examples:
-  ./run.sh install-nodejs --help
-  ./run.sh install-nodejs # install default nodejs version
-  ./run.sh install-nodejs --version=17.9.1
-  ./run.sh install-nodejs -a 17.9.1 --local
+  pm install-nodejs --help
+  pm install-nodejs # install default nodejs version
+  pm install-nodejs --version=17.9.1
+  pm install-nodejs -a 17.9.1 --local
 eof
 
   echo "${var}"
@@ -1810,7 +1810,7 @@ There are two flavors of the LSP:
 For this reason, you must specify the flavor you wish to install.
 
 Usage:
-  ./run.sh install-terraform-lsp flavor [OPTIONS]
+  pm install-terraform-lsp flavor [OPTIONS]
 
 Options:
   --version/-v. Print version information and exit.
@@ -1821,9 +1821,9 @@ Options:
                   lsp - the unofficial binary that works with COC-nvim
 
 Examples:
-  ./run.sh install-terraform-lsp --help
-  ./run.sh install-terraform-lsp --version
-  ./run.sh install-terraform-lsp lsp
+  pm install-terraform-lsp --help
+  pm install-terraform-lsp --version
+  pm install-terraform-lsp lsp
 eof
 
   echo -e "${var}"
@@ -2135,10 +2135,10 @@ function install-aws-cli {
 function ___install-aws-cli-help {
   read -r -d '' var <<'eof'
 Install aws cli including configuring auto completion for /bin/bash. Usage:
-  ./run.sh install-aws-cli
+  pm install-aws-cli
 
 Examples:
-  ./run.sh install-aws-cli
+  pm install-aws-cli
 eof
 
   echo -e "${var}"
