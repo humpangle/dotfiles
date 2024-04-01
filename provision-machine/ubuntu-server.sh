@@ -362,6 +362,21 @@ _is_darwin() {
   fi
 }
 
+_install_erlang_os_deps() {
+  if _is_darwin; then
+    brew install \
+      autoconf \
+      openssl@1.1 \
+      openssl \
+      wxwidgets \
+      libxslt \
+      fop
+  else
+    _install-deps "${ERLANG_DEPS[*]}"
+    sudo apt-get autoremove -y
+  fi
+}
+
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -879,9 +894,7 @@ function install-erlang {
 
   _echo "INSTALLING ERLANG version: ${version}"
 
-  _install-deps "${ERLANG_DEPS[*]}"
-
-  sudo apt-get autoremove -y
+  _install_erlang_os_deps
 
   export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
   # Do not build erlang docs when installing with
@@ -1015,10 +1028,14 @@ function install-elixir {
 
   _echo "INSTALLING ELIXIR ${version}"
 
-  sudo apt-get update
+  if _is_darwin; then
+    brew install unzip
+  else
+    sudo apt-get update
 
-  sudo apt-get install -y \
-    unzip
+    sudo apt-get install -y \
+      unzip
+  fi
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
