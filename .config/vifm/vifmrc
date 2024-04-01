@@ -534,7 +534,7 @@ elseif executable('pbcopy')
   nnoremap yd :!printf %d | pbcopy %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
 
   " Yank current file path into the clipboard (escape spaces)
-  nnoremap yf :!printf %c:p | pbcopy %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+  nnoremap yf :!printf %f:p:gs? ?\\ ? | pbcopy %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
 
   " yank current filename without path into the clipboard
   nnoremap yn :!printf %c | pbcopy %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
@@ -562,7 +562,7 @@ nnoremap ,t :!bash &<cr>
 " Open editor to edit vifmrc and apply settings after returning to vifm
 nnoremap ,ec :write | edit $MYVIFMRC | restart full<cr>
 " Open nvim to edit vifmrc
-nnoremap ,C :!nvim --remote-tab-silent $MYVIFMRC &<cr>
+" nnoremap ,C :!nvim --remote-tab-silent $MYVIFMRC &<cr>
 
 " Toggle wrap setting on ,w key
 nnoremap ,w :set wrap!<cr>
