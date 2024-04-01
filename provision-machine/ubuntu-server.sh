@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # shellcheck disable=1090,2009,2046,2143,2164,2103,2230,1091
 
 set -o pipefail
