@@ -2418,6 +2418,7 @@ _paths=(
   '/opt/homebrew/opt/gawk/libexec/gnubin'
   '/opt/homebrew/opt/grep/libexec/gnubin'
   '/opt/homebrew/opt/gnu-getopt/bin'
+  '/opt/homebrew/opt/unzip/bin'
   "$HOME/.local/bin"
   "$HOME/dotfiles/scripts"
 )
