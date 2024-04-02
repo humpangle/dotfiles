@@ -499,18 +499,28 @@ function install-asdf-postgres {
 
   local version=15.2
 
-  sudo apt-get update
+  if _is_linux;  then
+    sudo apt-get update
 
-  sudo apt-get install -y \
-    g++ \
-    build-essential \
-    libssl-dev \
-    libreadline-dev \
-    zlib1g-dev \
-    libcurl4-openssl-dev \
-    uuid-dev
+    sudo apt-get install -y \
+      g++ \
+      build-essential \
+      libssl-dev \
+      libreadline-dev \
+      zlib1g-dev \
+      libcurl4-openssl-dev \
+      uuid-dev
 
-  sudo apt-get autoremove -y
+    sudo apt-get autoremove -y
+  else
+    brew install \
+      gcc \
+      readline \
+      zlib \
+      curl \
+      ossp-uuid \
+      icu4c
+  fi
 
   "$(_asdf-bin-path)" plugin add postgres
   "$(_asdf-bin-path)" install postgres "$version"
