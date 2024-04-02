@@ -1331,7 +1331,7 @@ function install-python {
     pip install -U \
       pip \
       yt-dlp \
-      pynvim \
+      pyright \
       jupyterlab \
       jedi-language-server \
       black \
