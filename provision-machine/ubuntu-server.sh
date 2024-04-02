@@ -1175,7 +1175,13 @@ function install-nodejs {
   _echo "INSTALLING NODEJS version ${version}"
 
   if [[ -n "${_dev}" ]]; then
-    _install-deps "${NODEJS_DEPS[*]}"
+    if _is_linux; then
+      _install-deps "${NODEJS_DEPS[*]}"
+  else
+    brew install \
+      gcc \
+      make
+    fi
   fi
 
   # shellcheck source=/dev/null
