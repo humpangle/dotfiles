@@ -2467,6 +2467,10 @@ done
 # Remove our custom paths if already exists.
 PATH="${PATH//$_joined_paths/''}"
 PATH="$_joined_paths$PATH"
+
+# Seems? to be required for asdf install python
+export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
 ######################################################################
 
 EOF
