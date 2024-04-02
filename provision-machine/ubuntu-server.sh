@@ -1301,7 +1301,15 @@ function install-python {
 
   _echo "INSTALLING PYTHON $_version"
 
-  if [[ -z "$_dev" ]]; then
+  if _is_darwin; then
+    brew install \
+      openssl \
+      readline \
+      sqlite3 \
+      xz \
+      zlib \
+      tcl-tk
+  else
     _install-deps "${PYTHON_DEPS[*]}"
   fi
 
