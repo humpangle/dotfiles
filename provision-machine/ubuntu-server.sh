@@ -210,28 +210,30 @@ function _setup-wsl-home {
 }
 
 function _update-and-upgrade-os-packages {
-  sudo apt-get update
-  sudo apt-get upgrade -y
+  if _is_linux; then
+    sudo apt-get update
+    sudo apt-get upgrade -y
 
-  if ! _is-dev "$@"; then
-    sudo apt-get install -y \
-      git \
-      curl
-  else
-    deps="${LUA_DEPS[*]} \
-      ${RUST_DEPS[*]} \
-      ${TMUX_DEPS[*]} \
-      ${NEOVIM_DEPS[*]} \
-      ${NODEJS_DEPS[*]} \
-      ${PYTHON_DEPS[*]} \
-      ${GOLANG_DEPS[*]} \
-      ${DOCKER_DEPS[*]} "
+    if ! _is-dev "$@"; then
+      sudo apt-get install -y \
+        git \
+        curl
+    else
+      deps="${LUA_DEPS[*]} \
+        ${RUST_DEPS[*]} \
+        ${TMUX_DEPS[*]} \
+        ${NEOVIM_DEPS[*]} \
+        ${NODEJS_DEPS[*]} \
+        ${PYTHON_DEPS[*]} \
+        ${GOLANG_DEPS[*]} \
+        ${DOCKER_DEPS[*]} "
 
-    local cmd="sudo apt-get install -y ${deps}"
-    eval "$cmd"
+      local cmd="sudo apt-get install -y ${deps}"
+      eval "$cmd"
+    fi
+
+    sudo apt-get autoremove -y
   fi
-
-  sudo apt-get autoremove -y
 }
 
 function _may_be_install_asdf {
