@@ -833,6 +833,13 @@ function install-asdf {
     _update-and-upgrade-os-packages
   fi
 
+  if _is_darwin; then
+    brew install \
+      coreutils \
+      curl \
+      git
+  fi
+
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch $version
 }
 
