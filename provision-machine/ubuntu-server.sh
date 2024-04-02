@@ -1058,6 +1058,10 @@ function install-elixir {
 function elixir-post-install {
   : "Install hex and rebar"
 
+  # Compile Hex from scratch for this OTP version (fix for apple silicon)
+  #   https://elixirforum.com/t/crash-dump-when-installing-phoenix-on-mac-m2-eheap-alloc-cannot-allocate-x-bytes-of-memory-of-type-heap-frag/62154/9?u=samba6
+  mix archive.install --force github hexpm/hex branch latest
+
   mix local.hex --force --if-missing
   mix local.rebar --force --if-missing
 }
