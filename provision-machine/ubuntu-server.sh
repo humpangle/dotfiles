@@ -2463,6 +2463,7 @@ darwin_bash_profile() {
 ######################################################################
 # Prepend the GNU binaries
 _paths=(
+  '/opt/homebrew/opt/make/libexec/gnubin'
   '/opt/homebrew/opt/gnu-sed/libexec/gnubin'
   '/opt/homebrew/opt/gawk/libexec/gnubin'
   '/opt/homebrew/opt/grep/libexec/gnubin'
