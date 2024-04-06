@@ -645,16 +645,6 @@ function install-neovim {
   sudo dpkg -i "${bat_deb}"
   rm "${bat_deb}"
 
-  local shfmt_version=v3.5.1
-
-  rm -rf "$HOME/.local/bin/shfmt"
-  curl -Lo \
-    "$HOME/.local/bin/shfmt" \
-    --create-dirs \
-    "https://github.com/mvdan/sh/releases/download/${shfmt_version}/shfmt_${shfmt_version}_linux_amd64"
-
-  chmod ugo+x "$HOME/.local/bin/shfmt"
-
   # shellcheck disable=2016
   printf 'export DISPLAY="$(%s):0"' "ip route | awk '/default/ {print \$3}'"
 
@@ -2272,6 +2262,37 @@ function install-helm {
   cd - &>/dev/null
 }
 
+function install_shfmt {
+  : "Shfmt is the code formatter binary for bash/sh"
+
+  local shfmt_version
+
+  shfmt_version="$(
+    get_latest_github_release mvdan/sh
+  )"
+
+  _echo "Installing shfmt version \"$shfmt_version\""
+
+  mkdir -p "${LOCAL_BIN_PATH}"
+
+  rm -rf "$HOME/.local/bin/shfmt"
+
+  local os
+  local archi
+
+  os="$(uname -s)"
+  os="${os,,}"
+
+  archi="$(uname -m)"
+
+  curl -Lo \
+    "$HOME/.local/bin/shfmt" \
+    --create-dirs \
+    "https://github.com/mvdan/sh/releases/download/${shfmt_version}/shfmt_${shfmt_version}_${os}_${archi}"
+
+  chmod u+x "$HOME/.local/bin/shfmt"
+}
+
 function ___get_latest_github_release-help {
   read -r -d '' var <<'eof'
 Get the latest release from github. Usage:
@@ -2290,6 +2311,8 @@ Available user/repo (the indented identifiers are the repos):
     kubernetes
   neovim
     neovim
+  mvdan
+    sh
 
 Examples:
   # Get help.
