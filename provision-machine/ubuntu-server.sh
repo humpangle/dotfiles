@@ -2476,6 +2476,7 @@ function update_latest_global_version {
 darwin_bash_profile() {
   local _profile_path="$HOME/.bash_profile"
 
+  # shellcheck disable=SC2016
   if ! _is_darwin ||
     ! [[ -s "$_profile_path" ]] ||
     grep -qP 'PATH="\$_joined_paths\$PATH"' "$_profile_path"; then
@@ -2484,6 +2485,7 @@ darwin_bash_profile() {
 
   local _temp_profile_path="$PROJECT_0_PATH/.bash_profile"
 
+  # shellcheck disable=SC2064
   trap "rm -rf $_temp_profile_path" EXIT
 
   cat "$_profile_path" > "$_temp_profile_path"
