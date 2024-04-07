@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# This utility function exists because `realpath` command errors on macos when given path does not exist.
+
+# :TODO:(Kanmii)
+#     1. Help text
+#     2. -p flag to create directories
+
+# We must wrap the function in brackets instead of curly braces so that it runs in a subshell and restores the original
+# working directory on exit.
+resolve_rel_to_abs_path() (
+  # Extract '/file' from '/dir/file'
+
+  # We only change the directory if the name doesn't match for the cases where we were passed something like 'file'
+  # without './'
+
+  # ../env -> ..
+  # ./a/c/ -> ./a/c
+  local _dirname="${1%/*}"
+
+  if [[ "$_dirname" != "$1" ]]; then
+    if ! cd "${1%/*}" &>/dev/null; then
+      return
+    fi
+  fi
+
+  local _basename="${1##*/}"
+  echo -n "$(pwd)/$_basename"
+)
+
+resolve_rel_to_abs_path "${@}"
