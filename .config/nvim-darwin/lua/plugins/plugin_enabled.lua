@@ -38,4 +38,8 @@ function M.dap()
   return not M.has_vscode()
 end
 
+function M.coc()
+  return has_coc()
+end
+
 return M
