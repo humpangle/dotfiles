@@ -178,6 +178,31 @@ function _compute_path_to_use {
   echo "$_path_to_use"
 }
 
+# This utility function is necessary because commands `realpath` and `realdlink` do not work for non existing
+# paths on macos.
+#
+# We must wrap the function in brackets instead of curly braces so that it runs in a subshell and restores the original
+# working directory on exit.
+_resolve_rel_to_abs_path() (
+  # Extract '/file' from '/dir/file'
+
+  # We only change the directory if the name doesn't match for the cases where we were passed something like 'file'
+  # without './'
+
+  # ../env -> ..
+  # ./a/c/ -> ./a/c
+  local _dirname="${1%/*}"
+
+  if [[ "$_dirname" != "$1" ]]; then
+    if ! cd "${1%/*}" &>/dev/null; then
+      return
+    fi
+  fi
+
+  local _basename="${1##*/}"
+  echo -n "$(pwd)/$_basename"
+)
+
 parse-args "$@"
 
 if [[ "$_level" -gt 5 ]]; then
@@ -255,7 +280,12 @@ function _parse_variables_in_in_infile {
 _parse_variables_in_in_infile
 
 if [[ -n "$_out_filename" ]]; then
-  _out_file_full_path_name=$(realpath "$_out_filename")
+  if [[ -e "$_out_filename" ]]; then
+    # File exists - get absolute file path
+    _out_file_full_path_name=$(realdlink -f "$_out_filename")
+  else
+    _out_file_full_path_name=$(_resolve_rel_to_abs_path "$_out_filename")
+  fi
 fi
 
 if _should_output_to_file; then
