@@ -731,11 +731,15 @@ function _setenvs {
   "$_p_env" "$_path_to_use" \
     --output "${_output}"
 
-  set -o allexport
-  . "${_output}"
-  set +o allexport
+  if [[ -s "$_output" ]]; then
+    set -o allexport
+    . "${_output}"
+    set +o allexport
 
-  rm -rf "${_output}"
+    rm -rf "${_output}"
+  else
+    echo "Environment vairables can not be written to shell. File \"$_output\" does not exist."
+  fi
 }
 
 function _compute_path_to_use {
