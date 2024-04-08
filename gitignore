@@ -118,6 +118,7 @@ Session.vim
 **/.vim/.ropeproject/*
 **/.vim/coc-settings.json
 **/spell/*.spl
+*.lua.swp
 
 # scratch files
 *.___scratch*
