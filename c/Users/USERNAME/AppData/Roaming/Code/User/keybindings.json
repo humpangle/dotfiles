@@ -1,0 +1,84 @@
+// Place your key bindings in this file to override the defaults
+[
+  {
+    "key": "ctrl+alt+1",
+    "command": "workbench.action.createTerminalEditor",
+    "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+  },
+  {
+    "key": "alt+1",
+    "command": "-workbench.action.openEditorAtIndex1"
+  },
+  {
+    "key": "alt+1",
+    "command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
+    "when": "inFilesPicker && inQuickOpen"
+  },
+  {
+    "key": "alt+1",
+    "command": "workbench.view.explorer",
+    "when": "viewContainer.workbench.view.explorer.enabled"
+  },
+  {
+    "key": "alt+1",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "!editorTextFocus"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "workbench.view.explorer",
+    "when": "terminalEditorFocus && terminalFocus && terminalHasBeenCreated || terminalEditorFocus && terminalFocus"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "!terminalEditorFocus || !terminalFocus"
+  },
+  {
+    "key": "ctrl+alt+w",
+    // "key": "ctrl+F4",
+    "command": "workbench.action.closeActiveEditor",
+    // "when": "editorFocus || terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+alt+w",
+    "command": "workbench.action.terminal.killActiveTab",
+    "when": "terminalFocus && !terminalEditorFocus"
+  },
+  {
+    "key": "shift+escape",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "shift+tab shift+escape",
+    "command": "workbench.action.toggleMaximizedPanel",
+  },
+  {
+    "key": "ctrl+f",
+    "command": "vscode-neovim.ctrl-f",
+    "when": "terminalEditorFocus || (editorTextFocus && neovim.ctrlKeysNormal.f && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions')"
+  },
+  {
+    "key": "ctrl+alt+v",
+    "command": "workbench.action.toggleActivityBarVisibility",
+    // "command": "workbench.action.activityBarLocation.side",
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.terminal.killEditor",
+    "when": "terminalEditorFocus && terminalFocus && terminalHasBeenCreated || terminalEditorFocus && terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+v",
+    "command": "-workbench.action.terminal.paste",
+  },
+  // {
+  //   "key": "ctrl+alt+1",
+  //   "command": "workbench.action.terminal.new",
+  //   "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+  // },
+  // {
+  //   "key": "shift+tab+escape",
+  //   "command": "-workbench.action.togglePanel"
+  // },
+]
