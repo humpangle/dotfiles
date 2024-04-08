@@ -8,7 +8,7 @@ if command -v Alacritty &>/dev/null; then
     env -i \
       HOME="$HOME" \
       bash -l -c \
-        'Alacritty &>/dev/null' &
+      'Alacritty &>/dev/null' &
     disown
   }
 
