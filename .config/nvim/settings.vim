@@ -319,6 +319,7 @@ function! NetrwMapping()
   nmap <buffer> fl :echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
 endfunction
 
+let g:ebnis_netrw_loaded = 0
 autocmd BufEnter * if ( g:ebnis_netrw_loaded == 0 && expand("%") == "NetrwTreeListing"  ) |
   \ set ft=netrw |
   \ call NetrwVExplore('n') |
