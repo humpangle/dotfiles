@@ -152,3 +152,6 @@ ___logs/
 .cloudflare-tunnel-config*
 *dump.tar.*
 **/lazy-lock.json
+
+# Apple
+*.DS_Store*
