@@ -6,33 +6,37 @@
     "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
   },
   {
-    "key": "alt+1",
-    "command": "-workbench.action.openEditorAtIndex1"
-  },
-  {
-    "key": "alt+1",
-    "command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
-    "when": "inFilesPicker && inQuickOpen"
-  },
-  {
-    "key": "alt+1",
-    "command": "workbench.view.explorer",
-    "when": "viewContainer.workbench.view.explorer.enabled"
-  },
-  {
-    "key": "alt+1",
-    "command": "workbench.action.toggleSidebarVisibility",
-    "when": "!editorTextFocus"
-  },
-  {
     "key": "ctrl+alt+e",
-    "command": "workbench.view.explorer",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleActivityBarVisibility",
+        "workbench.view.explorer",
+      ],
+    },
     "when": "terminalEditorFocus && terminalFocus && terminalHasBeenCreated || terminalEditorFocus && terminalFocus"
   },
   {
     "key": "ctrl+alt+e",
-    "command": "workbench.action.toggleSidebarVisibility",
-    "when": "!terminalEditorFocus || !terminalFocus"
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleActivityBarVisibility",
+        "workbench.view.explorer",
+      ],
+    },
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.activityBarLocation.hide",
+        "workbench.action.closeSidebar",
+      ],
+    },
+    "when": "!editorTextFocus && !terminalEditorFocus && !terminalFocus"
   },
   {
     "key": "ctrl+alt+w",
@@ -57,11 +61,6 @@
     "key": "ctrl+f",
     "command": "vscode-neovim.ctrl-f",
     "when": "terminalEditorFocus || (editorTextFocus && neovim.ctrlKeysNormal.f && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions')"
-  },
-  {
-    "key": "ctrl+alt+v",
-    "command": "workbench.action.toggleActivityBarVisibility",
-    // "command": "workbench.action.activityBarLocation.side",
   },
   {
     "key": "ctrl+w",
@@ -89,6 +88,19 @@
   {
     "key": "ctrl+,",
     "command": "workbench.action.openSettings"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "shift+ctrl+m",
+    "command": "workbench.actions.view.problems",
+    "when": "workbench.panel.markers.view.active"
+  },
+  {
+    "key": "shift+ctrl+w",
+    "command": "workbench.action.closeWindow"
   },
   // {
   //   "key": "ctrl+alt+1",
