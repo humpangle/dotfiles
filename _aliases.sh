@@ -581,8 +581,32 @@ alias _pm----help='provison machine'
 # END PROVISION MACHINE
 # -----------------------------------------------------------------------------
 
-export VSCODE_BINARY="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
-alias c="$VSCODE_BINARY" # vs code
+# -----------------------------------------------------------------------------
+# START VSCODE
+# -----------------------------------------------------------------------------
+
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  export VSCODE_BINARY="$(which code)"
+else
+  export VSCODE_BINARY="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
+fi
+
+# Launch VS code with clean environment.
+__c() {
+  env -i \
+    HOME="$HOME" \
+    bash -l -c \
+    "$VSCODE_BINARY ${*} &>/dev/null" &
+  disown
+}
+alias c="__c"
+
+# Launch VS code and pick up environment variables.
+alias ce="$VSCODE_BINARY"
+
+# -----------------------------------------------------------------------------
+# END VSCODE
+# -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 # TERRAFORM
