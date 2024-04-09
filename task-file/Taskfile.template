@@ -148,7 +148,7 @@ function _timestamp {
   date +'%s'
 }
 
-function _raise-on-no-env {
+function _raise_on_no_env_file {
   if [[ ! -e "${ENV_FILENAME}" ]] ||
     [[ "${ENV_FILENAME}" =~ .env.example ]]; then
     echo -e "Environment file does not exist or it's the wrong one."
