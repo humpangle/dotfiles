@@ -638,3 +638,7 @@ fi
 alias el='echo -e "\n# -----------------------------------------------------------------------------\n"'
 alias elp='echo -e "\n# -----------------------------------------------------------------------------\n" >> p'
 alias epl=elp
+
+if command -v multipass &>/dev/null; then
+  alias m='multipass'
+fi
