@@ -1,0 +1,4 @@
+Defaults  editor=__NEOVIM_BIN__
+Defaults:kanmii timestamp_timeout=2000
+
+%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/chown
