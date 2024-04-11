@@ -1026,7 +1026,7 @@ function install-elixir {
   if [[ -n "${_erlang_version}" ]] ||
     [[ "${_erlang_version}" == "latest" ]] ||
     ! "$(_asdf-bin-path)" current erlang 2>/dev/null | grep -q "$ERLANG_VERSION"; then
-    install-erlang --erlang "${_erlang_version}" &
+    install-erlang --erlang "${_erlang_version}"
   fi
 
   if asdf list elixir | grep -q "${version}"; then
