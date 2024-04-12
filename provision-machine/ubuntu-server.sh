@@ -2525,7 +2525,7 @@ EOF
   cat "$_temp_profile_path" >> "$_profile_path"
 }
 
-function help {
+help() {
   : "List available tasks."
 
   if [[ -z "${1}" ]]; then
@@ -2553,7 +2553,10 @@ function help {
   len=$((len + 10))
 
   for name in "${names[@]}"; do
-    if ! grep -qP "function\s+${name}\s+{" <<<"${_this_file_content}"; then
+    # Make sure we are only processing function names from this file's content and no names inherited from
+    # elsewhere such as the shell.
+    if ! grep -qP "^$name\(\)\s+\{" <<<"$_this_file_content" &&
+      ! grep -qP "function\s+${name}\s+{" <<<"$_this_file_content"; then
       continue
     fi
 
@@ -2587,7 +2590,7 @@ function help {
     # Matching pattern example:
     # `: "___help___ ___elixir-help"`
     _help_func="$(awk \
-      'match($0, /^ +: *"___help___ +(___[a-zA-Z][a-zA-Z0-9_-]+-help)/, a) {print a[1]}' \
+      'match($0, /^ +: *"___help___ +(___[a-zA-Z][a-zA-Z0-9_-]*-help)/, a) {print a[1]}' \
       <<<"${_function_def_text}")"
 
     # Get the whole function definition text and extract only the documentation
