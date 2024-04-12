@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155,2139,2086,1090
 
+# The full path to this script --> /some_prefix/dotfiles/regular_shell.sh
+_bash_src="${BASH_SOURCE[0]}"
+
+# MOTIVATION:
+#   I started using ubuntu multipass as I am unable to get docker desktop working on my macbook pro 3. In this case, I
+#   mount my home directory inside multipass as `/home/kanmii` and use the contents of `/home/kanmii/dotfiles` to
+#   configure multipass shell (I want to re-use as much as possible from my current dotfiles). The problem now is that
+#   any reference to `$HOME` inside multipass will resolve to `/home/ubuntu`. So I have created this variable to hold
+#   the path to `dotfiles` parent whether inside multipass or not.
+# On:
+#   macos      -> /User/<username>
+#   linux      -> /home/<username>
+#   multipass  -> /home/<host_username>
+export DOTFILE_PARENT_PATH="${_bash_src/\/dotfiles\/regular_shell.sh/''}"
+
 # Add to $PATH only if `it` does not exist in the $PATH
 # fish shell has the `fish_add_path` function which does something similar
 # CREDIT: https://unix.stackexchange.com/a/217629
@@ -267,7 +282,7 @@ function __run-well-known-paths {
   # A mapping of apps to directory where they are located
   declare -A _app_to_path_mapping=()
 
-  _app_to_path_mapping["$_dot"]="$HOME/dotfiles"
+  _app_to_path_mapping["$_dot"]="$DOTFILE_PARENT_PATH/dotfiles"
   _app_to_path_mapping["$_wiki"]="$_shared_0_prefix/wiki"
   _app_to_path_mapping["$_py"]="$_shared_0_prefix/py"
   _app_to_path_mapping["$_web"]="$_shared_0_prefix/web-pages"
@@ -431,10 +446,10 @@ alias C="clear && printf '\e[3J'"
 # debian package `lrzsz`
 alias rb='sudo reboot'
 alias scouser='sudo chown -R $USER:$USER'
-alias cdo='mkdir -p $HOME/projects/0 && cd $HOME/projects/0'
-alias cdp='mkdir -p $HOME/projects && cd $HOME/projects'
+alias cdo="mkdir -p $DOTFILE_PARENT_PATH/projects/0 && cd $DOTFILE_PARENT_PATH/projects/0"
+alias cdp="mkdir -p $DOTFILE_PARENT_PATH/projects && cd $DOTFILE_PARENT_PATH/projects"
 alias cds='cd /c/0000-shared'
-alias cdd='cd $HOME/dotfiles'
+alias cdd="cd $DOTFILE_PARENT_PATH/dotfiles"
 alias shl='source ~/.bashrc'
 alias exshell="export SHELL=$__shell_path"
 alias rmvimswap='rm ~/.local/share/nvim/swap/*'
@@ -726,7 +741,7 @@ function _setenvs {
 
   local _output="$_path_to_use--$(date +'%s')--temp"
 
-  local _p_env="${HOME}/dotfiles/scripts/p-env"
+  local _p_env="${DOTFILE_PARENT_PATH}/dotfiles/scripts/p-env"
 
   "$_p_env" "$_path_to_use" \
     --output "${_output}"
@@ -1143,7 +1158,7 @@ alias purge-systemd-service='_purge-systemd-service'
 # END COMMONS
 # -----------------------------------------------------------------------------
 
-[[ -e "$HOME/dotfiles/_aliases.sh" ]] && source "$HOME/dotfiles/_aliases.sh"
+[[ -e "$DOTFILE_PARENT_PATH/dotfiles/_aliases.sh" ]] && source "$DOTFILE_PARENT_PATH/dotfiles/_aliases.sh"
 
 # -----------------------------------------------------------------------------
 # PYTHON SECTION
@@ -1222,7 +1237,7 @@ fi
 
 pathmunge "/usr/lib/dart/bin" "after"
 
-[[ -e "$HOME/dotfiles/elixir-ls-install.sh" ]] && source "$HOME/dotfiles/elixir-ls-install.sh"
+[[ -e "$DOTFILE_PARENT_PATH/dotfiles/elixir-ls-install.sh" ]] && source "$DOTFILE_PARENT_PATH/dotfiles/elixir-ls-install.sh"
 
 alias ng="sudo nginx -g 'daemon off; master_process on;' &"
 alias ngd="sudo nginx -g 'daemon on; master_process on;'"
@@ -1367,7 +1382,7 @@ eof
   # (**NOT ANY MORE**)
   # export PATH="$PATH:/c/WINDOWS/system32"
 
-  SETUP_DNS_RESOLVER_SCRIPT_NAME="$HOME/dotfiles/etc/wsl-dns-resolver.sh"
+  SETUP_DNS_RESOLVER_SCRIPT_NAME="$DOTFILE_PARENT_PATH/dotfiles/etc/wsl-dns-resolver.sh"
 
   export WSL_EXE='/c/WINDOWS/system32/wsl.exe'
 
@@ -1385,7 +1400,7 @@ eof
   #   Details: https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
   # alias dpc="clear && sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
   # shellcheck disable=2139
-  alias dpc="sudo $HOME/dotfiles/etc/wsl-drop-caches.sh"
+  alias dpc="sudo $DOTFILE_PARENT_PATH/dotfiles/etc/wsl-drop-caches.sh"
   # Reset/update clock/time. Sometimes, WSL time lags
   # sudo apt-get install -y ntpdate
   alias rst="sudo ntpdate -u pool.ntp.org"
@@ -1423,21 +1438,21 @@ if [ -d "$MY_JAVA_PATH" ]; then
   pathmunge "$JAVA_HOME/bin"
 fi
 
-MY_ANDROID_STUDIO_PATH="$HOME/projects/android-studio"
+MY_ANDROID_STUDIO_PATH="$DOTFILE_PARENT_PATH/projects/android-studio"
 if [ -d "$MY_ANDROID_STUDIO_PATH" ]; then
   export ANDROID_HOME="$MY_ANDROID_STUDIO_PATH"
   pathmunge "$ANDROID_HOME"
   pathmunge "$ANDROID_HOME/bin"
 fi
 
-MY_ANDROID_SDK_PATH="$HOME/projects/android-sdk"
+MY_ANDROID_SDK_PATH="$DOTFILE_PARENT_PATH/projects/android-sdk"
 if [ -d "$MY_ANDROID_SDK_PATH" ]; then
   pathmunge "$MY_ANDROID_SDK_PATH/tools"
   pathmunge "$MY_ANDROID_SDK_PATH/tools/bin"
   pathmunge "$MY_ANDROID_SDK_PATH/platform-tools"
 fi
 
-MY_FLUTTER_PATH="$HOME/projects/flutter"
+MY_FLUTTER_PATH="$DOTFILE_PARENT_PATH/projects/flutter"
 if [ -d "$MY_FLUTTER_PATH" ]; then
   pathmunge "$MY_FLUTTER_PATH/bin"
   pathmunge "$MY_FLUTTER_PATH/.pub-cache/bin"

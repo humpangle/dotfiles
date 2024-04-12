@@ -291,10 +291,10 @@ if command -v tmux &>/dev/null; then
 
   _start-tmux() {
     if tmux ls &>/dev/null; then
-      cd "${HOME}/dotfiles" || exit 1
+      cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
       tmux a -d -t dot
     else
-      cd "${HOME}/dotfiles" || exit 1
+      cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
       rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
       tmux new -s dot
     fi
@@ -572,7 +572,7 @@ alias smysql='mysql-startf'
 # -----------------------------------------------------------------------------
 
 function __pm {
-  local _script="${HOME}/dotfiles/provision-machine/ubuntu-server.sh"
+  local _script="${DOTFILE_PARENT_PATH}/dotfiles/provision-machine/ubuntu-server.sh"
 
   if [[ ! -e "${_script}" ]]; then
     echo "Script \"${_script}\" does not exist. Exiting!"
