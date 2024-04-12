@@ -511,6 +511,19 @@ if has('win')
     " Yank path to current file to Windows clipboard with forward slashes
     nnoremap yf :!echo %"c:gs!\!/! %i | clip<cr>
 
+elseif executable('pbcopy')
+  " Yank current directory path into the clipboard
+  nnoremap yd :!printf %d | pbcopy %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+
+  " Yank current file path into the clipboard (escape spaces)
+  nnoremap yf :!printf %f:p:gs? ?\\ ? | pbcopy %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+
+  " yank current filename without path into the clipboard
+  nnoremap yn :!printf %c | pbcopy %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
+
+  " yank root of current file's name into the clipboard
+  nnoremap yr :!printf %c:r | pbcopy %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
+
 elseif executable('xclip')
     " Yank current directory path into the clipboard
     nnoremap yd :!printf %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
@@ -528,19 +541,6 @@ elseif executable('xsel')
     " Yank current file path into into primary and selection clipboards
     nnoremap yf :!printf %c:p | xsel --input --primary %i &&
                 \ printf %c:p | xsel --clipboard --input %i<cr>
-
-elseif executable('pbcopy')
-  " Yank current directory path into the clipboard
-  nnoremap yd :!printf %d | pbcopy %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
-
-  " Yank current file path into the clipboard (escape spaces)
-  nnoremap yf :!printf %f:p:gs? ?\\ ? | pbcopy %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
-
-  " yank current filename without path into the clipboard
-  nnoremap yn :!printf %c | pbcopy %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
-
-  " yank root of current file's name into the clipboard
-  nnoremap yr :!printf %c:r | pbcopy %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
 endif
 
 " View preview in Quick Look
