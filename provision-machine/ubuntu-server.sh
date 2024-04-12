@@ -783,7 +783,12 @@ function install-bins {
 install_vifm() {
   : "Install VIFM"
 
-  local version='0.12.1'
+  local version
+  version="$(
+    get_latest_github_release vifm/vifm
+  )"
+
+  local _version_no_prefix="${version/v/''}"
 
   _echo "INSTALLING VIFM VERSION ${version}"
 
@@ -791,18 +796,18 @@ install_vifm() {
     sudo apt-get update
   fi
 
-  rm -rf ~/.config/vifm
-  mkdir -p ~/.config/vifm
-  curl -LO https://github.com/vifm/vifm/releases/download/v${version}/vifm-${version}.tar.bz2
-  tar xf vifm-${version}.tar.bz2
-  rm -f vifm-${version}.tar.bz2
-  cd vifm-${version} || exit
+  local _filename="vifm-${_version_no_prefix}.tar.bz2"
+
+  curl -LO "https://github.com/vifm/vifm/releases/download/${version}/$_filename"
+  tar xf "$_filename"
+  rm -f "$_filename"
+  cd "vifm-${_version_no_prefix}" || exit
   ./configure
   make
   sudo make install
   cd - || exit
   sudo rm -rf /usr/local/src/vifm-*
-  sudo mv vifm-${version} /usr/local/src
+  sudo mv "vifm-${_version_no_prefix}" /usr/local/src
 
   if ! _is-dev "$@"; then
     if [[ -s ~/.vifm/vifmrc ]]; then
