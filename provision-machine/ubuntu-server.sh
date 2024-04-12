@@ -2088,16 +2088,14 @@ function install-mongo-db {
   sudo apt-get install -y \
     mongodb-org
 
-  return
-
   # To prevent unintended upgrades, you can pin the package at the currently
   # installed version
-  echo "mongodb-org hold" | sudo dpkg --set-selections
-  echo "mongodb-org-database hold" | sudo dpkg --set-selections
-  echo "mongodb-org-server hold" | sudo dpkg --set-selections
-  echo "mongodb-mongosh hold" | sudo dpkg --set-selections
-  echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
-  echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+  # echo "mongodb-org hold" | sudo dpkg --set-selections
+  # echo "mongodb-org-database hold" | sudo dpkg --set-selections
+  # echo "mongodb-org-server hold" | sudo dpkg --set-selections
+  # echo "mongodb-mongosh hold" | sudo dpkg --set-selections
+  # echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+  # echo "mongodb-org-tools hold" | sudo dpkg --set-selections
 }
 
 function install-mongosh {
