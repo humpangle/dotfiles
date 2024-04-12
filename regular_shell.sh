@@ -819,13 +819,14 @@ eof
 }
 
 _ggc() {
-  if [[ -z "$*" ]];  then
+  if [[ -z "$*" ]]; then
     ____ggc-help
     return
   fi
 
   local _profile_directory_base="$HOME/.config/google-chrome/profiles"
 
+  local _user
   local _user_dir
   local _new_user
   local _debug
@@ -900,6 +901,10 @@ _ggc() {
       shift
       ;;
 
+    --default | -o)
+      shift
+      ;;
+
     --)
       shift
       break
@@ -920,7 +925,7 @@ _ggc() {
   # --------------------------------------------------------------------------
 
   if [[ -n "$_user" ]] ||
-      [[ -n "$_new_user" ]]; then
+    [[ -n "$_new_user" ]]; then
 
     if [[ -n "$_new_user" ]]; then
       _user="$_new_user"
