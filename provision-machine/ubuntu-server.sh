@@ -2310,7 +2310,11 @@ Available user/repo (the indented identifiers are the repos):
   neovim
     neovim
   mvdan
-    sh
+    sh               -> shfmt
+  tmux
+    tmux
+  vifm
+    vifm
 
 Examples:
   # Get help.
