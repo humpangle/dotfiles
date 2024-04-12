@@ -547,7 +547,7 @@ function install-postgres {
   sudo apt-get autoremove -y
 }
 
-function install-tmux {
+install_tmux() {
   : "Install tmux"
 
   tmux_version='3.3a'
@@ -780,7 +780,7 @@ function install-bins {
   mkdir -p ~/.ssh
 }
 
-function install-vifm {
+install_vifm() {
   : "Install VIFM"
 
   local version='0.12.1'
@@ -1571,8 +1571,8 @@ function setup-machine-min {
   install-bins
   install-git
   install-neovim
-  install-tmux
-  install-vifm
+  install_tmux
+  install_vifm
 }
 
 function install-dev {
@@ -1609,8 +1609,8 @@ function setup-dev {
   mkdir -p ~/.ssh
   install-complete-alias
 
-  install-tmux dev
-  install-vifm dev
+  install_tmux dev
+  install_vifm dev
   install-chrome
 
   mkdir -p "${LOCAL_BIN_PATH}" \
