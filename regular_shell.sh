@@ -925,8 +925,8 @@ _ggc() {
     if [[ -n "$_new_user" ]]; then
       _user="$_new_user"
     else
-      if ! grep -q "$_user" <<<"$(ls $_profile_directory_base)" ; then
-        echo -e "\nProfile \"$_user\" does not exist. Tyep \"_ggc --help\" to get help.\n"
+      if ! grep -q "$_user" <<<"$(ls $_profile_directory_base)"; then
+        echo -e "\nProfile \"$_user\" does not exist. Type \"_ggc --help\" to get help.\n"
         return
       fi
     fi
