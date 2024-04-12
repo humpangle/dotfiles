@@ -28,6 +28,22 @@ get_hash() {
   echo -n "${hash}"
 }
 
+_is_forcing() {
+  : "Check flag that indicates that we should force install hex and rebar."
+  : "Flags are:"
+  : " -f"
+  : " --force"
+
+  for _arg in "${@}"; do
+    if [ "$_arg" = "-f" ] ||
+      [ "$_arg" = '--force' ]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
 rel_asdf_plugin_version() {
   local _plugin="${1}"
 
@@ -111,8 +127,13 @@ rel_asdf_elixir_install_f() {
     #   https://elixirforum.com/t/crash-dump-when-installing-phoenix-on-mac-m2-eheap-alloc-cannot-allocate-x-bytes-of-memory-of-type-heap-frag/62154/9?u=samba6
     mix archive.install --force github hexpm/hex branch latest
 
-    mix local.hex --force --if-missing
-    mix local.rebar --force --if-missing
+    if _is_forcing "$@"; then
+      mix local.hex --force
+      mix local.rebar --force
+    else
+      mix local.hex --force --if-missing
+      mix local.rebar --force --if-missing
+    fi
 
     asdf reshim elixir
     asdf reshim erlang
