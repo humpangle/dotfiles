@@ -15,7 +15,8 @@ get_hash() {
 
   # args is equal to `some text --hash=git-hash` or `some text --hash git-hash`
   # sed: may be some text --hash(=)(git-hash)
-  local hash="$(
+  local hash
+  hash="$(
     echo "${args}" |
       sed -n -E "s/.*--hash(=|\s+)([a-zA-Z0-9]+)?.*/\2/p"
   )"
@@ -35,7 +36,8 @@ rel_asdf_plugin_version() {
 }
 
 elixir_ls_install_dir() {
-  local install_dir="$ELIXIR_LS_BASE/$(rel_asdf_plugin_version elixir)___$(rel_asdf_plugin_version erlang)/$(get_hash "${@}")"
+  local install_dir
+  install_dir="$ELIXIR_LS_BASE/$(rel_asdf_plugin_version elixir)___$(rel_asdf_plugin_version erlang)/$(get_hash "${@}")"
 
   printf '%s' "${install_dir}"
 }
@@ -144,7 +146,8 @@ elixir_ls_rel_bin_dir() {
 }
 
 rel_asdf_elixir_exists_f() {
-  local server_bin_path="$(elixir_ls_rel_bin_dir "${@}")/language_server.sh"
+  local server_bin_path
+  server_bin_path="$(elixir_ls_rel_bin_dir "${@}")/language_server.sh"
 
   printf "\n%s\n\n" "$server_bin_path"
 
