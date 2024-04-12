@@ -805,9 +805,14 @@ install_vifm() {
   sudo mv vifm-${version} /usr/local/src
 
   if ! _is-dev "$@"; then
-    _echo "DOWNLOADING VIFM CONF"
+    if [[ -s ~/.vifm/vifmrc ]]; then
+      _echo "$HOME/.vifm/vifmrc exists and renaming to $HOME/.vifm/vifmrc.bak."
+      mv ~/.vifm/vifmrc ~/.vifm/vifmrc.bak
+    fi
 
-    curl -fLo ~/.config/vifm/vifmrc \
+    _echo "DOWNLOADING VIFM CONF."
+
+    curl --create-dirs -fLo ~/.vifm/vifmrc \
       "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/vifm/vifmrc"
   fi
 }
@@ -1616,6 +1621,7 @@ function setup-dev {
   mkdir -p "${LOCAL_BIN_PATH}" \
     ~/.ssh \
     ~/.config \
+    ~/.vifm \
     ~/.config/erlang_ls
 
   git clone https://github.com/humpangle/dotfiles ~/dotfiles
@@ -1630,7 +1636,7 @@ function setup-dev {
   ln -s ~/dotfiles/.config/nvim ~/.config
   ln -s ~/dotfiles/.iex.exs ~/.iex.exs
   ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
-  ln -s ~/dotfiles/.config/vifm/vifmrc ~/.config/vifm/vifmrc
+  ln -s ~/dotfiles/.config/vifm/vifmrc ~/.vifm/vifmrc
   ln -s ~/dotfiles/.config/shellcheckrc ~/.config
 
   touch ~/dotfiles/snippet_in.txt
