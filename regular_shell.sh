@@ -1238,6 +1238,7 @@ fi
 
 pathmunge "/usr/lib/dart/bin" "after"
 
+# shellcheck source=/dev/null
 [[ -e "$DOTFILE_PARENT_PATH/dotfiles/elixir-ls-install.sh" ]] && source "$DOTFILE_PARENT_PATH/dotfiles/elixir-ls-install.sh"
 
 alias ng="sudo nginx -g 'daemon off; master_process on;' &"
@@ -1247,7 +1248,9 @@ alias ngkill='pgrep -f nginx | xargs sudo kill -9'
 alias ngstop='pgrep -f nginx | xargs sudo kill -9'
 
 if [ -d "$HOME/.asdf" ]; then
+  # shellcheck source=/dev/null
   . $HOME/.asdf/asdf.sh
+  # shellcheck source=/dev/null
   . $HOME/.asdf/completions/asdf.bash
 
   if asdf current nodejs &>/dev/null; then
@@ -1255,6 +1258,7 @@ if [ -d "$HOME/.asdf" ]; then
   fi
 
   if [[ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]]; then
+    # shellcheck source=/dev/null
     . "$HOME/.asdf/plugins/java/set-java-home.bash"
   fi
 fi
