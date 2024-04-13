@@ -1,7 +1,14 @@
 {
   "bash": {
-    "prefix": ["bash", "#!", "shebang"],
-    "body": ["#!/usr/bin/env bash", "# shellcheck disable=2034,2209,2135,2155"],
+    "prefix": [
+      "bash",
+      "#!",
+      "shebang"
+    ],
+    "body": [
+      "#!/usr/bin/env bash",
+      "# shellcheck disable=2034,2209,2135,2155"
+    ],
     "description": [
       "Option 1:\n",
       "#!/bin/bash\n",
@@ -39,7 +46,11 @@
   },
   "for_in": {
     "prefix": "forin",
-    "body": ["for ${1:VAR} in $${2:LIST}; do", "  echo \"$${1:VAR}\" ", "done"],
+    "body": [
+      "for ${1:VAR} in $${2:LIST}; do",
+      "  echo \"$${1:VAR}\" ",
+      "done"
+    ],
     "description": "for loop in list"
   },
   "for_i": {
@@ -97,11 +108,28 @@
       "ignore_shellcheck",
       "shellcheck_ignore"
     ],
-    "body": ["# shellcheck disable=${0:code}"],
+    "body": [
+      "# shellcheck disable=${0:code}"
+    ],
     "description": "Shellcheck disable"
   },
+  "shellcheck source": {
+    "prefix": [
+      "shellcheck_source",
+      "source_shellcheck",
+      "ignore_shellcheck",
+      "shellcheck_ignore"
+    ],
+    "body": [
+      "# shellcheck source=${0:/dev/null}"
+    ],
+    "description": "Shellcheck source"
+  },
   "helper func": {
-    "prefix": ["helper_func"],
+    "prefix": [
+      "helper_func_comment",
+      "helper_func_divider"
+    ],
     "body": [
       "",
       "# -----------------------------------------------------------------------------",
@@ -118,7 +146,10 @@
     "description": "Helper function"
   },
   "raise on no env": {
-    "prefix": ["raise_on_no_env_file", "env_file_raise"],
+    "prefix": [
+      "raise_on_no_env_file",
+      "env_file_raise"
+    ],
     "body": [
       "function _raise_on_no_env_file {",
       "  if [[ -z \"\\$ENV_FILE\" ]]; then",
@@ -130,10 +161,15 @@
       "  fi",
       "}"
     ],
-    "description": ["Raise on no env file"]
+    "description": [
+      "Raise on no env file"
+    ]
   },
   "browser sync start": {
-    "prefix": ["browser_sync_start", "start_browser_sync"],
+    "prefix": [
+      "browser_sync_start",
+      "start_browser_sync"
+    ],
     "body": [
       "browser-sync start \\",
       "  --port \"browser-sync-port\" \\",
@@ -145,10 +181,15 @@
       "",
       "echo -n \"\\$!\" >./.___pid/browser-sync"
     ],
-    "description": ["Browser sync start"]
+    "description": [
+      "Browser sync start"
+    ]
   },
   "getopt parse options": {
-    "prefix": ["getopt_parse_options", "parse_options_getopt"],
+    "prefix": [
+      "getopt_parse_options",
+      "parse_options_getopt"
+    ],
     "body": [
       "# --------------------------------------------------------------------------",
       "# PARSE ARGUMENTS",
@@ -162,7 +203,7 @@
       "      --name \"\\$0\" \\",
       "      -- \"\\$@\"",
       ")\"; then",
-      "  exit 1",
+      "  return",
       "fi",
       "",
       "# Provides proper quoting",
@@ -172,7 +213,7 @@
       "  case \"\\$1\" in",
       "    --help | -h)",
       "        ___helper-func",
-      "        exit 0",
+      "        return",
       "        ;;",
       "",
       "    --dry | -d)",
@@ -192,7 +233,7 @@
       "",
       "    *)",
       "        Echo \"Unknown option \\${1}.\"",
-      "        exit 1",
+      "        return",
       "        ;;",
       "  esac",
       "done",
@@ -200,7 +241,7 @@
       "# handle non-option arguments",
       "if [[ \\$# -ne 1 ]]; then",
       "  echo \"\\$0: Non optional argument XX is required.\"",
-      "  exit 1",
+      "  return",
       "fi",
       "",
       "non_optional=\\$1",
@@ -208,10 +249,15 @@
       "# END PARSE ARGUMENTS",
       "# --------------------------------------------------------------------------"
     ],
-    "description": ["getopt parse options"]
+    "description": [
+      "getopt parse options"
+    ]
   },
   "define helper function": {
-    "prefix": ["def_help_fun", "help_fun_def"],
+    "prefix": [
+      "def_help_fun",
+      "help_fun_def"
+    ],
     "body": [
       "function ___${1:name}-help {",
       "  : \"___help___ ___$1-help\"",
@@ -234,20 +280,30 @@
       "  echo -e \"\\${var}\\n\"",
       "}"
     ],
-    "description": ["define helper function"]
+    "description": [
+      "define helper function"
+    ]
   },
   "define alias function": {
-    "prefix": ["def_alias_func", "alias_func_def"],
+    "prefix": [
+      "def_alias_func",
+      "alias_func_def"
+    ],
     "body": [
       "function ${1:alias_name} {",
       "  : \"___alias___ ${2:main_func_name}\"",
       "    $2 \"\\${@}\"",
       "}"
     ],
-    "description": ["define alias function"]
+    "description": [
+      "define alias function"
+    ]
   },
   "Run.sh task template": {
-    "prefix": ["task_template", "run_sh"],
+    "prefix": [
+      "task_template",
+      "run_sh"
+    ],
     "body": [
       "#!/bin/bash",
       "# shellcheck disable=",
@@ -291,23 +347,23 @@
       "# Helper functions start with _ and aren't listed in this script's help menu.",
       "# -----------------------------------------------------------------------------",
       "",
-      "function _wait-until {",
+      "_wait_until() {",
       "  : \"Run 'command_to_run' and try until 'timeout' is reached. Usage:\"",
-      "  : \"  ./run.sh _wait-until [OPTIONS] command_to_run\"",
-      "  : \"  ./run.sh _wait-until command_to_run [OPTIONS]\"",
+      "  : \"  ./run.sh _wait_until [OPTIONS] command_to_run\"",
+      "  : \"  ./run.sh _wait_until command_to_run [OPTIONS]\"",
       "  : \"\"",
       "  : \"Options:\"",
       "  : \"  --sleep/-s.   How long (in seconds) to wait before command is tried again\"",
       "  : \"                when it fails. Defaults to 1 second.\"",
       "  : \"  --no-exit/-n. If true, we do not exit when timeout is reached but return.\"",
       "  : \"                This is great for situations where we want do not want the\"",
-      "  : \"                script to exit if '_wait-until' does not run successfully.\"",
+      "  : \"                script to exit if '_wait_until' does not run successfully.\"",
       "  : \"  --timeout/-t. How many retries before exiting/returning. Defaults to 30\"",
       "  : \"\"",
       "  : \"Examples:\"",
-      "  : \"  ./run.sh _wait-until \"echo 'something'\"\"",
-      "  : \"  ./run.sh _wait-until \"echo something\" --sleep 1 --timeout 2 --no-exit\"",
-      "  : \"  ./run.sh _wait-until command_to_run -s 1 -t 2 -n\"",
+      "  : \"  ./run.sh _wait_until \"echo 'something'\"\"",
+      "  : \"  ./run.sh _wait_until \"echo something\" --sleep 1 --timeout 2 --no-exit\"",
+      "  : \"  ./run.sh _wait_until command_to_run -s 1 -t 2 -n\"",
       "",
       "  local _command=",
       "  local _timeout=30",
@@ -334,30 +390,30 @@
       "",
       "  while true; do",
       "      case \"\\$1\" in",
-      "          --timeout | -t)",
-      "              _timeout=\"\\$2\"",
-      "              shift 2",
-      "              ;;",
+      "      --timeout | -t)",
+      "          _timeout=\"\\$2\"",
+      "          shift 2",
+      "          ;;",
       "",
-      "          --sleep | -s)",
-      "              _sleep=\"\\$2\"",
-      "              shift 2",
-      "              ;;",
+      "      --sleep | -s)",
+      "          _sleep=\"\\$2\"",
+      "          shift 2",
+      "          ;;",
       "",
-      "          --no-exit | -n)",
-      "              _no_exit=1",
-      "              shift",
-      "              ;;",
+      "      --no-exit | -n)",
+      "          _no_exit=1",
+      "          shift",
+      "          ;;",
       "",
-      "          --)",
-      "              shift",
-      "              break",
-      "              ;;",
+      "      --)",
+      "          shift",
+      "          break",
+      "          ;;",
       "",
-      "          *)",
-      "              Echo \"Unknown option \\${1}.\"",
-      "              exit 1",
-      "              ;;",
+      "      *)",
+      "          Echo \"Unknown option \\${1}.\"",
+      "          exit 1",
+      "          ;;",
       "      esac",
       "  done",
       "",
@@ -395,11 +451,11 @@
       "  _echo \"Done successfully running: \\${_command}\"",
       "}",
       "",
-      "function _timestamp {",
+      "_timestamp() {",
       "  date +'%s'",
       "}",
       "",
-      "function _raise-on-no-env {",
+      "_raise_on_no_env() {",
       "  if [[ ! -e \"\\${ENV_FILENAME}\" ]] ||",
       "      [[ \"\\${ENV_FILENAME}\" =~ .env.example ]]; then",
       "      echo -e \"Environment file does not exist or it's the wrong one.\"",
@@ -421,43 +477,13 @@
       "  done",
       "}",
       "",
-      "function _has-internet {",
+      "_has_internet() {",
       "  ping -q -c 1 -W 1 8.8.8.8 >/dev/null",
-      "}",
-      "",
-      "function _h {",
-      "  # First and last newlines are required in order to pretty print help text",
-      "  read -r -d '' var <<'eof'",
-      "What does function do. Usage:",
-      "  ./run.sh ping-app [OPTIONS]",
-      "",
-      "Options:",
-      "  --verbose/-v. Description should be capitalized and end in a period.",
-      "  --timeout/-t. Super long",
-      "                              description's subsequent lines should start at same column as",
-      "                              first line.",
-      "",
-      "Examples:",
-      "  ./run.sh ping-app",
-      "eof",
-      "",
-      "  local output",
-      "  IFS=''",
-      "  while read -r line; do",
-      "      next=\": \\\"\\${line}\\\" \"",
-      "      output=\"\\${output}\\n\\${next}\"",
-      "  done <<<\"\\$(printf \"%s\" \"\\$var\")\"",
-      "",
-      "  echo -e \"\\${output}\\n\"",
-      "",
-      "  if command -v xclip &>/dev/null; then",
-      "      echo -e \"\\${output}\" | xclip -selection c",
-      "  fi",
       "}",
       "",
       "full_line_len=\\$(tput cols)",
       "",
-      "function _echo {",
+      "_echo() {",
       "  local text=\"\\${*}\"",
       "  local equal='*'",
       "",
@@ -478,13 +504,13 @@
       "# END HELPER FUNCTIONS",
       "# -----------------------------------------------------------------------------",
       "",
-      "function d {",
+      "d() {",
       "  : \"Start development server\"",
       "",
       "  echo \"dev task not implemented\"",
       "}",
       "",
-      "function help {",
+      "help() {",
       "  : \"List available tasks.\"",
       "",
       "  if [[ -z \"\\${1}\" ]]; then",
@@ -512,9 +538,12 @@
       "  len=\\$((len + 10))",
       "",
       "  for name in \"\\${names[@]}\"; do",
-      "      if ! grep -qP \"function\\s+\\${name}\\s+{\" <<<\"\\${_this_file_content}\"; then",
-      "          continue",
-      "      fi",
+      "   # Make sure we are only processing function names from this file's content and no names inherited from",
+      "   # elsewhere such as the shell.",
+      "    if ! grep -qP \"^\\$name\\(\\)\\s+\\{\" <<<\"\\$_this_file_content\" &&",
+      "       ! grep -qP \"function\\s+\\${name}\\s+{\" <<<\"\\$_this_file_content\"; then",
+      "       continue",
+      "    fi",
       "",
       "      local spaces=\"\"",
       "      _len=\"\\${name_to_len_map[\\$name]}\"",
@@ -590,6 +619,8 @@
       "TIMEFORMAT=\\$'\\n\\nTask completed in %3lR\\n'",
       "time \"\\${@:-help}\""
     ],
-    "description": ["Run.sh task template"]
+    "description": [
+      "Run.sh task template"
+    ]
   }
 }
