@@ -1054,6 +1054,7 @@ if [ -d "$HOME/.fzf" ]; then
   alias ff="fzf $FZF_PREVIEW_APP"
   alias eff='env | fzf'
   alias aff='alias | fzf'
+  alias fff='compgen -A function | fzf'
 fi
 
 ____cpath-help() {
