@@ -585,7 +585,7 @@ install_tmux() {
   else
     cd "$install_path"
     git pull origin master
-    cd -
+    cd - &>/dev/null
   fi
 
   if ! _is-dev "$@"; then
@@ -820,7 +820,7 @@ install_vifm() {
   ./configure
   make
   sudo make install
-  cd - || exit
+  cd - &>/dev/null || exit
   sudo rm -rf /usr/local/src/vifm-*
   sudo mv "vifm-${_version_no_prefix}" /usr/local/src
 
