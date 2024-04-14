@@ -794,6 +794,21 @@ install_vifm() {
 
   if ! _is-dev "$@"; then
     sudo apt-get update
+
+    sudo apt-get install -y `# I need to determine minimum deps for building vifm.` \
+      curl \
+      g++ \
+      ca-certificates \
+      gnupg \
+      build-essential \
+      make \
+      libevent-dev \
+      ncurses-dev \
+      libncursesw5-dev \
+      libssh-dev \
+      lsb-release \
+      bison \
+      xclip `# for yanking file paths`
   fi
 
   local _filename="vifm-${_version_no_prefix}.tar.bz2"
