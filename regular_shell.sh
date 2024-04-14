@@ -55,12 +55,18 @@ copy() {
   if _is_darwin; then
     pbcopy <<<"${*}"
   elif command -v xclip &>/dev/null; then
-    xclip -selection c <<<"${*}"
+    # If we can not copy with xclip (may be because x11 server was not properly setup), then attempt to use clipper.
+    if ! xclip -selection c <<<"${*}" 2>/dev/null; then
+      if command -v clip &>/dev/null; then
+        clip <<<"${*}"
+      fi
+    fi
+  elif command -v clip &>/dev/null; then
+    clip <<<"${*}"
   fi
 }
 
 export -f copy
-alias xclip='copy'
 
 if _is_linux; then
   __shell_path='/usr/bin/bash'
@@ -1651,3 +1657,6 @@ if [[ -e "${_intellij_idea_bin_path}" ]]; then
   alias intellij='_intellij'
   alias idea='intellij'
 fi
+
+# shellcheck source=/dev/null
+[[ -e "$DOTFILE_PARENT_PATH/dotfiles/clipper_start.sh" ]] && source "$DOTFILE_PARENT_PATH/dotfiles/clipper_start.sh"
