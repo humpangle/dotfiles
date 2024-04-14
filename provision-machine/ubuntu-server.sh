@@ -414,6 +414,29 @@ _install_neovim_linux_x86() {
     sudo mv nvim /usr/bin
 }
 
+_install_tmux_plugins() {
+  _echo "Installing tmux plugins."
+
+  local install_path="$HOME/.tmux/plugins/tpm"
+
+  if [ ! -d "$install_path" ]; then
+    git clone https://github.com/tmux-plugins/tpm "$install_path"
+  else
+    cd "$install_path"
+    git pull origin master
+    cd - &>/dev/null
+  fi
+
+  if ! _is-dev "$@"; then
+    _echo "DOWNLOADING TMUX CONF"
+
+    curl -fLo ~/.tmux.conf \
+      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/tmux.conf"
+  fi
+
+  mkdir -p "$HOME/.tmux/resurrect"
+}
+
 # -----------------------------------------------------------------------------
 # END HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -585,52 +608,43 @@ function install-postgres {
 install_tmux() {
   : "Install tmux"
 
-  tmux_version='3.3a'
-
-  _echo "TMUX ${tmux_version}"
-
-  local current_tmux_bin_path
-  current_tmux_bin_path="$(command -v tmux)"
-
-  if [ -e "$current_tmux_bin_path" ]; then
-    tmux kill-server &>/dev/null || true
-    sudo rm -rf "$current_tmux_bin_path"
-    sudo apt remove -y --purge tmux
-  fi
-
-  if ! _is-dev "$@"; then
-    _install-deps "${TMUX_DEPS[*]}"
-  fi
-
-  curl -LO https://github.com/tmux/tmux/releases/download/${tmux_version}/tmux-${tmux_version}.tar.gz
-  tar xf tmux-${tmux_version}.tar.gz
-  rm -f tmux-${tmux_version}.tar.gz
-  cd tmux-${tmux_version}
-  ./configure
-  make
-  sudo make install
-  cd -
-  sudo rm -rf /usr/local/src/tmux-\*
-  sudo mv tmux-${tmux_version} /usr/local/src
-
-  local install_path="$HOME/.tmux/plugins/tpm"
-
-  if [ ! -d "$install_path" ]; then
-    git clone https://github.com/tmux-plugins/tpm "$install_path"
+  if _is_darwin; then
+    brew install tmux
   else
-    cd "$install_path"
-    git pull origin master
+    local tmux_version
+
+    tmux_version="$(
+      get_latest_github_release tmux/tmux
+    )"
+
+    _echo "Installing tmux version ${tmux_version}"
+
+    local current_tmux_bin_path
+    current_tmux_bin_path="$(command -v tmux)"
+
+    if [ -e "$current_tmux_bin_path" ]; then
+      tmux kill-server &>/dev/null || true
+      sudo rm -rf "$current_tmux_bin_path"
+      sudo apt remove -y --purge tmux
+    fi
+
+    if ! _is-dev "$@"; then
+      _install-deps "${TMUX_DEPS[*]}"
+    fi
+
+    curl -LO "https://github.com/tmux/tmux/releases/download/${tmux_version}/tmux-${tmux_version}.tar.gz"
+    tar xf "tmux-${tmux_version}.tar.gz"
+    rm -f "tmux-${tmux_version}.tar.gz"
+    cd "tmux-${tmux_version}"
+    ./configure
+    make
+    sudo make install
     cd - &>/dev/null
+    sudo rm -rf /usr/local/src/tmux-\*
+    sudo mv "tmux-${tmux_version}" /usr/local/src
   fi
 
-  if ! _is-dev "$@"; then
-    _echo "DOWNLOADING TMUX CONF"
-
-    curl -fLo ~/.tmux.conf \
-      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/tmux.conf"
-  fi
-
-  mkdir -p "$HOME/.tmux/resurrect"
+  _install_tmux_plugins "$@"
 }
 
 install_neovim() {
