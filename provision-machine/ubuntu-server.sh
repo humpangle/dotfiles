@@ -2342,6 +2342,8 @@ Available user/repo (the indented identifiers are the repos):
     tmux
   vifm
     vifm
+  sharkdp
+    bat             -> bat syntax highlighting
 
 Examples:
   # Get help.
