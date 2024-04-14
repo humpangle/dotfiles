@@ -2618,7 +2618,7 @@ help() {
     # Matching pattern example:
     # `: "___help___ ___elixir-help"`
     _help_func="$(awk \
-      'match($0, /^ +: *"___help___ +(___[a-zA-Z][a-zA-Z0-9_-]*-help)/, a) {print a[1]}' \
+      'match($0, /^ +: *"___help___ +(___[a-zA-Z][a-zA-Z0-9_-]*[_-]help)/, a) {print a[1]}' \
       <<<"${_function_def_text}")"
 
     # Get the whole function definition text and extract only the documentation
