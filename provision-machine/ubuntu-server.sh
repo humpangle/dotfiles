@@ -364,6 +364,20 @@ _is_darwin() {
   fi
 }
 
+_is_arm_hardware() {
+  local _hardware_platform
+  _hardware_platform="$(
+    uname -m
+  )"
+
+  if [[ "$_hardware_platform" == "arm64" ]] ||
+    [[ "$_hardware_platform" == "aarch64" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 _install_erlang_os_deps() {
   if _is_darwin; then
     brew install \
@@ -377,6 +391,27 @@ _install_erlang_os_deps() {
     _install-deps "${ERLANG_DEPS[*]}"
     sudo apt-get autoremove -y
   fi
+}
+
+_install_neovim_linux_x86() {
+  local neovim_version
+
+  neovim_version="$(
+    get_latest_github_release neovim/neovim
+  )"
+
+  if [[ ! $(dpkg -l | grep -q fuse2) ]]; then
+    sudo apt-get install -y \
+      fuse \
+      libfuse2
+  fi
+
+  _echo "INSTALLING NEOVIM VERSION ${neovim_version}"
+
+  curl -fLo nvim "https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage" &&
+    sudo chown root:root nvim &&
+    sudo chmod +x nvim &&
+    sudo mv nvim /usr/bin
 }
 
 # -----------------------------------------------------------------------------
@@ -598,139 +633,91 @@ install_tmux() {
   mkdir -p "$HOME/.tmux/resurrect"
 }
 
-function install_neovim {
+install_neovim() {
   : "Install neovim"
 
-  local neovim_version
-  _latest_version="$(
-    get_latest_github_release neovim/neovim
-  )"
-
-  RIP_GREP_VERSION=13.0.0
-  # `bat` is for syntax highlighting inside `fzf`
-  BAT_VERSION=0.23.0
-
-  _echo "INSTALLING NEOVIM VERSION ${neovim_version}"
+  if _is_darwin; then
+    brew install neovim
+  elif _is_arm_hardware; then
+    sudo snap install nvim --classic
+  else
+    _install_neovim_linux_x86 "$@"
+  fi
 
   if ! _is-dev "$@"; then
     _install-deps "${NEOVIM_DEPS[*]}"
   fi
-
-  if [[ ! $(dpkg -l | grep -q fuse2) ]]; then
-    sudo apt-get install -y \
-      fuse \
-      libfuse2
-  fi
-
-  curl -fLo nvim https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage &&
-    sudo chown root:root nvim &&
-    sudo chmod +x nvim &&
-    sudo mv nvim /usr/bin
 
   if [[ ! -d ~/.fzf ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --all
   fi
 
-  rm -rf ripgrep_${RIP_GREP_VERSION}_amd64.deb
-  curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RIP_GREP_VERSION}/ripgrep_${RIP_GREP_VERSION}_amd64.deb
-  # shellcheck disable=SC1001
-  sudo dpkg -i ripgrep*${RIP_GREP_VERSION}\_amd64.deb
-  # shellcheck disable=SC1001
-  rm ripgrep*${RIP_GREP_VERSION}\_amd64.deb
+  install_bat
+  install_ripgrep
+}
 
-  bat_deb="bat_${BAT_VERSION}_amd64.deb"
-  rm -rf $bat_deb
-  curl -LO "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/${bat_deb}"
-  sudo dpkg -i "${bat_deb}"
-  rm "${bat_deb}"
+install_ripgrep() {
+  if _is_darwin; then
+    brew install ripgrep
+    return
+  fi
 
-  # shellcheck disable=2016
-  printf 'export DISPLAY="$(%s):0"' "ip route | awk '/default/ {print \$3}'"
+  local _version
+  _version="$(
+    get_latest_github_release BurntSushi/ripgrep
+  )"
 
-  # mkdir -p ~/.config/nvim
+  if _is_arm_hardware; then
+    local _folder_name="ripgrep-${_version}-aarch64-unknown-linux-gnu"
+    local _filename="${_folder_name}.tar.gz"
 
-  curl -fLo ~/.config/nvim/init.vim \
-    --create-dirs \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/nvim/settings-min.vim"
+    rm -rf "$_filename" "$_folder_name"
 
-  local _shared_path=~/.local/share/nvim
+    curl -LO "https://github.com/BurntSushi/ripgrep/releases/download/${_version}/$_filename"
 
-  # Each line is `owner plugin_name config_file`
-  local plugins=(
-    'szw vim-maximizer vim-maximizer.vim'
-    'tpope vim-obsession'
-    'tpope vim-unimpaired'
-    'tpope vim-fugitive fugitive.vim'
-    'tpope vim-surround'
-    'sbdchd neoformat neoformat.lua'
-    'jpalardy vim-slime vim-slime.lua'
-    'junegunn fzf'
-    'junegunn fzf.vim fzf.vim'
-    'stsewd fzf-checkout.vim'
-    'dhruvasagar vim-prosession'
-    'tomtom tcomment_vim'
-    'nelstrom vim-visual-star-search'
-    'voldikss vim-floaterm floaterm.lua'
-    'voldikss fzf-floaterm'
-    'airblade vim-gitgutter'
-    'itchyny lightline.vim lightline.vim'
-    'easymotion vim-easymotion vim-easymotion.vim'
-    'elixir-editors vim-elixir'
-    'rakr vim-one vim-one.vim'
-  )
+    tar xzvf "$_filename"
 
-  for _entry in "${plugins[@]}"; do
-    read -r -d '' -a _value <<<"${_entry}"
+    local _bin="${_folder_name}/rg"
 
-    local plugin_owner="${_value[0]}"
-    local plugin_path="${_value[1]}"
-    local _plugin_file="${_value[2]}"
+    sudo chown root:root "$_bin"
+    sudo chmod +x "$_bin"
+    sudo mv "$_bin" /usr/bin
 
-    local _path_prefix="${_shared_path}/site/pack/$plugin_path/start"
-    local full_install_path="${_path_prefix}/$plugin_path"
+    rm -rf "$_filename" "$_folder_name"
+  else
+    rm -rf "ripgrep_${_version}_amd64.deb"
+    curl -LO "https://github.com/BurntSushi/ripgrep/releases/download/${_version}/ripgrep_${_version}_amd64.deb"
+    sudo dpkg -i "ripgrep*${_version}\_amd64.deb"
+    rm -rf "ripgrep*${_version}\_amd64.deb"
+  fi
+}
 
-    if [[ ! -d "$full_install_path" ]]; then
-      mkdir -p "${_path_prefix}"
-      echo "Installing neovim plugin ${plugin_owner}/${plugin_path}"
+install_bat() {
+  : "'bat' is for syntax highlighting inside 'fzf'"
 
-      git clone \
-        "https://github.com/${plugin_owner}/${plugin_path}" \
-        "$full_install_path"
-    else
-      cd "$full_install_path"
-      git pull origin master
-      cd -
+  if _is_darwin; then
+    brew install bat
+  else
+    local _version
+    _version="$(
+      get_latest_github_release sharkdp/bat
+    )"
+
+    _version="${_version/v/''}"
+
+    local _machine_archi="amd64"
+
+    if _is_arm_hardware; then
+      _machine_archi="arm64"
     fi
 
-    if [[ -z "${_plugin_file}" ]]; then
-      continue
-    fi
-
-    local _plugin_config_path_prefix=.config/nvim/lua/plugins
-
-    if [[ "${_plugin_file}" =~ .vim ]]; then
-      _plugin_config_path_prefix=.config/nvim/plugins
-    fi
-
-    local _plugin_config_abs_path="${HOME}/${_plugin_config_path_prefix}/${_plugin_file}"
-    rm -rf "${_plugin_config_abs_path}"
-
-    local url="$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/${_plugin_config_path_prefix}/${_plugin_file}"
-
-    echo "Downloading neovim plugin config"
-    echo "  from         ${url}"
-    echo "  into file    ${_plugin_config_abs_path}"
-    echo
-
-    curl --create-dirs -fLo "${_plugin_config_abs_path}" "${url}"
-    # curl -fL "${_plugin_config_abs_path}" "${url}"
-  done
-
-  rm -rf "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/nvim/lua/util.lua"
-  curl -fLo ~/.config/nvim/lua/util.lua \
-    --create-dirs \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/nvim/lua/util.lua"
+    local bat_deb="bat_${_version}_${_machine_archi}.deb"
+    rm -rf "$bat_deb"
+    curl -LO "https://github.com/sharkdp/bat/releases/download/v${_version}/${bat_deb}"
+    sudo dpkg -i "${bat_deb}"
+    rm "${bat_deb}"
+  fi
 }
 
 function install-haproxy {
