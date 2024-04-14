@@ -1618,16 +1618,17 @@ function setup-dev {
       tr -d '\r\n '
   )"
 
-  if _has-wsl && [[ -z "$USERNAME" ]]; then
-    echo -e "\nWindows OS username is required as USERNAME environment variable"
-    exit
-  else
-    echo "export USERNAME='$USERNAME'" >>~/.bashrc
+  if _has-wsl; then
+    if [[ -z "$USERNAME" ]]; then
+      echo -e "\nWindows OS username is required as USERNAME environment variable"
+      exit
+    else
+      echo "export USERNAME='$USERNAME'" >>~/.bashrc
+      echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf >/dev/null
+    fi
   fi
 
   _echo "SETUP DEV MACHINE WITH DOTFILE"
-
-  echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf >/dev/null
 
   _update-and-upgrade-os-packages dev
 
