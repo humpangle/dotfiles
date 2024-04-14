@@ -1583,7 +1583,7 @@ function set-password-less-shell {
 
 function min-machine {
   : "Setup the machine"
-  setup-machine-min
+  setup-machine-min "$@"
 }
 
 function setup-machine-min {
@@ -1595,19 +1595,19 @@ function setup-machine-min {
 
   install-bins
   install-git
-  install-neovim
+  install-neovim "$@"
   install_tmux
   install_vifm
 }
 
 function install-dev {
   : "See setup-dev"
-  setup-dev
+  setup-dev "$@"
 }
 
 function provision-dev {
   : "See setup-dev"
-  setup-dev
+  setup-dev "$@"
 }
 
 function setup-dev {
