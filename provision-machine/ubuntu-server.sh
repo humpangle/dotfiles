@@ -598,7 +598,7 @@ install_tmux() {
   mkdir -p "$HOME/.tmux/resurrect"
 }
 
-function install-neovim {
+function install_neovim {
   : "Install neovim"
 
   local neovim_version
@@ -1595,7 +1595,7 @@ function setup-machine-min {
 
   install-bins
   install-git
-  install-neovim "$@"
+  install_neovim "$@"
   install_tmux
   install_vifm
 }
@@ -1711,7 +1711,7 @@ function setup-dev {
   fi
 
   install-docker dev || true
-  install-neovim dev
+  install_neovim dev
 
   sudo apt-get autoremove -y
 
