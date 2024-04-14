@@ -499,7 +499,7 @@ function install-asdf-postgres {
 
   local version=15.2
 
-  if _is_linux;  then
+  if _is_linux; then
     sudo apt-get update
 
     sudo apt-get install -y \
@@ -1192,10 +1192,10 @@ function install-nodejs {
   if [[ -n "${_dev}" ]]; then
     if _is_linux; then
       _install-deps "${NODEJS_DEPS[*]}"
-  else
-    brew install \
-      gcc \
-      make
+    else
+      brew install \
+        gcc \
+        make
     fi
   fi
 
@@ -2516,9 +2516,9 @@ darwin_bash_profile() {
   # shellcheck disable=SC2064
   trap "rm -rf $_temp_profile_path" EXIT
 
-  cat "$_profile_path" > "$_temp_profile_path"
+  cat "$_profile_path" >"$_temp_profile_path"
 
-  cat <<'EOF' > "$_profile_path"
+  cat <<'EOF' >"$_profile_path"
 ######################################################################
 # Prepend the GNU binaries
 _paths=(
@@ -2550,7 +2550,7 @@ export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
 
 EOF
 
-  cat "$_temp_profile_path" >> "$_profile_path"
+  cat "$_temp_profile_path" >>"$_profile_path"
 }
 
 help() {
