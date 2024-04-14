@@ -1,36 +1,71 @@
-local Vimg = vim.g
-local keymap = vim.api.nvim_set_keymap
+local plugin_enabled = require("plugins/plugin_enabled")
 
--- Vimg.floaterm_keymap_toggle = '<F1>'
--- Vimg.floaterm_keymap_next   = '<F2>'
--- Vimg.floaterm_keymap_prev   = '<F3>'
--- Vimg.floaterm_keymap_new    = '<F4>'
-Vimg.floaterm_autoinsert = 1
-Vimg.floaterm_width = 0.99
-Vimg.floaterm_height = 0.99
-Vimg.floaterm_wintitle = 0
-Vimg.floaterm_autoclose = 1
-Vimg.floaterm_position = "topright"
+return {
+  "voldikss/vim-floaterm",
+  enabled = not plugin_enabled.has_vscode(),
+  config = function()
+    local utils = require("utils")
 
-if vim.fn.has("win32") == 1 then
-  Vimg.floaterm_shell = "pwsh.exe"
-else
-  Vimg.floaterm_shell = os.getenv("SHELL")
-end
+    -- vim.g.floaterm_keymap_toggle = '<F1>'
+    -- vim.g.floaterm_keymap_next   = '<F2>'
+    -- vim.g.floaterm_keymap_prev   = '<F3>'
+    -- vim.g.floaterm_keymap_new    = '<F4>'
+    vim.g.floaterm_autoinsert = 1
+    vim.g.floaterm_width = 0.99
+    vim.g.floaterm_height = 0.99
+    vim.g.floaterm_wintitle = 0
+    vim.g.floaterm_autoclose = 1
+    vim.g.floaterm_position = "topright"
 
-keymap("n", "<Leader>tt", ":FloatermToggle<CR>", { noremap = true })
-keymap("n", "<Leader>ff", ":FloatermNew --height=0.99 --width=0.99 --title=",
-  { noremap = true })
-keymap("n", ",FL", ":Floaterms<CR>", { noremap = true })
-keymap("n", "<Leader>FK", ":FloatermKill!", { noremap = true })
+    if vim.fn.has("win32") == 1 then
+      vim.g.floaterm_shell = "pwsh.exe"
+    else
+      vim.g.floaterm_shell = os.getenv("SHELL")
+    end
 
-keymap("n", "<Leader>vi", ":let @+=trim(execute(':pwd'))<bar>:FloatermNew vifm <CR>", { noremap = true })
-keymap("n", "<Leader>vI", ":FloatermNew vifm <CR>", { noremap = true })
+    utils.map_key(
+      "n",
+      "<Leader>tt",
+      ":FloatermToggle<CR>",
+      { noremap = true }
+    )
 
-keymap("n", ",FU", ":FloatermUpdate --height=0.99 --width=0.99 --title",
-  { noremap = true })
+    utils.map_key(
+      "n",
+      "<Leader>ff",
+      ":FloatermNew --height=0.99 --width=0.99 --title=",
+      { noremap = true }
+    )
 
--- :FloatermUpdate
--- title=a
--- width=0.5
--- wintype='vsplit' | 'split' | 'float'
+    utils.map_key("n", ",FL", ":Floaterms<CR>", { noremap = true })
+
+    utils.map_key("n", "<Leader>FK", ":FloatermKill!", { noremap = true })
+
+    utils.map_key(
+      "n",
+      "<Leader>vi",
+      ":let @+=trim(execute(':pwd'))<bar>:FloatermNew vifm <CR>",
+      { noremap = true }
+    )
+
+    utils.map_key(
+      "n",
+      "<Leader>vI",
+      ":FloatermNew vifm <CR>",
+      { noremap = true }
+    )
+
+    utils.map_key(
+      "n",
+      ",FU",
+      ":FloatermUpdate --height=0.99 --width=0.99 --title",
+      { noremap = true }
+    )
+
+    -- :FloatermUpdate
+    -- title=a
+    -- width=0.5
+    -- wintype='vsplit' | 'split' | 'float'
+  end,
+  -- dependencies = { "voldikss/fzf-floaterm" },
+}

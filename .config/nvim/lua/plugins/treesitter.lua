@@ -1,53 +1,76 @@
-require("nvim-treesitter.configs").setup({
-	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
-	ensure_installed = {
-		"bash",
-		"comment",
-		"dart",
-		"dockerfile",
-		"elixir",
-		"erlang",
-		"fish",
-		"go",
-		"graphql",
-		"heex",
-		"html",
-		"javascript",
-		"jsdoc",
-		"json",
-		"json5",
-		"jsonc",
-		"lua",
-		"make",
-		"php",
-		"python",
-		"regex",
-		"rst",
-		"ruby",
-		"rust",
-		"scss",
-		"svelte",
-		"toml",
-		"tsx",
-		"typescript",
-		"vim",
-		"vue",
-		"yaml",
-	},
-	highlight = {
-		-- false will disable the whole extension
-		enable = true,
-		-- list of language that will be disabled
-		disable = {},
-	},
-	indent = {
-		-- default is disabled
-		enable = true,
-	},
-	context_commentstring = {
-		enable = true,
-	},
-})
+-- Highlight, edit, and navigate code
+local plugin_enabled = require("plugins/plugin_enabled")
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+return {
+  "nvim-treesitter/nvim-treesitter",
+  enabled = plugin_enabled.treesitter(),
+  dependencies = {
+    require("plugins/treesitter-textobjects"),
+  },
+  build = ":TSUpdate",
+  opts = {
+    ensure_installed = {
+      "bash",
+      "css",
+      "dockerfile",
+      "eex",
+      "elixir",
+      "erlang",
+      "gitignore",
+      "go",
+      "heex",
+      "helm",
+      "html",
+      "ini",
+      "jsdoc",
+      "jsonc",
+      "lua",
+      "luadoc",
+      "markdown",
+      "markdown_inline",
+      "python",
+      "regex",
+      "scss",
+      "sql",
+      "ssh_config",
+      "terraform",
+      "tmux",
+      "toml",
+      "tsx",
+      "typescript",
+      "vim",
+      "vimdoc",
+      "yaml",
+    },
+    -- Autoinstall languages that are not installed
+    auto_install = true,
+    highlight = {
+      enable = true,
+      -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+      --  If you are experiencing weird indenting issues, add the language to
+      --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+      additional_vim_regex_highlighting = {
+        "ruby",
+      },
+    },
+    indent = {
+      enable = true,
+      disable = {
+        "ruby",
+      },
+    },
+  },
+  config = function(_, opts)
+    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+
+    ---@diagnostic disable-next-line: missing-fields
+    require("nvim-treesitter.configs").setup(opts)
+
+    -- There are additional nvim-treesitter modules that you can use to interact
+    -- with nvim-treesitter. You should go explore a few and see what interests you:
+    --
+    --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
+    --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
+    --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  end,
+}

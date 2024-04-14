@@ -1,47 +1,28 @@
--- https://github.com/dag/vim-fish#teach-a-vim-to-fish
-vim.o.shell = "/bin/bash"
-
--- editorconfig/editorconfig-vim
-vim.g.EditorConfig_exclude_patterns = { "fugitive://.*" }
-
--- lazy.nvim requires that we set leader keys before requiring lazy
-vim.keymap.set('n', '<Space>', '<Nop>', {})
+-- Set <space> as the leader key
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.keymap.set("n", "<Space>", "<Nop>", {})
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-require('plugins/plugins')
+local plugin_enabled = require("plugins/plugin_enabled")
 
-vim.cmd("source ~/.config/nvim/settings.vim")
-vim.cmd("source ~/.config/nvim/plugins/lightline.vim")
-vim.cmd("source ~/.config/nvim/plugins/fugitive.vim")
-vim.cmd("source ~/.config/nvim/plugins/fzf.vim")
-vim.cmd("source ~/.config/nvim/plugins/vimspector.vim")
--- vim.cmd("source ~/.config/nvim/plugins/vim-easymotion.vim")
-vim.cmd("source ~/.config/nvim/plugins/vim-maximizer.vim")
+require("plugins/plugin-init")
 
--- THEME SELECTION
-local env_vim_theme = os.getenv("EBNIS_VIM_THEME")
-if env_vim_theme ~= nil then
-  vim.cmd("source ~/.config/nvim/plugins/" .. env_vim_theme .. ".vim")
-  if os.getenv("EBNIS_VIM_THEME_BG") == 'd' then
-    vim.o.background = "dark"
-  else
-    vim.o.background = "light"
-  end
+if plugin_enabled.has_vscode() then
+  require("vscode_settings")
 else
-  vim.cmd("colorscheme one")
-  vim.o.background = "dark"
+  require("settings")
+  require("theme_and_bg")
 end
 
--- Make ~/.bashrc interactive
--- May be use https://stackoverflow.com/a/19819036
--- vim.o.shellcmdflag = "-ic"
+-- keymap to sync content of unnamed register with external host's clipboard.
+-- WHY: https://github.com/wincent/clipper#configuration-for-vimrc
+--    This is a workarund for situations where a remote machine's clipboard
+--    does not sync with a macos client machine.
+vim.cmd([[
+  nnoremap <leader>gg :call system('nc -N localhost 8377', @")<CR>
+]])
 
-local term_clear = function()
-  vim.fn.feedkeys("", 'n') -- control-L
-  local sb = vim.bo.scrollback
-  vim.bo.scrollback = 1
-  vim.bo.scrollback = sb
-end
-
-vim.keymap.set('t', '<C-l>', term_clear)
+-- The line beneath this is called `modeline`. See `:help modeline`
+-- vim: ts=2 sts=2 sw=2 et

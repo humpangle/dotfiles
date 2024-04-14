@@ -6,12 +6,7 @@
   "javascript.showUnused": false,
   // "tsserver.log": "verbose",
   "css.validate": false,
-  "cSpell.userWords": [
-    "Kanmii",
-    "NEOVIM",
-    "arity",
-    "xdebug"
-  ],
+  "cSpell.userWords": ["Kanmii", "NEOVIM", "arity", "xdebug"],
   "cSpell.ignoreWords": [],
   "cSpellExt.enableDictionaries": ["german", "french", "spanish"],
   "cSpell.language": "en,de,fr,es",

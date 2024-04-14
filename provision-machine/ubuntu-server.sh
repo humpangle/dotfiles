@@ -2713,7 +2713,7 @@ fi
 EOF
 
   install_neovim
-  ln -s "$_dotfiles_path/.config/nvim-darwin" "$HOME/.config"
+  ln -s "$_dotfiles_path/.config/nvim" "$HOME/.config"
   ln -s "$_dotfiles_path/gitconfig" "$HOME/.gitconfig"
   ln -s "$_dotfiles_path/gitignore" "$HOME/.gitignore"
 
