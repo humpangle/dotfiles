@@ -788,6 +788,7 @@ ____ggc-help() {
   read -r -d '' var <<'eof'
 Launch google chrome browser. Usage:
   _ggc [OPTIONS]
+  _ggc some_user
 
 Options:
   --help/-h
@@ -818,6 +819,7 @@ Examples:
 
   # Open `some-user` profile
   _ggc --user some-user
+  _ggc some-user
 
   # Delete `some-user` profile
   _ggc --delete some-user
@@ -932,11 +934,20 @@ _ggc() {
     esac
   done
 
-  local _other_args="$*"
-
   # --------------------------------------------------------------------------
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
+
+  # If no user profile was specified and we are not creating a new user, **ASSUME** the first argument is username
+  # except it starts with the character `-` (\U002d).
+  if [[ -z "$_new_user" ]] &&
+    [[ -z "$_user" ]] &&
+    ! echo "$1" | grep -qP "^-"; then
+    _user="$1"
+    shift
+  fi
+
+  local _other_args="$*"
 
   if [[ -n "$_user" ]] ||
     [[ -n "$_new_user" ]]; then
