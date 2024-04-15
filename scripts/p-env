@@ -178,7 +178,7 @@ function _compute_path_to_use {
   echo "$_path_to_use"
 }
 
-# This utility function is necessary because commands `realpath` and `realdlink` do not work for non existing
+# This utility function is necessary because commands `realpath` and `readlink` do not work for non existing
 # paths on macos.
 #
 # We must wrap the function in brackets instead of curly braces so that it runs in a subshell and restores the original
@@ -282,7 +282,7 @@ _parse_variables_in_in_infile
 if [[ -n "$_out_filename" ]]; then
   if [[ -e "$_out_filename" ]]; then
     # File exists - get absolute file path
-    _out_file_full_path_name=$(realdlink -f "$_out_filename")
+    _out_file_full_path_name=$(readlink -f "$_out_filename")
   else
     _out_file_full_path_name=$(_resolve_rel_to_abs_path "$_out_filename")
   fi
