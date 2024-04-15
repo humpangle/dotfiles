@@ -794,11 +794,11 @@ Options:
   --help/-h
       Print this help text and quit (same as called with no arguments).
   --default/-o
-      Open the default profile.
+      Open with default profile.
   --new/-n profile
       New profile.
   --user/-u profile
-      Exisiting user profile.
+      Open with exisiting user profile.
   --delete/-d profile
       Delete a profile.
   --profiles/-p
