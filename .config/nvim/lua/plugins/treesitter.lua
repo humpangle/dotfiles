@@ -52,6 +52,9 @@ return {
       additional_vim_regex_highlighting = {
         "ruby",
       },
+      disable = {
+        "gitcommit" -- treesitter highlighting does not work well inside buffer of this type.
+      }
     },
     indent = {
       enable = true,
