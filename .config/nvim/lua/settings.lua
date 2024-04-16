@@ -11,16 +11,16 @@ end
 local keymap = vim.keymap.set
 
 -- Disable Python2 support
-vim.g.loaded_python_provider = 0
+vim.g.loaded_python_provider = false
 
 -- Disable perl provider
-vim.g.loaded_perl_provider = 0
+vim.g.loaded_perl_provider = false
 
 -- Disable ruby provider
-vim.g.loaded_ruby_provider = 0
+vim.g.loaded_ruby_provider = false
 
 -- Disable node provider
-vim.g.loaded_node_provider = 0
+vim.g.loaded_node_provider = false
 
 -- https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
 -- Always show in tree view
