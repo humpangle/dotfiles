@@ -21,8 +21,6 @@ declare -A alias_map=()
 # DOCKER
 # -----------------------------------------------------------------------------
 if command -v docker &>/dev/null; then
-  export DOCKER_BUILDKIT=1
-
   # shellcheck disable=2230
   export _docker_bin="$(which docker)"
 
