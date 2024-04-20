@@ -341,6 +341,10 @@ keymap("n", ",ts", ":split<bar>:term<CR>:echo &channel<CR>", { noremap = true })
 -- Reorder tabs
 keymap("n", "<A-Left>", ":-tabmove<CR>", { noremap = true })
 keymap("n", "<A-Right>", ":+tabmove<CR>", { noremap = true })
+-- -- This is what works on my macbook pro 3. I go the keys thus:
+-- -- -- in nvim editor, enter insert mode, <c-v> and then <key> or combo.
+keymap("n", "<M-b>", ":-tabmove<CR>", { noremap = true })
+keymap("n", "<M-f>", ":+tabmove<CR>", { noremap = true })
 
 -- Switch between last active and current tab
 -- Initialize the global variable if it doesn't exist
