@@ -19,17 +19,17 @@ function M.yaml_companion_plugin_init()
 end
 
 function M.config_from_yaml_companion_plugin()
-  local yaml_companion_config = require("yaml-companion").setup {
+  local yaml_companion_config = require("yaml-companion").setup({
     -- Detect schemas based on file content (e.g. presence of `kind` attribute in k8s and that atribute value matches
     -- some predefined k8s resources values).
     builtin_matchers = {
       kubernetes = {
-        enabled = true
+        enabled = true,
       },
 
       cloud_init = {
-        enabled = true
-      }
+        enabled = true,
+      },
     },
 
     -- Schemas available in Telescope picker and statusline.
@@ -39,29 +39,29 @@ function M.config_from_yaml_companion_plugin()
       -- to enable for appropriate file.
       {
         name = "Argo CD Application",
-        uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"
+        uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
       },
 
       {
         name = "SealedSecret",
-        uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/bitnami.com/sealedsecret_v1alpha1.json"
+        uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/bitnami.com/sealedsecret_v1alpha1.json",
       },
       -- / K8s CRDs
 
       -- Schemas below are automatically loaded, but added here so they show up in the statusline.
       {
         name = "docker-compose.yml",
-        uri = "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"
+        uri = "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json",
       },
 
       {
         name = "Kustomization",
-        uri = "https://json.schemastore.org/kustomization.json"
+        uri = "https://json.schemastore.org/kustomization.json",
       },
 
       {
         name = "GitHub Workflow",
-        uri = "https://json.schemastore.org/github-workflow.json"
+        uri = "https://json.schemastore.org/github-workflow.json",
       },
     },
 
@@ -75,7 +75,7 @@ function M.config_from_yaml_companion_plugin()
           validate = true,
 
           format = {
-            enable = true
+            enable = true,
           },
 
           hover = true,
@@ -87,22 +87,22 @@ function M.config_from_yaml_companion_plugin()
             enable = false,
 
             -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-            url = ""
+            url = "",
             -- url = "https://www.schemastore.org/api/json/catalog.json",
           },
 
           -- Schemas from store that will be loaded automatically.
-          schemas = require('schemastore').yaml.schemas {
+          schemas = require("schemastore").yaml.schemas({
             select = {
               "kustomization.yaml",
               "GitHub Workflow",
               "docker-compose.yml",
-            }
-          }
-        }
-      }
-    }
-  }
+            },
+          }),
+        },
+      },
+    },
+  })
 
   return yaml_companion_config
 end

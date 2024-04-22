@@ -185,11 +185,11 @@ return {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client =
-            vim.lsp.get_client_by_id(event.data.client_id)
+              vim.lsp.get_client_by_id(event.data.client_id)
 
           if
-            client
-            and client.server_capabilities.documentHighlightProvider
+              client
+              and client.server_capabilities.documentHighlightProvider
           then
             vim.api.nvim_create_autocmd(
               { "CursorHold", "CursorHoldI" },
@@ -259,9 +259,9 @@ return {
           on_init = function(client)
             local workspace = client.config.root_dir
             local python_bin =
-              require("plugins/lsp_utils").get_python_path(
-                workspace
-              )
+                require("plugins/lsp_utils").get_python_path(
+                  workspace
+                )
 
             client.config.settings.python.pythonPath = python_bin
             vim.g.python_host_prog = python_bin
