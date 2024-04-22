@@ -19,6 +19,14 @@ return {
         section_separators = "",
       },
 
+      sections = {
+        lualine_x = {
+          require("plugins.yaml_lsp").get_yaml_schema,
+          "fileformat",
+          "filetype",
+        },
+      },
+
       inactive_sections = {
         lualine_c = {
           {

@@ -2,6 +2,7 @@
 
 local utils = require("utils")
 local plugin_enabled = require("plugins/plugin_enabled")
+local yamlls_config = require("plugins.yaml_lsp")
 
 return {
   {
@@ -52,6 +53,13 @@ return {
         "folke/twilight.nvim",
         opts = {},
       },
+
+      -- Allows us to use the schemastore catalog
+      -- (https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json)
+      -- in jsonls and yamlls by referencing only the *name*.
+      "b0o/schemastore.nvim",
+
+      yamlls_config.yaml_companion_plugin_init(),
     },
     config = function()
       -- Diagnostic keymaps
@@ -286,6 +294,8 @@ return {
         bashls = {},
 
         dockerls = {},
+
+        yamlls = yamlls_config.config_from_yaml_companion_plugin(),
       }
 
       -- Ensure the servers and tools above are installed
