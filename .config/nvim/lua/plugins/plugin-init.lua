@@ -114,14 +114,8 @@ local plugins_table = {
     },
   },
 
-  -- Statusline
-  {
-    "itchyny/lightline.vim",
-    enabled = not plugin_enabled.has_vscode(),
-    config = function()
-      require("plugins/lightline")
-    end,
-  },
+  -- Statusline / tabline
+  require("plugins.lualine"),
 
   -- TERMINAL
   require("plugins/floaterm"),
