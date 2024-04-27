@@ -16,5 +16,15 @@ else
   require("theme_and_bg")
 end
 
+if os.execute("command -v clip &>/dev/null") then
+  -- keymap to sync content of unnamed register with external host's clipboard.
+  -- WHY: https://github.com/wincent/clipper#configuration-for-vimrc
+  --    This is a workarund for situations where a remote machine's clipboard
+  --    does not sync with a macos client machine.
+  vim.cmd([[
+    nnoremap <leader>gg :call system('nc -N localhost 8377', @")<CR>
+  ]])
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
