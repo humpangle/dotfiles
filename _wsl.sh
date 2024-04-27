@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155,2139,2086,1090
 
-function check-wsl-distro-name {
+check-wsl-distro-name() {
   : "Check if WSL distro name has been set"
 
   if [[ -z "$WSL_DISTRO_NAME" ]]; then
@@ -10,7 +10,7 @@ function check-wsl-distro-name {
   fi
 }
 
-function _edit-windows-terminal-settings {
+_edit-windows-terminal-settings() {
   local _settings_path
 
   _settings_path="$(
@@ -27,7 +27,7 @@ function _edit-windows-terminal-settings {
 alias edit_wt='nvim _edit-windows-terminal-settings'
 alias wt='_edit-windows-terminal-settings'
 
-function ____open-wsl-explorer-help {
+____open-wsl-explorer-help() {
   read -r -d '' var <<'eof'
 Open windows OS explorer from WSL. Usage:
   _open-wsl-explorer [OPTIONS] [path]
@@ -55,7 +55,7 @@ eof
   echo -e "${var}"
 }
 
-function _open-wsl-explorer {
+_open-wsl-explorer() {
   : "___help___ ____open-wsl-explorer-help"
 
   local _path="$PWD"
