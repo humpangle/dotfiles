@@ -486,6 +486,7 @@ if command -v nvim &>/dev/null; then
   alias sv='sudo -E nvim'
   alias vmin='nvim -u ~/.config/nvim/settings-min.vim'
   alias vm='nvim -u ~/.config/nvim/settings-min.vim'
+  alias vc='nvim --clean'
 
   # set vim theme and background per shell session
   # unset
