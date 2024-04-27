@@ -112,7 +112,8 @@ function _open-wsl-explorer {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  local _windows_path="$(wslpath -w "$_path")"
+  local _windows_path
+  _windows_path="$(wslpath -w "$_path")"
   echo -n "$_windows_path" | xclip -selection c
 
   if [[ -n "$_should_copy" ]]; then
