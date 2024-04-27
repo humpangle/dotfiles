@@ -109,68 +109,6 @@ export SUDO_ASKPASS=$(command -v ssh-askpass)
 
 alias ug='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 
-# vim
-alias vi='/usr/bin/vim'
-alias vimdiff="nvim -d"
-alias v="nvim"
-alias v.="v ."
-alias svim='sudo -E nvim'
-alias sv='sudo -E nvim'
-alias vmin='v -u ~/.config/nvim/settings-min.vim'
-alias vm='v -u ~/.config/nvim/settings-min.vim'
-alias nvl="VIM_USE_COC=1 nvim "
-
-# set vim theme and background per shell session
-# unset
-# one theme
-alias vt1d='export EBNIS_VIM_THEME=one EBNIS_VIM_THEME_BG=d'
-alias vt1l='export EBNIS_VIM_THEME="one" EBNIS_VIM_THEME_BG=l'
-# gruvbox8 themes
-alias vtg8sd='export EBNIS_VIM_THEME=gruvbox8_soft EBNIS_VIM_THEME_BG=d'
-alias vtg8sl='export EBNIS_VIM_THEME=gruvbox8_soft EBNIS_VIM_THEME_BG=l'
-alias vtg8hd='export EBNIS_VIM_THEME=gruvbox8_hard EBNIS_VIM_THEME_BG=d'
-alias vtg8hl='export EBNIS_VIM_THEME=gruvbox8_hard EBNIS_VIM_THEME_BG=l'
-# solarized8 themes
-alias vts8d='export EBNIS_VIM_THEME=solarized8 EBNIS_VIM_THEME_BG=d'
-alias vts8l='export EBNIS_VIM_THEME=solarized8 EBNIS_VIM_THEME_BG=l'
-alias vts8hd='export EBNIS_VIM_THEME=solarized8_high EBNIS_VIM_THEME_BG=d'
-alias vts8hl='export EBNIS_VIM_THEME=solarized8_high EBNIS_VIM_THEME_BG=l'
-
-remove_vim_sessionf() {
-  local ME
-  local filename
-  local absolute_path
-
-  ME=$(pwd)
-  filename="${ME//\//%}"
-  absolute_path="$HOME/.vim/session/$filename.vim"
-  rm -rf "$absolute_path"
-
-  remove_vim_undof
-}
-alias remove_vim_session=remove_vim_sessionf
-alias rmvs=remove_vim_sessionf
-
-remove_vim_undof() {
-  local ME
-  local filename
-  local absolute_path
-  local prefix
-
-  ME=$(pwd)
-  filename="${ME//\//%}%"
-  prefix="${HOME}/.vim/undodir"
-
-  # shellcheck disable=2010
-  mapfile -t filenames < <(ls -h "${prefix}" | grep -P "${filename}")
-  for f in "${filenames[@]}"; do
-    absolute_path="${prefix}/${f}"
-    rm -rf "${absolute_path}"
-  done
-}
-alias remove_vim_undo='remove_vim_undof'
-alias rmvu='remove_vim_undof'
-
 function _run_f {
   local _script_name
 
