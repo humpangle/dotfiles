@@ -58,6 +58,9 @@ return {
           {
             "tabs",
 
+            -- Maximum width of each tab. The content will be shorten dynamically (example: apple/orange -> a/orange)
+            tab_max_length = 5,
+
             -- Maximum width of tabline.
             max_length = vim.o.columns,
 
