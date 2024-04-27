@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155,2139,2086,1090
 
-check-wsl-distro-name() {
+check_wsl_distro_name() {
   : "Check if WSL distro name has been set"
 
   if [[ -z "$WSL_DISTRO_NAME" ]]; then
@@ -10,7 +10,7 @@ check-wsl-distro-name() {
   fi
 }
 
-_edit-windows-terminal-settings() {
+_edit_windows_terminal_settings() {
   local _settings_path
 
   _settings_path="$(
@@ -24,13 +24,13 @@ _edit-windows-terminal-settings() {
   echo "$_settings_path"
 }
 
-alias edit_wt='nvim _edit-windows-terminal-settings'
-alias wt='_edit-windows-terminal-settings'
+alias edit_wt='nvim _edit_windows_terminal_settings'
+alias wt='_edit_windows_terminal_settings'
 
-____open-wsl-explorer-help() {
+____open_wsl_explorer_help() {
   read -r -d '' var <<'eof'
 Open windows OS explorer from WSL. Usage:
-  _open-wsl-explorer [OPTIONS] [path]
+  _open_wsl_explorer [OPTIONS] [path]
 
 Options:
   --help/-h
@@ -40,23 +40,23 @@ Options:
 
 Examples:
   # Get help.
-  command _open-wsl-explorer --help
+  command _open_wsl_explorer --help
 
   # Open explorer in current path and copy path.
-  command _open-wsl-explorer
+  command _open_wsl_explorer
 
   # Copy current path only, do not open explorer.
-  command _open-wsl-explorer --copy
+  command _open_wsl_explorer --copy
 
   # Open explorer in given path and copy path.
-  command _open-wsl-explorer /some/path
+  command _open_wsl_explorer /some/path
 eof
 
   echo -e "${var}"
 }
 
-_open-wsl-explorer() {
-  : "___help___ ____open-wsl-explorer-help"
+_open_wsl_explorer() {
+  : "___help___ ____open_wsl_explorer_help"
 
   local _path="$PWD"
   local _should_copy
@@ -82,7 +82,7 @@ _open-wsl-explorer() {
   while true; do
     case "$1" in
     --help | -h)
-      ____open-wsl-explorer-help
+      ____open_wsl_explorer_help
       return
       ;;
 
@@ -140,9 +140,9 @@ SETUP_DNS_RESOLVER_SCRIPT_NAME="$DOTFILE_PARENT_PATH/dotfiles/etc/wsl-dns-resolv
 
 export WSL_EXE='/c/WINDOWS/system32/wsl.exe'
 
-alias e.='_open-wsl-explorer'
+alias e.='_open_wsl_explorer'
 alias wsls="{ ebnis-save-tmux.sh || true; } && $WSL_EXE --shutdown"
-alias wslt="check-wsl-distro-name && { { ebnis-save-tmux.sh || true ; } && $WSL_EXE --terminate $WSL_DISTRO_NAME ; }"
+alias wslt="check_wsl_distro_name && { { ebnis-save-tmux.sh || true ; } && $WSL_EXE --terminate $WSL_DISTRO_NAME ; }"
 alias ubuntu18="$WSL_EXE --distribution Ubuntu"
 alias ubuntu20="$WSL_EXE --distribution Ubuntu-20.04"
 alias ubuntu22="$WSL_EXE --distribution Ubuntu-22.04"
