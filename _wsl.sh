@@ -29,15 +29,27 @@ alias wt='_edit-windows-terminal-settings'
 
 function ____open-wsl-explorer-help {
   read -r -d '' var <<'eof'
-What does function do. Usage:
-  _open-wsl-explorer [OPTIONS]
+Open windows OS explorer from WSL. Usage:
+  _open-wsl-explorer [OPTIONS] [path]
 
 Options:
-  --verbose/-v
-       Description should be capitalized and end in a period.
+  --help/-h
+    Print this help text and quit.
+  --copy/-c
+    Copy path only, do not open explorer.
 
 Examples:
-  _open-wsl-explorer
+  # Get help.
+  command _open-wsl-explorer --help
+
+  # Open explorer in current path and copy path.
+  command _open-wsl-explorer
+
+  # Copy current path only, do not open explorer.
+  command _open-wsl-explorer --copy
+
+  # Open explorer in given path and copy path.
+  command _open-wsl-explorer /some/path
 eof
 
   echo -e "${var}"
