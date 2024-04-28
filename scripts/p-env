@@ -266,8 +266,15 @@ function _parse_variables_in_in_infile {
 
   while read -r line; do
     if [[ "$line" =~ $_line_regex ]]; then
-      key=$(echo "$line" | cut -d '=' -f 1)
-      val=$(echo "$line" | cut -d'=' -f 2-)
+      key=$(
+        echo "$line" |
+          cut -d '=' -f 1
+      )
+
+      val=$(
+        echo "$line" |
+          cut -d'=' -f 2-
+      )
 
       _debug_fn "\n\nRAW:    $key" "$val" s
 
