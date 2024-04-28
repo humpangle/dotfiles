@@ -178,6 +178,33 @@ function _compute_path_to_use {
   echo "$_path_to_use"
 }
 
+_debug_fn() {
+  if [[ -z "$debug" ]]; then
+    return
+  fi
+
+  local _key="$1"
+  local _val=$2
+
+  local _len_key="${#_key}"
+  local _len_spaces=$((60 - _len_key))
+
+  local _spaces=""
+  for ((i = 0; i < _len_spaces; i++)); do
+    _spaces="$_spaces "
+  done
+
+  local _string="$_key $_spaces------> $_val"
+
+  # s == start
+  # Start a new set of debugging.
+  if [[ $3 == "s" ]]; then
+    _string="\n$_string"
+  fi
+
+  echo -e "$_string"
+}
+
 # This utility function is necessary because commands `realpath` and `readlink` do not work for non existing
 # paths on macos.
 #
@@ -242,7 +269,7 @@ function _parse_variables_in_in_infile {
       key=$(echo "$line" | cut -d '=' -f 1)
       val=$(echo "$line" | cut -d'=' -f 2-)
 
-      [[ -n "$debug" ]] && echo "$key=$val"
+      _debug_fn "\n\nRAW:    $key" "$val" s
 
       # Imagine we have a line: HOST=my-host
       # And another line USER_HOME=/home/${HOST} = this a line with interpolated variables. And each `${}` is an
@@ -253,10 +280,14 @@ function _parse_variables_in_in_infile {
 
       # _interpolated_variable_without_brackets=HOST
       for _interpolated_variable_without_brackets in $(echo "$val" | grep -Po '\$\{\K.+?(?=\})'); do
+        _debug_fn "_interpolated_variable_without_brackets" "$_interpolated_variable_without_brackets"
+
         # _interpolated_variable_with_brackets=${HOST}
         _interpolated_variable_with_brackets="\${$_interpolated_variable_without_brackets}"
+        _debug_fn "_interpolated_variable_with_brackets" "$_interpolated_variable_with_brackets"
 
         _interpolated_variable_concrete_value="${_env_key_to_value_map[$_interpolated_variable_without_brackets]:-}"
+        _debug_fn "_interpolated_variable_concrete_value user env file" "$_interpolated_variable_concrete_value"
 
         # Imagine you have interpolated variable _interpolated_variable_without_brackets=PWD. PWD is a bash variable
         # which means we may not have the value from preceeding lines.
@@ -264,10 +295,13 @@ function _parse_variables_in_in_infile {
         # variable ($PWD) and expand it (so we get /some/path).
         if [[ -z "$_interpolated_variable_concrete_value" ]]; then
           _interpolated_variable_concrete_value=${!_interpolated_variable_without_brackets}
+          _debug_fn "_interpolated_variable_concrete_value shell env" "$_interpolated_variable_concrete_value"
         fi
 
         # Replace each interpolated variable with its concrete value.
         val="${val//$_interpolated_variable_with_brackets/$_interpolated_variable_concrete_value}"
+
+        _debug_fn "value1" "$val"
       done
 
       _env_key_to_value_map["$key"]="${val}"
