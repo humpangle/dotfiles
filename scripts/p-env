@@ -311,6 +311,15 @@ function _parse_variables_in_in_infile {
         _debug_fn "value1" "$val"
       done
 
+      # Remove all quotes.
+      if echo "$val" | grep -qP "^[\"'].+[\"']$"; then
+        val="$(
+          echo "$val" |
+            sed -nE "s/^['\"](.+)['\"]$/\1/p"
+        )"
+      fi
+
+      _debug_fn "value2" "$val"
       _env_key_to_value_map["$key"]="${val}"
     fi
   done <<<"${_in_file_content}"
@@ -339,18 +348,23 @@ _out_file_content_accumulator=
 for key in "${!_env_key_to_value_map[@]}"; do
   _value="${_env_key_to_value_map[$key]}"
 
-  # Sometimes, we will get a `_value` such as `""/app/___outs"/cert"/selfsigned_key.pem` where the `"` are messed up.
-  # We just strip all `"` from all values.
-  _value="${_value//\"/}"
+  # If the value is not all numeric characters we handle quoting.
+  if ! echo "$_value" | grep -q -P "^\d+$"; then
+    if [[ -n "$_format" ]]; then
+      # Always quote json string.
+      if [[ "$_format" == "json" ]]; then
+        _value="\"$_value\""
 
-  if [[ -n "$_format" ]]; then
-    # If the value is not all numeric characters and we are formatting in yaml|json, surround with `""`
-    if ! echo "$_value" | grep -q -P "^ *\d+ *$"; then
-      _value="\"$_value\""
+      # Quote yaml string only if not empty.
+      elif [[ -n "$_value" ]]; then
+        _value="\"$_value\""
+      fi
+    else
+      # Use a single quote for shell strings. (Why??)
+      if [[ -n "$_value" ]]; then
+        _value="'$_value'"
+      fi
     fi
-  # If $_value contains SPACES, surround with `''`
-  elif echo "$_value" | grep -q -P "[\s]"; then
-    _value="'$_value'"
   fi
 
   # Formatting
