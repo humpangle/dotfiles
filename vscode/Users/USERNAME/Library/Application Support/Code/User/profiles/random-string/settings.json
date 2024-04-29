@@ -1,0 +1,189 @@
+{
+  "workbench.colorTheme": "Default Light+",
+  // "workbench.colorTheme": "Default High Contrast",
+  // "workbench.colorTheme": "Solarized Dark",
+  "elixirLS.dialyzerEnabled": false,
+  "elixirLS.enableTestLenses": true,
+  "elixirLS.fetchDeps": true,
+  "editor.fontSize": 15,
+  "editor.minimap.enabled": false,
+  "editor.tabSize": 2,
+  "editor.tabCompletion": "on",
+  "editor.lineNumbers": "relative",
+  "editor.renderWhitespace": "trailing",
+  "editor.wordBasedSuggestions": "allDocuments",
+  "editor.mouseWheelZoom": true,
+  "editor.accessibilitySupport": "off",
+  "editor.scrollbar.verticalScrollbarSize": 5,
+  "editor.scrollbar.horizontalScrollbarSize": 5,
+  "editor.renderFinalNewline": "off",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": "on",
+    "strings": "on"
+  },
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "vscode-neovim.neovimExecutablePaths.darwin": "nvim",
+  "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
+  "vscode-neovim.logLevel": "debug",
+  "vscode-neovim.logOutputToConsole": true,
+  "vscode-neovim.logPath": "~/dotfiles/.___scratch",
+  // "vscode-neovim.neovimClean": true,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  // "workbench.activityBar.location": "hidden",
+  "security.workspace.trust.untrustedFiles": "open",
+  "files.trimTrailingWhitespace": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[shellscript]": {
+    "editor.autoClosingQuotes": "always",
+    "editor.tabSize": 2,
+  },
+  "[html-eex]": {
+    "editor.trimAutoWhitespace": false,
+    "editor.snippetSuggestions": "inline",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "files.associations": {
+    "*html.heex": "html-eex",
+    ".dockerignore": "ignore",
+    ".css": "tailwindcss",
+    "*dockerfile": "dockerfile",
+  },
+  "git.openRepositoryInParentFolders": "never",
+  "files.exclude": {
+    "**/___outs": true,
+    "**/.elixir_ls": true,
+    "**/.vim": true
+  },
+  "cSpell.userWords": [
+    "callmiy",
+    "resolv",
+    "stenote"
+  ],
+  "gopls": {
+    "ui.semanticTokens": true
+  },
+  "code-runner.runInTerminal": true,
+  "files.insertFinalNewline": true,
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html",
+    "html": "html",
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "explorer.confirmDragAndDrop": false,
+  "remote.autoForwardPortsSource": "output",
+  "remote.autoForwardPorts": false,
+  "explorer.compactFolders": false,
+  "files.eol": "\n",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "yaml.schemas": {
+    "Kubernetes": [
+      // "*-kb.yaml",
+      // "*k8s.yaml",
+    ],
+    "Kind": [
+      "*kind-config.yaml",
+    ],
+  },
+  "redhat.telemetry.enabled": false,
+  "aws.telemetry": false,
+  "settingsSync.ignoredSettings": [],
+  // "terminal.integrated.enablePersistentSessions": false,
+  "terminal.integrated.persistentSessionReviveProcess": "never",
+  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.confirmOnKill": "never",
+  "terminal.integrated.enableImages": true,
+  "terminal.integrated.scrollback": 100000,
+  "application.shellEnvironmentResolutionTimeout": 120,
+  "terminal.integrated.env.osx": {
+    "IS_VSCODE_TERMINAL": "1"
+  },
+  "terminal.integrated.env.linux": {
+    "IS_VSCODE_TERMINAL": "1"
+  },
+  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "tmux-shell": {
+      "path": "tmux",
+      "args": [
+        "new-session",
+        "-A",
+        "-s",
+        "vsc_${workspaceFolder}"
+      ],
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+  // https://stackoverflow.com/a/60023686/1437611
+  // https://github.com/Tyriar/vscode-snazzy/blob/master/snazzy.json
+  "workbench.colorCustomizations": {
+    // The background is optional
+    // "terminal.background": "#282a36",
+    "terminalCursor.background": "#282a36",
+    "terminalCursor.foreground": "#97979b",
+    "terminal.selectionBackground": "#97979b33",
+    "terminal.foreground": "#eff0eb",
+    "terminal.ansiBlack": "#282a36",
+    "terminal.ansiRed": "#ff5c57",
+    "terminal.ansiGreen": "#5af78e",
+    "terminal.ansiYellow": "#f3f99d",
+    "terminal.ansiBlue": "#57c7ff",
+    "terminal.ansiMagenta": "#ff6ac1",
+    "terminal.ansiCyan": "#9aedfe",
+    "terminal.ansiWhite": "#f1f1f0",
+    "terminal.ansiBrightBlack": "#686868",
+    "terminal.ansiBrightRed": "#ff5c57",
+    "terminal.ansiBrightGreen": "#5af78e",
+    "terminal.ansiBrightYellow": "#f3f99d",
+    "terminal.ansiBrightBlue": "#57c7ff",
+    "terminal.ansiBrightMagenta": "#ff6ac1",
+    "terminal.ansiBrightCyan": "#9aedfe",
+    "terminal.ansiBrightWhite": "#eff0eb"
+  },
+  "prettier.printWidth": 120,
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "workbench.activityBar.location": "hidden",
+  // "workbench.startupEditor": "none",
+  // "window.menuBarVisibility": "compact"
+}
