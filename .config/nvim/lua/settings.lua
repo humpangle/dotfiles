@@ -170,10 +170,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 local filetypes_group =
-  vim.api.nvim_create_augroup("filetypes", { clear = true })
+    vim.api.nvim_create_augroup("filetypes", { clear = true })
 -- Change filetype based on patterns
 local patterns = {
-  { pattern = "*.html.django", filetype = "htmldjango" },
+  {
+    pattern = "*.html.django",
+    filetype = "htmldjango",
+  },
   {
     pattern = {
       "*.eslintrc",
@@ -183,22 +186,72 @@ local patterns = {
     },
     filetype = "json",
   },
-  { pattern = ".env*", filetype = "sh" },
-  { pattern = ".env*.y*ml", filetype = "yaml" },
-  { pattern = "*.psql", filetype = "sql" },
-  { pattern = { "Dockerfile*", "*.docker" }, filetype = "dockerfile" },
-  { pattern = "*config", filetype = "gitconfig" },
   {
-    pattern = { "*.heex", "*.leex", "*.sface", "*.lexs" },
+    pattern = ".env*",
+    filetype = "sh",
+  },
+  {
+    pattern = ".env*.y*ml",
+    filetype = "yaml",
+  },
+  {
+    pattern = "*.psql",
+    filetype = "sql",
+  },
+  {
+    pattern = {
+      "Dockerfile*",
+      "*.docker",
+    },
+    filetype = "dockerfile",
+  },
+  {
+    pattern = "*config",
+    filetype = "gitconfig",
+  },
+  {
+    pattern = {
+      "*.heex",
+      "*.leex",
+      "*.sface",
+      "*.lexs",
+    },
     filetype = "eelixir",
   },
-  { pattern = { "rebar.config", "*/src/*.app.src" }, filetype = "erlang" },
-  { pattern = { "erlang_ls.config", "__dcy*" }, filetype = "yaml" },
-  { pattern = "*.service", filetype = "systemd" },
-  { pattern = "*.log", filetype = "conf" },
-  { pattern = { "*.doc", "*.docx" }, cmd = "set ro" }, -- For setting readonly
   {
-    pattern = { "*/playbooks/*.y*ml", "inventory.y*ml" },
+    pattern = {
+      "rebar.config",
+      "*/src/*.app.src",
+    },
+    filetype = "erlang",
+  },
+  {
+    pattern = {
+      "erlang_ls.config",
+      "__dcy*",
+    },
+    filetype = "yaml",
+  },
+  {
+    pattern = "*.service",
+    filetype = "systemd",
+  },
+  {
+    pattern = "*.log",
+    filetype = "conf",
+  },
+  {
+    pattern = {
+      "*.doc",
+      "*.docx",
+    },
+    cmd = "set ro",
+  }, -- For setting readonly
+  {
+    pattern = {
+      "*/playbooks/*.y*ml",
+      "inventory.y*ml",
+    },
     filetype = "yaml.ansible",
   },
 }
@@ -224,6 +277,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo.filetype = "vim"
   end,
 })
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "json",
   callback = function()
@@ -236,14 +290,16 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Might not be necessary when using LSP?
 vim.api.nvim_create_autocmd("FileType", {
   group = filetypes_group,
-  pattern = { "elixir", "eelixir", "sh" },
+  pattern = {
+    "elixir",
+    "eelixir",
+    "sh",
+  },
   callback = function()
-    keymap(
-      "n",
-      "<leader>fc",
-      ":Neoformat<CR>",
-      { noremap = true, buffer = true }
-    )
+    keymap("n", "<leader>fc", ":Neoformat<CR>", {
+      noremap = true,
+      buffer = true,
+    })
   end,
 })
 
@@ -444,8 +500,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = function()
     if
-      vim.g.ebnis_netrw_loaded == 0
-      and vim.fn.expand("%") == "NetrwTreeListing"
+        vim.g.ebnis_netrw_loaded == 0
+        and vim.fn.expand("%") == "NetrwTreeListing"
     then
       vim.cmd("set ft=netrw")
       NetrwVExplore("n")
