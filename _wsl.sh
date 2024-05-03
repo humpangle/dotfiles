@@ -35,6 +35,9 @@ Open windows OS explorer from WSL. Usage:
 Options:
   --help/-h
     Print this help text and quit.
+  --path/-p
+    The unix filesystem path to convert to windows path and open and or copy. Defaults to current working directory
+    ($PWD).
   --copy/-c
     Copy path only, do not open explorer.
 
@@ -49,7 +52,7 @@ Examples:
   command _open_wsl_explorer --copy
 
   # Open explorer in given path and copy path.
-  command _open_wsl_explorer /some/path
+  command _open_wsl_explorer --path /some/path
 eof
 
   echo -e "${var}"
