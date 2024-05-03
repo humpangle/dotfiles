@@ -3,7 +3,7 @@ if not utils_status_ok then
   return
 end
 
-local keymap = vim.keymap.set
+local keymap = utils.map_key
 
 local function write_to_command_mode(string)
   -- Prepend ':' to enter command mode, don't append '<CR>' to avoid executing
@@ -64,7 +64,7 @@ keymap(
   { noremap = true, desc = "Git commit amend no edit" }
 )
 
-utils.map_key("n", "<leader>gcz", ":Git commit --allow-empty ", {
+keymap("n", "<leader>gcz", ":Git commit --allow-empty ", {
   noremap = true,
   desc = 'Git commit allow empty. Pass -m "message" to pass message on cmd.',
 })
