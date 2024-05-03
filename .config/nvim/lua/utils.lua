@@ -242,7 +242,7 @@ function utils.DeleteFile(which)
   end
 end
 
-function utils.map_key(mode, left, right, opts, bufnr)
+function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
   opts = opts or { desc = "" }
 
   if bufnr ~= nil then
@@ -251,9 +251,9 @@ function utils.map_key(mode, left, right, opts, bufnr)
 
   -- We append the keymap (left) and mode to the description so when we search with description as search term, the
   -- keymap also shows up.
-  opts.desc = (opts.desc or "") .. " " .. left .. " " .. vim.inspect(mode)
+  opts.desc = (opts.desc or "") .. " " .. mapping_str .. " " .. vim.inspect(mode)
 
-  vim.keymap.set(mode, left, right, opts)
+  vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
 
 return utils
