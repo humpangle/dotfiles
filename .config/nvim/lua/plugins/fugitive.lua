@@ -64,12 +64,10 @@ keymap(
   { noremap = true, desc = "Git commit amend no edit" }
 )
 
-keymap(
-  "n",
-  "<leader>gcz",
-  ':Git commit --allow-empty -m ""<left>',
-  { noremap = true, desc = "Git commit allow empty" }
-)
+utils.map_key("n", "<leader>gcz", ":Git commit --allow-empty ", {
+  noremap = true,
+  desc = 'Git commit allow empty. Pass -m "message" to pass message on cmd.',
+})
 
 -- Git config.user
 keymap(
