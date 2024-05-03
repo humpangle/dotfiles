@@ -78,6 +78,7 @@ if command -v docker &>/dev/null; then
   alias_map[dnls]='docker network ls'
   alias_map[dcps]='docker compose ps'
   alias_map[dcpsa]='docker compose ps -a'
+  alias_map[dcc]='docker compose config'
   alias_map[drmlogs__description]='docker rm logs containers..'
   alias_map['d-dangling']='dim -qf dangling=true | xargs docker rmi -f 2>/dev/null'
   alias_map[ddangling]='d-dangling'
