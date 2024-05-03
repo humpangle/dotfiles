@@ -249,9 +249,13 @@ function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
     opts.buffer = bufnr
   end
 
-  -- We append the keymap (left) and mode to the description so when we search with description as search term, the
+  -- We prepend the keymap (left) and mode to the description so when we search with description as search term, the
   -- keymap also shows up.
-  opts.desc = (opts.desc or "") .. " " .. mapping_str .. " " .. vim.inspect(mode)
+  opts.desc = mapping_str
+    .. " "
+    .. vim.inspect(mode)
+    .. " "
+    .. (opts.desc or "")
 
   vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
