@@ -1,7 +1,9 @@
 {
+  // "workbench.colorTheme": "Visual Studio Dark",
   "workbench.colorTheme": "Default Light+",
   // "workbench.colorTheme": "Default High Contrast",
   // "workbench.colorTheme": "Solarized Dark",
+  "ansible.python.interpreterPath": "~/.asdf/shims/python",
   "elixirLS.dialyzerEnabled": false,
   "elixirLS.enableTestLenses": true,
   "elixirLS.fetchDeps": true,
@@ -26,16 +28,17 @@
     80,
     120
   ],
+  // "vscode-neovim.useWSL": true,
   "vscode-neovim.neovimExecutablePaths.darwin": "nvim",
   "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
   "vscode-neovim.logLevel": "debug",
   "vscode-neovim.logOutputToConsole": true,
   "vscode-neovim.logPath": "~/dotfiles/.___scratch",
+  // "vscode-neovim.NVIM_APPNAME": "nvim-win",
   // "vscode-neovim.neovimClean": true,
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  // "workbench.activityBar.location": "hidden",
   "security.workspace.trust.untrustedFiles": "open",
   "files.trimTrailingWhitespace": true,
   "[jsonc]": {
@@ -58,6 +61,9 @@
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true
   },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
@@ -76,7 +82,8 @@
   "cSpell.userWords": [
     "callmiy",
     "resolv",
-    "stenote"
+    "stenote",
+    "wavfile"
   ],
   "gopls": {
     "ui.semanticTokens": true
@@ -116,7 +123,8 @@
   "settingsSync.ignoredSettings": [],
   // "terminal.integrated.enablePersistentSessions": false,
   "terminal.integrated.persistentSessionReviveProcess": "never",
-  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontSize": 15, // small screen
+  // "terminal.integrated.fontSize": 17, // big screen
   "terminal.integrated.confirmOnKill": "never",
   "terminal.integrated.enableImages": true,
   "terminal.integrated.scrollback": 100000,
@@ -128,6 +136,7 @@
     "IS_VSCODE_TERMINAL": "1"
   },
   "terminal.integrated.defaultProfile.osx": "bash",
+  // "terminal.integrated.defaultProfile.osx": "tmux-shell",
   "terminal.integrated.profiles.osx": {
     "bash": {
       "path": "bash",
@@ -146,7 +155,7 @@
         "new-session",
         "-A",
         "-s",
-        "vsc_${workspaceFolder}"
+        "vscode_${workspaceFolderBasename}"
       ],
       "icon": "terminal-tmux"
     },
@@ -183,7 +192,15 @@
   },
   "prettier.printWidth": 120,
   "terminal.integrated.enableMultiLinePasteWarning": "never",
+  // "window.zoomLevel": 0.6,
+  "workbench.startupEditor": "none",
   "workbench.activityBar.location": "hidden",
-  // "workbench.startupEditor": "none",
+  "settingsSync.keybindingsPerPlatform": true,
+  "Lua.diagnostics.globals": [
+    "vim",
+  ],
+  // "security.allowedUNCHosts": [
+  //   "wsl.localhost"
+  // ],
   // "window.menuBarVisibility": "compact"
 }
