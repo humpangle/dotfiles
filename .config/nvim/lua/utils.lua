@@ -260,4 +260,13 @@ function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
   vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
 
+function utils.write_to_command_mode(string)
+  -- Prepend ':' to enter command mode, don't append '<CR>' to avoid executing
+  -- Use 't' flag in feedkeys to interpret keys as if typed by the user
+  vim.fn.feedkeys(
+    vim.api.nvim_replace_termcodes(":" .. string, true, false, true),
+    "t"
+  )
+end
+
 return utils

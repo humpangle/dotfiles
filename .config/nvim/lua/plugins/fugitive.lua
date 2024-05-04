@@ -5,20 +5,11 @@ end
 
 local keymap = utils.map_key
 
-local function write_to_command_mode(string)
-  -- Prepend ':' to enter command mode, don't append '<CR>' to avoid executing
-  -- Use 't' flag in feedkeys to interpret keys as if typed by the user
-  vim.fn.feedkeys(
-    vim.api.nvim_replace_termcodes(":" .. string, true, false, true),
-    "t"
-  )
-end
-
 keymap("n", "<leader>g.", ":Git add .<CR>", { noremap = true })
 keymap("n", "<leader>gd", ":Gvdiffsplit!<CR>", { noremap = true })
 
 keymap("n", "<leader>gf", function()
-  write_to_command_mode(
+  utils.write_to_command_mode(
     "Git push --force-with-lease origin " .. vim.fn.FugitiveHead()
   )
 end, { noremap = true })
@@ -31,7 +22,7 @@ keymap(
 )
 
 vim.keymap.set("n", "<leader>go", function()
-  write_to_command_mode("Git push origin " .. vim.fn.FugitiveHead())
+  utils.write_to_command_mode("Git push origin " .. vim.fn.FugitiveHead())
 end, { noremap = true })
 
 -- gt = git take / pull
