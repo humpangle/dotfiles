@@ -719,3 +719,5 @@ alias elp='echo -e "\n# --------------------------------------------------------
 alias epl=elp
 
 alias svifm='sudo -E vifm'
+
+alias up="sudo $HOME/dotfiles/_updd.sh"
