@@ -4,6 +4,48 @@
 start_clipper() {
   : "Start the clipper utility used to sync remote machine's clipboard with client macos'."
 
+  local _quiet
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local _parsed
+
+  if ! _parsed="$(
+    getopt \
+      --longoptions=quiet \
+      --options=q \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    return
+  fi
+
+  # Provides proper quoting
+  eval set -- "$_parsed"
+
+  while true; do
+    case "$1" in
+    --quiet | -q)
+      _quiet=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      return
+      ;;
+    esac
+  done
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
   # We only run this utility on macos.
   if [[ "$(uname -s)" != "Darwin" ]]; then
     return
@@ -25,10 +67,12 @@ start_clipper() {
   fi
 
   # Run clipper in the background.
-  clipper &
+  clipper &>/dev/null &
   disown
 
-  echo "clipper is running on port 8377."
+  if [[ -z "$_quiet" ]]; then
+    echo "clipper is running on port 8377."
+  fi
 }
 
 is_clipper_running() {
@@ -89,4 +133,4 @@ is_clipper_running() {
   return 1
 }
 
-start_clipper
+start_clipper --quiet
