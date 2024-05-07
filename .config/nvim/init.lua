@@ -26,5 +26,16 @@ if os.execute("command -v clip &>/dev/null") then
   ]])
 end
 
+-- Via: https://github.com/neoclide/coc.nvim/wiki/Using-the-configuration-file
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "json",
+    "jsonc",
+  },
+  callback = function()
+    vim.cmd([[syntax match Comment +\/\/.\+$+]])
+  end,
+})
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
