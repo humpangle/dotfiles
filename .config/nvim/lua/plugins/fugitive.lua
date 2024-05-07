@@ -29,8 +29,7 @@ end, { noremap = true })
 vim.keymap.set("n", "<leader>gt", function()
   vim.cmd("Git fetch")
 
-  local fugitiveHead = vim.fn.FugitiveHead()
-  vim.cmd("Git pull origin " .. fugitiveHead)
+  utils.write_to_command_mode("Git pull origin " .. vim.fn.FugitiveHead())
 end, { noremap = true })
 
 -- Git stash related mappings
