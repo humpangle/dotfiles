@@ -16,6 +16,9 @@ _bash_src="${BASH_SOURCE[0]}"
 #   multipass  -> /home/<host_username>
 export DOTFILE_PARENT_PATH="${_bash_src/\/dotfiles\/regular_shell.sh/''}"
 
+# shellcheck source=/dev/null
+[[ -e "$DOTFILE_PARENT_PATH/dotfiles/_bash_history" ]] && source "$DOTFILE_PARENT_PATH/dotfiles/_bash_history"
+
 # Add to $PATH only if `it` does not exist in the $PATH
 # fish shell has the `fish_add_path` function which does something similar
 # CREDIT: https://unix.stackexchange.com/a/217629
@@ -312,20 +315,6 @@ function _parse-command-to-run {
   _result="${_command_v_result//$_find/$_replace}"
 }
 
-# Save bash history per tmux pane
-
-hist_dir="$HOME/.bash_histories"
-
-mkdir -p "$hist_dir"
-
-# hist_file="$hist_dir/tmux--$(tmux display-message -p '#{session_name}--#{window_index}')--${TMUX_PANE:1}"
-hist_file="$HOME/.bash_history"
-export HISTFILE="$hist_file"
-
-if [[ ! -e "$hist_file" ]]; then
-  touch "$hist_file"
-fi
-
 # rsync
 alias rsynca='rsync -avzP --delete'
 alias rsyncd='rsync -avzP --delete --dry-run'
@@ -548,33 +537,6 @@ mdf() {
 alias mdc='mdf'
 alias md='mkdir -p'
 
-# Make bash history unique
-
-# https://unix.stackexchange.com/a/265649
-#   ignoreboth is actually just like doing ignorespace:ignoredups
-export HISTCONTROL=ignoreboth:erasedups
-
-# https://unix.stackexchange.com/a/179852
-
-make-bash-history-unique() {
-  _tmux_pane=""
-
-  if [ -n "${1}" ]; then
-    _tmux_pane="${1}"
-  elif [ -n "${TMUX_PANE}" ]; then
-    _tmux_pane="${TMUX_PANE:1}"
-  fi
-
-  _temp_file="/tmp/tmpfile-${_tmux_pane}"
-
-  touch "${_temp_file}"
-
-  tac "$HISTFILE" | awk '!x[$0]++' >"${_temp_file}"
-  tac "${_temp_file}" >"$HISTFILE"
-  rm "${_temp_file}"
-}
-export -f make-bash-history-unique
-alias hu='make-bash-history-unique'
 # also https://unix.stackexchange.com/a/613644
 
 function ____setenvs-help {
