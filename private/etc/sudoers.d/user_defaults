@@ -3,3 +3,5 @@ Defaults:__USERNAME__ timestamp_timeout=2000
 
 __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/chown
 __USERNAME__ ALL = (ALL)  NOPASSWD: /Users/__USERNAME__/dotfiles/_updd.sh
+__USERNAME__ ALL = (ALL)  NOPASSWD:SETENV: /Users/__USERNAME__/dotfiles/scripts/sv
+__USERNAME__ ALL = (ALL)  NOPASSWD:SETENV: /Users/__USERNAME__/dotfiles/scripts/svfm

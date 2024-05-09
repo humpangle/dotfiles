@@ -483,8 +483,6 @@ if command -v nvim &>/dev/null; then
   alias vimdiff="nvim -d"
   alias v="nvim"
   alias v.="nvim ."
-  alias svim='sudo -E nvim'
-  alias sv='sudo -E nvim'
   alias vmin='nvim -u ~/.config/nvim/settings-min.vim'
   alias vm='nvim -u ~/.config/nvim/settings-min.vim'
   alias vc='nvim --clean'
@@ -717,7 +715,5 @@ fi
 alias el='echo -e "\n# -----------------------------------------------------------------------------\n"'
 alias elp='echo -e "\n# -----------------------------------------------------------------------------\n" >> p'
 alias epl=elp
-
-alias svifm='sudo -E vifm'
 
 alias up="sudo $HOME/dotfiles/_updd.sh"
