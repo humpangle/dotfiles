@@ -1,6 +1,12 @@
+local utils_status_ok, utils = pcall(require, "utils")
+if not utils_status_ok then
+  return
+end
+
+local keymap = utils.map_key
+
 local vscode = require("vscode-neovim")
 local vcall = vscode.call
-local keyset = vim.keymap.set
 local no_re_map_silent_opts = { noremap = true, silent = true }
 local no_re_map_opts = { noremap = true }
 
@@ -62,90 +68,90 @@ vim.o.undodir = vim.fn.expand("$HOME/.vim/undodir/")
 vim.o.paste = true
 vim.o.nopaste = false
 
-keyset("n", "<leader>fc", function()
+keymap("n", "<leader>fc", function()
   vcall("editor.action.formatDocument")
 end, no_re_map_silent_opts)
 
 -- format paragraphs/lines to 80 chars
-keyset("n", "<Leader>pp", "gqap", no_re_map_silent_opts)
+keymap("n", "<Leader>pp", "gqap", no_re_map_silent_opts)
 
-keyset("x", "<Leader>pp", "gqa", no_re_map_silent_opts)
+keymap("x", "<Leader>pp", "gqa", no_re_map_silent_opts)
 
 -- ------------------------ Save file
-keyset("n", "<Leader>ww", ":Write<CR>", no_re_map_silent_opts)
+keymap("n", "<Leader>ww", ":Write<CR>", no_re_map_silent_opts)
 
-keyset("n", "<Leader>wa", ":Wall<CR>", no_re_map_silent_opts)
+keymap("n", "<Leader>wa", ":Wall<CR>", no_re_map_silent_opts)
 
-keyset("n", "<Leader>wq", ":Wq<CR>", no_re_map_silent_opts)
+keymap("n", "<Leader>wq", ":Wq<CR>", no_re_map_silent_opts)
 -- ---------------------- END Save file
 
 -- ---------------------- Quit vim
-keyset("n", "<leader>qq", function()
+keymap("n", "<leader>qq", function()
   vcall("workbench.action.closeActiveEditor")
 end, no_re_map_silent_opts)
 
-keyset("n", "<leader>bd", function()
+keymap("n", "<leader>bd", function()
   vcall("workbench.action.closeActiveEditor")
 end, no_re_map_silent_opts)
 
-keyset("n", "<leader>qA", function()
+keymap("n", "<leader>qA", function()
   vcall("workbench.action.closeWindow")
 end, no_re_map_silent_opts)
 
-keyset("n", "<leader>qg", function()
+keymap("n", "<leader>qg", function()
   vcall("workbench.action.closeEditorsInGroup")
 end, no_re_map_silent_opts)
 
-keyset("n", "<leader>qG", function()
+keymap("n", "<leader>qG", function()
   vcall("workbench.action.closeEditorsInOtherGroups")
 end, no_re_map_silent_opts)
 -- ---------------------- END Quit vim
 
 -- ---------------------- better code indentations in visual mode.
-keyset("x", "<", "<gv", no_re_map_silent_opts)
-keyset("x", ">", ">gv", no_re_map_silent_opts)
+keymap("x", "<", "<gv", no_re_map_silent_opts)
+keymap("x", ">", ">gv", no_re_map_silent_opts)
 -- ---------------------- END better code indentations in visual mode.
 
 -- ---------------------- Yank to system clipboard
-keyset("n", '"+yy', '0"+yg_', no_re_map_silent_opts)
-keyset("v", "<Leader>Y", '"+y', no_re_map_silent_opts)
-keyset("v", "<Leader>x", '"+x', no_re_map_silent_opts)
-keyset("n", "<Leader>x", '"+x', no_re_map_silent_opts)
-keyset("n", "<Leader>P", '"+P', no_re_map_silent_opts)
-keyset("v", "<Leader>P", '"+P', no_re_map_silent_opts)
+keymap("n", '"+yy', '0"+yg_', no_re_map_silent_opts)
+keymap("v", "<Leader>Y", '"+y', no_re_map_silent_opts)
+keymap("v", "<Leader>x", '"+x', no_re_map_silent_opts)
+keymap("n", "<Leader>x", '"+x', no_re_map_silent_opts)
+keymap("n", "<Leader>P", '"+P', no_re_map_silent_opts)
+keymap("v", "<Leader>P", '"+P', no_re_map_silent_opts)
 -- ---------------------- END Yank to system clipboard
 
 -- ---------------------- Yank all
-keyset("n", "<Leader>y+", ':%y<bar>:let @+=@"<CR>', no_re_map_silent_opts)
-keyset("n", "<Leader>YY", ':%y<bar>:let @+=@"<CR>', no_re_map_silent_opts)
-keyset("n", "<Leader>ya", ':%y<bar>:let @a=@"<CR>', no_re_map_silent_opts)
+keymap("n", "<Leader>y+", ':%y<bar>:let @+=@"<CR>', no_re_map_silent_opts)
+keymap("n", "<Leader>YY", ':%y<bar>:let @+=@"<CR>', no_re_map_silent_opts)
+keymap("n", "<Leader>ya", ':%y<bar>:let @a=@"<CR>', no_re_map_silent_opts)
 -- Yank highlighted
-keyset("n", ",yy", 'vgny<bar>:let @+=@"<CR> <bar>"', no_re_map_silent_opts)
+keymap("n", ",yy", 'vgny<bar>:let @+=@"<CR> <bar>"', no_re_map_silent_opts)
 -- Yank highlighted
-keyset("n", ",cc", 'vgny<bar>:let @a=@"<CR> <bar>"', no_re_map_silent_opts)
+keymap("n", ",cc", 'vgny<bar>:let @a=@"<CR> <bar>"', no_re_map_silent_opts)
 -- ---------------------- END Yank all
 
 --  Remove Contents of Current File, save file and enter normal mode
-keyset("n", "d=", "ggdG<bar>:Write<CR>", { noremap = true })
+keymap("n", "d=", "ggdG<bar>:Write<CR>", { noremap = true })
 
 -- Remove Contents of Current File and Enter Insert Mode
-keyset("n", "c=", "ggcG", { noremap = true })
+keymap("n", "c=", "ggcG", { noremap = true })
 
 -- ------------------------ Copy file path
 -- Yank relative file path
-keyset("n", ",yr", function()
+keymap("n", ",yr", function()
   vcall("copyRelativeFilePath")
   print(vim.fn.getreg("+"))
 end, no_re_map_opts)
 
 -- Yank absolute file path
-keyset("n", ",yf", function()
+keymap("n", ",yf", function()
   vcall("copyFilePath")
   print(vim.fn.getreg("+"))
 end, no_re_map_opts)
 
 -- Yank file directory path.
-keyset("n", ",yd", function()
+keymap("n", ",yd", function()
   -- Copy absolute file path into register + .
   vcall("copyFilePath")
 
@@ -164,7 +170,7 @@ keyset("n", ",yd", function()
 end, no_re_map_opts)
 
 -- Yank file name.
-keyset("n", ",yn", function()
+keymap("n", ",yn", function()
   -- Copy absolute file path into register + .
   vcall("copyFilePath")
 
@@ -182,46 +188,46 @@ end, no_re_map_opts)
 -- ------------------------ END Copy file path
 
 -- ---------------------- Dump vim register into a buffer in vertical split.
-keyset("n", "<leader>re", ":reg<CR>", no_re_map_silent_opts)
+keymap("n", "<leader>re", ":reg<CR>", no_re_map_silent_opts)
 
-keyset("n", ",o", function()
+keymap("n", ",o", function()
   vcall("editor.action.organizeImports")
 end, no_re_map_silent_opts)
 
 -- Rename variable
-keyset("n", "<leader>rn", function()
+keymap("n", "<leader>rn", function()
   vcall("editor.action.rename")
 end, no_re_map_silent_opts)
 
 -- ------------------------ Go to problem
-keyset("n", "]d", function()
+keymap("n", "]d", function()
   vcall("editor.action.marker.next")
 end, no_re_map_silent_opts)
 
-keyset("n", "[d", function()
+keymap("n", "[d", function()
   vcall("editor.action.marker.prev")
 end, no_re_map_silent_opts)
 -- ------------------------ END Go to problem
 
-keyset("n", "gr", function()
+keymap("n", "gr", function()
   vcall("editor.action.referenceSearch.trigger")
 end, no_re_map_silent_opts)
 
-keyset("x", "gr", function()
+keymap("x", "gr", function()
   vcall("editor.action.referenceSearch.trigger")
 end, no_re_map_silent_opts)
 
 -- ------------------------ Folds
-keyset("n", "zM", function()
+keymap("n", "zM", function()
   vcall("editor.foldAll")
 end, no_re_map_silent_opts)
 
-keyset("n", "zR", function()
+keymap("n", "zR", function()
   vcall("editor.unfoldAll")
 end, no_re_map_silent_opts)
 -- ------------------------ END Folds
 
-keyset(
+keymap(
   "n",
   ",ec",
   ":Edit " .. vim.fn.expand("$MYVIMRC") .. "<CR>",
