@@ -29,14 +29,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
-vim.o.expandtab = true  -- converts tabs to white space
-vim.o.shiftwidth = 2    -- default indent = 2 spaces
+vim.o.expandtab = true -- converts tabs to white space
+vim.o.shiftwidth = 2 -- default indent = 2 spaces
 vim.o.encoding = "utf8"
-vim.o.cc = 80           -- column width
-vim.o.incsearch = true  -- Incremental search, search as you type
+vim.o.cc = 80 -- column width
+vim.o.incsearch = true -- Incremental search, search as you type
 vim.o.ignorecase = true -- Make searching case insensitive
-vim.o.smartcase = true  -- ... unless the query has capital letters
-vim.o.gdefault = true   -- Use 'g' flag by default with :s/foo/bar/.
+vim.o.smartcase = true -- ... unless the query has capital letters
+vim.o.gdefault = true -- Use 'g' flag by default with :s/foo/bar/.
 vim.o.hlsearch = true
 -- vim.o.nohlsearch = true
 -- :%s/term/sub will be highlighted as sub is typed
