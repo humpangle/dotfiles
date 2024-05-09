@@ -233,3 +233,7 @@ keymap(
   ":Edit " .. vim.fn.expand("$MYVIMRC") .. "<CR>",
   no_re_map_silent_opts
 )
+
+keymap("n", "<leader>ca", function()
+  vcall("editor.action.quickFix")
+end, no_re_map_silent_opts)
