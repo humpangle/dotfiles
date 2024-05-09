@@ -1,5 +1,5 @@
 Defaults  editor=__NEOVIM_BIN__
-Defaults:kanmii timestamp_timeout=2000
+Defaults:__USERNAME__ timestamp_timeout=2000
 
 __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/chown
 __USERNAME__ ALL = (ALL)  NOPASSWD: /Users/__USERNAME__/dotfiles/_updd.sh
