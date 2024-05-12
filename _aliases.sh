@@ -283,7 +283,6 @@ fi
 # -----------------------------------------------------------------------------
 
 if command -v tmux &>/dev/null; then
-  alias tls='tmux ls'
   alias tkss='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
   alias ts='ebnis-save-tmux.sh'
   alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
@@ -315,7 +314,38 @@ if command -v tmux &>/dev/null; then
     fi
   )
 
+  __list_sessions() (
+    set -o errexit
+
+    local _sessions
+
+    if _sessions="$(tmux ls 2>&1)"; then
+      echo -e "$_sessions"
+      return
+    fi
+
+    local _session_resurrect="$HOME/.tmux/resurrect/last"
+
+    if [[ -s "$_session_resurrect" ]]; then
+      echo "tmux has not been started. Available sessions:"
+      awk '/^window\s+/ {print $2}' "$_session_resurrect" |
+        sort -u
+
+      tail -n1 "$_session_resurrect"
+
+      if [[ -n "$DEFAULT_TMUX_SESSION" ]]; then
+        echo -e "\nDefault session: $DEFAULT_TMUX_SESSION"
+      fi
+
+      return
+    fi
+
+    echo "tmux has not been started and no sessions are available."
+    exit 1
+  )
+
   alias tnd=_start_tmux
+  alias tls=__list_sessions
 
   function _____tks-help {
     read -r -d '' var <<'eof'
