@@ -431,7 +431,7 @@ _install_tmux_plugins() {
     _echo "DOWNLOADING TMUX CONF"
 
     curl -fLo ~/.tmux.conf \
-      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/tmux.conf"
+      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.tmux.conf"
   fi
 
   mkdir -p "$HOME/.tmux/resurrect"
@@ -1657,7 +1657,7 @@ function setup-dev {
   ln -s ~/dotfiles/gitconfig ~/.gitconfig
   ln -s ~/dotfiles/.config/nvim ~/.config
   ln -s ~/dotfiles/.iex.exs ~/.iex.exs
-  ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+  ln -s ~/dotfiles/.tmux.conf ~
   ln -s ~/dotfiles/.config/vifm/vifmrc ~/.vifm/vifmrc
   ln -s ~/dotfiles/.config/shellcheckrc ~/.config
 
@@ -1677,7 +1677,7 @@ function setup-dev {
   # We preliminary save tmux sessions every minute instead of default to 15.
   # After the first save, we must revert back to 15 - so git does not record
   # any changes.
-  sed -i -e "s/set -g @continuum-save-interval '15'/set -g @continuum-save-interval '1'/" ~/dotfiles/tmux.conf
+  sed -i -e "s/set -g @continuum-save-interval '15'/set -g @continuum-save-interval '1'/" ~/dotfiles/.tmux.conf
 
   # Install tmux plugins specified in .tmux.conf
   chmod 755 ~/.tmux/plugins/tpm/bin/install_plugins
@@ -2726,7 +2726,7 @@ EOF
   ln -s "$_dotfiles_path/.iex.exs" "$HOME"
 
   install_tmux
-  ln -s "$_dotfiles_path/tmux.conf" "$HOME/.tmux.conf"
+  ln -s "$_dotfiles_path/.tmux.conf" "$HOME"
 
   install-python --global
   install-nodejs dev
