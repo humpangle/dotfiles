@@ -415,35 +415,35 @@ eof
 
     while true; do
       case "$1" in
-        --help | -h)
-          _____tks-help
-          return
-          ;;
+      --help | -h)
+        _____tks-help
+        return
+        ;;
 
-        --all-but | -a)
-          _all_but=1
-          shift
-          ;;
+      --all-but | -a)
+        _all_but=1
+        shift
+        ;;
 
-        --current | -c)
-          _current=1
-          shift
-          ;;
+      --current | -c)
+        _current=1
+        shift
+        ;;
 
-        --numbered | -n)
-          _numbered=1
-          shift
-          ;;
+      --numbered | -n)
+        _numbered=1
+        shift
+        ;;
 
-        --)
-          shift
-          break
-          ;;
+      --)
+        shift
+        break
+        ;;
 
-        *)
-          echo "Unknown option ${1}."
-          return
-          ;;
+      *)
+        echo "Unknown option ${1}."
+        return
+        ;;
       esac
     done
 
