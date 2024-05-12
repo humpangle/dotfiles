@@ -2652,6 +2652,7 @@ setup_multipass() {
     mkdir -p "$HOME/.local/bin"
     mkdir -p "$HOME/.config"
     mkdir -p "$HOME/.vifm"
+    touch "$HOME/.hushlogin"
 
     sudo apt-get update
     sudo apt-get upgrade -y
