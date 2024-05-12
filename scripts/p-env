@@ -340,7 +340,13 @@ fi
 
 if _should_output_to_file; then
   rm -rf "$_out_file_full_path_name"
-  touch "$_out_file_full_path_name"
+
+  if [[ -n "$_format" ]]; then
+    touch "$_out_file_full_path_name"
+  else
+    # Add directive to silence shellcheck complaints about unused variables.
+    echo '# shellcheck disable=2034' >"$_out_file_full_path_name"
+  fi
 fi
 
 _out_file_content_accumulator=
