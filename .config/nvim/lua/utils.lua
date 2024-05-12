@@ -269,4 +269,6 @@ function utils.write_to_command_mode(string)
   )
 end
 
+utils.clip_cmd = [[:call system('nc -N localhost 8377', @")]]
+
 return utils
