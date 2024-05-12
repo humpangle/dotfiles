@@ -288,7 +288,7 @@ if command -v tmux &>/dev/null; then
   alias ts='ebnis-save-tmux.sh'
   alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
-  _start-tmux() {
+  _start_tmux() {
     if tmux ls &>/dev/null; then
       cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
       tmux a -d -t dot
@@ -299,7 +299,7 @@ if command -v tmux &>/dev/null; then
     fi
   }
 
-  alias tnd=_start-tmux
+  alias tnd=_start_tmux
 
   function _____tks-help {
     read -r -d '' var <<'eof'
