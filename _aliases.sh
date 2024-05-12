@@ -287,22 +287,177 @@ if command -v tmux &>/dev/null; then
   alias ts='ebnis-save-tmux.sh'
   alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
+  function ____start_tmux_help {
+    : "___help___ ____start_tmux_help"
+    read -r -d '' var <<'eof' || true
+Start tmux. Usage:
+  _start_tmux [OPTIONS] [SESSION]
+
+Options:
+  --help/-h
+    Print this help text and quit.
+  --cd/-c DIR
+    Change directory to DIR before entering tmux.
+  --pwd/-p
+    Change directory to current working directory before entering tmux.
+  --base/-b
+    Must be used in addition to --cd or --pwd. Use the basename of the directory to change to as session name. This
+    option makes SESSION name redundant.
+  --detach/-d
+    Detach from all clients before attaching to a client.
+  --debug/-D
+    Do not take any action - just print command to run to stdout.
+
+Examples:
+  # Get help.
+  _start_tmux --help
+
+  # Start default session (must set DEFAULT_TMUX_SESSION environment variable).
+  _start_tmux
+
+  # Change directory to DIR and start tmux session SESSION.
+  _start_tmux --cd DIR SESSION
+  _start_tmux -c DIR SESSION
+
+  # Change directory to $PWD and start tmux session SESSION.
+  _start_tmux --pwd SESSION
+  _start_tmux -p SESSION
+
+  # Change directory to $PWD and start tmux whose session name is the basename of $PWD.
+  _start_tmux --pwd --base
+  _start_tmux -pb
+
+  # Detach SESSION from all clients before attaching to SESSION.
+  _start_tmux --detach
+  _start_tmux -d
+  _start_tmux -d SESSION
+
+  # Print command to run only.
+  _start_tmux --debug --pwd --base
+  _start_tmux -Dpb
+eof
+
+    echo -e "${var}\n"
+  }
+
   _start_tmux() (
     set -o errexit
 
-    local _session="${1:-$DEFAULT_TMUX_SESSION}"
+    local _session
+    local _cd
+    local _use_basename_as_session
+    local _detach
+    local _debug
+
+    # --------------------------------------------------------------------------
+    # PARSE ARGUMENTS
+    # --------------------------------------------------------------------------
+    local _parsed
+
+    if ! _parsed="$(
+      getopt \
+        --longoptions=help,pwd,cd:,base,detach,debug \
+        --options=h,p,c:,b,d,D \
+        --name "$0" \
+        -- "$@"
+    )"; then
+      ____start_tmux_help
+      exit 129
+    fi
+
+    # Provides proper quoting
+    eval set -- "$_parsed"
+
+    while true; do
+      case "$1" in
+      --help | -h)
+        ____start_tmux_help
+        exit 129
+        ;;
+
+      --cd | -c)
+        _cd=$2
+        shift 2
+        ;;
+
+      --pwd | -p)
+        _cd=$PWD
+        shift
+        ;;
+
+      --base | -b)
+        _use_basename_as_session=1
+        shift
+        ;;
+
+      --detach | -d)
+        _detach=1
+        shift
+        ;;
+
+      --debug | -D)
+        _debug=1
+        shift
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        ____start_tmux_help
+        exit 129
+        ;;
+      esac
+    done
+
+    if [[ -n "$_cd" ]]; then
+      _cd="$(
+        realpath "$_cd"
+      )"
+
+      if [[ -n "$_use_basename_as_session" ]]; then
+        _session="$(
+          basename "$_cd"
+        )"
+      fi
+    fi
 
     if [[ -z "$_session" ]]; then
-      echo "Provide session or set DEFAULT_TMUX_SESSION environment variable."
+      _session="${1:-$DEFAULT_TMUX_SESSION}"
+    fi
+
+    if [[ -z "$_session" ]]; then
+      echo "Provide target session or set DEFAULT_TMUX_SESSION environment variable."
       exit 1
+    fi
+    # --------------------------------------------------------------------------
+    # END PARSE ARGUMENTS
+    # --------------------------------------------------------------------------
+
+    if [[ -z "$_cd" ]]; then
+      _cd="${DOTFILE_PARENT_PATH}/dotfiles"
     fi
 
     if tmux ls 2>&1 | grep -qP "${_session}:"; then
-      cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
-      tmux a -d -t "$_session"
-      ebnis-save-tmux.sh &>/dev/null || true
+      cd "$_cd" || exit 1
+      local _cmd="tmux attach-session"
+
+      if [[ -n "$_detach" ]]; then
+        _cmd+=" -d"
+      fi
+      _cmd+=" -t $_session"
+
+      if [[ -n "$_debug" ]]; then
+        echo "$_cmd"
+      else
+        bash -c "$_cmd"
+        ebnis-save-tmux.sh &>/dev/null || true
+      fi
     else
-      cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
+      cd "$_cd" || exit 1
       # rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
 
       if [[ -n "$TMUX" ]]; then
@@ -311,8 +466,14 @@ if command -v tmux &>/dev/null; then
       fi
 
       # Launch new tmux session.
-      tmux new -s "$_session"
-      ebnis-save-tmux.sh &>/dev/null || true
+      local _cmd="tmux new -s $_session"
+
+      if [[ -n "$_debug" ]]; then
+        echo "$_cmd"
+      else
+        bash -c "$_cmd"
+        ebnis-save-tmux.sh &>/dev/null || true
+      fi
     fi
   )
 
