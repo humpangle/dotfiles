@@ -302,7 +302,7 @@ if command -v tmux &>/dev/null; then
       tmux a -d -t "$_session"
     else
       cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
-      rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
+      # rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
 
       if [[ -n "$TMUX" ]]; then
         echo "Please disconnect from tmux session \"$(tmux display-message -p '#S')\"."
