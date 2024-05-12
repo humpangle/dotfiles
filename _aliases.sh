@@ -300,6 +300,7 @@ if command -v tmux &>/dev/null; then
     if tmux ls 2>&1 | grep -qP "${_session}:"; then
       cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
       tmux a -d -t "$_session"
+      ebnis-save-tmux.sh &>/dev/null || true
     else
       cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
       # rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
@@ -311,6 +312,7 @@ if command -v tmux &>/dev/null; then
 
       # Launch new tmux session.
       tmux new -s "$_session"
+      ebnis-save-tmux.sh &>/dev/null || true
     fi
   )
 
