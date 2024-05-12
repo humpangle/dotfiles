@@ -288,16 +288,32 @@ if command -v tmux &>/dev/null; then
   alias ts='ebnis-save-tmux.sh'
   alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
-  _start_tmux() {
-    if tmux ls &>/dev/null; then
+  _start_tmux() (
+    set -o errexit
+
+    local _session="${1:-$DEFAULT_TMUX_SESSION}"
+
+    if [[ -z "$_session" ]]; then
+      echo "Provide session or set DEFAULT_TMUX_SESSION environment variable."
+      exit 1
+    fi
+
+    if tmux ls 2>&1 | grep -qP "${_session}:"; then
       cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
-      tmux a -d -t dot
+      tmux a -d -t "$_session"
     else
       cd "${DOTFILE_PARENT_PATH}/dotfiles" || exit 1
       rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
-      tmux new -s dot
+
+      if [[ -n "$TMUX" ]]; then
+        echo "Please disconnect from tmux session \"$(tmux display-message -p '#S')\"."
+        exit 1
+      fi
+
+      # Launch new tmux session.
+      tmux new -s "$_session"
     fi
-  }
+  )
 
   alias tnd=_start_tmux
 
