@@ -21,12 +21,12 @@ keymap(
   { noremap = true }
 )
 
-vim.keymap.set("n", "<leader>go", function()
+keymap("n", "<leader>go", function()
   utils.write_to_command_mode("Git push origin " .. vim.fn.FugitiveHead())
 end, { noremap = true })
 
 -- gt = git take / pull
-vim.keymap.set("n", "<leader>gt", function()
+keymap("n", "<leader>gt", function()
   vim.cmd("Git fetch")
 
   utils.write_to_command_mode("Git pull origin " .. vim.fn.FugitiveHead())
