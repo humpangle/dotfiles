@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# vim ft=bash
+
+_make_sudo_e() {
+  local _bin=$1
+  local _path
+  local _dirname
+
+  if ! _path="$(command -v "$_bin")"; then
+    echo "Path for binary $_bin not found. Exiting."
+    exit 1
+  fi
+
+  _dirname="$(dirname "$_path")"
+
+  local _copied_bin="$_dirname/${_bin}_sudo_e"
+
+  sudo cp "$_path" "$_copied_bin"
+
+  echo "New bin at $_copied_bin"
+}
+
+_make_sudo_e "$@"
