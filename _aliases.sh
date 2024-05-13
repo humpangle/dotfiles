@@ -477,10 +477,101 @@ eof
     fi
   )
 
+  function _____list_sessions_help {
+    read -r -d '' var <<'eof' || true
+List tmux sessions and clients. Usage:
+  __list_sessions [OPTIONS]
+
+List sessions or clients if tmux is started otherwise list sessions from inside resurrect file (if that file exists).
+
+Options:
+  --help/-h
+    Print this help text and quit.
+  --client/-c
+    List clients (and not sessions).
+
+Examples:
+  # Get help.
+  __list_sessions --help
+
+  # List sessions.
+  __list_sessions
+
+  # List clients.
+  __list_sessions --client
+  __list_sessions -c
+eof
+
+    echo -e "${var}\n"
+  }
+
   __list_sessions() (
+    : "___help___ _____list_sessions_help"
+
     set -o errexit
 
+    local _clients
+
+    # --------------------------------------------------------------------------
+    # PARSE ARGUMENTS
+    # --------------------------------------------------------------------------
+    local _parsed
+
+    if ! _parsed="$(
+      getopt \
+        --longoptions=help,client \
+        --options=h,c \
+        --name "$0" \
+        -- "$@"
+    )"; then
+      _____list_sessions_help
+      exit 129
+    fi
+
+    # Provides proper quoting
+    eval set -- "$_parsed"
+
+    while true; do
+      case "$1" in
+      --help | -h)
+        _____list_sessions_help
+        exit 129
+        ;;
+
+      --client | -c)
+        _clients=1
+        shift
+        ;;
+
+      --)
+        shift
+        break
+        ;;
+
+      *)
+        Echo "Unknown option ${1}."
+        _____list_sessions_help
+        exit 129
+        ;;
+      esac
+    done
+
+    # --------------------------------------------------------------------------
+    # END PARSE ARGUMENTS
+    # --------------------------------------------------------------------------
+
     local _sessions
+
+    if [[ -n "$_clients" ]]; then
+      if _clients="$(tmux list-clients 2>&1)"; then
+        if [[ -n "$_clients" ]]; then
+          echo -e "$_clients"
+          return
+        fi
+      fi
+
+      echo -e "\nWe can not retrieve clients or no clients are attached - we will try to serve you sessions:\n"
+    fi
 
     if _sessions="$(tmux ls 2>&1)"; then
       echo -e "$_sessions"
