@@ -1,21 +1,21 @@
-# Defaults	editor=/usr/local/bin/nvim
+# Defaults  editor=/usr/local/bin/nvim
 # Allow normal user to start cron job in .bashrc
 # %sudo ALL=NOPASSWD: /etc/init.d/cron start
 
 # grant passwordless access to dockerd for group docker users
 # %docker ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
 # username ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
-Defaults	editor=__NEOVIM_BIN__
+Defaults  editor=__NEOVIM_BIN__
 
 Cmnd_Alias TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD = /usr/bin/tee /var/lib/docker/containers/*
 
-%__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /home/__USERNAME__/dotfiles/etc/wsl-dns-resolver.sh, /home/__USERNAME__/dotfiles/etc/wsl-drop-caches.sh
-%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/chown
-%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
-%__USERNAME__ ALL=(ALL)  NOPASSWD: TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD
-%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/systemctl
+__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /home/__USERNAME__/dotfiles/etc/wsl-dns-resolver.sh, /home/__USERNAME__/dotfiles/etc/wsl-drop-caches.sh
+__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/chown
+__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
+__USERNAME__ ALL=(ALL)  NOPASSWD: TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD
+__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/systemctl
 # WSL reset clock
-%__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/ntpdate
+__USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/ntpdate
 # Binaries with sudo -E
 __USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /usr/bin/nvim_sudo_e
 __USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /usr/local/bin/vifm_sudo_e
