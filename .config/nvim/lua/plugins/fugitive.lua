@@ -35,11 +35,21 @@ end, { noremap = true })
 -- Git stash related mappings
 -- Inspired by
 --    https://github.com/tpope/vim-fugitive/issues/236#issuecomment-1737935479
+local git_stash_list_cmd =
+  ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>"
+
 keymap(
   "n",
   "czl",
-  ":Git<CR>:G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>",
+  git_stash_list_cmd .. ":Git<CR>",
   { noremap = true, silent = true, desc = "Git stash list" }
+)
+
+keymap(
+  "n",
+  "czd",
+  git_stash_list_cmd .. ":G stash drop stash@{}<left>",
+  { noremap = true, desc = "Git stash drop" }
 )
 -- END Git stash related mappings
 
