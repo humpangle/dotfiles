@@ -10,6 +10,9 @@ function ____start_tmux_help {
 Start tmux. Usage:
   _start_tmux [OPTIONS] [SESSION]
 
+If no options and session are given, we will change to dotfiles directory and start/enter $DEFAULT_TMUX_SESSION if it
+exists.
+
 Options:
   --help/-h
     Print this help text and quit.
