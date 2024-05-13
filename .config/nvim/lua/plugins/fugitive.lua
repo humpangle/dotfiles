@@ -74,6 +74,24 @@ keymap(
   { noremap = true, desc = "Git config user email" }
 )
 
+-- Rebase keymaps
+keymap("n", "<Leader>r<Space>", function()
+  utils.write_to_command_mode("G rebase ")
+end, { noremap = true, desc = [[Populate command line with :Git rebase .]] })
+
+keymap("n", "<Leader>rr", function()
+  utils.write_to_command_mode("G rebase --continue")
+end, { noremap = true, desc = [[Continue the current rebase.]] })
+
+keymap("n", "<Leader>ra", function()
+  utils.write_to_command_mode("G rebase --abort")
+end, { noremap = true, desc = [[Abort the current rebase.]] })
+
+keymap("n", "<Leader>re", function()
+  utils.write_to_command_mode("G rebase --edit-todo")
+end, { noremap = true, desc = [[Edit the current rebase todo list.]] })
+-- /END Rebase keymaps
+
 -- Auto-clean Fugitive Buffers
 vim.api.nvim_create_autocmd("BufReadPost", {
   pattern = "fugitive://*",
