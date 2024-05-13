@@ -1,0 +1,481 @@
+#!/usr/bin/env bash
+
+alias tkss='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
+alias ts='ebnis-save-tmux.sh'
+alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+
+function ____start_tmux_help {
+  : "___help___ ____start_tmux_help"
+  read -r -d '' var <<'eof' || true
+Start tmux. Usage:
+  _start_tmux [OPTIONS] [SESSION]
+
+Options:
+  --help/-h
+    Print this help text and quit.
+  --cd/-c DIR
+    Change directory to DIR before entering tmux.
+  --pwd/-p
+    Change directory to current working directory before entering tmux.
+  --base/-b
+    Must be used in addition to --cd or --pwd. Use the basename of the directory to change to as session name. This
+    option makes SESSION name redundant.
+  --detach/-d
+    Detach from all clients before attaching to a client.
+  --debug/-D
+    Do not take any action - just print command to run to stdout.
+
+Examples:
+  # Get help.
+  _start_tmux --help
+
+  # Start default session (must set DEFAULT_TMUX_SESSION environment variable).
+  _start_tmux
+
+  # Change directory to DIR and start tmux session SESSION.
+  _start_tmux --cd DIR SESSION
+  _start_tmux -c DIR SESSION
+
+  # Change directory to $PWD and start tmux session SESSION.
+  _start_tmux --pwd SESSION
+  _start_tmux -p SESSION
+
+  # Change directory to $PWD and start tmux whose session name is the basename of $PWD.
+  _start_tmux --pwd --base
+  _start_tmux -pb
+
+  # Detach SESSION from all clients before attaching to SESSION.
+  _start_tmux --detach
+  _start_tmux -d
+  _start_tmux -d SESSION
+
+  # Print command to run only.
+  _start_tmux --debug --pwd --base
+  _start_tmux -Dpb
+eof
+
+  echo -e "${var}\n"
+}
+
+_start_tmux() (
+  set -o errexit
+
+  local _session
+  local _cd
+  local _use_basename_as_session
+  local _detach
+  local _debug
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local _parsed
+
+  if ! _parsed="$(
+    getopt \
+      --longoptions=help,pwd,cd:,base,detach,debug \
+      --options=h,p,c:,b,d,D \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ____start_tmux_help
+    exit 129
+  fi
+
+  # Provides proper quoting
+  eval set -- "$_parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ____start_tmux_help
+      exit 129
+      ;;
+
+    --cd | -c)
+      _cd=$2
+      shift 2
+      ;;
+
+    --pwd | -p)
+      _cd=$PWD
+      shift
+      ;;
+
+    --base | -b)
+      _use_basename_as_session=1
+      shift
+      ;;
+
+    --detach | -d)
+      _detach=1
+      shift
+      ;;
+
+    --debug | -D)
+      _debug=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      ____start_tmux_help
+      exit 129
+      ;;
+    esac
+  done
+
+  if [[ -n "$_cd" ]]; then
+    _cd="$(
+      realpath "$_cd"
+    )"
+
+    if [[ -n "$_use_basename_as_session" ]]; then
+      _session="$(
+        basename "$_cd"
+      )"
+    fi
+  fi
+
+  if [[ -z "$_session" ]]; then
+    _session="${1:-$DEFAULT_TMUX_SESSION}"
+  fi
+
+  if [[ -z "$_session" ]]; then
+    echo "Provide target session or set DEFAULT_TMUX_SESSION environment variable."
+    exit 1
+  fi
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  if [[ -z "$_cd" ]]; then
+    _cd="${DOTFILE_PARENT_PATH}/dotfiles"
+  fi
+
+  if tmux ls 2>&1 | grep -qP "${_session}:"; then
+    cd "$_cd" || exit 1
+    local _cmd="tmux attach-session"
+
+    if [[ -n "$_detach" ]]; then
+      _cmd+=" -d"
+    fi
+    _cmd+=" -t $_session"
+
+    if [[ -n "$_debug" ]]; then
+      echo "$_cmd"
+    else
+      bash -c "$_cmd"
+      ebnis-save-tmux.sh &>/dev/null || true
+    fi
+  else
+    cd "$_cd" || exit 1
+    # rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
+
+    if [[ -n "$TMUX" ]]; then
+      echo "Please disconnect from tmux session \"$(tmux display-message -p '#S')\"."
+      exit 1
+    fi
+
+    # Launch new tmux session.
+    local _cmd="tmux new -s $_session"
+
+    if [[ -n "$_debug" ]]; then
+      echo "$_cmd"
+    else
+      bash -c "$_cmd"
+      ebnis-save-tmux.sh &>/dev/null || true
+    fi
+  fi
+)
+
+function _____list_sessions_help {
+  read -r -d '' var <<'eof' || true
+List tmux sessions and clients. Usage:
+  __list_sessions [OPTIONS]
+
+List sessions or clients if tmux is started otherwise list sessions from inside resurrect file (if that file exists).
+
+Options:
+  --help/-h
+    Print this help text and quit.
+  --client/-c
+    List clients (and not sessions).
+
+Examples:
+  # Get help.
+  __list_sessions --help
+
+  # List sessions.
+  __list_sessions
+
+  # List clients.
+  __list_sessions --client
+  __list_sessions -c
+eof
+
+  echo -e "${var}\n"
+}
+
+__list_sessions() (
+  : "___help___ _____list_sessions_help"
+
+  set -o errexit
+
+  local _clients
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local _parsed
+
+  if ! _parsed="$(
+    getopt \
+      --longoptions=help,client \
+      --options=h,c \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    _____list_sessions_help
+    exit 129
+  fi
+
+  # Provides proper quoting
+  eval set -- "$_parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      _____list_sessions_help
+      exit 129
+      ;;
+
+    --client | -c)
+      _clients=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      _____list_sessions_help
+      exit 129
+      ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  local _sessions
+
+  if [[ -n "$_clients" ]]; then
+    if _clients="$(tmux list-clients 2>&1)"; then
+      if [[ -n "$_clients" ]]; then
+        echo -e "$_clients"
+        return
+      fi
+    fi
+
+    echo -e "\nWe can not retrieve clients or no clients are attached - we will try to serve you sessions:\n"
+  fi
+
+  if _sessions="$(tmux ls 2>&1)"; then
+    echo -e "$_sessions"
+    return
+  fi
+
+  local _session_resurrect="$HOME/.tmux/resurrect/last"
+
+  if [[ -s "$_session_resurrect" ]]; then
+    echo "tmux has not been started. Available sessions:"
+    awk '/^window\s+/ {print $2}' "$_session_resurrect" |
+      sort -u
+
+    tail -n1 "$_session_resurrect"
+
+    if [[ -n "$DEFAULT_TMUX_SESSION" ]]; then
+      echo -e "\nDefault session: $DEFAULT_TMUX_SESSION"
+    fi
+
+    return
+  fi
+
+  echo "tmux has not been started and no sessions are available."
+  exit 1
+)
+
+alias tnd=_start_tmux
+alias tls=__list_sessions
+
+function _____tks-help {
+  read -r -d '' var <<'eof'
+Helper for killing tmux session(s). Usage:
+  __tks [OPTIONS]
+
+Options:
+  --help/-h
+    Print this help text and quit.
+  --all-but/-a
+    Kill all but session from which command was invoked.
+  --current/-c
+    Kill session from which command was invoked (current session).
+
+  --numbered/-n
+    Kill sessions with only numerical names.
+
+Examples:
+  # Get help.
+  __tks --help
+  __tks # Call with no argument.
+
+  # Kill all sessions except session from which this command is called.
+  __tks --all-but
+  __tks -a
+
+  # Kill session from which this command is called (current session).
+  __tks --current
+  __tks -c
+
+  # Kill sessions with only numerical names. (Will kill sessions named 1, 2, 3, .. 10, 11, ..)
+  __tks --numbered
+  __tks -n
+
+  # Kill one or more specified sessions
+  __tks session-1 session2 ... session-n
+eof
+
+  echo -e "${var}\n"
+}
+
+# :TODO:persist session information ala tmux-resurrect
+__tks() {
+  : "___help___ _____tks-help"
+
+  local _all_but
+  local _current
+  local _numbered
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help,all-but,current,numbered \
+      --options=h,a,c,n \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      _____tks-help
+      return
+      ;;
+
+    --all-but | -a)
+      _all_but=1
+      shift
+      ;;
+
+    --current | -c)
+      _current=1
+      shift
+      ;;
+
+    --numbered | -n)
+      _numbered=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown option ${1}."
+      return
+      ;;
+    esac
+  done
+
+  local _other_args=()
+  _other_args=("$@")
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  if [[ -n "${_other_args[*]}" ]]; then
+    for _session in "${_other_args[@]}"; do
+      echo "Killing session \"$_session\""
+
+      tmux kill-session -t "$_session"
+    done
+
+    return
+  fi
+
+  local _this_session
+
+  _this_session="$(
+    tmux list-panes -t $TMUX_PANE -F '#S' |
+      head -n1
+  )"
+
+  if [[ -n "$_current" ]]; then
+    echo "Killing current session \"$_this_session\""
+    tmux kill-session -t "$_this_session"
+    return
+  fi
+
+  local _all_sessions
+
+  _all_sessions="$(
+    tmux list-sessions -F '#S'
+  )"
+
+  if [[ -n "$_numbered" ]]; then
+    while IFS= read -r _session; do
+      if [[ "$_session" == "$_this_session" ]]; then continue; fi
+
+      echo "Killing session \"$_session\""
+      tmux kill-session -t "$_session"
+    done < <(grep -P "\d+" <<<"$_all_sessions")
+
+    return
+  fi
+
+  if [[ -n "$_all_but" ]]; then
+    while IFS= read -r _session; do
+      if [[ "$_session" == "$_this_session" ]]; then continue; fi
+
+      echo "Killing session \"$_session\""
+      tmux kill-session -t "$_session"
+    done <<<"$_all_sessions"
+
+    return
+  fi
+
+  _____tks-help
+}
+
+alias tks='__tks'
