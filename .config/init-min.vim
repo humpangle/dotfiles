@@ -86,7 +86,7 @@ nmap ,yr :let @+=expand("%")<CR>
 nmap ,yn :let @+=expand("%:t")<CR>
 nmap ,yd :let @+=expand("%:p:h")<CR>
 nnoremap <leader>nh :noh<cr>
-nnoremap <leader>rr :%s///g<left><left>
+" nnoremap <leader>rr :%s///g<left><left>
 nnoremap <leader>bd :bd%<cr>
 nnoremap <leader>bD :bd!%<cr>
 nnoremap <leader>bw :bw%<cr>
