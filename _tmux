@@ -171,7 +171,7 @@ _start_tmux() (
     _cmd+=" -t $_session"
 
     if [[ -n "$_debug" ]]; then
-      echo "$_cmd"
+      echo -e "CD: $_cd\nCMD $_cmd"
     else
       bash -c "$_cmd"
       ebnis-save-tmux.sh &>/dev/null || true
@@ -189,7 +189,7 @@ _start_tmux() (
     local _cmd="tmux new -s $_session"
 
     if [[ -n "$_debug" ]]; then
-      echo "$_cmd"
+      echo -e "CD: $_cd\nCMD $_cmd"
     else
       bash -c "$_cmd"
       ebnis-save-tmux.sh &>/dev/null || true
