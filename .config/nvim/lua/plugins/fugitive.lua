@@ -76,10 +76,13 @@ keymap(
 
     local count = vim.v.count
 
-    -- If count given, there will be no need to list stashes.
-    if count > 0 then -- wished vim.v.count could return nil
-      cmd = ":G stash drop stash@{" .. count .. "}"
-    else
+    -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we can
+    -- have git stash index 99).
+    if count == 99 then -- simulate count 0
+      cmd = ":G stash drop stash@{0}<Left>"
+    elseif count > 0 then -- count given (not 0)
+      cmd = ":G stash drop stash@{" .. count .. "}<Left>"
+    else -- no count
       -- List stashes so we can select count
       vim.cmd(list_stash_cmd)
     end
@@ -89,14 +92,8 @@ keymap(
       "t"
     )
   end),
-  { noremap = true, desc = "Git stash drop" }
+  { noremap = true, desc = "Git stash drop - use 99 to simulate count 0" }
 )
-
-keymap("n", "0czd", function()
-  local cmd = ":G stash drop stash@{0}<left>"
-
-  vim.fn.feedkeys(vim.api.nvim_replace_termcodes(cmd, true, true, true), "t")
-end, { noremap = true, desc = "Git stash drop" })
 
 keymap("n", "<Leader>czz", function()
   -- Get the latest Git commit hash
