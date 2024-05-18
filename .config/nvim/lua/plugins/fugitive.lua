@@ -63,14 +63,14 @@ end
 
 keymap(
   "n",
-  "czl",
+  "<Leader>czl",
   git_stash_list_fn(),
   { noremap = true, silent = true, desc = "Git stash list" }
 )
 
 keymap(
   "n",
-  "czd",
+  "<Leader>czd",
   git_stash_list_fn(function(list_stash_cmd)
     vim.cmd(list_stash_cmd)
 
