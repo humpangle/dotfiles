@@ -120,6 +120,57 @@ end, {
   noremap = true,
   desc = "G stash push --include-untracked/--all -m 'GITHEAD: '",
 })
+
+local git_stash_apply_or_pop = function(apply_or_pop, maybe_include_index)
+  return git_stash_list_fn(function(list_stash_cmd)
+    local count = vim.v.count
+
+    local cmd = ":Git stash "
+      .. apply_or_pop
+      .. " --quiet "
+      .. (maybe_include_index and "--index " or "")
+      .. "stash@{"
+      .. (count == 99 and 0 or (count > 0 and count or "")) -- Count 99 simulates count 0 (See czd -->> git stash drop).
+      .. "}<Left>"
+
+    if count < 1 then -- No count given.
+      vim.cmd(list_stash_cmd)
+    end
+
+    vim.fn.feedkeys(
+      vim.api.nvim_replace_termcodes(cmd, true, true, true),
+      "t"
+    )
+  end)
+end
+
+keymap(
+  "n",
+  "<Leader>czP",
+  git_stash_apply_or_pop("pop"),
+  { noremap = true, desc = "Git stash pop --quiet" }
+)
+
+keymap(
+  "n",
+  "<Leader>czp",
+  git_stash_apply_or_pop("pop", "index"),
+  { noremap = true, desc = "Git stash pop --quiet --index" }
+)
+
+keymap(
+  "n",
+  "<Leader>czA",
+  git_stash_apply_or_pop("apply"),
+  { noremap = true, desc = "Git stash apply --quiet" }
+)
+
+keymap(
+  "n",
+  "<Leader>cza",
+  git_stash_apply_or_pop("apply", "index"),
+  { noremap = true, desc = "Git stash apply --quiet --index" }
+)
 -- END Git stash related mappings
 
 -- Git commit mappings
