@@ -72,15 +72,20 @@ keymap(
   "n",
   "<Leader>czd",
   git_stash_list_fn(function(list_stash_cmd)
-    vim.cmd(list_stash_cmd)
+    local cmd = ":G stash drop stash@{}<left>"
+
+    local count = vim.v.count
+
+    -- If count given, there will be no need to list stashes.
+    if count > 0 then -- wished vim.v.count could return nil
+      cmd = ":G stash drop stash@{" .. count .. "}"
+    else
+      -- List stashes so we can select count
+      vim.cmd(list_stash_cmd)
+    end
 
     vim.fn.feedkeys(
-      vim.api.nvim_replace_termcodes(
-        ":G stash drop stash@{}<left>",
-        true,
-        true,
-        true
-      ),
+      vim.api.nvim_replace_termcodes(cmd, true, true, true),
       "t"
     )
   end),
