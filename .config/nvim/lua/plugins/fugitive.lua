@@ -41,7 +41,7 @@ local git_stash_list_cmd =
 keymap(
   "n",
   "czl",
-  git_stash_list_cmd .. ":Git<CR>",
+  git_stash_list_cmd,
   { noremap = true, silent = true, desc = "Git stash list" }
 )
 
