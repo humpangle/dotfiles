@@ -33,8 +33,9 @@ keymap("n", "<leader>gt", function()
 end, { noremap = true })
 
 -- Git stash related mappings
--- Inspired by
---    https://github.com/tpope/vim-fugitive/issues/236#issuecomment-1737935479
+
+-- Git stash list inspired by
+--   https://github.com/tpope/vim-fugitive/issues/236#issuecomment-1737935479
 local git_stash_list_fn = function()
   local handle = io.popen("git stash list")
   local result = nil
