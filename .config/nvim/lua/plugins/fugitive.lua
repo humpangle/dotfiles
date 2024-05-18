@@ -36,36 +36,42 @@ end, { noremap = true })
 
 -- Git stash list inspired by
 --   https://github.com/tpope/vim-fugitive/issues/236#issuecomment-1737935479
-local git_stash_list_fn = function()
-  local handle = io.popen("git stash list")
-  local result = nil
+local git_stash_list_fn = function(callback)
+  return function()
+    local handle = io.popen("git stash list")
+    local result = nil
 
-  if handle ~= nil then
-    result = handle:read("*a")
-    handle:close()
-  end
+    if handle ~= nil then
+      result = handle:read("*a")
+      handle:close()
+    end
 
-  if result and result ~= "" then
-    return ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>"
-  else
-    return nil
+    if result and result ~= "" then
+      local cmd =
+        ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>"
+
+      if callback then
+        callback(cmd)
+      else
+        vim.cmd(cmd)
+      end
+    else
+      print("No stashes found")
+    end
   end
 end
 
-keymap("n", "czl", function()
-  local cmd = git_stash_list_fn()
+keymap(
+  "n",
+  "czl",
+  git_stash_list_fn(),
+  { noremap = true, silent = true, desc = "Git stash list" }
+)
 
-  if cmd then
-    vim.cmd(cmd)
-  else
-    print("No stashes found")
-  end
-end, { noremap = true, silent = true, desc = "Git stash list" })
-
-keymap("n", "czd", function()
-  local list_stash_cmd = git_stash_list_fn()
-
-  if list_stash_cmd then
+keymap(
+  "n",
+  "czd",
+  git_stash_list_fn(function(list_stash_cmd)
     vim.cmd(list_stash_cmd)
 
     vim.fn.feedkeys(
@@ -77,10 +83,9 @@ keymap("n", "czd", function()
       ),
       "t"
     )
-  else
-    print("No stashes found")
-  end
-end, { noremap = true, desc = "Git stash drop" })
+  end),
+  { noremap = true, desc = "Git stash drop" }
+)
 
 keymap("n", "<Leader>czz", function()
   -- Get the latest Git commit hash
