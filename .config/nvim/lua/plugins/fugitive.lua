@@ -52,38 +52,31 @@ keymap(
   { noremap = true, desc = "Git stash drop" }
 )
 
-keymap(
-  "n",
-  "<Leader>czz",
-  function()
-    -- Get the latest Git commit hash
-    local latest_commit = vim.fn.systemlist("git rev-parse --short HEAD")[1]
+keymap("n", "<Leader>czz", function()
+  -- Get the latest Git commit hash
+  local latest_commit = vim.fn.systemlist("git rev-parse --short HEAD")[1]
 
-    local count = vim.v.count
-    local cmd = "Git stash push"
+  local count = vim.v.count
+  local cmd = "Git stash push"
 
-    if count == 1 then
-      cmd = cmd .. " --include-untracked"
-    elseif count > 1 then
-      cmd = cmd .. " --all"
-    end
+  if count == 1 then
+    cmd = cmd .. " --include-untracked"
+  elseif count > 1 then
+    cmd = cmd .. " --all"
+  end
 
-    -- Append text for custom message with the latest commit hash and place cursor between quotes
-    cmd = cmd .. " -m '" .. latest_commit .. ": '"
+  -- Append text for custom message with the latest commit hash and place cursor between quotes
+  cmd = cmd .. " -m '" .. latest_commit .. ": '"
 
-    -- Move the cursor back by one position to place it after the commit hash and before the end quote
-    vim.fn.feedkeys(
-      ":"
-        .. cmd
-        .. vim.api.nvim_replace_termcodes("<Left>", true, true, true),
-      "t"
-    )
-  end,
-  {
-    noremap = true,
-    desc = "G stash push --include-untracked/--all -m 'GITHEAD: '",
-  }
-)
+  -- Move the cursor back by one position to place it after the commit hash and before the end quote
+  vim.fn.feedkeys(
+    ":" .. cmd .. vim.api.nvim_replace_termcodes("<Left>", true, true, true),
+    "t"
+  )
+end, {
+  noremap = true,
+  desc = "G stash push --include-untracked/--all -m 'GITHEAD: '",
+})
 -- END Git stash related mappings
 
 -- Git commit mappings
