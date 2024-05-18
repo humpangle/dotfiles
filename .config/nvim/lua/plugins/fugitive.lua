@@ -35,22 +35,51 @@ end, { noremap = true })
 -- Git stash related mappings
 -- Inspired by
 --    https://github.com/tpope/vim-fugitive/issues/236#issuecomment-1737935479
-local git_stash_list_cmd =
-  ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>"
+local git_stash_list_fn = function()
+  local handle = io.popen("git stash list")
+  local result = nil
 
-keymap(
-  "n",
-  "czl",
-  git_stash_list_cmd,
-  { noremap = true, silent = true, desc = "Git stash list" }
-)
+  if handle ~= nil then
+    result = handle:read("*a")
+    handle:close()
+  end
 
-keymap(
-  "n",
-  "czd",
-  git_stash_list_cmd .. ":G stash drop stash@{}<left>",
-  { noremap = true, desc = "Git stash drop" }
-)
+  if result and result ~= "" then
+    return ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>"
+  else
+    return nil
+  end
+end
+
+keymap("n", "czl", function()
+  local cmd = git_stash_list_fn()
+
+  if cmd then
+    vim.cmd(cmd)
+  else
+    print("No stashes found")
+  end
+end, { noremap = true, silent = true, desc = "Git stash list" })
+
+keymap("n", "czd", function()
+  local list_stash_cmd = git_stash_list_fn()
+
+  if list_stash_cmd then
+    vim.cmd(list_stash_cmd)
+
+    vim.fn.feedkeys(
+      vim.api.nvim_replace_termcodes(
+        ":G stash drop stash@{}<left>",
+        true,
+        true,
+        true
+      ),
+      "t"
+    )
+  else
+    print("No stashes found")
+  end
+end, { noremap = true, desc = "Git stash drop" })
 
 keymap("n", "<Leader>czz", function()
   -- Get the latest Git commit hash
