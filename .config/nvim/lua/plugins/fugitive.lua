@@ -92,6 +92,12 @@ keymap(
   { noremap = true, desc = "Git stash drop" }
 )
 
+keymap("n", "0czd", function()
+  local cmd = ":G stash drop stash@{0}<left>"
+
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes(cmd, true, true, true), "t")
+end, { noremap = true, desc = "Git stash drop" })
+
 keymap("n", "<Leader>czz", function()
   -- Get the latest Git commit hash
   local latest_commit = vim.fn.systemlist("git rev-parse --short HEAD")[1]
