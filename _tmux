@@ -209,6 +209,8 @@ Options:
     Print this help text and quit.
   --client/-c
     List clients (and not sessions).
+  --resurrect/-r
+    Fetch session list from resurrect file.
 
 Examples:
   # Get help.
@@ -231,6 +233,7 @@ __list_sessions() (
   set -o errexit
 
   local _clients
+  local _from_resurrect_file
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -239,8 +242,8 @@ __list_sessions() (
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,client \
-      --options=h,c \
+      --longoptions=help,client,resurrect \
+      --options=h,c,r \
       --name "$0" \
       -- "$@"
   )"; then
@@ -263,6 +266,11 @@ __list_sessions() (
       shift
       ;;
 
+    --resurrect | -r)
+      _from_resurrect_file=1
+      shift
+      ;;
+
     --)
       shift
       break
@@ -279,6 +287,38 @@ __list_sessions() (
   # --------------------------------------------------------------------------
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
+
+  local _session_resurrect_file="$HOME/.tmux/resurrect/last"
+  local _session_resurrect
+
+  if [[ -s "$_session_resurrect_file" ]]; then
+    local _session_resurrect_list
+    _session_resurrect_list="$(
+      awk '/^window\s+/ {print $2}' "$_session_resurrect_file" |
+        sort -u
+    )"
+
+    for _elm in $_session_resurrect_list; do
+      local _windows_count
+      _windows_count="$(awk -v _awk_elm="$_elm" 'match($0, "^window\\s+" _awk_elm) {print $0}' "$_session_resurrect_file" |
+        wc -l |
+        xargs)"
+
+      _session_resurrect+="$_elm: $_windows_count windows\n"
+    done
+
+    _session_resurrect+="\n$(tail -n1 "$_session_resurrect_file")"
+  fi
+
+  if [[ -n "$_from_resurrect_file" ]]; then
+    if [[ -n "$_session_resurrect" ]]; then
+      echo -e "Sessions from $_session_resurrect_file:\n$_session_resurrect"
+      return
+    fi
+
+    echo "No sessions are available."
+    exit 1
+  fi
 
   local _sessions
 
@@ -298,14 +338,8 @@ __list_sessions() (
     return
   fi
 
-  local _session_resurrect="$HOME/.tmux/resurrect/last"
-
-  if [[ -s "$_session_resurrect" ]]; then
-    echo "tmux has not been started. Available sessions:"
-    awk '/^window\s+/ {print $2}' "$_session_resurrect" |
-      sort -u
-
-    tail -n1 "$_session_resurrect"
+  if [[ -n "$_session_resurrect" ]]; then
+    echo -e "tmux has not been started. Available sessions:\n$_session_resurrect"
 
     if [[ -n "$DEFAULT_TMUX_SESSION" ]]; then
       echo -e "\nDefault session: $DEFAULT_TMUX_SESSION"
