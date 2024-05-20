@@ -61,6 +61,8 @@ eof
 }
 
 _start_tmux() (
+  : "___help___ ____start_tmux_help"
+
   set -o errexit
 
   local _session
