@@ -7,11 +7,6 @@ end
 
 local keymap = utils.map_key
 
-vim.g.slime_last_channel = {}
-
-vim.b.slime_target = "neovim"
--- let g:slime_target = "tmux"
-
 -- Key to show slime config for the first time - <C-c><C-c>
 -- Key to update slime config after starting - <C-c>v
 -- Vim slime will prompt you for some config the first time it is ran.
@@ -27,7 +22,6 @@ vim.b.slime_target = "neovim"
 local slime_config = {
   socket_name = "default",
   target_pane = "dot:",
-  jobid = "",
 }
 
 vim.g.slime_default_config = slime_config
@@ -39,6 +33,14 @@ vim.g.slime_default_config = slime_config
 vim.g.slime_bracketed_paste = 1
 
 local helper_func = function(target)
+  -- https://github.com/jpalardy/vim-slime/blob/main/assets/doc/targets/neovim.md
+  if target == "neovim" then
+    vim.g.slime_input_pid = false
+    vim.g.slime_suggest_default = false
+    vim.g.slime_menu_config = true
+    vim.g.slime_neovim_ignore_unlisted = true
+  end
+
   vim.b.slime_target = target
   vim.b.slime_config = slime_config
 

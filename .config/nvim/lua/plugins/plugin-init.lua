@@ -256,10 +256,12 @@ local plugins_table = {
   {
     "jpalardy/vim-slime",
     enabled = not plugin_enabled.has_vscode(),
+    init = function()
+      -- https://github.com/jpalardy/vim-slime/blob/main/assets/doc/targets/neovim.md
+      vim.g.slime_target = "neovim"
+    end,
     config = function()
       require("plugins/slime")
-      -- ctrl-c ctrl-c
-      -- ctrl-c v
     end,
   },
 
