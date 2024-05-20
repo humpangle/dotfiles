@@ -41,7 +41,10 @@ vim.g.slime_bracketed_paste = 1
 local helper_func = function(target)
   vim.b.slime_target = target
   vim.b.slime_config = slime_config
-  print("slime_target = '" .. target .. "'")
+
+  -- Both of the below work 😀
+  -- vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>SlimeConfig", true, true, true), "")
+  vim.cmd(":SlimeConfig")
 end
 
 keymap("n", ",sln", function()
