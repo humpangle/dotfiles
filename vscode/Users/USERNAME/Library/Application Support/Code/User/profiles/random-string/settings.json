@@ -1,9 +1,10 @@
 {
-  // "workbench.colorTheme": "Visual Studio Dark",
   "workbench.colorTheme": "Default Light+",
+  // "workbench.colorTheme": "Default Light+",
+  // "workbench.colorTheme": "Default Dark+",
   // "workbench.colorTheme": "Default High Contrast",
   // "workbench.colorTheme": "Solarized Dark",
-  "ansible.python.interpreterPath": "~/.asdf/shims/python",
+  // "workbench.colorTheme": "Visual Studio Dark",
   "elixirLS.dialyzerEnabled": false,
   "elixirLS.enableTestLenses": true,
   "elixirLS.fetchDeps": true,
@@ -28,12 +29,10 @@
     80,
     120
   ],
-  // "vscode-neovim.useWSL": true,
   "vscode-neovim.neovimExecutablePaths.darwin": "nvim",
   "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
-  "vscode-neovim.logLevel": "debug",
   "vscode-neovim.logOutputToConsole": true,
-  "vscode-neovim.logPath": "~/dotfiles/.___scratch",
+  "vscode-neovim.logPath": "/Users/kanmii/dotfiles/.___scratch-vscode-neovim.log",
   // "vscode-neovim.NVIM_APPNAME": "nvim-win",
   // "vscode-neovim.neovimClean": true,
   "extensions.experimental.affinity": {
@@ -168,7 +167,8 @@
   // https://github.com/Tyriar/vscode-snazzy/blob/master/snazzy.json
   "workbench.colorCustomizations": {
     // The background is optional
-    // "terminal.background": "#282a36",
+    "terminal.background": "#282a36",
+    // "terminal.background": "#000000",
     "terminalCursor.background": "#282a36",
     "terminalCursor.foreground": "#97979b",
     "terminal.selectionBackground": "#97979b33",
@@ -199,8 +199,6 @@
   "Lua.diagnostics.globals": [
     "vim",
   ],
-  // "security.allowedUNCHosts": [
-  //   "wsl.localhost"
-  // ],
+  "javascript.updateImportsOnFileMove.enabled": "always",
   // "window.menuBarVisibility": "compact"
 }
