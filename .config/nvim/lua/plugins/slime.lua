@@ -1,4 +1,12 @@
 ---@diagnostic disable: inject-field
+
+local utils_status_ok, utils = pcall(require, "utils")
+if not utils_status_ok then
+  return
+end
+
+local keymap = utils.map_key
+
 vim.g.slime_last_channel = {}
 
 vim.b.slime_target = "neovim"
@@ -36,10 +44,10 @@ local helper_func = function(target)
   print("slime_target = '" .. target .. "'")
 end
 
-vim.keymap.set("n", ",sln", function()
+keymap("n", ",sln", function()
   helper_func("neovim")
-end)
+end, { noremap = true, desc = "Slime config neovim" })
 
-vim.keymap.set("n", ",slt", function()
+keymap("n", ",slt", function()
   helper_func("tmux")
-end)
+end, { noremap = true, desc = "Slime config tmux" })
