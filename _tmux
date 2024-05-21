@@ -292,6 +292,7 @@ __list_sessions() (
 
   local _session_resurrect_file="$HOME/.tmux/resurrect/last"
   local _session_resurrect
+  local _session_resurrect_pwds
 
   if [[ -s "$_session_resurrect_file" ]]; then
     local _session_resurrect_list
@@ -302,19 +303,37 @@ __list_sessions() (
 
     for _elm in $_session_resurrect_list; do
       local _windows_count
-      _windows_count="$(awk -v _awk_elm="$_elm" 'match($0, "^window\\s+" _awk_elm) {print $0}' "$_session_resurrect_file" |
-        wc -l |
-        xargs)"
+      _windows_count="$(
+        awk -v _awk_elm="$_elm" 'match($0, "^window\\s+" _awk_elm) {print $0}' "$_session_resurrect_file" |
+          wc -l |
+          xargs
+      )"
 
       _session_resurrect+="$_elm: $_windows_count windows\n"
+
+      local _session_resurrect_pwd
+      # Matching pattern:
+      # pane  session_name window_index active_win?  :*  pane_index  hostname  :directory active_pane? program  :program?/empty
+      # active = 1  inactive = 0
+      _session_resurrect_pwd="$(
+        awk -v _awk_var_session="$_elm" 'match($0, "^pane\\s+" _awk_var_session "\\s+0\\s+[0-1]\\s+:.*\\s+1\\s+.+\\s+:(/.+)\\s+[0-1]", matches) {print matches[1]}' "$_session_resurrect_file"
+      )"
+
+      if [[ -n "$_session_resurrect_pwd" ]]; then
+        _session_resurrect_pwds+="  $_elm:\n$_session_resurrect_pwd\n\n"
+      fi
     done
 
     _session_resurrect+="\n$(tail -n1 "$_session_resurrect_file")"
+
+    if [[ -n "$_session_resurrect_pwds" ]]; then
+      _session_resurrect_pwds="\nPWDs:\n$_session_resurrect_pwds"
+    fi
   fi
 
   if [[ -n "$_from_resurrect_file" ]]; then
     if [[ -n "$_session_resurrect" ]]; then
-      echo -e "Sessions from $_session_resurrect_file:\n$_session_resurrect"
+      echo -e "Sessions from $_session_resurrect_file:\n$_session_resurrect\n$_session_resurrect_pwds"
       return
     fi
 
@@ -327,7 +346,7 @@ __list_sessions() (
   if [[ -n "$_clients" ]]; then
     if _clients="$(tmux list-clients 2>&1)"; then
       if [[ -n "$_clients" ]]; then
-        echo -e "$_clients"
+        echo -e "$_clients\n$_session_resurrect_pwds"
         return
       fi
     fi
@@ -336,7 +355,7 @@ __list_sessions() (
   fi
 
   if _sessions="$(tmux ls 2>&1)"; then
-    echo -e "$_sessions"
+    echo -e "$_sessions\n$_session_resurrect_pwds"
     return
   fi
 
@@ -346,6 +365,8 @@ __list_sessions() (
     if [[ -n "$DEFAULT_TMUX_SESSION" ]]; then
       echo -e "\nDefault session: $DEFAULT_TMUX_SESSION"
     fi
+
+    echo -e "\n$_session_resurrect_pwds"
 
     return
   fi
