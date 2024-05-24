@@ -8,7 +8,8 @@ ELIXIR_LS_SCRIPTS_BASE="${ELIXIR_LS_BASE}/ebnis-scripts"
 # Jun 29, 2023 v0.15.1 9427f7f
 # Oct 24, 2023 v0.17.3 d2eb6f3
 # Feb 21, 2024 v0.20.0 824fbe0
-ELIXIR_LS_STABLE_HASH='824fbe0'
+# May 22, 2024 v0.21.3 f94b289
+ELIXIR_LS_STABLE_HASH='f94b289'
 
 get_hash() {
   local args="${*}"
