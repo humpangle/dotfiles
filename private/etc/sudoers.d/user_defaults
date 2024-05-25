@@ -8,3 +8,4 @@ __USERNAME__ ALL = (ALL)  NOPASSWD:SETENV: /Users/__USERNAME__/dotfiles/scripts/
 # Binaries with sudo -E
 __USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /opt/homebrew/bin/nvim_sudo_e
 __USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /opt/homebrew/bin/vifm_sudo_e
+__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /Users/kanmii/.local/bin/find_sudo_e
