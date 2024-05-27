@@ -54,6 +54,11 @@ _is_darwin() {
   fi
 }
 
+if _is_darwin && [[ -e "$DOTFILE_PARENT_PATH/dotfiles/_macos" ]]; then
+  # shellcheck source=/dev/null
+  source "$DOTFILE_PARENT_PATH/dotfiles/_macos"
+fi
+
 copy() {
   if _is_darwin; then
     pbcopy <<<"${*}"

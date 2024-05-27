@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Fix for bash completion not working in macos neovim.
+if [[ "$0" != "-bash" ]] && # Not a login shell.
+  [[ -n "$NVIM" ]] && # We are in a neovim instance.
+  [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]]; then
+  # shellcheck source=/dev/null
+  . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+fi
