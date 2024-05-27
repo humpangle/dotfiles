@@ -374,7 +374,7 @@ on() {
     case "$1" in
     --help | -h)
       ___on_help
-      exit 129
+      return
       ;;
 
     --)
@@ -456,7 +456,7 @@ off() {
     case "$1" in
     --help | -h)
       ___off_help
-      exit 129
+      return
       ;;
 
     --)

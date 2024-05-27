@@ -94,7 +94,7 @@ _start_tmux() (
     case "$1" in
     --help | -h)
       ____start_tmux_help
-      exit 129
+      return
       ;;
 
     --cd | -c)
@@ -260,7 +260,7 @@ __list_sessions() (
     case "$1" in
     --help | -h)
       _____list_sessions_help
-      exit 129
+      return
       ;;
 
     --client | -c)
