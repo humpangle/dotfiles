@@ -422,6 +422,6 @@ alias epl=elp
 alias fm=vifm
 alias sfm="sudo -E vifm_sudo_e --server-name vifm_root_1716773602"
 
-alias up="sudo $HOME/dotfiles/_updd.sh"
+alias up="sudo $DOTFILE_PARENT_PATH/dotfiles/_updd.sh"
 
 alias sudoe="bash ${DOTFILE_PARENT_PATH}/dotfiles/_sudoe"
