@@ -213,6 +213,8 @@ Options:
     List clients (and not sessions).
   --resurrect/-r
     Fetch session list from resurrect file.
+  --verbose/-v
+    Include the command for starting sessions.
 
 Examples:
   # Get help.
@@ -236,6 +238,7 @@ __list_sessions() (
 
   local _clients
   local _from_resurrect_file
+  local _verbose
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -244,8 +247,8 @@ __list_sessions() (
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,client,resurrect \
-      --options=h,c,r \
+      --longoptions=help,client,resurrect,verbose \
+      --options=h,c,r,v \
       --name "$0" \
       -- "$@"
   )"; then
@@ -270,6 +273,11 @@ __list_sessions() (
 
     --resurrect | -r)
       _from_resurrect_file=1
+      shift
+      ;;
+
+    --verbose | -v)
+      _verbose=1
       shift
       ;;
 
@@ -320,7 +328,13 @@ __list_sessions() (
       )"
 
       if [[ -n "$_session_resurrect_pwd" ]]; then
-        _session_resurrect_pwds+="  $_elm:\n$_session_resurrect_pwd\n\n"
+        _session_resurrect_pwds+="$_elm:\n$_session_resurrect_pwd\n"
+
+        if [[ -n "$_verbose" ]]; then
+          _session_resurrect_pwds+="cd $_session_resurrect_pwd\ntnd -c $_session_resurrect_pwd $_elm\n"
+        fi
+
+        _session_resurrect_pwds+="\n"
       fi
     done
 
