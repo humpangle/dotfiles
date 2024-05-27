@@ -1080,6 +1080,7 @@ alias purge-systemd-service='_purge-systemd-service'
 # END COMMONS
 # -----------------------------------------------------------------------------
 
+# shellcheck source=/dev/null
 [[ -e "$DOTFILE_PARENT_PATH/dotfiles/_aliases.sh" ]] && source "$DOTFILE_PARENT_PATH/dotfiles/_aliases.sh"
 
 # -----------------------------------------------------------------------------
