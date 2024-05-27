@@ -43,6 +43,12 @@ function M.get_python_path(workspace)
     end
   end
 
+  python_bin = os.getenv("GLOBAL_PYTHON_BIN")
+
+  if python_bin ~= nil and python_bin ~= "" then
+    return python_bin
+  end
+
   -- Use system python binary if all the above do not work.
   return (vim.fn.exepath("python3") or vim.fn.exepath("python") or "python")
 end
