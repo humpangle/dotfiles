@@ -18,148 +18,6 @@ fi
 declare -A alias_map=()
 
 # -----------------------------------------------------------------------------
-# DOCKER
-# -----------------------------------------------------------------------------
-if command -v docker &>/dev/null; then
-  # shellcheck disable=2230
-  export _docker_bin="$(which docker)"
-
-  # shellcheck disable=2032
-  function docker {
-    if [[ "${1}" == 'compose' ]] &&
-      [[ -n "${DOCKER_COMPOSE_FILENAME}" ]] &&
-      [[ -e "${DOCKER_COMPOSE_FILENAME}" ]]; then
-      "${_docker_bin}" compose \
-        --file "${DOCKER_COMPOSE_FILENAME}" \
-        "${@:2}"
-    else
-      "${_docker_bin}" "${@}"
-    fi
-  }
-  export -f docker
-
-  function docker-compose {
-    docker compose "${@}"
-  }
-
-  export -f docker-compose
-
-  alias_map[d]='docker'
-  # docker remove all containers
-  # shellcheck disable=2016
-  alias_map[drac]='docker rm $(docker ps -a -q)'
-  # shellcheck disable=2016
-  alias_map[dracf]='drac --force'
-  alias_map[drac__description]='docker rm all containers force'
-  alias_map[drim]='docker rmi'
-  alias_map[dim]='docker images'
-  alias_map[dps]='docker ps'
-  alias_map[dpsa]='docker ps -a'
-  alias_map[dc]='docker compose'
-  alias_map[dcp]='docker compose'
-  alias_map[dce]='docker compose exec'
-  alias_map[de]='docker exec -it'
-  alias_map[dcu]='docker compose up'
-  alias_map[dcub]='docker compose up --build'
-  alias_map[dcud]='docker compose up -d'
-  alias_map[dcb]='docker compose build'
-  alias_map[db]='docker build -t'
-  alias_map[dcl]='docker compose logs'
-  alias_map[dclf]='docker compose logs -f'
-  alias_map[dck]='docker compose kill'
-  alias_map[dcd]='docker compose down'
-  alias_map[dcdv]='docker compose kill && docker compose down -v'
-  # shellcheck disable=2016
-  alias_map[dvra]='docker volume rm $(docker volume ls -q)'
-  alias_map[dvls]='docker volume ls'
-  alias_map[dvlsq]='docker volume ls -q'
-  alias_map[ds]='sudo service docker start'
-  alias_map[dn]='docker network'
-  alias_map[dnls]='docker network ls'
-  alias_map[dcps]='docker compose ps'
-  alias_map[dcpsa]='docker compose ps -a'
-  alias_map[dcc]='docker compose config'
-  alias_map[drmlogs__description]='docker rm logs containers..'
-  alias_map['d-dangling']='dim -qf dangling=true | xargs docker rmi -f 2>/dev/null'
-  alias_map[ddangling]='d-dangling'
-  alias_map[dcrml]='dcps -aq | xargs drmlogs'
-
-  # docker compose up --daemon and logs --follow
-  _dcudlf() {
-    docker compose up -d "$@"
-    docker compose logs -f "$@"
-  }
-
-  alias_map[dcudlf]='_dcudlf'
-  alias_map[dcudfl]='_dcudlf'
-  alias_map[dcudlf__description]='docker up daemon and logs'
-
-  # docker compose restart and logs --follow
-  dcrsf() {
-    docker compose restart "$@"
-    docker compose logs -f "$@"
-  }
-  alias_map[dcrs]='dcrsf'
-  alias_map[dcrs__description]='docker compose restart then logs'
-
-  dimgf() {
-    if [ -n "$1" ]; then
-      docker images |
-        grep -P "$1"
-    else
-      printf 'false'
-    fi
-  }
-
-  drimgf() {
-    docker images |
-      grep -P "$1" |
-      awk '{print $3}' |
-      xargs docker rmi
-  }
-
-  alias_map[dimg]='dimgf'
-  alias_map[drimg]='drimgf'
-  alias_map[dimg___description]='docker images grep'
-
-  _docker_compose_build_no_cache() {
-    docker compose build "${@}" --no-cache
-  }
-
-  alias_map[dcbn]='_docker_compose_build_no_cache'
-  alias_map[dcbn___description]='docker build no cache'
-
-  _docker_image_repo_tag_merge_func() {
-    local _pattern=""
-
-    for arg in "$@"; do
-      _pattern+="($arg).*"
-    done
-
-    local _result
-    _result="$(
-      docker image ls |
-        awk -v p="$_pattern" '
-          BEGIN{
-              OFS=":";
-          }
-          match($0, p) {print $1,$2}
-        '
-    )"
-
-    if [[ -n "$_result" ]]; then
-      echo -n "$_result" |
-        xclip -selection c
-
-      echo "$_result"
-    fi
-  }
-
-  alias dimrt='_docker_image_repo_tag_merge_func'
-  alias dimrt__description='_docker_image_repo_tag_merge_func dimm docker image repo tag merge/join'
-fi
-
-# -----------------------------------------------------------------------------
 # # MINIKUBE
 # # -----------------------------------------------------------------------------
 if command -v minikube &>/dev/null; then
@@ -381,15 +239,21 @@ fi
 # END OLLAMA
 # -----------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------
-# Complete all bash aliases
-# See https://github.com/cykerway/complete-alias#faq
-#------------------------------------------------------------------------------
-for key in "${!alias_map[@]}"; do
-  val="${alias_map[$key]}"
-  eval "alias $key='$val'"
-  complete -F _complete_alias "$key" 2</dev/null || true
-done
+_alias_map_complete() {
+  #------------------------------------------------------------------------------
+  # Complete all bash aliases
+  # See https://github.com/cykerway/complete-alias#faq
+  #------------------------------------------------------------------------------
+  local -n _map=$1
+
+  for key in "${!_map[@]}"; do
+    val="${_map[$key]}"
+    eval "alias $key='$val'"
+    complete -F _complete_alias "$key" 2</dev/null || true
+  done
+}
+
+_alias_map_complete alias_map
 
 # -----------------------------------------------------------------------------
 # ANSIBLE

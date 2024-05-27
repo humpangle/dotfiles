@@ -1083,6 +1083,9 @@ alias purge-systemd-service='_purge-systemd-service'
 # shellcheck source=/dev/null
 [[ -e "$DOTFILE_PARENT_PATH/dotfiles/_aliases.sh" ]] && source "$DOTFILE_PARENT_PATH/dotfiles/_aliases.sh"
 
+# shellcheck source=/dev/null
+[[ -e "$DOTFILE_PARENT_PATH/dotfiles/_docker" ]] && source "$DOTFILE_PARENT_PATH/dotfiles/_docker"
+
 # -----------------------------------------------------------------------------
 # PYTHON SECTION
 # -----------------------------------------------------------------------------

@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+
+if ! command -v docker &>/dev/null; then
+  return
+fi
+
+declare -A _alias_map_docker=()
+
+# shellcheck disable=2230
+_docker_bin=
+_docker_bin="$(command -v docker)"
+export _docker_bin
+
+# shellcheck disable=2032
+
+function docker-compose {
+  docker compose "${@}"
+}
+
+export -f docker-compose
+
+_alias_map_docker["d"]='docker'
+# docker remove all containers
+# shellcheck disable=2016
+_alias_map_docker["drac"]='docker rm $(docker ps -a -q)'
+# shellcheck disable=2016
+_alias_map_docker["dracf"]='drac --force'
+_alias_map_docker["drac__description"]='docker rm all containers force'
+_alias_map_docker["drim"]='docker rmi'
+_alias_map_docker["dim"]='docker images'
+_alias_map_docker["dps"]='docker ps'
+_alias_map_docker["dpsa"]='docker ps -a'
+_alias_map_docker["dc"]='docker compose'
+_alias_map_docker["dcp"]='docker compose'
+_alias_map_docker["dce"]='docker compose exec'
+_alias_map_docker["de"]='docker exec -it'
+_alias_map_docker["dcu"]='docker compose up'
+_alias_map_docker["dcub"]='docker compose up --build'
+_alias_map_docker["dcud"]='docker compose up -d'
+_alias_map_docker["dcb"]='docker compose build'
+_alias_map_docker["db"]='docker build -t'
+_alias_map_docker["dcl"]='docker compose logs'
+_alias_map_docker["dclf"]='docker compose logs -f'
+_alias_map_docker["dck"]='docker compose kill'
+_alias_map_docker["dcd"]='docker compose down'
+_alias_map_docker["dcdv"]='docker compose kill && docker compose down -v'
+# shellcheck disable=2016
+_alias_map_docker["dvra"]='docker volume rm $(docker volume ls -q)'
+_alias_map_docker["dvls"]='docker volume ls'
+_alias_map_docker["dvlsq"]='docker volume ls -q'
+_alias_map_docker["ds"]='sudo service docker start'
+_alias_map_docker["dn"]='docker network'
+_alias_map_docker["dnls"]='docker network ls'
+_alias_map_docker["dcps"]='docker compose ps'
+_alias_map_docker["dcpsa"]='docker compose ps -a'
+_alias_map_docker["dcc"]='docker compose config'
+_alias_map_docker["drmlogs__description"]='docker rm logs containers..'
+_alias_map_docker["d-dangling"]='dim -qf dangling=true | xargs docker rmi -f 2>/dev/null'
+_alias_map_docker["ddangling"]='d-dangling'
+_alias_map_docker["dcrml"]='dcps -aq | xargs drmlogs'
+
+# docker compose up --daemon and logs --follow
+_dcudlf() {
+  docker compose up -d "$@"
+  docker compose logs -f "$@"
+}
+
+_alias_map_docker["dcudlf"]='_dcudlf'
+_alias_map_docker["dcudfl"]='_dcudlf'
+_alias_map_docker["dcudlf__description"]='docker up daemon and logs'
+
+# docker compose restart and logs --follow
+dcrsf() {
+  docker compose restart "$@"
+  docker compose logs -f "$@"
+}
+_alias_map_docker["dcrs"]='dcrsf'
+_alias_map_docker["dcrs__description"]='docker compose restart then logs'
+
+dimgf() {
+  if [ -n "$1" ]; then
+    docker images |
+      grep -P "$1"
+  else
+    printf 'false'
+  fi
+}
+
+drimgf() {
+  docker images |
+    grep -P "$1" |
+    awk '{print $3}' |
+    xargs docker rmi
+}
+
+_alias_map_docker["dimg"]='dimgf'
+_alias_map_docker["drimg"]='drimgf'
+_alias_map_docker["dimg___description"]='docker images grep'
+
+_docker_compose_build_no_cache() {
+  docker compose build "${@}" --no-cache
+}
+
+_alias_map_docker["dcbn"]='_docker_compose_build_no_cache'
+_alias_map_docker["dcbn___description"]='docker build no cache'
+
+_docker_image_repo_tag_merge_func() {
+  local _pattern=""
+
+  for arg in "$@"; do
+    _pattern+="($arg).*"
+  done
+
+  local _result
+  _result="$(
+    docker image ls |
+      awk -v p="$_pattern" '
+            BEGIN{
+                OFS=":";
+            }
+            match($0, p) {print $1,$2}
+          '
+  )"
+
+  if [[ -n "$_result" ]]; then
+    echo -n "$_result" |
+      xclip -selection c
+
+    echo "$_result"
+  fi
+}
+
+alias dimrt=_docker_image_repo_tag_merge_func
+alias dimrt__description='_docker_image_repo_tag_merge_func dimm docker image repo tag merge/join'
+
+_alias_map_complete _alias_map_docker
