@@ -2289,6 +2289,8 @@ function install-helm {
 }
 
 function install_shfmt {
+  set -o errexit
+
   : "Shfmt is the code formatter binary for bash/sh"
 
   local shfmt_version
@@ -2304,17 +2306,23 @@ function install_shfmt {
   rm -rf "$HOME/.local/bin/shfmt"
 
   local os
-  local archi
+  local _archi
 
   os="$(uname -s)"
   os="${os,,}"
 
-  archi="$(uname -m)"
+  _archi="amd64"
 
-  curl -Lo \
+  if _is_arm_hardware; then
+    _archi="arm64"
+  fi
+
+  local _url="https://github.com/mvdan/sh/releases/download/${shfmt_version}/shfmt_${shfmt_version}_${os}_${_archi}"
+
+  curl -fLo \
     "$HOME/.local/bin/shfmt" \
     --create-dirs \
-    "https://github.com/mvdan/sh/releases/download/${shfmt_version}/shfmt_${shfmt_version}_${os}_${archi}"
+    "$_url"
 
   chmod u+x "$HOME/.local/bin/shfmt"
 }
