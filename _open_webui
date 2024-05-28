@@ -57,7 +57,12 @@ stop() {
 }
 
 _ollama_exists() {
-  command -v ollama &>/dev/null
+  if ! command -v ollama &>/dev/null; then
+    echo "Ollama has not been installed. Visit https://ollama.com/download for installation instruction."
+    return 1
+  fi
+
+  return 0
 }
 
 ___ollama_ps_help() {
@@ -226,7 +231,7 @@ start() {
 
   if _start_result="$(bash -c "$_cmd")"; then
     _success=1
-    ollama_start
+    ollama_start || true
   fi
 
   if [[ -n "$_success" ]]; then
@@ -241,6 +246,10 @@ start() {
 ollama_start() {
   : "Start Ollama if not started."
 
+  if ! _ollama_exists; then
+    return 1
+  fi
+
   if ! ollama_ps -s; then
     ollama serve &>/dev/null &
     disown
@@ -249,6 +258,10 @@ ollama_start() {
 
 ollama_stop() {
   : "Stop Ollama if running."
+
+  if ! _ollama_exists; then
+    return 1
+  fi
 
   declare -A _info=()
 
