@@ -94,3 +94,10 @@ end
 
 _G.create_slime_input_file = create_slime_input_file
 vim.cmd("command! SlimeFileTerminal lua create_slime_input_file()")
+
+_G.copy_slime_input_file = function()
+  vim.fn.setreg("+", slime_input_file_directory_path)
+  vim.cmd(utils.clip_cmd)
+  print(slime_input_file_directory_path)
+end
+vim.cmd("command! SlimeFileDirectory lua copy_slime_input_file()")
