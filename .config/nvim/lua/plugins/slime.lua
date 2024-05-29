@@ -101,4 +101,4 @@ end
 _G.create_slime_input_file = create_slime_input_file
 
 -- Create a command to call this function from Neovim
-vim.cmd("command! SlimeFile lua create_slime_input_file()")
+vim.cmd("command! SlimeFileTerminal lua create_slime_input_file()")
