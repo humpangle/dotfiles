@@ -57,13 +57,13 @@ keymap("n", ",slt", function()
   helper_func("tmux")
 end, { noremap = true, desc = "Slime config tmux" })
 
-local slime_file_directory_path = vim.fn.expand("$HOME") .. "/.bash_histories"
-vim.fn.mkdir(slime_file_directory_path, "p")
+local slime_input_file_directory_path = vim.fn.expand("$HOME") .. "/.bash_histories"
+vim.fn.mkdir(slime_input_file_directory_path, "p")
 
 local function create_slime_input_file()
-  local timestamp = os.date('%s')
+  local timestamp = os.date("%s")
 
-  local filename = slime_file_directory_path .. "/--vim-slime--" .. timestamp
+  local filename = slime_input_file_directory_path .. "/--vim-slime--" .. timestamp
 
   local file = io.open(filename, "w")
   if file then
