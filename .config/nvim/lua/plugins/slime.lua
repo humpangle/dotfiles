@@ -61,29 +61,24 @@ local slime_file_directory_path = vim.fn.expand("$HOME") .. "/.bash_histories"
 vim.fn.mkdir(slime_file_directory_path, "p")
 
 local function create_slime_input_file()
-  -- Get the current timestamp
   local timestamp = os.date('%s')
 
-  -- Construct the filename
-  local filename = vim.fn.expand("$HOME") .. "/.bash_histories/bash_history--vim-slime--" .. timestamp
+  local filename = slime_file_directory_path .. "/--vim-slime--" .. timestamp
 
-  -- Create the file
   local file = io.open(filename, "w")
   if file then
-    file:write("") -- Ensure the file is created empty
+    file:write("") -- Ensure the file is created empty.
     file:close()
   else
     print("Error: Unable to create file at " .. filename)
     return
   end
 
-  -- Open a new tab
   vim.cmd("tabnew")
 
   -- Open the created file in the new tab
   vim.cmd("edit " .. filename)
 
-  -- Split the window vertically (splitright will place the new window to the right)
   vim.cmd("vsplit")
 
   -- Move to the right window (which is now the new vertical split)
@@ -97,8 +92,5 @@ local function create_slime_input_file()
   vim.cmd("set filetype=unix")
 end
 
--- Add the function to the global scope so it can be called easily
 _G.create_slime_input_file = create_slime_input_file
-
--- Create a command to call this function from Neovim
 vim.cmd("command! SlimeFileTerminal lua create_slime_input_file()")
