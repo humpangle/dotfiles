@@ -163,8 +163,13 @@ function _run_f {
 
   # Let us run the script at the root of script file
   cd "$_script_dir" || true
+
   bash "$_script_name" "$@"
+  local _exit_code="$?"
+
   cd - &>/dev/null || true
+
+  return "$_exit_code"
 }
 
 alias r='_run_f'
