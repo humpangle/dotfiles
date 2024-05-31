@@ -230,6 +230,37 @@ _resolve_rel_to_abs_path() (
   echo -n "$(pwd)/$_basename"
 )
 
+_deal_with_trailing_comment() {
+  : "This is to deal with such lines as: EXPORTER=endpoints # Export both to stdout and endpoints."
+  : "We wish to remove: # Export both to stdout and endpoints."
+  : "And end up with only: endpoints"
+
+  echo "$1" | awk '
+    {
+        # Initialize variables
+        in_single_quote = 0
+        in_double_quote = 0
+        result = ""
+
+        for (i = 1; i <= length($0); i++) {
+            char = substr($0, i, 1)
+
+            if (char == "'"'"'" && !in_double_quote) {
+                in_single_quote = !in_single_quote
+            } else if (char == "\"" && !in_single_quote) {
+                in_double_quote = !in_double_quote
+            } else if (char == "#" && !in_single_quote && !in_double_quote) {
+                break
+            }
+            result = result char
+        }
+
+        # Remove trailing whitespace from the result
+        sub(/[[:space:]]+$/, "", result)
+        print result
+    }'
+}
+
 parse-args "$@"
 
 if [[ "$_level" -gt 5 ]]; then
@@ -275,6 +306,8 @@ function _parse_variables_in_in_infile {
         echo "$line" |
           cut -d'=' -f 2-
       )
+
+      val="$(_deal_with_trailing_comment "$val")"
 
       _debug_fn "\n\nRAW:    $key" "$val" s
 
