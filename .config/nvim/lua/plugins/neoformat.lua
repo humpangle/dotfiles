@@ -9,7 +9,7 @@ local do_format = function()
   -- Neoformat converts spaces to tabs - we retab to force spaces
   vim.cmd({ cmd = "retab", bang = true })
   -- Neoformat marks the buffer as dirty - save the biffer
-  vim.cmd("silent w")
+  -- vim.cmd("silent w")
 end
 
 keymap(
