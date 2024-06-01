@@ -675,3 +675,23 @@ keymap("t", "<C-l>", term_clear)
 keymap("n", "<leader>re", ":reg<CR>", { noremap = true })
 -- Dump vim register into a buffer in vertical split.
 keymap("n", "<localleader>re", ":VMessage reg<CR>", { noremap = true })
+
+local function insert_current_datetime()
+  -- The `.. ""` is to silence the warning `Cannot assign `string|osdate` to `string`.  - `osdate` cannot match `string``
+  local datetime = os.date("%Y-%m-%d %H:%M:%S") .. ""
+  vim.api.nvim_put({ datetime }, "c", true, true)
+end
+
+utils.map_key(
+  "n",
+  "<leader>D",
+  insert_current_datetime,
+  { noremap = true, silent = true, desc = "Insert datetime" }
+)
+
+utils.map_key(
+  "i",
+  "<C-r><C-d>",
+  insert_current_datetime,
+  { noremap = true, silent = true, desc = "Insert datetime" }
+)
