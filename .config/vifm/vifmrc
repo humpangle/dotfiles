@@ -158,7 +158,7 @@ command! zip zip -r %f.zip %f
 command! run !! ./%f
 command! make !!make %a
 command! mdc :mkdir %a | cd %a
-command! mdd :!mkdir -p %a
+command! mdp :!mkdir -p %a
 command! vgrep nvim "+grep %a"
 command! reload :write | restart full
 
