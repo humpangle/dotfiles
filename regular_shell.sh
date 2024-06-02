@@ -117,7 +117,7 @@ export SUDO_ASKPASS=$(command -v ssh-askpass)
 
 alias ug='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 
-function _run_f {
+_run_f() {
   local _script_name
 
   local _script_pattern=(
@@ -174,11 +174,11 @@ function _run_f {
 
 alias r='_run_f'
 
-function _____run-well-known-paths-help {
-  : "___help___ _____run-well-known-paths-help"
+_____run_well_known_paths_help() {
+  : "___help___ _____run_well_known_paths_help"
   read -r -d '' var <<'eof'
 Run a program against some well known filesystem paths. Usage:
-  __run-well-known-paths program_o_run path
+  __run_well_known_paths program_o_run path
 
 The program we want to run: may be a binary or an alias. E.g.
   alias c=$HOME/.vscode-server/bin/0ee/bin/remote-cli/code
@@ -192,19 +192,19 @@ web
 
 Examples:
   # Run vscode (binary) with path `wiki`
-  __run-well-known-paths code wiki
+  __run_well_known_paths code wiki
 
   # Run vscode (alias) with the path `py`
-  __run-well-known-paths c py
+  __run_well_known_paths c py
 eof
 
   echo -e "${var}"
 }
 
-function __run-well-known-paths {
+__run_well_known_paths() {
   if [[ "$1" == '-h' ]] ||
     [[ "$1" == '--help' ]]; then
-    _____run-well-known-paths-help
+    _____run_well_known_paths_help
     return
   fi
 
@@ -213,7 +213,7 @@ function __run-well-known-paths {
   if [[ -z "$_user_supplied_program_to_run" ]]; then
     echo -e "Program to run is required. Exiting!\n"
 
-    _____run-well-known-paths-help
+    _____run_well_known_paths_help
     return
   fi
 
@@ -223,7 +223,7 @@ function __run-well-known-paths {
   if [[ -z "$_app" ]]; then
     echo -e "Path to run program against is required. Exiting!\n"
 
-    _____run-well-known-paths-help
+    _____run_well_known_paths_help
     return
   fi
 
@@ -265,7 +265,7 @@ function __run-well-known-paths {
   fi
 
   local _program_to_run
-  _parse-command-to-run _program_to_run "$_user_supplied_program_to_run"
+  _parse_command_to_run _program_to_run "$_user_supplied_program_to_run"
 
   if [[ -z "$_program_to_run" ]]; then
     echo "'$_user_supplied_program_to_run' is not a valid program or shell alias"
@@ -275,11 +275,11 @@ function __run-well-known-paths {
   eval "$_program_to_run $_app_path"
 }
 
-alias rr='__run-well-known-paths'
-alias rrv='__run-well-known-paths v'
-alias rrc='__run-well-known-paths code'
+alias rr='__run_well_known_paths'
+alias rrv='__run_well_known_paths v'
+alias rrc='__run_well_known_paths code'
 
-function _parse-command-to-run {
+_parse_command_to_run() {
   local -n _result=$1
 
   # The value to parse may be a program binary or shell alias
@@ -364,7 +364,7 @@ gsd() {
   git stash drop "stash@{$1}"
 }
 
-_do-cd() {
+_do_cd() {
   local level
 
   if [[ -z "$1" ]] ||
@@ -379,7 +379,7 @@ _do-cd() {
   done
 }
 
-alias _c='_do-cd'
+alias _c='_do_cd'
 alias ..='cd ..'
 alias ls='ls --color=auto'
 alias ll='ls -AlhF'
@@ -406,7 +406,7 @@ alias sb='sudo reboot now'
 # is the same as cp -r ./xx ../.. as ../../xx will be created if does not exist
 # alias cpr='cp -rT' # The above may not work in some shell - hence _cpr below
 
-function _cpr-help {
+_cpr_help() {
   echo "
 Usage:
   cpr [ -h | --help ] \\
@@ -437,9 +437,9 @@ Options:
 "
 }
 
-function _cpr {
+_cpr() {
   if [[ -z "${*}" ]]; then
-    _cpr-help
+    _cpr_help
     return
   fi
 
@@ -467,7 +467,7 @@ function _cpr {
   while true; do
     case "$1" in
     --help | -h)
-      _cpr-help
+      _cpr_help
       return
       ;;
 
@@ -538,18 +538,18 @@ function _cpr {
 
 alias cpr=_cpr
 
-mdf() {
+_mdf() {
   mkdir -p "$1"
   # shellcheck disable=2103,2164
   cd "$1"
 }
 
-alias mdc='mdf'
+alias mdc='_mdf'
 alias md='mkdir -p'
 
 # also https://unix.stackexchange.com/a/613644
 
-function ____setenvs-help {
+____setenvs_help() {
   read -r -d '' var <<'eof'
 Set environment variables from a file into the shell. Usage:
   _setenvs env_file_name [OPTIONS]
@@ -572,11 +572,11 @@ eof
   echo -e "${var}"
 }
 
-function _setenvs {
+_setenvs() {
   # TODO: can I write a project such as
   # https://github.com/andrewmclagan/react-env so users can set environment
   # vars based on shell type on different OSes - linux, Mac, windows?
-  : "___help___ ____setenvs-help"
+  : "___help___ ____setenvs_help"
 
   local _path
   local _level=2
@@ -603,7 +603,7 @@ function _setenvs {
   while true; do
     case "$1" in
     --help | -h)
-      ____setenvs-help
+      ____setenvs_help
       return
       ;;
 
@@ -619,7 +619,7 @@ function _setenvs {
 
     *)
       echo "Unknown option ${1}."
-      ____setenvs-help
+      ____setenvs_help
       return
       ;;
     esac
@@ -628,13 +628,13 @@ function _setenvs {
   # handle non-option arguments
   if [[ $# -ne 1 ]]; then
     echo "Non optional argument environment file to set is required."
-    ____setenvs-help
+    ____setenvs_help
     return
   fi
 
   if [[ "$_level" -gt 5 ]]; then
     echo -e "Maximum level of 5 allowed. Got '$_level'\n"
-    ____setenvs-help
+    ____setenvs_help
     return
   fi
 
@@ -672,7 +672,7 @@ function _setenvs {
   fi
 }
 
-function _compute_path_to_use {
+_compute_path_to_use() {
   local _path_to_use=$1
   local _level=$2
   local _exists
@@ -1254,7 +1254,7 @@ fi
 # https://github.com/microsoft/WSL/issues/7915#issuecomment-1163333151
 # sudo /etc/init.d/dbus start &>/dev/null
 
-function _cert-etc {
+_cert_etc() {
   : "Publish host to /etc/hosts"
   if [ -z "$1" ]; then
     echo -e "\n Please provide a domain\n"
@@ -1274,9 +1274,9 @@ function _cert-etc {
   echo -e "C:\Windows\System32\drivers\etc\hosts\n\n"
 }
 
-alias cert-etc='_cert-etc'
+alias cert-etc='_cert_etc'
 
-function archive-projects-f {
+_archive_projects_f() {
   local _extract_path
 
   # --------------------------------------------------------------------------
@@ -1376,7 +1376,7 @@ function archive-projects-f {
   )
 }
 
-alias archive-projects='archive-projects-f'
+alias archive-projects='_archive_projects_f'
 
 # -----------------------------------------------------------------------------
 # INTELLIJ IDEA IDE
@@ -1392,7 +1392,7 @@ _intellij_idea_bin_path="${HOME}/.local/share/JetBrains/Toolbox/apps/${INTELLIJ_
 if [[ -e "${_intellij_idea_bin_path}" ]]; then
   pathmunge "$(dirname "${_intellij_idea_bin_path}")"
 
-  function _intellij {
+  _intellij() {
     local settings_sync_dir="${HOME}/.config/JetBrains/${INTELLIJ_VERSION:-bahridarnish}/settingsSync"
 
     (
