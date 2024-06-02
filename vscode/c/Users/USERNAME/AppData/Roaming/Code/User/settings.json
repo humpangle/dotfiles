@@ -35,8 +35,7 @@
   "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
   "vscode-neovim.logLevel": "debug",
   "vscode-neovim.logOutputToConsole": true,
-  "vscode-neovim.logPath": "~/dotfiles/.___scratch-vscode-neovim.log",
-  // "vscode-neovim.NVIM_APPNAME": "nvim-win",
+  "vscode-neovim.logPath": "/home/kanmii/dotfiles/.___scratch-vscode-neovim.log",
   // "vscode-neovim.neovimClean": true,
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
@@ -166,6 +165,9 @@
       "icon": "terminal-powershell"
     }
   },
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "terminal.integrated.tabs.title": "${process}-${cwdFolder}",
+  "terminal.integrated.tabs.description": "${task}${separator}${local}${separator}${cwdFolder}",
   // https://stackoverflow.com/a/60023686/1437611
   // https://github.com/Tyriar/vscode-snazzy/blob/master/snazzy.json
   "workbench.colorCustomizations": {
@@ -194,11 +196,10 @@
     "terminal.ansiBrightWhite": "#eff0eb"
   },
   "prettier.printWidth": 120,
-  "terminal.integrated.enableMultiLinePasteWarning": "never",
   "window.zoomLevel": 0.6,
   "workbench.startupEditor": "none",
   "workbench.activityBar.location": "hidden",
-  "settingsSync.keybindingsPerPlatform": true,
+  "settingsSync.keybindingsPerPlatform": false,
   "Lua.diagnostics.globals": [
     "vim",
   ],

@@ -39,13 +39,13 @@
     "when": "!editorTextFocus && !terminalEditorFocus && !terminalFocus"
   },
   {
-    "key": "ctrl+alt+w",
+    "key": "ctrl+shift+w",
     // "key": "ctrl+F4",
     "command": "workbench.action.closeActiveEditor",
     // "when": "editorFocus || terminalEditorFocus"
   },
   {
-    "key": "ctrl+alt+w",
+    "key": "ctrl+shift+w",
     "command": "workbench.action.terminal.killActiveTab",
     "when": "terminalFocus && !terminalEditorFocus"
   },
@@ -99,8 +99,14 @@
     "when": "workbench.panel.markers.view.active"
   },
   {
-    "key": "shift+ctrl+w",
+    "key": "ctrl+alt+w",
     "command": "workbench.action.closeWindow"
+  },
+  {
+    "key": "ctrl+r ctrl+d",
+    "command": "vscode-neovim.send",
+    "when": "editorTextFocus && neovim.init && neovim.mode == 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'",
+    "args": "<C-r><C-d>"
   },
   // {
   //   "key": "ctrl+alt+1",
