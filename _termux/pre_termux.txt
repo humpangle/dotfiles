@@ -1,0 +1,31 @@
+# I do not want to use the -y flag for update because for some reasons there are so many prompts for newer file
+# versions.
+
+pkg update &&
+  pkg install -y \
+    git \
+    gnupg \
+    pass \
+    neovim \
+    vifm \
+    root-repo \
+    x11-repo \
+    curl \
+    iproute2 \
+    nodejs-lts \
+    termux-api
+
+npm install --global \
+  clipboard-cli
+
+# Requires Android permissions.
+termux-setup-storage
+
+bash "$HOME/storage/downloads/_termux/_termux.sh"
+
+#
+#
+#
+#
+#
+#
