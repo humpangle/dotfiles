@@ -236,3 +236,23 @@ keymap(
 keymap("n", "<leader>ca", function()
   vcall("editor.action.quickFix")
 end, no_re_map_silent_opts)
+
+local function insert_current_datetime()
+  -- The `.. ""` is to silence the warning `Cannot assign `string|osdate` to `string`.  - `osdate` cannot match `string``
+  local datetime = os.date("%Y-%m-%d %H:%M:%S") .. ""
+  vim.api.nvim_put({ datetime }, "c", true, true)
+end
+
+keymap(
+  "n",
+  "<leader>D",
+  insert_current_datetime,
+  { noremap = true, silent = true, desc = "Insert datetime" }
+)
+
+keymap(
+  "i",
+  "<C-r><C-d>",
+  insert_current_datetime,
+  { noremap = true, silent = true, desc = "Insert datetime" }
+)
