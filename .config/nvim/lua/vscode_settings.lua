@@ -66,7 +66,6 @@ vim.o.undodir = vim.fn.expand("$HOME/.vim/undodir/")
 -- Paste text unmodified from other applications.
 -- https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste
 vim.o.paste = true
-vim.o.nopaste = false
 
 keymap("n", "<leader>fc", function()
   vcall("editor.action.formatDocument")
