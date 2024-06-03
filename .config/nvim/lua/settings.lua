@@ -362,7 +362,6 @@ keymap("n", ",cc", do_yanka_highlighted("a"), { noremap = true })
 
 -- Move between windows in a tab
 keymap("n", "<Tab>", "<C-w>w", { noremap = false })
-keymap("n", "<C-h>", "<C-w>h", { noremap = true })
 
 -- Tab operations
 keymap("n", "<Leader>tn", "<cmd>tabnew<CR>", { noremap = true })
