@@ -1,0 +1,52 @@
+[alias]
+  br = branch
+  st = status
+  ps = push
+  psf = push --force-with-lease
+  pl = pull
+  tk = pull
+  co = checkout
+  cm = commit
+  cam = commit -am
+  cz = commit --allow-empty -m
+  pgm = push github master
+  pgd = push github dev
+  lone = log --oneline
+  wk = worktree
+  wkadd = worktree add
+  wkrm = worktree remove
+  wkls = worktree list
+  wkrp = worktree repair
+[credential]
+  helper = cache --timeout 604800
+[core]
+  filemode = false
+  editor = nvim
+  excludesfile = ~/.gitignore
+  # Print utf8 pathnames
+  quotePath = false
+[commit]
+  verbose = true
+[difftool]
+  prompt = false
+[diff]
+  tool = nvim -d
+[merge]
+  tool = fugitive
+[mergetool "fugitive"]
+  cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+[mergetool]
+  prompt = false
+[push]
+  followTags = true
+# [user]
+#   email = you@example.com
+#   name = Your Name
+[init]
+  defaultBranch = master
+  # defaultBranch = main
+# specify how pulling is reconciled
+[pull]
+  rebase = true
+[log]
+  decorate = full

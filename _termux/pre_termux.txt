@@ -13,15 +13,21 @@ pkg update &&
     curl \
     iproute2 \
     nodejs-lts \
+    tmux \
+    ncurses-utils \
+    clang \
     termux-api
 
-npm install --global \
-  clipboard-cli
+# ncurses-utils provides tput command.
+# clang provides gcc
 
 # Requires Android permissions.
 termux-setup-storage
 
 bash "$HOME/storage/downloads/_termux/_termux.sh"
+
+npm install --global \
+  clipboard-cli
 
 #
 #

@@ -1,10 +1,29 @@
 set -o errexit
 
+full_line_len=$(tput cols)
+
+_echo() {
+  local text="${*}"
+  local equal='*'
+
+  local len="${#text}"
+  len=$((full_line_len - len))
+  local half=$((len / 2 - 1))
+
+  local line=''
+
+  for _ in $(seq $half); do
+    line="${line}${equal}"
+  done
+
+  echo -e "\n${text}  ${line}${line}\n"
+}
+
 _local_bin="$HOME/.local/bin"
 _storage_download="$HOME/storage/downloads"
 
-# Our out folder on the android host.
-_storage_download_termux="$HOME/storage/downloads/__termux"
+_android_host_out_folder="$_storage_download/__termux"
+_android_host_in_folder="$_storage_download/_termux"
 
 _bashrc="$HOME/.bashrc"
 cp "$PREFIX/etc/bash.bashrc" "$_bashrc"
@@ -112,6 +131,18 @@ _run_f() {
 }
 
 alias r='_run_f'
+
+export MY_TMUX_SHARE_DIR="$HOME/storage/downloads/_termux_share"
+mkdir -p "$MY_TMUX_SHARE_DIR"
+
+export SINGLE_FILE_WEB_PAGES_DOWNLOAD_DIR="$MY_TMUX_SHARE_DIR/web-pages"
+
+export DEFAULT_TMUX_SESSION=dot
+
+export EBNIS_VIM_THEME=one
+export EBNIS_VIM_THEME=gruvbox8_hard
+export EBNIS_VIM_THEME_BG=l
+export EBNIS_VIM_THEME_BG=d
 eof
 
 _ssh_dir="$HOME/.ssh"
@@ -127,14 +158,14 @@ _callmiy_github="${_ssh_identity_prefix}github__callmiy"
 _hellcooper_github="${_ssh_identity_prefix}github__hellcooper"
 _path_array=("$_humpangle_github" "$_callmiy_github" "$_hellcooper_github")
 
-mkdir -p "$_storage_download_termux"
+mkdir -p "$_android_host_out_folder"
 
 for _path in "${_path_array[@]}"; do
   _no_ssh_prefix="${_path/$_ssh_dir\//''}"
   echo -e "\n_no_ssh_prefix = $_no_ssh_prefix"
   ssh-keygen -t ed25519 -f "$_path" -C "$_no_ssh_prefix" -P ''
 
-  _to_downloadable_file="$_storage_download_termux/${_no_ssh_prefix}.txt"
+  _to_downloadable_file="$_android_host_out_folder/${_no_ssh_prefix}.txt"
   rm -rf "$_to_downloadable_file"
   cp "${_path}.pub" "$_to_downloadable_file"
   echo -e "\n\n"
@@ -173,7 +204,7 @@ rm -rf "$_vifm_dir/vifmrc"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
 
 cp \
-  "$_storage_download/_termux/vifmrc" \
+  "$_android_host_in_folder/vifmrc" \
   "$_vifm_dir"
 
 curl \
@@ -181,5 +212,20 @@ curl \
   "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/scripts/p-env"
 
 chmod 755 "$_local_bin/p-env"
+
+_echo "Copying neovim config files"
+mkdir -p "$HOME/.config"
+cp -r "$_android_host_in_folder/.config/nvim" "$HOME/.config"
+
+_echo "Copying git config files"
+_git_configs=(gitignore gitconfig gitattributes)
+for _elm in "${_git_configs[@]}"; do
+  cp "$_android_host_in_folder/$_elm" "$HOME/.${_elm}"
+done
+
+_echo "Setting up tmux config"
+cp "$_android_host_in_folder/.tmux.conf" "$HOME"
+
+mkdir -p "$HOME/.tmux/resurrect"
 
 echo -e "\n\nsource $_bashrc"
