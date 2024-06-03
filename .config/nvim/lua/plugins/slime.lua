@@ -38,7 +38,7 @@ local helper_func = function(target)
     vim.g.slime_input_pid = false
     vim.g.slime_suggest_default = false
     vim.g.slime_menu_config = true
-    vim.g.slime_neovim_ignore_unlisted = true
+    vim.g.slime_neovim_ignore_unlisted = false -- true
   end
 
   vim.b.slime_target = target
