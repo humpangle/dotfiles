@@ -526,7 +526,7 @@ local process_file_path_yanking = function(file_name_modifier, register)
     vim.fn.setreg('"', fp)
     vim.fn.setreg(register, fp)
     vim.cmd(utils.clip_cmd)
-    print(fp)
+    print('"' .. register .. " -> " .. file_name_modifier .. " = " .. fp)
   end
 end
 
