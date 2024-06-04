@@ -518,15 +518,24 @@ end, { noremap = true })
 
 -- Copying File Paths and Names
 
-local process_file_path_yanking = function(file_name_modifier, register)
+-- value_getter_directive may be:
+--   a filename modifier
+--   the literal string `cwd`
+local process_file_path_yanking = function(value_getter_directive, register)
   register = register or "+"
 
   return function()
-    local fp = vim.fn.expand(file_name_modifier)
+    local fp
+    if value_getter_directive == "cwd" then
+      fp = vim.fn.getcwd()
+    else
+      fp = vim.fn.expand(value_getter_directive)
+    end
+
     vim.fn.setreg('"', fp)
     vim.fn.setreg(register, fp)
     vim.cmd(utils.clip_cmd)
-    print('"' .. register .. " -> " .. file_name_modifier .. " = " .. fp)
+    print('"' .. register .. " -> " .. value_getter_directive .. " = " .. fp)
   end
 end
 
@@ -544,6 +553,11 @@ keymap("n", ",cr", process_file_path_yanking("%", "a"))
 keymap("n", ",cf", process_file_path_yanking("%:p", "a"))
 -- Copy file name
 keymap("n", ",cn", process_file_path_yanking("%:t", "a"))
+
+-- Yank current working directory
+keymap("n", ",yw", process_file_path_yanking("cwd"))
+-- Copy current working directory to register a
+keymap("n", ",cw", process_file_path_yanking("cwd", "a"))
 
 --  Some plugins change my CWD to currently opened file - I change it back
 -- Change CWD to the directory of the current file
