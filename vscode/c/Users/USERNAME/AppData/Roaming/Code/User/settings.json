@@ -5,7 +5,6 @@
   // "workbench.colorTheme": "Default High Contrast",
   // "workbench.colorTheme": "Solarized Dark",
   // "workbench.colorTheme": "Visual Studio Dark",
-  "ansible.python.interpreterPath": "~/.asdf/shims/python",
   "elixirLS.dialyzerEnabled": false,
   "elixirLS.enableTestLenses": true,
   "elixirLS.fetchDeps": true,
@@ -35,7 +34,7 @@
   "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
   "vscode-neovim.logLevel": "debug",
   "vscode-neovim.logOutputToConsole": true,
-  "vscode-neovim.logPath": "/home/kanmii/dotfiles/.___scratch-vscode-neovim.log",
+  "vscode-neovim.logPath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\kanmii\\dotfiles\\.___scratch-vscode-neovim.log",
   // "vscode-neovim.neovimClean": true,
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
@@ -124,8 +123,8 @@
   "settingsSync.ignoredSettings": [],
   // "terminal.integrated.enablePersistentSessions": false,
   "terminal.integrated.persistentSessionReviveProcess": "never",
-  // "terminal.integrated.fontSize": 15, // small screen
-  "terminal.integrated.fontSize": 17, // big screen
+  "terminal.integrated.fontSize": 15, // small screen
+  // "terminal.integrated.fontSize": 17, // big screen
   "terminal.integrated.confirmOnKill": "never",
   "terminal.integrated.enableImages": true,
   "terminal.integrated.scrollback": 100000,
@@ -199,6 +198,7 @@
   "window.zoomLevel": 0.6,
   "workbench.startupEditor": "none",
   "workbench.activityBar.location": "hidden",
+  "window.newWindowProfile": "Default",
   "settingsSync.keybindingsPerPlatform": false,
   "Lua.diagnostics.globals": [
     "vim",
