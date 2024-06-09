@@ -31,6 +31,7 @@
   prompt = false
 [diff]
   tool = nvim -d
+  submodule = log
 [merge]
   tool = fugitive
 [mergetool "fugitive"]
@@ -39,6 +40,7 @@
   prompt = false
 [push]
   followTags = true
+  recurseSubmodules = on-demand # check
 # [user]
 #   email = you@example.com
 #   name = Your Name
@@ -50,3 +52,5 @@
   rebase = true
 [log]
   decorate = full
+[submodule]
+  recurse = true
