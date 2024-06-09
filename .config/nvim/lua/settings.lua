@@ -339,8 +339,16 @@ keymap("n", "<Leader>y+", '<cmd>%y<CR><cmd>let @+=@"<CR>', { noremap = true })
 keymap("n", "<Leader>YY", '<cmd>%y<CR><cmd>let @+=@"<CR>', { noremap = true })
 keymap("n", "<Leader>ya", '<cmd>%y<CR><cmd>let @a=@"<CR>', { noremap = true })
 
-local function do_yanka_highlighted(register)
+local function do_yanka_highlighted(register_flag)
+  local register = nil
+
   return function()
+    if register_flag == "letter" then
+      register = utils.ord_to_char(vim.v.count)
+    end
+
+    register = register or register_flag
+
     -- Yank the currently highlighted texts to the unnamed register
     vim.api.nvim_command("normal! vgny")
 
@@ -358,7 +366,7 @@ end
 
 -- Yank highlighted to system clipboard / register a
 keymap("n", ",yy", do_yanka_highlighted("+"), { noremap = true })
-keymap("n", ",cc", do_yanka_highlighted("a"), { noremap = true })
+keymap("n", ",cc", do_yanka_highlighted("letter"), { noremap = true })
 
 -- Move between windows in a tab
 keymap("n", "<Tab>", "<C-w>w", { noremap = false })
@@ -521,10 +529,19 @@ end, { noremap = true })
 -- value_getter_directive may be:
 --   a filename modifier
 --   the literal string `cwd`
-local process_file_path_yanking = function(value_getter_directive, register)
-  register = register or "+"
+local process_file_path_yanking = function(
+  value_getter_directive,
+  register_flag
+)
+  local register = nil
 
   return function()
+    if register_flag == "letter" then
+      register = utils.ord_to_char(vim.v.count)
+    end
+
+    register = register or "+"
+
     local fp
     if value_getter_directive == "cwd" then
       fp = vim.fn.getcwd()
@@ -550,16 +567,16 @@ keymap("n", ",yd", process_file_path_yanking("%:p:h"))
 -- Yank absolute file path
 keymap("n", ",yf", process_file_path_yanking("%:p"))
 -- Copy relative path
-keymap("n", ",cr", process_file_path_yanking("%", "a"))
+keymap("n", ",cr", process_file_path_yanking("%", "letter"))
 -- Copy absolute path
-keymap("n", ",cf", process_file_path_yanking("%:p", "a"))
+keymap("n", ",cf", process_file_path_yanking("%:p", "letter"))
 -- Copy file name
-keymap("n", ",cn", process_file_path_yanking("%:t", "a"))
+keymap("n", ",cn", process_file_path_yanking("%:t", "letter"))
 
 -- Yank current working directory
 keymap("n", ",yw", process_file_path_yanking("cwd"))
 -- Copy current working directory to register a
-keymap("n", ",cw", process_file_path_yanking("cwd", "a"))
+keymap("n", ",cw", process_file_path_yanking("cwd", "letter"))
 
 --  Some plugins change my CWD to currently opened file - I change it back
 -- Change CWD to the directory of the current file

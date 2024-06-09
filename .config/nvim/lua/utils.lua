@@ -271,4 +271,12 @@ end
 
 utils.clip_cmd = [[:call system('nc -N localhost 8377', @")]]
 
+utils.ord_to_char = function(ord)
+  if ord < 1 or ord > 26 then
+    ord = 26
+  end
+
+  return string.char(ord + 96)
+end
+
 return utils
