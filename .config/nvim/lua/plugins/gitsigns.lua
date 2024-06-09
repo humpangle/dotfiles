@@ -37,7 +37,10 @@ return {
         utils.map_key(
           "n",
           "<leader>hs",
-          gitsigns.stage_hunk,
+          function ()
+            gitsigns.stage_hunk()
+            vim.cmd("edit! %")
+          end,
           { desc = "Hunk stage" },
           bufnr
         )
@@ -45,7 +48,10 @@ return {
         utils.map_key(
           "n",
           "<leader>hr",
-          gitsigns.reset_hunk,
+          function ()
+            gitsigns.reset_hunk()
+            vim.cmd("edit! %")
+          end,
           { desc = "Hunk reset" },
           bufnr
         )
@@ -55,6 +61,8 @@ return {
             vim.fn.line("."),
             vim.fn.line("v"),
           })
+
+          vim.cmd("edit! %")
         end, { desc = "Hunk stage" }, bufnr)
 
         utils.map_key("v", "<leader>hr", function()
@@ -67,7 +75,10 @@ return {
         utils.map_key(
           "n",
           "<leader>hS",
-          gitsigns.stage_buffer,
+          function ()
+            gitsigns.stage_buffer()
+            vim.cmd("edit! %")
+          end,
           { desc = "Hunk stage buffer" },
           bufnr
         )
@@ -75,7 +86,10 @@ return {
         utils.map_key(
           "n",
           "<leader>hu",
-          gitsigns.undo_stage_hunk,
+          function ()
+            gitsigns.undo_stage_hunk()
+            vim.cmd("edit! %")
+          end,
           { desc = "Hunk undo stage" },
           bufnr
         )
@@ -83,7 +97,10 @@ return {
         utils.map_key(
           "n",
           "<leader>hR",
-          gitsigns.reset_buffer,
+          function ()
+            gitsigns.reset_buffer()
+            vim.cmd("edit! %")
+          end,
           { desc = "Hunk reset buffer" },
           bufnr
         )
@@ -109,6 +126,7 @@ return {
         )
 
         utils.map_key("n", "<leader>hD", function()
+          vim.cmd("edit! %")
           gitsigns.diffthis("~")
         end, { desc = "Hunk diffthis" }, bufnr)
       end,
