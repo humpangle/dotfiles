@@ -185,6 +185,17 @@ function utils.DeleteAllBuffers(f)
   end
 end
 
+local function is_terminal_buffer()
+  local buf_number = vim.api.nvim_get_current_buf()
+  local buf_name = vim.api.nvim_buf_get_name(buf_number)
+
+  if buf_name:match("^term://") then
+    return true
+  else
+    return false
+  end
+end
+
 function utils.RenameFile()
   local old_name = vim.api.nvim_buf_get_name(0) -- Get the current buffer's file name
   local new_name = vim.fn.input({
@@ -197,19 +208,26 @@ function utils.RenameFile()
     local dirname = vim.fn.fnamemodify(new_name, ":p:h")
 
     -- Create the directory if it doesn't exist
-    os.execute("mkdir -p " .. vim.fn.shellescape(dirname))
+    if not is_terminal_buffer() then
+      os.execute("mkdir -p " .. vim.fn.shellescape(dirname))
+    end
 
-    -- Save the buffer under the new name
-    vim.cmd("saveas " .. vim.fn.fnameescape(new_name))
+    -- Wrap in pcall because terminal buffers produce error which terminates rest of function.
+    pcall(function()
+      -- Save the buffer under the new name
+      vim.cmd("saveas " .. vim.fn.fnameescape(new_name))
+    end)
 
     -- Remove the old file
-    os.execute("rm " .. vim.fn.shellescape(old_name))
+    if not is_terminal_buffer() then
+      os.execute("rm " .. vim.fn.shellescape(old_name))
+    end
 
     -- Refresh the screen
     vim.cmd("redraw!")
 
     -- Close the buffer that had the old file name
-    vim.cmd("bdelete #")
+    vim.cmd("bdelete! " .. old_name)
   end
 end
 
