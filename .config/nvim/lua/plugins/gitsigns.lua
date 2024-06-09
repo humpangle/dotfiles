@@ -108,14 +108,6 @@ return {
           bufnr
         )
 
-        utils.map_key(
-          "n",
-          "<leader>hd",
-          gitsigns.diffthis,
-          { desc = "Hunk diffthis" },
-          bufnr
-        )
-
         utils.map_key("n", "<leader>hD", function()
           gitsigns.diffthis("~")
         end, { desc = "Hunk diffthis" }, bufnr)
