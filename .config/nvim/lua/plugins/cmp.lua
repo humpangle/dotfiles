@@ -99,14 +99,14 @@ return {
         { name = "nvim_lsp" },
         { name = "luasnip" },
         {
-          name = 'buffer',
+          name = "buffer",
           option = {
             -- https://github.com/hrsh7th/cmp-buffer#get_bufnrs-type-fun-number
             get_bufnrs = function()
               -- completion from all buffers.
               return vim.api.nvim_list_bufs()
-            end
-          }
+            end,
+          },
         },
         { name = "path" },
       },
@@ -121,8 +121,8 @@ return {
         -- This step is not supported in many windows environments.
         -- Remove the below condition to re-enable on windows.
         if
-            vim.fn.has("win32") == 1
-            or vim.fn.executable("make") == 0
+          vim.fn.has("win32") == 1
+          or vim.fn.executable("make") == 0
         then
           return
         end
