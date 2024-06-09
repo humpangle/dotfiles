@@ -68,6 +68,14 @@ keymap(
   { noremap = true, silent = true, desc = "Git stash list" }
 )
 
+local description_with_count = function(mapping_str)
+  return string.format(
+    " - count=index. 0=99 E.g. SPACE%s, [count]SPACE%s.",
+    mapping_str,
+    mapping_str
+  )
+end
+
 keymap(
   "n",
   "<Leader>czd",
@@ -76,7 +84,7 @@ keymap(
 
     local count = vim.v.count
 
-    -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we can
+    -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we cannot
     -- have git stash index 99).
     if count == 99 then -- simulate count 0
       cmd = ":G stash drop stash@{0}<Left>"
@@ -92,7 +100,7 @@ keymap(
       "t"
     )
   end),
-  { noremap = true, desc = "Git stash drop - use 99 to simulate count 0" }
+  { noremap = true, desc = "Git stash drop" .. description_with_count("czd") }
 )
 
 keymap("n", "<Leader>czz", function()
@@ -144,33 +152,25 @@ local git_stash_apply_or_pop = function(apply_or_pop, maybe_include_index)
   end)
 end
 
-keymap(
-  "n",
-  "<Leader>czP",
-  git_stash_apply_or_pop("pop"),
-  { noremap = true, desc = "Git stash pop --quiet" }
-)
+keymap("n", "<Leader>czP", git_stash_apply_or_pop("pop"), {
+  noremap = true,
+  desc = "Git stash pop" .. description_with_count("czP"),
+})
 
-keymap(
-  "n",
-  "<Leader>czp",
-  git_stash_apply_or_pop("pop", "index"),
-  { noremap = true, desc = "Git stash pop --quiet --index" }
-)
+keymap("n", "<Leader>czp", git_stash_apply_or_pop("pop", "index"), {
+  noremap = true,
+  desc = "Git stash pop --index" .. description_with_count("czp"),
+})
 
-keymap(
-  "n",
-  "<Leader>czA",
-  git_stash_apply_or_pop("apply"),
-  { noremap = true, desc = "Git stash apply --quiet" }
-)
+keymap("n", "<Leader>czA", git_stash_apply_or_pop("apply"), {
+  noremap = true,
+  desc = "Git stash apply" .. description_with_count("czA"),
+})
 
-keymap(
-  "n",
-  "<Leader>cza",
-  git_stash_apply_or_pop("apply", "index"),
-  { noremap = true, desc = "Git stash apply --quiet --index" }
-)
+keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
+  noremap = true,
+  desc = "Git stash apply --index" .. description_with_count("cza"),
+})
 -- END Git stash related mappings
 
 -- Git commit mappings
