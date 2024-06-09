@@ -26,7 +26,9 @@ LOCAL_BIN_PATH="$HOME/.local/bin"
 PROJECT_0_PATH="$HOME/projects/0"
 mkdir -p "$PROJECT_0_PATH"
 
+DOTFILE_ROOT="$HOME/dotfiles"
 DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
+
 BASH_COMPLETION_DIR=/etc/bash_completion.d
 
 LUA_DEPS=(
@@ -825,17 +827,57 @@ install_vifm() {
   sudo rm -rf /usr/local/src/vifm-*
   sudo mv "vifm-${_version_no_prefix}" /usr/local/src
 
-  if ! _is-dev "$@"; then
-    if [[ -s ~/.vifm/vifmrc ]]; then
-      _echo "$HOME/.vifm/vifmrc exists and renaming to $HOME/.vifm/vifmrc.bak."
-      mv ~/.vifm/vifmrc ~/.vifm/vifmrc.bak
+  _echo "Setting up vifmrc"
+
+  # Each array member is a string of the form `file_location function_to_test_kernel_name`, where the string before
+  # space is the filesystem path where the vifm configuration file is stored and the string after space is function
+  # we will invoke to get the kernel name - linux or darwin.
+  declare -a _potential_vifmrc_locations=(
+    "$HOME/.vifm/vifmrc _is_darwin"
+    "$HOME/.config/vifm/vifmrc _is_linux"
+  )
+
+  for _location_kernel_fn in "${_potential_vifmrc_locations[@]}"; do
+    local _location
+    local _kernel_fn
+
+    _location="$(cut -d ' ' -f1 <<<"$_location_kernel_fn")"
+    _kernel_fn="$(cut -d ' ' -f2 <<<"$_location_kernel_fn")"
+
+    local _location_exists
+
+    if [[ -s "$_location" ]]; then
+      local _bak="${_location}.bak"
+      _echo "$_location exists and renaming to ${_bak}."
+      mv "$_location" "$_bak"
+
+      _location_exists=1
+    elif bash -c "$0 $_kernel_fn"; then
+      # The trick here is that if the kernel function invocation succeeds, we assume the current $_location is the
+      # corrct location of the vifmrc configuration file.
+      _location_exists=1
     fi
 
-    _echo "DOWNLOADING VIFM CONF."
+    # If the current location is not the correct configuration location, there is nothing else to do.
+    if [[ -z "$_location_exists" ]]; then
+      continue
+    fi
 
-    curl --create-dirs -fLo ~/.vifm/vifmrc \
-      "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/vifm/vifmrc"
-  fi
+    if [[ -d "$DOTFILE_ROOT" ]]; then
+      local _source="$DOTFILE_ROOT/.config/vifm/vifmrc"
+
+      _echo "Linking $_source to ${_location}."
+
+      mkdir -p "$(dirname "$_location")" # In case the directory does not exist previously.
+      ln -s "$_source" "$_location"
+    else
+      local _source="$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/vifm/vifmrc"
+
+      _echo "Downloading $_source to ${_location}."
+
+      curl --create-dirs -fLo "$_location" "$_source"
+    fi
+  done
 }
 
 function install-git {
