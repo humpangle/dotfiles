@@ -128,6 +128,12 @@ return {
         end
         return "make install_jsregexp"
       end)(),
+      config = function()
+        -- load snippets from path/of/your/nvim/config/my-cool-snippets
+        require("luasnip.loaders.from_vscode").lazy_load({
+          paths = { "./snippets" }, -- relative to the directory of $MYVIMRC
+        })
+      end,
       dependencies = {
         -- `friendly-snippets` contains a variety of premade snippets.
         --    See the README about individual language/framework/plugin snippets:

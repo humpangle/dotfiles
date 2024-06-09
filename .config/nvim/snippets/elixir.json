@@ -1,0 +1,1200 @@
+{
+  "print to console": {
+    "prefix": ["puts", "ioputs"],
+    "body": [
+      "IO.puts(\"\"\"\n\n\n",
+      "${1:label}: \n    #{ inspect( ${2:expr} ) }\n\n\n",
+      "\"\"\")"
+    ],
+    "description": "print to console - puts"
+  },
+  "inspect console": {
+    "prefix": "putsinspect",
+    "body": [
+      "IO.inspect(${1:data}, label: \"\n----------- ${1:label}------------\n\")",
+      "IO.puts(\"-----------end ${1:label}------------\n\")"
+    ],
+    "description": "print to console puts inspect"
+  },
+  "inspect with label": {
+    "prefix": "inspectlabel",
+    "body": [
+      "IO.inspect(${1:data}, label: \"\\n----------- ${2:label} ------------\")"
+    ],
+    "description": "print to console puts inspect"
+  },
+  "inspect with label in pipe": {
+    "prefix": "inspectpipe",
+    "body": [
+      "$0",
+      "|> IO.inspect(",
+      "  label:",
+      "      \"\\n\\n\\n",
+      "----------------------------------------------------------------------",
+      "         ${1:label}     ",
+      "----------------------------------------------------------------------\\n\"",
+      ")"
+    ],
+    "description": "print to console puts inspect"
+  },
+  "tap inspect in a pipe & func": {
+    "prefix": ["tap_inspect_&", "inspect_tap_&"],
+    "body": [
+      "|> tap(",
+      "  &IO.inspect(",
+      "      ${0:&1},",
+      "      label: \"\\n\\n\\n----${1:label}----\\n\"",
+      "  )",
+      ")"
+    ],
+    "description": "tap inspect in pipe & func"
+  },
+  "tap_log_inspect": {
+    "prefix": ["tap_log_inspect", "inspect_tap_log", "log_tap_inspect"],
+    "body": [
+      "${2} |> tap(fn args ->",
+      "  require Logger",
+      "",
+      "  opts = Inspect.Opts.new([])",
+      "  doc = Inspect.Algebra.group(Inspect.Algebra.to_doc(args, opts))",
+      "  chardata = Inspect.Algebra.format(doc, opts.width)",
+      "",
+      "  Logger.info([",
+      "    \"\\n\\n\\n\",",
+      "    \"Start ===  ${1:label}  ===\\n\",",
+      "    \"-------------------------------------------------------------------------------\\n\",",
+      "    chardata,",
+      "    \"\\n-------------------------------------------------------------------------------\",",
+      "    \"\\nEnd ===  ${1:label}  ===\\n\\n\\n\"",
+      "  ])",
+      "end)"
+    ],
+    "description": ["tap Logger inspect"]
+  },
+  "@opaque type": {
+    "prefix": "@opaque",
+    "body": "@opaque ${1:t} :: ${2:expr}",
+    "description": "@opaque type"
+  },
+  "@type type": {
+    "prefix": ["type", "@type"],
+    "body": "@type ${1:type_name} :: ${0:type}",
+    "description": "@type type"
+  },
+  "@spec": {
+    "prefix": ["@spec", "spec"],
+    "body": "@spec ${1:fun_name}(${2:param} :: ${3:type}) :: ${4:return}",
+    "description": "@spec"
+  },
+  "for expression full": {
+    "prefix": ["for_exp_full"],
+    "body": [
+      "for ${1:member1} <- ${2:list1},",
+      "    ${3:member2 <- member1_or_list2},",
+      "    ${4:var = member1 + member2,}",
+      "    ${5:filter_exp,}",
+      "    ${6:unique: true,}",
+      "    ${7:into: string_or_map} do",
+      "  # {key, val}",
+      "  ${8:return_exp}",
+      "end"
+    ],
+    "description": "for expression full"
+  },
+  "for into": {
+    "prefix": ["for_into"],
+    "body": [
+      "for ${1:member1} <- ${2:list1},",
+      "    into: ${3:string_or_map} do",
+      "  ${4:# code}",
+      "end"
+    ],
+    "description": "for into"
+  },
+  "for reduce": {
+    "prefix": ["for_reduce"],
+    "body": [
+      "for ${1:member1} <- ${2:list1},",
+      "    reduce: ${3:string_or_map_or_collectible} do",
+      "  acc -> ${4:expression}",
+      "end"
+    ],
+    "description": "for reduce"
+  },
+  "defstruct": {
+    "prefix": ["defstruct_def"],
+    "body": [
+      "defstruct [",
+      "  :${1:field},",
+      "  ${2:# field: default_val}",
+      "]"
+    ],
+    "description": "Defines a Struct"
+  },
+  "set up test module": {
+    "prefix": ["defmodule_test", "test_module"],
+    "body": [
+      "defmodule ${1:Module.Name}Test do",
+      "  use ExUnit.Case, async: ${2:true}",
+      "",
+      "  # import ExUnit.CaptureLog",
+      "",
+      "  ${3:alias Module.Name, as:Name}",
+      "  # doctest ModuleName",
+      "",
+      "  # @moduletag capture_log: true",
+      "",
+      "  setup_all  do",
+      "    :ok",
+      "  end",
+      "",
+      "  setup _context do",
+      "    ${4:# code}",
+      "",
+      "    :ok",
+      "  end",
+      "",
+      "  test \"${5:test name}\" do",
+      "    ${6:# code}$0",
+      "  end",
+      "end"
+    ],
+    "description": "set up test module"
+  },
+  "ExUnit capture log": {
+    "prefix": [
+      "capture_log_exunit",
+      "exunit_capture_log",
+      "log_capture_exunit"
+    ],
+    "body": [
+      "# import ExUnit.CaptureLog",
+      "@moduletag capture_log: true",
+      "",
+      "# _log_message =",
+      "  # capture_log(fn ->",
+      "      ${0:# assertions}",
+      "  # end)",
+      "",
+      "# assert log_message =~ \"STACK\""
+    ],
+    "description": "ExUnit capture log"
+  },
+  "@behaviour": {
+    "prefix": "@behaviour",
+    "body": "@behaviour ",
+    "description": "@behaviour"
+  },
+  "@module doc": {
+    "prefix": ["@module_doc", "module_doc"],
+    "body": ["@moduledoc ~S\"\"\"", "  $1", "\"\"\""],
+    "description": "@module doc"
+  },
+  "@module doc false": {
+    "prefix": ["@module_doc_false", "module_doc_false"],
+    "body": "@moduledoc false",
+    "description": "@module doc false"
+  },
+  "@doc": {
+    "prefix": ["doc", "@doc"],
+    "body": ["@doc \"\"\"", "$0", "\"\"\""],
+    "description": "@doc"
+  },
+  "@doc Sigil": {
+    "prefix": ["@doc_sigil", "doc_sigil"],
+    "body": ["@doc ~S\"\"\"", "  $1", "\"\"\""],
+    "description": "@doc Sigil"
+  },
+  "@doc false": {
+    "prefix": ["@doc_false", "doc_false"],
+    "body": "@doc false",
+    "description": "@doc false"
+  },
+  "@doc doctest": {
+    "prefix": ["doc_test", "doc_doctest", "doctest_doc", "@doc_doctest"],
+    "body": [
+      "@doc ~S\"\"\"",
+      "${4:What does function do?.}",
+      "",
+      "## Examples",
+      "",
+      "Example: 1",
+      "",
+      "      iex> ${1:Module.}${2:func_name}(${3:args})",
+      "      ${4:result}",
+      "",
+      "Example 2:",
+      "",
+      "      iex> ${1:Module.}${2:func_name}(${5:args})",
+      "      ${6:result}",
+      "",
+      "\"\"\""
+    ],
+    "description": "@doc doctest"
+  },
+  "@doc example": {
+    "prefix": [
+      "doc_example",
+      "doc_docexample",
+      "docexample_doc",
+      "@doc_docexample"
+    ],
+    "body": [
+      "@doc ~S\"\"\"",
+      "${0:What does function do?.}",
+      "",
+      "## Examples",
+      "",
+      "Example 1:",
+      "",
+      "      iex> ${1:func_name}(${2:args})",
+      "      ${4:result}",
+      "",
+      "\"\"\""
+    ],
+    "description": "@doc example"
+  },
+  "DynamicSupervisor spec": {
+    "prefix": [
+      "supervisor_spec_dynamic",
+      "dynamic_supervisor_spec",
+      "spec_dynamic_supervisor"
+    ],
+    "body": [
+      "%{",
+      "id: ${1:compulsory},",
+      "start: {",
+      "  DynamicSupervisor, ",
+      ":start_link, [[strategy: :one_for_one, name: ${2:compulsory}]]}, ",
+      "type: :supervisor",
+      "}"
+    ],
+    "description": "DynamicSupervisor specification"
+  },
+  "Supervisor snippet": {
+    "prefix": ["supervisor_snippet", "use_supervisor"],
+    "body": [
+      "defmodule ${1:SupervisorName} do",
+      "  use Supervisor",
+      "$0",
+      "  def start_link(opts) do",
+      "      # opts = Keyword.put_new(opts, :name, __MODULE__)",
+      "      # _name = Keyword.fetch!(opts, :name)",
+      "      Supervisor.start_link(__MODULE__, :ok, opts)",
+      "  end",
+      "",
+      "  ## Supervisor callbacks",
+      "",
+      "  @impl true",
+      "  def init(_) do",
+      "      children = []",
+      "",
+      "      Supervisor.init(",
+      "          children,",
+      "          strategy: :one_for_one",
+      "      )",
+      "  end",
+      "end",
+      "",
+      "# Add this supervisor to your main supervision tree:",
+      "# children = [",
+      "#   $1",
+      "#   # {$1, start_link_args}",
+      "# ]",
+      "#",
+      "#",
+      "# Root Supervisor",
+      "# Supervisor.start_link(",
+      "#   children,",
+      "#   strategy: :one_for_one",
+      "# )"
+    ],
+    "description": "Supervisor snippet"
+  },
+  "Dynamic Supervisor Module": {
+    "prefix": [
+      "dynamic_supervisor_module",
+      "supervisor_dynamic_module",
+      "module_dynamic_supervisor"
+    ],
+    "body": [
+      "defmodule ${1:MySupervisor} do",
+      "  use DynamicSupervisor",
+      "",
+      "  @process_name __MODULE__",
+      "$0",
+      "  ## Client APIs",
+      "",
+      "  def start_link(init_arg) do",
+      "      DynamicSupervisor.start_link(",
+      "          # The module which defines init/1 (in this case, this module)",
+      "          __MODULE__,",
+      "",
+      "          # Argument passed to init/1. If there is no argument, just pass the",
+      "          # atom `:ok`",
+      "          init_arg,",
+      "          # Name registration",
+      "          name: @process_name",
+      "      )",
+      "  end",
+      "",
+      "  def start_child(foo, bar, baz) do",
+      "      # If MyWorker is not using the new child specs, we need to pass a map:",
+      "      # spec = %{id: MyWorker, start: {MyWorker, :start_link, [foo, bar, baz]}}",
+      "      # This is useful if child worker does not follow the `start_link`",
+      "      # convention.",
+      "",
+      "      spec = {",
+      "          MyWorker,",
+      "          # Argument passed to child worker's `start_link`. If uses function",
+      "          # named other than `start_link`, use a spec map as stated above.",
+      "          foo: foo, bar: bar, baz: baz",
+      "      }",
+      "",
+      "      DynamicSupervisor.start_child(",
+      "          @process_name,",
+      "          spec",
+      "      )",
+      "  end",
+      "",
+      "  @doc \"\"\"",
+      "      Nice utility method to list all processes under supervision",
+      "  \"\"\"",
+      "  def list_children do",
+      "      # [",
+      "      #   %{",
+      "      #     id: :undefined, # always `:undefined` for dynamic supervisor",
+      "      #     child: PID, # or `:restarting` if about to be restarted",
+      "      #     type: :worker, # or :supervisor",
+      "      #     modules: [] # as defined in child spec",
+      "      #   }",
+      "      # ]",
+      "      DynamicSupervisor.which_children(@process_name)",
+      "  end",
+      "",
+      "  @doc \"\"\"",
+      "      Nice utility method to return number of processes under supervision",
+      "  \"\"\"",
+      "  def count_children do",
+      "      # %{active: 2, specs: 2, supervisors: 0, workers: 2}",
+      "      DynamicSupervisor.count_children(@process_name)",
+      "  end",
+      "",
+      "  ## Supervisor callbacks",
+      "",
+      "  @impl true",
+      "  def init(init_arg) do",
+      "      DynamicSupervisor.init(",
+      "          strategy: :one_for_one,",
+      "          extra_arguments: [init_arg]",
+      "      )",
+      "  end",
+      "end",
+      "",
+      "# Add this supervisor to your main supervision tree:",
+      "# children = [",
+      "#   {",
+      "#     MySupervisor,",
+      "#     strategy: :one_for_one, name: MySupervisor",
+      "#   }",
+      "# ]",
+      "#",
+      "#",
+      "# Root Supervisor",
+      "# Supervisor.start_link(",
+      "#   children,",
+      "#   strategy: :one_for_one",
+      "# )"
+    ],
+    "description": "Dynamic Supervisor Module"
+  },
+  "Create ecto table": {
+    "prefix": "create_table_ecto",
+    "body": [
+      "create table(:${1:table_name}, primary_key: false) do",
+      "  add :id, :binary_id, primary_key: true, comment: \"Primary key\"",
+      "  add :source, :string, null: false, default: \"password\", comment: \"source of token\"",
+      "  add :token, :string, null: false, comment: \"token from source\"",
+      "  add :related_id, references(:relateds, on_delete: :delete_all), null: false, comment: \"The owner of ${1:table_name}\"",
+      "",
+      "  timestamps(type: :utc_datetime)",
+      "end",
+      "",
+      ":${1:table_name}",
+      "|> index([:source, :token])",
+      "|> create()",
+      "",
+      ":${1:table_name}",
+      "|> unique_index([:related_id, :source])",
+      "|> create()"
+    ],
+    "description": "Create ecto table"
+  },
+  "Create ecto schema": {
+    "prefix": "create_schema_ecto",
+    "body": [
+      "defmodule ${1:module_name} do",
+      "  use Ecto.Schema, warn: true",
+      "",
+      "  import Ecto.Changeset",
+      "",
+      "  alias Ecto.Changeset",
+      "",
+      "  @primary_key {:id, :binary_id, autogenerate: true}",
+      "  @foreign_key_type :binary_id",
+      "  schema \"${2:schema_name}\" do",
+      "    field(:${3:field_name}, :string)",
+      "",
+      "    timestamps(type: :utc_datetime)",
+      "  end",
+      "",
+      "  @doc \"changeset\"",
+      "  def changeset(%__MODULE__{} = ${4:name}, %{} = ${5:attrs}) do",
+      "    ${4:name}",
+      "    |> cast(${5:attrs}, [:${3:field_name}])",
+      "  end",
+      "end"
+    ],
+    "description": "Create ecto schema"
+  },
+  "Ecto aliases": {
+    "prefix": "ecto_aliases",
+    "body": [
+      "defp aliases do",
+      "  [",
+      "    \"ecto.setup\": [\"ecto.create\", \"ecto.migrate\", \"run priv/repo/seeds.exs\"],",
+      "    \"ecto.reset\": [\"ecto.drop\", \"ecto.setup\"],",
+      "    test: [\"ecto.create --quiet\", \"ecto.migrate\", \"test\"]",
+      "  ]",
+      "end"
+    ],
+    "description": "Ecto aliases"
+  },
+  "elixirc_paths": {
+    "prefix": ["elixirc_paths_def"],
+    "body": [
+      "defp elixirc_paths(:prod), do: [\"lib\"]",
+      "defp elixirc_paths(:dev), do: [\"lib\", \"lib_dev\"]",
+      "defp elixirc_paths(:test), do: elixirc_paths(:dev) ++ [\"test/support\"]",
+      "defp elixirc_paths(:e2e), do: elixirc_paths(:dev) ++ [\"lib_e2e\"]",
+      "# Mostly for IDE - to signal all compilation folders",
+      "defp elixirc_paths(:all), do: [\"lib\", \"lib_dev\", \"test/support\", \"lib_e2e\"]"
+    ],
+    "description": ["elixirc_paths"]
+  },
+  "absinthe child schema": {
+    "prefix": "absinthe_child_schema_definition",
+    "body": [
+      "defmodule ${1:module_parent}.Schema.${2:module_name} do",
+      "  use Absinthe.Schema.Notation",
+      "",
+      "  alias ${1:module_parent}.${2:module_name}.Resolver",
+      "",
+      "  @desc \"A ${2:module_name}\"",
+      "  object :${3:schema_name} do",
+      "      field :id, non_null(:id)",
+      "",
+      "      field :inserted_at, non_null(:iso_datetime)",
+      "      field :updated_at, non_null(:iso_datetime)",
+      "  end",
+      "",
+      "  @desc \"Variables for creating ${2:module_name}\"",
+      "  input_object :${3:schema_name} do",
+      "      field :name, non_null(:string)",
+      "  end",
+      "",
+      "  @desc \"Mutations allowed on ${2:module_name} object\"",
+      "  object :${3:schema_name}_mutation do",
+      "      @doc \"Create a ${3:schema_name}\"",
+      "      field :field_input, :${3:schema_name} do",
+      "          arg :field_input, non_null(:field_input)",
+      "",
+      "          resolve(&Resolver.create/3)",
+      "      end",
+      "  end",
+      "",
+      "  @desc \"Queries allowed on ${2:module_name} object\"",
+      "  object :${3:schema_name}_query do",
+      "      @desc \"query a ${3:schema_name} \"",
+      "      field :field, :${3:schema_name} do",
+      "          arg :field, non_null(:field_input)",
+      "          resolve(&Resolver.field/3)",
+      "      end",
+      "  end",
+      "end"
+    ],
+    "description": "absinthe child schema definition"
+  },
+  "absinthe schema": {
+    "prefix": "absinthe_schema_definition",
+    "body": [
+      "defmodule ${1:module_name}.Schema do",
+      "  use Absinthe.Schema",
+      "",
+      "  import_types(Absinthe.Type.Custom)",
+      "  import_types(${1:module_name}.Schema.Types)",
+      "",
+      "",
+      "  query do",
+      "      import_fields :${2:child}_query",
+      "  end",
+      "",
+      "  mutation do",
+      "      import_fields :${2:child}_mutation",
+      "  end",
+      "",
+      "  def context(ctx) do",
+      "      loader =",
+      "          Dataloader.new()",
+      "          |> Dataloader.add_source(",
+      "              :data,",
+      "              Dataloader.Ecto.new(${3:repo_module}.Repo, query: &my_data/2)",
+      "          )",
+      "",
+      "      Map.put(ctx, :loader, loader)",
+      "  end",
+      "",
+      "  def plugins do",
+      "      [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()",
+      "  end",
+      "",
+      "  def my_data(queryable, _params) do",
+      "      queryable",
+      "  end",
+      "end"
+    ],
+    "description": "absinthe schema definition"
+  },
+  "@desc": {
+    "prefix": "@desc",
+    "body": ["@desc ~S\"\"\"", "  ${1}", "\"\"\""],
+    "description": "@desc"
+  },
+  "helperfunction": {
+    "prefix": "helperfunction",
+    "body": [
+      "############################################",
+      "# START ${1}",
+      "############################################",
+      "",
+      "${2}",
+      "",
+      "############################################",
+      "# END ${1}",
+      "############################################"
+    ],
+    "description": "helperfunction"
+  },
+  "GenServer snippet": {
+    "prefix": ["genserver_snippet", "use_genserver"],
+    "body": [
+      "defmodule ${1:ModuleName} do",
+      "  use GenServer",
+      "$0",
+      "  ## Client API",
+      "",
+      "  def start_link(opts) do",
+      "      # opts = Keyword.put_new(opts, :name, __MODULE__)",
+      "      # _name = Keyword.fetch!(opts, :name)",
+      "      GenServer.start_link(__MODULE__, opts, opts)",
+      "  end",
+      "",
+      "  ## GenServer Callbacks",
+      "",
+      "  @impl true",
+      "  def init(state) do",
+      "      {:ok, state}",
+      "      # {:ok, state, {:continue, :start}}",
+      "  end",
+      "",
+      "  @impl true",
+      "  def handle_call(_request, _from, state) do",
+      "      {:reply, :ok, state}",
+      "  end",
+      "",
+      "  @impl true",
+      "  def handle_cast(_request, state) do",
+      "      {:noreply, state}",
+      "  end",
+      "",
+      "  @impl true",
+      "  def handle_info(unexpected_msg, state) do",
+      "      IO.puts([\"Received unexpected message: \", inspect(unexpected_msg)])",
+      "      {:noreply, state}",
+      "  end",
+      "",
+      "  @impl true",
+      "  def handle_continue(_continue, state) do",
+      "      {:noreply, state}",
+      "  end",
+      "end"
+    ],
+    "description": "GenServer snippet"
+  },
+  "Def child spec": {
+    "prefix": ["def_child_spec", "child_spec_def"],
+    "body": [
+      "def child_spec(${1:_opts}) do",
+      "",
+      "  # opts = Keyword.put_new(opts, :name, __MODULE__)",
+      "  # name = Keyword.fetch!(opts, :name)",
+      "",
+      "  %{",
+      "      # You may use the name option to customize the ID",
+      "      id: ${2:__MODULE__},",
+      "      start: {",
+      "          # The module to call",
+      "          ${3:__MODULE__},",
+      "          # start_func, conventionally `:start_link`",
+      "          ${4::start_link},",
+      "          # we will call module.start_func(..start_func_args)",
+      "          [${5:_start_func_args = []}]",
+      "      },",
+      "      # or :supervisor",
+      "      type: ${6::worker},",
+      "      # Optional - :temporary / :transient",
+      "      ${7:restart: :permanent,}",
+      "      # Optional: defaults to 5_000 for worker and :infinity for supervisor",
+      "      ${8:shutdown: 5_000}",
+      "  }",
+      "end"
+    ],
+    "description": "Def child spec"
+  },
+  "Process get callers": {
+    "prefix": ["process_get_callers", "callers_process_get"],
+    "body": ["Process.get(:\"\\$callers\")"],
+    "description": "Process get callers"
+  },
+  "if else clause": {
+    "prefix": "ifelse",
+    "body": [
+      "if ${1:condition} do",
+      "  ${2:expr}",
+      "else",
+      "  ${3:expr}",
+      "end"
+    ],
+    "description": "if else clause"
+  },
+  "if inline": {
+    "prefix": ["if_short", "if_inline", "if:"],
+    "body": "if ${1:condition}, do: $0",
+    "description": "if inline"
+  },
+  "if else inline": {
+    "prefix": ["if_else_inline", "if_inline_else", "if_short_else"],
+    "body": "if ${1:condition}, do: $2, else: $0",
+    "description": "if else inline"
+  },
+  "cond": {
+    "prefix": "cond",
+    "body": ["cond do", "  $1 -> ", "  $0", "end"]
+  },
+  "def + doc": {
+    "prefix": "defdoc",
+    "body": [
+      "@doc \"\"\"",
+      "${1:doc}",
+      "\"\"\"",
+      "def ${2:func_name}(${3:args}) do",
+      "  $0",
+      "end"
+    ]
+  },
+  "def + doc false": {
+    "prefix": "defdocfalse",
+    "body": ["@doc false", "def ${1:func_name}(${2:arg}) do", "  $0", "end"]
+  },
+  "def + spec": {
+    "prefix": "defspec",
+    "body": [
+      "@spec ${1:func_name}(${2:args}) :: ${3:no_return}",
+      "def $1(${4:args}) do",
+      "  $0",
+      "end"
+    ]
+  },
+  "def + doc + spec": {
+    "prefix": "defdocspec",
+    "body": [
+      "@doc \"\"\"",
+      "${1:doc}",
+      "\"\"\"",
+      "@spec ${2:func_name}(${3:args}) :: ${4:no_return}",
+      "def ${2:func_name}(${5:args}) do",
+      "  $0",
+      "end"
+    ]
+  },
+  "defp": {
+    "prefix": ["defp_short", "defp_inline", "defp:"],
+    "body": "defp ${1:func_name}(${2:arg}), do: ${0:# code}",
+    "description": "defp short Private function"
+  },
+  "def": {
+    "prefix": ["def_short", "def_inline", "def:"],
+    "body": "def ${1:func_name}(${2:arg}), do: ${0:# code}",
+    "description": "def short Public function"
+  },
+  "moduledoc s": {
+    "prefix": "mdocs",
+    "body": ["@moduledoc ~S\"\"\"", "$0", "\"\"\""]
+  },
+  "require": {
+    "prefix": "req",
+    "body": "require ${0:Logger}"
+  },
+  "test": {
+    "prefix": "test:",
+    "body": ["test \"${1:name}\" do", "  $0", "end"]
+  },
+  "des": {
+    "prefix": "describe:",
+    "body": ["describe \"${1:test group subject}\" do", "  $0", "end"]
+  },
+  // IEX
+  "IEx.pry": {
+    "prefix": ["pry_iex", "iex_pry"],
+    "body": ["require IEx; IEx.pry$0"],
+    "description": "IEx.pry"
+  },
+  "IEx.configure": {
+    "prefix": ["iex_configure", "configure_iex"],
+    "body": ["IEx.configure(inspect: [charlists: :as_lists])", "$0"],
+    "description": "IEx.configure"
+  },
+  // END IEX
+  "pipe char": {
+    "prefix": "p",
+    "body": "|> $0"
+  },
+  "pipe into each": {
+    "prefix": ">e",
+    "body": "|> Enum.each($0)"
+  },
+  "pipe into map": {
+    "prefix": ">m",
+    "body": "|> Enum.map($0)"
+  },
+  "pipe into filter": {
+    "prefix": ">f",
+    "body": "|> Enum.filter($0)"
+  },
+  "pipe into reduce": {
+    "prefix": ">f",
+    "body": "|> Enum.reduce(${1:acc}, fn ${2}, ${3:acc} -> $0 end)"
+  },
+  "word list": {
+    "prefix": ["word_list", "list_word", "wlw"],
+    "body": "~w($0)",
+    "description": "Word list"
+  },
+  "atom list": {
+    "prefix": ["atom_list", "list_atom", "wla"],
+    "body": "~w($0)a",
+    "description": "Atom list"
+  },
+  "receive after block": {
+    "prefix": ["receive_after"],
+    "body": [
+      "receive do",
+      "  ${1:{:message_type, value\\}} ->",
+      "      ${2:# code}",
+      "after",
+      "  ${3:timeout} ->",
+      "      ${4:# code}",
+      "end"
+    ],
+    "description": "receive after block"
+  },
+  "mix test interactive": {
+    "prefix": [
+      "mix_test_interactive",
+      "interactive_mix_test",
+      "test_interactive_mix"
+    ],
+    "body": [
+      "{",
+      "  :mix_test_interactive,",
+      "  \"~> 1.2\",",
+      "  only: [:dev, :test], runtime: false",
+      "}",
+      "if Mix.env() != :prod do",
+      "  config :mix_test_interactive,",
+      "    clear: true,",
+      "    exclude: [",
+      "      ~r/___scratch/,",
+      "      ~r/\\.db\\$/,",
+      "      ~r/\\.db-.+/",
+      "    ]",
+      "end"
+    ],
+    "description": "Mix test interactive"
+  },
+  "Supervisor strategy one_for_one": {
+    "prefix": ["one_for_one_strategy", "strategy_one_for_one"],
+    "body": "strategy: :one_for_one",
+    "description": "Supervisor strategy one_for_one"
+  },
+  "restart temporary": {
+    "prefix": ["restart_temporary", "temporary"],
+    "body": "restart: :temporary",
+    "description": "restart temporary"
+  },
+  "restart permanent": {
+    "prefix": ["restart_permanent", "permanent"],
+    "body": "restart: :permanent",
+    "description": "restart permanent"
+  },
+  "restart transient": {
+    "prefix": ["restart_transient", "transient"],
+    "body": "restart: :transient",
+    "description": "restart transient"
+  },
+  "Supervisor strategy rest_for_one": {
+    "prefix": ["rest_for_one_strategy", "strategy_rest_for_one"],
+    "body": "strategy: :rest_for_one",
+    "description": "Supervisor strategy rest_for_one"
+  },
+  "Supervisor strategy one_for_all": {
+    "prefix": ["one_for_all_strategy", "strategy_one_for_all"],
+    "body": "strategy: :one_for_all",
+    "description": "Supervisor strategy one_for_all"
+  },
+  "handle_info :DOWN": {
+    "prefix": [
+      "down_message",
+      "down_process",
+      "down_handle_info",
+      "handle_info_down"
+    ],
+    "body": "{:DOWN, ${1:_ref}, :process, ${2:_pid}, ${3:_reason}}",
+    "description": "handle_info :DOWN"
+  },
+  "ets new": {
+    "prefix": [":ets_new", "ets_new", "new_ets"],
+    "body": [
+      "_table_ref =",
+      "  :ets.new(${0:name}, [",
+      "      :set,",
+      "      :protected,",
+      "      :named_table,",
+      "      read_concurrency: false,",
+      "      write_concurrency: false,",
+      "      keypos: 1",
+      "  ])"
+    ],
+    "description": "ets new"
+  },
+  "gen_tcp options": {
+    "prefix": ["gen_tcp_options", "tcp_options_gen"],
+    "body": [
+      "[",
+      "  # receives data as binaries (instead of lists)",
+      "  :binary,",
+      "  # receives data line by line",
+      "  packet: :line,",
+      "  # blocks on `:gen_tcp.recv/2` until data is available",
+      "  active: false,",
+      "  # allows us to reuse the address if the listener crashes",
+      "  reuseaddr: true",
+      "]"
+    ],
+    "description": "gen_tcp options"
+  },
+  "stop genserver": {
+    "prefix": ["genserver_stop", "stop_genserver"],
+    "body": "{:stop, ${1::normal}, ${0:next_state}\\}",
+    "description": "Stop genserver"
+  },
+  "Ecto primary key false migration": {
+    "prefix": ["ecto_primary_key_false", "primary_key_false_ecto", "id_false"],
+    "body": [
+      ", primary_key: false",
+      "",
+      "add(",
+      "  :id,",
+      "  :binary_id,",
+      "  primary_key: true",
+      ")",
+      "",
+      "@primary_key {:id, :binary_id, autogenerate: true}",
+      "@foreign_key_type :binary_id"
+    ],
+    "description": "Ecto primary key false migration"
+  },
+
+  "live_component": {
+    "prefix": ["use_live_component", "live_component"],
+    "body": [
+      "defmodule ${1:module_name} do",
+      "  use ${2:Web}Web, :live_component",
+      "",
+      "  # <.live_component",
+      "  #   module={$1}",
+      "  #   id={post.id$0}",
+      "  #   post={post}",
+      "  # />",
+      "",
+      "end"
+    ],
+    "description": "Use live_component"
+  },
+  "cache-x": {
+    "prefix": ["boiler_cache_x", "cache_x_boiler"],
+    "body": [
+      "defmodule ${1:module_base_name}.AppCache do",
+      "",
+      "  @cache ${2:cache_name}",
+      "",
+      "  def fetch_resources(cb) do",
+      "      Cachex.fetch(@cache, resources_key(), cb)",
+      "  end",
+      "",
+      "  def fetch_resource(id, cb) do",
+      "      Cachex.fetch(@cache, resource_key(id), cb)",
+      "  end",
+      "",
+      "  def put_resource(resource) do",
+      "      Cachex.execute(@cache, fn cache ->",
+      "          Cachex.put(cache, resource_key(resource.id), resource)",
+      "          Cachex.del(cache, resources_key())",
+      "      end)",
+      "  end",
+      "",
+      "  def del_resource(id) do",
+      "      Cachex.execute(@cache, fn cache ->",
+      "          Cachex.del(cache, resource_key(id))",
+      "          Cachex.del(cache, resources_key())",
+      "      end)",
+      "  end",
+      "",
+      "  def put_resource_params(id, params),",
+      "      do: Cachex.put(@cache, resource_params_key(id), params)",
+      "",
+      "  def get_resource_params(id) do",
+      "      {:ok, val} = Cachex.get(@cache, resource_params_key(id))",
+      "      val || %{}",
+      "  end",
+      "",
+      "  def del_resource_params(id), do: Cachex.del(@cache, resource_params_key(id))",
+      "",
+      "  def resources_key(), do: \"resources\"",
+      "",
+      "  def resource_key(id), do: \"resource:#{id}\"",
+      "",
+      "  def resource_params_key(id), do: \"resource_params:#{id}\"",
+      "",
+      "  def purge_all(), do: Cachex.clear(@cache)",
+      "end",
+      "",
+      "{:cachex, \"~> 3.4\"}",
+      "{Cachex, name: $2}"
+    ],
+    "description": ["Cachex Boilerplate"]
+  },
+  "tailwind": {
+    "prefix": ["tailwind_boiler_plate_elixir", "boilerplate_tailwind_elixir"],
+    "body": [
+      "{:tailwind, \"~> 0.1.6\", runtime: Mix.env() == :dev}",
+      "",
+      "# config/config.exs",
+      "config :tailwind,",
+      "  version: \"3.1.0\",",
+      "  default: [",
+      "      args: ~w(",
+      "          --config=tailwind.config.js",
+      "          --input=css/app.css",
+      "          --output=../priv/static/assets/css/app.css",
+      "      ),",
+      "      cd: Path.expand(\"../assets\", __DIR__)",
+      "  ]",
+      "",
+      "# config/dev.exs",
+      "tailwind: {",
+      "  Tailwind,",
+      "  :install_and_run,",
+      "  [:default, ~w(--watch)]",
+      "}",
+      "",
+      "",
+      "assets/tailwind.config.js",
+      "// See the Tailwind configuration guide for advanced usage",
+      "// https://tailwindcss.com/docs/configuration",
+      "module.exports = {",
+      "  content: [\"./js/**/*.js\", \"../lib/*_web.ex\", \"../lib/*_web/**/*.*ex\"],",
+      "  theme: {",
+      "      extend: {},",
+      "  },",
+      "  plugins: [require(\"@tailwindcss/forms\")],",
+      "};",
+      "",
+      "",
+      "",
+      "assets/css/app.css",
+      "@import \"tailwindcss/base\";",
+      "@import \"tailwindcss/components\";",
+      "@import \"tailwindcss/utilities\";",
+      "",
+      "",
+      "templates/layout/root.html.heex",
+      "<link",
+      "  phx-track-static",
+      "  rel=\"stylesheet\"",
+      "  href={Routes.static_path(@conn, \"/assets/css/bulma.css\")}",
+      "/>",
+      "",
+      "<link",
+      "  phx-track-static",
+      "  rel=\"stylesheet\"",
+      "  href={Routes.static_path(@conn, \"/assets/css/app.css\")}",
+      "/>",
+      "",
+      "<script",
+      "  defer",
+      "  phx-track-static",
+      "  type=\"text/javascript\"",
+      "  src={Routes.static_path(@conn, \"/assets/js/app.js\")}",
+      ">",
+      "</script>"
+    ],
+    "description": ["Tailwind boiler plate elixir"]
+  },
+  "formatter": {
+    "prefix": [
+      "formatter_phoenix_boilerplate",
+      "phoenix_formatter_boilerplate"
+    ],
+    "body": [
+      "[",
+      "  import_deps: [:ecto, :phoenix],",
+      "  subdirectories: [\"priv/*/migrations\"],",
+      "  plugins: [Phoenix.LiveView.HTMLFormatter],",
+      "  inputs: [",
+      "      \"*.{heex,ex,exs}\",",
+      "      \"priv/*/seeds.exs\",",
+      "      \"{config,lib,test}/**/*.{heex,ex,exs}\"",
+      "  ],",
+      "  line_length: 80,",
+      "  heex_line_length: 80",
+      "]"
+    ],
+    "description": ["Formatter.exs file for phoenix"]
+  },
+  "heex": {
+    "prefix": ["he", "heex"],
+    "body": ["~H\"\"\"", "$0", "\"\"\""],
+    "description": ["~H Heex sigil"]
+  },
+  "reg-unique": {
+    "prefix": ["registry_unique", "unique_registry"],
+    "body": ["{Registry, keys: :unique, name: ${0:name}}"],
+    "description": ["Registry unique"]
+  },
+  "reg-via": {
+    "prefix": ["registry_via", "via_registry"],
+    "body": ["{:via, Registry, {${1:name}, ${0:key}}}"],
+    "description": ["Registry via"]
+  },
+  "releases": {
+    "prefix": ["releases_snippet"],
+    "body": [
+      "releases: [",
+      "  foo: [",
+      "      version: \"0.0.0\",",
+      "      include_executables_for: [:unix],",
+      "      applications: [",
+      "          app1: :permanent",
+      "      ]",
+      "  ],",
+      "  bar: [",
+      "      version: \"0.0.0\",",
+      "      include_executables_for: [:unix],",
+      "      applications: [",
+      "          app2: :permanent",
+      "      ]",
+      "  ]",
+      "]"
+    ],
+    "description": ["Releases"]
+  },
+  "import mix config": {
+    "prefix": ["mix_import_config", "import_mix_config"],
+    "body": ["import_config \"#{Mix.env()}.exs\""],
+    "description": ["import mix config"]
+  },
+  "todo": {
+    "prefix": ["todo"],
+    "body": ["# TODO${1:(author)}: ${0:todo_text}"],
+    "description": ["TODO"]
+  },
+  "def Application": {
+    "prefix": ["def_application", "application_def"],
+    "body": [
+      "defmodule ${1:ModuleName}.Application do",
+      "  # See https://hexdocs.pm/elixir/Application.html",
+      "  # for more information on OTP Applications",
+      "  @moduledoc false",
+      "",
+      "  use Application",
+      "",
+      "  @impl true",
+      "  def start(_type, _args) do",
+      "      children = [",
+      "        $0",
+      "      ]",
+      "",
+      "      # See https://hexdocs.pm/elixir/Supervisor.html",
+      "      # for other strategies and supported options",
+      "      opts = [strategy: :one_for_one, name: ${1:ModuleName}.Supervisor]",
+      "      Supervisor.start_link(children, opts)",
+      "  end",
+      "end"
+    ],
+    "description": ["defmodule application"]
+  },
+  "start dynamic supervisor": {
+    "prefix": ["start_dynamic_supervisor", "dynamic_supervisor_start"],
+    "body": ["{DynamicSupervisor, strategy: :one_for_one, name: ${0:name}}"],
+    "description": ["Start dynamic supervisor"]
+  },
+  "start task sup": {
+    "prefix": ["start_task_supervisor", "task_supervisor_start"],
+    "body": [
+      "{Task.Supervisor, name: ${0:name}.TaskSupervisor}",
+      "{Task, fn -> :some_work end}"
+    ],
+    "description": ["Start task supervisor"]
+  },
+  "config-include file": {
+    "prefix": ["config_include_file", "include_config_file"],
+    "body": [
+      "{_result, binding} = Code.eval_file(Path.join(__DIR__, \"${1:file_name}\"))",
+      "b = Map.new(binding)"
+    ],
+    "description": ["Include file in config.exs"]
+  },
+  "debugger start": {
+    "prefix": ["debugger_start", "start_debugger"],
+    "body": [
+      ":debugger.start()",
+      ":int.ni(ModuleName)",
+      ":int.break(ModuleName, line_number)"
+    ],
+    "description": ["Debugger start"]
+  },
+  "ecto ulid primary_key autogen": {
+    "prefix": [
+      "primary_key_ecto_ulid_gen",
+      "primary_key_ulid_ecto_gen",
+      "ecto_ulid_primary_key_gen",
+      "ulid_ecto_primary_key_gen"
+    ],
+    "body": [
+      "@primary_key {:id, Ecto.ULID, autogenerate: true}",
+      "@foreign_key_type Ecto.ULID"
+    ],
+    "description": ["Ecto ULID primary key autogenerate"]
+  }
+}

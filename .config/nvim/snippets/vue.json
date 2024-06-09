@@ -1,0 +1,783 @@
+{
+  // CREDIT: https://github.com/sdras/vue-vscode-snippets
+  // vue-script.json
+  "Vue Data": {
+    "scope": "javascript,typescript",
+    "prefix": "vdata",
+    "body": [
+      "data() {",
+      "\tconst data: {",
+      "\t\t${1:prop}: ${2:propType};",
+      "\t} = {",
+      "\t\t${1:prop}: ${3:propVal},",
+      "\t};",
+      "",
+      "\treturn data;",
+      "},"
+    ],
+    "description": "Vue Component Data"
+  },
+  "Vue Methods": {
+    "scope": "javascript,typescript",
+    "prefix": "vmethod",
+    "body": ["methods: {", "\t${1:name}() {", "\t\t${0}", "\t}", "},"],
+    "description": "vue method"
+  },
+  "Vue Computed": {
+    "scope": "javascript,typescript",
+    "prefix": "vcomputed",
+    "body": [
+      "computed: {",
+      "\t${1:name}() {",
+      "\t\treturn this.${2:data} ${0}",
+      "\t}",
+      "},"
+    ],
+    "description": "computed value"
+  },
+  "Vue Lifecycle beforeCreate": {
+    "scope": "javascript,typescript",
+    "prefix": "vbeforecreate",
+    "body": ["beforeCreate () {", "\t${0};", "},"],
+    "description": "beforeCreate lifecycle method"
+  },
+  "Vue Lifecycle created": {
+    "scope": "javascript,typescript",
+    "prefix": "vcreated",
+    "body": ["created () {", "\t${0};", "},"],
+    "description": "created lifecycle method"
+  },
+  "Vue Lifecycle beforeMount": {
+    "scope": "javascript,typescript",
+    "prefix": "vbeforemount",
+    "body": ["beforeMount () {", "\t${0};", "},"],
+    "description": "beforeMount lifecycle method"
+  },
+  "Vue Lifecycle mounted": {
+    "scope": "javascript,typescript",
+    "prefix": "vmounted",
+    "body": ["mounted () {", "\t${0};", "},"],
+    "description": "mounted lifecycle method"
+  },
+  "Vue Lifecycle beforeUpdate": {
+    "scope": "javascript,typescript",
+    "prefix": "vbeforeupdate",
+    "body": ["beforeUpdate () {", "\t${0};", "},"],
+    "description": "beforeUpdate lifecycle method"
+  },
+  "Vue Lifecycle updated": {
+    "scope": "javascript,typescript",
+    "prefix": "vupdated",
+    "body": ["updated () {", "\t${0};", "},"],
+    "description": "updated lifecycle method"
+  },
+  "Vue Lifecycle beforeDestroy": {
+    "scope": "javascript,typescript",
+    "prefix": "vbeforedestroy",
+    "body": ["beforeDestroy () {", "\t${0};", "},"],
+    "description": "beforeDestroy lifecycle method"
+  },
+  "Vue Lifecycle destroyed": {
+    "scope": "javascript,typescript",
+    "prefix": "vdestroyed",
+    "body": ["destroyed () {", "\t${0};", "},"],
+    "description": "destroyed lifecycle method"
+  },
+  "Vue Watchers": {
+    "scope": "javascript,typescript",
+    "prefix": "vwatcher",
+    "body": [
+      "watch: {",
+      "\t${1:data}(${2:newValue}, ${3:oldValue}) {",
+      "\t\t${0}",
+      "\t}",
+      "},"
+    ],
+    "description": "vue watcher"
+  },
+  "Vue Watchers with Options": {
+    "scope": "javascript,typescript",
+    "prefix": "vwatcher-options",
+    "body": [
+      "watch: {",
+      "\t${1:data}: {",
+      "\t\timmediate: ${2:true},",
+      "\t\tdeep: ${3:true},",
+      "\t\thandler(${4:newValue}, ${5:oldValue}) {",
+      "\t\t\t${0}",
+      "\t\t}",
+      "\t}",
+      "},"
+    ],
+    "description": "vue watcher with options"
+  },
+  "Vue Props with Default": {
+    "scope": "javascript,typescript",
+    "prefix": "vprops",
+    "body": [
+      "props: {",
+      "\t${1:propName}: {",
+      "\t\ttype: ${2:Number},",
+      "\t\tdefault: ${0}",
+      "\t},",
+      "},"
+    ],
+    "description": "Vue Props with Default"
+  },
+  "Vue Import File": {
+    "scope": "javascript,typescript",
+    "prefix": "vimport",
+    "body": ["import ${1:New} from '@/components/${1:New}.vue';"],
+    "description": "Import one component into another"
+  },
+  "Vue Import into the Component": {
+    "scope": "javascript,typescript",
+    "prefix": "vcomponents",
+    "body": ["components: {", "\t${1:New},", "},"],
+    "description": "Import one component into another, within export statement"
+  },
+  "Vue Import Export": {
+    "scope": "javascript,typescript",
+    "prefix": "vimport-export",
+    "body": [
+      "import ${1:Name} from '@/components/${1:Name}.vue';",
+      "",
+      "export default {",
+      "\tcomponents: {",
+      "\t\t${1:Name}",
+      "\t},",
+      "};"
+    ],
+    "description": "import a component and include it in export default"
+  },
+  "Vue Import Component Dynamically": {
+    "scope": "javascript,typescript",
+    "prefix": "vimport-dynamic",
+    "body": ["${1:New} = () => import('@/components/${1:New}.vue')"],
+    "description": "Import component that should be lazy loaded"
+  },
+  "Vue MapState": {
+    "scope": "javascript,typescript",
+    "prefix": "vmapstate",
+    "body": [
+      "import { mapState } from 'vuex';",
+      "",
+      "export default {",
+      "\tcomputed: {",
+      "\t\t...mapState([",
+      "\t\t\t${1:'nameOfState'},",
+      "\t\t])",
+      "\t},",
+      "};"
+    ],
+    "description": "map getters inside a vue component"
+  },
+  "Vue MapGetters": {
+    "scope": "javascript,typescript",
+    "prefix": "vmapgetters",
+    "body": [
+      "import { mapGetters } from 'vuex';",
+      "",
+      "export default {",
+      "\tcomputed: {",
+      "\t\t...mapGetters([",
+      "\t\t\t${1:'nameOfGetter'},",
+      "\t\t])",
+      "\t},",
+      "};"
+    ],
+    "description": "mapgetters inside a vue component"
+  },
+  "Vue MapMutations": {
+    "scope": "javascript,typescript",
+    "prefix": "vmapmutations",
+    "body": [
+      "import { mapMutations } from 'vuex';",
+      "",
+      "export default {",
+      "\tmethods: {",
+      "\t\t...mapMutations([",
+      "\t\t\t${1:'nameOfMutation'}, //also supports payload `this.nameOfMutation(amount)` ",
+      "\t\t])",
+      "\t},",
+      "};"
+    ],
+    "description": "mapmutations inside a vue component"
+  },
+  "Vue MapActions": {
+    "scope": "javascript,typescript",
+    "prefix": "vmapactions",
+    "body": [
+      "import { mapActions } from 'vuex';",
+      "",
+      "export default {",
+      "\tmethods: {",
+      "\t\t...mapActions([",
+      "\t\t\t${1:'nameOfAction'}, //also supports payload `this.nameOfAction(amount)` ",
+      "\t\t])",
+      "\t},",
+      "};"
+    ],
+    "description": "mapactions inside a vue component"
+  },
+  "Vue Filter": {
+    "scope": "javascript,typescript",
+    "prefix": "vfilter",
+    "body": [
+      "filters: {",
+      "\t${1:fnName}: function(${2:value}) {",
+      "\t\treturn ${2:value}${0};",
+      "\t}",
+      "}"
+    ],
+    "description": "vue filter"
+  },
+  "Vue Mixin": {
+    "scope": "javascript,typescript",
+    "prefix": "vmixin",
+    "body": [
+      "const ${1:mixinName} = {",
+      "\tmounted() {",
+      "\t\tconsole.log('hello from mixin!');",
+      "\t},",
+      "};"
+    ],
+    "description": "vue mixin"
+  },
+  "Vue Use Mixin": {
+    "scope": "javascript,typescript",
+    "prefix": "vmixin-use",
+    "body": ["mixins: [${1:mixinName}],"],
+    "description": "vue use mixin"
+  },
+  "Vue Custom Directive": {
+    "scope": "javascript,typescript",
+    "prefix": "vc-direct",
+    "body": [
+      "Vue.directive('${1:directiveName}', {",
+      "\tbind(el, binding, vnode) {",
+      "\t\tel.style.${2:arg} = binding.value.${2:arg};",
+      "\t}",
+      "});"
+    ],
+    "description": "vue custom directive"
+  },
+  "Vue Transition Methods with JavaScript Hooks": {
+    "scope": "javascript,typescript",
+    "prefix": "vanimhook-js",
+    "body": [
+      "beforeEnter(el) {",
+      "\tconsole.log('beforeEnter');",
+      "},",
+      "enter(el, done) {",
+      "\tconsole.log('enter');",
+      "\tdone();",
+      "},",
+      "beforeLeave(el) {",
+      "\tconsole.log('beforeLeave');",
+      "},",
+      "leave(el, done) {",
+      "\tconsole.log('leave');",
+      "\tdone();",
+      "},"
+    ],
+    "description": "transition component js hooks"
+  },
+  "Vue Commit Vuex Store in Methods": {
+    "scope": "javascript,typescript",
+    "prefix": "vcommit",
+    "body": [
+      "${1:mutationName}() {",
+      "\tthis.\\$store.commit('${1:mutationName}', ${2:payload});",
+      "}"
+    ],
+    "description": "commit to vuex store in methods for mutation"
+  },
+  "Vue Dispatch Vuex Store in Methods": {
+    "scope": "javascript,typescript",
+    "prefix": "vdispatch",
+    "body": [
+      "${1:actionName}() {",
+      "\tthis.\\$store.dispatch('${1:actionName}', ${2:payload});",
+      "}"
+    ],
+    "description": "dispatch to vuex store in methods for action"
+  },
+  "Vue.config.js Import": {
+    "scope": "javascript,typescript",
+    "prefix": "vconfig",
+    "body": [
+      "module.exports = {",
+      "\tcss: {",
+      "\t\tloaderOptions: {",
+      "\t\t\t${1:sass}: {",
+      "\t\t\t\tdata: `${2:@import '@/styles/_variables.scss';}`",
+      "\t\t\t}",
+      "\t\t}",
+      "\t}",
+      "}"
+    ],
+    "description": "vue.config.js"
+  },
+  "Vue Composition API - Reactive": {
+    "scope": "javascript,typescript",
+    "prefix": "v3reactive",
+    "body": ["const ${1:name} = reactive({", "\t${2:count}: ${3:0}", "})"],
+    "description": "Vue Composition api - reactive"
+  },
+  "Vue Composition API - Computed": {
+    "scope": "javascript,typescript",
+    "prefix": "v3computed",
+    "body": ["const ${1:name} = computed(() => {", "\treturn ${2}", "})"],
+    "description": "Vue Composition api - computed"
+  },
+  "Vue Composition API - watch - single source": {
+    "scope": "javascript,typescript",
+    "prefix": "v3watch",
+    "body": ["watch(() => ${1:foo}, (newValue, oldValue) => {", "\t${2}", "})"],
+    "description": "Vue Composition api - watcher single source"
+  },
+  "Vue Composition API - watch - array": {
+    "scope": "javascript,typescript",
+    "prefix": "v3watch-array",
+    "body": [
+      "watch([${1:foo}, ${2:bar}], ([new${1}, new${2}], [prev${1}, prev${2}]) => {",
+      "\t${3}",
+      "})"
+    ],
+    "description": "Vue Composition api - watch as array"
+  },
+  "Vue Composition API - watchEffect": {
+    "scope": "javascript,typescript",
+    "prefix": "v3watcheffect",
+    "body": ["watchEffect(() => {", "\t${1}", "})"],
+    "description": "Vue Composition api - watchEffect"
+  },
+  "Vue Composition API - Vue ref": {
+    "scope": "javascript,typescript",
+    "prefix": "vref",
+    "body": [
+      "// REMEMBER to `<tag ref=\"$1\">` (not `ref.value`) in TEMPLATE",
+      "// if `ref` is to be referenced in a `DOM` element",
+      "// ALSO REMEMBER to return `ref` from `setup` else `ref` will not be updated in TEMPLATE (not reactive) ",
+      "// import { ref } from \"vue\"",
+      "const ${1:name} = ref(${2:initialValue})"
+    ],
+    "description": "Vue Ref"
+  },
+  "Vue Lifecycle Hooks - onMounted": {
+    "scope": "javascript,typescript",
+    "prefix": "v3onmounted",
+    "body": ["onMounted(() => {${1}})"],
+    "description": "Vue Mounted Lifecycle hook"
+  },
+  "Vue Lifecycle Hooks - onBeforeMount": {
+    "scope": "javascript,typescript",
+    "prefix": "v3onbeforemount",
+    "body": ["onBeforeMount(() => {${1}})"],
+    "description": "Vue onBeforeMount Lifecycle hook"
+  },
+  "Vue Lifecycle Hooks - onBeforeUpdate": {
+    "scope": "javascript,typescript",
+    "prefix": "v3onbeforeupdate",
+    "body": ["onBeforeUpdate(() => {${1}})"],
+    "description": "Vue onBeforeUpdate Lifecycle hook"
+  },
+  "Vue Lifecycle Hooks - onUpdated": {
+    "scope": "javascript,typescript",
+    "prefix": "v3onupdated",
+    "body": ["onUpdated(() => {${1}})"],
+    "description": "Vue onUpdated Lifecycle hook"
+  },
+  "Vue Lifecycle Hooks - onErrorCaptured": {
+    "scope": "javascript,typescript",
+    "prefix": "v3onerrorcaptured",
+    "body": ["onErrorCaptured(() => {${1}})"],
+    "description": "Vue onErrorCaptured Lifecycle hook"
+  },
+  "Vue Lifecycle Hooks - onUnmounted": {
+    "scope": "javascript,typescript",
+    "prefix": "v3onunmounted",
+    "body": ["onUnmounted(() => {${1}})"],
+    "description": "(destroyed) Vue onUnmounted Lifecycle hook"
+  },
+  "Vue Lifecycle Hooks - onBeforeUnmount": {
+    "scope": "javascript,typescript",
+    "prefix": "v3onbeforeunmount",
+    "body": ["onBeforeUnmount(() => {${1}})"],
+    "description": "(beforeDestroy) Vue onBeforeUnmount Lifecycle hook"
+  },
+  "Vue Routes Array Entry": {
+    "scope": "javascript,typescript",
+    "prefix": "vrouteentry",
+    "body": [
+      "{",
+      "\tpath: \"/${1}\",",
+      "\t// redirect: \"/${5}\",",
+      "\tname: \"${2:Name}\",",
+      "\t// component: ${2:Name},",
+      "\tcomponent: () =>",
+      "\t\t\timport(/* webpackChunkName: \"${3:Name}\" */ \"../views/${2:Name}.vue\"),",
+      "\t// ${4:props: true,}",
+      "},"
+    ],
+    "description": "Vue Routes Array Entry"
+  },
+  "Vue setup": {
+    "scope": "javascript,typescript",
+    "prefix": "vsetup",
+    "body": ["setup() {", "\treturn {};", "},"],
+    "description": "Vue template tag"
+  },
+  // END vue-script.json
+  // vue.json
+  "Vue Single File Component": {
+    "scope": "vue",
+    "prefix": "vbase-2",
+    "body": [
+      "<template>",
+      "$0",
+      "</template>",
+      "",
+      "<script lang=\"ts\">",
+      "import { defineComponent } from 'vue'",
+      "import { PropType } from 'vue';",
+      "",
+      "export default Vue.extend({",
+      "   name: 'name',",
+      "   props: {",
+      "   },",
+      "   setup() {",
+      "       return {};",
+      "   },",
+      "});",
+      "</script>"
+    ],
+    "description": "Base for Vue 2 typescript"
+  },
+  "Vue Single File Component with Typescript": {
+    "scope": "vue",
+    "prefix": "vbase-2-ts",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "",
+      "\t</div>",
+      "</template>",
+      "",
+      "<script lang=\"ts\">",
+      "\timport Vue from 'vue'",
+      "",
+      "\texport default Vue.extend({",
+      "\t\t${0}",
+      "\t})",
+      "</script>",
+      "",
+      "<style scoped></style>"
+    ],
+    "description": "Base for Vue File with Typescript"
+  },
+  "Vue Setup Script with Typescript": {
+    "scope": "vue",
+    "prefix": "vbase_setup",
+    "body": [
+      "<script setup lang=\"ts\">",
+      "import { ref } from \"vue\";",
+      "import { ActionType, reducer, Action, initState } from \"./add-course.utils\";",
+      "",
+      "//// DATA",
+      "",
+      "const state = ref(initState());",
+      "",
+      "//// END DATA",
+      "",
+      "//// METHODS",
+      "",
+      "function dispatch(action: Action) {",
+      "  reducer(state.value, action);",
+      "}",
+      "",
+      "//// END METHODS",
+      "</script>",
+      "",
+      "<template>",
+      "  <div",
+      "      @click=\"",
+      "          () =>",
+      "              dispatch({",
+      "                  type: ActionType.action,",
+      "                  data: '',",
+      "              })",
+      "      \"",
+      "  ></div>",
+      "</template>",
+      "",
+      "<style scoped></style>"
+    ],
+    "description": "Vue Setup Script with Typescript"
+  },
+  "Vue Single File Component Composition API": {
+    "scope": "vue",
+    "prefix": "vbase-3-js",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "",
+      "\t</div>",
+      "</template>",
+      "",
+      "<script>",
+      "export default {",
+      "\tsetup () {",
+      "\t\t${0://}",
+      "\t\treturn {}",
+      "\t}",
+      "}",
+      "</script>",
+      "",
+      "<style scoped>",
+      "",
+      "</style>"
+    ],
+    "description": "Base for Vue File Composition API with SCSS"
+  },
+  "Vue Single File Component Composition API with Typescript": {
+    "scope": "vue",
+    "prefix": "vbase",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "",
+      "\t</div>",
+      "</template>",
+      "",
+      "<script lang=\"ts\">",
+      "import { defineComponent } from 'vue'",
+      "// import { defineComponent } from '@vue/composition-api'",
+      "",
+      "export default defineComponent({",
+      "name: \"\",",
+      "setup() {",
+      "\treturn {};",
+      "},",
+      "})",
+      "</script>",
+      "",
+      "<style scoped></style>"
+    ],
+    "description": "Base for Vue File Composition API - Typescript"
+  },
+  "Vue Single File Component with Class based Typescript format": {
+    "scope": "vue",
+    "prefix": "vbase-ts-class",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "",
+      "\t</div>",
+      "</template>",
+      "",
+      "<script lang=\"ts\">",
+      "\timport { Component, Vue } from 'vue-property-decorator';",
+      "",
+      "\t@Component",
+      "\texport default class ${0} extends Vue {",
+      "\t\t",
+      "\t}",
+      "</script>",
+      "",
+      "<style scoped></style>"
+    ],
+    "description": "Base for Vue File with Class based Typescript format"
+  },
+  // vue-template.json
+  "Vue v-for array": {
+    "scope": "html",
+    "prefix": "vforarray",
+    "body": [
+      "<${1:div} v-for=\"( ${2:item} ${3:,index} ) in ${4:items}\" :key=\"${2:item}\">",
+      "\t{{ ${2:item} }}",
+      "</${1:div}>"
+    ],
+    "description": "vfor array statement"
+  },
+  "Vue v-for object": {
+    "scope": "html",
+    "prefix": "vforobject",
+    "body": [
+      "<${1:div} v-for=\"( ${2:value} ${3:,key} ${4:,index} ) in ${5:items}\" :key=\"${6:key}\">",
+      "\t{{ ${2:value} }}",
+      "</${1:div}>"
+    ],
+    "description": "vfor Object statement"
+  },
+  "Vue v-model Input Directive": {
+    "scope": "html",
+    "prefix": "vmodel-input",
+    "body": ["<input v-model=\"${1:data}\" type=\"text\" />"],
+    "description": "v-model Input directive"
+  },
+  "Vue v-model Directive": {
+    "scope": "html",
+    "prefix": "vmodel",
+    "body": ["v-model=\"${1:data}\""],
+    "description": "v-model directive"
+  },
+  "Vue v-model Input Number Directive": {
+    "scope": "html",
+    "prefix": "vmodel-input-num",
+    "body": [
+      "<input v-model.number=\"${1:numData}\" type=\"number\" step=\"1\" />"
+    ],
+    "description": "v-model directive number input"
+  },
+  "Vue v-model Number Directive": {
+    "scope": "html",
+    "prefix": "vmodel-num",
+    "body": ["v-model.number=\"${1:numData}\""],
+    "description": "v-model directive number input"
+  },
+  "Vue v-on Shortcut Directive": {
+    "scope": "html",
+    "prefix": "von",
+    "body": ["@click=\"${1:handler}(${2:arg}, $event)\""],
+    "description": "v-on click handler with arguments"
+  },
+  "Vue Component with Props Binding": {
+    "scope": "html",
+    "prefix": "vel-props",
+    "body": ["<${1:component} :${1:propName}=\"${0}\"></${1:component}>"],
+    "description": "component element with props"
+  },
+  "Vue Named Slot": {
+    "scope": "html",
+    "prefix": "vslot-named",
+    "body": ["<template v-slot:${0:name}>${1:defaultcontent}</template>"],
+    "description": "named slot"
+  },
+  "Vue Image Source Binding": {
+    "scope": "html",
+    "prefix": "vsrc",
+    "body": [
+      "<img :src=\"'/path/to/images/' + ${1:fileName}\" alt=\"${2:altText}\"/>"
+    ],
+    "description": "image source binding"
+  },
+  "Vue Style Binding": {
+    "scope": "html",
+    "prefix": "vstyle",
+    "body": ["<${1:div} :style=\"{ fontSize: ${2:data} + 'px' }\"></${1:div}>"],
+    "description": "vue inline style binding"
+  },
+  "Vue Style Binding Object": {
+    "scope": "html",
+    "prefix": "vstyle-obj",
+    "body": [
+      "<${1:div} :style=\"[${2:styleObjectA}, ${3:styleObjectB]}\"></${1:div}>"
+    ],
+    "description": "vue inline style binding, objects"
+  },
+  "Vue Class Binding": {
+    "scope": "html",
+    "prefix": "vclass",
+    "body": ["<${1:div} :class=\"{ ${2:className}: ${3:data} }\"></${1:div}>"],
+    "description": "vue class binding"
+  },
+  "Vue Class Binding Object": {
+    "scope": "html",
+    "prefix": "vclass-obj",
+    "body": [
+      "<${1:div} :class=\"[${2:classNameA}, ${3:classNameB}]\"></${1:div}>"
+    ],
+    "description": "vue class binding"
+  },
+  "Vue Multiple Conditional Class Bindings": {
+    "scope": "html",
+    "prefix": "vclass-obj-mult",
+    "body": [
+      "<${1:div} :class=\"[${2:classNameA}, {${3:classNameB} : ${4:condition}}]\"></${1:div}>"
+    ],
+    "description": "vue multiple conditional class bindings"
+  },
+  "Vue Transition Component with JavaScript Hooks": {
+    "scope": "html",
+    "prefix": "vanim",
+    "body": [
+      "<transition",
+      "\tmode=\"out-in\"",
+      "\t@before-enter=\"beforeEnter\"",
+      "\t@enter=\"enter\"",
+      "",
+      "\t@before-leave=\"beforeLeave\"",
+      "\t@leave=\"leave\"",
+      "\t:css=\"false\">",
+      "",
+      "</transition>"
+    ],
+    "description": "transition component js hooks"
+  },
+  "Vue Nuxt Routing Link": {
+    "scope": "html",
+    "prefix": "vnuxtl",
+    "body": ["<nuxt-link to=\"/${1:page}\">${1:page}</nuxt-link>"],
+    "description": "nuxt routing link"
+  },
+  "Vue Named Routing Link": {
+    "scope": "html",
+    "prefix": "vroutename",
+    "body": [
+      "<router-link :to=\"{name: '${1:name}'}\">${2:LinkTitle}</router-link>"
+    ],
+    "description": "Named routing link"
+  },
+  "Vue Named Routing Link with Params": {
+    "scope": "html",
+    "prefix": "vroutenameparam",
+    "body": [
+      "<router-link :to=\"{name: '${1:name}', params:{${2:id}: '${3:value}'} }\">${4:LinkTitle}</router-link>"
+    ],
+    "description": "Named routing link w/ params"
+  },
+  "Vue Path Routing Link": {
+    "scope": "html",
+    "prefix": "vroutepath",
+    "body": ["<router-link to=\"${1:path}\">${2:LinkTitle}</router-link>"],
+    "description": "Path routing link"
+  },
+  "Vue Emit from Child": {
+    "scope": "html",
+    "prefix": "vemit-child",
+    "body": ["@change=\"$emit('change', $event.target.value)\""],
+    "description": "Vue Emit from Child Component"
+  },
+  "Vue Emit to Parent": {
+    "scope": "html",
+    "prefix": "vemit-parent",
+    "body": ["@change=\"${1:foo} = $event\""],
+    "description": "Vue Emit to Parent Component"
+  },
+  "Vue v-bind Directive": {
+    "scope": "html",
+    "prefix": "vbind",
+    "body": ["v-bind=\"${1:\\$attrs}\""],
+    "description": "Vue v-bind Directive"
+  },
+  "Vue slot": {
+    "scope": "html",
+    "prefix": "vslot",
+    "body": ["<slot>", "$0", "</slot>"],
+    "description": "Vue slot"
+  },
+  "Vue Named slot": {
+    "scope": "html",
+    "prefix": "vslotname",
+    "body": ["<slot name=\"${1:name}\">$0</slot>"],
+    "description": "Vue slot"
+  },
+  "Vue template tag": {
+    "scope": "html",
+    "prefix": "vtemplate",
+    "body": ["<template>", "$0", "</template>"],
+    "description": "Vue template tag"
+  }
+}

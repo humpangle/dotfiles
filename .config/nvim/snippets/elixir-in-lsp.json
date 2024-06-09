@@ -1,0 +1,48 @@
+{
+  "if clause": {
+    "prefix": "if",
+    "body": ["if ${1:expr_for_condition} do", "  ${2:expr}", "end"],
+    "description": "if clause"
+  },
+  "defp": {
+    "prefix": "defp",
+    "body": ["defp ${1:func_name}() do", "  $0", "end"],
+    "description": "Private function"
+  },
+
+  "fn": {
+    "prefix": "fn",
+    "body": ["fn(${1:param}) -> ${2:expr} end"],
+    "description": "Anonymous function"
+  },
+  "def": {
+    "prefix": "def",
+    "body": ["def ${1:func_name}(${2:args}) do", "  $0", "end"],
+    "description": "Define a function"
+  },
+  "defmodule": {
+    "prefix": "defmodule",
+    "body": ["defmodule ${1:module_name} do", "  $0", "end"],
+    "description": "Define a module"
+  },
+  "receive block": {
+    "prefix": "receive",
+    "body": [
+      "receive do",
+      "  ${1:{:message_type, value}} ->",
+      "      # code$0",
+      "end"
+    ],
+    "description": " Checks if there is a message matching the given clauses in the current process mailbox."
+  },
+
+  "case": {
+    "prefix": "case",
+    "body": ["case $1 do", "  $2 -> ", "    $0", "end"]
+  },
+
+  "if .. do .. end": {
+    "prefix": "if",
+    "body": ["if ${1:condition} do", "  $0", "end"]
+  }
+}

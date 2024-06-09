@@ -1,0 +1,60 @@
+{
+  "name": "kanmii-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "elixir",
+        "path": "./elixir.json"
+      },
+      {
+        "language": "eelixir",
+        "path": "./eelixir.json"
+      },
+      {
+        "language": "erlang",
+        "path": "./erlang.json"
+      },
+      {
+        "language": "php",
+        "path": "./php.json"
+      },
+      {
+        "language": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "vue",
+          "svelte"
+        ],
+        "path": "./javascript.json"
+      },
+      {
+        "language": "vue",
+        "path": "./vue.json"
+      },
+      {
+        "language": "python",
+        "path": "./python.json"
+      },
+      {
+        "language": [
+          "sh",
+          "shellscript",
+          "shell",
+          "zsh"
+        ],
+        "path": "./sh.json"
+      },
+      {
+        "language": [
+          "markdown"
+        ],
+        "path": "./markdown.json"
+      }
+    ]
+  }
+}

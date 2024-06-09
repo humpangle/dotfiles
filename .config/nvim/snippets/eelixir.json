@@ -1,0 +1,296 @@
+{
+  "<%=": {
+    "prefix": ["render_html", "html_render"],
+    "body": "<%= $0 %>",
+    "description": "render html"
+  },
+  "<%": {
+    "prefix": ["render_exp", "exp_render", "exp_html", "html_exp"],
+    "body": "<% $0 %>",
+    "description": "render elixir expression"
+  },
+  "for": {
+    "prefix": ["for_render", "render_for", "for_html", "html_for"],
+    "body": ["<%= for ${1:item} <- ${2:items} do %>", "  $0", "<% end %>"],
+    "description": "for loop heex"
+  },
+  "for else": {
+    "prefix": [
+      "for_render_else",
+      "render_for_else",
+      "for_html_else",
+      "html_for_else"
+    ],
+    "body": [
+      "<%= for ${1:item} <- ${2:items} do %>",
+      "  $1",
+      "<% else %>",
+      "  $0",
+      "<% end %>"
+    ],
+    "description": "for else loop heex"
+  },
+  "unless": {
+    "prefix": ["unless_render", "render_unless", "unless_html", "html_unless"],
+    "body": ["<%= unless ${1:cond} do %>", "  ${0:expr}", "<% end %>"],
+    "description": "unless loop heex"
+  },
+  "unless else": {
+    "prefix": [
+      "unless_render_else",
+      "unless_html_else",
+      "render_unless_else",
+      "html_unless_else"
+    ],
+    "body": [
+      "<%= unless ${1:item} <- ${2:items} do %>",
+      "  $1",
+      "<% else %>",
+      "  $0",
+      "<% end %>"
+    ],
+    "description": "unless else loop heex"
+  },
+  "if": {
+    "prefix": ["if_html", "html_if", "if_render", "render_if"],
+    "body": ["<%= if ${1} do %>", "  $0", "<% end %>"],
+    "description": "if heex"
+  },
+  "ife": {
+    "prefix": "if_else",
+    "body": ["<%= if ${1} do %>", "  $2", "<% else %>", "  $0", "<% end %>"],
+    "description": "If else heex"
+  },
+  "link": {
+    "prefix": ["link_patch", "link_or_live_patch"],
+    "body": [
+      "<%= ${1:link_or_live_patch} to: \"${2:#}\",",
+      "  class: \"\",",
+      "  data: [confirm: \"Are you sure?\"]",
+      "do %>",
+      "  ${0:child}",
+      "<% end %>"
+    ],
+    "description": "link tag"
+  },
+  "link_l": {
+    "prefix": ["link_live_view", "live_view_link"],
+    "body": [
+      "<%= live_patch(",
+      "  \"${1:text}\",",
+      "  to:",
+      "    Routes.${2:post_index}_path(",
+      "      @socket, ",
+      "      ${3::method_name}${0:, resource}",
+      "    )",
+      ") %>"
+    ],
+    "description": "Live_path liveview link"
+  },
+  "Live component": {
+    "prefix": ["live_component_html", "html_live_component"],
+    "body": [
+      "<.live_component",
+      "  module={${1:module_name}\\}",
+      "  id={${0:id}\\}",
+      "/>"
+    ],
+    "description": "Live component HTML"
+  },
+  "phx-v": {
+    "prefix": ["phx-value"],
+    "body": ["phx-value-${1:val_name}={${0:val}\\} "],
+    "description": ["phx-value-* binding", "  phx-value-myvar1=\"val1\""]
+  },
+  "phx-click": {
+    "prefix": ["phx-click"],
+    "body": ["phx-click=\"${0:event-name}\""],
+    "description": [
+      "phx-click binding",
+      "  phx-click={JS.push(\"inc\", value: %{myvar1: @val1})}",
+      "  phx-click=\"inc\" phx-value-myvar1=\"val1\""
+    ]
+  },
+  "phx-click-away": {
+    "prefix": ["phx-click-away"],
+    "body": ["phx-click-away"],
+    "description": [
+      "phx-click-away fired when a click event happens outside of the element",
+      "Useful for hiding toggled containers like drop-downs, modals."
+    ]
+  },
+  "phx-change": {
+    "prefix": ["phx-change"],
+    "body": ["phx-change=\"${0:event-name}\""],
+    "description": ["phx-change: when form/input changes"]
+  },
+  "phx-submit": {
+    "prefix": ["phx-submit"],
+    "body": ["phx-submit=\"${0:event-name}\""],
+    "description": ["phx-submit when form submit button clicked"]
+  },
+  "phx-disable-with": {
+    "prefix": ["phx-disable-with"],
+    "body": ["phx-disable-with=\"${0:message}\""],
+    "description": [
+      "phx-disable-with button binding",
+      "swaps the element's innerText with the provided value during event submission."
+    ]
+  },
+  "phx-trigger-action": {
+    "prefix": ["phx-trigger-action"],
+    "body": ["phx-trigger-action"],
+    "description": [
+      "https://hexdocs.pm/phoenix_live_view/form-bindings.html#submitting-the-form-action-over-http"
+    ]
+  },
+  "phx-auto-recover": {
+    "prefix": ["phx-auto-recover"],
+    "body": ["phx-auto-recover"],
+    "description": [
+      "phx-auto-recover - recover user inputs on disconnect/server crash"
+    ]
+  },
+  "phx-blur": {
+    "prefix": ["phx-blur"],
+    "body": ["phx-blur=\"${0:event-name}\""],
+    "description": ["phx-blur"]
+  },
+  "phx-focus": {
+    "prefix": ["phx-focus"],
+    "body": ["phx-focus=\"${0:event-name}\""],
+    "description": ["phx-focus"]
+  },
+  "phx-window-blur": {
+    "prefix": ["phx-window-blur"],
+    "body": ["phx-window-blur=\"${0:event-name}\""],
+    "description": [
+      "phx-window-blur: Detect when page elm receives blur event",
+      "<div class=\"container\" phx-window-blur=\"page-inactive\" phx-value-page=\"123\">"
+    ]
+  },
+  "phx-window-focus": {
+    "prefix": ["phx-window-focus"],
+    "body": ["phx-window-focus=\"${0:event-name}\""],
+    "description": [
+      "phx-window-focus: Detect when page elm receives focus event",
+      "<div class=\"container\" phx-window-focus=\"page-inactive\" phx-value-page=\"123\">"
+    ]
+  },
+  "phx-keydown": {
+    "prefix": ["phx-keydown"],
+    "body": ["phx-keydown=\"${0:event-name}\""],
+    "description": ["phx-keydown"]
+  },
+  "phx-keyup": {
+    "prefix": ["phx-keyup"],
+    "body": ["phx-keyup=\"${0:event-name}\""],
+    "description": ["phx-keyup"]
+  },
+  "phx-window-keydown": {
+    "prefix": ["phx-window-keydown"],
+    "body": ["phx-window-keydown=\"${0:event-name}\""],
+    "description": ["phx-window-keydown"]
+  },
+  "phx-window-keyup": {
+    "prefix": ["phx-window-keyup"],
+    "body": ["phx-window-keyup=\"${0:event-name}\""],
+    "description": ["phx-window-keyup"]
+  },
+  "phx-key": {
+    "prefix": ["phx-key"],
+    "body": ["phx-key"],
+    "description": ["phx-key"]
+  },
+  "phx-update": {
+    "prefix": ["phx-update"],
+    "body": ["phx-update=\"${0:event-name}\""],
+    "description": ["phx-update DOM patching"]
+  },
+  "phx-update-pre": {
+    "prefix": ["phx-update-prepend"],
+    "body": ["phx-update=\"prepend\""],
+    "description": ["phx-update DOM prepend"]
+  },
+  "phx-update-app": {
+    "prefix": ["phx-update-append"],
+    "body": ["phx-update=\"append\""],
+    "description": ["phx-update DOM append"]
+  },
+  "phx-update-ig": {
+    "prefix": ["phx-update-ignore"],
+    "body": ["phx-update=\"ignore\""],
+    "description": [
+      "phx-update: ignores updates to the DOM regardless of new content changes.",
+      "Its attributes can still be updated.",
+      "Frequently used when you need to integrate with another JS library."
+    ]
+  },
+  "phx-remove": {
+    "prefix": ["phx-remove"],
+    "body": ["phx-remove=\"${0:event-name}\""],
+    "description": ["phx-remove DOM patching"]
+  },
+  "phx-debounce": {
+    "prefix": ["phx-debounce", "rate-limit-phx-debounce"],
+    "body": ["phx-debounce=\"${0:dom-event-or-mili-secs}\""],
+    "description": [
+      "phx-debounce rate limiting",
+      "  <input type=\"text\" name=\"user[email]\" phx-debounce=\"blur\"/>",
+      "  <input type=\"text\" name=\"user[username]\" phx-debounce=\"2000\"/>"
+    ]
+  },
+  "phx-throttle": {
+    "prefix": ["phx-throttle", "rate-limit-phx-throttle"],
+    "body": ["phx-throttle=\"${0:mili-secs}\""],
+    "description": [
+      "phx-throttle rate limiting",
+      "  <div phx-window-keydown=\"keydown\" phx-throttle=\"2000\"></div>"
+    ]
+  },
+  "phx-target": {
+    "prefix": ["phx-target"],
+    "body": ["phx-target=${0:@myself_or_module}"],
+    "description": ["phx-target binding"]
+  },
+  "phx-hook": {
+    "prefix": ["phx-hook", "hook-phx"],
+    "body": ["phx-hook=${0:hook}"],
+    "description": ["phx-hook binding"]
+  },
+  "html comment": {
+    "prefix": ["html_comment", "comment_html"],
+    "body": ["<!-- $0 -->"],
+    "description": ["HTML Comment"]
+  },
+  "<%#": {
+    "prefix": ["render_comment", "comment_render"],
+    "body": ["<%!-- :COMMENT:", "$0", ":COMMENT: --%>"],
+    "description": "render comment"
+  },
+  "static-path": {
+    "prefix": ["static_path", "static_route", "path_static", "route_static"],
+    "body": ["Routes.static_path(${1:@conn}, \"${0:path}\")"],
+    "description": "Live_path liveview link"
+  },
+  "inspect-pre": {
+    "prefix": [
+      "inspect_pre",
+      "pre_inspect",
+      "inspect_code",
+      "code_inspect",
+      "inspect_heex",
+      "heex_inspect"
+    ],
+    "body": [
+      "<pre style=\"",
+      "  overflow-wrap: break-word;",
+      "  white-space: pre-wrap;",
+      "  max-width: 24rem;",
+      "\">",
+      "  <%= inspect(${0:code}) %>",
+      "</pre>"
+    ],
+    "description": ["Pre tag inspect code"]
+  }
+}
