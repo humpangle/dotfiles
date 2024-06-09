@@ -340,6 +340,11 @@ local plugins_table = {
     event = "InsertEnter",
     opts = {}, -- this is equalent to setup({}) function
   },
+
+  {
+    -- A plugin to color colornames and ANSI codes. :ColoHighlight
+    "chrisbra/Colorizer"
+  }
 }
 
 require("lazy").setup(plugins_table, {})
