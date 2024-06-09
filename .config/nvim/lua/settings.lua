@@ -170,7 +170,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 local filetypes_group =
-    vim.api.nvim_create_augroup("filetypes", { clear = true })
+  vim.api.nvim_create_augroup("filetypes", { clear = true })
 -- Change filetype based on patterns
 local patterns = {
   {
@@ -499,8 +499,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = function()
     if
-        vim.g.ebnis_netrw_loaded == 0
-        and vim.fn.expand("%") == "NetrwTreeListing"
+      vim.g.ebnis_netrw_loaded == 0
+      and vim.fn.expand("%") == "NetrwTreeListing"
     then
       vim.cmd("set ft=netrw")
       NetrwVExplore("n")
@@ -535,7 +535,9 @@ local process_file_path_yanking = function(value_getter_directive, register)
     vim.fn.setreg('"', fp)
     vim.fn.setreg(register, fp)
     vim.cmd(utils.clip_cmd)
-    print('"' .. register .. " -> " .. value_getter_directive .. " = " .. fp)
+    print(
+      '"' .. register .. " -> " .. value_getter_directive .. " = " .. fp
+    )
   end
 end
 
