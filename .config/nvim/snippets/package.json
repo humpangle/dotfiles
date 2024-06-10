@@ -45,7 +45,8 @@
           "sh",
           "shellscript",
           "shell",
-          "zsh"
+          "zsh",
+          "bash"
         ],
         "path": "./sh.json"
       },
