@@ -62,6 +62,8 @@ return {
       yamlls_config.yaml_companion_plugin_init(),
     },
     config = function()
+      local lspconfig = require("lspconfig")
+
       -- Diagnostic keymaps
       utils.map_key(
         "n",
@@ -214,10 +216,10 @@ return {
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend(
+      local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+      local lsp_extended_capabilities = vim.tbl_deep_extend(
         "force",
-        capabilities,
+        lsp_capabilities,
         -- Augment neovim LSP capabilities with those from nvim cmp.
         require("cmp_nvim_lsp").default_capabilities()
       )
@@ -351,14 +353,31 @@ return {
             server.capabilities = vim.tbl_deep_extend(
               "force",
               {},
-              capabilities,
+              lsp_extended_capabilities,
               server.capabilities or {}
             )
 
-            require("lspconfig")[server_name].setup(server)
+            lspconfig[server_name].setup(server)
           end,
         },
       })
+
+      -- Mason does not support nginx language server - so we do it ourselves:
+      --
+      -- Latest supported python version for nginx-language-server is 3.11.9
+      --
+      -- Install language server binary: https://pypi.org/project/nginx-language-server/
+      --  pip install -U nginx-language-server
+      --
+      -- Install nginx-language-server lsp:
+      --  :LspInstall nginx
+
+      if vim.fn.executable("nginx-language-server") == 1 then
+        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#nginx_language_server
+        lspconfig.nginx_language_server.setup({
+          capabilities = lsp_extended_capabilities
+        })
+      end
     end,
   },
 }
