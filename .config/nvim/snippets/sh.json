@@ -15,7 +15,7 @@
       "Description: Shebang Bash executor.\n",
       "Option 2:\n",
       "#!/usr/bin/env bash\n",
-      "Description: Shell scarchs for the first match of bash in the $PATH environment variable.\n",
+      "Description: Shell searches for the first match of bash in the $PATH environment variable.\n",
       "It can be useful if you aren't aware of the absolute path or don't want to search for it.\n"
     ]
   },
