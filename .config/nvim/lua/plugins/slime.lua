@@ -5,6 +5,8 @@ if not utils_status_ok then
   return
 end
 
+local PlenaryPath = require("plenary.path")
+
 local keymap = utils.map_key
 
 -- Key to show slime config for the first time - <C-c><C-c>
@@ -58,28 +60,41 @@ keymap("n", ",slt", function()
 end, { noremap = true, desc = "Slime config tmux" })
 
 vim.api.nvim_create_user_command("Slime0", function(opts)
-  local arg = opts.fargs[1] or "file_terminal"
+  -- opts.fargs[1] = nil | hist_dir | local | global
+  --    hist_dir: query for the global history directory only and copy the path to system clipboard .
+  --    local: create the slime input file in the current working directory.
+  --    nil: implies local.
+  --    global: create the slime input file in the global bash history directory.
 
-  if arg == "terminal_file" then
-    arg = "file_terminal"
+  local arg = opts.fargs[1] or "local"
+
+  local slime_dir
+  local timestamp = os.date("%s")
+
+  if arg == "local" then
+    slime_dir = vim.fn.getcwd() .. "/.___scratch"
+    local slime_dir_obj = PlenaryPath:new(slime_dir)
+
+    -- if there is a file (not directory) at this path, rename it so we can create a directory with same name below.
+    if slime_dir_obj:is_file() then
+      os.rename(slime_dir, slime_dir .. "--" .. timestamp)
+    end
+  else
+    slime_dir = vim.fn.expand("$HOME") .. "/.bash_histories"
   end
 
-  local slime_default_input_file_directory_path = vim.fn.expand("$HOME")
-    .. "/.bash_histories"
-  vim.fn.mkdir(slime_default_input_file_directory_path, "p")
+  -- Create the directory if it does not exist already.
+  vim.fn.mkdir(slime_dir, "p")
 
+  -- We merely want to query for the history directory.
   if arg == "hist_dir" then
-    vim.fn.setreg("+", slime_default_input_file_directory_path)
+    vim.fn.setreg("+", slime_dir)
     vim.cmd(utils.clip_cmd)
-    print(slime_default_input_file_directory_path)
+    print(slime_dir)
     return
   end
 
-  local timestamp = os.date("%s")
-
-  local filename = slime_default_input_file_directory_path
-    .. "/--vim-slime--"
-    .. timestamp
+  local filename = slime_dir .. "/--vim-slime--" .. timestamp
 
   local file = io.open(filename, "w")
   if file then
@@ -112,6 +127,6 @@ end, {
   desc = "Create a text buffer for vim slime and a terminal at the same time.",
   complete = function()
     -- return completion candidates as a list-like table
-    return { "hist_dir", "file_terminal", "terminal_file" }
+    return { "hist_dir", "local", "global" }
   end,
 })
