@@ -115,10 +115,8 @@
   },
   "shellcheck source": {
     "prefix": [
-      "shellcheck_source",
-      "source_shellcheck",
-      "ignore_shellcheck",
-      "shellcheck_ignore"
+      "shellcheck_source_dev_null",
+      "source_shellcheck_dev_null"
     ],
     "body": [
       "# shellcheck source=${0:/dev/null}"
