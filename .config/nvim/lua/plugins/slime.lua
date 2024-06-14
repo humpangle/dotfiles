@@ -57,13 +57,16 @@ keymap("n", ",slt", function()
   helper_func("tmux")
 end, { noremap = true, desc = "Slime config tmux" })
 
-local slime_input_file_directory_path = vim.fn.expand("$HOME") .. "/.bash_histories"
-vim.fn.mkdir(slime_input_file_directory_path, "p")
+local slime_default_input_file_directory_path = vim.fn.expand("$HOME")
+  .. "/.bash_histories"
+vim.fn.mkdir(slime_default_input_file_directory_path, "p")
 
-local function create_slime_input_file()
+vim.api.nvim_create_user_command("SlimeFileTerminal", function()
   local timestamp = os.date("%s")
 
-  local filename = slime_input_file_directory_path .. "/--vim-slime--" .. timestamp
+  local filename = slime_default_input_file_directory_path
+    .. "/--vim-slime--"
+    .. timestamp
 
   local file = io.open(filename, "w")
   if file then
@@ -90,14 +93,13 @@ local function create_slime_input_file()
   -- Set the filetype to unix for the left window
   vim.cmd("wincmd h")
   vim.cmd("set filetype=unix")
-end
+end, {
+  force = true,
+  desc = "Create a text buffer for vim slime and a terminal at the same time.",
+})
 
-_G.create_slime_input_file = create_slime_input_file
-vim.cmd("command! SlimeFileTerminal lua create_slime_input_file()")
-
-_G.copy_slime_input_file = function()
-  vim.fn.setreg("+", slime_input_file_directory_path)
+vim.api.nvim_create_user_command("SlimeFileDirectory", function()
+  vim.fn.setreg("+", slime_default_input_file_directory_path)
   vim.cmd(utils.clip_cmd)
-  print(slime_input_file_directory_path)
-end
-vim.cmd("command! SlimeFileDirectory lua copy_slime_input_file()")
+  print(slime_default_input_file_directory_path)
+end, { force = true, desc = "" })
