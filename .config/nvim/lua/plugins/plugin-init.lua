@@ -249,7 +249,7 @@ local plugins_table = {
       vim.g.choosewin_overlay_enable = 0
 
       -- invoke with '-'
-      keymap("n", "<Leader>-", "<Plug>(choosewin)", { noremap = true })
+      keymap("n", "-", "<Plug>(choosewin)", { noremap = true })
     end,
   },
 
