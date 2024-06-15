@@ -32,7 +32,7 @@ vim.o.softtabstop = 2
 vim.o.expandtab = true -- converts tabs to white space
 vim.o.shiftwidth = 2 -- default indent = 2 spaces
 vim.o.encoding = "utf8"
-vim.o.cc = 80 -- column width
+vim.o.cc = "120,80" -- column width
 vim.o.incsearch = true -- Incremental search, search as you type
 vim.o.ignorecase = true -- Make searching case insensitive
 vim.o.smartcase = true -- ... unless the query has capital letters
