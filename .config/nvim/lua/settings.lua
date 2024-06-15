@@ -72,6 +72,15 @@ vim.opt.mouse = "a"
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
+-- I guess some plugins are changing tabstop/shiftwidth settings for markdown.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+  end,
+})
+
 -- converts tabs to white space
 vim.opt.expandtab = true
 
