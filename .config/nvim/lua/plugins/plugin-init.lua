@@ -115,7 +115,8 @@ local plugins_table = {
   },
 
   -- Statusline / tabline
-  require("plugins.lualine"),
+  -- require("plugins.lualine"),
+  require("plugins.lightline"),
 
   -- TERMINAL
   require("plugins/floaterm"),
