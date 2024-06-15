@@ -114,7 +114,7 @@ vim.api.nvim_create_user_command("Slime0", function(opts)
     return
   end
 
-  local name_affix = "--vim-slime--" .. timestamp
+  local name_affix = "~slime" .. timestamp
   local filename = slime_dir .. "/" .. name_affix
 
   local file = io.open(filename, "w")
