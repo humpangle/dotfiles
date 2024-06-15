@@ -114,7 +114,8 @@ vim.api.nvim_create_user_command("Slime0", function(opts)
     return
   end
 
-  local filename = slime_dir .. "/--vim-slime--" .. timestamp
+  local name_affix = "--vim-slime--" .. timestamp
+  local filename = slime_dir .. "/" .. name_affix
 
   local file = io.open(filename, "w")
   if file then
@@ -140,7 +141,7 @@ vim.api.nvim_create_user_command("Slime0", function(opts)
   vim.cmd("wincmd l")
 
   -- Open a terminal in the right window
-  vim.cmd("term")
+  vim.cmd("terminal bash;" .. name_affix)
 
   -- Set the filetype to unix for the left window
   vim.cmd("wincmd h")
