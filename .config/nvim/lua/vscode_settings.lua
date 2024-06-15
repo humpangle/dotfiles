@@ -137,16 +137,29 @@ keymap("n", "d=", "ggdG<bar>:Write<CR>", { noremap = true })
 keymap("n", "c=", "ggcG", { noremap = true })
 
 -- ------------------------ Copy file path
+
+local convert_to_unix_path = function(file_path)
+  local modified_path = file_path:gsub("^/(%a):", function(drive_letter)
+    return "/" .. drive_letter:lower()
+  end)
+
+  return modified_path
+end
+
 -- Yank relative file path
 keymap("n", ",yr", function()
   vcall("copyRelativeFilePath")
-  print(vim.fn.getreg("+"))
+  local path = convert_to_unix_path(vim.fn.getreg("+"))
+  vim.fn.setreg("+", path)
+  print(path)
 end, no_re_map_opts)
 
 -- Yank absolute file path
 keymap("n", ",yf", function()
   vcall("copyFilePath")
-  print(vim.fn.getreg("+"))
+  local path = convert_to_unix_path(vim.fn.getreg("+"))
+  vim.fn.setreg("+", path)
+  print(path)
 end, no_re_map_opts)
 
 -- Yank file directory path.
@@ -155,7 +168,7 @@ keymap("n", ",yd", function()
   vcall("copyFilePath")
 
   -- Copy file path from register + into local variable.
-  local absolute_file_path = vim.fn.getreg("+")
+  local absolute_file_path = convert_to_unix_path(vim.fn.getreg("+"))
 
   -- Get parent path.
   local path = PlenaryPath:new(absolute_file_path)
