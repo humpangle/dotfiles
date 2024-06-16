@@ -1,6 +1,9 @@
 {
   "print to console": {
-    "prefix": ["puts", "ioputs"],
+    "prefix": [
+      "puts",
+      "ioputs"
+    ],
     "body": [
       "IO.puts(\"\"\"\n\n\n",
       "${1:label}: \n    #{ inspect( ${2:expr} ) }\n\n\n",
@@ -38,7 +41,10 @@
     "description": "print to console puts inspect"
   },
   "tap inspect in a pipe & func": {
-    "prefix": ["tap_inspect_&", "inspect_tap_&"],
+    "prefix": [
+      "tap_inspect_&",
+      "inspect_tap_&"
+    ],
     "body": [
       "|> tap(",
       "  &IO.inspect(",
@@ -50,7 +56,11 @@
     "description": "tap inspect in pipe & func"
   },
   "tap_log_inspect": {
-    "prefix": ["tap_log_inspect", "inspect_tap_log", "log_tap_inspect"],
+    "prefix": [
+      "tap_log_inspect",
+      "inspect_tap_log",
+      "log_tap_inspect"
+    ],
     "body": [
       "${2} |> tap(fn args ->",
       "  require Logger",
@@ -69,7 +79,9 @@
       "  ])",
       "end)"
     ],
-    "description": ["tap Logger inspect"]
+    "description": [
+      "tap Logger inspect"
+    ]
   },
   "@opaque type": {
     "prefix": "@opaque",
@@ -77,17 +89,25 @@
     "description": "@opaque type"
   },
   "@type type": {
-    "prefix": ["type", "@type"],
+    "prefix": [
+      "type",
+      "@type"
+    ],
     "body": "@type ${1:type_name} :: ${0:type}",
     "description": "@type type"
   },
   "@spec": {
-    "prefix": ["@spec", "spec"],
+    "prefix": [
+      "@spec",
+      "spec"
+    ],
     "body": "@spec ${1:fun_name}(${2:param} :: ${3:type}) :: ${4:return}",
     "description": "@spec"
   },
   "for expression full": {
-    "prefix": ["for_exp_full"],
+    "prefix": [
+      "for_exp_full"
+    ],
     "body": [
       "for ${1:member1} <- ${2:list1},",
       "    ${3:member2 <- member1_or_list2},",
@@ -102,7 +122,9 @@
     "description": "for expression full"
   },
   "for into": {
-    "prefix": ["for_into"],
+    "prefix": [
+      "for_into"
+    ],
     "body": [
       "for ${1:member1} <- ${2:list1},",
       "    into: ${3:string_or_map} do",
@@ -112,7 +134,9 @@
     "description": "for into"
   },
   "for reduce": {
-    "prefix": ["for_reduce"],
+    "prefix": [
+      "for_reduce"
+    ],
     "body": [
       "for ${1:member1} <- ${2:list1},",
       "    reduce: ${3:string_or_map_or_collectible} do",
@@ -122,7 +146,9 @@
     "description": "for reduce"
   },
   "defstruct": {
-    "prefix": ["defstruct_def"],
+    "prefix": [
+      "defstruct_def"
+    ],
     "body": [
       "defstruct [",
       "  :${1:field},",
@@ -132,7 +158,10 @@
     "description": "Defines a Struct"
   },
   "set up test module": {
-    "prefix": ["defmodule_test", "test_module"],
+    "prefix": [
+      "defmodule_test",
+      "test_module"
+    ],
     "body": [
       "defmodule ${1:Module.Name}Test do",
       "  use ExUnit.Case, async: ${2:true}",
@@ -186,32 +215,64 @@
     "description": "@behaviour"
   },
   "@module doc": {
-    "prefix": ["@module_doc", "module_doc"],
-    "body": ["@moduledoc ~S\"\"\"", "  $1", "\"\"\""],
+    "prefix": [
+      "@module_doc",
+      "module_doc"
+    ],
+    "body": [
+      "@moduledoc ~S\"\"\"",
+      "  $1",
+      "\"\"\""
+    ],
     "description": "@module doc"
   },
   "@module doc false": {
-    "prefix": ["@module_doc_false", "module_doc_false"],
+    "prefix": [
+      "@module_doc_false",
+      "module_doc_false"
+    ],
     "body": "@moduledoc false",
     "description": "@module doc false"
   },
   "@doc": {
-    "prefix": ["doc", "@doc"],
-    "body": ["@doc \"\"\"", "$0", "\"\"\""],
+    "prefix": [
+      "doc",
+      "@doc"
+    ],
+    "body": [
+      "@doc \"\"\"",
+      "$0",
+      "\"\"\""
+    ],
     "description": "@doc"
   },
   "@doc Sigil": {
-    "prefix": ["@doc_sigil", "doc_sigil"],
-    "body": ["@doc ~S\"\"\"", "  $1", "\"\"\""],
+    "prefix": [
+      "@doc_sigil",
+      "doc_sigil"
+    ],
+    "body": [
+      "@doc ~S\"\"\"",
+      "  $1",
+      "\"\"\""
+    ],
     "description": "@doc Sigil"
   },
   "@doc false": {
-    "prefix": ["@doc_false", "doc_false"],
+    "prefix": [
+      "@doc_false",
+      "doc_false"
+    ],
     "body": "@doc false",
     "description": "@doc false"
   },
   "@doc doctest": {
-    "prefix": ["doc_test", "doc_doctest", "doctest_doc", "@doc_doctest"],
+    "prefix": [
+      "doc_test",
+      "doc_doctest",
+      "doctest_doc",
+      "@doc_doctest"
+    ],
     "body": [
       "@doc ~S\"\"\"",
       "${4:What does function do?.}",
@@ -272,7 +333,10 @@
     "description": "DynamicSupervisor specification"
   },
   "Supervisor snippet": {
-    "prefix": ["supervisor_snippet", "use_supervisor"],
+    "prefix": [
+      "supervisor_snippet",
+      "use_supervisor"
+    ],
     "body": [
       "defmodule ${1:SupervisorName} do",
       "  use Supervisor",
@@ -471,7 +535,9 @@
     "description": "Ecto aliases"
   },
   "elixirc_paths": {
-    "prefix": ["elixirc_paths_def"],
+    "prefix": [
+      "elixirc_paths_def"
+    ],
     "body": [
       "defp elixirc_paths(:prod), do: [\"lib\"]",
       "defp elixirc_paths(:dev), do: [\"lib\", \"lib_dev\"]",
@@ -480,7 +546,9 @@
       "# Mostly for IDE - to signal all compilation folders",
       "defp elixirc_paths(:all), do: [\"lib\", \"lib_dev\", \"test/support\", \"lib_e2e\"]"
     ],
-    "description": ["elixirc_paths"]
+    "description": [
+      "elixirc_paths"
+    ]
   },
   "absinthe child schema": {
     "prefix": "absinthe_child_schema_definition",
@@ -567,7 +635,11 @@
   },
   "@desc": {
     "prefix": "@desc",
-    "body": ["@desc ~S\"\"\"", "  ${1}", "\"\"\""],
+    "body": [
+      "@desc ~S\"\"\"",
+      "  ${1}",
+      "\"\"\""
+    ],
     "description": "@desc"
   },
   "helperfunction": {
@@ -586,7 +658,10 @@
     "description": "helperfunction"
   },
   "GenServer snippet": {
-    "prefix": ["genserver_snippet", "use_genserver"],
+    "prefix": [
+      "genserver_snippet",
+      "use_genserver"
+    ],
     "body": [
       "defmodule ${1:ModuleName} do",
       "  use GenServer",
@@ -632,7 +707,10 @@
     "description": "GenServer snippet"
   },
   "Def child spec": {
-    "prefix": ["def_child_spec", "child_spec_def"],
+    "prefix": [
+      "def_child_spec",
+      "child_spec_def"
+    ],
     "body": [
       "def child_spec(${1:_opts}) do",
       "",
@@ -662,8 +740,13 @@
     "description": "Def child spec"
   },
   "Process get callers": {
-    "prefix": ["process_get_callers", "callers_process_get"],
-    "body": ["Process.get(:\"\\$callers\")"],
+    "prefix": [
+      "process_get_callers",
+      "callers_process_get"
+    ],
+    "body": [
+      "Process.get(:\"\\$callers\")"
+    ],
     "description": "Process get callers"
   },
   "if else clause": {
@@ -678,18 +761,31 @@
     "description": "if else clause"
   },
   "if inline": {
-    "prefix": ["if_short", "if_inline", "if:"],
+    "prefix": [
+      "if_short",
+      "if_inline",
+      "if:"
+    ],
     "body": "if ${1:condition}, do: $0",
     "description": "if inline"
   },
   "if else inline": {
-    "prefix": ["if_else_inline", "if_inline_else", "if_short_else"],
+    "prefix": [
+      "if_else_inline",
+      "if_inline_else",
+      "if_short_else"
+    ],
     "body": "if ${1:condition}, do: $2, else: $0",
     "description": "if else inline"
   },
   "cond": {
     "prefix": "cond",
-    "body": ["cond do", "  $1 -> ", "  $0", "end"]
+    "body": [
+      "cond do",
+      "  $1 -> ",
+      "  $0",
+      "end"
+    ]
   },
   "def + doc": {
     "prefix": "defdoc",
@@ -704,7 +800,12 @@
   },
   "def + doc false": {
     "prefix": "defdocfalse",
-    "body": ["@doc false", "def ${1:func_name}(${2:arg}) do", "  $0", "end"]
+    "body": [
+      "@doc false",
+      "def ${1:func_name}(${2:arg}) do",
+      "  $0",
+      "end"
+    ]
   },
   "def + spec": {
     "prefix": "defspec",
@@ -728,18 +829,30 @@
     ]
   },
   "defp": {
-    "prefix": ["defp_short", "defp_inline", "defp:"],
+    "prefix": [
+      "defp_short",
+      "defp_inline",
+      "defp:"
+    ],
     "body": "defp ${1:func_name}(${2:arg}), do: ${0:# code}",
     "description": "defp short Private function"
   },
   "def": {
-    "prefix": ["def_short", "def_inline", "def:"],
+    "prefix": [
+      "def_short",
+      "def_inline",
+      "def:"
+    ],
     "body": "def ${1:func_name}(${2:arg}), do: ${0:# code}",
     "description": "def short Public function"
   },
   "moduledoc s": {
     "prefix": "mdocs",
-    "body": ["@moduledoc ~S\"\"\"", "$0", "\"\"\""]
+    "body": [
+      "@moduledoc ~S\"\"\"",
+      "$0",
+      "\"\"\""
+    ]
   },
   "require": {
     "prefix": "req",
@@ -747,21 +860,40 @@
   },
   "test": {
     "prefix": "test:",
-    "body": ["test \"${1:name}\" do", "  $0", "end"]
+    "body": [
+      "test \"${1:name}\" do",
+      "  $0",
+      "end"
+    ]
   },
   "des": {
     "prefix": "describe:",
-    "body": ["describe \"${1:test group subject}\" do", "  $0", "end"]
+    "body": [
+      "describe \"${1:test group subject}\" do",
+      "  $0",
+      "end"
+    ]
   },
   // IEX
   "IEx.pry": {
-    "prefix": ["pry_iex", "iex_pry"],
-    "body": ["require IEx; IEx.pry$0"],
+    "prefix": [
+      "pry_iex",
+      "iex_pry"
+    ],
+    "body": [
+      "require IEx; IEx.pry$0"
+    ],
     "description": "IEx.pry"
   },
   "IEx.configure": {
-    "prefix": ["iex_configure", "configure_iex"],
-    "body": ["IEx.configure(inspect: [charlists: :as_lists])", "$0"],
+    "prefix": [
+      "iex_configure",
+      "configure_iex"
+    ],
+    "body": [
+      "IEx.configure(inspect: [charlists: :as_lists])",
+      "$0"
+    ],
     "description": "IEx.configure"
   },
   // END IEX
@@ -786,17 +918,27 @@
     "body": "|> Enum.reduce(${1:acc}, fn ${2}, ${3:acc} -> $0 end)"
   },
   "word list": {
-    "prefix": ["word_list", "list_word", "wlw"],
+    "prefix": [
+      "word_list",
+      "list_word",
+      "wlw"
+    ],
     "body": "~w($0)",
     "description": "Word list"
   },
   "atom list": {
-    "prefix": ["atom_list", "list_atom", "wla"],
+    "prefix": [
+      "atom_list",
+      "list_atom",
+      "wla"
+    ],
     "body": "~w($0)a",
     "description": "Atom list"
   },
   "receive after block": {
-    "prefix": ["receive_after"],
+    "prefix": [
+      "receive_after"
+    ],
     "body": [
       "receive do",
       "  ${1:{:message_type, value\\}} ->",
@@ -833,32 +975,50 @@
     "description": "Mix test interactive"
   },
   "Supervisor strategy one_for_one": {
-    "prefix": ["one_for_one_strategy", "strategy_one_for_one"],
+    "prefix": [
+      "one_for_one_strategy",
+      "strategy_one_for_one"
+    ],
     "body": "strategy: :one_for_one",
     "description": "Supervisor strategy one_for_one"
   },
   "restart temporary": {
-    "prefix": ["restart_temporary", "temporary"],
+    "prefix": [
+      "restart_temporary",
+      "temporary"
+    ],
     "body": "restart: :temporary",
     "description": "restart temporary"
   },
   "restart permanent": {
-    "prefix": ["restart_permanent", "permanent"],
+    "prefix": [
+      "restart_permanent",
+      "permanent"
+    ],
     "body": "restart: :permanent",
     "description": "restart permanent"
   },
   "restart transient": {
-    "prefix": ["restart_transient", "transient"],
+    "prefix": [
+      "restart_transient",
+      "transient"
+    ],
     "body": "restart: :transient",
     "description": "restart transient"
   },
   "Supervisor strategy rest_for_one": {
-    "prefix": ["rest_for_one_strategy", "strategy_rest_for_one"],
+    "prefix": [
+      "rest_for_one_strategy",
+      "strategy_rest_for_one"
+    ],
     "body": "strategy: :rest_for_one",
     "description": "Supervisor strategy rest_for_one"
   },
   "Supervisor strategy one_for_all": {
-    "prefix": ["one_for_all_strategy", "strategy_one_for_all"],
+    "prefix": [
+      "one_for_all_strategy",
+      "strategy_one_for_all"
+    ],
     "body": "strategy: :one_for_all",
     "description": "Supervisor strategy one_for_all"
   },
@@ -873,7 +1033,11 @@
     "description": "handle_info :DOWN"
   },
   "ets new": {
-    "prefix": [":ets_new", "ets_new", "new_ets"],
+    "prefix": [
+      ":ets_new",
+      "ets_new",
+      "new_ets"
+    ],
     "body": [
       "_table_ref =",
       "  :ets.new(${0:name}, [",
@@ -888,7 +1052,10 @@
     "description": "ets new"
   },
   "gen_tcp options": {
-    "prefix": ["gen_tcp_options", "tcp_options_gen"],
+    "prefix": [
+      "gen_tcp_options",
+      "tcp_options_gen"
+    ],
     "body": [
       "[",
       "  # receives data as binaries (instead of lists)",
@@ -904,12 +1071,19 @@
     "description": "gen_tcp options"
   },
   "stop genserver": {
-    "prefix": ["genserver_stop", "stop_genserver"],
+    "prefix": [
+      "genserver_stop",
+      "stop_genserver"
+    ],
     "body": "{:stop, ${1::normal}, ${0:next_state}\\}",
     "description": "Stop genserver"
   },
   "Ecto primary key false migration": {
-    "prefix": ["ecto_primary_key_false", "primary_key_false_ecto", "id_false"],
+    "prefix": [
+      "ecto_primary_key_false",
+      "primary_key_false_ecto",
+      "id_false"
+    ],
     "body": [
       ", primary_key: false",
       "",
@@ -924,9 +1098,11 @@
     ],
     "description": "Ecto primary key false migration"
   },
-
   "live_component": {
-    "prefix": ["use_live_component", "live_component"],
+    "prefix": [
+      "use_live_component",
+      "live_component"
+    ],
     "body": [
       "defmodule ${1:module_name} do",
       "  use ${2:Web}Web, :live_component",
@@ -942,7 +1118,10 @@
     "description": "Use live_component"
   },
   "cache-x": {
-    "prefix": ["boiler_cache_x", "cache_x_boiler"],
+    "prefix": [
+      "boiler_cache_x",
+      "cache_x_boiler"
+    ],
     "body": [
       "defmodule ${1:module_base_name}.AppCache do",
       "",
@@ -992,10 +1171,15 @@
       "{:cachex, \"~> 3.4\"}",
       "{Cachex, name: $2}"
     ],
-    "description": ["Cachex Boilerplate"]
+    "description": [
+      "Cachex Boilerplate"
+    ]
   },
   "tailwind": {
-    "prefix": ["tailwind_boiler_plate_elixir", "boilerplate_tailwind_elixir"],
+    "prefix": [
+      "tailwind_boiler_plate_elixir",
+      "boilerplate_tailwind_elixir"
+    ],
     "body": [
       "{:tailwind, \"~> 0.1.6\", runtime: Mix.env() == :dev}",
       "",
@@ -1059,7 +1243,9 @@
       ">",
       "</script>"
     ],
-    "description": ["Tailwind boiler plate elixir"]
+    "description": [
+      "Tailwind boiler plate elixir"
+    ]
   },
   "formatter": {
     "prefix": [
@@ -1080,25 +1266,52 @@
       "  heex_line_length: 80",
       "]"
     ],
-    "description": ["Formatter.exs file for phoenix"]
+    "description": [
+      "Formatter.exs file for phoenix"
+    ]
   },
   "heex": {
-    "prefix": ["he", "heex"],
-    "body": ["~H\"\"\"", "$0", "\"\"\""],
-    "description": ["~H Heex sigil"]
+    "prefix": [
+      "he",
+      "heex"
+    ],
+    "body": [
+      "~H\"\"\"",
+      "$0",
+      "\"\"\""
+    ],
+    "description": [
+      "~H Heex sigil"
+    ]
   },
   "reg-unique": {
-    "prefix": ["registry_unique", "unique_registry"],
-    "body": ["{Registry, keys: :unique, name: ${0:name}}"],
-    "description": ["Registry unique"]
+    "prefix": [
+      "registry_unique",
+      "unique_registry"
+    ],
+    "body": [
+      "{Registry, keys: :unique, name: ${0:name}}"
+    ],
+    "description": [
+      "Registry unique"
+    ]
   },
   "reg-via": {
-    "prefix": ["registry_via", "via_registry"],
-    "body": ["{:via, Registry, {${1:name}, ${0:key}}}"],
-    "description": ["Registry via"]
+    "prefix": [
+      "registry_via",
+      "via_registry"
+    ],
+    "body": [
+      "{:via, Registry, {${1:name}, ${0:key}}}"
+    ],
+    "description": [
+      "Registry via"
+    ]
   },
   "releases": {
-    "prefix": ["releases_snippet"],
+    "prefix": [
+      "releases_snippet"
+    ],
     "body": [
       "releases: [",
       "  foo: [",
@@ -1117,20 +1330,38 @@
       "  ]",
       "]"
     ],
-    "description": ["Releases"]
+    "description": [
+      "Releases"
+    ]
   },
   "import mix config": {
-    "prefix": ["mix_import_config", "import_mix_config"],
-    "body": ["import_config \"#{Mix.env()}.exs\""],
-    "description": ["import mix config"]
+    "prefix": [
+      "mix_import_config",
+      "import_mix_config"
+    ],
+    "body": [
+      "import_config \"#{Mix.env()}.exs\""
+    ],
+    "description": [
+      "import mix config"
+    ]
   },
   "todo": {
-    "prefix": ["todo"],
-    "body": ["# TODO${1:(author)}: ${0:todo_text}"],
-    "description": ["TODO"]
+    "prefix": [
+      "todo"
+    ],
+    "body": [
+      "# TODO${1:(author)}: ${0:todo_text}"
+    ],
+    "description": [
+      "TODO"
+    ]
   },
   "def Application": {
-    "prefix": ["def_application", "application_def"],
+    "prefix": [
+      "def_application",
+      "application_def"
+    ],
     "body": [
       "defmodule ${1:ModuleName}.Application do",
       "  # See https://hexdocs.pm/elixir/Application.html",
@@ -1152,37 +1383,61 @@
       "  end",
       "end"
     ],
-    "description": ["defmodule application"]
+    "description": [
+      "defmodule application"
+    ]
   },
   "start dynamic supervisor": {
-    "prefix": ["start_dynamic_supervisor", "dynamic_supervisor_start"],
-    "body": ["{DynamicSupervisor, strategy: :one_for_one, name: ${0:name}}"],
-    "description": ["Start dynamic supervisor"]
+    "prefix": [
+      "start_dynamic_supervisor",
+      "dynamic_supervisor_start"
+    ],
+    "body": [
+      "{DynamicSupervisor, strategy: :one_for_one, name: ${0:name}}"
+    ],
+    "description": [
+      "Start dynamic supervisor"
+    ]
   },
   "start task sup": {
-    "prefix": ["start_task_supervisor", "task_supervisor_start"],
+    "prefix": [
+      "start_task_supervisor",
+      "task_supervisor_start"
+    ],
     "body": [
       "{Task.Supervisor, name: ${0:name}.TaskSupervisor}",
       "{Task, fn -> :some_work end}"
     ],
-    "description": ["Start task supervisor"]
+    "description": [
+      "Start task supervisor"
+    ]
   },
   "config-include file": {
-    "prefix": ["config_include_file", "include_config_file"],
+    "prefix": [
+      "config_include_file",
+      "include_config_file"
+    ],
     "body": [
       "{_result, binding} = Code.eval_file(Path.join(__DIR__, \"${1:file_name}\"))",
       "b = Map.new(binding)"
     ],
-    "description": ["Include file in config.exs"]
+    "description": [
+      "Include file in config.exs"
+    ]
   },
   "debugger start": {
-    "prefix": ["debugger_start", "start_debugger"],
+    "prefix": [
+      "debugger_start",
+      "start_debugger"
+    ],
     "body": [
       ":debugger.start()",
       ":int.ni(ModuleName)",
       ":int.break(ModuleName, line_number)"
     ],
-    "description": ["Debugger start"]
+    "description": [
+      "Debugger start"
+    ]
   },
   "ecto ulid primary_key autogen": {
     "prefix": [
@@ -1195,6 +1450,31 @@
       "@primary_key {:id, Ecto.ULID, autogenerate: true}",
       "@foreign_key_type Ecto.ULID"
     ],
-    "description": ["Ecto ULID primary key autogenerate"]
+    "description": [
+      "Ecto ULID primary key autogenerate"
+    ]
+  },
+  "Snippet Import shared config": {
+    "prefix": [
+      "import_shared_config",
+      "shared_config_import"
+    ],
+    "body": [
+      "${1:shared_config_module} =",
+      "  case :code.module_status(${2:SharedConfig}) do",
+      "    :loaded ->",
+      "      ${2:SharedConfig}",
+      "",
+      "    _ ->",
+      "      {${1:shared_config_module}, _} =",
+      "        Code.require_file(Path.join(__DIR__, \"${3:./shared_config.exs}\"))",
+      "        |> List.first()",
+      "",
+      "      ${1:shared_config_module}",
+      "  end"
+    ],
+    "description": [
+      "Snippet Import shared config"
+    ]
   }
 }
