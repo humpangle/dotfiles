@@ -341,18 +341,9 @@ function _parse_variables_in_in_infile {
         # Replace each interpolated variable with its concrete value.
         val="${val//$_interpolated_variable_with_brackets/$_interpolated_variable_concrete_value}"
 
-        _debug_fn "value1" "$val"
+        _debug_fn "value from interpolation" "$val"
       done
 
-      # Remove all quotes.
-      if echo "$val" | grep -qP "^[\"'].+[\"']$"; then
-        val="$(
-          echo "$val" |
-            sed -nE "s/^['\"](.+)['\"]$/\1/p"
-        )"
-      fi
-
-      _debug_fn "value2" "$val"
       _env_key_to_value_map["$key"]="${val}"
     fi
   done <<<"${_in_file_content}"
@@ -387,21 +378,23 @@ _out_file_content_accumulator=
 for key in "${!_env_key_to_value_map[@]}"; do
   _value="${_env_key_to_value_map[$key]}"
 
-  # If the value is not all numeric characters we handle quoting.
-  if ! echo "$_value" | grep -q -P "^\d+$"; then
-    if [[ -n "$_format" ]]; then
-      # Always quote json string.
+  # If the value is not all numeric characters and output is not sh, we handle quoting.
+  if [[ -n "$_format" ]] &&
+    ! echo "$_value" | grep -q -P "^\d+$"; then
+    # Replace single quotes with double quotes for json and yaml.
+    if echo "$_value" | grep -qP "^['].+[']$"; then
+      _value="$(
+        echo "$_value" |
+          sed -nE "s/^['](.+)[']$/\"\1\"/p"
+      )"
+    else
+      # Always quote double json string.
       if [[ "$_format" == "json" ]]; then
         _value="\"$_value\""
 
-      # Quote yaml string only if not empty.
+      # Double quote yaml string only if not empty.
       elif [[ -n "$_value" ]]; then
         _value="\"$_value\""
-      fi
-    else
-      # Use a single quote for shell strings. (Why??)
-      if [[ -n "$_value" ]]; then
-        _value="'$_value'"
       fi
     fi
   fi
