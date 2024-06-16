@@ -48,6 +48,12 @@ return {
             "FilenameLeft",
           },
         },
+
+        right = {
+          { "lineinfo" },
+          { "percent" },
+          { "fileformat", "filetype" },
+        },
       },
 
       tab = {
