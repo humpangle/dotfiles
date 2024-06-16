@@ -962,5 +962,26 @@
     "description": [
       "_echo function"
     ]
+  },
+  "while loop list file": {
+    "prefix": [
+      "while_list_file",
+      "list_file_while_loop"
+    ],
+    "body": [
+      "while IFS= read -r -d '' ${7:_some_file}; do",
+      "  ${8:echo \"\\$_some_file\"}$0",
+      "done < <(",
+      "  find ${1:_some_dir} \\",
+      "    ${2:-maxdepth 1 \\ }",
+      "    -type ${3:f} \\",
+      "    ${4:-name \"${5:pattern1}\"} \\",
+      "    ${6:-not -name \"pattern2\" \\ }",
+      "    -print0",
+      ")"
+    ],
+    "description": [
+      "while loop list file"
+    ]
   }
 }
