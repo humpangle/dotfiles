@@ -49,7 +49,12 @@ eof
 }
 
 _out_filename=
+# Raw user specified format
 _format=
+# We parse user specified formatting into format to use internally. The rules are:
+# User specified yaml/yml -> yaml
+#                    json -> json
+_format_type=
 _in_filename=
 _in_file_content=
 _should_output_to_stdout=
@@ -139,6 +144,13 @@ function parse-args {
       ;;
     esac
   done
+
+  # Parse user specified formatting into internal.
+  if [[ "$_format" = yml ]] || [[ "$_format" = yaml ]]; then
+    _format_type="yaml"
+  else
+    _format_type="$_format"
+  fi
 
   # handle non-option arguments
   if [[ $# -ne 1 ]]; then
@@ -365,7 +377,7 @@ fi
 if _should_output_to_file; then
   rm -rf "$_out_file_full_path_name"
 
-  if [[ -n "$_format" ]]; then
+  if [[ -n "$_format_type" ]]; then
     touch "$_out_file_full_path_name"
   else
     # Add directive to silence shellcheck complaints about unused variables.
@@ -379,7 +391,7 @@ for key in "${!_env_key_to_value_map[@]}"; do
   _value="${_env_key_to_value_map[$key]}"
 
   # If the value is not all numeric characters and output is not sh, we handle quoting.
-  if [[ -n "$_format" ]] &&
+  if [[ -n "$_format_type" ]] &&
     ! echo "$_value" | grep -q -P "^\d+$"; then
     # Replace single quotes with double quotes for json and yaml.
     if echo "$_value" | grep -qP "^['].+[']$"; then
@@ -389,7 +401,7 @@ for key in "${!_env_key_to_value_map[@]}"; do
       )"
     else
       # Always quote double json string.
-      if [[ "$_format" == "json" ]]; then
+      if [[ "$_format_type" == "json" ]]; then
         _value="\"$_value\""
 
       # Double quote yaml string only if not empty.
@@ -400,10 +412,10 @@ for key in "${!_env_key_to_value_map[@]}"; do
   fi
 
   # Formatting
-  if [[ "$_format" = yml ]] || [[ "$_format" = yaml ]]; then
+  if [[ "$_format_type" = yaml ]]; then
     # key: value
     _key_value_line="${key}: $_value"
-  elif [[ "$_format" = json ]]; then
+  elif [[ "$_format_type" = json ]]; then
     # "key": value
     _key_value_line="\"$key\": $_value,"
   else
