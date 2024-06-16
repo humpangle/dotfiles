@@ -117,9 +117,12 @@ _ggc() {
       ;;
 
     --delete | -d)
-      mv "$_profile_directory_base/$2" /tmp
+      local _profile_directory_base_no_path_segments="${_profile_directory_base//\//%}"
+      local _to_delete="$_profile_directory_base/$2"
 
-      echo -e "\n$_profile_directory_base/$2 Profile deleted successfully.\n"
+      if mv "$_to_delete" "/tmp/$_profile_directory_base_no_path_segments%${2}-$(date +''%s)"; then
+        echo -e "\n$_to_delete Profile deleted successfully.\n"
+      fi
 
       return
       ;;
