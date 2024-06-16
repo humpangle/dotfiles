@@ -27,6 +27,16 @@ local function abbreviate_path(file_path)
   return table.concat(abbreviated_parts, "/")
 end
 
+local get_yaml_schema = function()
+  local yaml_schema = require("plugins.yaml_lsp").get_yaml_schema()
+
+  if yaml_schema ~= "" then
+    yaml_schema = " " .. yaml_schema
+  end
+
+  return yaml_schema
+end
+
 function _G.FilenameLeft()
   local file_path = vim.fn.expand("%:f")
   local git_branch = vim.fn.FugitiveHead()
@@ -42,7 +52,20 @@ function _G.FilenameLeft()
   end
 
   local modified = vim.bo.modified and "+" or ""
-  return git_branch .. file_path .. modified
+
+  return git_branch .. file_path .. modified .. get_yaml_schema()
+end
+
+function _G.FilenameRight()
+  local file_path = vim.fn.expand("%:f")
+
+  if file_path == "" then
+    file_path = "[No Name]"
+  end
+
+  local modified = vim.bo.modified and "+" or ""
+
+  return file_path .. modified .. get_yaml_schema()
 end
 
 local function tab_modified(tab_num)

@@ -28,12 +28,9 @@ return {
         t = "T", -- terminal
       },
 
-      component = {
-        filename = "%f",
-      },
-
       component_function = {
         FilenameLeft = "v:lua.FilenameLeft",
+        FilenameRight = "v:lua.FilenameRight",
       },
 
       tab_component_function = {
@@ -53,6 +50,15 @@ return {
           { "lineinfo" },
           { "percent" },
           { "fileformat", "filetype" },
+        },
+      },
+
+      inactive = {
+        left = { { "FilenameRight" } },
+
+        right = {
+          { "lineinfo" },
+          { "percent" },
         },
       },
 
