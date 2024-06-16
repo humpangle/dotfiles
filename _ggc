@@ -170,8 +170,20 @@ _ggc() {
     if [[ -n "$_new_user" ]]; then
       _user="$_new_user"
     else
-      # shellcheck disable=2086
-      if ! grep -q "$_user" <<<"$(ls $_profile_directory_base)"; then
+      local _profile_exists
+
+      while IFS= read -r -d '' _some_file; do
+        _profile_exists=1
+        break
+      done < <(
+        find "$_profile_directory_base" \
+          -maxdepth 1 \
+          -type d \
+          -name "$_user" \
+          -print0
+      )
+
+      if [[ -z "$_profile_exists" ]]; then
         echo -e "\nProfile \"$_user\" does not exist. Type \"_ggc --help\" to get help.\n"
         return
       fi
