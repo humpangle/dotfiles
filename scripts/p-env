@@ -447,4 +447,24 @@ else
   # Output to file.
 
   sort "$_out_file_full_path_name" -o "$_out_file_full_path_name"
+
+  if [[ "$_format_type" == "json" ]]; then
+    # We choose a filename with enough git ignorable texts.
+    _temp_filename="/tmp/.___scratch--.DS_Store-p-env---$(date +'%s').gz"
+
+    # We write the opening curly bracket '{' of the json syntax.
+    echo "{" >"$_temp_filename"
+
+    cat "$_out_file_full_path_name" >>"$_temp_filename"
+    # Remove any trailing comma on the last line of the file
+    sed -i '$s/,$//' "$_temp_filename"
+
+    rm -rf "$_out_file_full_path_name"
+
+    cat "$_temp_filename" >>"$_out_file_full_path_name"
+    rm -rf "$_temp_filename"
+
+    # We write the closing curly bracket '}' of the json syntax.
+    echo "}" >>"$_out_file_full_path_name"
+  fi
 fi
