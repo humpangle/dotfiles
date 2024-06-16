@@ -157,8 +157,7 @@ _ggc() {
 
   # If no user profile was specified and we are not creating a new user, **ASSUME** the first argument is username
   # except it starts with the character `-` (\U002d).
-  if [[ -z "$_new_user" ]] &&
-    [[ -z "$_user" ]] &&
+  if [[ -z "$_new_user" && -z "$_user" ]] &&
     ! echo "$1" | grep -qP "^-"; then
     _user="$1"
     shift
@@ -166,8 +165,7 @@ _ggc() {
 
   local _other_args="$*"
 
-  if [[ -n "$_user" ]] ||
-    [[ -n "$_new_user" ]]; then
+  if [[ -n "$_user" || -n "$_new_user" ]]; then
 
     if [[ -n "$_new_user" ]]; then
       _user="$_new_user"
