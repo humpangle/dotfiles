@@ -983,5 +983,35 @@
     "description": [
       "while loop list file"
     ]
+  },
+  "Snippet Echo terminal line": {
+    "prefix": [
+      "echo_line_terminal",
+      "echo_terminal_line",
+      "line_echo_terminal"
+    ],
+    "body": [
+      "full_line_len=\\$(tput cols)",
+      "",
+      "_echo() {",
+      "  local text=\"\\${*}\"",
+      "  local equal='*'",
+      "",
+      "  local len=\"\\${#text}\"",
+      "  len=\\$((full_line_len - len))",
+      "  local half=\\$((len / 2 - 1))",
+      "",
+      "  local line=''",
+      "",
+      "  for _ in \\$(seq \\$half); do",
+      "      line=\"\\${line}\\${equal}\"",
+      "  done",
+      "",
+      "  echo -e \"\\n\\${text}  \\${line}\\${line}\\n\"",
+      "}"
+    ],
+    "description": [
+      "Snippet Echo terminal line"
+    ]
   }
 }
