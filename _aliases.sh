@@ -426,3 +426,9 @@ alias up="sudo $DOTFILE_PARENT_PATH/dotfiles/_updd.sh"
 alias open_webui="chmod +x $DOTFILE_PARENT_PATH/dotfiles/_open_webui && $DOTFILE_PARENT_PATH/dotfiles/_open_webui"
 
 alias sudoe="bash ${DOTFILE_PARENT_PATH}/dotfiles/_sudoe"
+
+_elixir_lexical_script="${DOTFILE_PARENT_PATH}/dotfiles/scripts/install-elixir-lexical"
+if [[ -e "$_elixir_lexical_script" ]]; then
+  alias ilexical="chmod 755 $_elixir_lexical_script && $_elixir_lexical_script"
+fi
+unset _elixir_lexical_script

@@ -286,10 +286,18 @@ return {
           },
         },
 
-        elixirls = {
+        -- elixirls = {
+        --   cmd = {
+        --     -- I have a  global ELIXIR_LS_BIN in .bashrc and then project specific in the workspace root.
+        --     os.getenv("ELIXIR_LS_BIN"),
+        --   },
+        -- },
+
+        -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/lexical/init.lua
+        lexical = {
           cmd = {
-            -- I have a  global ELIXIR_LS_BIN in .bashrc and then project specific in the workspace root.
-            os.getenv("ELIXIR_LS_BIN"),
+            -- I have a  global ELIXIR_LEXICAL_BIN in .bashrc and then project specific in the workspace root.
+            os.getenv("ELIXIR_LEXICAL_BIN") or "lexical"
           },
         },
 
