@@ -344,8 +344,18 @@ local plugins_table = {
 
   {
     -- A plugin to color colornames and ANSI codes. :ColoHighlight
-    "chrisbra/Colorizer"
-  }
+    "chrisbra/Colorizer",
+  },
+  {
+    -- Bash Automated Testing System
+    -- https://github.com/bats-core/bats-core?tab=readme-ov-file
+    "aliou/bats.vim",
+    enabled = not plugin_enabled.has_vscode(),
+    init = function()
+      -- https://github.com/aliou/bats.vim#configuration
+      vim.g.bats_vim_consider_dollar_as_part_of_word = true
+    end,
+  },
 }
 
 require("lazy").setup(plugins_table, {})
