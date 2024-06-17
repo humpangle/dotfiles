@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+# The following variables and functions are declared and set in cp-vim-session-util.bash. Sourcing that script below
+# brings them into this script.
+
+_vim_session_dir= # <- variable
+# _strip_home_dir_prefix <- function
+
+# shellcheck source=/dev/null
+source "$(dirname "$0")/../scripts-utils/cp-vim-session-util.bash"
+
+_cp_vim_session() {
+  local _source=$1
+  if [[ ! "$_source" == /* ]]; then
+    echo "Path to rename from must be absolute path - aborting!" >&2
+    exit 1
+  fi
+
+  if [[ ! -e "$_source" ]]; then
+    echo "$_source does not exist - aborting!" >&2
+    exit 1
+  fi
+
+  # Must be absolute path
+  local _dest=$2
+  if [[ ! "$_dest" == /* ]]; then
+    echo "Path to rename to must be absolute path - aborting!" >&2
+    exit 1
+  fi
+
+  local _source_session_path
+  _source_session_path="$(_convert_to_vim_session_file "$_source")"
+
+  local _dest_session_path
+  _dest_session_path="$(_convert_to_vim_session_file "$_dest")"
+
+  if ! cp "$_source_session_path" "$_dest_session_path"; then
+    echo "We are unable to create destination vim session - aborting!"
+    exit 1
+  fi
+
+  local _source_no_home_prefix_unusual_escaped
+  _source_no_home_prefix_unusual_escaped="$(
+    _strip_home_dir_prefix "$_source" |
+      xargs -I {} \
+        -S 1024 \
+        bash -c "$(declare -f _escape_unusual_chars); _escape_unusual_chars '{}' 2"
+  )"
+
+  local _dest_unusual_escaped
+  _dest_unusual_escaped="$(_escape_unusual_chars "$_dest" 2)"
+
+  sed -i -E \
+    "s'(~|${HOME})${_source_no_home_prefix_unusual_escaped}'${_dest_unusual_escaped}'g" \
+    "$_dest_session_path"
+}
+
+_cp_vim_session "$@"
