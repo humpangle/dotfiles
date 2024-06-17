@@ -302,7 +302,6 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "elixir",
     "eelixir",
-    "sh",
   },
   callback = function()
     keymap("n", "<leader>fc", ":Neoformat<CR>", {
