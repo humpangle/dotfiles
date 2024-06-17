@@ -46,9 +46,16 @@
           "shellscript",
           "shell",
           "zsh",
-          "bash"
+          "bash",
+          "bats"
         ],
         "path": "./sh.json"
+      },
+      {
+        "language": [
+          "bats"
+        ],
+        "path": "./bats.json"
       },
       {
         "language": [

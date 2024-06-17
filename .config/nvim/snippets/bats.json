@@ -1,0 +1,77 @@
+{
+  "Snippet bats shebang": {
+    "prefix": [
+      "bats_shebang",
+      "shebang_bats"
+    ],
+    "body": [
+      "#!/usr/bin/env bats"
+    ],
+    "description": [
+      "Snippet bats shebang"
+    ]
+  },
+  "Snippet bats @test": {
+    "prefix": [
+      "test_bats",
+      "bats_test"
+    ],
+    "body": [
+      "@test \"${1:description of test}\" {",
+      "  $0",
+      "}"
+    ],
+    "description": [
+      "Snippet bats @test"
+    ]
+  },
+  "Snippet bats run": {
+    "prefix": [
+      "run_bats",
+      "bats_run"
+    ],
+    "body": [
+      "run ${1:executable.sh}",
+      "  [ \"\\$status\" -eq ${2:0} ]"
+    ],
+    "description": [
+      "Snippet bats run"
+    ]
+  },
+  "Snippet bats status": {
+    "prefix": [
+      "status_bats",
+      "bats_status"
+    ],
+    "body": [
+      "[ \"\\$status\" -eq ${1:0} ]"
+    ],
+    "description": [
+      "Snippet bats status"
+    ]
+  },
+  "Snippet bats output": {
+    "prefix": [
+      "output_bats",
+      "bats_output"
+    ],
+    "body": [
+      "[ \"\\$output\" = \"${1:term: no such file 'nonexistent_filename'}\" ]"
+    ],
+    "description": [
+      "Snippet bats output"
+    ]
+  },
+  "Snippet bats line": {
+    "prefix": [
+      "line_bats",
+      "bats_line"
+    ],
+    "body": [
+      "[ \"\\${lines[${1:0}]}\" = \"${1:some term:}\" ]"
+    ],
+    "description": [
+      "Snippet bats line"
+    ]
+  }
+}
