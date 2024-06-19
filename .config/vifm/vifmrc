@@ -560,8 +560,8 @@ elseif executable('xsel')
                 \ printf %c:p | xsel --clipboard --input %i<cr>
 endif
 
-" View preview in Quick Look
-nnoremap <space> :!qlmanage -p %f > /dev/null 2>&1<cr>
+" View preview in Quick Look -- looks like this options makes <space> open file rather than cycle windows.
+" nnoremap <space> :!qlmanage -p %f > /dev/null 2>&1<cr>
 
 " Mappings for faster renaming
 nnoremap I cw<c-a>
