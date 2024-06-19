@@ -111,7 +111,9 @@ set incsearch
 set scrolloff=4
 
 " Don't do too many requests to slow file systems
-set slowfs=curlftpfs
+if !has('win')
+    set slowfs=curlftpfs
+endif
 
 " Set custom status line look
 set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
@@ -158,8 +160,8 @@ command! zip zip -r %f.zip %f
 command! run !! ./%f
 command! make !!make %a
 command! mdc :mkdir %a | cd %a
-command! mdp :!mkdir -p %a
 command! vgrep nvim "+grep %a"
+command! mdp :!mkdir -p %a
 command! reload :write | restart full
 
 " ------------------------------------------------------------------------------
@@ -574,7 +576,13 @@ nnoremap A cw
 " nnoremap A cW
 
 " Open console in current directory
-nnoremap ,t :!bash &<cr>
+if $DISPLAY && executable('xterm')
+    nnoremap ,t :!xterm &<cr>
+elseif $TERMINAL
+    nnoremap ,t :!$TERMINAL &<cr>
+else
+  nnoremap ,t :!bash &<cr>
+endif
 
 " Open editor to edit vifmrc and apply settings after returning to vifm
 nnoremap ,ec :write | edit $MYVIFMRC | restart full<cr>
