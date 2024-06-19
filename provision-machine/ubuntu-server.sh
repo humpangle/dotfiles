@@ -13,7 +13,7 @@ INITIAL_WSL_C_PATH=/mnt/c
 #   WHATEVER_VERSION="version number"
 ERLANG_VERSION="26.2.5"
 ELIXIR_VERSION="1.16.3-otp-26"
-PYTHON_VERSION="3.12.2"
+PYTHON_VERSION="3.11.9"
 RUST_VERSION="1.65.0"
 
 # -----------------------------------------------------------------------------
@@ -179,6 +179,11 @@ function _has-wsl {
 
 function _setup-wsl-home {
   if ! _has-wsl; then
+    return
+  fi
+
+  if [[ -e /etc/wsl.conf ]]; then
+    _echo "WSL already setup."
     return
   fi
 
@@ -801,8 +806,8 @@ install_vifm() {
     sudo apt-get install -y `# I need to determine minimum deps for building vifm.` \
       curl \
       g++ \
-      ca-certificates \
-      gnupg \
+      ca-certificates
+    gnupg \
       build-essential \
       make \
       libevent-dev \
@@ -829,55 +834,28 @@ install_vifm() {
 
   _echo "Setting up vifmrc"
 
-  # Each array member is a string of the form `file_location function_to_test_kernel_name`, where the string before
-  # space is the filesystem path where the vifm configuration file is stored and the string after space is function
-  # we will invoke to get the kernel name - linux or darwin.
-  declare -a _potential_vifmrc_locations=(
-    "$HOME/.vifm/vifmrc _is_darwin"
-    "$HOME/.config/vifm/vifmrc _is_linux"
-  )
+  local _dest="$HOME/.vifm/vifmrc"
 
-  for _location_kernel_fn in "${_potential_vifmrc_locations[@]}"; do
-    local _location
-    local _kernel_fn
+  if [[ -s "$_dest" ]]; then
+    local _dest_bak
+    _dest_bak="$_dest-$(date +'%s')"
 
-    _location="$(cut -d ' ' -f1 <<<"$_location_kernel_fn")"
-    _kernel_fn="$(cut -d ' ' -f2 <<<"$_location_kernel_fn")"
+    _echo "Backing up $_dest to $_dest_bak"
 
-    local _location_exists
+    mv "$_dest" "$_dest_bak"
+  else
+    mkdir -p "$(dirname "$_dest")" # In case the directory does not exist previously.
+  fi
 
-    if [[ -s "$_location" ]]; then
-      local _bak="${_location}.bak"
-      _echo "$_location exists and renaming to ${_bak}."
-      mv "$_location" "$_bak"
-
-      _location_exists=1
-    elif bash -c "$0 $_kernel_fn"; then
-      # The trick here is that if the kernel function invocation succeeds, we assume the current $_location is the
-      # corrct location of the vifmrc configuration file.
-      _location_exists=1
-    fi
-
-    # If the current location is not the correct configuration location, there is nothing else to do.
-    if [[ -z "$_location_exists" ]]; then
-      continue
-    fi
-
-    if [[ -d "$DOTFILE_ROOT" ]]; then
-      local _source="$DOTFILE_ROOT/.config/vifm/vifmrc"
-
-      _echo "Linking $_source to ${_location}."
-
-      mkdir -p "$(dirname "$_location")" # In case the directory does not exist previously.
-      ln -s "$_source" "$_location"
-    else
-      local _source="$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/vifm/vifmrc"
-
-      _echo "Downloading $_source to ${_location}."
-
-      curl --create-dirs -fLo "$_location" "$_source"
-    fi
-  done
+  if [[ -d "$DOTFILE_ROOT" ]]; then
+    local _source="$DOTFILE_ROOT/.config/vifm/vifmrc"
+    _echo "Linking $_source to $_dest."
+    ln -s "$_source" "$_dest"
+  else
+    local _source="$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/vifm/vifmrc"
+    _echo "Downloading $_source to ${_dest}."
+    curl --create-dirs -fLo "$_dest" "$_source"
+  fi
 }
 
 function install-git {
@@ -1688,28 +1666,42 @@ function setup-dev {
     ~/.vifm \
     ~/.config/erlang_ls
 
-  git clone https://github.com/humpangle/dotfiles ~/dotfiles
+  if [[ ! -d "$HOME/dotfiles" ]]; then
+    git clone https://github.com/humpangle/dotfiles ~/dotfiles
+    touch ~/dotfiles/snippet_in.txt
+    touch ~/dotfiles/snippet_out.json
+
+    sed -i -e "s/filemode = true/filemode = false/" ~/dotfiles/.git/config
+
+    [[ -e ~/dotfiles/to_snippet_vscode.py ]] &&
+      chmod 755 ~/dotfiles/to_snippet_vscode.py
+  fi
 
   _setup-wsl-home
 
-  sudo chown root:root ~/user_defaults
-  sudo mv ~/user_defaults /etc/sudoers.d/
+  declare -a _file_src_to_link_dest=(
+    'gitignore .gitignore'
+    'gitconfig .gitconfig'
+    '.config/nvim'
+    '.iex.exs'
+    '.tmux.conf'
+    '.config/shellcheckrc'
+  )
 
-  ln -s ~/dotfiles/gitignore ~/.gitignore
-  ln -s ~/dotfiles/gitconfig ~/.gitconfig
-  ln -s ~/dotfiles/.config/nvim ~/.config
-  ln -s ~/dotfiles/.iex.exs ~/.iex.exs
-  ln -s ~/dotfiles/.tmux.conf ~
-  ln -s ~/dotfiles/.config/vifm/vifmrc ~/.vifm/vifmrc
-  ln -s ~/dotfiles/.config/shellcheckrc ~/.config
+  for _string in "${_file_src_to_link_dest[@]}"; do
+    IFS=' ' read -r -a _array <<<"$_string"
+    local _src="${_array[0]}"
+    local _dest="${_array[1]}"
 
-  touch ~/dotfiles/snippet_in.txt
-  touch ~/dotfiles/snippet_out.json
+    if [[ -z "$_dest" ]]; then
+      _dest="$_src"
+    fi
 
-  sed -i -e "s/filemode = true/filemode = false/" ~/dotfiles/.git/config
+    _dest="$HOME/$_dest"
 
-  [[ -e ~/dotfiles/to_snippet_vscode.py ]] &&
-    chmod 755 ~/dotfiles/to_snippet_vscode.py
+    rm -rf "$_dest"
+    ln -s "$HOME/dotfiles/$_src" "$_dest"
+  done
 
   curl -fLo "$HOME/complete_alias.sh" \
     https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias
@@ -1719,7 +1711,7 @@ function setup-dev {
   # We preliminary save tmux sessions every minute instead of default to 15.
   # After the first save, we must revert back to 15 - so git does not record
   # any changes.
-  sed -i -e "s/set -g @continuum-save-interval '15'/set -g @continuum-save-interval '1'/" ~/dotfiles/.tmux.conf
+  sed -i -E "s/set -g @continuum-save-interval '15'/set -g @continuum-save-interval '1'/" ~/dotfiles/.tmux.conf
 
   # Install tmux plugins specified in .tmux.conf
   chmod 755 ~/.tmux/plugins/tpm/bin/install_plugins
@@ -1729,7 +1721,8 @@ function setup-dev {
   chmod 755 ~/dotfiles/scripts/*
   find ~/dotfiles/etc/ -type f -name "*.sh" -exec chmod 755 {} \;
 
-  echo "[ -f $HOME/dotfiles/bash_append.sh ] && source $HOME/dotfiles/bash_append.sh" >>~/.bashrc
+  # shellcheck disable=SC2016
+  echo '[ -f "$HOME/dotfiles/bash_append.sh" ] && source "$HOME/dotfiles/bash_append.sh"' >>~/.bashrc
 
   # shellcheck disable=SC2016
   echo '[ -f "$HOME/dotfiles/profile_append.sh" ] && source "$HOME/dotfiles/profile_append.sh"' >>~/.profile
@@ -1758,12 +1751,14 @@ function setup-dev {
 
   sudo apt-get autoremove -y
 
-  cp ~/dotfiles/etc/sudoers.d/user_defaults "${HOME}"
+  if [[ ! -e /etc/sudoers.d/user_defaults ]]; then
+    cp ~/dotfiles/etc/sudoers.d/user_defaults "${HOME}"
 
-  sed -i -e "s/__USERNAME__/$USER/g" ~/user_defaults
-  sed -i -e "s|__NEOVIM_BIN__|$(which nvim)|g" ~/user_defaults
-  sudo mv ~/user_defaults /etc/sudoers.d/
-  sudo chown root:root /etc/sudoers.d/user_defaults
+    sed -i -e "s/__USERNAME__/$USER/g" ~/user_defaults
+    sed -i -e "s|__NEOVIM_BIN__|$(which nvim)|g" ~/user_defaults
+    sudo mv ~/user_defaults /etc/sudoers.d/
+    sudo chown root:root /etc/sudoers.d/user_defaults
+  fi
 
   if _has-wsl; then
     # Date and time are not usually updated when WSL sleeps - this package
