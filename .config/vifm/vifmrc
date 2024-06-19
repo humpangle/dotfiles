@@ -541,25 +541,25 @@ elseif executable('clip')
 
 elseif executable('xclip')
     " Yank current directory path into the clipboard
-    nnoremap yd :!printf %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+    nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
 
     " yank current file path into the clipboard
-    nnoremap yf :!printf %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+    nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
 
     " yank current filename without path into the clipboard
-    nnoremap yn :!printf %c | xclip -selection clipboard %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
+    nnoremap yn :!echo -n %c | xclip -selection clipboard %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
 
     " yank root of current file's name into the clipboard
-    nnoremap yr :!printf %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
+    nnoremap yr :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
 
 elseif executable('xsel')
     " Yank current directory path into primary and selection clipboards
-    nnoremap yd :!printf %d | xsel --input --primary %i &&
-                \ printf %d | xsel --clipboard --input %i<cr>
+    nnoremap yd :!echo -n %d | xsel --input --primary %i &&
+                \ echo -n %d | xsel --clipboard --input %i<cr>
 
     " Yank current file path into into primary and selection clipboards
-    nnoremap yf :!printf %c:p | xsel --input --primary %i &&
-                \ printf %c:p | xsel --clipboard --input %i<cr>
+    nnoremap yf :!echo -n %c:p | xsel --input --primary %i &&
+                \ echo -n %c:p | xsel --clipboard --input %i<cr>
 endif
 
 " View preview in Quick Look -- looks like this options makes <space> open file rather than cycle windows.
