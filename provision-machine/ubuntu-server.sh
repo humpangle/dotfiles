@@ -1722,9 +1722,6 @@ function setup-dev {
   find ~/dotfiles/etc/ -type f -name "*.sh" -exec chmod 755 {} \;
 
   # shellcheck disable=SC2016
-  echo '[ -f "$HOME/dotfiles/bash_append.sh" ] && source "$HOME/dotfiles/bash_append.sh"' >>~/.bashrc
-
-  # shellcheck disable=SC2016
   echo '[ -f "$HOME/dotfiles/profile_append.sh" ] && source "$HOME/dotfiles/profile_append.sh"' >>~/.profile
 
   echo "export INTELEPHENSE_LICENCE=''" >>~/.bashrc
