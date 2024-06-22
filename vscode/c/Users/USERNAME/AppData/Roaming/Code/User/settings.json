@@ -29,13 +29,13 @@
     80,
     120
   ],
-  "vscode-neovim.useWSL": true,
   "vscode-neovim.neovimExecutablePaths.linux": "nvim",
   "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
   "vscode-neovim.revealCursorScrollLine": true,
   "vscode-neovim.logOutputToConsole": true,
   "vscode-neovim.logPath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\kanmii\\dotfiles\\.___scratch-vscode-neovim.log",
   // "vscode-neovim.neovimClean": true,
+  "vscode-neovim.useWSL": true,
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
