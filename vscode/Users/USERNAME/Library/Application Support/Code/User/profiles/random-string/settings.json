@@ -47,7 +47,6 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[shellscript]": {
     "editor.autoClosingQuotes": "always",
@@ -61,7 +60,6 @@
     "files.trimFinalNewlines": true
   },
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
@@ -100,13 +98,10 @@
   "explorer.compactFolders": false,
   "files.eol": "\n",
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "yaml.schemas": {
     "Kubernetes": [
@@ -193,7 +188,6 @@
     "terminal.ansiBrightCyan": "#9aedfe",
     "terminal.ansiBrightWhite": "#eff0eb"
   },
-  "prettier.printWidth": 120,
   // "window.zoomLevel": 0.6,
   "workbench.startupEditor": "none",
   "workbench.activityBar.location": "hidden",
