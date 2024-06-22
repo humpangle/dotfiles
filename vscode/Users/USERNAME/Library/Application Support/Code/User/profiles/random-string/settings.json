@@ -31,7 +31,6 @@
   ],
   "vscode-neovim.neovimExecutablePaths.darwin": "nvim",
   "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
-  "vscode-neovim.logLevel": "debug",
   "vscode-neovim.logOutputToConsole": true,
   "vscode-neovim.logPath": "/Users/kanmii/dotfiles/.___scratch-vscode-neovim.log",
   // "vscode-neovim.neovimClean": true,
