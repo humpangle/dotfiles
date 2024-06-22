@@ -33,6 +33,7 @@
   "vscode-neovim.neovimExecutablePaths.linux": "nvim",
   "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
   "vscode-neovim.logLevel": "debug",
+  "vscode-neovim.revealCursorScrollLine": true,
   "vscode-neovim.logOutputToConsole": true,
   "vscode-neovim.logPath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\kanmii\\dotfiles\\.___scratch-vscode-neovim.log",
   // "vscode-neovim.neovimClean": true,
