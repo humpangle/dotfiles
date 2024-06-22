@@ -1405,15 +1405,14 @@ function install-python {
   _tool-versions-backup --restore=python
 
   if [[ -n "$_global" ]]; then
-    local _python_bin_path
-
     "$(_asdf-bin-path)" global python "$_version"
 
-    local _exp='export PYTHON3="\$\(asdf which python 2>/dev/null\)"'
+    local _exp_py3_regexp='export PYTHON3="\$\(asdf which python 2>/dev/null\)"'
 
-    if ! grep -qP "$_exp" .bashrc &>/dev/null; then
+    if ! grep -qP "$_exp_py3_regexp" .bashrc &>/dev/null; then
       # shellcheck disable=SC2016
-      echo 'export PYTHON3="$(asdf which python 2>/dev/null)"' >>~/.bashrc
+      echo 'PYTHON3="$(asdf which python 2>/dev/null)"' >>~/.bashrc
+      echo 'export PYTHON3' >>~/.bashrc
     fi
   fi
 }
