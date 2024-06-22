@@ -52,6 +52,9 @@
     "editor.autoClosingQuotes": "always",
     "editor.tabSize": 2,
   },
+  "[bats]": {
+    "editor.defaultFormatter": "mkhl.shfmt"
+  },
   "[html-eex]": {
     "editor.trimAutoWhitespace": false,
     "editor.snippetSuggestions": "inline",
