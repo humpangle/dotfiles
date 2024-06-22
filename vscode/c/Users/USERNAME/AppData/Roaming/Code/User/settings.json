@@ -195,7 +195,7 @@
   "window.zoomLevel": 0.6,
   "workbench.startupEditor": "none",
   "workbench.activityBar.location": "hidden",
-  "window.newWindowProfile": "Default",
+  "window.newWindowProfile": null,
   "settingsSync.keybindingsPerPlatform": false,
   "Lua.diagnostics.globals": [
     "vim",
