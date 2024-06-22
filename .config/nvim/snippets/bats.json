@@ -25,53 +25,48 @@
       "Snippet bats @test"
     ]
   },
-  "Snippet bats run": {
+  "Snippet bats echo debug": {
     "prefix": [
-      "run_bats",
-      "bats_run"
+      "bats_echo_debug",
+      "echo_bats_debug",
+      "echo_debug_bats",
+      "debug_echo_bats"
     ],
     "body": [
-      "run ${1:executable.sh}",
-      "  [ \"\\$status\" -eq ${2:0} ]"
+      "echo -e \"\\n# /START/ Debugging \\$BATS_TEST_NAME\\n${1:var} ${2:description} => \\$${1:var}$0\" >&3",
+      "echo -e \"# /END/ Debugging \\$BATS_TEST_NAME\\n\" >&3"
     ],
     "description": [
-      "Snippet bats run"
+      "Snippet bats echo debug"
     ]
   },
-  "Snippet bats status": {
+  "Snippet bats cat debug": {
     "prefix": [
-      "status_bats",
-      "bats_status"
+      "bats_cat_debug",
+      "cat_bats_debug",
+      "cat_debug_bats",
+      "debug_cat_bats"
     ],
     "body": [
-      "[ \"\\$status\" -eq ${1:0} ]"
+      "echo -e \"\\n# /START/ Debugging \\$BATS_TEST_NAME\\ncat file ${1:description} =>\" >&3",
+      "cat \"${2:\\$var_or_filename}\" >&3",
+      "echo -e \"# /END/ cat file ${1:description}\" >&3",
+      "echo -e \"# /END/ Debugging \\$BATS_TEST_NAME\\n\" >&3"
     ],
     "description": [
-      "Snippet bats status"
+      "bats cat debug"
     ]
   },
-  "Snippet bats output": {
+  "Snippet bats tag focus": {
     "prefix": [
-      "output_bats",
-      "bats_output"
+      "tag_focus",
+      "focus_tag"
     ],
     "body": [
-      "[ \"\\$output\" = \"${1:term: no such file 'nonexistent_filename'}\" ]"
+      "# bats test_tags=bats:focus"
     ],
     "description": [
-      "Snippet bats output"
-    ]
-  },
-  "Snippet bats line": {
-    "prefix": [
-      "line_bats",
-      "bats_line"
-    ],
-    "body": [
-      "[ \"\\${lines[${1:0}]}\" = \"${1:some term:}\" ]"
-    ],
-    "description": [
-      "Snippet bats line"
+      "Bats tag focus"
     ]
   }
 }
