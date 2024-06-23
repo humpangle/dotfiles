@@ -411,7 +411,9 @@ keymap("n", ",ts", ":split<bar>:term<CR>:echo &channel<CR>", { noremap = true })
 
 -- Reorder tabs
 keymap("n", "<C-Left>", ":-tabmove<CR>", { noremap = true })
+keymap("n", "<M-Left>", ":-tabmove<CR>", { noremap = true })
 keymap("n", "<C-Right>", ":+tabmove<CR>", { noremap = true })
+keymap("n", "<M-Right>", ":+tabmove<CR>", { noremap = true })
 -- -- This is what works on my macbook pro 3. I got the keys thus:
 -- -- -- in nvim editor, enter insert mode, <c-v> and then <key> or combo.
 keymap("n", "<M-b>", ":-tabmove<CR>", { noremap = true })
