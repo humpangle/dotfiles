@@ -242,6 +242,12 @@ function utils.DeleteFile(which)
       to_delete = vim.fn.expand("%")
     end
 
+    if to_delete == "" or to_delete:match("^term://") then
+      vim.cmd("bdelete!")
+      print("DELETED " .. to_delete .. " !")
+      return
+    end
+
     local delete_prompt =
       vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
 
