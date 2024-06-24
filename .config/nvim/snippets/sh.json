@@ -963,7 +963,7 @@
       "_echo function"
     ]
   },
-  "while loop list file": {
+  "Snippet while loop find list file": {
     "prefix": [
       "while_list_file",
       "list_file_while_loop"
@@ -981,7 +981,7 @@
       ")"
     ],
     "description": [
-      "while loop list file"
+      "Snippet while loop find list file"
     ]
   },
   "Snippet Echo terminal line": {
