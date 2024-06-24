@@ -966,7 +966,8 @@
   "Snippet while loop find list file": {
     "prefix": [
       "while_list_file",
-      "list_file_while_loop"
+      "list_file_while_loop",
+      "find_files_list"
     ],
     "body": [
       "while IFS= read -r -d '' ${7:_some_file}; do",
