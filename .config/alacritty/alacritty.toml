@@ -18,15 +18,16 @@ columns = 0
 lines   = 0
 
 [window.padding]
-x = 12
-y = 12
+x = 0
+y = 0
 
 [scrolling]
-history = 12000
+history = 100000
 
 [font]
 builtin_box_drawing = false
-size                = 15
+# size                = 16
+size                = 17
 
 [font.bold]
 family = "CaskaydiaMono Nerd Font Mono"
@@ -119,7 +120,8 @@ command   = "None"
 duration  = 0
 
 [selection]
-save_to_clipboard     = false
+# save_to_clipboard     = false
+save_to_clipboard     = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
 
 [cursor]
@@ -157,7 +159,8 @@ key    = "End"
 mods   = "Shift"
 
 [mouse]
-hide_when_typing = true
+# hide_when_typing = true
+hide_when_typing = false
 
 [debug]
 highlight_damage   = false
@@ -165,4 +168,3 @@ log_level          = "Warn"
 persistent_logging = false
 print_events       = false
 render_timer       = false
-
