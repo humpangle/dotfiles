@@ -970,8 +970,8 @@
       "find_files_list"
     ],
     "body": [
-      "while IFS= read -r -d '' ${7:_some_file}; do",
-      "  ${8:echo \"\\$_some_file\"}$0",
+      "while IFS= read -r -d '' ${7:_file}; do",
+      "  ${8:echo \"\\$_file\"}$0",
       "done < <(",
       "  find ${1:_some_dir} \\",
       "    ${2:-maxdepth 1 \\ }",
