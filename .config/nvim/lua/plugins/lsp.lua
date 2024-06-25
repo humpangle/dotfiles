@@ -224,6 +224,15 @@ return {
         require("cmp_nvim_lsp").default_capabilities()
       )
 
+      local elixir_lsp_filetypes = {
+        "elixir",
+        "eelixir",
+        "heex",
+        "surface"
+      }
+
+      local none_existing_vim_filetype = { "1" } -- hopefully a filetype that does not exist.
+
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -286,19 +295,14 @@ return {
           },
         },
 
-        -- elixirls = {
-        --   cmd = {
-        --     -- I have a  global ELIXIR_LS_BIN in .bashrc and then project specific in the workspace root.
-        --     os.getenv("ELIXIR_LS_BIN"),
-        --   },
-        -- },
-
         -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/lexical/init.lua
         lexical = {
           cmd = {
             -- I have a  global ELIXIR_LEXICAL_BIN in .bashrc and then project specific in the workspace root.
             os.getenv("ELIXIR_LEXICAL_BIN") or "lexical"
           },
+          filetypes = utils.os_env_not_empty("NVIM_USE_ELIXIR_LEXICAL") and elixir_lsp_filetypes or
+          none_existing_vim_filetype
         },
 
         bashls = {},
@@ -330,6 +334,33 @@ return {
 
         terraformls = {},
       }
+
+      local elixir_ls_config_fn = function()
+        local filetypes = nil
+
+        if utils.os_env_not_empty("NVIM_USE_ELIXIR_LS") then
+          filetypes = elixir_lsp_filetypes
+        elseif utils.os_env_not_empty("NVIM_USE_ELIXIR_LEXICAL") then
+          filetypes = none_existing_vim_filetype
+        else
+          filetypes = elixir_lsp_filetypes
+        end
+
+        local bin_from_env_var = utils.os_env_not_empty("ELIXIR_LS_BIN") and os.getenv("ELIXIR_LS_BIN")
+
+        return {
+          elixirls = {
+            cmd = {
+              -- I have a  global ELIXIR_LS_BIN in .bashrc and then project specific in the workspace root.
+              bin_from_env_var or "elixir-ls",
+            },
+            filetypes = filetypes
+          },
+        }
+      end
+
+      servers = vim.tbl_extend("error", servers, elixir_ls_config_fn())
+      -- /END/ servers variable
 
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
