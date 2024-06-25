@@ -4,7 +4,8 @@
 _IFS=$IFS
 
 function _ebnis-save-tmux {
-  if [ -z "${TMUX}" ]; then
+  # Do not invoke if there is no active tmux session.
+  if ! tmux ls &>/dev/null; then
     return
   fi
 
