@@ -57,7 +57,7 @@ Examples:
   _start_tmux -Dpb
 eof
 
-  echo -e "${var}\n"
+  echo -e "$var"
 }
 
 _start_tmux() (
@@ -228,7 +228,7 @@ Examples:
   __list_sessions -c
 eof
 
-  echo -e "${var}\n"
+  echo -e "$var"
 }
 
 __list_sessions() (
@@ -441,7 +441,7 @@ Examples:
   __tks session-1 session2 ... session-n
 eof
 
-  echo -e "${var}\n"
+  echo -e "$var"
 }
 
 # :TODO:persist session information ala tmux-resurrect
