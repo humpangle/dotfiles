@@ -2776,6 +2776,55 @@ EOF
   install-asdf-postgres 1 || true
 }
 
+_confirm_git_lfs_installed_successfully() {
+  if git lfs install | grep -qP 'Git LFS initialized' &>/dev/null; then
+    echo "Git Large File Storage installed successfully"
+    return 0
+  fi
+
+  echo "Git Large File Storage could not be installed." >&2
+  return 1
+}
+
+install_git_lfs() {
+  : "Install Git Large File Storage"
+
+  set -o errexit
+
+  if _is_darwin; then
+    brew install git-lfs
+    _confirm_git_lfs_installed_successfully
+    return
+  fi
+
+  local _version=v3.5.1
+  local _project_name='git-lfs'
+  local _filename="${_project_name}-linux-amd64-$_version.tar.gz"
+  local _extracted_folder_name="${_project_name}-${_version#v}"
+
+  local _download_url="https://github.com/git-lfs/git-lfs/releases/download/$_version/$_filename"
+
+  (
+    cd "$PROJECT_0_PATH" || exit 1
+
+    curl -fLO "$_download_url"
+    tar xf "$_filename"
+
+    _echo "Entering $_extracted_folder_name"
+    cd "$_extracted_folder_name" || exit 1
+
+    _echo "Executing ./install.sh >/dev/null"
+    sudo ./install.sh >/dev/null
+
+    cd - &>/dev/null
+
+    _echo "Cleaning up by removing $_extracted_folder_name and $_filename ."
+    rm -rf "$_extracted_folder_name" "$_filename"
+  )
+
+  _confirm_git_lfs_installed_successfully
+}
+
 help() {
   : "List available tasks."
 
