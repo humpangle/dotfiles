@@ -298,56 +298,65 @@ __list_sessions() (
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  local _session_resurrect_file="$HOME/.tmux/resurrect/last"
-  local _session_resurrect
-  local _session_resurrect_pwds
+  local _resurrect_file="$HOME/.tmux/resurrect/last"
 
-  if [[ -s "$_session_resurrect_file" ]]; then
+  # Where we gather session information read from resurrect file into.
+  local _sessions_info_from_resurrect_file
+
+  # The current working directory of each session - as read from resurrect file.
+  local _sessions_pwds_from_resurrect_file
+
+  # Gather information from resurrect file
+  if [[ -s "$_resurrect_file" ]]; then
     local _session_resurrect_list
     _session_resurrect_list="$(
-      awk '/^window\s+/ {print $2}' "$_session_resurrect_file" |
+      awk '/^window\s+/ {print $2}' "$_resurrect_file" |
         sort -u
     )"
 
     for _elm in $_session_resurrect_list; do
       local _windows_count
       _windows_count="$(
-        awk -v _awk_elm="$_elm" 'match($0, "^window\\s+" _awk_elm) {print $0}' "$_session_resurrect_file" |
+        awk \
+          -v _awk_elm="$_elm" \
+          'match($0, "^window\\s+" _awk_elm) {print $0}' "$_resurrect_file" |
           wc -l |
           xargs
       )"
 
-      _session_resurrect+="$_elm: $_windows_count windows\n"
+      _sessions_info_from_resurrect_file+="$_elm: $_windows_count windows\n"
 
-      local _session_resurrect_pwd
+      local _session_pwd_from_resurrect_file
       # Matching pattern:
       # pane  session_name window_index active_win?  :*  pane_index  hostname  :directory active_pane? program  :program?/empty
       # active = 1  inactive = 0
-      _session_resurrect_pwd="$(
-        awk -v _awk_var_session="$_elm" 'match($0, "^pane\\s+" _awk_var_session "\\s+0\\s+[0-1]\\s+:.*\\s+1\\s+.+\\s+:(/.+)\\s+[0-1]", matches) {print matches[1]}' "$_session_resurrect_file"
+      _session_pwd_from_resurrect_file="$(
+        awk -v _awk_var_session="$_elm" 'match($0, "^pane\\s+" _awk_var_session "\\s+0\\s+[0-1]\\s+:.*\\s+1\\s+.+\\s+:(/.+)\\s+[0-1]", matches) {print matches[1]}' "$_resurrect_file"
       )"
 
-      if [[ -n "$_session_resurrect_pwd" ]]; then
-        _session_resurrect_pwds+="$_elm:\n$_session_resurrect_pwd\n"
+      if [[ -n "$_session_pwd_from_resurrect_file" ]]; then
+        _sessions_pwds_from_resurrect_file+="$_elm:\n$_session_pwd_from_resurrect_file\n"
 
         if [[ -n "$_verbose" ]]; then
-          _session_resurrect_pwds+="cd $_session_resurrect_pwd\ntnd -c $_session_resurrect_pwd $_elm\n"
+          _sessions_pwds_from_resurrect_file+="cd $_session_pwd_from_resurrect_file\ntnd -c $_session_pwd_from_resurrect_file $_elm\n"
         fi
 
-        _session_resurrect_pwds+="\n"
+        _sessions_pwds_from_resurrect_file+="\n"
       fi
     done
 
-    _session_resurrect+="\n$(tail -n1 "$_session_resurrect_file")"
+    _sessions_info_from_resurrect_file+="\n$(tail -n1 "$_resurrect_file")"
 
-    if [[ -n "$_session_resurrect_pwds" ]]; then
-      _session_resurrect_pwds="\nPWDs:\n$_session_resurrect_pwds"
+    if [[ -n "$_sessions_pwds_from_resurrect_file" ]]; then
+      _sessions_pwds_from_resurrect_file="\nPWDs:\n$_sessions_pwds_from_resurrect_file"
     fi
   fi
+  # /END/ Gather information from resurrect file.
 
+  # User asked that we only query resurrect file - we query and exit.
   if [[ -n "$_from_resurrect_file" ]]; then
-    if [[ -n "$_session_resurrect" ]]; then
-      echo -e "Sessions from $_session_resurrect_file:\n$_session_resurrect\n$_session_resurrect_pwds"
+    if [[ -n "$_sessions_info_from_resurrect_file" ]]; then
+      echo -e "Sessions from $_resurrect_file:\n$_sessions_info_from_resurrect_file\n$_sessions_pwds_from_resurrect_file"
       return
     fi
 
@@ -357,10 +366,11 @@ __list_sessions() (
 
   local _sessions
 
+  # User asked for clients information only - we return clients's information and exit.
   if [[ -n "$_clients" ]]; then
     if _clients="$(tmux list-clients 2>&1)"; then
       if [[ -n "$_clients" ]]; then
-        echo -e "$_clients\n$_session_resurrect_pwds"
+        echo -e "$_clients\n$_sessions_pwds_from_resurrect_file"
         return
       fi
     fi
@@ -368,19 +378,21 @@ __list_sessions() (
     echo -e "\nWe can not retrieve clients or no clients are attached - we will try to serve you sessions:\n"
   fi
 
+  # Is tmux server started? - Get sessions data from live tmux server and enrich with information from resurrect file.
   if _sessions="$(tmux ls 2>&1)"; then
-    echo -e "$_sessions\n$_session_resurrect_pwds"
+    echo -e "$_sessions\n$_sessions_pwds_from_resurrect_file"
     return
   fi
 
-  if [[ -n "$_session_resurrect" ]]; then
-    echo -e "tmux has not been started. Available sessions:\n$_session_resurrect"
+  # tmux server is not live - return only information from resurrect file.
+  if [[ -n "$_sessions_info_from_resurrect_file" ]]; then
+    echo -e "tmux has not been started. Available sessions:\n$_sessions_info_from_resurrect_file"
 
     if [[ -n "$DEFAULT_TMUX_SESSION" ]]; then
       echo -e "\nDefault session: $DEFAULT_TMUX_SESSION"
     fi
 
-    echo -e "\n$_session_resurrect_pwds"
+    echo -e "\n$_sessions_pwds_from_resurrect_file"
 
     return
   fi
