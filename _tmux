@@ -128,7 +128,7 @@ _start_tmux() (
       ;;
 
     *)
-      echo "Unknown option ${1}."
+      echo "Unknown option ${1}." >&2
       ____start_tmux_help
       exit 129
       ;;
@@ -152,7 +152,7 @@ _start_tmux() (
   fi
 
   if [[ -z "$_session" ]]; then
-    echo "Provide target session or set DEFAULT_TMUX_SESSION environment variable."
+    echo "Provide target session or set DEFAULT_TMUX_SESSION environment variable." >&2
     exit 1
   fi
   # --------------------------------------------------------------------------
@@ -287,7 +287,7 @@ __list_sessions() (
       ;;
 
     *)
-      echo "Unknown option ${1}."
+      echo "Unknown option ${1}." >&2
       _____list_sessions_help
       exit 129
       ;;
@@ -360,7 +360,7 @@ __list_sessions() (
       return
     fi
 
-    echo "No sessions are available."
+    echo "No sessions are available." >&2
     exit 1
   fi
 
@@ -397,7 +397,7 @@ __list_sessions() (
     return
   fi
 
-  echo "tmux has not been started and no sessions are available."
+  echo "tmux has not been started and no sessions are available." >&2
   exit 1
 )
 
@@ -498,7 +498,7 @@ __tks() {
       ;;
 
     *)
-      echo "Unknown option ${1}."
+      echo "Unknown option ${1}." >&2
       return
       ;;
     esac
