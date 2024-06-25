@@ -349,6 +349,9 @@ __list_sessions() (
 
   # Gather information from resurrect file
   if [[ -s "$_resurrect_file" ]]; then
+    # If tmux running, flush sessions info into resurrect file.
+    ebnis-save-tmux.sh &>/dev/null || true
+
     local _session_resurrect_list
     _session_resurrect_list="$(
       awk '/^window\s+/ {print $2}' "$_resurrect_file" |
