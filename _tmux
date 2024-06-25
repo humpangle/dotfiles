@@ -204,9 +204,10 @@ _start_tmux() (
     _cd="${DOTFILE_PARENT_PATH}/dotfiles"
   fi
 
-  local _cmd
+  local _cmd="tmux new -s $_session"
 
-  if tmux ls &>/dev/null; then
+  if tmux ls &>/dev/null &&
+    [[ -z "$_new" ]]; then
     _cmd="tmux attach-session"
 
     if [[ -n "$_detach" ]]; then
@@ -214,8 +215,6 @@ _start_tmux() (
     fi
 
     _cmd+=" -t $_session"
-  else
-    _cmd="tmux new -s $_session"
   fi
 
   if [[ -n "$_debug" ]]; then
