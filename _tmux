@@ -21,12 +21,14 @@ Options:
   --pwd/-p
     Change directory to current working directory before entering tmux.
   --base/-b
-    Must be used in addition to --cd or --pwd. Use the basename of the directory to change to as session name. This
-    option makes SESSION name redundant.
+    Must be used in addition to --cd or --pwd. Use the basename of the directory to change to as session name. If
+    SESSION is specified, this option is ignored.
   --detach/-d
     Detach from all clients before attaching to a client.
   --debug/-D
     Do not take any action - just print command to run to stdout.
+  --new/-n SESSION
+    Create a new tmux session named SESSION
 
 Examples:
   # Get help.
@@ -55,6 +57,10 @@ Examples:
   # Print command to run only.
   _start_tmux --debug --pwd --base
   _start_tmux -Dpb
+
+  # Create new session
+  _start_tmux --new session_name
+  _start_tmux -n session_name
 eof
 
   echo -e "$var"
@@ -70,6 +76,7 @@ _start_tmux() (
   local _use_basename_as_session
   local _detach
   local _debug
+  local _new
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -78,8 +85,8 @@ _start_tmux() (
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,pwd,cd:,base,detach,debug \
-      --options=h,p,c:,b,d,D \
+      --longoptions=help,pwd,cd:,base,detach,debug,new \
+      --options=h,p,c:,b,d,D,n \
       --name "$0" \
       -- "$@"
   )"; then
@@ -122,6 +129,11 @@ _start_tmux() (
       shift
       ;;
 
+    --new | -n)
+      _new=1
+      shift
+      ;;
+
     --)
       shift
       break
@@ -135,15 +147,44 @@ _start_tmux() (
     esac
   done
 
+  if [[ "$#" -eq 1 ]]; then
+    _session="$1"
+  fi
+
   if [[ -n "$_cd" ]]; then
     _cd="$(
       realpath "$_cd"
     )"
 
-    if [[ -n "$_use_basename_as_session" ]]; then
+    if [[ -z "$_session" && -n "$_use_basename_as_session" ]]; then
       _session="$(
         basename "$_cd"
       )"
+    fi
+  fi
+
+  local _session_exists
+
+  # If session specified/computed is not in list of available sessions and we are not creating new session, we must
+  # error.
+  if [[ -n "$_session" && -z "$_new" ]]; then
+    local _list_existing_sessions
+
+    mapfile -t _list_existing_sessions < <(__list_sessions --names)
+
+    for _elm in "${_list_existing_sessions[@]}"; do
+      if [[ "$_elm" == "$_session" ]]; then
+        _session_exists=1
+        break
+      fi
+    done
+
+    if [[ -z "$_session_exists" ]]; then
+      echo -e \
+        "\nSession \"$_session\" does not exist. Are you trying to create a new session? Then use -n,--new flag.\n" \
+        >&2
+
+      exit 1
     fi
   fi
 
@@ -163,40 +204,33 @@ _start_tmux() (
     _cd="${DOTFILE_PARENT_PATH}/dotfiles"
   fi
 
-  if tmux ls 2>&1 | grep -qP "${_session}:"; then
-    cd "$_cd" || exit 1
-    local _cmd="tmux attach-session"
+  local _cmd
+
+  if tmux ls &>/dev/null; then
+    _cmd="tmux attach-session"
 
     if [[ -n "$_detach" ]]; then
       _cmd+=" -d"
     fi
+
     _cmd+=" -t $_session"
-
-    if [[ -n "$_debug" ]]; then
-      echo -e "CD: $_cd\nCMD $_cmd"
-    else
-      bash -c "$_cmd"
-      ebnis-save-tmux.sh &>/dev/null || true
-    fi
   else
-    cd "$_cd" || exit 1
-    # rm -rf $HOME/.tmux/resurrect/pane_contents.tar.gz
-
-    if [[ -n "$TMUX" ]]; then
-      echo "Please disconnect from tmux session \"$(tmux display-message -p '#S')\"."
-      exit 1
-    fi
-
-    # Launch new tmux session.
-    local _cmd="tmux new -s $_session"
-
-    if [[ -n "$_debug" ]]; then
-      echo -e "CD: $_cd\nCMD $_cmd"
-    else
-      bash -c "$_cmd"
-      ebnis-save-tmux.sh &>/dev/null || true
-    fi
+    _cmd="tmux new -s $_session"
   fi
+
+  if [[ -n "$_debug" ]]; then
+    echo -e "\nCD:  $_cd\nCMD: $_cmd\n"
+    return
+  fi
+
+  if [[ -n "$TMUX" ]]; then
+    echo -e "\nPlease disconnect from tmux session \"$(tmux display-message -p '#S')\".\n" >&2
+    exit 1
+  fi
+
+  cd "$_cd" || exit 1
+  bash -c "$_cmd"
+  ebnis-save-tmux.sh &>/dev/null || true
 )
 
 function _____list_sessions_help {
@@ -215,6 +249,8 @@ Options:
     Fetch session list from resurrect file.
   --verbose/-v
     Include the command for starting sessions.
+  --names/-n
+    Return names only
 
 Examples:
   # Get help.
@@ -239,6 +275,7 @@ __list_sessions() (
   local _clients
   local _from_resurrect_file
   local _verbose
+  local _names_only
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -247,8 +284,8 @@ __list_sessions() (
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,client,resurrect,verbose \
-      --options=h,c,r,v \
+      --longoptions=help,client,resurrect,verbose,names \
+      --options=h,c,r,v,n \
       --name "$0" \
       -- "$@"
   )"; then
@@ -278,6 +315,11 @@ __list_sessions() (
 
     --verbose | -v)
       _verbose=1
+      shift
+      ;;
+
+    --names | -n)
+      _names_only=1
       shift
       ;;
 
@@ -313,6 +355,11 @@ __list_sessions() (
       awk '/^window\s+/ {print $2}' "$_resurrect_file" |
         sort -u
     )"
+
+    if [[ -n "$_names_only" ]]; then
+      echo "${_session_resurrect_list[*]}"
+      return
+    fi
 
     for _elm in $_session_resurrect_list; do
       local _windows_count
@@ -380,6 +427,11 @@ __list_sessions() (
 
   # Is tmux server started? - Get sessions data from live tmux server and enrich with information from resurrect file.
   if _sessions="$(tmux ls 2>&1)"; then
+    if [[ -n "$_names_only" ]]; then
+      awk -F ':' '{print $1}' <<<"$_sessions"
+      return
+    fi
+
     echo -e "$_sessions\n$_sessions_pwds_from_resurrect_file"
     return
   fi
