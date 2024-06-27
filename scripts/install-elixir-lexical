@@ -6,8 +6,6 @@ set -o pipefail
 elixir_lexical_base="$HOME/.elixir_lexical_ebnis"
 lexical_src="$elixir_lexical_base/src"
 build_dir="$lexical_src/_build"
-build_lexical_dir="$build_dir/dev/package/lexical"
-build_bin_dir="$build_lexical_dir/bin"
 
 full_line_len=$(tput cols)
 _echo() {
@@ -32,21 +30,6 @@ _get_asdf_plugin_version() {
 
   asdf current "$_plugin_name" |
     awk ' {print $2}'
-}
-
-_move_files_to_script_dir() {
-  find \
-    "$build_lexical_dir" \
-    -mindepth 1 \
-    -maxdepth 1 \
-    -print0 |
-    xargs \
-      --null \
-      --max-args=1 \
-      --max-procs=5 \
-      -I {} \
-      -S 1024 \
-      bash -c "echo 'Moving {}'; mv {} $_script_dir "
 }
 
 get_latest_tag() {
@@ -253,27 +236,26 @@ install() {
     _echo "Removing any previous build of lexical."
     rm -rf "$build_dir"
 
-    _echo "Building lexical."
-    mix package
+    local _script_dir="$elixir_lexical_base/${_elixir}--${_erlang}--${_tag}"
 
-    if [[ -e "$build_bin_dir" ]]; then
-      _echo "lexical built successfully. Build bin directory: $build_bin_dir"
+    _echo "Deleting previous build directory $_script_dir if existing."
+    rm -rf "$_script_dir"
+    mkdir -p "$_script_dir"
+
+    _echo "Building lexical into $_script_dir."
+    mix package --path "$_script_dir"
+
+    local _start_lexical_script="$_script_dir/bin/start_lexical.sh"
+
+    if [[ -e "$_start_lexical_script" ]]; then
+      _echo "lexical built successfully. Start script: $_start_lexical_script"
     else
       _echo "Building lexical failed - aborting!" >&2
       exit 1
     fi
 
-    local _script_dir="$elixir_lexical_base/${_elixir}--${_erlang}--${_tag}"
-
-    rm -rf "$_script_dir"
-    mkdir -p "$_script_dir"
-
-    _echo "Moving scripts from $build_lexical_dir to $_script_dir:"
-
-    _move_files_to_script_dir "$_script_dir"
-
     echo -e "\n**********Write to your bashrc/.env file:**********"
-    echo -e "export ELIXIR_LEXICAL_BIN='$_script_dir/bin/start_lexical.sh'\n"
+    echo -e "export ELIXIR_LEXICAL_BIN='$_start_lexical_script'\n"
   )
 }
 
