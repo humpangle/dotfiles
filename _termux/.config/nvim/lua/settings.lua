@@ -72,6 +72,15 @@ vim.opt.mouse = "a"
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
+-- I guess some plugins are changing tabstop/shiftwidth settings for markdown.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+  end,
+})
+
 -- converts tabs to white space
 vim.opt.expandtab = true
 
@@ -170,7 +179,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 local filetypes_group =
-    vim.api.nvim_create_augroup("filetypes", { clear = true })
+  vim.api.nvim_create_augroup("filetypes", { clear = true })
 -- Change filetype based on patterns
 local patterns = {
   {
@@ -293,7 +302,6 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "elixir",
     "eelixir",
-    "sh",
   },
   callback = function()
     keymap("n", "<leader>fc", ":Neoformat<CR>", {
@@ -339,8 +347,16 @@ keymap("n", "<Leader>y+", '<cmd>%y<CR><cmd>let @+=@"<CR>', { noremap = true })
 keymap("n", "<Leader>YY", '<cmd>%y<CR><cmd>let @+=@"<CR>', { noremap = true })
 keymap("n", "<Leader>ya", '<cmd>%y<CR><cmd>let @a=@"<CR>', { noremap = true })
 
-local function do_yanka_highlighted(register)
+local function do_yanka_highlighted(register_flag)
+  local register = nil
+
   return function()
+    if register_flag == "letter" then
+      register = utils.ord_to_char(vim.v.count)
+    end
+
+    register = register or register_flag
+
     -- Yank the currently highlighted texts to the unnamed register
     vim.api.nvim_command("normal! vgny")
 
@@ -358,11 +374,10 @@ end
 
 -- Yank highlighted to system clipboard / register a
 keymap("n", ",yy", do_yanka_highlighted("+"), { noremap = true })
-keymap("n", ",cc", do_yanka_highlighted("a"), { noremap = true })
+keymap("n", ",cc", do_yanka_highlighted("letter"), { noremap = true })
 
 -- Move between windows in a tab
 keymap("n", "<Tab>", "<C-w>w", { noremap = false })
-keymap("n", "<C-h>", "<C-w>h", { noremap = true })
 
 -- Tab operations
 keymap("n", "<Leader>tn", "<cmd>tabnew<CR>", { noremap = true })
@@ -395,9 +410,11 @@ keymap(
 keymap("n", ",ts", ":split<bar>:term<CR>:echo &channel<CR>", { noremap = true })
 
 -- Reorder tabs
-keymap("n", "<A-Left>", ":-tabmove<CR>", { noremap = true })
-keymap("n", "<A-Right>", ":+tabmove<CR>", { noremap = true })
--- -- This is what works on my macbook pro 3. I go the keys thus:
+keymap("n", "<C-Left>", ":-tabmove<CR>", { noremap = true })
+keymap("n", "<M-Left>", ":-tabmove<CR>", { noremap = true })
+keymap("n", "<C-Right>", ":+tabmove<CR>", { noremap = true })
+keymap("n", "<M-Right>", ":+tabmove<CR>", { noremap = true })
+-- -- This is what works on my macbook pro 3. I got the keys thus:
 -- -- -- in nvim editor, enter insert mode, <c-v> and then <key> or combo.
 keymap("n", "<M-b>", ":-tabmove<CR>", { noremap = true })
 keymap("n", "<M-f>", ":+tabmove<CR>", { noremap = true })
@@ -500,8 +517,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = function()
     if
-        vim.g.ebnis_netrw_loaded == 0
-        and vim.fn.expand("%") == "NetrwTreeListing"
+      vim.g.ebnis_netrw_loaded == 0
+      and vim.fn.expand("%") == "NetrwTreeListing"
     then
       vim.cmd("set ft=netrw")
       NetrwVExplore("n")
@@ -519,15 +536,35 @@ end, { noremap = true })
 
 -- Copying File Paths and Names
 
-local process_file_path_yanking = function(file_name_modifier, register)
-  register = register or "+"
+-- value_getter_directive may be:
+--   a filename modifier
+--   the literal string `cwd`
+local process_file_path_yanking = function(
+  value_getter_directive,
+  register_flag
+)
+  local register = nil
 
   return function()
-    local fp = vim.fn.expand(file_name_modifier)
+    if register_flag == "letter" then
+      register = utils.ord_to_char(vim.v.count)
+    end
+
+    register = register or "+"
+
+    local fp
+    if value_getter_directive == "cwd" then
+      fp = vim.fn.getcwd()
+    else
+      fp = vim.fn.expand(value_getter_directive)
+    end
+
     vim.fn.setreg('"', fp)
     vim.fn.setreg(register, fp)
     vim.cmd(utils.clip_cmd)
-    print(fp)
+    print(
+      '"' .. register .. " -> " .. value_getter_directive .. " = " .. fp
+    )
   end
 end
 
@@ -540,11 +577,16 @@ keymap("n", ",yd", process_file_path_yanking("%:p:h"))
 -- Yank absolute file path
 keymap("n", ",yf", process_file_path_yanking("%:p"))
 -- Copy relative path
-keymap("n", ",cr", process_file_path_yanking("%", "a"))
+keymap("n", ",cr", process_file_path_yanking("%", "letter"))
 -- Copy absolute path
-keymap("n", ",cf", process_file_path_yanking("%:p", "a"))
+keymap("n", ",cf", process_file_path_yanking("%:p", "letter"))
 -- Copy file name
-keymap("n", ",cn", process_file_path_yanking("%:t", "a"))
+keymap("n", ",cn", process_file_path_yanking("%:t", "letter"))
+
+-- Yank current working directory
+keymap("n", ",yw", process_file_path_yanking("cwd"))
+-- Copy current working directory to register a
+keymap("n", ",cw", process_file_path_yanking("cwd", "letter"))
 
 --  Some plugins change my CWD to currently opened file - I change it back
 -- Change CWD to the directory of the current file

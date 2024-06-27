@@ -59,6 +59,8 @@ return {
       yamlls_config.yaml_companion_plugin_init(),
     },
     config = function()
+      local lspconfig = require("lspconfig")
+
       -- Diagnostic keymaps
       utils.map_key(
         "n",
@@ -211,13 +213,22 @@ return {
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend(
+      local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+      local lsp_extended_capabilities = vim.tbl_deep_extend(
         "force",
-        capabilities,
+        lsp_capabilities,
         -- Augment neovim LSP capabilities with those from nvim cmp.
         require("cmp_nvim_lsp").default_capabilities()
       )
+
+      local elixir_lsp_filetypes = {
+        "elixir",
+        "eelixir",
+        "heex",
+        "surface",
+      }
+
+      local none_existing_vim_filetype = { "1" } -- hopefully a filetype that does not exist.
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -263,11 +274,15 @@ return {
           },
         },
 
-        elixirls = {
+        -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/lexical/init.lua
+        lexical = {
           cmd = {
-            -- I have a  global ELIXIR_LS_BIN in .bashrc and then project specific in the workspace root.
-            os.getenv("ELIXIR_LS_BIN"),
+            -- I have a  global ELIXIR_LEXICAL_BIN in .bashrc and then project specific in the workspace root.
+            os.getenv("ELIXIR_LEXICAL_BIN") or "lexical",
           },
+          filetypes = utils.os_env_not_empty(
+            "NVIM_USE_ELIXIR_LEXICAL"
+          ) and elixir_lsp_filetypes or none_existing_vim_filetype,
         },
 
         bashls = {},
@@ -295,6 +310,34 @@ return {
           },
         },
       }
+
+      local elixir_ls_config_fn = function()
+        local filetypes = nil
+
+        if utils.os_env_not_empty("NVIM_USE_ELIXIR_LS") then
+          filetypes = elixir_lsp_filetypes
+        elseif utils.os_env_not_empty("NVIM_USE_ELIXIR_LEXICAL") then
+          filetypes = none_existing_vim_filetype
+        else
+          filetypes = elixir_lsp_filetypes
+        end
+
+        local bin_from_env_var = utils.os_env_not_empty("ELIXIR_LS_BIN")
+          and os.getenv("ELIXIR_LS_BIN")
+
+        return {
+          elixirls = {
+            cmd = {
+              -- I have a  global ELIXIR_LS_BIN in .bashrc and then project specific in the workspace root.
+              bin_from_env_var or "elixir-ls",
+            },
+            filetypes = filetypes,
+          },
+        }
+      end
+
+      servers = vim.tbl_extend("error", servers, elixir_ls_config_fn())
+      -- /END/ servers variable
 
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
@@ -326,11 +369,11 @@ return {
             server.capabilities = vim.tbl_deep_extend(
               "force",
               {},
-              capabilities,
+              lsp_extended_capabilities,
               server.capabilities or {}
             )
 
-            require("lspconfig")[server_name].setup(server)
+            lspconfig[server_name].setup(server)
           end,
         },
       })

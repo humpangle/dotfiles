@@ -68,6 +68,14 @@ keymap(
   { noremap = true, silent = true, desc = "Git stash list" }
 )
 
+local description_with_count = function(mapping_str)
+  return string.format(
+    " - count=index. 0=99 E.g. SPACE%s, [count]SPACE%s.",
+    mapping_str,
+    mapping_str
+  )
+end
+
 keymap(
   "n",
   "<Leader>czd",
@@ -76,7 +84,7 @@ keymap(
 
     local count = vim.v.count
 
-    -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we can
+    -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we cannot
     -- have git stash index 99).
     if count == 99 then -- simulate count 0
       cmd = ":G stash drop stash@{0}<Left>"
@@ -92,7 +100,7 @@ keymap(
       "t"
     )
   end),
-  { noremap = true, desc = "Git stash drop - use 99 to simulate count 0" }
+  { noremap = true, desc = "Git stash drop" .. description_with_count("czd") }
 )
 
 keymap("n", "<Leader>czz", function()
@@ -104,16 +112,45 @@ keymap("n", "<Leader>czz", function()
 
   if count == 1 then
     cmd = cmd .. " --include-untracked"
-  elseif count > 1 then
+  elseif count == 2 then
     cmd = cmd .. " --all"
+  elseif count == 3 then
+    cmd = cmd
+  else
+    print("count should be 1/--include-untracked 2/--all 3/pathspec")
+    return
   end
 
   -- Append text for custom message with the latest commit hash and place cursor between quotes
   cmd = cmd .. " -m '" .. latest_commit .. ": '"
 
+  local left = "<left>"
+  local left_repeated_severally = left
+
+  if count == 3 then
+    local file_path = vim.fn.expand("%:.")
+    local how_many_times_to_repeat = string.len(file_path) + 5
+
+    left_repeated_severally = ""
+
+    ---@diagnostic disable-next-line: unused-local
+    for i = 1, how_many_times_to_repeat do
+      left_repeated_severally = left_repeated_severally .. left
+    end
+
+    cmd = cmd .. " -- " .. file_path
+  end
+
   -- Move the cursor back by one position to place it after the commit hash and before the end quote
   vim.fn.feedkeys(
-    ":" .. cmd .. vim.api.nvim_replace_termcodes("<Left>", true, true, true),
+    ":"
+      .. cmd
+      .. vim.api.nvim_replace_termcodes(
+        left_repeated_severally,
+        true,
+        true,
+        true
+      ),
     "t"
   )
 end, {
@@ -144,33 +181,25 @@ local git_stash_apply_or_pop = function(apply_or_pop, maybe_include_index)
   end)
 end
 
-keymap(
-  "n",
-  "<Leader>czP",
-  git_stash_apply_or_pop("pop"),
-  { noremap = true, desc = "Git stash pop --quiet" }
-)
+keymap("n", "<Leader>czP", git_stash_apply_or_pop("pop"), {
+  noremap = true,
+  desc = "Git stash pop" .. description_with_count("czP"),
+})
 
-keymap(
-  "n",
-  "<Leader>czp",
-  git_stash_apply_or_pop("pop", "index"),
-  { noremap = true, desc = "Git stash pop --quiet --index" }
-)
+keymap("n", "<Leader>czp", git_stash_apply_or_pop("pop", "index"), {
+  noremap = true,
+  desc = "Git stash pop --index" .. description_with_count("czp"),
+})
 
-keymap(
-  "n",
-  "<Leader>czA",
-  git_stash_apply_or_pop("apply"),
-  { noremap = true, desc = "Git stash apply --quiet" }
-)
+keymap("n", "<Leader>czA", git_stash_apply_or_pop("apply"), {
+  noremap = true,
+  desc = "Git stash apply" .. description_with_count("czA"),
+})
 
-keymap(
-  "n",
-  "<Leader>cza",
-  git_stash_apply_or_pop("apply", "index"),
-  { noremap = true, desc = "Git stash apply --quiet --index" }
-)
+keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
+  noremap = true,
+  desc = "Git stash apply --index" .. description_with_count("cza"),
+})
 -- END Git stash related mappings
 
 -- Git commit mappings

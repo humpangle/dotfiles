@@ -115,7 +115,17 @@ function M.get_yaml_schema()
     return ""
   end
 
-  return "*" .. schema.result[1].name .. "*"
+  local name = schema.result[1].name or ""
+
+  -- For container compose file, we will either receive `docker-compose.yml` or `Compose Specification`.
+  -- We normalize both to `Compose`
+  if name == "docker-compose.yml" then
+    name = "Compose"
+  else
+    name = string.gsub(name, " Specification", "")
+  end
+
+  return "*" .. name
 end
 
 return M

@@ -100,7 +100,8 @@ local plugins_table = {
   },
 
   -- Statusline / tabline
-  require("plugins.lualine"),
+  -- require("plugins.lualine"),
+  require("plugins.lightline"),
 
   -- TERMINAL
   require("plugins/floaterm"),
@@ -220,6 +221,18 @@ local plugins_table = {
     end,
   },
 
+  {
+    "t9md/vim-choosewin",
+    init = function()
+      -- if you want to use overlay feature: does not work well if there is terminal buffer in the tab
+      -- vim.g.choosewin_overlay_enable = 1
+      vim.g.choosewin_overlay_enable = 0
+
+      -- invoke with '-'
+      keymap("n", "-", "<Plug>(choosewin)", { noremap = true })
+    end,
+  },
+
   -- Send text from vim to tmux/NeoVim :terminal etc
   {
     "jpalardy/vim-slime",
@@ -301,6 +314,20 @@ local plugins_table = {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {}, -- this is equalent to setup({}) function
+  },
+
+  {
+    -- A plugin to color colornames and ANSI codes. :ColoHighlight
+    "chrisbra/Colorizer",
+  },
+  {
+    -- Bash Automated Testing System
+    -- https://github.com/bats-core/bats-core?tab=readme-ov-file
+    "aliou/bats.vim",
+    init = function()
+      -- https://github.com/aliou/bats.vim#configuration
+      vim.g.bats_vim_consider_dollar_as_part_of_word = true
+    end,
   },
 }
 

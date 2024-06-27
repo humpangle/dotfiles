@@ -5,6 +5,8 @@ if not utils_status_ok then
   return
 end
 
+local PlenaryPath = require("plenary.path")
+
 local keymap = utils.map_key
 
 -- Key to show slime config for the first time - <C-c><C-c>
@@ -57,13 +59,63 @@ keymap("n", ",slt", function()
   helper_func("tmux")
 end, { noremap = true, desc = "Slime config tmux" })
 
-local slime_input_file_directory_path = vim.fn.expand("$HOME") .. "/.bash_histories"
-vim.fn.mkdir(slime_input_file_directory_path, "p")
+local is_only = function(text)
+  return text == "o" or text == "on" or text == "only"
+end
 
-local function create_slime_input_file()
+vim.api.nvim_create_user_command("Slime0", function(opts)
+  -- opts.fargs[1] = nil | hist_dir | local | global
+  --    hist_dir: query for the global history directory only and copy the path to system clipboard .
+  --    local: create the slime input file in the current working directory.
+  --    nil: implies local.
+  --    global: create the slime input file in the global bash history directory.
+  --
+  -- opts.fargs[2] = nil | o | on | only --> create input file only, do not create terminal.
+
+  local arg_size = #opts.fargs
+  local action
+  local only = false
+
+  if arg_size == 0 then
+    action = "local"
+  elseif arg_size == 1 then
+    if is_only(opts.fargs[1]) then
+      action = "local"
+      only = true
+    end
+  else
+    action = opts.fargs[1]
+    only = is_only(opts.fargs[2])
+  end
+
+  local slime_dir
   local timestamp = os.date("%s")
 
-  local filename = slime_input_file_directory_path .. "/--vim-slime--" .. timestamp
+  if action == "local" then
+    slime_dir = vim.fn.getcwd() .. "/.___scratch"
+    local slime_dir_obj = PlenaryPath:new(slime_dir)
+
+    -- if there is a file (not directory) at this path, rename it so we can create a directory with same name below.
+    if slime_dir_obj:is_file() then
+      os.rename(slime_dir, slime_dir .. "--" .. timestamp)
+    end
+  else
+    slime_dir = vim.fn.expand("$HOME") .. "/.bash_histories"
+  end
+
+  -- Create the directory if it does not exist already.
+  vim.fn.mkdir(slime_dir, "p")
+
+  -- We merely want to query for the history directory.
+  if action == "hist_dir" then
+    vim.fn.setreg("+", slime_dir)
+    vim.cmd(utils.clip_cmd)
+    print(slime_dir)
+    return
+  end
+
+  local name_affix = "~slime" .. timestamp
+  local filename = slime_dir .. "/" .. name_affix
 
   local file = io.open(filename, "w")
   if file then
@@ -79,25 +131,34 @@ local function create_slime_input_file()
   -- Open the created file in the new tab
   vim.cmd("edit " .. filename)
 
+  if only then
+    return
+  end
+
   vim.cmd("vsplit")
 
   -- Move to the right window (which is now the new vertical split)
   vim.cmd("wincmd l")
 
   -- Open a terminal in the right window
-  vim.cmd("term")
+  vim.cmd("terminal bash;" .. name_affix)
 
   -- Set the filetype to unix for the left window
   vim.cmd("wincmd h")
   vim.cmd("set filetype=unix")
-end
-
-_G.create_slime_input_file = create_slime_input_file
-vim.cmd("command! SlimeFileTerminal lua create_slime_input_file()")
-
-_G.copy_slime_input_file = function()
-  vim.fn.setreg("+", slime_input_file_directory_path)
-  vim.cmd(utils.clip_cmd)
-  print(slime_input_file_directory_path)
-end
-vim.cmd("command! SlimeFileDirectory lua copy_slime_input_file()")
+end, {
+  nargs = "*",
+  force = true,
+  desc = "Create a text buffer for vim slime and a terminal at the same time.",
+  complete = function()
+    -- return completion candidates as a list-like table
+    return {
+      "hist_dir",
+      "local",
+      "global",
+      "only",
+      "o",
+      "on",
+    }
+  end,
+})

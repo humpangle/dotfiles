@@ -185,6 +185,17 @@ function utils.DeleteAllBuffers(f)
   end
 end
 
+local function is_terminal_buffer()
+  local buf_number = vim.api.nvim_get_current_buf()
+  local buf_name = vim.api.nvim_buf_get_name(buf_number)
+
+  if buf_name:match("^term://") then
+    return true
+  else
+    return false
+  end
+end
+
 function utils.RenameFile()
   local old_name = vim.api.nvim_buf_get_name(0) -- Get the current buffer's file name
   local new_name = vim.fn.input({
@@ -197,19 +208,26 @@ function utils.RenameFile()
     local dirname = vim.fn.fnamemodify(new_name, ":p:h")
 
     -- Create the directory if it doesn't exist
-    os.execute("mkdir -p " .. vim.fn.shellescape(dirname))
+    if not is_terminal_buffer() then
+      os.execute("mkdir -p " .. vim.fn.shellescape(dirname))
+    end
 
-    -- Save the buffer under the new name
-    vim.cmd("saveas " .. vim.fn.fnameescape(new_name))
+    -- Wrap in pcall because terminal buffers produce error which terminates rest of function.
+    pcall(function()
+      -- Save the buffer under the new name
+      vim.cmd("saveas " .. vim.fn.fnameescape(new_name))
+    end)
 
     -- Remove the old file
-    os.execute("rm " .. vim.fn.shellescape(old_name))
+    if not is_terminal_buffer() then
+      os.execute("rm " .. vim.fn.shellescape(old_name))
+    end
 
     -- Refresh the screen
     vim.cmd("redraw!")
 
     -- Close the buffer that had the old file name
-    vim.cmd("bdelete #")
+    vim.cmd("bdelete! " .. old_name)
   end
 end
 
@@ -222,6 +240,12 @@ function utils.DeleteFile(which)
       to_delete = vim.fn.expand("%:p:h")
     else
       to_delete = vim.fn.expand("%")
+    end
+
+    if to_delete == "" or to_delete:match("^term://") then
+      vim.cmd("bdelete!")
+      print("DELETED " .. to_delete .. " !")
+      return
     end
 
     local delete_prompt =
@@ -270,5 +294,18 @@ function utils.write_to_command_mode(string)
 end
 
 utils.clip_cmd = [[:call system('nc -N localhost 8377', @")]]
+
+utils.ord_to_char = function(ord)
+  if ord < 1 or ord > 26 then
+    ord = 26
+  end
+
+  return string.char(ord + 96)
+end
+
+utils.os_env_not_empty = function(env_var_string)
+  local val = os.getenv(env_var_string)
+  return val ~= nil and string.gsub(val, "^%s*(.-)%s*$", "%1") ~= ""
+end
 
 return utils
