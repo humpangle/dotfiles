@@ -112,16 +112,45 @@ keymap("n", "<Leader>czz", function()
 
   if count == 1 then
     cmd = cmd .. " --include-untracked"
-  elseif count > 1 then
+  elseif count == 2 then
     cmd = cmd .. " --all"
+  elseif count == 3 then
+    cmd = cmd
+  else
+    print("count should be 1/--include-untracked 2/--all 3/pathspec")
+    return
   end
 
   -- Append text for custom message with the latest commit hash and place cursor between quotes
   cmd = cmd .. " -m '" .. latest_commit .. ": '"
 
+  local left = "<left>"
+  local left_repeated_severally = left
+
+  if count == 3 then
+    local file_path = vim.fn.expand("%:.")
+    local how_many_times_to_repeat = string.len(file_path) + 5
+
+    left_repeated_severally = ""
+
+    ---@diagnostic disable-next-line: unused-local
+    for i = 1, how_many_times_to_repeat do
+      left_repeated_severally = left_repeated_severally .. left
+    end
+
+    cmd = cmd .. " -- " .. file_path
+  end
+
   -- Move the cursor back by one position to place it after the commit hash and before the end quote
   vim.fn.feedkeys(
-    ":" .. cmd .. vim.api.nvim_replace_termcodes("<Left>", true, true, true),
+    ":"
+      .. cmd
+      .. vim.api.nvim_replace_termcodes(
+        left_repeated_severally,
+        true,
+        true,
+        true
+      ),
     "t"
   )
 end, {
