@@ -9,7 +9,7 @@ function utils.ebnis_save_commit_buffer()
   end
 
   local max_tab_number =
-      vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
+    vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
   local current_tab_number = vim.fn.tabpagenr("$")
 
   if max_tab_number == current_tab_number then
@@ -72,12 +72,12 @@ function utils.get_file_name(num)
       local next_path_segment = path_segments_list[i]
 
       local first_letter_of_next_path_segment =
-          string.sub(next_path_segment, 1, 1)
+        string.sub(next_path_segment, 1, 1)
 
       -- for dot file, we take the dot and next char
       if first_letter_of_next_path_segment == "." then
         first_letter_of_next_path_segment =
-            string.sub(next_path_segment, 1, 2)
+          string.sub(next_path_segment, 1, 2)
       end
 
       table.insert(
@@ -87,8 +87,8 @@ function utils.get_file_name(num)
     end
 
     return table.concat(first_letters_of_path_segments_list, "/")
-        .. "/"
-        .. tail
+      .. "/"
+      .. tail
   end
 
   return file_name
@@ -131,17 +131,17 @@ function utils.DeleteAllBuffers(f)
   ---@diagnostic disable-next-line: param-type-mismatch
   local last_b_num = vim.fn.bufnr("$")
   local normal_buffers, terminal_buffers, no_name_buffers, dbui_buffers =
-      {}, {}, {}, {}
+    {}, {}, {}, {}
 
   for index = 1, last_b_num do
     if vim.fn.bufexists(index) == 1 then
       local b_name = vim.fn.bufname(index)
       if
-          f == "dbui"
-          and (
-            string.match(b_name, ".dbout")
-            or string.match(b_name, "share/db_ui/")
-          )
+        f == "dbui"
+        and (
+          string.match(b_name, ".dbout")
+          or string.match(b_name, "share/db_ui/")
+        )
       then
         table.insert(dbui_buffers, index)
       else
@@ -173,13 +173,13 @@ function utils.DeleteAllBuffers(f)
     wipeout_buffers(no_name_buffers)
     wipeout_buffers(terminal_buffers)
     delete_buffers(normal_buffers)
-    -- empty / no-name buffers
+  -- empty / no-name buffers
   elseif f == "e" then
     wipeout_buffers(no_name_buffers)
-    -- terminal buffers
+  -- terminal buffers
   elseif f == "t" then
     wipeout_buffers(terminal_buffers)
-    -- dbui buffers
+  -- dbui buffers
   elseif f == "dbui" then
     wipeout_buffers(dbui_buffers)
   end
@@ -249,7 +249,7 @@ function utils.DeleteFile(which)
     end
 
     local delete_prompt =
-        vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
+      vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
 
     if delete_prompt:lower() == "y" then
       if which == "d" then
@@ -276,10 +276,10 @@ function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
   -- We prepend the keymap (left) and mode to the description so when we search with description as search term, the
   -- keymap also shows up.
   opts.desc = mapping_str
-      .. " "
-      .. vim.inspect(mode)
-      .. " "
-      .. (opts.desc or "")
+    .. " "
+    .. vim.inspect(mode)
+    .. " "
+    .. (opts.desc or "")
 
   vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
@@ -305,7 +305,7 @@ end
 
 utils.os_env_not_empty = function(env_var_string)
   local val = os.getenv(env_var_string)
-  return val ~= nil and string.gsub(val, '^%s*(.-)%s*$', '%1') ~= ""
+  return val ~= nil and string.gsub(val, "^%s*(.-)%s*$", "%1") ~= ""
 end
 
 return utils
