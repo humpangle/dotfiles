@@ -1,5 +1,14 @@
 set -o errexit
 
+if [[ -z "$EBNIS_PHONE_ID" ]]; then
+  echo "Set \"EBNIS_PHONE_ID\" environment variable e.g." >&2
+  echo "export EBNIS_PHONE_ID='android_redme_note_8_pro'" >&2
+  echo "export EBNIS_PHONE_ID='samsung_galaxy_s24'" >&2
+  exit 1
+fi
+
+_platform_identifier_prefix="$EBNIS_PHONE_ID"
+
 full_line_len=$(tput cols)
 
 _echo() {
@@ -38,12 +47,37 @@ fi
 
 export EDITOR='nvim'
 
-alias which='command -v'
+alias C="clear && printf '\e[3J'"
 alias ..='cd ..'
 alias ls='ls --color=auto'
 alias ll='ls -AlhF'
-alias C="clear && printf '\e[3J'"
-alias cb=clipboard
+alias md='mkdir -p'
+alias v=nvim
+alias fm=vifm
+alias p=pass
+alias shl='exec $SHELL'
+
+which() {
+  command -v "$@"
+}
+export -f which
+
+g() {
+  grep "$@"
+}
+export -f g
+
+# /START/ Clipboard
+tcs() {
+  termux-clipboard-set "$@"
+}
+export -f tcs
+
+tcg() {
+  termux-clipboard-get "$@"
+}
+export -f tcg
+# /END/ Clipboard
 
 _do_cd() {
   local level
@@ -61,17 +95,12 @@ _do_cd() {
 }
 alias _c='_do_cd'
 
-alias v=nvim
-alias fm=vifm
-
 _mdf() {
   mkdir -p "$1"
   # shellcheck disable=2103,2164
   cd "$1"
 }
-
 alias mdc='_mdf'
-alias md='mkdir -p'
 
 alias ug='apt update && apt upgrade -y'
 
@@ -129,7 +158,6 @@ _run_f() {
 
   return "$_exit_code"
 }
-
 alias r='_run_f'
 
 export MY_TMUX_SHARE_DIR="$HOME/storage/downloads/_termux_share"
@@ -150,7 +178,6 @@ mkdir -p "$_ssh_dir"
 
 if [[ ! -e "$_ssh_dir/config" ]]; then touch "$_ssh_dir/config"; fi
 
-_platform_identifier_prefix="android_redme_note_8_pro"
 _ssh_identity_prefix="$_ssh_dir/${_platform_identifier_prefix}__ed25519__"
 
 _humpangle_github="${_ssh_identity_prefix}github__humpangle"
@@ -228,4 +255,4 @@ cp "$_android_host_in_folder/.tmux.conf" "$HOME"
 
 mkdir -p "$HOME/.tmux/resurrect"
 
-echo -e "\n\nsource $_bashrc"
+echo -e "\n\nsource $_bashrc\n\n"
