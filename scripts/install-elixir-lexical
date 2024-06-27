@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o pipefail
+
 elixir_lexical_base="$HOME/.elixir_lexical_ebnis"
 lexical_src="$elixir_lexical_base/src"
 build_dir="$lexical_src/_build"
