@@ -59,23 +59,6 @@ if _is_darwin && [[ -e "$DOTFILE_PARENT_PATH/dotfiles/_macos" ]]; then
   source "$DOTFILE_PARENT_PATH/dotfiles/_macos"
 fi
 
-copy() {
-  if _is_darwin; then
-    pbcopy <<<"${*}"
-  elif command -v xclip &>/dev/null; then
-    # If we can not copy with xclip (may be because x11 server was not properly setup), then attempt to use clipper.
-    if ! xclip -selection c <<<"${*}" 2>/dev/null; then
-      if command -v clip &>/dev/null; then
-        clip <<<"${*}"
-      fi
-    fi
-  elif command -v clip &>/dev/null; then
-    clip <<<"${*}"
-  fi
-}
-
-export -f copy
-
 if _is_linux; then
   __shell_path='/usr/bin/bash'
   google_chrome_bin="$(which google-chrome)"
