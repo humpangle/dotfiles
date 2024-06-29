@@ -1,27 +1,120 @@
 #!/usr/bin/env bash
 
-main() {
-  local _arg=
+set -o errexit
+set -o pipefail
 
+# The following function is declared and set in cp-vim-session-util.bash. Sourcing that script below
+# brings it into this script.
+
+# _get_copy_program <- function
+# ____copy_help <- function
+
+# shellcheck source=/dev/null
+source "$(dirname "$0")/../scripts-utils/copy-util.bash"
+
+# Helper function for copy confirmations.
+_debug() {
+  local _copy_program="$1"
+  local _copied_text
+
+  case "$_copy_program" in
+  xclip)
+    _copied_text="$(xclip -o -selection clipboard)"
+    ;;
+
+  pbcopy)
+    _copied_text="$(pbpaste)"
+    ;;
+
+  *)
+    echo "Unknown copy program $_copy_program" >&2
+    exit 1
+    ;;
+  esac
+
+  echo "$_copy_program $_copied_text"
+}
+
+_text_to_copy=
+
+_get_text_to_copy() {
   if [[ -n "$1" ]]; then
-    _arg=$1
+    _text_to_copy=$1
   elif [[ ! -t 0 ]]; then
-    _arg="$(</dev/stdin)"
+    _text_to_copy="$(</dev/stdin)"
   else
-    echo "No standard input."
+    echo "Nothing to copy" >&2
+    exit 1
+  fi
+}
+
+main() {
+  : "___help___ ____copy_help"
+
+  local _copy_program=
+  _copy_program="$(_get_copy_program)"
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local _parsed
+  local _debug
+
+  if ! _parsed="$(
+    getopt \
+      --longoptions=help,debug \
+      --options=h,d \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ____copy_help
+    return 129
   fi
 
-  if _is_darwin; then
-    pbcopy <<<"$_arg"
-  elif command -v xclip &>/dev/null; then
-    # If we can not copy with xclip (may be because x11 server was not properly setup), then attempt to use clipper.
-    if ! xclip -selection c <<<"$_arg" 2>/dev/null; then
-      if command -v clip &>/dev/null; then
-        clip <<<"$_arg"
-      fi
-    fi
-  elif command -v clip &>/dev/null; then
-    clip <<<"$_arg"
+  # provides proper quoting.
+  eval set -- "$_parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ____copy_help
+      return
+      ;;
+
+    --debug | -d)
+      _debug=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "unknown option ${1}."
+      ____copy_help
+      return 129
+      ;;
+    esac
+  done
+  # --------------------------------------------------------------------------
+  # end parse arguments
+  # --------------------------------------------------------------------------
+
+  _get_text_to_copy "$1"
+
+  case "$_copy_program" in
+  xclip)
+    xclip -selection c <<<"$_text_to_copy"
+    ;;
+  *)
+    "$_copy_program" <<<"$_text_to_copy"
+    ;;
+  esac
+
+  if [[ -n "$_debug" ]]; then
+    _debug "$_copy_program"
   fi
 }
 
