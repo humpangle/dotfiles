@@ -47,7 +47,7 @@ test() {
     # shellcheck disable=2086
     BATS_NO_FAIL_FOCUS_RUN=1 \
       "$NODE_BIN/chokidar" \
-      $_files_to_watch \
+      $_files_to_watch ../scripts/* ../scripts-utils/* \
       --initial \
       --command "$_run _clear && bats $_files_to_test"
   )
