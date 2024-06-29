@@ -19,7 +19,8 @@ pkg update \
       tmux \
       ncurses-utils \
       clang \
-      termux-api
+      termux-api \
+      man
 
 # ncurses-utils provides tput command.
 # clang provides gcc
