@@ -1014,5 +1014,24 @@
     "description": [
       "Snippet Echo terminal line"
     ]
+  },
+  "Snippet source test helper file": {
+    "prefix": [
+      "source_test_helper_file",
+      "helper_file_test_source"
+    ],
+    "body": [
+      "# The following variables and functions are declared and set in cp-vim-session-util.bash. Sourcing that script below",
+      "# brings them into this script.",
+      "",
+      "_variable_name= # <- variable",
+      "# _function_name <- function",
+      "",
+      "# shellcheck source=/dev/null",
+      "source \"\\$(dirname \"\\$0\")/../scripts-utils/${1:executable}-util.bash\""
+    ],
+    "description": [
+      "Snippet source test helper file"
+    ]
   }
 }
