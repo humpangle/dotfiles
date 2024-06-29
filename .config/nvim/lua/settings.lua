@@ -603,7 +603,7 @@ end)
 
 -- Find and replace in current buffer only
 -- press * {shift 8) to search for word under cursor and key combo below to replace in entire file
-keymap({ "n", "x" }, "<leader>rr", ":%s///g<left><left>")
+-- keymap({ "n", "x" }, "<leader>rr", ":%s///g<left><left>")
 keymap({ "n", "x" }, "<leader>rc", ":%s///gc<left><left><left>")
 
 -- Search for the strings using `fzf`, press <tab> to select multiple (<s-tab> to deselect) and <cr> to populate QuickFix list
