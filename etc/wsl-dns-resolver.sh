@@ -3,13 +3,16 @@
 resolv_conf_filename="/etc/resolv.conf"
 
 function set-up-dns-resolver {
+  : "___help___ ___set-up-dns-resolver-help"
+
   if [[ -z "${*}" ]]; then
     ___set-up-dns-resolver-help
     return
   fi
 
   local _use_native_resolver
-  local _use_cloudflare_resolver
+  local _use_custom_resolver
+  local _custom_resolver_server
   local _help
   local _networking_mode
 
@@ -20,8 +23,8 @@ function set-up-dns-resolver {
 
   if ! parsed="$(
     getopt \
-      --longoptions=native,cloudflare,help,query,networking: \
-      --options=n,c,h,q,t: \
+      --longoptions=native,cloudflare,help,query,networking:,dns: \
+      --options=n,c,h,q,t:,r: \
       --name "$0" \
       -- "$@"
   )"; then
@@ -49,9 +52,14 @@ function set-up-dns-resolver {
       ;;
 
     --cloudflare | -c)
-      _use_cloudflare_resolver=1
-      _use_native_resolver=
+      _use_custom_resolver=1
       shift
+      ;;
+
+    --dns | -r)
+      _use_custom_resolver=1
+      _custom_resolver_server="$2"
+      shift 2
       ;;
 
     --networking | -t)
@@ -76,10 +84,22 @@ function set-up-dns-resolver {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  if [[ -n "${_use_cloudflare_resolver}" ]]; then
+  if [[ -n "$_use_custom_resolver" ]]; then
+    # Custom resolver supercedes native resolver.
+    _use_native_resolver=
+
+    if [[ -z "$_custom_resolver_server" ]]; then
+      # Use Cloudflare's resover.
+      _custom_resolver_server=1.1.1.1
+    fi
+  fi
+
+  if [[ -n "${_use_custom_resolver}" ]]; then
     _remove-resolv-conf
     sudo sed -i -e 's|generateResolvConf = true|generateResolvConf = false|' /etc/wsl.conf
-    echo 'nameserver 1.1.1.1' | sudo tee "${resolv_conf_filename}" 1>/dev/null
+
+    echo "nameserver $_custom_resolver_server" |
+      sudo tee "${resolv_conf_filename}" 1>/dev/null
 
     set-up-dns-resolver --query
     return
@@ -106,8 +126,7 @@ function _remove-resolv-conf {
 }
 
 function ___set-up-dns-resolver-help {
-  : "___help___ ___set-up-dns-resolver-help"
-  read -r -d '' var <<'eof'
+  read -r -d '' var <<'eof' || true
 Set up and query DNS resolver for WSL2. Usage:
   wsl-dns-resolver.sh [OPTIONS]
 
@@ -117,6 +136,8 @@ Options:
   --native/-n.      Use WSL native NAT resolver
   --cloudflare/-c.  Use Cloudflare resolver
   --networking/-t.  Networking mode. Values are nat|mirrored
+  --networking/-t.  Networking mode. Values are nat|mirrored
+  --dns/-r.         Specify a custom resolver.
 
 * Without an option - print this help message and exit
 
@@ -130,6 +151,10 @@ Examples:
   wsl-dns-resolver.sh --native
   wsl-dns-resolver.sh --cloudflare
   wsl-dns-resolver.sh --query
+
+  # Use a custom (google) DNS server
+  wsl-dns-resolver --dns 8.8.8.8
+  wsl-dns-resolver -r 8.8.8.8
 eof
 
   echo -e "${var}"
