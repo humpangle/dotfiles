@@ -577,7 +577,7 @@ __tks() {
   local _this_session
 
   _this_session="$(
-    tmux list-panes -t $TMUX_PANE -F '#S' |
+    tmux list-panes -t "$TMUX_PANE" -F '#S' |
       head -n1
   )"
 
