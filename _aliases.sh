@@ -133,6 +133,8 @@ fi
 # -----------------------------------------------------------------------------
 # START PYTHON POETRY
 # -----------------------------------------------------------------------------
+alias py='python'
+
 if command -v poetry &>/dev/null; then
   alias_map['pt']='poetry'
 fi
@@ -141,6 +143,8 @@ fi
 # -----------------------------------------------------------------------------
 
 if command -v tmux &>/dev/null; then
+  export TP="${TMUX_PANE}"
+
   alias kts='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
   alias ts='ebnis-save-tmux.sh'
   alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
@@ -164,6 +168,8 @@ fi
 # START nvim
 # -----------------------------------------------------------------------------
 if command -v nvim &>/dev/null; then
+  export EDITOR="nvim"
+
   # vim
   alias vi='/usr/bin/vim'
   alias vimdiff="nvim -d"
@@ -436,3 +442,110 @@ if [[ -e "$_elixir_lexical_script" ]]; then
   alias ilexical="chmod 755 $_elixir_lexical_script && $_elixir_lexical_script"
 fi
 unset _elixir_lexical_script
+
+if [ -x "$(command -v sort-package-json)" ]; then
+  alias spj='sort-package-json'
+fi
+
+# PHP SECTION
+# Do not use PHP PEAR when installing PHP with asdf
+# export PHP_WITHOUT_PEAR='yes'
+
+if command -v php &>/dev/null; then
+  _phpunit() {
+    if command -v phpunit >/dev/null; then
+      phpunit --testdox "$@"
+    else
+      ./vendor/bin/phpunit --testdox "$@"
+    fi
+  }
+
+  alias php-unit='_phpunit'
+  alias pu='_phpunit'
+
+  # debian pkg bsdgames
+  alias sail='./vendor/bin/sail'
+  alias sailartisan='./vendor/bin/sail artisan'
+
+  alias artisan='php artisan'
+
+  alias scmstorage='sudo chmod -R 777 storage'
+
+  alias cmp='composer'
+  alias cmpi='composer install'
+  alias cmpr='composer require'
+  alias cmprd='composer require --dev'
+  alias cmpd='composer dumpautoload -o'
+fi
+
+if command -v nginx &>/dev/null; then
+  alias ng="sudo nginx -g 'daemon off; master_process on;' &"
+  alias ngd="sudo nginx -g 'daemon on; master_process on;'"
+  alias ngk='pgrep -f nginx | xargs sudo kill -9'
+  alias ngkill='pgrep -f nginx | xargs sudo kill -9'
+  alias ngstop='pgrep -f nginx | xargs sudo kill -9'
+fi
+
+# GIT
+alias gss='git status'
+# alias gst='git stash'
+# alias gsp='git stash pop'
+alias gsl='git stash list'
+# there is a debian package gsc = gambc
+alias gsc='git stash clear'
+alias gcma='git commit --amend'
+alias gcma='git commit -a'
+alias gcme='git commit --amend --no-edit'
+alias gcamupm='git commit -am "updated" && git push github master'
+alias ga.='git add .'
+alias gp='git push'
+alias gpgm='git push github master'
+# The following command has serious caveats: see wiki/git.md
+# deliberately put an error: stash1 instead of stash so that user is forced
+# to edit command and put stash message
+alias gsstaged='git stash1 push -m "" -- $(git diff --staged --name-only)'
+alias gcm='git commit'
+alias grb='git rebase -i'
+# debian package gpodder=gpo
+alias gpo='git push origin'
+alias gpf='git push --force-with-lease origin'
+alias glone='git log --oneline'
+alias gconflict='git diff --name-only --diff-filter=U'
+alias gwt='git worktree'
+# debian package gsa = gwenhywfar-tools
+gsa() {
+  git stash apply "stash@{$1}"
+}
+
+gsd() {
+  git stash drop "stash@{$1}"
+}
+
+if _is_linux && ! _has_termux; then
+  # install with: `sudo apt-get install ssh-askpass-gnome ssh-askpass -y`
+  # shellcheck disable=2155
+  export SUDO_ASKPASS=$(command -v ssh-askpass)
+
+  alias ug='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
+
+  # rsync
+  alias rsynca='rsync -avzP --delete'
+  alias rsyncd='rsync -avzP --delete --dry-run'
+
+  alias scouser='sudo chown -R $USER:$USER'
+  alias hb='sudo systemctl hibernate'
+  alias sd='sudo shutdown now'
+  alias sb='sudo reboot now'
+  # debian package `lrzsz`
+  alias rb='sudo reboot'
+
+  _purge-systemd-service() {
+    sudo systemctl stop "$1"
+    sudo systemctl disable "$1"
+    sudo rm -rf /etc/systemd/system/"$1"
+    sudo rm -rf /usr/lib/systemd/system/"$1"
+    sudo systemctl daemon-reload
+    sudo systemctl reset-failed
+  }
+  alias purge-systemd-service='_purge-systemd-service'
+fi

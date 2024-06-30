@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if [ ! -d "$HOME/.asdf" ]; then
+  return
+fi
+# shellcheck source=/dev/null
+. "$HOME/.asdf/asdf.sh"
+# shellcheck source=/dev/null
+. "$HOME/.asdf/completions/asdf.bash"
+
+if asdf current nodejs &>/dev/null; then
+  TS_SERVER_GBLOBAL_LIBRARY_PATH="$HOME/.asdf/installs/nodejs/$(asdf current nodejs | awk '{print $2}')/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
+  export TS_SERVER_GBLOBAL_LIBRARY_PATH
+fi
+
+if [[ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]]; then
+  # shellcheck source=/dev/null
+  . "$HOME/.asdf/plugins/java/set-java-home.bash"
+fi

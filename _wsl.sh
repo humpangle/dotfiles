@@ -95,7 +95,7 @@ _open_wsl_explorer() {
       ;;
 
     --path | -p)
-      _path="$(realpath $2)"
+      _path="$(realpath "$2")"
       shift 2
       ;;
 
@@ -144,12 +144,19 @@ SETUP_DNS_RESOLVER_SCRIPT_NAME="$DOTFILE_PARENT_PATH/dotfiles/etc/wsl-dns-resolv
 export WSL_EXE='/c/WINDOWS/system32/wsl.exe'
 
 alias e.='_open_wsl_explorer'
+# shellcheck disable=2139
 alias wsls="{ ebnis-save-tmux.sh || true; } && $WSL_EXE --shutdown"
+# shellcheck disable=2139
 alias wslt="check_wsl_distro_name && { { ebnis-save-tmux.sh || true ; } && $WSL_EXE --terminate $WSL_DISTRO_NAME ; }"
+# shellcheck disable=2139
 alias ubuntu18="$WSL_EXE --distribution Ubuntu"
+# shellcheck disable=2139
 alias ubuntu20="$WSL_EXE --distribution Ubuntu-20.04"
+# shellcheck disable=2139
 alias ubuntu22="$WSL_EXE --distribution Ubuntu-22.04"
+# shellcheck disable=2139
 alias nameserver="sudo $SETUP_DNS_RESOLVER_SCRIPT_NAME"
+# shellcheck disable=2139
 alias _dns="sudo -E $SETUP_DNS_RESOLVER_SCRIPT_NAME"
 
 # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free

@@ -1,0 +1,210 @@
+#!/usr/bin/env bash
+
+_run_f() {
+  local _script_name
+
+  local _script_pattern=(
+    run
+    run.sh
+    .run
+    .run.sh
+    do-run.sh
+  )
+
+  # Let us search 5 directories level deep for the environment file
+  local _parent_search_paths=(
+    .
+    ..
+    ../..
+    ../../..
+    ../../../..
+    ../../../../..
+    ../../z
+    ../../../z
+    "${HOME}"
+  )
+
+  local exit_parent
+
+  for parent_dir in "${_parent_search_paths[@]}"; do
+    unset exit_parent
+
+    for path in "${_script_pattern[@]}"; do
+      complete_path="${parent_dir}/$path"
+
+      if [[ -e "$complete_path" ]]; then
+        _script_name="$(realpath "$complete_path")"
+        exit_parent=1
+        break
+      fi
+    done
+
+    if [[ -n "${exit_parent}" ]]; then break; fi
+  done
+
+  local _script_dir
+  _script_dir="$(dirname "$_script_name")"
+
+  # Let us run the script at the root of script file
+  cd "$_script_dir" || true
+
+  bash "$_script_name" "$@"
+  local _exit_code="$?"
+
+  cd - &>/dev/null || true
+
+  return "$_exit_code"
+}
+
+alias r='_run_f'
+
+_____run_well_known_paths_help() {
+  : "___help___ _____run_well_known_paths_help"
+  read -r -d '' var <<'eof'
+Run a program against some well known filesystem paths. Usage:
+  __run_well_known_paths program_o_run path
+
+The program we want to run: may be a binary or an alias. E.g.
+  alias c=$HOME/.vscode-server/bin/0ee/bin/remote-cli/code
+  alias v=/usr/bin/nvim
+
+Available paths:
+dot
+wiki
+py
+web
+
+Examples:
+  # Run vscode (binary) with path `wiki`
+  __run_well_known_paths code wiki
+
+  # Run vscode (alias) with the path `py`
+  __run_well_known_paths c py
+eof
+
+  echo -e "${var}"
+}
+
+__run_well_known_paths() {
+  if [[ "$1" == '-h' ]] ||
+    [[ "$1" == '--help' ]]; then
+    _____run_well_known_paths_help
+    return
+  fi
+
+  local _user_supplied_program_to_run="$1"
+
+  if [[ -z "$_user_supplied_program_to_run" ]]; then
+    echo -e "Program to run is required. Exiting!\n"
+
+    _____run_well_known_paths_help
+    return
+  fi
+
+  # The path we wish to run program against
+  local _app="$2"
+
+  if [[ -z "$_app" ]]; then
+    echo -e "Path to run program against is required. Exiting!\n"
+
+    _____run_well_known_paths_help
+    return
+  fi
+
+  # Here is the shared directory where we keep our most popular app
+  local _shared_0_prefix='/c/0000-shared'
+
+  # The apps we are interested in
+  local _dot='dot'
+  local _wiki='wiki'
+  local _py='py'
+  local _web='web'
+
+  # A mapping of apps to directory where they are located
+  declare -A _app_to_path_mapping=()
+
+  _app_to_path_mapping["$_dot"]="$DOTFILE_PARENT_PATH/dotfiles"
+  _app_to_path_mapping["$_wiki"]="$_shared_0_prefix/wiki"
+  _app_to_path_mapping["$_py"]="$_shared_0_prefix/py"
+  _app_to_path_mapping["$_web"]="$_shared_0_prefix/web-pages"
+
+  # If the program to run is visual studio code, the app may contain a file *.code-workspace. This will be
+  # appended to the app's path
+  declare -A _app_to_code_workspace_file_mapping=()
+
+  _app_to_code_workspace_file_mapping["$_dot"]='dotfiles.code-workspace'
+  _app_to_code_workspace_file_mapping["$_wiki"]='wiki.code-workspace'
+  _app_to_code_workspace_file_mapping["$_py"]='py.code-workspace'
+  _app_to_code_workspace_file_mapping["$_web"]='web-pages.code-workspace'
+
+  # The filesystem path to the app
+  local _app_path="${_app_to_path_mapping["$_app"]}"
+
+  # If we are running visual studio code, append code workspace path (if it exists)
+  if {
+    echo "$_user_supplied_program_to_run" | grep -qP "code$" ||
+      [[ "$_user_supplied_program_to_run" == 'c' ]]
+  }; then
+    _app_path="$_app_path/${_app_to_code_workspace_file_mapping["$_app"]}"
+  fi
+
+  local _program_to_run
+  _parse_command_to_run _program_to_run "$_user_supplied_program_to_run"
+
+  if [[ -z "$_program_to_run" ]]; then
+    echo "'$_user_supplied_program_to_run' is not a valid program or shell alias"
+    return
+  fi
+
+  eval "$_program_to_run $_app_path"
+}
+
+alias rr='__run_well_known_paths'
+alias rrv='__run_well_known_paths v'
+alias rrc='__run_well_known_paths code'
+
+_parse_command_to_run() {
+  local -n _result=$1
+
+  # The value to parse may be a program binary or shell alias
+  local _to_parse="$2"
+
+  local _command_v_result
+  _command_v_result="$(command -v "$_to_parse")"
+
+  if [[ -z "$_command_v_result" ]]; then return; fi
+
+  # Check if command to parse is a shell alias and extract values.
+  # We will have a pattern such as:
+  #   `alias c=code`
+  #   `alias c='code'`
+  #   `alias   c="code"`
+  # This will be extracted into (alias, c, code) where _not_used=alias
+  read -r _not_used _alias_name _suffix \
+    <<<"$(
+      echo "$_command_v_result" |
+        awk -F"[='\"]" '/^alias/{print $1, $2, $3}'
+    )"
+
+  # If we have an alias, ensure it is the same as _to_parse
+  if [[ -n $_alias_name ]]; then
+    # First trim
+    _alias_name=$(echo "$_alias_name" | awk '{$1=$1};1')
+
+    if [[ "$_alias_name" != "$_to_parse" ]]; then return; fi
+
+    _command_v_result="$_suffix"
+  fi
+
+  # If the version of vscode invoked is from WSL, replace with version installed on windows OS. Why?
+  # WSL version of the binary does not work when invoked from tmux launched inside vscode.
+  if echo "$_command_v_result" | grep -qP "/home/.+\.vscode-server/bin.+bin/remote-cli/code"; then
+    _command_v_result="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft VS Code/bin/code"
+  fi
+
+  # Replace all whitespace with '\ '. Why?
+  # When using WSL, windows binaries sometimes contain space which is frowned up in path names for unix
+  local _find=" "
+  local _replace="\ "
+  _result="${_command_v_result//$_find/$_replace}"
+}

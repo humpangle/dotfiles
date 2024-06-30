@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+# In `~/.bashrc`
+# export INTELLIJ_VERSION='IntelliJIdea2022.3' # Found at /home/kanmii/.config/JetBrains/IntelliJIdea2023.2
+# export INTELLIJ_IDEA_BIN_VERSION='intellij-idea-ultimate'
+# export GIT_USER='your-name'
+# export GIT_EMAIL='your-email@email.email'
+
+_intellij_idea_bin_path="$HOME/.local/share/JetBrains/Toolbox/apps/$INTELLIJ_IDEA_BIN_VERSION/bin/idea.sh"
+
+if [[ ! -e "$_intellij_idea_bin_path" ]]; then
+  return
+fi
+
+pathmunge "$(dirname "$_intellij_idea_bin_path")"
+
+_intellij() {
+  local settings_sync_dir="$HOME/.config/JetBrains/${INTELLIJ_VERSION:-bahridarnish}/settingsSync"
+
+  (
+    if cd "$settings_sync_dir" &>/dev/null; then
+      local _git_config="$settings_sync_dir/.git/config"
+
+      if ! grep -q "name = Kanmii" "$_git_config"; then
+        if [[ -n "$GIT_USER" ]]; then
+          git config user.name "$GIT_USER"
+        fi
+
+        if [[ -n "$GIT_EMAIL" ]]; then
+          git config user.email "$GIT_EMAIL"
+        fi
+      fi
+
+      local commit_message
+      commit_message="Launching intellij checkpoint -- $(hostname) -- $(date)"
+
+      if git commit \
+        --allow-empty \
+        -m "$commit_message"; then
+
+        # Sometime to allow the commit to complete
+        sleep 2
+
+        echo -e "\nCommit message: \"$commit_message\"\n"
+      else
+        echo -e "$settings_sync_dir"
+      fi
+    fi
+  )
+
+  "$_intellij_idea_bin_path" &>/dev/null &
+  disown
+}
+
+alias intellij='_intellij'
+alias idea='intellij'

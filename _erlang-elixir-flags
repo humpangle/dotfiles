@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if ! _has_termux; then
+  # Erlang and elixir flags
+  # skip the java dependency during installation
+  export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
+  # Do not build erlang docs when installing with
+  # asdf cos it's slow and unstable
+  export KERL_BUILD_DOCS=yes
+  export KERL_INSTALL_MANPAGES=
+  export KERL_INSTALL_HTMLDOCS=
+fi
+
+alias rebar='rebar3'
+
+# IEx Persistent History (https://tylerpachal.medium.com/iex-persistent-history-5d7d64e905d3)
+export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 10240000"

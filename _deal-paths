@@ -1,0 +1,266 @@
+#!/usr/bin/env bash
+
+_do_cd() {
+  local level
+
+  if [[ -z "$1" ]] ||
+    [[ "$1" == "0" ]]; then
+    level=1
+  else
+    level="$1"
+  fi
+
+  for _l in $(seq "$level"); do
+    cd .. || exit 1
+  done
+}
+
+alias .c='_do_cd'
+alias ..='cd ..'
+alias ls='ls --color=auto'
+alias ll='ls -AlhF'
+
+alias C="clear && printf '\e[3J'"
+
+alias shl='source ~/.bashrc'
+# shellcheck disable=2139,2154
+alias shell="export SHELL=$__shell_path"
+
+# shellcheck disable=2139
+alias cdd="cd $DOTFILE_PARENT_PATH/dotfiles"
+# shellcheck disable=2139
+alias cdp="mkdir -p $DOTFILE_PARENT_PATH/projects && cd $DOTFILE_PARENT_PATH/projects"
+# shellcheck disable=2139
+alias cdo="mkdir -p $DOTFILE_PARENT_PATH/projects/0 && cd $DOTFILE_PARENT_PATH/projects/0"
+
+_mdf() {
+  mkdir -p "$1"
+  # shellcheck disable=2103,2164
+  cd "$1"
+}
+alias mdc='_mdf'
+alias md='mkdir -p'
+
+# cp -r ./xx yy -> will create yy/xx
+# cp -rT ./xx yy -> will not create yy, but dump contents of xx into yy and
+# if yy does not exist, it will be created. This means cp -rT ./xx ../../xx
+# is the same as cp -r ./xx ../.. as ../../xx will be created if does not exist
+# alias cpr='cp -rT' # The above may not work in some shell - hence _cpr below
+_cpr_help() {
+  echo "
+Usage:
+  cpr [ -h | --help ] \\
+      source \\
+      destination-prefix \\
+      -o | --out   \\
+
+Examples:
+  cpr -h
+  cpr /some/source/a /some/dirname --out some_name
+
+  # WIll copy to /some/dirname/a
+  cpr /some/source/a/ /some/dirname -o s
+
+  # WIll copy to /some/dirname - /some/dirname must not exist
+  cpr /some/source/a/ /some/dirname -o d
+
+  # Will copy to ./a
+  cpr /some/source/a/ . -o s
+
+Options:
+  --help/-h
+      Print usage information and exit.
+  --out/-o
+      The output folder name.
+      Use character 's' to make destination basename same as source basename
+      Use character 'd' to write to destination basename
+"
+}
+_cpr() {
+  if [[ -z "${*}" ]]; then
+    _cpr_help
+    return
+  fi
+
+  local _out
+  local _help
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=out:,help \
+      --options=o:,h \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    return
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      _cpr_help
+      return
+      ;;
+
+    --out | -o)
+      _out="$2"
+      shift 2
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      return
+      ;;
+    esac
+  done
+
+  # handle non-option arguments
+
+  if [[ $# -lt 2 ]]; then
+    echo "source and destination required"
+    return
+  fi
+
+  if [[ -z "${_out}" ]]; then
+    echo "--out/-o option is required to be output folder or character 's'"
+    return
+  fi
+
+  local _source
+  _source="$(realpath "$1")"
+  local _destination_prefix=$2
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  # Remove trailing '/' from source otherwise source will be deleted
+  _source="${_source%/}"
+
+  _destination_prefix="${_destination_prefix%/}"
+  _destination_prefix="$(realpath "${_destination_prefix}")"
+  local _destination
+
+  if [[ "${_out}" == 's' ]]; then
+    local _source_base
+    _source_base="$(basename "${_source}")"
+    _destination="${_destination_prefix}/${_source_base}"
+  elif [[ "${_out}" == 'd' ]]; then
+
+    # The destination must not already exist
+    if [[ -e "${_destination_prefix}" ]]; then
+      echo "Destination '${_destination_prefix}' must not exist with '-o d' "
+      echo "argument. Exiting!"
+      return
+    fi
+
+    _destination="${_destination_prefix}"
+  else
+    _destination="${_destination_prefix}/${_out}"
+  fi
+
+  echo "Destination => ${_destination}"
+  mkdir -p "${_destination}"
+
+  cp -rT "${_source}" "${_destination}"
+}
+alias cpr=_cpr
+
+____cpath_help() {
+  read -r -d '' var <<'eof'
+Copy path to current working directory or file name to system clipboard. Usage:
+  _cpath [OPTIONS] [filename]
+
+Options:
+  --basename/-b
+      Copy only the basename
+  --help/-h
+      Print this help text and exit
+Examples:
+  _cpath
+  _cpath -h
+  _cpath some-file
+eof
+
+  echo -e "${var}"
+}
+
+_cpath() {
+  : "___help___ ____cpath_help"
+
+  local _base_only=
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=basename,help \
+      --options=b,h \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    return
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ____cpath_help
+      return
+      ;;
+
+    --basename | -b)
+      _base_only=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      return
+      ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  local _path="${PWD}"
+  local _filename="$1"
+
+  if [[ -n "$_filename" ]]; then
+    _path="$_path/$_filename"
+  fi
+
+  if [[ -n "${_base_only}" ]]; then
+    _path="$(basename "${_path}")"
+  fi
+
+  copy "$_path"
+  echo "$_path"
+}
+alias cpath=_cpath
+alias cpt=_cpath

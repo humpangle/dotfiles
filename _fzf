@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+if [ ! -d "$HOME/.fzf" ]; then
+  return
+fi
+
+if [[ -e ~/.fzf.bash ]]; then
+  # shellcheck source=/dev/null
+  source ~/.fzf.bash
+
+  # Set up fzf key bindings and fuzzy completion
+  eval "$(fzf --bash)"
+fi
+
+# ripgrep
+export RG_IGNORES="!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
+RG_OPTIONS="--hidden --follow --glob '$RG_IGNORES'"
+
+export FZF_DEFAULT_OPTS="--layout=reverse --border"
+# Use git-ls-files inside git repo, otherwise rg
+export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_COMPLETION_TRIGGER=',,'
+
+_fzf_compgen_dir() {
+  rg --files "$RG_OPTIONS"
+}
+
+_fzf_compgen_path() {
+  rg --files --hidden --follow --glob $RG_IGNORES
+}
+
+FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
+
+# shellcheck disable=2139
+alias ff="fzf $FZF_PREVIEW_APP"
+alias eff='env | fzf'
+alias aff='alias | fzf'
+alias fff='compgen -A function | fzf'
