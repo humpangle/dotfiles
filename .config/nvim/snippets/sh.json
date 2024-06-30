@@ -1114,5 +1114,19 @@
     "description": [
       "Snippet source test helper file"
     ]
+  },
+  "Snippet sh echo debug": {
+    "prefix": [
+      "echo_debug",
+      "echo_debug",
+      "echo_debug",
+      "debug_echo"
+    ],
+    "body": [
+      "echo -e \"${1:\\n\\n }${2:var} ${3:description} => \\$${2:var} $0\" "
+    ],
+    "description": [
+      "Snippet echo debug"
+    ]
   }
 }
