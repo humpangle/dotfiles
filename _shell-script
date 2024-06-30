@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=
 
-# The full path to this script --> /some_prefix/dotfiles/regular_shell.sh
+# The full path to this script --> /some_prefix/dotfiles/_shell-script
 _bash_src="${BASH_SOURCE[0]}"
 
 # MOTIVATION:
@@ -14,7 +14,7 @@ _bash_src="${BASH_SOURCE[0]}"
 #   macos      -> /User/<username>
 #   linux      -> /home/<username>
 #   multipass  -> /home/<host_username>
-export DOTFILE_PARENT_PATH="${_bash_src/\/dotfiles\/regular_shell.sh/''}"
+export DOTFILE_PARENT_PATH="${_bash_src/\/dotfiles\/_shell-script/''}"
 
 # Add to $PATH only if `it` does not exist in the $PATH
 # fish shell has the `fish_add_path` function which does something similar

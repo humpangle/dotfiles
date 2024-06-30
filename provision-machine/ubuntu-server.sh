@@ -741,7 +741,7 @@ function install-bins {
   done
 
   curl -fLo "${BASH_APPEND_PATH}" \
-    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/regular_shell.sh"
+    "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/_shell-script"
 
   echo "[ -f ${BASH_APPEND_PATH} ] && source ${BASH_APPEND_PATH}" >>"$HOME/.bashrc"
   # shellcheck source=/dev/null
@@ -2706,7 +2706,7 @@ setup_multipass() {
   cat <<EOF >>"$HOME/.bashrc"
 
 if [[ -d "$_dotfiles_path" ]]; then
-  source "$_dotfiles_path/regular_shell.sh"
+  source "$_dotfiles_path/_shell-script"
 fi
 EOF
 
