@@ -720,17 +720,22 @@ keymap("n", "<leader>re", ":reg<CR>", { noremap = true })
 keymap("n", "<localleader>re", ":VMessage reg<CR>", { noremap = true })
 
 local function insert_current_datetime()
+  local format_string = "%Y-%m-%d %H:%M:%S"
+
+  if vim.v.count == 1 then
+    format_string = "%s"
+  end
+
   -- The `.. ""` is to silence the warning `Cannot assign `string|osdate` to `string`.  - `osdate` cannot match `string``
-  local datetime = os.date("%Y-%m-%d %H:%M:%S") .. ""
+  local datetime = os.date(format_string) .. ""
   vim.api.nvim_put({ datetime }, "c", true, true)
 end
 
-utils.map_key(
-  "n",
-  ",D",
-  insert_current_datetime,
-  { noremap = true, silent = true, desc = "Insert datetime" }
-)
+utils.map_key("n", ",D", insert_current_datetime, {
+  noremap = true,
+  silent = true,
+  desc = "Insert datetime. Count 1 for timestamp.",
+})
 
 utils.map_key(
   "i",
