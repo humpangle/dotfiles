@@ -22,28 +22,7 @@ vim.g.have_nerd_font = true
 
 local plugins_table = {
   -- THEMES / COLORSCHEME
-  {
-    {
-      "rakr/vim-one",
-      enabled = not plugin_enabled.has_vscode(),
-      cond = true, -- conditionally load
-      priority = 1000,
-    },
-
-    {
-      "lifepillar/vim-gruvbox8",
-      enabled = not plugin_enabled.has_vscode(),
-      cond = true, -- conditionally load
-      priority = 1000,
-    },
-
-    {
-      "lifepillar/vim-solarized8",
-      enabled = not plugin_enabled.has_vscode(),
-      cond = true, -- conditionally load
-      priority = 1000,
-    },
-  },
+  require("plugins/color-schemes"),
 
   "nvim-lua/plenary.nvim",
 

@@ -1,7 +1,7 @@
 local M = {}
 
 local has_coc = function()
-  if vim.g.vscode then
+  if vim.g.vscode or M.has_termux() then
     return false
   end
 
@@ -40,6 +40,22 @@ end
 
 function M.coc()
   return has_coc()
+end
+
+function M.has_termux()
+  return os.getenv("HOME") == "/data/data/com.termux/files/home"
+end
+
+function M.enable_vim_one_color_scheme()
+  if M.has_termux() then
+    return false
+  end
+
+  return not M.has_vscode()
+end
+
+function M.enable_solarized_color_scheme()
+  return M.enable_vim_one_color_scheme()
 end
 
 return M

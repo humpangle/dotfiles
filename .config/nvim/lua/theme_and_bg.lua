@@ -1,3 +1,5 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
 local theme_fn_map = {
   -- BACKGROUNDS
   d = function()
@@ -8,11 +10,6 @@ local theme_fn_map = {
   end,
 
   -- THEMES
-  one = function()
-    vim.cmd.colorscheme("one")
-    -- use italic for comments
-    vim.g.one_allow_italics = 1
-  end,
 
   ---- gruvbox8
   gruvbox8 = function()
@@ -27,21 +24,32 @@ local theme_fn_map = {
     vim.g.one_allow_italics = 1
     vim.cmd.colorscheme("gruvbox8_soft")
   end,
-
-  ---- solarized8
-  solarized8 = function()
-    vim.cmd.colorscheme("solarized8")
-  end,
-  solarized8_low = function()
-    vim.cmd.colorscheme("solarized8_low")
-  end,
-  solarized8_flat = function()
-    vim.cmd.colorscheme("solarized8_flat")
-  end,
-  solarized8_high = function()
-    vim.cmd.colorscheme("solarized8_high")
-  end,
 }
+
+if not plugin_enabled.has_termux() then
+  -- THEMES not used in termux
+  theme_fn_map = vim.tbl_extend("error", theme_fn_map, {
+    one = function()
+      vim.cmd.colorscheme("one")
+      -- use italic for comments
+      vim.g.one_allow_italics = 1
+    end,
+
+    ---- solarized8
+    solarized8 = function()
+      vim.cmd.colorscheme("solarized8")
+    end,
+    solarized8_low = function()
+      vim.cmd.colorscheme("solarized8_low")
+    end,
+    solarized8_flat = function()
+      vim.cmd.colorscheme("solarized8_flat")
+    end,
+    solarized8_high = function()
+      vim.cmd.colorscheme("solarized8_high")
+    end,
+  })
+end
 
 local env_vim_theme = os.getenv("EBNIS_VIM_THEME")
 local env_vim_bg = os.getenv("EBNIS_VIM_THEME_BG")
@@ -49,7 +57,7 @@ local env_vim_bg = os.getenv("EBNIS_VIM_THEME_BG")
 if env_vim_theme ~= nil and theme_fn_map[env_vim_theme] ~= nil then
   theme_fn_map[env_vim_theme]()
 else
-  theme_fn_map.solarized8_high()
+  theme_fn_map.gruvbox8_hard()
 end
 
 if env_vim_bg ~= nil and theme_fn_map[env_vim_bg] ~= nil then

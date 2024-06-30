@@ -1,4 +1,5 @@
 set -o errexit
+set -o pipefail
 
 if [[ -z "$EBNIS_PHONE_ID" ]]; then
   echo "Set \"EBNIS_PHONE_ID\" environment variable e.g." >&2
@@ -41,145 +42,60 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 _storage_download="$HOME/storage/downloads"
 
 _android_host_out_folder="$_storage_download/__termux"
-_dotfiles_termux_dir="$HOME/dotfiles/_termux"
+_dotfiles_termux_dir="$HOME/dotfiles"
 
 _bashrc="$HOME/.bashrc"
 cp "$PREFIX/etc/bash.bashrc" "$_bashrc"
 
 mkdir -p "$HOME/.local/bin"
 
-cat <<'eof' >>"$_bashrc"
-if [ -d "$HOME/dotfiles/scripts" ]; then
-  PATH="$HOME/dotfiles/scripts:$PATH"
-fi
+cat <<'EOM' >>"$_bashrc"
 
-export EDITOR='nvim'
+##########################################################
 
-alias C="clear && printf '\e[3J'"
-alias ..='cd ..'
-alias ls='ls --color=auto'
-alias ll='ls -AlhF'
-alias md='mkdir -p'
-alias v=nvim
-alias fm=vifm
-alias p=pass
-alias shl='exec $SHELL'
+[ -f "$HOME/dotfiles/_shell-script" ] && source "$HOME/dotfiles/_shell-script"
 
-which() {
-  command -v "$@"
-}
-export -f which
+export MY_TERMUX_SHARE_DIR="$HOME/storage/downloads/_termux_share"
+mkdir -p "$MY_TERMUX_SHARE_DIR"
 
-g() {
-  grep "$@"
-}
-export -f g
+export SINGLE_FILE_WEB_PAGES_DOWNLOAD_DIR="$MY_TERMUX_SHARE_DIR/web-pages"
 
-# /START/ Clipboard
-tcs() {
-  termux-clipboard-set "$@"
-}
-export -f tcs
+# -----------------------------------------------------------------------------
+# PROGRAMMING LANGUAGES RELATED
+# -----------------------------------------------------------------------------
+PYTHON3="$(command -v python 2>/dev/null)"
+export PYTHON3
 
-tcg() {
-  termux-clipboard-get "$@"
-}
-export -f tcg
-# /END/ Clipboard
+# -----------------------------------------------------------------------------
+# ELIXIR LEXICAL
+# -----------------------------------------------------------------------------
+export NVIM_USE_ELIXIR_LEXICAL=
+export ELIXIR_LEXICAL_BIN=''
+export ELIXIR_LEXICAL_BIN=''
+# -----------------------------------------------------------------------------
+# /END/ ELIXIR LEXICAL
+# -----------------------------------------------------------------------------
 
-_do_cd() {
-  local level
+# -----------------------------------------------------------------------------
+# ELIXIR ELIXIR_LS
+# -----------------------------------------------------------------------------
+export NVIM_USE_ELIXIR_LS=
+export ELIXIR_LS_BIN=
+# -----------------------------------------------------------------------------
+# /END/ ELIXIR ELIXIR_LS
+# -----------------------------------------------------------------------------
 
-  if [[ -z "$1" ]] ||
-    [[ "$1" == "0" ]]; then
-    level=1
-  else
-    level="$1"
-  fi
-
-  for _l in $(seq $level); do
-    cd .. || exit 1
-  done
-}
-alias _c='_do_cd'
-
-_mdf() {
-  mkdir -p "$1"
-  # shellcheck disable=2103,2164
-  cd "$1"
-}
-alias mdc='_mdf'
-
-alias ug='apt update && apt upgrade -y'
-
-_run_f() {
-  local _script_name
-
-  local _script_pattern=(
-    run
-    run.sh
-    .run
-    .run.sh
-    do-run.sh
-  )
-
-  # Let us search 5 directories level deep for the environment file
-  local _parent_search_paths=(
-    .
-    ..
-    ../..
-    ../../..
-    ../../../..
-    ../../../../..
-    ../../z
-    ../../../z
-    "$HOME"
-  )
-
-  local exit_parent
-
-  for parent_dir in "${_parent_search_paths[@]}"; do
-    unset exit_parent
-
-    for path in "${_script_pattern[@]}"; do
-      complete_path="${parent_dir}/$path"
-
-      if [[ -e "$complete_path" ]]; then
-        _script_name="$(realpath "$complete_path")"
-        exit_parent=1
-        break
-      fi
-    done
-
-    if [[ -n "${exit_parent}" ]]; then break; fi
-  done
-
-  local _script_dir="$(dirname "$_script_name")"
-
-  # Let us run the script at the root of script file
-  cd "$_script_dir" || true
-
-  bash "$_script_name" "$@"
-  local _exit_code="$?"
-
-  cd - &>/dev/null || true
-
-  return "$_exit_code"
-}
-alias r='_run_f'
-
-export MY_TMUX_SHARE_DIR="$HOME/storage/downloads/_termux_share"
-mkdir -p "$MY_TMUX_SHARE_DIR"
-
-export SINGLE_FILE_WEB_PAGES_DOWNLOAD_DIR="$MY_TMUX_SHARE_DIR/web-pages"
+# -----------------------------------------------------------------------------
+# /END/ PROGRAMMING LANGUAGES RELATED
+# -----------------------------------------------------------------------------
 
 export DEFAULT_TMUX_SESSION=dot
 
-export EBNIS_VIM_THEME=one
-export EBNIS_VIM_THEME=gruvbox8_hard
 export EBNIS_VIM_THEME_BG=l
 export EBNIS_VIM_THEME_BG=d
-eof
+EOM
+
+echo "export EBNIS_PHONE_ID='$EBNIS_PHONE_ID'"
 
 _ssh_dir="$HOME/.ssh"
 mkdir -p "$_ssh_dir"
@@ -206,7 +122,7 @@ for _path in "${_path_array[@]}"; do
   echo -e "\n\n"
 done
 
-cat <<EOF >>"$_ssh_dir/config"
+cat <<EOM >>"$_ssh_dir/config"
 # git@github.humpangle:humpangle/repo.git
 Host github.humpangle
   HostName github.com
@@ -227,30 +143,33 @@ Host github.hellcooper
   User git
   IdentityFile $_hellcooper_github
   StrictHostKeyChecking no
-EOF
+EOM
 
 # shellcheck disable=2086
 chmod 600 $_ssh_dir/*
 
+_echo "Configuring vifmrc"
 _vifm_dir="$HOME/.vifm"
 mkdir -p "$_vifm_dir"
 rm -rf "$_vifm_dir/vifmrc"
-
 ln -s \
   "$_dotfiles_termux_dir/.vifm/vifmrc" \
   "$_vifm_dir"
 
-_echo "Copying neovim config files"
+_echo "Configuring neovim config files"
+rm -rf "$HOME/.config/nvim"
 mkdir -p "$HOME/.config"
 ln -s "$_dotfiles_termux_dir/.config/nvim" "$HOME/.config"
 
-_echo "Copying git config files"
+_echo "Linking git config files"
 _git_configs=(gitignore gitconfig gitattributes)
 for _elm in "${_git_configs[@]}"; do
+  rm -rf "$HOME/.${_elm}"
   ln -s "$_dotfiles_termux_dir/$_elm" "$HOME/.${_elm}"
 done
 
 _echo "Setting up tmux config"
+rm -rf "$HOME/.tmux.conf"
 ln -s "$_dotfiles_termux_dir/.tmux.conf" "$HOME"
 
 mkdir -p "$HOME/.tmux/resurrect"

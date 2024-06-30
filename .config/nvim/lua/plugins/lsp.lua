@@ -187,11 +187,11 @@ return {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client =
-              vim.lsp.get_client_by_id(event.data.client_id)
+            vim.lsp.get_client_by_id(event.data.client_id)
 
           if
-              client
-              and client.server_capabilities.documentHighlightProvider
+            client
+            and client.server_capabilities.documentHighlightProvider
           then
             vim.api.nvim_create_autocmd(
               { "CursorHold", "CursorHoldI" },
@@ -228,7 +228,7 @@ return {
         "elixir",
         "eelixir",
         "heex",
-        "surface"
+        "surface",
       }
 
       local none_existing_vim_filetype = { "1" } -- hopefully a filetype that does not exist.
@@ -248,31 +248,13 @@ return {
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 
-        --[[ The state of typescript LSP is unfortunately a sad one. The official tsserver (typescript) from microsoft is
-            not compatible with LSP protocol (since the project predates the birth of LSP) and microsoft team is making
-            slow progress towards LSP compatibility.
-
-            For now, there is typescript-language-server which sits (as proxy) between LSP clients and tsserver:
-                   lsp client --> typescript-language-server --> tsserver
-            which works, but is claimed to be slow for very large typescript projects. This is what you get by using
-            stock nvim-lspconfig.
-
-            There has been various efforts from the community to augment nvim-lspconfig's typescript-language-server
-            integration (https://github.com/jose-elias-alvarez/typescript.nvim archived) or bypass
-            typescript-language-server completely (https://github.com/pmizio/typescript-tools.nvim -
-            does not work well nvim-lspconfig).
-      --]]
-
-        -- If you want nvim-lspconfig managed tsserver, uncomment the below:
-        tsserver = {},
-
         pyright = {
           on_init = function(client)
             local workspace = client.config.root_dir
             local python_bin =
-                require("plugins/lsp_utils").get_python_path(
-                  workspace
-                )
+              require("plugins/lsp_utils").get_python_path(
+                workspace
+              )
 
             client.config.settings.python.pythonPath = python_bin
             vim.g.python_host_prog = python_bin
@@ -280,34 +262,18 @@ return {
           end,
         },
 
-        lua_ls = {
-          -- cmd = {...},
-          -- filetypes = { ...},
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = "Replace",
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-
         -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/lexical/init.lua
         lexical = {
           cmd = {
             -- I have a  global ELIXIR_LEXICAL_BIN in .bashrc and then project specific in the workspace root.
-            os.getenv("ELIXIR_LEXICAL_BIN") or "lexical"
+            os.getenv("ELIXIR_LEXICAL_BIN") or "lexical",
           },
-          filetypes = utils.os_env_not_empty("NVIM_USE_ELIXIR_LEXICAL") and elixir_lsp_filetypes or
-          none_existing_vim_filetype
+          filetypes = utils.os_env_not_empty(
+            "NVIM_USE_ELIXIR_LEXICAL"
+          ) and elixir_lsp_filetypes or none_existing_vim_filetype,
         },
 
         bashls = {},
-
-        dockerls = {},
 
         yamlls = yamlls_config.config_from_yaml_companion_plugin(),
 
@@ -331,8 +297,6 @@ return {
             },
           },
         },
-
-        terraformls = {},
       }
 
       local elixir_ls_config_fn = function()
@@ -346,7 +310,8 @@ return {
           filetypes = elixir_lsp_filetypes
         end
 
-        local bin_from_env_var = utils.os_env_not_empty("ELIXIR_LS_BIN") and os.getenv("ELIXIR_LS_BIN")
+        local bin_from_env_var = utils.os_env_not_empty("ELIXIR_LS_BIN")
+          and os.getenv("ELIXIR_LS_BIN")
 
         return {
           elixirls = {
@@ -354,12 +319,53 @@ return {
               -- I have a  global ELIXIR_LS_BIN in .bashrc and then project specific in the workspace root.
               bin_from_env_var or "elixir-ls",
             },
-            filetypes = filetypes
+            filetypes = filetypes,
           },
         }
       end
 
       servers = vim.tbl_extend("error", servers, elixir_ls_config_fn())
+
+      if not plugin_enabled.has_termux() then
+        servers = vim.tbl_extend("error", servers, {
+          --[[ The state of typescript LSP is unfortunately a sad one. The official tsserver (typescript) from microsoft is
+            not compatible with LSP protocol (since the project predates the birth of LSP) and microsoft team is making
+            slow progress towards LSP compatibility.
+
+            For now, there is typescript-language-server which sits (as proxy) between LSP clients and tsserver:
+                   lsp client --> typescript-language-server --> tsserver
+            which works, but is claimed to be slow for very large typescript projects. This is what you get by using
+            stock nvim-lspconfig.
+
+            There has been various efforts from the community to augment nvim-lspconfig's typescript-language-server
+            integration (https://github.com/jose-elias-alvarez/typescript.nvim archived) or bypass
+            typescript-language-server completely (https://github.com/pmizio/typescript-tools.nvim -
+            does not work well nvim-lspconfig).
+      --]]
+
+          -- If you want nvim-lspconfig managed tsserver, uncomment the below:
+          tsserver = {},
+
+          lua_ls = {
+            -- cmd = {...},
+            -- filetypes = { ...},
+            -- capabilities = {},
+            settings = {
+              Lua = {
+                completion = {
+                  callSnippet = "Replace",
+                },
+                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                -- diagnostics = { disable = { 'missing-fields' } },
+              },
+            },
+          },
+
+          dockerls = {},
+
+          terraformls = {},
+        })
+      end
       -- /END/ servers variable
 
       -- Ensure the servers and tools above are installed
@@ -374,9 +380,12 @@ return {
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
 
-      vim.list_extend(ensure_installed, {
-        "stylua", -- Used to format Lua code
-      })
+      if not plugin_enabled.has_termux() then
+        -- stylua does noot work onn android.
+        vim.list_extend(ensure_installed, {
+          "stylua", -- Used to format Lua code
+        })
+      end
 
       require("mason-tool-installer").setup({
         ensure_installed = ensure_installed,
@@ -414,7 +423,7 @@ return {
       if vim.fn.executable("nginx-language-server") == 1 then
         -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#nginx_language_server
         lspconfig.nginx_language_server.setup({
-          capabilities = lsp_extended_capabilities
+          capabilities = lsp_extended_capabilities,
         })
       end
     end,
