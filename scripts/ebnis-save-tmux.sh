@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155
 
-_IFS=$IFS
-
 function _ebnis-save-tmux {
   # Do not invoke if there is no active tmux session.
   if ! tmux ls &>/dev/null; then
@@ -15,5 +13,3 @@ function _ebnis-save-tmux {
 }
 
 _ebnis-save-tmux "$@"
-
-IFS=$_IFS
