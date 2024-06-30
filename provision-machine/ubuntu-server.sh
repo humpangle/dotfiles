@@ -812,11 +812,11 @@ install_vifm() {
   fi
 
   if [[ -d "$DOTFILE_ROOT" ]]; then
-    local _source="$DOTFILE_ROOT/.config/vifm/vifmrc"
+    local _source="$DOTFILE_ROOT/.vifm/vifmrc"
     _echo "Linking $_source to $_dest."
     ln -s "$_source" "$_dest"
   else
-    local _source="$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.config/vifm/vifmrc"
+    local _source="$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/.vifm/vifmrc"
     _echo "Downloading $_source to ${_dest}."
     curl --create-dirs -fLo "$_dest" "$_source"
   fi
