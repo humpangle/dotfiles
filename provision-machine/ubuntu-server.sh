@@ -1680,12 +1680,8 @@ function setup-dev {
   chmod 755 ~/.tmux/plugins/tpm/bin/install_plugins
   ~/.tmux/plugins/tpm/bin/install_plugins
 
-  # ~/dotfiles/scripts/* added to path in `profile_append.sh`
   chmod 755 ~/dotfiles/scripts/*
   find ~/dotfiles/etc/ -type f -name "*.sh" -exec chmod 755 {} \;
-
-  # shellcheck disable=SC2016
-  echo '[ -f "$HOME/dotfiles/profile_append.sh" ] && source "$HOME/dotfiles/profile_append.sh"' >>~/.profile
 
   echo "export INTELEPHENSE_LICENCE=''" >>~/.bashrc
 

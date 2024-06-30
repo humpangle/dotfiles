@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# shellcheck disable=2034,2209,2135,2155,2139,2086,1090
+
+# https://github.com/microsoft/WSL/issues/4166#issuecomment-604707989
+if [ -n "$WSL_DISTRO_NAME" ]; then
+  # sudo /etc/init.d/cron start &> /dev/null
+  umask 022
+fi
 
 check_wsl_distro_name() {
   : "Check if WSL distro name has been set"

@@ -97,6 +97,10 @@ else
   PS1="$PS1$_PS1_APPEND"
 fi
 
+pathmunge "$HOME/.local/bin"
+pathmunge "$DOTFILE_PARENT_PATH/dotfiles/scripts"
+pathmunge "$HOME/.poetry/bin"
+
 ___source_scripts() {
   local _flag_no_termux='no-termux'
   local _flag_mac_only='mac-only'
