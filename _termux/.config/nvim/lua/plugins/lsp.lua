@@ -259,21 +259,6 @@ return {
           end,
         },
 
-        lua_ls = {
-          -- cmd = {...},
-          -- filetypes = { ...},
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = "Replace",
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-
         -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/lexical/init.lua
         lexical = {
           cmd = {
@@ -351,8 +336,9 @@ return {
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
 
+      -- stylua does noot work onn android.
       vim.list_extend(ensure_installed, {
-        "stylua", -- Used to format Lua code
+        -- "stylua", -- Used to format Lua code
       })
 
       require("mason-tool-installer").setup({
@@ -375,6 +361,22 @@ return {
 
             lspconfig[server_name].setup(server)
           end,
+        },
+      })
+
+      lspconfig.lua_lsp.setup({
+        capabilities = lsp_extended_capabilities,
+        -- cmd = {...},
+        -- filetypes = { ...},
+        -- capabilities = {},
+        settings = {
+          Lua = {
+            completion = {
+              callSnippet = "Replace",
+            },
+            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+            -- diagnostics = { disable = { 'missing-fields' } },
+          },
         },
       })
     end,
