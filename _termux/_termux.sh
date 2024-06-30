@@ -28,21 +28,29 @@ _echo() {
   echo -e "\n${text}  ${line}${line}\n"
 }
 
-_local_bin="$HOME/.local/bin"
+git clone https://github.com/humpangle/dotfiles.git ~/dotfiles
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --all
+
+(
+  cd ~/dotfiles/ || exit 1
+  git config user.name Kanmii
+  git config user.email maneptha@gmail.com
+)
+
 _storage_download="$HOME/storage/downloads"
 
 _android_host_out_folder="$_storage_download/__termux"
-_android_host_in_folder="$_storage_download/_termux"
+_dotfiles_termux_dir="$HOME/dotfiles/_termux"
 
 _bashrc="$HOME/.bashrc"
 cp "$PREFIX/etc/bash.bashrc" "$_bashrc"
 
-mkdir -p "$_local_bin"
-echo -e "\nexport LOCAL_BIN='$_local_bin'\n" >>"$_bashrc"
+mkdir -p "$HOME/.local/bin"
 
 cat <<'eof' >>"$_bashrc"
-if ! grep -qE "$LOCAL_BIN" <<<"$PATH"; then
-  export PATH="$LOCAL_BIN:$PATH"
+if [ -d "$HOME/dotfiles/scripts" ]; then
+  PATH="$HOME/dotfiles/scripts:$PATH"
 fi
 
 export EDITOR='nvim'
@@ -228,30 +236,22 @@ _vifm_dir="$HOME/.vifm"
 mkdir -p "$_vifm_dir"
 rm -rf "$_vifm_dir/vifmrc"
 
-DOTFILE_GIT_DOWNLOAD_URL_PREFIX='https://raw.githubusercontent.com/humpangle/dotfiles/master'
-
-cp \
-  "$_android_host_in_folder/vifmrc" \
+ln -s \
+  "$_dotfiles_termux_dir/.vifm/vifmrc" \
   "$_vifm_dir"
-
-curl \
-  -fLo "$_local_bin/p-env" \
-  "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/scripts/p-env"
-
-chmod 755 "$_local_bin/p-env"
 
 _echo "Copying neovim config files"
 mkdir -p "$HOME/.config"
-cp -r "$_android_host_in_folder/.config/nvim" "$HOME/.config"
+ln -s "$_dotfiles_termux_dir/.config/nvim" "$HOME/.config"
 
 _echo "Copying git config files"
 _git_configs=(gitignore gitconfig gitattributes)
 for _elm in "${_git_configs[@]}"; do
-  cp "$_android_host_in_folder/$_elm" "$HOME/.${_elm}"
+  ln -s "$_dotfiles_termux_dir/$_elm" "$HOME/.${_elm}"
 done
 
 _echo "Setting up tmux config"
-cp "$_android_host_in_folder/.tmux.conf" "$HOME"
+ln -s "$_dotfiles_termux_dir/.tmux.conf" "$HOME"
 
 mkdir -p "$HOME/.tmux/resurrect"
 

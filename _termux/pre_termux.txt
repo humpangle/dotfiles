@@ -21,8 +21,24 @@ pkg update \
       clang \
       termux-api \
       man
+      ripgrep \
+      bat \
+      make \
+      build-essential \
+      openssl \
+      zlib \
+      libbz2 \
+      readline \
+      libsqlite \
+      pkg-config \
+      python \
+      erlang \
+      elixir \
+      lua-language-server \
+      stylua
 
 # ncurses-utils provides tput command.
+# ripgrep provides rg command
 # clang provides gcc
 
 # Requires Android permissions.
