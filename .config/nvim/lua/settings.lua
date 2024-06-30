@@ -682,7 +682,8 @@ end, { noremap = true })
 -- Inserts the current date and time into the buffer
 keymap("n", ",tm", function()
   -- Get the current date and time in the desired format
-  local date_str = os.date("%Y-%m-%d %H:%M:%S")
+  -- The `.. ""` is to silence the warning `Cannot assign `string|osdate` to `string`.  - `osdate` cannot match `string``
+  local date_str = os.date("%Y-%m-%d %H:%M:%S") .. ""
 
   -- Get the current line number
   local line_num = vim.api.nvim_win_get_cursor(0)[1]
