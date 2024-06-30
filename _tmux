@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-alias tkss='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
-alias ts='ebnis-save-tmux.sh'
-alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
-
-function ____start_tmux_help {
+____start_tmux_help() {
   : "___help___ ____start_tmux_help"
   read -r -d '' var <<'eof' || true
 Start tmux. Usage:
@@ -232,7 +228,7 @@ _start_tmux() (
   ebnis-save-tmux.sh &>/dev/null || true
 )
 
-function _____list_sessions_help {
+_____list_sessions_help() {
   read -r -d '' var <<'eof' || true
 List tmux sessions and clients. Usage:
   __list_sessions [OPTIONS]
@@ -455,10 +451,7 @@ __list_sessions() (
   exit 1
 )
 
-alias tnd=_start_tmux
-alias tls=__list_sessions
-
-function _____tks-help {
+_____tks-help() {
   read -r -d '' var <<'eof'
 Helper for killing tmux session(s). Usage:
   __tks [OPTIONS]
@@ -617,5 +610,3 @@ __tks() {
 
   _____tks-help
 }
-
-alias tks='__tks'
