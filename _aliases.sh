@@ -140,10 +140,14 @@ fi
 # END PYTHON POETRY
 # -----------------------------------------------------------------------------
 
-if command -v tmux &>/dev/null &&
-  [[ -s "${DOTFILE_PARENT_PATH}/dotfiles/_tmux" ]]; then
-  # shellcheck source=/dev/null
-  . "${DOTFILE_PARENT_PATH}/dotfiles/_tmux"
+if command -v tmux &>/dev/null; then
+  alias kts='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
+  alias ts='ebnis-save-tmux.sh'
+  alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+
+  alias st='_tmux start_tmux'
+  alias lst='_tmux list'
+  alias kt='_tmux kill_tmux'
 fi
 
 # -----------------------------------------------------------------------------
