@@ -11,9 +11,9 @@ function _ebnis-save-tmux {
 
   # make-bash-history-unique
 
-  "$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh" &>/dev/null
+  "$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh" "$@" &>/dev/null
 }
 
-_ebnis-save-tmux
+_ebnis-save-tmux "$@"
 
 IFS=$_IFS
