@@ -727,7 +727,7 @@ end
 
 utils.map_key(
   "n",
-  "<leader>D",
+  ",D",
   insert_current_datetime,
   { noremap = true, silent = true, desc = "Insert datetime" }
 )
