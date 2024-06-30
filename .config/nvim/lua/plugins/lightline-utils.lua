@@ -37,18 +37,30 @@ local get_yaml_schema = function()
   return yaml_schema
 end
 
-function _G.FilenameLeft()
-  local file_path = vim.fn.expand("%:f")
-  local git_branch = vim.fn.FugitiveHead()
+local compute_file_path = function(side)
+  local left = side == "left"
 
-  if git_branch ~= "" then
-    git_branch = git_branch .. " "
-  end
+  local file_path = vim.fn.expand("%:f")
+  local file_path_original = file_path
 
   if file_path == "" then
     file_path = "[No Name]"
-  else
+  elseif left then
     file_path = abbreviate_path(file_path)
+  end
+
+  if file_path_original:match("^term://") then
+    return file_path .. "->" .. vim.o.channel
+  end
+
+  local git_branch = ""
+
+  if left then
+    git_branch = vim.fn.FugitiveHead()
+  end
+
+  if git_branch ~= "" then
+    git_branch = git_branch .. " "
   end
 
   local modified = vim.bo.modified and "+" or ""
@@ -56,16 +68,12 @@ function _G.FilenameLeft()
   return git_branch .. file_path .. modified .. get_yaml_schema()
 end
 
+function _G.FilenameLeft()
+  return compute_file_path("left")
+end
+
 function _G.FilenameRight()
-  local file_path = vim.fn.expand("%:f")
-
-  if file_path == "" then
-    file_path = "[No Name]"
-  end
-
-  local modified = vim.bo.modified and "+" or ""
-
-  return file_path .. modified .. get_yaml_schema()
+  return compute_file_path("right")
 end
 
 local function tab_modified(tab_num)
@@ -96,6 +104,7 @@ function _G.FilenameTab(tab_num)
 
   return vim.fn.expand("#" .. buflist[winnr] .. ":t") .. tab_modified(tab_num)
 end
+
 vim.cmd([[
   function! FilenameTab(tab_num) abort
     return luaeval('FilenameTab(_A)', a:tab_num)
