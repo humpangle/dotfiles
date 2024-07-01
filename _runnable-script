@@ -45,6 +45,13 @@ _run_f() {
   local _script_dir
   _script_dir="$(dirname "$_script_name")"
 
+  if [[ "$1" == '--explain' ]]; then
+    echo -e "\nPWD: $PWD"
+    echo -e "SCRIPT DIRECTORY: $_script_dir"
+    echo -e "SCRIPT NAME: $_script_name\n"
+    return
+  fi
+
   # Let us run the script at the root of script file
   cd "$_script_dir" || true
 
