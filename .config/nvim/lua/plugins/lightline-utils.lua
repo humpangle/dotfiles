@@ -50,7 +50,7 @@ local compute_file_path = function(side)
   end
 
   if file_path_original:match("^term://") then
-    return file_path .. "->" .. vim.o.channel
+    return file_path .. "," .. vim.o.channel
   end
 
   local git_branch = ""
