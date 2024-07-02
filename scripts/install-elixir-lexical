@@ -264,21 +264,18 @@ query() {
   : "Output is elixir-version--erlang--version--lexical-tag."
   : "Usage: install-elixir-lexical query"
 
-  echo -e "\nInstalled elixir lexical in ${elixir_lexical_base}"
+  echo -e "\nInstalled elixir lexical in $elixir_lexical_base"
 
-  find \
+  while IFS= read -r -d '' _dir_name; do
+    basename "$_dir_name"
+    echo "  $_dir_name/bin/start_lexical.sh"
+  done < <(find \
     "$elixir_lexical_base" \
     -mindepth 1 \
     -maxdepth 1 \
     -type d \
     -not -name 'src' \
-    -print0 |
-    xargs \
-      --null \
-      --max-args=1 \
-      -I {} \
-      -S 1024 \
-      basename {}
+    -print0)
 
   echo
 }
