@@ -115,7 +115,7 @@ ___source_scripts() {
     elixir-ls-install.sh
     _archive_projects
     _deal-paths
-    _runnable-script
+    _run-script
     "_intellij $_flag_no_termux"
     "_docker $_flag_no_termux"
     "clipper_starts.sh $_flag_no_termux"
