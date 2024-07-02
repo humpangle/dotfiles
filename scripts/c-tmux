@@ -3,7 +3,7 @@
 ___start_tmux_help() {
   read -r -d '' var <<'eof' || true
 Start tmux. Usage:
-  start_tmux [OPTIONS] [session]
+  c-tmux start_tmux [OPTIONS] [session]
 
 If no options and session are given, we will change to dotfiles directory and start/enter $DEFAULT_TMUX_SESSION if it exists.
 
@@ -26,35 +26,35 @@ Options:
 
 Examples:
   # Get help.
-  _tmux start_tmux --help
+  c-tmux start_tmux --help
 
   # Start default session (must set DEFAULT_TMUX_SESSION environment variable).
-  _tmux start_tmux
+  c-tmux start_tmux
 
   # Change directory to <dir> and start tmux session <session>.
-  _tmux start_tmux --cd <dir> <session>
-  _tmux start_tmux -c <dir> <session>
+  c-tmux start_tmux --cd <dir> <session>
+  c-tmux start_tmux -c <dir> <session>
 
   # Change directory to $PWD and start tmux session <session>.
-  _tmux start_tmux --pwd <session>
-  _tmux start_tmux -p <session>
+  c-tmux start_tmux --pwd <session>
+  c-tmux start_tmux -p <session>
 
   # Change directory to $PWD and start tmux whose session name is the basename of $PWD.
-  _tmux start_tmux --pwd --base
-  _tmux start_tmux -pb
+  c-tmux start_tmux --pwd --base
+  c-tmux start_tmux -pb
 
   # Detach <session> from all clients before attaching to <session>.
-  _tmux start_tmux --detach
-  _tmux start_tmux -d
-  _tmux start_tmux -d <session>
+  c-tmux start_tmux --detach
+  c-tmux start_tmux -d
+  c-tmux start_tmux -d <session>
 
   # Print command to run only.
-  _tmux start_tmux --debug --pwd --base
-  _tmux start_tmux -Dpb
+  c-tmux start_tmux --debug --pwd --base
+  c-tmux start_tmux -Dpb
 
   # Create new session
-  _tmux start_tmux --new session_name
-  _tmux start_tmux -n session_name
+  c-tmux start_tmux --new session_name
+  c-tmux start_tmux -n session_name
 eof
 
   echo -e "$var"
@@ -255,23 +255,23 @@ Options:
 
 Examples:
   # Get help.
-  _tmux list --help
+  c-tmux list --help
 
   # List sessions including information about their present working directories, the default session and tmux states
   # as seen in tmux resurrect file.
-  _tmux list
+  c-tmux list
 
   # List sessions including commands needed to start each listed session.
-  _tmux list --verbose
-  _tmux list -v
+  c-tmux list --verbose
+  c-tmux list -v
 
   # List clients.
-  _tmux list --client
-  _tmux list -c
+  c-tmux list --client
+  c-tmux list -c
 
   # List session names only (no additional information)
-  _tmux list --names
-  _tmux list -n
+  c-tmux list --names
+  c-tmux list -n
 eof
 
   echo -e "$var"
@@ -399,7 +399,7 @@ list() {
 
         if [[ -n "$_verbose" ]]; then
           local _cd1719741431="cd $_session_pwd_from_resurrect_file"
-          local _start1719741519="_tmux start_tmux -c $_session_pwd_from_resurrect_file $_elm"
+          local _start1719741519="c-tmux start_tmux -c $_session_pwd_from_resurrect_file $_elm"
 
           _sessions_pwds_from_resurrect_file+="$_cd1719741431\n"
           _sessions_pwds_from_resurrect_file+="$_start1719741519\n"
@@ -474,7 +474,7 @@ list() {
 ___kill_tmux_help() {
   read -r -d '' var <<'eof'
 Helper for killing tmux session(s). Usage:
-  kill_tmux [OPTIONS]
+  c-tmux kill_tmux [OPTIONS]
 
 Options:
   -h,--help
@@ -488,23 +488,23 @@ Options:
 
 Examples:
   # Get help.
-  _tmux kill_tmux --help
-  _tmux kill_tmux # Call with no argument.
+  c-tmux kill_tmux --help
+  c-tmux kill_tmux # Call with no argument.
 
   # Kill all sessions except session from which this command is called.
-  _tmux kill_tmux --all-but
-  _tmux kill_tmux -a
+  c-tmux kill_tmux --all-but
+  c-tmux kill_tmux -a
 
   # Kill session from which this command is called (current session).
-  _tmux kill_tmux --current
-  _tmux kill_tmux -c
+  c-tmux kill_tmux --current
+  c-tmux kill_tmux -c
 
   # Kill sessions with only numerical names. (Will kill sessions named 1, 2, 3, .. 10, 11, ..)
-  _tmux kill_tmux --numbered
-  _tmux kill_tmux -n
+  c-tmux kill_tmux --numbered
+  c-tmux kill_tmux -n
 
   # Kill one or more specified sessions
-  _tmux kill_tmux session-1 session2 ... session-n
+  c-tmux kill_tmux session-1 session2 ... session-n
 eof
 
   echo -e "$var"

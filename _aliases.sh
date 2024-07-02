@@ -149,9 +149,17 @@ if command -v tmux &>/dev/null; then
   alias ts='ebnis-save-tmux.sh'
   alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
-  alias st='_tmux start_tmux'
-  alias lst='_tmux list'
-  alias kt='_tmux kill_tmux'
+  _c_tmux_script="${DOTFILE_PARENT_PATH}/dotfiles/scripts/c-tmux"
+
+  if [[ -e "$_c_tmux_script" ]]; then
+    chmod 755 "$_c_tmux_script"
+
+    alias st='c-tmux start_tmux'
+    alias lst='c-tmux list'
+    alias kt='c-tmux kill_tmux'
+  fi
+
+  unset _c_tmux_script
 fi
 
 # -----------------------------------------------------------------------------
