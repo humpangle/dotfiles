@@ -45,8 +45,10 @@ _run_f() {
   local _script_dir
   _script_dir="$(dirname "$_script_name")"
 
+  local _pwd="$PWD"
+
   if [[ "$1" == '--explain' ]]; then
-    echo -e "\nPWD: $PWD"
+    echo -e "\nPWD: $_pwd"
     echo -e "SCRIPT DIRECTORY: $_script_dir"
     echo -e "SCRIPT NAME: $_script_name\n"
     return
@@ -55,7 +57,8 @@ _run_f() {
   # Let us run the script at the root of script file
   cd "$_script_dir" || true
 
-  bash "$_script_name" "$@"
+  __RUN_SCRIPT_CWD__="$_pwd" \
+    bash "$_script_name" "$@"
   local _exit_code="$?"
 
   cd - &>/dev/null || true
