@@ -283,7 +283,7 @@ local plugins_table = {
     enabled = not plugin_enabled.has_vscode(),
     init = function()
       vim.maximizer_set_default_mapping = 0
-      keymap({ "n", "x" }, "mm", ":MaximizerToggle!<CR>")
+      keymap({ "n", "x" }, "<leader>mm", ":MaximizerToggle!<CR>")
     end,
   },
 
