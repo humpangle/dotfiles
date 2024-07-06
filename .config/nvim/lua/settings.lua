@@ -8,6 +8,8 @@ if not utils_status_ok1 then
   return
 end
 
+local plugin_enabled = require("plugins/plugin_enabled")
+
 local keymap = vim.keymap.set
 
 -- Disable Python2 support
@@ -715,6 +717,17 @@ local term_clear = function()
 end
 keymap("t", "<C-l>", term_clear)
 -- END CLEAR THE TERMINAL
+
+if plugin_enabled.has_termux() then
+  -- Exit terminal mode
+  vim.keymap.set(
+    "t",
+    "<Esc><Esc>",
+    "<C-\\><C-n>",
+    { desc = "Exit terminal mode in termux" }
+  )
+end
+
 -- -----/END TERMINAL
 
 -- Show the registers
