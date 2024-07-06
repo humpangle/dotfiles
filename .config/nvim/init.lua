@@ -16,7 +16,7 @@ else
   require("theme_and_bg")
 end
 
-if os.execute("command -v clip &>/dev/null") then
+if vim.fn.executable("clip") then
   -- keymap to sync content of unnamed register with external host's clipboard.
   -- WHY: https://github.com/wincent/clipper#configuration-for-vimrc
   --    This is a workarund for situations where a remote machine's clipboard
