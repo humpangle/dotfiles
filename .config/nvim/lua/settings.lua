@@ -394,21 +394,6 @@ keymap(
 keymap("n", ",vn", ":vnew<CR>", { noremap = true })
 keymap("n", ",sn", ":new<CR>", { noremap = true })
 
--- Terminal in new tab/split
-keymap(
-  "n",
-  ",tt",
-  ":tab split<bar>:term<CR>:echo &channel<CR>",
-  { noremap = true }
-)
-keymap(
-  "n",
-  ",tv",
-  ":vertical split<bar>:term<CR>:echo &channel<CR>",
-  { noremap = true }
-)
-keymap("n", ",ts", ":split<bar>:term<CR>:echo &channel<CR>", { noremap = true })
-
 -- Reorder tabs
 keymap("n", "<C-Left>", ":-tabmove<CR>", { noremap = true })
 keymap("n", "<M-Left>", ":-tabmove<CR>", { noremap = true })
@@ -674,11 +659,6 @@ keymap("n", "<leader>be", function()
   utils.DeleteAllBuffers("e")
 end, { noremap = true })
 
--- Delete all terminal buffers
-keymap("n", "<leader>bT", function()
-  utils.DeleteAllBuffers("t")
-end, { noremap = true })
-
 -- Inserts the current date and time into the buffer
 keymap("n", ",tm", function()
   -- Get the current date and time in the desired format
@@ -704,6 +684,28 @@ keymap(
 keymap("n", ",rm", utils.DeleteFile(), { noremap = true })
 keymap("n", ",rd", utils.DeleteFile("d"), { noremap = true })
 
+-- ----- TERMINAL
+
+-- Terminal in new tab/split
+keymap(
+  "n",
+  ",tt",
+  ":tab split<bar>:term<CR>:echo &channel<CR>",
+  { noremap = true }
+)
+keymap(
+  "n",
+  ",tv",
+  ":vertical split<bar>:term<CR>:echo &channel<CR>",
+  { noremap = true }
+)
+keymap("n", ",ts", ":split<bar>:term<CR>:echo &channel<CR>", { noremap = true })
+
+-- Delete all terminal buffers
+keymap("n", "<leader>bT", function()
+  utils.DeleteAllBuffers("t")
+end, { noremap = true })
+
 -- CLEAR THE TERMINAL
 local term_clear = function()
   vim.fn.feedkeys("", "n") -- control-L
@@ -713,6 +715,7 @@ local term_clear = function()
 end
 keymap("t", "<C-l>", term_clear)
 -- END CLEAR THE TERMINAL
+-- -----/END TERMINAL
 
 -- Show the registers
 keymap("n", "<leader>re", ":reg<CR>", { noremap = true })
