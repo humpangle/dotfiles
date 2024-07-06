@@ -12,8 +12,8 @@ require("plugins/plugin-init")
 if plugin_enabled.has_vscode() then
   require("vscode_settings")
 else
-  require("settings")
   require("theme_and_bg")
+  require("settings")
 end
 
 if vim.fn.executable("clip") then
