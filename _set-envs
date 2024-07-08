@@ -6,18 +6,22 @@ Set environment variables from a file into the shell. Usage:
   _setenvs env_file_name [OPTIONS]
 
 Options:
-  --help/-h
-       Print this help text and exit.
+  -h,--help
+   Print this help text and exit.
 
-  --level/-l level
-       How many levels, in integer, deep should we search parent directories if environment file can not be found in the
-       current directory.
-       Maximum levels is 5
+  -l,--level <level>
+   How many levels, in integer, deep should we search parent directories if environment file can not be found in the
+   current directory. Maximum levels is 5. Default level is 2.
 
 Examples:
-  _setenvs
+  # Get help
   _setenvs --help
-  _setenvs --level 5
+
+  # Export environment variables from .env file where .env file will be searched at most 2 levels down parent directories.
+  _setenvs .env
+
+  # Export environment variables from .env file where .env file will be searched at most 5 levels down parent directories.
+  _setenvs --level 5 .env
 eof
 
   echo -e "${var}"
