@@ -78,6 +78,9 @@ return {
           function ()
             gitsigns.stage_buffer()
             vim.cmd("edit! %")
+            vim.cmd("redraw!")
+            gitsigns.stage_buffer()
+            vim.cmd("edit! %")
           end,
           { desc = "Hunk stage buffer" },
           bufnr
