@@ -10,8 +10,6 @@ end
 
 local plugin_enabled = require("plugins/plugin_enabled")
 
-local keymap = vim.keymap.set
-
 -- Disable Python2 support
 vim.g.loaded_python_provider = false
 
@@ -148,7 +146,7 @@ vim.opt.incsearch = true
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
-keymap("n", "yoh", "<cmd>nohlsearch<CR>")
+utils.map_key("n", "yoh", "<cmd>nohlsearch<CR>")
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
@@ -306,7 +304,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "eelixir",
   },
   callback = function()
-    keymap("n", "<leader>fc", ":Neoformat<CR>", {
+    utils.map_key("n", "<leader>fc", ":Neoformat<CR>", {
       noremap = true,
       buffer = true,
     })
@@ -314,40 +312,55 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Format paragraphs/lines to {textwidth} characters
-keymap("n", "<Leader>pp", "gqap", { noremap = true })
-keymap("x", "<Leader>pp", "gq", { noremap = true })
+utils.map_key("n", "<Leader>pp", "gqap", { noremap = true })
+utils.map_key("x", "<Leader>pp", "gq", { noremap = true })
 
 -- Save file
-keymap("n", "<Leader>ww", ":w<CR>", { noremap = true })
-keymap("n", "<Leader>wa", ":wa<CR>", { noremap = true })
-keymap("n", "<Leader>wq", ":wq<CR>", { noremap = true })
-keymap("n", "<Leader>w!", ":w!<CR>", { noremap = true })
+utils.map_key("n", "<Leader>ww", ":w<CR>", { noremap = true })
+utils.map_key("n", "<Leader>wa", ":wa<CR>", { noremap = true })
+utils.map_key("n", "<Leader>wq", ":wq<CR>", { noremap = true })
+utils.map_key("n", "<Leader>w!", ":w!<CR>", { noremap = true })
 
 -- Quit Vim
-keymap("i", "<C-Q>", "<esc>:q<CR>", { noremap = true })
-keymap("v", "<C-Q>", "<esc>", { noremap = true })
-keymap("n", "<Leader>qq", ":q<CR>", { noremap = true })
-keymap("n", "<Leader>qf", ":q!<CR>", { noremap = true })
-keymap("n", "<Leader>qa", ":qa<CR>", { noremap = true })
-keymap("n", "<Leader>qF", ":qa!<CR>", { noremap = true })
-keymap("n", "<Leader>qA", ":qa!<CR>", { noremap = true })
+utils.map_key("i", "<C-Q>", "<esc>:q<CR>", { noremap = true })
+utils.map_key("v", "<C-Q>", "<esc>", { noremap = true })
+utils.map_key("n", "<Leader>qq", ":q<CR>", { noremap = true })
+utils.map_key("n", "<Leader>qf", ":q!<CR>", { noremap = true })
+utils.map_key("n", "<Leader>qa", ":qa<CR>", { noremap = true })
+utils.map_key("n", "<Leader>qF", ":qa!<CR>", { noremap = true })
+utils.map_key("n", "<Leader>qA", ":qa!<CR>", { noremap = true })
 
 -- BETTER CODE INDENTATIONS IN VISUAL MODE.
-keymap("v", "<", "<gv", {})
-keymap("v", ">", ">gv", {})
+utils.map_key("v", "<", "<gv", {})
+utils.map_key("v", ">", ">gv", {})
 
 -- Yank / Copy and paste from system clipboard (Might require xclip install)
-keymap("n", '"+yy', '0"+yg_', { noremap = true })
-keymap("v", "<Leader>Y", '"+y', { noremap = true })
-keymap("v", "<Leader>x", '"+x', { noremap = true })
-keymap("n", "<Leader>x", '"+x', { noremap = true })
-keymap("n", "<Leader>P", '"+P', { noremap = true })
-keymap("v", "<Leader>P", '"+P', { noremap = true })
+utils.map_key("n", '"+yy', '0"+yg_', { noremap = true })
+utils.map_key("v", "<Leader>Y", '"+y', { noremap = true })
+utils.map_key("v", "<Leader>x", '"+x', { noremap = true })
+utils.map_key("n", "<Leader>x", '"+x', { noremap = true })
+utils.map_key("n", "<Leader>P", '"+P', { noremap = true })
+utils.map_key("v", "<Leader>P", '"+P', { noremap = true })
 
 -- Yank all
-keymap("n", "<Leader>y+", '<cmd>%y<CR><cmd>let @+=@"<CR>', { noremap = true })
-keymap("n", "<Leader>YY", '<cmd>%y<CR><cmd>let @+=@"<CR>', { noremap = true })
-keymap("n", "<Leader>ya", '<cmd>%y<CR><cmd>let @a=@"<CR>', { noremap = true })
+utils.map_key(
+  "n",
+  "<Leader>y+",
+  '<cmd>%y<CR><cmd>let @+=@"<CR>',
+  { noremap = true }
+)
+utils.map_key(
+  "n",
+  "<Leader>YY",
+  '<cmd>%y<CR><cmd>let @+=@"<CR>',
+  { noremap = true }
+)
+utils.map_key(
+  "n",
+  "<Leader>ya",
+  '<cmd>%y<CR><cmd>let @a=@"<CR>',
+  { noremap = true }
+)
 
 local function do_yanka_highlighted(register_flag)
   local register = nil
@@ -375,17 +388,17 @@ local function do_yanka_highlighted(register_flag)
 end
 
 -- Yank highlighted to system clipboard / register a
-keymap("n", ",yy", do_yanka_highlighted("+"), { noremap = true })
-keymap("n", ",cc", do_yanka_highlighted("letter"), { noremap = true })
+utils.map_key("n", ",yy", do_yanka_highlighted("+"), { noremap = true })
+utils.map_key("n", ",cc", do_yanka_highlighted("letter"), { noremap = true })
 
 -- Move between windows in a tab
-keymap("n", "<Tab>", "<C-w>w", { noremap = false })
+utils.map_key("n", "<Tab>", "<C-w>w", { noremap = false })
 
 -- Tab operations
-keymap("n", "<Leader>tn", "<cmd>tabnew<CR>", { noremap = true })
-keymap("n", "<Leader>ts", "<cmd>tab split<cr>", { noremap = true })
-keymap("n", ",tc", ":tabclose<CR>", { noremap = true })
-keymap(
+utils.map_key("n", "<Leader>tn", "<cmd>tabnew<CR>", { noremap = true })
+utils.map_key("n", "<Leader>ts", "<cmd>tab split<cr>", { noremap = true })
+utils.map_key("n", ",tc", ":tabclose<CR>", { noremap = true })
+utils.map_key(
   "n",
   ",td",
   ":execute 'bwipeout! '.join(tabpagebuflist())<CR>",
@@ -393,18 +406,18 @@ keymap(
 )
 
 -- New split operations
-keymap("n", ",vn", ":vnew<CR>", { noremap = true })
-keymap("n", ",sn", ":new<CR>", { noremap = true })
+utils.map_key("n", ",vn", ":vnew<CR>", { noremap = true })
+utils.map_key("n", ",sn", ":new<CR>", { noremap = true })
 
 -- Reorder tabs
-keymap("n", "<C-Left>", ":-tabmove<CR>", { noremap = true })
-keymap("n", "<M-Left>", ":-tabmove<CR>", { noremap = true })
-keymap("n", "<C-Right>", ":+tabmove<CR>", { noremap = true })
-keymap("n", "<M-Right>", ":+tabmove<CR>", { noremap = true })
+utils.map_key("n", "<C-Left>", ":-tabmove<CR>", { noremap = true })
+utils.map_key("n", "<M-Left>", ":-tabmove<CR>", { noremap = true })
+utils.map_key("n", "<C-Right>", ":+tabmove<CR>", { noremap = true })
+utils.map_key("n", "<M-Right>", ":+tabmove<CR>", { noremap = true })
 -- -- This is what works on my macbook pro 3. I got the keys thus:
 -- -- -- in nvim editor, enter insert mode, <c-v> and then <key> or combo.
-keymap("n", "<M-b>", ":-tabmove<CR>", { noremap = true })
-keymap("n", "<M-f>", ":+tabmove<CR>", { noremap = true })
+utils.map_key("n", "<M-b>", ":-tabmove<CR>", { noremap = true })
+utils.map_key("n", "<M-f>", ":+tabmove<CR>", { noremap = true })
 
 -- Switch between last active and current tab
 -- Initialize the global variable if it doesn't exist
@@ -419,7 +432,7 @@ vim.api.nvim_create_autocmd("TabLeave", {
   end,
 })
 
-keymap("n", "<Leader>tl", function()
+utils.map_key("n", "<Leader>tl", function()
   -- ':exe "tabn " .. vim.g.lasttab<CR>',
   vim.cmd("tabn " .. vim.g.lasttab)
 end, { noremap = true })
@@ -455,26 +468,26 @@ utils.map_key(
 )
 
 -- QuickFix and Location list:
-keymap("n", "yol", ":lclose<CR>", { noremap = true })
-keymap("n", "yoq", ":cclose<CR>", { noremap = true })
+utils.map_key("n", "yol", ":lclose<CR>", { noremap = true })
+utils.map_key("n", "yoq", ":cclose<CR>", { noremap = true })
 
 -- Force sync buffer content with external:
-keymap("n", "<Leader>%e", ":e! %<CR>", { noremap = true })
+utils.map_key("n", "<Leader>%e", ":e! %<CR>", { noremap = true })
 
 -- Create the new directory you're already working in:
-keymap("n", ",md", ":!mkdir -p %:h<cr>:w %<CR>", { noremap = true })
+utils.map_key("n", ",md", ":!mkdir -p %:h<cr>:w %<CR>", { noremap = true })
 
 -- Edit .bashrc file:
-keymap("n", ",.", ":tab split<CR>:e ~/.bashrc<CR>", { noremap = true })
+utils.map_key("n", ",.", ":tab split<CR>:e ~/.bashrc<CR>", { noremap = true })
 
 -- Edit init.vim:
-keymap("n", ",ec", ":tab split<CR>:e $MYVIMRC<CR>", { noremap = true })
+utils.map_key("n", ",ec", ":tab split<CR>:e $MYVIMRC<CR>", { noremap = true })
 
 -- Source init.vim:
-keymap("n", ",sc", ":so $MYVIMRC<CR>", { noremap = true })
+utils.map_key("n", ",sc", ":so $MYVIMRC<CR>", { noremap = true })
 
 -- Source Lua file and then source init.vim:
-keymap("n", ",ss", ":source %<CR>:so $MYVIMRC<CR>", { noremap = true })
+utils.map_key("n", ",ss", ":source %<CR>:so $MYVIMRC<CR>", { noremap = true })
 
 function NetrwVExplore(f)
   vim.cmd("Vexplore " .. vim.fn.expand("%:h"))
@@ -490,7 +503,7 @@ end
 vim.cmd("command! Vexplore1 lua NetrwVExplore(1)")
 
 function NetrwMapping()
-  keymap(
+  utils.map_key(
     "n",
     "fl",
     [[:echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>]],
@@ -516,7 +529,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- Check file in ShellCheck:
-keymap("n", "<Leader>sc,", function()
+utils.map_key("n", "<Leader>sc,", function()
   local filepath = vim.fn.expand("%")
   vim.cmd("!clear && shellcheck -x " .. filepath)
 end, { noremap = true })
@@ -556,47 +569,47 @@ local process_file_path_yanking = function(
 end
 
 -- Yank relative file path
-keymap("n", ",yr", process_file_path_yanking("%:r"))
+utils.map_key("n", ",yr", process_file_path_yanking("%:r"))
 -- Yank file name (not path)
-keymap("n", ",yn", process_file_path_yanking("%:t"))
+utils.map_key("n", ",yn", process_file_path_yanking("%:t"))
 -- Yank file parent directory
-keymap("n", ",yd", process_file_path_yanking("%:p:h"))
+utils.map_key("n", ",yd", process_file_path_yanking("%:p:h"))
 -- Yank absolute file path
-keymap("n", ",yf", process_file_path_yanking("%:p"))
+utils.map_key("n", ",yf", process_file_path_yanking("%:p"))
 -- Copy relative path
-keymap("n", ",cr", process_file_path_yanking("%", "letter"))
+utils.map_key("n", ",cr", process_file_path_yanking("%", "letter"))
 -- Copy absolute path
-keymap("n", ",cf", process_file_path_yanking("%:p", "letter"))
+utils.map_key("n", ",cf", process_file_path_yanking("%:p", "letter"))
 -- Copy file name
-keymap("n", ",cn", process_file_path_yanking("%:t", "letter"))
+utils.map_key("n", ",cn", process_file_path_yanking("%:t", "letter"))
 
 -- Yank current working directory
-keymap("n", ",yw", process_file_path_yanking("cwd"))
+utils.map_key("n", ",yw", process_file_path_yanking("cwd"))
 -- Copy current working directory to register a
-keymap("n", ",cw", process_file_path_yanking("cwd", "letter"))
+utils.map_key("n", ",cw", process_file_path_yanking("cwd", "letter"))
 
 --  Some plugins change my CWD to currently opened file - I change it back
 -- Change CWD to the directory of the current file
-keymap("n", "<leader>cd", function()
+utils.map_key("n", "<leader>cd", function()
   local cwd = vim.fn.expand("%:p:h")
   vim.cmd("cd " .. cwd)
   print("Current working directory changed to: " .. vim.fn.getcwd())
 end)
 
 -- Display the current working directory
-keymap("n", "<leader>wd", function()
+utils.map_key("n", "<leader>wd", function()
   print("Current working directory is: " .. vim.fn.getcwd())
 end)
 
 -- Find and replace in current buffer only
 -- press * {shift 8) to search for word under cursor and key combo below to replace in entire file
--- keymap({ "n", "x" }, "<leader>rr", ":%s///g<left><left>")
-keymap({ "n", "x" }, "<leader>rc", ":%s///gc<left><left><left>")
+-- utils.map_key({ "n", "x" }, "<leader>rr", ":%s///g<left><left>")
+utils.map_key({ "n", "x" }, "<leader>rc", ":%s///gc<left><left><left>")
 
 -- Search for the strings using `fzf`, press <tab> to select multiple (<s-tab> to deselect) and <cr> to populate QuickFix list
 -- After searching for strings, press this mapping to do a project wide find and replace. It's similar to <leader>r
 -- except this one applies to all matches across all files instead of just the current file.
-keymap(
+utils.map_key(
   { "n", "x" },
   "<Leader>RR",
   [[:cfdo %s///g | update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>]]
@@ -623,46 +636,46 @@ vim.api.nvim_create_user_command("VMessage", function(input)
 end, { nargs = "+", complete = "command" })
 
 -- Go to Buffer Number
--- keymap('n', '<leader>bl', '<cmd>VMessage ls<CR>', { noremap = true, silent = false })
+-- utils.map_key('n', '<leader>bl', '<cmd>VMessage ls<CR>', { noremap = true, silent = false })
 
 -- Delete current buffer
-keymap("n", "<leader>bd", function()
+utils.map_key("n", "<leader>bd", function()
   utils.DeleteOrCloseBuffer(1)
 end, { noremap = true, silent = false })
 -- Delete current buffer force
-keymap("n", "<leader>bD", function()
+utils.map_key("n", "<leader>bD", function()
   utils.DeleteOrCloseBuffer("f")
 end, { noremap = true, silent = false })
 
 -- Wipe Current Buffer
-keymap("n", "<leader>bw", "<cmd>bw%<CR>", { noremap = true })
+utils.map_key("n", "<leader>bw", "<cmd>bw%<CR>", { noremap = true })
 
 --  Remove Contents of Current File
-keymap("n", "d=", function()
+utils.map_key("n", "d=", function()
   vim.cmd("e! %")
   vim.cmd("%delete_")
   vim.cmd("w!")
 end, { noremap = true })
 
 -- Remove Contents of Current File and Enter Insert Mode
-keymap("n", "c=", utils.EbnisClearAllBuffer, { noremap = true })
+utils.map_key("n", "c=", utils.EbnisClearAllBuffer, { noremap = true })
 
 vim.api.nvim_create_user_command("DeleteDbUi", function()
   utils.DeleteAllBuffers("dbui")
 end, {})
 
 -- Delete all buffers
-keymap("n", "<leader>bA", function()
+utils.map_key("n", "<leader>bA", function()
   utils.DeleteAllBuffers("a")
 end, { noremap = true })
 
 -- Delete all empty buffers
-keymap("n", "<leader>be", function()
+utils.map_key("n", "<leader>be", function()
   utils.DeleteAllBuffers("e")
 end, { noremap = true })
 
 -- Inserts the current date and time into the buffer
-keymap("n", ",tm", function()
+utils.map_key("n", ",tm", function()
   -- Get the current date and time in the desired format
   -- The `.. ""` is to silence the warning `Cannot assign `string|osdate` to `string`.  - `osdate` cannot match `string``
   local date_str = os.date("%Y-%m-%d %H:%M:%S") .. ""
@@ -675,7 +688,7 @@ keymap("n", ",tm", function()
 end, { noremap = true })
 
 -- Rename File
-keymap(
+utils.map_key(
   "n",
   "<leader>bn",
   utils.RenameFile,
@@ -683,28 +696,33 @@ keymap(
 )
 
 -- Delete file and folder
-keymap("n", ",rm", utils.DeleteFile(), { noremap = true })
-keymap("n", ",rd", utils.DeleteFile("d"), { noremap = true })
+utils.map_key("n", ",rm", utils.DeleteFile(), { noremap = true })
+utils.map_key("n", ",rd", utils.DeleteFile("d"), { noremap = true })
 
 -- ----- TERMINAL
 
 -- Terminal in new tab/split
-keymap(
+utils.map_key(
   "n",
   ",tt",
   ":tab split<bar>:term<CR>:echo &channel<CR>",
   { noremap = true }
 )
-keymap(
+utils.map_key(
   "n",
   ",tv",
   ":vertical split<bar>:term<CR>:echo &channel<CR>",
   { noremap = true }
 )
-keymap("n", ",ts", ":split<bar>:term<CR>:echo &channel<CR>", { noremap = true })
+utils.map_key(
+  "n",
+  ",ts",
+  ":split<bar>:term<CR>:echo &channel<CR>",
+  { noremap = true }
+)
 
 -- Delete all terminal buffers
-keymap("n", "<leader>bT", function()
+utils.map_key("n", "<leader>bT", function()
   utils.DeleteAllBuffers("t")
 end, { noremap = true })
 
@@ -732,7 +750,7 @@ local term_clear = function()
     )
   end
 end
-keymap("t", "<C-l>", term_clear)
+utils.map_key("t", "<C-l>", term_clear)
 
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
@@ -758,9 +776,9 @@ end
 -- -----/END TERMINAL
 
 -- Show the registers
-keymap("n", "<leader>re", ":reg<CR>", { noremap = true })
+utils.map_key("n", "<leader>re", ":reg<CR>", { noremap = true })
 -- Dump vim register into a buffer in vertical split.
-keymap("n", "<localleader>re", ":VMessage reg<CR>", { noremap = true })
+utils.map_key("n", "<localleader>re", ":VMessage reg<CR>", { noremap = true })
 
 local function insert_current_datetime()
   local format_string = "%Y-%m-%d %H:%M:%S"
