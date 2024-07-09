@@ -77,11 +77,11 @@ keymap("n", "<Leader>pp", "gqap", no_re_map_silent_opts)
 keymap("x", "<Leader>pp", "gqa", no_re_map_silent_opts)
 
 -- ------------------------ Save file
-keymap("n", "<Leader>ww", ":Write<CR>", no_re_map_silent_opts)
+keymap("n", "<Leader>ww", ":w<CR>", no_re_map_silent_opts)
 
-keymap("n", "<Leader>wa", ":Wall<CR>", no_re_map_silent_opts)
+keymap("n", "<Leader>wa", ":wa<CR>", no_re_map_silent_opts)
 
-keymap("n", "<Leader>wq", ":Wq<CR>", no_re_map_silent_opts)
+keymap("n", "<Leader>wq", ":wq<CR>", no_re_map_silent_opts)
 -- ---------------------- END Save file
 
 -- ---------------------- Quit vim
@@ -131,7 +131,7 @@ keymap("n", ",cc", 'vgny<bar>:let @a=@"<CR> <bar>"', no_re_map_silent_opts)
 -- ---------------------- END Yank all
 
 --  Remove Contents of Current File, save file and enter normal mode
-keymap("n", "d=", "ggdG<bar>:Write<CR>", { noremap = true })
+keymap("n", "d=", "ggdG<bar>:w<CR>", { noremap = true })
 
 -- Remove Contents of Current File and Enter Insert Mode
 keymap("n", "c=", "ggcG", { noremap = true })
