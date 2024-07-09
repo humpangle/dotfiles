@@ -389,12 +389,40 @@ else
   export VSCODE_BINARY="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
 fi
 
-# Launch VS code with clean environment.
 __c() {
-  env -i \
-    HOME="$HOME" \
+  : Launch VS code with/without clean environment. By default, we launch vscode with a clean environment.
+  : Pass -p flag to preseve current shell environment.
+  : Pass -d for debug logging.
+
+  local _preverve_env
+  local _debug
+  local _args=()
+
+  for _arg; do
+    if [[ "$_arg" == -p ]]; then
+      _preverve_env=1
+    elif [[ "$_arg" == -d ]]; then
+      _debug=1
+    else
+      _args+=("$_arg")
+    fi
+  done
+
+  if [[ -n "$_debug" ]]; then
+    echo -e "\n\_preverve_env = $_preverve_env"
+    echo -e "_args = ${_args[*]}"
+  fi
+
+  if [[ -n "$_preverve_env" ]]; then
     bash -l -c \
-    "$VSCODE_BINARY ${*} &>/dev/null" &
+      "$VSCODE_BINARY ${_args[*]} &>/dev/null" &
+  else
+    env -i \
+      HOME="$HOME" \
+      bash -l -c \
+      "$VSCODE_BINARY ${_args[*]} &>/dev/null" &
+  fi
+
   disown
 }
 alias c="__c"
