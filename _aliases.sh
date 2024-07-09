@@ -239,6 +239,7 @@ if command -v nvim &>/dev/null; then
   alias remove_vim_undo='remove_vim_undof'
   alias rmvu='remove_vim_undof'
 
+  # shellcheck disable=SC2016
   export MANPAGER='nvim -c "%! col -b" -c "set ft=man nomod | let &titlestring=$MAN_PN"'
 fi
 # -----------------------------------------------------------------------------
