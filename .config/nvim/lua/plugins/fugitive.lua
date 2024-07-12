@@ -219,19 +219,35 @@ keymap("n", "<leader>gcz", ":Git commit --allow-empty ", {
 })
 
 -- Git config.user
-keymap(
-  "n",
-  "<leader>gu",
-  ":Git config user.name <right>",
-  { noremap = true, desc = "Git config user name" }
-)
+keymap("n", "<leader>gu", function()
+  local cmd = ""
+  local count = vim.v.count
 
-keymap(
-  "n",
-  "<leader>gU",
-  ":Git config user.email <right>",
-  { noremap = true, desc = "Git config user email" }
-)
+  if count == 0 then
+    cmd = ":Git config user.name <right>"
+  elseif count == 1 then
+    cmd = ":Git config user.email <right>"
+  elseif count == 2 then
+    local git_user = utils.get_os_env_or_nil("GIT_USER")
+
+    local git_user_email = utils.get_os_env_or_nil("GIT_USER_EMAIL")
+
+    if git_user ~= nil and git_user_email ~= nil then
+      cmd = ":Git config user.name "
+        .. git_user
+        .. "<bar>"
+        .. ":Git config user.email "
+        .. git_user_email
+    end
+  end
+
+  if cmd == "" then
+    print("We can not set git user/email. Aborting!")
+    return
+  end
+
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes(cmd, true, true, true), "t")
+end, { noremap = true, desc = "Git config user name. 1=email 2=env defaults" })
 
 -- Rebase keymaps
 keymap("n", "<Leader>r<Space>", function()

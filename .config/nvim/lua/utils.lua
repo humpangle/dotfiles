@@ -308,4 +308,22 @@ utils.os_env_not_empty = function(env_var_string)
   return val ~= nil and string.gsub(val, "^%s*(.-)%s*$", "%1") ~= ""
 end
 
+-- Returns nil if environment variable is not set or is empty.
+-- Returns the value of the environment variable otherwise.
+utils.get_os_env_or_nil = function(env_var_string)
+  local val = os.getenv(env_var_string)
+
+  -- environment variable is not set at all
+  if val == nil then
+    return nil
+  end
+
+  --  environment variable is set to an empty string
+  if string.gsub(val, "^%s*(.-)%s*$", "%1") == "" then
+    return nil
+  end
+
+  return val
+end
+
 return utils
