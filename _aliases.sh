@@ -592,3 +592,7 @@ if _is_linux && ! _has_termux; then
   }
   alias purge-systemd-service='_purge-systemd-service'
 fi
+
+if _has_termux; then
+  alias ug='pkg update && pkg upgrade'
+fi
