@@ -49,6 +49,7 @@ _setenvs() {
       --name "$0" \
       -- "$@"
   )"; then
+    ____setenvs_help
     exit 1
   fi
 
@@ -75,7 +76,7 @@ _setenvs() {
     *)
       echo "Unknown option ${1}."
       ____setenvs_help
-      return
+      exit 1
       ;;
     esac
   done
@@ -84,13 +85,13 @@ _setenvs() {
   if [[ $# -ne 1 ]]; then
     echo "Non optional argument environment file to set is required."
     ____setenvs_help
-    return
+    exit 1
   fi
 
   if [[ "$_level" -gt 5 ]]; then
     echo -e "Maximum level of 5 allowed. Got '$_level'\n"
     ____setenvs_help
-    return
+    exit 1
   fi
 
   _path=$1
@@ -106,7 +107,7 @@ _setenvs() {
 
   if [[ -z "$_path_to_use" ]]; then
     echo "$_path does not exist."
-    return
+    exit 1
   fi
 
   local _output
@@ -126,6 +127,7 @@ _setenvs() {
     rm -rf "${_output}"
   else
     echo "Environment vairables can not be written to shell. File \"$_output\" does not exist."
+    exit 1
   fi
 }
 
