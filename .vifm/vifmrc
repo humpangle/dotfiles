@@ -526,6 +526,19 @@ elseif executable('pbcopy')
   " yank root of current file's name into the clipboard
   nnoremap yr :!printf %c:r | pbcopy %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
 
+elseif executable('termux-clipboard-set')
+  " Yank current directory path into the clipboard
+  nnoremap yd :!printf %d | termux-clipboard-set %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+
+  " Yank current file path into the clipboard (escape spaces)
+  nnoremap yf :!printf %f:p:gs? ?\\ ? | termux-clipboard-set %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+
+  " yank current filename without path into the clipboard
+  nnoremap yn :!printf %c | termux-clipboard-set %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
+
+  " yank root of current file's name into the clipboard
+  nnoremap yr :!printf %c:r | termux-clipboard-set %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
+
 elseif executable('clip')
     " Yank current directory path into the clipboard
     nnoremap yd :!printf %d | clip %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
