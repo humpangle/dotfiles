@@ -229,7 +229,7 @@ local plugins_table = {
       vim.g.choosewin_overlay_enable = 0
 
       -- invoke with '-'
-      keymap("n", "-", "<Plug>(choosewin)", { noremap = true })
+      keymap("n", "<leader>-", "<Plug>(choosewin)", { noremap = true })
     end,
   },
 
@@ -284,7 +284,7 @@ local plugins_table = {
     enabled = not plugin_enabled.has_vscode(),
     init = function()
       vim.maximizer_set_default_mapping = 0
-      keymap({ "n", "x" }, "<leader>mm", ":MaximizerToggle!<CR>")
+      keymap({ "n", "x" }, "mm", ":MaximizerToggle!<CR>")
     end,
   },
 
