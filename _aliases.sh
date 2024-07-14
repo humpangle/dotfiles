@@ -480,6 +480,12 @@ if [[ -e "$_elixir_lexical_script" ]]; then
 fi
 unset _elixir_lexical_script
 
+_elixir_ls_script="${DOTFILE_PARENT_PATH}/dotfiles/scripts/c-elixir-ls"
+if [[ -e "$_elixir_ls_script" ]]; then
+  alias ielixir-ls="chmod 755 $_elixir_ls_script && $_elixir_ls_script"
+fi
+unset _elixir_ls_script
+
 if [ -x "$(command -v sort-package-json)" ]; then
   alias spj='sort-package-json'
 fi

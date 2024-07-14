@@ -1,0 +1,467 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+ELIXIR_LS_USER_SLASH_REPO='elixir-lsp/elixir-ls'
+elixir_ls_base="$HOME/.elixir_ls_ebnis"
+_copy_src="$elixir_ls_base/src"
+_main_branch=master
+
+full_line_len=$(tput cols)
+_echo() {
+  local text="${*}"
+  local equal='*'
+
+  local len="${#text}"
+  len=$((full_line_len - len))
+  local half=$((len / 2 - 1))
+
+  local line=''
+
+  for _ in $(seq $half); do
+    line="${line}${equal}"
+  done
+
+  echo -e "\n${text}  ${line}${line}\n"
+}
+
+_get_asdf_plugin_version() {
+  local _plugin_name="$1"
+
+  asdf current "$_plugin_name" |
+    awk '{print $2}'
+}
+
+get_latest_tag() {
+  : "Get latest tag from github. Usage:"
+  : "  get_latest_tag"
+
+  # Pluck JSON value
+
+  # Get latest release from GitHub api
+  local _release_html
+  _release_html="$(
+    curl \
+      --silent \
+      "https://api.github.com/repos/$ELIXIR_LS_USER_SLASH_REPO/releases/latest"
+  )"
+
+  # Get tag line
+  grep '"tag_name":' <<<"$_release_html" |
+    sed -E 's/.*"([^"]+)".*/\1/'
+}
+
+git_clone() {
+  : "Clone/update the local elixir ls repo. Usage:"
+  : "  git_clone [tag]"
+
+  local _tag="$1"
+
+  if [[ -e "$_copy_src" ]]; then
+    _echo "Elixir ls already cloned - we will try to pull latest code from remote repository."
+
+    (
+      if ! cd "$_copy_src"; then
+        _echo "Can not enter $_copy_src directory. Aborting!" >&2
+        exit 1
+      fi
+
+      _echo "Restoring chnages made to $_copy_src"
+      git restore . &>/dev/null
+
+      _echo "Which commit is currently checked out?"
+      git branch
+
+      _echo "Switching to $_main_branch branch"
+      git checkout $_main_branch &>/dev/null
+
+      _echo "Fetching and merging latest code."
+      git pull origin $_main_branch
+
+      _echo "Done pulling latest changes from remote."
+
+      if [[ -n "$_tag" ]]; then
+        _echo "Checking out tag $_tag"
+        git checkout "$_tag"
+      fi
+    )
+
+    return
+  fi
+
+  _echo "Elixir ls has not been cloned. Attempting to clone into $_copy_src"
+  git clone \
+    https://github.com/${ELIXIR_LS_USER_SLASH_REPO}.git \
+    "$_copy_src"
+  _echo "Done cloning elixir ls."
+}
+
+___install_help() {
+  read -r -d '' var <<'eof' || true
+Install elixir ls. Usage:
+  c-elixir-ls
+  c-elixir-ls install [OPTIONS]
+
+Options:
+  -h,--help
+    Print this help text and quit.
+  -t,--tag
+    The git tag to build. If none is specified, we query github for latest tag and use the latest tag.
+  -e,--elixir
+    The elixir version to build. If none is specified, we will use current elixir version managed by asdf. We will
+    validate that the version of elixir supplied matches the erlang version.
+  -l,--erlang
+    The erlang version to build. If none is specified, we will use current erlang version managed by asdf.
+
+Examples:
+  # Get help.
+  install --help
+
+  # Build latest git tag using current elixir and erlang managed by asdf.
+  c-elixir-ls
+
+  # Build tag v0.22.1 using current elixir and erlang managed by asdf.
+  c-elixir-ls install -t v0.22.1
+  c-elixir-ls install --tag v0.22.1
+
+  # Build tag v0.22.1 using elixir version 1.16.3-otp-26 and latest version of erlang managed by asdf.
+  c-elixir-ls install -t v0.22.1 -e 1.16.3-otp-26
+  c-elixir-ls install --tag v0.22.1 --elixir 1.16.3-otp-26
+eof
+
+  echo -e "${var}"
+}
+
+install() {
+  : "___help___ ___install_help"
+
+  local _tag
+  local _elixir
+  local _erlang
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local _parsed
+
+  if ! _parsed="$(
+    getopt \
+      --longoptions=help,tag:,elixir:,erlang: \
+      --options=h,t:,e:,l: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ___install_help
+    return 129
+  fi
+
+  # provides proper quoting.
+  eval set -- "$_parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ___install_help
+      return
+      ;;
+
+    --tag | -t)
+      _tag=$2
+      shift 2
+      ;;
+
+    --elixir | -e)
+      _elixir=$2
+      shift 2
+      ;;
+
+    --erlang | -l)
+      _erlang=$2
+      shift 2
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "unknown option ${1}."
+      ___install_help
+      return 129
+      ;;
+    esac
+  done
+  # --------------------------------------------------------------------------
+  # end parse arguments
+  # --------------------------------------------------------------------------
+
+  if [[ -z "$_elixir" ]]; then
+    _elixir="$(_get_asdf_plugin_version elixir)"
+  fi
+
+  if [[ -z "$_erlang" ]]; then
+    _erlang="$(_get_asdf_plugin_version erlang)"
+  fi
+
+  if [[ -z "$_tag" ]]; then
+    _tag="$(get_latest_tag)"
+  fi
+
+  git_clone "$_tag"
+
+  (
+    if ! cd "$_copy_src"; then
+      _echo "$_copy_src directory is inaccessible - aborting!"
+      exit 1
+    fi
+
+    _echo "Removing any current .tool-versions"
+    rm -rf .tool-versions
+
+    _echo "Change elixir to version \"$_elixir\" and erlang to version \"$_erlang\" "
+    asdf local erlang "$_erlang"
+    asdf local elixir "$_elixir"
+
+    _echo "Let us confirm we are using correct elixir and erlang versions:"
+    cat .tool-versions
+
+    _echo "Removing any previous build of elixir ls."
+    rm -rf _build deps
+
+    # There is this situation where `mix.lock` file with the `jason_vendored`
+    # dependency is wrongly configured. Let's fix it.
+    # ***NOTE*** The `e23c65b98411a3066ca73534b4aed1d23bcf0356` hash is gotten
+    # from:
+    #  git https://github.com/elixir-lsp/jason.git
+    #  git checkout vendored
+    #  Copy the hash from where the app name in mix.exs is jason_vendored
+    sed -i -E \
+      "s/(.*jason_vendored.+jason\.git\", +)\"([^,]+)\"(.*)/\1\"e23c65b98411a3066ca73534b4aed1d23bcf0356\"\3/" \
+      mix.lock
+
+    # Compile Hex from scratch for this OTP version (fix for apple silicon)
+    #   https://elixirforum.com/t/crash-dump-when-installing-phoenix-on-mac-m2-eheap-alloc-cannot-allocate-x-bytes-of-memory-of-type-heap-frag/62154/9?u=samba6
+    mix archive.install --force github hexpm/hex branch latest
+
+    _echo "Executing \"mix local.hex --force --if-missing\""
+    mix local.hex --force --if-missing
+    mix local.rebar --force --if-missing
+
+    asdf reshim elixir
+    asdf reshim erlang
+
+    _echo "Fetching elixir ls's dependencies."
+    mix deps.get
+
+    _echo "Compiling in prod environment."
+    MIX_ENV=prod mix compile
+
+    local _script_dir="$elixir_ls_base/${_elixir}--${_erlang}--${_tag}"
+
+    _echo "Deleting previous build directory $_script_dir if existing."
+    rm -rf "$_script_dir"
+    mkdir -p "$_script_dir"
+
+    ##############################
+    MIX_ENV=prod mix elixir_ls.release2 -o "$_script_dir"
+
+    local _lsp_script="$_script_dir/language_server.sh"
+
+    if [[ -e "$_lsp_script" ]]; then
+      _echo "elixir ls built successfully. Start script: $_lsp_script"
+    else
+      _echo "Building elixir ls failed - aborting!" >&2
+      exit 1
+    fi
+
+    echo -e "\n**********Write to your bashrc/.env file:**********"
+    echo -e "export ELIXIR_LS_BIN='$_lsp_script'\n"
+  )
+}
+
+query() {
+  : "Query for installed versions of elixir ls."
+  : "Output is elixir_version--erlang_version--elixir_ls-tag."
+  : "Usage: c-elixir-ls query"
+
+  echo -e "\nInstalled elixir ls in $elixir_ls_base"
+
+  while IFS= read -r -d '' _dir_name; do
+    basename "$_dir_name"
+    echo "  $_dir_name/bin/start_ls.sh"
+  done < <(find \
+    "$elixir_ls_base" \
+    -mindepth 1 \
+    -maxdepth 1 \
+    -type d \
+    -not -name 'src' \
+    -print0)
+
+  echo
+}
+
+help() {
+  : "List available tasks."
+
+  # Matching pattern examples:
+  # `: "___help___ ___some_func_help"`
+  # `: "___help___ ____some-func-help"`
+  local _help_func_pattern="[_]*___[a-zA-Z][a-zA-Z0-9_-]*[_-]help"
+
+  if [[ -z "$1" ]]; then
+    # Regular functions do not start with _.
+    mapfile -t _function_names < <(
+      compgen -A function |
+        grep -v '^_'
+    )
+  else
+    # Helper functions start with _.
+    mapfile -t _function_names < <(
+      compgen -A function |
+        grep '^_' |
+        grep -v -E "$_help_func_pattern"
+    )
+  fi
+
+  local _this_file_content
+  _this_file_content="$(cat "$0")"
+
+  local len=0
+  declare -A name_to_len_map=()
+
+  for _name in "${_function_names[@]}"; do
+    _len="${#_name}"
+    name_to_len_map["$_name"]="${_len}"
+    if [[ "${_len}" -gt "${len}" ]]; then len=${_len}; fi
+  done
+
+  declare -A _all_output=()
+  declare -A _aliases=()
+  declare -A _name_spaces_map=()
+
+  len=$((len + 10))
+
+  for _name in "${_function_names[@]}"; do
+    if ! _is_local_function "$_name" "$_this_file_content"; then
+      continue
+    fi
+
+    local spaces=""
+    _len="${name_to_len_map[$_name]}"
+    _len=$((len - _len))
+
+    for _ in $(seq "${_len}"); do
+      spaces="${spaces}-"
+      ((++t))
+    done
+
+    local _function_def_text
+    _function_def_text="$(type "${_name}")"
+
+    local _alias_name
+
+    # Matching pattern example:
+    # `: "___alias___ install-elixir"`
+    _alias_name="$(
+      awk \
+        'match($0, /^ +: *"___alias___ +([a-zA-Z_-][a-zA-Z0-9_-]*)/, a) {print a[1]}' \
+        <<<"${_function_def_text}"
+    )"
+
+    if [[ -n "${_alias_name}" ]]; then
+      _aliases["${_alias_name}"]="${_aliases["${_alias_name}"]} ${_name}"
+      continue
+    fi
+
+    local _help_func
+
+    _help_func="$(
+      awk \
+        -v _awk_help_func_pattern="$_help_func_pattern" \
+        'match($0, "^ +: *\"___help___ +(" _awk_help_func_pattern ")", a) {print a[1]}' \
+        <<<"$_function_def_text"
+    )"
+
+    # Get the whole function definition text and extract only the documentation
+    # part.
+    if [[ -n "$_help_func" ]]; then
+      mapfile -t _doc_lines < <(
+        eval "$_help_func" 2>/dev/null
+      )
+    else
+      mapfile -t _doc_lines < <(
+        sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p" <<<"$_function_def_text"
+      )
+    fi
+
+    local _output=""
+
+    if [[ -n "${_doc_lines[*]}" ]]; then
+      for _doc in "${_doc_lines[@]}"; do
+        _output+="$_name $spaces $_doc\n"
+      done
+    else
+      _output="$_name $spaces *************\n"
+    fi
+
+    _all_output["$_name"]="$_output"
+    _name_spaces_map["$_name"]="$_name $spaces"
+  done
+
+  for _name in "${!_all_output[@]}"; do
+    _output="${_all_output["${_name}"]}"
+    echo -e "${_output}"
+
+    local _alias_names="${_aliases["${_name}"]}"
+
+    if [[ -n "${_alias_names}" ]]; then
+      echo -e "${_name_spaces_map["${_name}"]} ALIASES: ${_alias_names}\n\n"
+    fi
+  done
+}
+
+_is_local_function() {
+  local _function_name="$1"
+  local _this_file_content="$2"
+
+  # Function name is not a local function - but perhaps inherited from the shell.
+  if ! grep -qP "^$_function_name\(\)\s+\{" <<<"$_this_file_content" &&
+    ! grep -qP "function\s+${_function_name}\s+{" <<<"$_this_file_content"; then
+    return 1
+  fi
+
+  return 0
+}
+
+_command_exists() {
+  local _this_file_content
+  _this_file_content="$(cat "$0")"
+
+  mapfile -t _all_function_names < <(compgen -A function | grep -v '^_')
+
+  for _name in "${_all_function_names[@]}"; do
+    if ! _is_local_function "$_name" "$_this_file_content"; then
+      continue
+    fi
+
+    if [[ "$_name" == "$1" ]]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+if [[ -z "$1" ]]; then
+  install "$@"
+elif [[ "$1" == "--help" ||
+  "$1" == "-h" ]]; then
+  help "${@:2}"
+elif _command_exists "$1"; then
+  "$@"
+else
+  echo "Command not found \"$1\". Type \"c-elixir-ls help\" for available commands." >&2
+  exit 127
+fi

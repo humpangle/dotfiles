@@ -112,7 +112,6 @@ ___source_scripts() {
     _fzf
     _set-envs
     _erlang-elixir-flags
-    elixir-ls-install.sh
     _archive_projects
     _deal-paths
     _run-script
