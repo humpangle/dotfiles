@@ -1,7 +1,6 @@
 local keymap = vim.keymap.set
 
 -- Search file from root directory
-keymap("n", "<c-p>", ":Files!<CR>", { noremap = true })
 keymap("n", "<leader>fW", ":Files!<CR>", { noremap = true })
 
 -- Search file from current directory
