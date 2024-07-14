@@ -295,22 +295,6 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 -- END Map files from one type to another
 
--- Force keymap `leader fc` to use Neoformat for certain file types
--- Might not be necessary when using LSP?
-vim.api.nvim_create_autocmd("FileType", {
-  group = filetypes_group,
-  pattern = {
-    "elixir",
-    "eelixir",
-  },
-  callback = function()
-    utils.map_key("n", "<leader>fc", ":Neoformat<CR>", {
-      noremap = true,
-      buffer = true,
-    })
-  end,
-})
-
 -- Format paragraphs/lines to {textwidth} characters
 utils.map_key("n", "<Leader>pp", "gqap", { noremap = true })
 utils.map_key("x", "<Leader>pp", "gq", { noremap = true })
