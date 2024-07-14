@@ -767,7 +767,7 @@ if plugin_enabled.has_termux() then
   -- Exit terminal mode
   vim.keymap.set(
     "t",
-    "<Esc><Esc>",
+    "<C-k>",
     "<C-\\><C-n>",
     { desc = "Exit terminal mode in termux" }
   )
