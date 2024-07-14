@@ -173,5 +173,6 @@ rm -rf "$HOME/.tmux.conf"
 ln -s "$_dotfiles_termux_dir/.tmux.conf" "$HOME"
 
 mkdir -p "$HOME/.tmux/resurrect"
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 echo -e "\n\nsource $_bashrc\n\n"
