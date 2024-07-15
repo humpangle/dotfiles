@@ -28,7 +28,13 @@ local function abbreviate_path(file_path)
 end
 
 local get_yaml_schema = function()
-  local yaml_schema = require("plugins.yaml_lsp").get_yaml_schema()
+  local ok, yaml_lsp = pcall(require, "yaml_lsp")
+
+  if not ok then
+    return ""
+  end
+
+  local yaml_schema = yaml_lsp.get_yaml_schema()
 
   if yaml_schema ~= "" then
     yaml_schema = " " .. yaml_schema

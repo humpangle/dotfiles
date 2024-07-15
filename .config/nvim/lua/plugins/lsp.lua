@@ -217,12 +217,15 @@ return {
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-      local lsp_extended_capabilities = vim.tbl_deep_extend(
-        "force",
-        lsp_capabilities,
-        -- Augment neovim LSP capabilities with those from nvim cmp.
-        require("cmp_nvim_lsp").default_capabilities()
-      )
+
+      local lsp_extended_capabilities = lsp_capabilities
+
+      -- Augment neovim LSP capabilities with those from nvim cmp.
+      local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      if cmp_nvim_lsp_ok then
+        lsp_extended_capabilities =
+          vim.tbl_deep_extend("force", lsp_capabilities, cmp_nvim_lsp)
+      end
 
       local elixir_lsp_filetypes = {
         "elixir",
@@ -405,7 +408,7 @@ return {
               server.capabilities or {}
             )
 
-            lspconfig[server_name].setup(server)
+            pcall(lspconfig[server_name].setup, server)
           end,
         },
       })
