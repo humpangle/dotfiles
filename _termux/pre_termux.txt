@@ -1,6 +1,9 @@
 # I do not want to use the -y flag for update because for some reasons there are so many prompts for newer file
 # versions.
 
+# I had problem installing python poetry - I used this web page:
+# https://github.com/termux/termux-packages/discussions/19126
+
 pkg update \
 && pkg upgrade \
 && pkg install root-repo \
@@ -35,7 +38,21 @@ pkg update \
       erlang \
       elixir \
       lua-language-server \
-      stylua
+      stylua \
+      cmake \
+      ninja \
+      libopenblas \
+      libandroid-execinfo \
+      patchelf \
+      binutils-is-llvm \
+&& pip3 install \
+      setuptools \
+      wheel \
+      packaging \
+      pyproject_metadata \
+      cython \
+      meson-python \
+      versioneer
 
 # ncurses-utils provides tput command.
 # ripgrep provides rg command
