@@ -54,8 +54,12 @@ end
 local env_vim_theme = os.getenv("EBNIS_VIM_THEME")
 local env_vim_bg = os.getenv("EBNIS_VIM_THEME_BG")
 
-if env_vim_theme ~= nil and theme_fn_map[env_vim_theme] ~= nil then
-  theme_fn_map[env_vim_theme]()
+if env_vim_theme ~= nil then
+  if theme_fn_map[env_vim_theme] ~= nil then
+    theme_fn_map[env_vim_theme]()
+  else
+    vim.cmd.colorscheme(env_vim_theme)
+  end
 else
   theme_fn_map.gruvbox8_hard()
 end
