@@ -429,6 +429,21 @@ return {
           capabilities = lsp_extended_capabilities,
         })
       end
+
+      -- mason does not know how to setup lua_ls on termux, so we do it manually.
+      if plugin_enabled.has_termux() then
+        lspconfig.lua_ls.setup({
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = "Replace",
+              },
+              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+              -- diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        })
+      end
     end,
   },
 }
