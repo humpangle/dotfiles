@@ -390,38 +390,102 @@ else
   export VSCODE_BINARY="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
 fi
 
+_____c_help() {
+  read -r -d '' var <<'eof' || true
+Launch visual studio code VSCODE. Usage:
+  __c [OPTIONS]
+  __c [OPTIONS] -- <vscode args>
+
+By default, we launch vscode with a clean environment.
+
+Options:
+  -h,--help
+    Print this help text and quit.
+  -p,--preserve
+    Preserve environment - do not launch with a clean environment.
+  -d,--debug
+    Print command that will be ran.
+
+Examples:
+  # Get help.
+  __c --help
+  __c -h
+
+  # Preserve environment
+  __c -p
+  __c --preserve
+
+  # DEbug command
+  __c -d
+  __c --debug
+eof
+
+  echo -e "${var}"
+}
+
 __c() {
-  : Launch VS code with/without clean environment. By default, we launch vscode with a clean environment.
-  : Pass -p flag to preseve current shell environment.
-  : Pass -d for debug logging.
+  : "___help___ _____c_help"
 
   local _preverve_env
   local _debug
-  local _args=()
+  local _parsed
 
-  for _arg; do
-    if [[ "$_arg" == -p ]]; then
+  if ! _parsed="$(
+    getopt \
+      --options=h,p,d \
+      --longoptions=help,preserve,debug \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    return
+  fi
+
+  eval set -- "$_parsed"
+
+  while :; do
+    case "$1" in
+    --help | -h)
+      _____c_help
+      return
+      ;;
+
+    --preserve | -p)
       _preverve_env=1
-    elif [[ "$_arg" == -d ]]; then
+      shift
+      ;;
+
+    --debug | -d)
       _debug=1
-    else
-      _args+=("$_arg")
-    fi
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown option $1"
+      _____c_help
+      return
+      ;;
+    esac
   done
 
   if [[ -n "$_debug" ]]; then
-    echo -e "\n\_preverve_env = $_preverve_env"
-    echo -e "_args = ${_args[*]}"
+    echo -e "\n_preverve_env = $_preverve_env"
+    echo -e "vscode args = $*"
+    return
   fi
 
   if [[ -n "$_preverve_env" ]]; then
     bash -l -c \
-      "$VSCODE_BINARY ${_args[*]} &>/dev/null" &
+      "$VSCODE_BINARY $* &>/dev/null" &
   else
     env -i \
       HOME="$HOME" \
       bash -l -c \
-      "$VSCODE_BINARY ${_args[*]} &>/dev/null" &
+      "$VSCODE_BINARY $* &>/dev/null" &
   fi
 
   disown
