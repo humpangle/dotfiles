@@ -223,8 +223,11 @@ return {
       -- Augment neovim LSP capabilities with those from nvim cmp.
       local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       if cmp_nvim_lsp_ok then
-        lsp_extended_capabilities =
-          vim.tbl_deep_extend("force", lsp_capabilities, cmp_nvim_lsp)
+        lsp_extended_capabilities = vim.tbl_deep_extend(
+          "force",
+          lsp_capabilities,
+          cmp_nvim_lsp.default_capabilities()
+        )
       end
 
       local elixir_lsp_filetypes = {
