@@ -472,20 +472,23 @@ __c() {
     esac
   done
 
+  local _cmd="$VSCODE_BINARY --remote wsl+$WSL_DISTRO_NAME $* &>/dev/null"
+
   if [[ -n "$_debug" ]]; then
     echo -e "\n_preverve_env = $_preverve_env"
-    echo -e "vscode args = $*"
+    echo -e "\nvscode args = $*"
+    echo -e "\nCommand:\n$_cmd\n"
     return
   fi
 
   if [[ -n "$_preverve_env" ]]; then
-    bash -l -c \
-      "$VSCODE_BINARY $* &>/dev/null" &
+    bash -c \
+      "$_cmd" &
   else
     env -i \
       HOME="$HOME" \
-      bash -l -c \
-      "$VSCODE_BINARY $* &>/dev/null" &
+      bash -c \
+      "$_cmd" &
   fi
 
   disown
