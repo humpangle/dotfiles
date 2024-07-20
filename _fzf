@@ -29,7 +29,7 @@ _fzf_compgen_dir() {
 }
 
 _fzf_compgen_path() {
-  rg --files --hidden --follow --glob $RG_IGNORES
+  rg --files --hidden --follow --glob "$RG_IGNORES"
 }
 
 FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
