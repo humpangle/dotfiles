@@ -14,7 +14,9 @@ fi
 
 # ripgrep
 export RG_IGNORES="!{.git,node_modules,cover,coverage,.elixir_ls,deps,_build,.build,build}"
+export RG_IGNORES=
 RG_OPTIONS="--hidden --follow --glob '$RG_IGNORES'"
+RG_OPTIONS=
 
 export FZF_DEFAULT_OPTS="--layout=reverse --border"
 # Use git-ls-files inside git repo, otherwise rg
