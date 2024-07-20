@@ -326,4 +326,28 @@ utils.get_os_env_or_nil = function(env_var_string)
   return val
 end
 
+utils.clear_terminal = function()
+  local current_mode = vim.fn.mode()
+
+  if current_mode == "n" then
+    -- Enter terminal-insert mode with control-L
+    vim.fn.feedkeys("a", "n") -- a-control-L
+  else
+    vim.fn.feedkeys("", "n") -- control-L
+  end
+
+  local sb = vim.bo.scrollback
+  vim.bo.scrollback = 1
+  vim.bo.scrollback = sb
+
+  if current_mode == "n" and vim.v.count == 0 then
+    -- Return to terminal-normal mode
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true),
+      "t",
+      true
+    )
+  end
+end
+
 return utils

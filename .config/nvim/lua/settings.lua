@@ -710,36 +710,12 @@ utils.map_key("n", "<leader>bT", function()
   utils.DeleteAllBuffers("t")
 end, { noremap = true })
 
--- CLEAR THE TERMINAL
-local term_clear = function()
-  local current_mode = vim.fn.mode()
-
-  if current_mode == "n" then
-    -- Enter terminal-insert mode with control-L
-    vim.fn.feedkeys("a", "n") -- a-control-L
-  else
-    vim.fn.feedkeys("", "n") -- control-L
-  end
-
-  local sb = vim.bo.scrollback
-  vim.bo.scrollback = 1
-  vim.bo.scrollback = sb
-
-  if current_mode == "n" and vim.v.count == 0 then
-    -- Return to terminal-normal mode
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true),
-      "t",
-      true
-    )
-  end
-end
-utils.map_key("t", "<C-l>", term_clear)
+utils.map_key("t", "<C-l>", utils.clear_terminal)
 
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
   callback = function()
-    utils.map_key("n", "<C-m>", term_clear, {
+    utils.map_key("n", "d=", utils.clear_terminal, {
       silent = true,
       desc = "Clear terminal. Supply count > 0 to enter insert mode.",
     }, 0)
