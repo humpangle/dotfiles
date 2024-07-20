@@ -229,6 +229,8 @@ start() {
       ghcr.io/open-webui/open-webui:main 2>&1"
   fi
 
+  echo -e "Executing command:\n$_cmd"
+
   if _start_result="$(bash -c "$_cmd")"; then
     _success=1
     ollama_start || true
