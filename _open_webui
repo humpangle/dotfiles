@@ -226,12 +226,12 @@ start() {
       --add-host=host.docker.internal:host-gateway \
       -v $CONTAINER_OPEN_WEB_UI_MAP_VOLUME_DATA:/app/backend/data \
       --restart $CONTAINER_OPEN_WEB_UI_RESTART_VALUE \
-      ghcr.io/open-webui/open-webui:main 2>&1"
+      ghcr.io/open-webui/open-webui:main"
   fi
 
   echo -e "Executing command:\n$_cmd"
 
-  if _start_result="$(bash -c "$_cmd")"; then
+  if _start_result=$(bash -c "$_cmd" 2>&1 | tee /dev/tty); then
     _success=1
     ollama_start || true
   fi
