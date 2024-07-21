@@ -472,7 +472,13 @@ __c() {
     esac
   done
 
-  local _cmd="$VSCODE_BINARY --remote wsl+$WSL_DISTRO_NAME $* &>/dev/null"
+  local _cmd="$VSCODE_BINARY"
+
+  if _has_wsl; then
+    _cmd+=" --remote wsl+$WSL_DISTRO_NAME"
+  fi
+
+  _cmd+=" $* &>/dev/null"
 
   if [[ -n "$_debug" ]]; then
     echo -e "\n_preverve_env = $_preverve_env"

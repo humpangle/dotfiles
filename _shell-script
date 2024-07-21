@@ -62,6 +62,14 @@ _has_termux() {
   return 1
 }
 
+_has_wsl() {
+  if [[ "$(uname -r)" == *WSL2 ]]; then
+    return 0
+  fi
+
+  return 1
+}
+
 if _is_linux; then
   if _has_termux; then
     __shell_path='/data/data/com.termux/files/usr/bin/bash'
