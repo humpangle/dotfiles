@@ -110,10 +110,10 @@ main() {
 
   case "$_copy_program" in
   xclip)
-    xclip -selection c <<<"$_text_to_copy"
+    echo -n "$_text_to_copy" | xclip -selection c
     ;;
   *)
-    "$_copy_program" <<<"$_text_to_copy"
+    echo -n "$_text_to_copy" | "$_copy_program"
     ;;
   esac
 
