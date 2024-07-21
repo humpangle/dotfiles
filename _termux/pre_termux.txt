@@ -52,7 +52,8 @@ pkg update \
       pyproject_metadata \
       cython \
       meson-python \
-      versioneer
+      versioneer \
+      shfmt
 
 # ncurses-utils provides tput command.
 # ripgrep provides rg command
