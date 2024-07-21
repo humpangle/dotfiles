@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 
+_copy_executables=(
+  pbcopy
+  termux-clipboard-set
+  clip
+  xclip
+)
+
 _get_copy_program() {
-  if command -v pbcopy &>/dev/null; then
-    echo -n pbcopy
-  elif command -v clip &>/dev/null; then
-    echo -n clip
-  elif command -v xclip &>/dev/null; then
-    echo -n xclip
-  else
-    echo "Clipboard management program not found." >&2
-    exit 1
-  fi
+
+  for _program in "${_copy_executables[@]}"; do
+    if command -v "$_program" &>/dev/null; then
+      echo -n "$_program"
+      return
+    fi
+  done
+
+  echo "Clipboard management program not found." >&2
+  exit 1
 }
 
 ____copy_help() {

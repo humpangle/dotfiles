@@ -26,6 +26,10 @@ _debug() {
     _copied_text="$(pbpaste)"
     ;;
 
+  termux-clipboard-set)
+    _copied_text="$(termux-clipboard-get)"
+    ;;
+
   *)
     echo "Unknown copy program $_copy_program" >&2
     exit 1
