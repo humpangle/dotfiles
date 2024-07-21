@@ -1,6 +1,6 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 local utils = require("utils")
-local keymap = vim.keymap.set
+local keymap = utils.map_key
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
