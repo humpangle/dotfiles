@@ -482,12 +482,12 @@ __c() {
   fi
 
   if [[ -n "$_preverve_env" ]]; then
-    bash -c \
+    bash -lc \
       "$_cmd" &
   else
     env -i \
       HOME="$HOME" \
-      bash -c \
+      bash -lc \
       "$_cmd" &
   fi
 
