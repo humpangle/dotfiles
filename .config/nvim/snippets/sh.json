@@ -1129,5 +1129,19 @@
     "description": [
       "Snippet echo debug"
     ]
+  },
+  "Snippet: one equal one": {
+    "prefix": [
+      "one_equal_one",
+      "1_equal_1"
+    ],
+    "body": [
+      "if [[ 1 -eq 1 ]]; then",
+      "  ${0:return}",
+      "fi"
+    ],
+    "description": [
+      "Snippet: one equal one"
+    ]
   }
 }
