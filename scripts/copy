@@ -3,7 +3,7 @@
 set -o errexit
 set -o pipefail
 
-# The following function is declared and set in cp-vim-session-util.bash. Sourcing that script below
+# The following function is declared and set in scripts-utils/copy-util.bash Sourcing that script below
 # brings it into this script.
 
 # _get_copy_program <- function
