@@ -187,36 +187,70 @@ local plugins_table = {
     "kristijanhusak/vim-dadbod-ui",
     enabled = not plugin_enabled.has_vscode(),
     dependencies = {
-      "tpope/vim-dadbod",
+      {
+        "tpope/vim-dadbod",
+        lazy = true,
+      },
+      -- Optional
+      {
+        "kristijanhusak/vim-dadbod-completion",
+        ft = { "sql", "mysql", "plsql" },
+        lazy = true,
+      },
+    },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
     },
     init = function()
       -- postgres — postgresql://user1:userpwd@localhost:5432/testdb
       -- mysql — mysql://user1:userpwd@127.0.0.1:3306/testdb
       -- sqlite - sqlite:path-to-sqlite-database
-      -- :w = execute query in open buffer
+
+      -- :w = execute query in current DBUI buffer
+
+      -- Typical entry in ~/.local/share/db_ui/connections.json:
+      -- [
+      --   {
+      --     "url": "postgresql://username:password@127.0.0.1:5432/db_name",
+      --     "name": "folder_name"
+      --   },
+      --   {
+      --     "url": "mysql://username:password@127.0.0.1:5432/db_name",
+      --     "name": "folder_name"
+      --   }
+      -- ]
+      --
+      -- Create ~/.local/share/db_ui/folder_name/*.sql and write your sql queries.
+
+      vim.g.db_ui_use_nerd_fonts = 1
 
       keymap(
         "n",
-        "<leader>du",
+        "<leader>dbi",
         ":tab new<CR>:DBUI<CR><C-w>o<bar><C-w>v<bar>:e ~/.local/share/db_ui/connections.json<CR>",
-        { noremap = true }
+        {
+          noremap = true,
+          desc = "Initiialize DBUI",
+        }
       )
 
-      keymap("n", "<leader>df", ":DBUIFindBuffer<CR>", { noremap = true })
+      keymap("n", "<leader>dbf", ":DBUIFindBuffer<CR>", {
+        noremap = true,
+        desc = "DBUIFindBuffer",
+      })
 
-      keymap(
-        "n",
-        "<leader>dr",
-        ":DBUIRenameBuffer<CR>",
-        { noremap = true }
-      )
+      keymap("n", "<leader>dbr", ":DBUIRenameBuffer<CR>", {
+        noremap = true,
+        desc = "DBUIRenameBuffer",
+      })
 
-      keymap(
-        "n",
-        "<leader>dl",
-        ":DBUILastQueryInfo<CR>",
-        { noremap = true }
-      )
+      keymap("n", "<leader>dbl", ":DBUILastQueryInfo<CR>", {
+        noremap = true,
+        desc = "DBUILastQueryInfo",
+      })
     end,
   },
 
