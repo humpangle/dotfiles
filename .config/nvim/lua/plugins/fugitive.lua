@@ -117,7 +117,9 @@ keymap("n", "<Leader>czz", function()
   elseif count == 3 then
     cmd = cmd
   else
-    vim.cmd.echo('"count should be 1/--include-untracked 2/--all 3/pathspec"')
+    vim.cmd.echo(
+      '"count should be 1/--include-untracked 2/--all 3/pathspec"'
+    )
     return
   end
 
@@ -242,7 +244,9 @@ keymap("n", "<leader>gu", function()
   end
 
   if cmd == "" then
-    vim.cmd.echo('"We can not set git user/email.Set GIT_USER/GIT_USER_EMAIL Aborting!"')
+    vim.cmd.echo(
+      '"We can not set git user/email.Set GIT_USER/GIT_USER_EMAIL Aborting!"'
+    )
     return
   end
 
