@@ -255,8 +255,17 @@ end, { noremap = true, desc = "Git config user name. 1=email 2=env defaults" })
 
 -- Rebase keymaps
 keymap("n", "<Leader>r<Space>", function()
-  utils.write_to_command_mode("G rebase ")
-end, { noremap = true, desc = [[Populate command line with :Git rebase .]] })
+  local count = vim.v.count
+
+  if count == 1 then
+    utils.write_to_command_mode("G rebase -i --root")
+  else
+    utils.write_to_command_mode("G rebase -i ")
+  end
+end, {
+  noremap = true,
+  desc = [[Populate command line with :Git rebase. 1=--root]],
+})
 
 keymap("n", "<Leader>rr", function()
   utils.write_to_command_mode("G rebase --continue")
