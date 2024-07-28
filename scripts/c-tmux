@@ -284,14 +284,16 @@ eof
 }
 
 list() {
+  set -eup
+
   : "___help___ ___list_help"
 
   set -o errexit
 
-  local _clients
-  local _from_resurrect_file
-  local _verbose
-  local _names_only
+  local _clients=
+  local _from_resurrect_file=
+  local _verbose=
+  local _names_only=
   local _session_to_copy=
 
   # --------------------------------------------------------------------------
