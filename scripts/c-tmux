@@ -252,6 +252,8 @@ Options:
     Include the command for starting each listed session.
   -n,--names
     Return session names only
+  -x,--copy
+    Copy the command for starting referenced session to system clipboard.
 
 Examples:
   # Get help.
@@ -272,6 +274,10 @@ Examples:
   # List session names only (no additional information)
   c-tmux list --names
   c-tmux list -n
+
+  # Copy session start command to system clipboard
+  c-tmux list -x session_name
+  c-tmux list --copy session_name
 eof
 
   echo -e "$var"
@@ -286,6 +292,7 @@ list() {
   local _from_resurrect_file
   local _verbose
   local _names_only
+  local _session_to_copy=
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -294,8 +301,8 @@ list() {
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,client,resurrect,verbose,names \
-      --options=h,c,r,v,n \
+      --longoptions=help,client,resurrect,verbose,names,copy: \
+      --options=h,c,r,v,n,x: \
       --name "$0" \
       -- "$@"
   )"; then
@@ -331,6 +338,11 @@ list() {
     --names | -n)
       _names_only=1
       shift
+      ;;
+
+    --copy | -x)
+      _session_to_copy="$2"
+      shift 2
       ;;
 
     --)
@@ -397,13 +409,18 @@ list() {
       if [[ -n "$_session_pwd_from_resurrect_file" ]]; then
         _sessions_pwds_from_resurrect_file+="$_elm:\n$_session_pwd_from_resurrect_file\n"
 
-        if [[ -n "$_verbose" ]]; then
-          local _cd1719741431="cd $_session_pwd_from_resurrect_file"
-          local _start1719741519="c-tmux start_tmux -c $_session_pwd_from_resurrect_file $_elm"
+        local _cd1719741431="cd $_session_pwd_from_resurrect_file"
+        local _start1719741519="c-tmux start_tmux -c $_session_pwd_from_resurrect_file $_elm"
+        local _cd_and_start_cmd="$_cd1719741431 && $_start1719741519"
 
+        if [[ "$_session_to_copy" == "$_elm" ]]; then
+          copy "$_cd_and_start_cmd" &>/dev/null || :
+        fi
+
+        if [[ -n "$_verbose" ]]; then
           _sessions_pwds_from_resurrect_file+="$_cd1719741431\n"
           _sessions_pwds_from_resurrect_file+="$_start1719741519\n"
-          _sessions_pwds_from_resurrect_file+="$_cd1719741431 && $_start1719741519\n"
+          _sessions_pwds_from_resurrect_file+="${_cd_and_start_cmd}\n"
         fi
 
         _sessions_pwds_from_resurrect_file+="\n"
