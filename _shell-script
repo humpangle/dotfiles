@@ -125,7 +125,7 @@ ___source_scripts() {
     _run-script
     "_intellij $_flag_no_termux"
     "_docker $_flag_no_termux"
-    "clipper_starts.sh $_flag_no_termux"
+    "clipper_start.sh $_flag_no_termux"
     "_ggc $_flag_no_termux"
     "_asdf $_flag_no_termux"
     "_macos $_flag_mac_only"
