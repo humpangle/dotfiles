@@ -22,7 +22,7 @@ if vim.fn.executable("clip") then
   --    This is a workarund for situations where a remote machine's clipboard
   --    does not sync with a macos client machine.
   vim.cmd([[
-    nnoremap <leader>gg :call system('nc -N localhost 8377', @")<CR>
+    nnoremap <leader>cc :call system('nc -N localhost 8377', @")<CR>
   ]])
 end
 
