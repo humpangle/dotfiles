@@ -393,7 +393,7 @@ for key in "${!_env_key_to_value_map[@]}"; do
   # If the value is not all numeric characters and output is not sh, we handle quoting.
   if [[ -n "$_format_type" ]] &&
     ! echo "$_value" | grep -q -P "^\d+$"; then
-    # Replace single quotes with double quotes for json and yaml.
+    # If value is surrounded with single quotes, replace single quotes with double quotes for json and yaml.
     if echo "$_value" | grep -qP "^['].+[']$"; then
       _value="$(
         echo "$_value" |
