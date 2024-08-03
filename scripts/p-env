@@ -400,7 +400,7 @@ for key in "${!_env_key_to_value_map[@]}"; do
           sed -nE "s/^['](.+)[']$/\"\1\"/p"
       )"
     else
-      # Always quote double json string.
+      # Always 'double quote' json string.
       if [[ "$_format_type" == "json" ]]; then
         _value="\"$_value\""
 
