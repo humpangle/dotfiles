@@ -70,6 +70,22 @@ vim.g.neoformat_enabled_python = {
   "autopep8",
 }
 
+vim.g.neoformat_heex_mixformatheex = {
+  exe = "mix",
+
+  args = {
+    "format",
+    '--stdin-filename="%:t"',
+    "-",
+  },
+
+  stdin = 1,
+}
+
+vim.g.neoformat_enabled_heex = {
+  "mixformatheex",
+}
+
 -- vim.g.neoformat_enabled_php = {
 --  "php-cs-fixer",
 -- }
