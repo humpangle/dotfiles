@@ -53,8 +53,8 @@ return {
         "ruby",
       },
       disable = {
-        "gitcommit" -- treesitter highlighting does not work well inside buffer of this type.
-      }
+        "gitcommit", -- treesitter highlighting does not work well inside buffer of this type.
+      },
     },
     indent = {
       enable = true,
