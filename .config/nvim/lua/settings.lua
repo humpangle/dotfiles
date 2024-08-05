@@ -220,15 +220,6 @@ local patterns = {
   },
   {
     pattern = {
-      "*.heex",
-      "*.leex",
-      "*.sface",
-      "*.lexs",
-    },
-    filetype = "eelixir",
-  },
-  {
-    pattern = {
       "rebar.config",
       "*/src/*.app.src",
     },
