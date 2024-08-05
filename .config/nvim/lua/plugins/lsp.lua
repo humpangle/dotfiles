@@ -306,7 +306,24 @@ return {
 
         tailwindcss = {},
 
-        emmet_language_server = {}
+        emmet_language_server = {
+          filetypes = {
+            "css",
+            "eruby",
+            "html",
+            "javascript",
+            "javascriptreact",
+            "less",
+            "sass",
+            "scss",
+            "pug",
+            "typescriptreact",
+            "eex",
+            "elixir",
+            "eelixir",
+            "heex",
+          },
+        },
       }
 
       local elixir_ls_config_fn = function()
