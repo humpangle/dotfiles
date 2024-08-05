@@ -303,6 +303,10 @@ return {
             },
           },
         },
+
+        tailwindcss = {},
+
+        emmet_language_server = {}
       }
 
       local elixir_ls_config_fn = function()
