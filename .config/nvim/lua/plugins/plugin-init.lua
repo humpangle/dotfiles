@@ -365,6 +365,8 @@ local plugins_table = {
       })
     end,
   },
+
+  require("plugins/elixir"),
 }
 
 require("lazy").setup(plugins_table, {})
