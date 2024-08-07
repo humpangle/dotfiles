@@ -6,12 +6,11 @@
   "contributes": {
     "snippets": [
       {
-        "language": "elixir",
+        "language": [
+          "elixir",
+          "heex"
+        ],
         "path": "./elixir.json"
-      },
-      {
-        "language": "eelixir",
-        "path": "./eelixir.json"
       },
       {
         "language": "erlang",
