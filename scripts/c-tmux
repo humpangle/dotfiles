@@ -254,6 +254,9 @@ Options:
     Return session names only
   -x,--copy
     Copy the command for starting referenced session to system clipboard.
+  --no-flush,-f
+    Do not flush current session into resurrect file. Flushing takes a few seconds to complete, but sometimes we just
+    flushed and do not wish to flush again.
 
 Examples:
   # Get help.
@@ -295,6 +298,8 @@ list() {
   local _verbose=
   local _names_only=
   local _session_to_copy=
+  # By default, we flush, unless user passes --no-flush option.
+  local flush_=1
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -303,8 +308,8 @@ list() {
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,client,resurrect,verbose,names,copy: \
-      --options=h,c,r,v,n,x: \
+      --longoptions=help,client,resurrect,verbose,names,copy:,--no-flush \
+      --options=h,c,r,v,n,x:,f \
       --name "$0" \
       -- "$@"
   )"; then
@@ -347,6 +352,11 @@ list() {
       shift 2
       ;;
 
+    --no-flush | -f)
+      flush_=
+      shift
+      ;;
+
     --)
       shift
       break
@@ -374,8 +384,11 @@ list() {
 
   # Gather information from resurrect file
   if [[ -s "$_resurrect_file" ]]; then
-    # If tmux running, flush sessions info into resurrect file.
-    ebnis-save-tmux.sh quiet &>/dev/null || true
+    # User has not instructed us not to flush.
+    if [ -n "$flush_" ]; then
+      # If tmux running, flush sessions info into resurrect file.
+      ebnis-save-tmux.sh quiet &>/dev/null || true
+    fi
 
     local _session_resurrect_list
     _session_resurrect_list="$(
