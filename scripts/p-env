@@ -39,6 +39,9 @@ Options:
   --cwd
       Works with `--exec` option. Change current working directory before executing command.
 
+  --quote/u
+      Quote numbers. We do not quote numbers by default. This option will quote numbers also.
+
 Examples:
   p-env --help
   p-env input-env-file --output /output/file --format json
@@ -62,6 +65,7 @@ _command_to_exec=
 cwd=
 debug=
 _level=2
+user_wants_quoting_=
 
 function parse-args {
   # -allow a command to fail with !’s side effect on errexit
@@ -72,8 +76,8 @@ function parse-args {
     exit 1
   fi
 
-  long_options=string,debug,format:,output:,exec:,cwd:,no-change-name,env-name:,help,level:
-  short_options=sdf:o:e:v,n,a:,h,l:
+  long_options=string,debug,format:,output:,exec:,cwd:,no-change-name,env-name:,help,level:,quote
+  short_options=sdf:o:e:v,n,a:,h,l:,u
 
   # -regarding ! and PIPESTATUS see above
   # -temporarily store output to be able to check for errors
@@ -129,6 +133,11 @@ function parse-args {
     --level | -l)
       _level=$2
       shift 2
+      ;;
+
+    --quote | -u)
+      user_wants_quoting_=1
+      shift
       ;;
 
       # -- means the end of the arguments; drop this, and break out of the
@@ -273,6 +282,21 @@ _deal_with_trailing_comment() {
     }'
 }
 
+_should_handle_quoting() {
+  # User explicitly passed option for quoting.
+  if [ -n "$user_wants_quoting_" ]; then
+    return 0
+  fi
+
+  # If the value is not all numeric characters and output is not sh, we handle quoting.
+  if [[ -n "$_format_type" ]] &&
+    ! echo "$_value" | grep -q -P "^\d+$"; then
+    return 0
+  fi
+
+  return 1
+}
+
 parse-args "$@"
 
 if [[ "$_level" -gt 5 ]]; then
@@ -391,8 +415,7 @@ for key in "${!_env_key_to_value_map[@]}"; do
   _value="${_env_key_to_value_map[$key]}"
 
   # If the value is not all numeric characters and output is not sh, we handle quoting.
-  if [[ -n "$_format_type" ]] &&
-    ! echo "$_value" | grep -q -P "^\d+$"; then
+  if _should_handle_quoting; then
     # Escape double quotes
     if grep -qP '"' <<<"$_value"; then
       _value="${_value//\"/\\\"}"
