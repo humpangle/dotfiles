@@ -290,7 +290,7 @@ query() {
 
   while IFS= read -r -d '' _dir_name; do
     basename "$_dir_name"
-    echo "  $_dir_name/bin/start_ls.sh"
+    echo "  $_dir_name/language_server.sh"
   done < <(find \
     "$elixir_ls_base" \
     -mindepth 1 \
