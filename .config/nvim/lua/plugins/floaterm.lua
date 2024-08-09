@@ -41,19 +41,16 @@ return {
 
     utils.map_key("n", "<Leader>FK", ":FloatermKill!", { noremap = true })
 
-    utils.map_key(
-      "n",
-      "<Leader>vi",
-      ":let @+=trim(execute(':pwd'))<bar>:FloatermNew vifm <CR>",
-      { noremap = true }
-    )
+    utils.map_key("n", "<Leader>vi", function()
+      local count = vim.fn.count
+      if count == 1 then
+        vim.fn.setreg("+", "%:p:h")
+      elseif count == 2 then
+        vim.fn.setreg("+", vim.fn.getcwd())
+      end
 
-    utils.map_key(
-      "n",
-      "<Leader>vI",
-      ":FloatermNew vifm <CR>",
-      { noremap = true }
-    )
+      vim.cmd("FloatermNew vifm")
+    end, { noremap = true, desc = "Float vifm 1dir 2pwd" })
 
     utils.map_key(
       "n",
