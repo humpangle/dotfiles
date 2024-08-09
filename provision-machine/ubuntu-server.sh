@@ -92,13 +92,6 @@ GOLANG_DEPS=(
   'coreutils'
 )
 
-DOCKER_DEPS=(
-  'ca-certificates'
-  'curl'
-  'gnupg'
-  'lsb-release'
-)
-
 ERLANG_DEPS=(
   'g++'
   'build-essential'
@@ -232,8 +225,7 @@ function _update-and-upgrade-os-packages {
         ${NEOVIM_DEPS[*]} \
         ${NODEJS_DEPS[*]} \
         ${PYTHON_DEPS[*]} \
-        ${GOLANG_DEPS[*]} \
-        ${DOCKER_DEPS[*]} "
+        ${GOLANG_DEPS[*]} "
 
       local cmd="sudo apt-get install -y ${deps}"
       eval "$cmd"
@@ -519,6 +511,71 @@ function install-rust {
   if [[ -d "${cargo_bin_dir}" ]]; then
     echo "export PATH=${cargo_bin_dir}:\$PATH" >>"${HOME}/.bashrc"
   fi
+}
+
+uninstall-docker() {
+  : "Uninstall docker on debian linux"
+
+  # We don't want to get apt autoremove suggestions.
+  sudo apt autoremove -y
+
+  sudo apt-get purge -y \
+    docker.io \
+    docker-doc \
+    docker-compose \
+    docker-compose-v2 \
+    podman-docker \
+    containerd \
+    runc \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io \
+    docker-buildx-plugin \
+    docker-compose-plugin
+}
+
+install-docker() {
+  : "Install docker on debian linux"
+
+  _echo "INSTALLING DOCKER"
+
+  # https://docs.docker.com/engine/install/ubuntu/
+
+  uninstall-docker
+
+  # Delete this file in case docker was previously installed as the new installation below will append to the file
+  # causing invalid json.
+  sudo rm -rf /etc/docker/daemon.json
+
+  # Add Docker's official GPG key:
+  sudo apt-get update
+  sudo apt-get install ca-certificates curl
+  sudo install -m 0755 -d /etc/apt/keyrings
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+  # Add the repository to Apt sources:
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
+    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+  sudo apt-get update
+
+  # Install docker and its components:
+  sudo apt-get install -y \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io \
+    docker-buildx-plugin \
+    docker-compose-plugin
+
+  sudo apt autoremove -y
+
+  sudo groupadd docker >/dev/null || :
+  sudo usermod -aG docker "${USER}" || :
+
+  # Confirm if docker can not run for whatever reason.
+  sudo dockerd --debug
 }
 
 function install-asdf-postgres {
