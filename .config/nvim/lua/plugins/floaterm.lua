@@ -42,7 +42,7 @@ return {
     utils.map_key("n", "<Leader>FK", ":FloatermKill!", { noremap = true })
 
     utils.map_key("n", "<Leader>vi", function()
-      local count = vim.fn.count
+      local count = vim.v.count
       if count == 1 then
         vim.fn.setreg("+", "%:p:h")
       elseif count == 2 then
