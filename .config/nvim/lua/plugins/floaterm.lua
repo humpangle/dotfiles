@@ -43,10 +43,17 @@ return {
 
     utils.map_key("n", "<Leader>vi", function()
       local count = vim.v.count
+      local path = nil
+
       if count == 1 then
-        vim.fn.setreg("+", "%:p:h")
+        path = vim.fn.expand("%:p:h")
       elseif count == 2 then
-        vim.fn.setreg("+", vim.fn.getcwd())
+        path = vim.fn.getcwd()
+      end
+
+      if path ~= nil then
+        vim.cmd("let @+=" .. '"' .. path .. '"')
+        vim.cmd("let @z=" .. '"' .. path .. '"')
       end
 
       vim.cmd("FloatermNew vifm")
