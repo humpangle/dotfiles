@@ -1053,7 +1053,9 @@
   "Snippet: one equal one": {
     "prefix": [
       "one_equal_one",
-      "1_equal_1"
+      "1_equal_1",
+      "if_one_equal_one",
+      "if_1_equal_1"
     ],
     "body": [
       "if [[ 1 -eq 1 ]]; then",
