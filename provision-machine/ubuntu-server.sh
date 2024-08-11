@@ -635,10 +635,6 @@ install-asdf-postgres() {
     )"
   fi
 
-  if [[ 1 -eq 1 ]]; then
-    return
-  fi
-
   _may_be_install_asdf "$@"
 
   if _is_linux; then
