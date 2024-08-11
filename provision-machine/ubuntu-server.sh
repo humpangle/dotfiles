@@ -578,12 +578,68 @@ install-docker() {
   sudo dockerd --debug
 }
 
-function install-asdf-postgres {
-  : "Install postgres with asdf"
+___install-asdf-postgres_help() {
+  read -r -d '' var <<'eof' || true
+Install postgres with ASDF. Usage:
+  install-asdf-postgres [OPTIONS]
+
+Options:
+  -h
+    Print this help text and quit.
+  -v  VERSION
+    Install VERSION
+
+Examples:
+  # Get help.
+  install-asdf-postgres -h
+
+  # Install latest version from asdf plugin postgres
+  install-asdf-postgres
+
+  # Install specific version
+  install-asdf-postgres -v 15.4
+eof
+
+  echo -e "${var}"
+}
+
+install-asdf-postgres() {
+  : "___help___ ___install-asdf-postgres_help"
+
+  local version_=
+  local _o=
+
+  while getopts 'hv:' o_; do
+    case "$o_" in
+    h)
+      ___install-asdf-postgres_help
+      return
+      ;;
+    v)
+      version_="$2"
+      shift
+      ;;
+
+    *)
+      echo "Unknown option: $o_"
+      exit 1
+      ;;
+    esac
+  done
+
+  if [[ -z "$_version" ]]; then
+    _version="$(
+      "$(_asdf-bin-path)" list all postgres |
+        grep -P "^\d+\.\d+$" |
+        tail -1
+    )"
+  fi
+
+  if [[ 1 -eq 1 ]]; then
+    return
+  fi
 
   _may_be_install_asdf "$@"
-
-  local version=15.2
 
   if _is_linux; then
     sudo apt-get update
@@ -609,8 +665,10 @@ function install-asdf-postgres {
   fi
 
   "$(_asdf-bin-path)" plugin add postgres
-  "$(_asdf-bin-path)" install postgres "$version"
-  "$(_asdf-bin-path)" global postgres "$version"
+  "$(_asdf-bin-path)" install postgres "$version_"
+
+  echo -e \
+    "Set global version using command: \nasdf global postgres $version_"
 }
 
 function install-postgres {
