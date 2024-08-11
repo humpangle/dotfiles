@@ -2622,6 +2622,8 @@ _paths=(
   '/opt/homebrew/opt/gnu-getopt/bin'
   '/opt/homebrew/opt/unzip/bin'
   '/opt/homebrew/opt/m4/bin'
+  '/opt/homebrew/opt/icu4c/bin'
+  '/opt/homebrew/opt/icu4c/sbin'
   "$HOME/.local/bin"
   "$HOME/dotfiles/scripts"
 )
@@ -2636,9 +2638,33 @@ done
 PATH="${PATH//$_joined_paths/''}"
 PATH="$_joined_paths$PATH"
 
-# Seems? to be required for asdf install python
-export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
+pkgs_=(
+  zlib
+  icu4c
+)
+ldflags_=
+cppflags_=
+
+for pkg_ in "${pkgs_[@]}"; do
+  ldflag_="-L/opt/homebrew/opt/$pkg_/lib"
+
+  if ! grep -qE -- "${ldflag_}" <<<"${LDFLAGS}"; then
+    ldflags_+=" $ldflag_"
+    cppflags_+=" -I/opt/homebrew/opt/$pkg_/include"
+  fi
+done
+
+export LDFLAGS="$LDFLAGS $ldflags_"
+export CPPFLAGS="$CPPFLAGS $cppflags_"
+ export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+unset _paths
+unset __path
+unset _joined_paths
+unset pkgs_
+unset pkg_
+unset ldflags_
+unset cppflags_
 ######################################################################
 
 EOF
