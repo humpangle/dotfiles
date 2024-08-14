@@ -5,6 +5,7 @@
   // "workbench.colorTheme": "Default High Contrast",
   // "workbench.colorTheme": "Solarized Dark",
   // "workbench.colorTheme": "Visual Studio Dark",
+  "editor.fontFamily": "CaskaydiaMono Nerd Font Mono",
   "elixirLS.dialyzerEnabled": false,
   "elixirLS.enableTestLenses": true,
   "elixirLS.fetchDeps": true,
@@ -26,11 +27,14 @@
     "strings": "on"
   },
   "editor.rulers": [
+    120,
     80,
-    120
   ],
   "vscode-neovim.neovimExecutablePaths.linux": "nvim",
+  // "vscode-neovim.neovimExecutablePaths.darwin": "nvim",
   "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
+  // "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
+  "vscode-neovim.logLevel": "debug",
   "vscode-neovim.revealCursorScrollLine": true,
   "vscode-neovim.logOutputToConsole": true,
   "vscode-neovim.logPath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\kanmii\\dotfiles\\.___scratch-vscode-neovim.log",
@@ -39,7 +43,7 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "security.workspace.trust.untrustedFiles": "open",
+  "security.workspace.trust.untrustedFiles": "open",  // set in global-profile
   "files.trimTrailingWhitespace": true,
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -48,13 +52,11 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[typescript]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[shellscript]": {
     "editor.autoClosingQuotes": "always",
     "editor.tabSize": 2,
-  },
-  "[bats]": {
-    "editor.defaultFormatter": "mkhl.shfmt"
   },
   "[html-eex]": {
     "editor.trimAutoWhitespace": false,
@@ -64,9 +66,13 @@
     "files.trimFinalNewlines": true
   },
   "[html]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "[nginx]": {
+    "editor.defaultFormatter": "raynigon.nginx-formatter"
   },
   "files.associations": {
     "*html.heex": "html-eex",
@@ -82,6 +88,7 @@
   },
   "cSpell.userWords": [
     "callmiy",
+    "neovim",
     "resolv",
     "stenote",
     "wavfile"
@@ -102,10 +109,13 @@
   "explorer.compactFolders": false,
   "files.eol": "\n",
   "[javascript]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "yaml.schemas": {
     "Kubernetes": [
@@ -126,7 +136,7 @@
   "terminal.integrated.confirmOnKill": "never",
   "terminal.integrated.enableImages": true,
   "terminal.integrated.scrollback": 100000,
-  // "application.shellEnvironmentResolutionTimeout": 120,
+  // "application.shellEnvironmentResolutionTimeout": 120, // macos
   "terminal.integrated.env.osx": {
     "IS_VSCODE_TERMINAL": "1"
   },
@@ -134,8 +144,10 @@
     "IS_VSCODE_TERMINAL": "1"
   },
   "terminal.integrated.defaultProfile.linux": "bash",
+  // "terminal.integrated.defaultProfile.osx": "bash",
   // "terminal.integrated.defaultProfile.linux": "tmux-shell",
   "terminal.integrated.profiles.linux": {
+    // "terminal.integrated.profiles.osx": {
     "bash": {
       "path": "bash",
       "icon": "terminal-bash"
@@ -194,9 +206,9 @@
   },
   "window.zoomLevel": 0.6,
   "workbench.startupEditor": "none",
-  "workbench.activityBar.location": "hidden",
-  "window.newWindowProfile": null,
-  "settingsSync.keybindingsPerPlatform": false,
+  "window.newWindowProfile": null, // set in global-profile
+  // "window.newWindowProfile": "MacOs",  // set in global-profile
+  "settingsSync.keybindingsPerPlatform": false, // set in global-profile
   "Lua.diagnostics.globals": [
     "vim",
   ],
@@ -204,5 +216,7 @@
   "security.allowedUNCHosts": [
     "wsl.localhost"
   ],
+  "accessibility.underlineLinks": true,
+  // "workbench.activityBar.location": "hidden",
   // "window.menuBarVisibility": "compact"
 }
