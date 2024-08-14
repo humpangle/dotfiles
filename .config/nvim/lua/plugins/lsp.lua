@@ -274,9 +274,9 @@ return {
             -- I have a  global ELIXIR_LEXICAL_BIN in .bashrc and then project specific in the workspace root.
             os.getenv("ELIXIR_LEXICAL_BIN") or "lexical",
           },
-          filetypes = utils.os_env_not_empty(
+          filetypes = utils.get_os_env_or_nil(
             "NVIM_USE_ELIXIR_LEXICAL"
-          ) and elixir_lsp_filetypes or none_existing_vim_filetype,
+          ) or none_existing_vim_filetype,
         },
 
         bashls = {},
@@ -337,8 +337,8 @@ return {
           filetypes = elixir_lsp_filetypes
         end
 
-        local bin_from_env_var = utils.os_env_not_empty("ELIXIR_LS_BIN")
-          and os.getenv("ELIXIR_LS_BIN")
+        local bin_from_env_var =
+          utils.get_os_env_or_nil("ELIXIR_LS_BIN")
 
         return {
           elixirls = {
