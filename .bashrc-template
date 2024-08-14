@@ -74,10 +74,10 @@ export PATH_SEPARATOR_SINGLE_FILE_WEB_PAGES_DOWNLOAD_DIR="\\"
 # -----------------------------------------------------------------------------
 # LIVEBOOK
 # -----------------------------------------------------------------------------
-export LIVEBOOK_DATA_PATH="$HOME/projects/elixir/livebook/_config"
+export LIVEBOOK_DATA_PATH="$HOME/projects/elixir/lb/_config"
 export LIVEBOOK_PORT=0
 export LIVEBOOK_SHUTDOWN_ENABLED=true
-export LIVEBOOK_HOME="$HOME/projects/elixir/livebook"
+export LIVEBOOK_HOME="$HOME/projects/elixir/lb"
 # -----------------------------------------------------------------------------
 # /END/ LIVEBOOK
 # -----------------------------------------------------------------------------
