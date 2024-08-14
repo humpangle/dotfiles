@@ -43,7 +43,7 @@ function M.coc()
 end
 
 function M.has_termux()
-  return os.getenv("HOME") == "/data/data/com.termux/files/home"
+  return vim.fn.isdirectory("/data/data/com.termux/files/home") ~= 0
 end
 
 function M.enable_vim_one_color_scheme()

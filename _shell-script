@@ -55,7 +55,7 @@ _is_darwin() {
 }
 
 _has_termux() {
-  if [[ "$HOME" == "/data/data/com.termux/files/home" ]]; then
+  if [[ -d "/data/data/com.termux/files/home" ]]; then
     return 0
   fi
 
