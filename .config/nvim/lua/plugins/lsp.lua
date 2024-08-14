@@ -304,7 +304,17 @@ return {
           },
         },
 
-        tailwindcss = {},
+        tailwindcss = {
+          settings = {
+            tailwindCSS = {
+              includeLanguages = {
+                elixir = "html-eex",
+                eelixir = "html-eex",
+                heex = "html-eex",
+              },
+            },
+          },
+        },
 
         emmet_language_server = {
           filetypes = {
