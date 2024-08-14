@@ -289,6 +289,29 @@ keymap("n", "<Leader>re", function()
 end, { noremap = true, desc = [[Edit the current rebase todo list.]] })
 -- /END Rebase keymaps
 
+-- Git mappings
+keymap("n", "<leader>gg", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.cmd("Git")
+    print("Git refreshed!")
+    return
+  end
+
+  if count == 1 then
+    vim.cmd("Git log --oneline")
+    return
+  end
+
+  if count == 2 then
+    utils.write_to_command_mode("Git log --oneline -")
+  end
+end, {
+  noremap = true,
+  desc = "Git commit 1/lone 2/lone-",
+})
+
 -- Auto-clean Fugitive Buffers
 vim.api.nvim_create_autocmd("BufReadPost", {
   pattern = "fugitive://*",
