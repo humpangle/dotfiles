@@ -111,10 +111,6 @@ return {
         { name = "path" },
       },
     })
-
-    cmp.config.formatting = {
-      format = require("tailwindcss-colorizer-cmp").formatter,
-    }
   end,
   dependencies = {
     -- Snippet Engine & its associated nvim-cmp source
@@ -148,10 +144,6 @@ return {
         --     require('luasnip.loaders.from_vscode').lazy_load()
         --   end,
         -- },
-      },
-      {
-        "roobert/tailwindcss-colorizer-cmp.nvim",
-        opts = {},
       },
     },
 
