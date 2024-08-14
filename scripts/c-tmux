@@ -23,6 +23,9 @@ Options:
     Do not take any action - just print command to run to stdout.
   -n.--new <session>
     Create a new tmux session named <session>
+  --no-flush,-f
+    Do not flush current session into resurrect file. Flushing takes a few seconds to complete, but sometimes we just
+    flushed and do not wish to flush again.
 
 Examples:
   # Get help.
@@ -71,6 +74,8 @@ start_tmux() {
   local _detach
   local _debug
   local _new
+  # By default, we flush, unless user passes --no-flush option.
+  local flush_=1
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -79,8 +84,8 @@ start_tmux() {
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,pwd,cd:,base,detach,debug,new \
-      --options=h,p,c:,b,d,D,n \
+      --longoptions=help,pwd,cd:,base,detach,debug,new,no-flush \
+      --options=h,p,c:,b,d,D,n,f \
       --name "$0" \
       -- "$@"
   )"; then
@@ -128,6 +133,11 @@ start_tmux() {
       shift
       ;;
 
+    --no-flush | -f)
+      flush_=
+      shift
+      ;;
+
     --)
       shift
       break
@@ -166,11 +176,17 @@ start_tmux() {
   # If session specified/computed is not in list of available sessions and we are not creating new session, we must
   # error.
   if [[ -n "$_session" && -z "$_new" ]]; then
-    local _list_existing_sessions
+    local list_existing_sessions_
 
-    mapfile -t _list_existing_sessions < <(list --names)
+    local list_cmd_="list --names"
 
-    for _elm in "${_list_existing_sessions[@]}"; do
+    if [ -z "$flush_" ]; then
+      list_cmd_+=" --no-flush"
+    fi
+
+    mapfile -t list_existing_sessions_ < <(eval "$list_cmd_")
+
+    for _elm in "${list_existing_sessions_[@]}"; do
       if [[ "$_elm" == "$_session" ]]; then
         _session_exists=1
         break
@@ -231,7 +247,10 @@ start_tmux() {
   fi
 
   bash -c "$_cmd"
-  ebnis-save-tmux.sh quiet &>/dev/null || true
+
+  if [ -n "$flush_" ]; then
+    ebnis-save-tmux.sh quiet &>/dev/null || true
+  fi
 }
 
 ___list_help() {
