@@ -6,7 +6,9 @@ export USERNAME='some-name'
 # /END/ WSL
 # -----------------------------------------------------------------------------
 
-[ -f "$HOME/dotfiles/_shell-script" ] && source "$HOME/dotfiles/_shell-script"
+if [[ -f "$HOME/dotfiles/_shell-script" ]]; then
+  source "$HOME/dotfiles/_shell-script"
+fi
 
 export INTELEPHENSE_LICENCE=''
 
