@@ -205,19 +205,28 @@ keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
 -- END Git stash related mappings
 
 -- Git commit mappings
-keymap("n", "<leader>gcc", ":Git commit<CR>", { noremap = true })
-keymap("n", "<leader>gca", ":Git commit --amend<CR>", { noremap = true })
+keymap("n", "<leader>gcc", function()
+  local count = vim.v.count
 
-keymap(
-  "n",
-  "<leader>gce",
-  ":Git commit --amend --no-edit",
-  { noremap = true, desc = "Git commit amend no edit" }
-)
+  if count == 0 then
+    vim.cmd("Git commit")
+    return
+  end
 
-keymap("n", "<leader>gcz", ":Git commit --allow-empty ", {
+  local cmd = nil
+
+  if count == 1 then
+    cmd = "--allow-empty"
+  elseif count == 2 then
+    cmd = "--amend"
+  elseif count == 3 then
+    cmd = "--amend --no-edit"
+  end
+
+  utils.write_to_command_mode("Git commit " .. cmd)
+end, {
   noremap = true,
-  desc = 'Git commit allow empty. Pass -m "message" to pass message on cmd.',
+  desc = "Git commit 1/empty 2/amend 3/amendNoEdit",
 })
 
 -- Git config.user
