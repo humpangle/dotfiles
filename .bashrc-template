@@ -89,3 +89,18 @@ export DEFAULT_TMUX_SESSION=dot
 # -----------------------------------------------------------------------------
 # /END/ TMUX
 # -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# OPEN WEBUI
+# -----------------------------------------------------------------------------
+export CONTAINER_OPEN_WEB_UI_NAME=open-webui
+export CONTAINER_OPEN_WEB_UI_PUBLISH_PORT=3000
+export CONTAINER_OPEN_WEB_UI_MAP_VOLUME_DATA="$HOME/open-webui/data"
+export CONTAINER_OPEN_WEB_UI_RESTART_VALUE=no
+export DEEPSEEK_API_KEY=
+export OPENAI_API_KEY=
+export OPENROUTER_API_KEY=
+export ANTHROPIC_API_KEY=
+# -----------------------------------------------------------------------------
+# /END/ WEBUI
+# -----------------------------------------------------------------------------
