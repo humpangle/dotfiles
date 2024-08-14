@@ -35,7 +35,6 @@ export GLOBAL_PYTHON_BIN="$HOME/.asdf/installs/python/3.11.9/bin/python"
 # ELIXIR LEXICAL
 # -----------------------------------------------------------------------------
 export NVIM_USE_ELIXIR_LEXICAL=
-export ELIXIR_LEXICAL_BIN="$HOME/.elixir_lexical_ebnis/1.17.1-otp-27--27.0--v0.6.1/bin/start_lexical.sh"
 export ELIXIR_LEXICAL_BIN="$HOME/.elixir_lexical_ebnis/1.16.3-otp-26--26.2.5.1--v0.6.1/bin/start_lexical.sh"
 # -----------------------------------------------------------------------------
 # /END/ ELIXIR LEXICAL
