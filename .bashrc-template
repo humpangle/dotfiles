@@ -12,9 +12,6 @@ fi
 
 export INTELEPHENSE_LICENCE=''
 
-PYTHON3="$(asdf which python 2>/dev/null)"
-export PYTHON3
-
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # -----------------------------------------------------------------------------
@@ -29,6 +26,10 @@ export EBNIS_VIM_THEME_BG=d
 # -----------------------------------------------------------------------------
 # PROGRAMMING LANGUAGES RELATED
 # -----------------------------------------------------------------------------
+
+export GLOBAL_PYTHON_BIN="$HOME/.asdf/installs/python/3.11.9/bin/python"
+# In your project folder, set
+# export PYTHON_BIN=
 
 # -----------------------------------------------------------------------------
 # ELIXIR LEXICAL
