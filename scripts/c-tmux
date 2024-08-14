@@ -327,7 +327,7 @@ list() {
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,client,resurrect,verbose,names,copy:,--no-flush \
+      --longoptions=help,client,resurrect,verbose,names,copy:,no-flush \
       --options=h,c,r,v,n,x:,f \
       --name "$0" \
       -- "$@"
