@@ -652,3 +652,7 @@ fi
 if _has_termux; then
   alias ug='pkg update && pkg upgrade'
 fi
+
+if command -v livebook &>/dev/null; then
+  alias lb=livebook
+fi
