@@ -75,5 +75,8 @@ return {
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+
+    -- Courtesy : https://elixirforum.com/t/preview-livebook-in-neovim/65080
+    vim.treesitter.language.register("markdown", "livebook")
   end,
 }

@@ -210,9 +210,27 @@ local plugins_table = {
   },
 
   -- MARKDOWN
+  -- Courtesy : https://elixirforum.com/t/preview-livebook-in-neovim/65080
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      file_types = {
+        "markdown",
+        "livebook",
+      },
+    },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    ft = {
+      "markdown",
+      "livebook",
+    },
+  },
   {
     "iamcco/markdown-preview.nvim",
-    enabled = not plugin_enabled.has_vscode(),
+    enabled = false, -- not plugin_enabled.has_vscode(),
     cmd = {
       "MarkdownPreviewToggle",
       "MarkdownPreview",
