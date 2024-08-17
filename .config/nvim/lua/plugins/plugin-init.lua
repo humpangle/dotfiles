@@ -385,6 +385,7 @@ local plugins_table = {
   },
 
   require("plugins/elixir"),
+  require("plugins/google-doc"),
 }
 
 require("lazy").setup(plugins_table, {})
