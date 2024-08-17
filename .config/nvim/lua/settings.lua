@@ -10,6 +10,8 @@ end
 
 local plugin_enabled = require("plugins/plugin_enabled")
 
+vim.g.python3_host_prog = os.getenv("GLOBAL_PYTHON_BIN")
+
 -- Disable Python2 support
 vim.g.loaded_python_provider = false
 
