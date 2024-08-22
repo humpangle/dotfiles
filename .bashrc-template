@@ -34,6 +34,10 @@ export GLOBAL_PYTHON_BIN="$HOME/.asdf/installs/python/3.11.9/bin/python"
 # In your project folder, set
 # export PYTHON_BIN=
 
+ if command -v pipx &>/dev/null; then
+   eval "$(register-python-argcomplete pipx)"
+ fi
+
 # -----------------------------------------------------------------------------
 # ELIXIR LEXICAL
 # -----------------------------------------------------------------------------
