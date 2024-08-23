@@ -161,7 +161,7 @@ command! run !! ./%f
 command! make !!make %a
 command! mdc :!mkdir -p %a | cd %d/%a
 command! vgrep nvim "+grep %a"
-command! mdp :!mkdir -p %a
+command! md :!mkdir -p %a
 command! reload :write | restart full
 
 " ------------------------------------------------------------------------------
