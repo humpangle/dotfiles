@@ -22,7 +22,7 @@ Examples:
   # Get information about actual command that clip will run.
   clip -d
 
-Set up ssh config:
+Set up ssh config client:
 Host remote_host
   HostName remote_host_ip
   Port 22
@@ -34,6 +34,11 @@ Host remote_host
   RemoteForward 8378 localhost:8377
   SetEnv __COPY_PROGRAM__=clip
   ForwardX11 yes # Optional
+
+Set up ssh config server:
+In /etc/ssh/sshd_config:
+Add/update line:
+AcceptEnv LANG LC_* __COPY_PROGRAM__
 eof
 
   echo -e "${var}"
