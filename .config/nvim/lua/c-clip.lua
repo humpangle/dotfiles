@@ -6,27 +6,13 @@ if vim.fn.executable("clip") then
   --    This is a workarund for situations where a remote machine's clipboard
   --    does not sync with a macos client machine.
 
-  local result = nil
-  local nc_flag = ""
-
-  -- Ubuntu OS requires the -N flag to the netcat nc executable.
-  local handle = io.popen(
-    "grep -q 'ubuntu' /etc/os-release &>/dev/null && echo 'yes' || echo 'no'"
-  )
-  if handle then
-    result = handle:read("*a"):gsub("%s+", "")
-    handle:close()
-  end
-
-  if result == "yes" then
-    nc_flag = "-N"
-  end
-
-  local cmd = "nc " .. nc_flag .. " localhost 8378"
-
   utils.map_key("n", "<leader>cc", function()
     local reg_value = vim.fn.getreg('"')
-    vim.fn.system(cmd, reg_value)
+    local cmd = utils.clip_cmd_exec(reg_value)
+
+    if cmd == nil  then
+      return
+    end
 
     local count = vim.v.count
 

@@ -109,7 +109,7 @@ vim.api.nvim_create_user_command("Slime0", function(opts)
   -- We merely want to query for the history directory.
   if action == "hist_dir" then
     vim.fn.setreg("+", slime_dir)
-    vim.cmd(utils.clip_cmd)
+    vim.cmd(utils.clip_cmd_exec)
     print(slime_dir)
     return
   end

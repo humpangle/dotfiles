@@ -538,7 +538,11 @@ local process_file_path_yanking = function(
 
     vim.fn.setreg('"', fp)
     vim.fn.setreg(register, fp)
-    vim.cmd(utils.clip_cmd)
+
+    if register == "+" then
+      utils.clip_cmd_exec(fp)
+    end
+
     print(
       '"' .. register .. " -> " .. value_getter_directive .. " = " .. fp
     )

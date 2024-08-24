@@ -299,7 +299,53 @@ function utils.write_to_command_mode(string)
   )
 end
 
-utils.clip_cmd = [[:call system('nc -N localhost 8377', @")]]
+utils.get_cmd_string = function()
+  if utils.get_os_env_or_nil("__COPY_PROGRAM__") == nil then
+    return nil
+  end
+
+  -- First attempt to read from cache.
+  local cmd = vim.g.___clip_cmd_string__
+
+  if cmd ~= nil then
+    return cmd
+  end
+
+  local result = nil
+  local nc_flag = ""
+
+  -- Ubuntu OS requires the -N flag to the netcat nc executable.
+  local handle = io.popen(
+    "grep -q 'ubuntu' /etc/os-release &>/dev/null && echo 'yes' || echo 'no'"
+  )
+
+  if handle then
+    result = handle:read("*a"):gsub("%s+", "")
+    handle:close()
+  end
+
+  if result == "yes" then
+    nc_flag = "-N"
+  end
+
+  cmd = "nc " .. nc_flag .. " localhost 8378"
+
+  -- Cache the value for future read
+  vim.g.___clip_cmd_string__ = cmd
+
+  return cmd
+end
+
+utils.clip_cmd_exec = function(reg_value)
+  local cmd = utils.get_cmd_string()
+
+  if cmd == nil then
+    return
+  end
+
+  vim.fn.system(cmd, reg_value)
+  return cmd
+end
 
 utils.ord_to_char = function(ord)
   if ord < 1 or ord > 26 then
