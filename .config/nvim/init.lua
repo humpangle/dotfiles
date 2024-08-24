@@ -16,15 +16,7 @@ else
   require("settings")
 end
 
-if vim.fn.executable("clip") then
-  -- keymap to sync content of unnamed register with external host's clipboard.
-  -- WHY: https://github.com/wincent/clipper#configuration-for-vimrc
-  --    This is a workarund for situations where a remote machine's clipboard
-  --    does not sync with a macos client machine.
-  vim.cmd([[
-    nnoremap <leader>cc :call system('nc -N localhost 8377', @")<CR>
-  ]])
-end
+require("c-clip")
 
 -- Via: https://github.com/neoclide/coc.nvim/wiki/Using-the-configuration-file
 vim.api.nvim_create_autocmd("FileType", {

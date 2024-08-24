@@ -2668,28 +2668,6 @@ EOF
   cat "$_temp_profile_path" >>"$_profile_path"
 }
 
-_setup_multipass_macos_clipboard_sync() {
-  # Utility to make clipboard sync between multipass instance and macos clipboard
-
-  # Install clipper on the host machine.
-  # brew install clipper
-
-  # Start clipper on host:
-  # clipper &
-  # disown
-
-  local _bin_path="$HOME/.local/bin/clip"
-
-  cat <<'EOF' >"$_bin_path"
-#!/usr/bin/env bash
-# shellcheck disable=2034,2209,2135,2155
-
-nc -N localhost 8377
-EOF
-
-  chmod 755 "$_bin_path"
-}
-
 ___setup_multipass_help() {
   read -r -d '' var <<'eof'
 Setup ubuntu multipass. Usage:
@@ -2803,8 +2781,6 @@ setup_multipass() {
     libssh-dev \
     lsb-release \
     bison
-
-  _setup_multipass_macos_clipboard_sync
 
   install-complete-alias
 
