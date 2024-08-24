@@ -350,4 +350,15 @@ utils.clear_terminal = function()
   end
 end
 
+utils.file_exists_and_not_empty = function(file_path)
+  local file = io.open(file_path, "r")
+  if file then
+    local size = file:seek("end")
+    file:close()
+    return size > 0
+  else
+    return false
+  end
+end
+
 return utils
