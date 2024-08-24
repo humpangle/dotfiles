@@ -248,8 +248,14 @@ function utils.DeleteFile(which)
       return
     end
 
-    local delete_prompt =
-      vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
+    local delete_prompt = "N"
+
+    if vim.v.count == 1 then
+      delete_prompt = "y"
+    else
+      delete_prompt =
+        vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
+    end
 
     if delete_prompt:lower() == "y" then
       if which == "d" then
