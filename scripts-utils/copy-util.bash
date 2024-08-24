@@ -9,6 +9,11 @@ _copy_executables=(
 
 _get_copy_program() {
 
+  if command -v "$__COPY_PROGRAM__" &>/dev/null; then
+    echo -n "$__COPY_PROGRAM__"
+    return
+  fi
+
   for _program in "${_copy_executables[@]}"; do
     if command -v "$_program" &>/dev/null; then
       echo -n "$_program"
