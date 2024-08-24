@@ -396,7 +396,7 @@ list() {
   local _resurrect_file="$HOME/.tmux/resurrect/last"
 
   # Where we gather session information read from resurrect file into.
-  local _sessions_info_from_resurrect_file
+  local _sessions_info_from_resurrect_file=
 
   # The current working directory of each session - as read from resurrect file.
   local _sessions_pwds_from_resurrect_file
