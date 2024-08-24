@@ -3,7 +3,6 @@
 _copy_executables=(
   pbcopy
   termux-clipboard-set
-  clip
   xclip
 )
 
