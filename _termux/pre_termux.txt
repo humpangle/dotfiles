@@ -45,6 +45,7 @@ pkg update \
       libandroid-execinfo \
       patchelf \
       binutils-is-llvm \
+      netcat-openbsd \
 && pip3 install \
       setuptools \
       wheel \
@@ -58,6 +59,7 @@ pkg update \
 # ncurses-utils provides tput command.
 # ripgrep provides rg command
 # clang provides gcc
+# netcat-openbsd provides nc
 
 # Requires Android permissions.
 termux-setup-storage
