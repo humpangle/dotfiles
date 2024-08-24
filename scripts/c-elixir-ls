@@ -113,6 +113,8 @@ Options:
     validate that the version of elixir supplied matches the erlang version.
   -l,--erlang
     The erlang version to build. If none is specified, we will use current erlang version managed by asdf.
+  -a,--no-asdf
+    Use this flag if your elixir and erlang versions are not managed by asdf.
 
 Examples:
   # Get help.
@@ -139,6 +141,7 @@ install() {
   local _tag
   local _elixir
   local _erlang
+  local has_asdf_=1
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -147,8 +150,8 @@ install() {
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,tag:,elixir:,erlang: \
-      --options=h,t:,e:,l: \
+      --longoptions=help,tag:,elixir:,erlang:,no-asdf \
+      --options=h,t:,e:,l:,a \
       --name "$0" \
       -- "$@"
   )"; then
@@ -174,6 +177,11 @@ install() {
     --elixir | -e)
       _elixir=$2
       shift 2
+      ;;
+
+    --no-asdf | -a)
+      has_asdf_=
+      shift
       ;;
 
     --erlang | -l)
@@ -220,12 +228,14 @@ install() {
     _echo "Removing any current .tool-versions"
     rm -rf .tool-versions
 
+    if [ -n "$has_asdf_" ]; then
     _echo "Change elixir to version \"$_elixir\" and erlang to version \"$_erlang\" "
     asdf local erlang "$_erlang"
     asdf local elixir "$_elixir"
 
     _echo "Let us confirm we are using correct elixir and erlang versions:"
     cat .tool-versions
+    fi
 
     _echo "Removing any previous build of elixir ls."
     rm -rf _build deps
@@ -249,8 +259,10 @@ install() {
     mix local.hex --force --if-missing
     mix local.rebar --force --if-missing
 
-    asdf reshim elixir
-    asdf reshim erlang
+    if [ -n "$has_asdf_" ]; then
+      asdf reshim elixir
+      asdf reshim erlang
+    fi
 
     _echo "Fetching elixir ls's dependencies."
     mix deps.get
