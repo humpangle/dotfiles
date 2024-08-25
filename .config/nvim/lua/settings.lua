@@ -543,8 +543,14 @@ local process_file_path_yanking = function(
       utils.clip_cmd_exec(fp)
     end
 
-    print(
-      '"' .. register .. " -> " .. value_getter_directive .. " = " .. fp
+    vim.cmd.echo(
+      "'"
+        .. register
+        .. " -> "
+        .. value_getter_directive
+        .. " = "
+        .. fp
+        .. "'"
     )
   end
 end
