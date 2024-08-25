@@ -51,8 +51,10 @@ vim.g.netrw_bufsettings = "noma nomod rnu nobl nowrap ro"
 -- no difference.
 -- hi! link netrwMarkFile Search
 
-vim.opt.number = true
-vim.opt.relativenumber = true
+if not (plugin_enabled.has_termux() or plugin_enabled.is_small_screen()) then
+  vim.opt.number = true
+  vim.opt.relativenumber = true
+end
 
 vim.g.encoding = "utf8"
 

@@ -46,6 +46,12 @@ function M.has_termux()
   return vim.fn.isdirectory("/data/data/com.termux/files/home") ~= 0
 end
 
+function M.is_small_screen()
+  local env = os.getenv("___EBNIS_SMALL_SCREEN___")
+
+  return env ~= nil and env ~= ""
+end
+
 function M.enable_vim_one_color_scheme()
   if M.has_termux() then
     return false
