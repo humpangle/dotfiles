@@ -95,4 +95,14 @@ end
 # TelemetryHelper.attach_all()
 # TelemetryHelper.stop()
 
-IEx.configure(inspect: [charlists: :as_lists])
+# Type below to get all options to inspect
+# h Inspect.Opts
+IEx.configure(
+  inspect: [
+    # charlists: :as_charlists,
+    # charlists: :as_lists,
+    charlists: :infer,
+    limit: :infinity
+  ],
+  history_size: 1_000_000
+)
