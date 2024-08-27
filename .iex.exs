@@ -28,6 +28,31 @@ defmodule Util do
       width: 0
     )
   end
+
+  @doc ~S"""
+  Update the IEx configuration using the func given as argument. The function
+  is passed the current configuration and should return a new configuration
+  that will be passed to IEx.configuration/0.
+
+  Example:
+
+
+  iex(3)> update_iex_config(fn conf ->
+  ...(3)>   Keyword.update!(
+  ...(3)>     conf,
+  ...(3)>     :inspect,
+  ...(3)>     fn inspect_ ->
+  ...(3)>       Keyword.put(inspect_, :pretty, true)
+  ...(3)>       |> Keyword.delete(:charlists)
+  ...(3)>     end
+  ...(3)>   )
+  ...(3)> end)
+  """
+  def update_iex_config(func) do
+    new_config = func.(IEx.configuration())
+    :ok = IEx.configure(new_config)
+    new_config
+  end
 end
 
 defmodule :_util do
@@ -37,6 +62,7 @@ defmodule :_util do
   defdelegate restart(), to: System, as: :restart
   defdelegate rs(), to: System, as: :restart
   defdelegate raw(any), to: Util, as: :raw
+  defdelegate update_iex_config(func), to: Util, as: :update_iex_config
 end
 
 import :_util
