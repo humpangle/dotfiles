@@ -324,6 +324,10 @@ return {
             "heex",
           },
         },
+
+        html = {},
+        volar = {},
+        black = {},
       }
 
       local elixir_ls_config_fn = function()
