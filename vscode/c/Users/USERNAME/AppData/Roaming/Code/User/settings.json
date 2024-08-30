@@ -9,7 +9,6 @@
   "elixirLS.dialyzerEnabled": false,
   "elixirLS.enableTestLenses": true,
   "elixirLS.fetchDeps": true,
-  "editor.fontSize": 16,
   "editor.minimap.enabled": false,
   "editor.tabSize": 2,
   "editor.tabCompletion": "on",
@@ -27,8 +26,8 @@
     "strings": "on"
   },
   "editor.rulers": [
-    120,
     80,
+    120
   ],
   "vscode-neovim.neovimExecutablePaths.linux": "nvim",
   // "vscode-neovim.neovimExecutablePaths.darwin": "nvim",
@@ -43,7 +42,7 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "security.workspace.trust.untrustedFiles": "open",  // set in global-profile
+  "security.workspace.trust.untrustedFiles": "open", // set in global-profile
   "files.trimTrailingWhitespace": true,
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -51,12 +50,13 @@
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "[typescript]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "[typescript]": {},
   "[shellscript]": {
     "editor.autoClosingQuotes": "always",
     "editor.tabSize": 2,
+  },
+  "[bats]": {
+    "editor.defaultFormatter": "mkhl.shfmt"
   },
   "[html-eex]": {
     "editor.trimAutoWhitespace": false,
@@ -65,9 +65,7 @@
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true
   },
-  "[html]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "[html]": {},
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
@@ -108,15 +106,9 @@
   "remote.autoForwardPorts": false,
   "explorer.compactFolders": false,
   "files.eol": "\n",
-  "[javascript]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yaml]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "[javascript]": {},
+  "[markdown]": {},
+  "[yaml]": {},
   "yaml.schemas": {
     "Kubernetes": [
       // "*-kb.yaml",
@@ -128,7 +120,6 @@
   },
   "redhat.telemetry.enabled": false,
   "aws.telemetry": false,
-  "settingsSync.ignoredSettings": [],
   // "terminal.integrated.enablePersistentSessions": false,
   "terminal.integrated.persistentSessionReviveProcess": "never",
   "terminal.integrated.fontSize": 15, // small screen
@@ -206,17 +197,61 @@
   },
   "window.zoomLevel": 0.6,
   "workbench.startupEditor": "none",
-  "window.newWindowProfile": null, // set in global-profile
-  // "window.newWindowProfile": "MacOs",  // set in global-profile
   "settingsSync.keybindingsPerPlatform": false, // set in global-profile
   "Lua.diagnostics.globals": [
     "vim",
   ],
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "security.allowedUNCHosts": [
+  "security.allowedUNCHosts": [ // Works only on non-wsl windows-os files?
     "wsl.localhost"
   ],
   "accessibility.underlineLinks": true,
   // "workbench.activityBar.location": "hidden",
+  "window.openFoldersInNewWindow": "on",
+  "window.newWindowProfile": null, // | "MacOs" // set in global-profile
+  "settingsSync.ignoredSettings": [
+    "window.newWindowProfile"
+  ],
+  "editor.fontSize": 14.5,
+  "debug.console.fontSize": 14.5,
+  "remote.SSH.enableX11Forwarding": false,
+  "code-runner.executorMapByFileExtension": {
+    ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
+    ".vbs": "cscript //Nologo",
+    ".scala": "scala",
+    ".jl": "julia",
+    ".cr": "crystal",
+    ".ml": "ocaml",
+    ".zig": "zig run",
+    ".exs": "mix run --no-mix-exs",
+    ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+    ".rkt": "racket",
+    ".scm": "csi -script",
+    ".ahk": "autohotkey",
+    ".au3": "autoit3",
+    ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
+    ".kts": "kotlinc -script",
+    ".dart": "dart",
+    ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+    ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+    ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+    ".hs": "runhaskell",
+    ".nim": "nim compile --verbosity:0 --hints:off --run",
+    ".csproj": "dotnet run --project",
+    ".fsproj": "dotnet run --project",
+    ".lisp": "sbcl --script",
+    ".kit": "kitc --run",
+    ".v": "v run",
+    ".vsh": "v run",
+    ".sass": "sass --style expanded",
+    ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    ".ring": "ring",
+    ".sml": "cd $dir && sml $fileName",
+    ".mojo": "mojo run",
+    ".erl": "escript",
+    ".spwn": "spwn build",
+    ".pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
+    ".gleam": "gleam run -m $fileNameWithoutExt"
+  },
   // "window.menuBarVisibility": "compact"
 }
