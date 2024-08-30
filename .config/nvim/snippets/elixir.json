@@ -1453,28 +1453,5 @@
     "description": [
       "Ecto ULID primary key autogenerate"
     ]
-  },
-  "Snippet Import shared config": {
-    "prefix": [
-      "import_shared_config",
-      "shared_config_import"
-    ],
-    "body": [
-      "${1:shared_config_module} =",
-      "  case :code.module_status(${2:SharedConfig}) do",
-      "    :loaded ->",
-      "      ${2:SharedConfig}",
-      "",
-      "    _ ->",
-      "      {${1:shared_config_module}, _} =",
-      "        Code.require_file(Path.join(__DIR__, \"${3:./shared_config.exs}\"))",
-      "        |> List.first()",
-      "",
-      "      ${1:shared_config_module}",
-      "  end"
-    ],
-    "description": [
-      "Snippet Import shared config"
-    ]
   }
 }
