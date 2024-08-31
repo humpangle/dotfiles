@@ -33,12 +33,12 @@
   // "vscode-neovim.neovimExecutablePaths.darwin": "nvim",
   "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
   // "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
-  "vscode-neovim.logLevel": "debug",
+  "vscode-neovim.logLevel": "debug", // Not MacOs?
   "vscode-neovim.revealCursorScrollLine": true,
   "vscode-neovim.logOutputToConsole": true,
   "vscode-neovim.logPath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\kanmii\\dotfiles\\.___scratch-vscode-neovim.log",
   // "vscode-neovim.neovimClean": true,
-  "vscode-neovim.useWSL": true,
+  "vscode-neovim.useWSL": true, // Set to true only on windows WSL
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
@@ -65,10 +65,24 @@
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true
   },
-  "[html]": {},
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
   },
+  // START python
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    },
+  },
+  "python.testing.autoTestDiscoverOnSaveEnabled": true,
+  "isort.args": [
+    "--profile",
+    "black"
+  ],
+  "python.defaultInterpreterPath": "/Users/kanmii/.asdf/shims/python",
+  "python.analysis.autoImportCompletions": true,
+  // END python
   "[nginx]": {
     "editor.defaultFormatter": "raynigon.nginx-formatter"
   },
@@ -127,7 +141,7 @@
   "terminal.integrated.confirmOnKill": "never",
   "terminal.integrated.enableImages": true,
   "terminal.integrated.scrollback": 100000,
-  // "application.shellEnvironmentResolutionTimeout": 120, // macos
+  // "application.shellEnvironmentResolutionTimeout": 120, // (only macos??) global-profile
   "terminal.integrated.env.osx": {
     "IS_VSCODE_TERMINAL": "1"
   },
@@ -209,12 +223,12 @@
   // "workbench.activityBar.location": "hidden",
   "window.openFoldersInNewWindow": "on",
   "window.newWindowProfile": null, // | "MacOs" // set in global-profile
-  "settingsSync.ignoredSettings": [
+  "settingsSync.ignoredSettings": [ // global-profile
     "window.newWindowProfile"
   ],
   "editor.fontSize": 14.5,
   "debug.console.fontSize": 14.5,
-  "remote.SSH.enableX11Forwarding": false,
+  "remote.SSH.enableX11Forwarding": false, // global-profile
   "code-runner.executorMapByFileExtension": {
     ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
     ".vbs": "cscript //Nologo",
