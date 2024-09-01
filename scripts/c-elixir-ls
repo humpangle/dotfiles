@@ -206,11 +206,25 @@ install() {
   # --------------------------------------------------------------------------
 
   if [[ -z "$_elixir" ]]; then
-    _elixir="$(_get_asdf_plugin_version elixir)"
+    if [ -n "$has_asdf_" ]; then
+      _elixir="$(_get_asdf_plugin_version elixir)"
+    else
+      echo -e "Please specify elixir version or install asdf and set elixir version.\n"
+
+      ___install_help
+      exit 1
+    fi
   fi
 
   if [[ -z "$_erlang" ]]; then
-    _erlang="$(_get_asdf_plugin_version erlang)"
+    if [ -n "$has_asdf_" ]; then
+      _erlang="$(_get_asdf_plugin_version erlang)"
+    else
+      echo -e "Please specify erlang version or install asdf and set erlang version.\n"
+
+      ___install_help
+      exit 1
+    fi
   fi
 
   if [[ -z "$_tag" ]]; then
