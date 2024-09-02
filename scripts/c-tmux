@@ -26,6 +26,8 @@ Options:
   --no-flush,-f
     Do not flush current session into resurrect file. Flushing takes a few seconds to complete, but sometimes we just
     flushed and do not wish to flush again.
+  -s,--state
+    Set session name as the current state in resurrect file. Is ignored is -n,--new is set.
 
 Examples:
   # Get help.
@@ -58,6 +60,10 @@ Examples:
   # Create new session
   c-tmux start_tmux --new session_name
   c-tmux start_tmux -n session_name
+
+  # Change the default state to the named session.
+  c-tmux start_tmux -s session_name
+  c-tmux start_tmux --state session_name
 eof
 
   echo -e "$var"
@@ -76,6 +82,8 @@ start_tmux() {
   local _new
   # By default, we flush, unless user passes --no-flush option.
   local flush_=1
+  # Set the default state in the resurrect file to the named session.
+  local set_state_=
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -84,8 +92,8 @@ start_tmux() {
 
   if ! _parsed="$(
     getopt \
-      --longoptions=help,pwd,cd:,base,detach,debug,new,no-flush \
-      --options=h,p,c:,b,d,D,n,f \
+      --longoptions=help,pwd,cd:,base,detach,debug,new,no-flush,state \
+      --options=h,p,c:,b,d,D,n,f,s \
       --name "$0" \
       -- "$@"
   )"; then
@@ -138,6 +146,11 @@ start_tmux() {
       shift
       ;;
 
+    --state | -s)
+      set_state_=1
+      shift
+      ;;
+
     --)
       shift
       break
@@ -153,6 +166,11 @@ start_tmux() {
 
   if [[ "$#" -eq 1 ]]; then
     _session="$1"
+  fi
+
+  # A new session will not already exist in resurrect file. So we ignore setting new session as state.
+  if [[ -n "$_new" ]]; then
+    set_state_=
   fi
 
   # --------------------------------------------------------------------------
@@ -199,6 +217,11 @@ start_tmux() {
         >&2
 
       exit 1
+    else
+      # Session exists and we are setting state
+      if [ -n "$set_state_" ]; then
+        __set-state "$_session" &>/dev/null || :
+      fi
     fi
   fi
 
@@ -251,6 +274,17 @@ start_tmux() {
   if [ -n "$flush_" ]; then
     ebnis-save-tmux.sh quiet &>/dev/null || true
   fi
+}
+
+__set-state() {
+  local resurrect_file_="$HOME/.tmux/resurrect/last"
+
+  if [ ! -s "$resurrect_file_" ]; then
+    return
+  fi
+
+  local session_="$1"
+  sed -Ei "s/^(state\s)[^\s]+.*/state\t${session_}/" "$resurrect_file_"
 }
 
 ___list_help() {
