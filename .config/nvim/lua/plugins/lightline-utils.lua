@@ -82,6 +82,35 @@ function _G.FilenameRight()
   return compute_file_path("right")
 end
 
+function _G.LightlineObsession()
+  if vim.fn.exists(":Obsession") ~= 2 then
+    return ""
+  end
+
+  -- Use the "DiffAdd" color if in a session
+  local active_color_indicator = (vim.g.this_obsession == nil and "")
+    or "%#diffadd#"
+
+  local prefix = "[$]" -- This is the indicator that session is active.
+  local session_file = vim.v.this_session
+
+  if session_file == nil or session_file == "" then
+    return prefix
+  end
+
+  -- This will indicate the session was started by vim prosession plugin. We can safely assume the session name is
+  -- vim.g.prosession_dir .. working_directory.vim
+  local vim_procession_indicator = "PROS"
+
+  if string.find(session_file, vim.g.prosession_dir, 1, true) then
+    return active_color_indicator .. prefix .. vim_procession_indicator
+  end
+
+  -- This means we started session manually - we simply show the session filename (minus directory) used to start
+  -- session.
+  return active_color_indicator .. prefix .. session_file:match("([^/]+)$")
+end
+
 local function tab_modified(tab_num)
   local win_num = vim.fn.tabpagewinnr(tab_num)
 

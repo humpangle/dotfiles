@@ -33,6 +33,10 @@ return {
         FilenameRight = "v:lua.FilenameRight",
       },
 
+      component_expand = {
+        LightlineObsession = "v:lua.LightlineObsession",
+      },
+
       tab_component_function = {
         FilenameTab = "FilenameTab", -- v:lua.* does not work in tab_component_function
       },
@@ -72,6 +76,16 @@ return {
 
           "tabnum",
           "FilenameTab",
+        },
+      },
+
+      tabline = {
+        left = {
+          { "tabs" },
+        },
+        right = {
+          { "close" },
+          { "LightlineObsession" },
         },
       },
     }
