@@ -5,7 +5,8 @@ resurrect_file_="$HOME/.tmux/resurrect/last"
 ___start_tmux_help() {
   read -r -d '' var <<'eof' || true
 Start tmux. Usage:
-  c-tmux start_tmux [OPTIONS] [session]
+  c-tmux start_tmux -h|--help
+  c-tmux start_tmux [OPTIONS] <SESSION>
 
 If no options and session are given, we will change to dotfiles directory and start/enter $DEFAULT_TMUX_SESSION if it exists.
 
@@ -23,7 +24,7 @@ Options:
     Detach from all clients before attaching to a client.
   -D,--debug
     Do not take any action - just print command to run to stdout.
-  -n.--new <session>
+  -n.--new
     Create a new tmux session named <session>
   -f,--no-flush
     Do not flush current session into resurrect file. Flushing takes a few seconds to complete, but sometimes we just
