@@ -228,28 +228,14 @@ _debug_fn() {
 
 # This utility function is necessary because commands `realpath` and `readlink` do not work for non existing
 # paths on macos.
-#
-# We must wrap the function in brackets instead of curly braces so that it runs in a subshell and restores the original
-# working directory on exit.
-_resolve_rel_to_abs_path() (
-  # Extract '/file' from '/dir/file'
-
-  # We only change the directory if the name doesn't match for the cases where we were passed something like 'file'
-  # without './'
-
-  # ../env -> ..
-  # ./a/c/ -> ./a/c
-  local _dirname="${1%/*}"
-
-  if [[ "$_dirname" != "$1" ]]; then
-    if ! cd "${1%/*}" &>/dev/null; then
-      return
-    fi
+_resolve_rel_to_abs_path() {
+  if command -v grealpath &>/dev/null; then
+    echo -n "$(grealpath "$1")"
+    return
   fi
 
-  local _basename="${1##*/}"
-  echo -n "$(pwd)/$_basename"
-)
+  echo -n "$(realpath "$1")"
+}
 
 _deal_with_trailing_comment() {
   : "This is to deal with such lines as: EXPORTER=endpoints # Export both to stdout and endpoints."
