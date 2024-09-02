@@ -25,7 +25,7 @@ Options:
     Do not take any action - just print command to run to stdout.
   -n.--new <session>
     Create a new tmux session named <session>
-  --no-flush,-f
+  -f,--no-flush
     Do not flush current session into resurrect file. Flushing takes a few seconds to complete, but sometimes we just
     flushed and do not wish to flush again.
   -s,--state
