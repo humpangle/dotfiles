@@ -448,9 +448,19 @@ list() {
         sort -u
     )"
 
+    local session_resurrect_list_as_string_="${_session_resurrect_list[*]}"
+
     if [[ -n "$_names_only" ]]; then
-      echo "${_session_resurrect_list[*]}"
+      echo "$session_resurrect_list_as_string_"
       return
+    fi
+
+    if [ -n "$_session_to_copy" ]; then
+      _session_to_copy="$(
+        _compute_session_to_copy \
+          "$_session_to_copy" \
+          "$session_resurrect_list_as_string_"
+      )"
     fi
 
     for _elm in $_session_resurrect_list; do
@@ -553,6 +563,39 @@ list() {
 
   echo "tmux has not been started and no sessions are available." >&2
   exit 1
+}
+
+_compute_session_to_copy() {
+  local session_to_copy_="$1"
+  local session_resurrect_list_as_string_="$2"
+
+  local matched_sessions_=
+  local matched_session_
+  read -ra matched_sessions_ <<<"$(
+    grep -iP "$session_to_copy_" <<<"$session_resurrect_list_as_string_"
+  )"
+
+  local num_matches_="${#matched_sessions_[@]}"
+
+  if [[ "$num_matches_" -gt 1 ]]; then
+    echo "There are $num_matches_ matches for $session_to_copy_. Please refine your search."
+    echo -e "\nMatched sessions:"
+
+    for matched_session_ in "${matched_sessions_[@]}"; do
+      echo "$matched_session_"
+    done
+
+    local available_session=
+    echo -e "\nAvailable sessions:"
+
+    for available_session in "${_session_resurrect_list[@]}"; do
+      echo "$available_session"
+    done
+
+    exit 1
+  fi
+
+  echo -n "${matched_sessions_[0]}"
 }
 
 ___kill_tmux_help() {
