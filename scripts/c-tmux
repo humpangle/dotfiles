@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+resurrect_file_="$HOME/.tmux/resurrect/last"
+
 ___start_tmux_help() {
   read -r -d '' var <<'eof' || true
 Start tmux. Usage:
@@ -277,8 +279,6 @@ start_tmux() {
 }
 
 __set-state() {
-  local resurrect_file_="$HOME/.tmux/resurrect/last"
-
   if [ ! -s "$resurrect_file_" ]; then
     return
   fi
@@ -427,8 +427,6 @@ list() {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  local _resurrect_file="$HOME/.tmux/resurrect/last"
-
   # Where we gather session information read from resurrect file into.
   local _sessions_info_from_resurrect_file=
 
@@ -436,7 +434,7 @@ list() {
   local _sessions_pwds_from_resurrect_file
 
   # Gather information from resurrect file
-  if [[ -s "$_resurrect_file" ]]; then
+  if [[ -s "$resurrect_file_" ]]; then
     # User has not instructed us not to flush.
     if [ -n "$flush_" ]; then
       # If tmux running, flush sessions info into resurrect file.
@@ -445,7 +443,7 @@ list() {
 
     local _session_resurrect_list
     _session_resurrect_list="$(
-      awk '/^window\s+/ {print $2}' "$_resurrect_file" |
+      awk '/^window\s+/ {print $2}' "$resurrect_file_" |
         sort -u
     )"
 
@@ -459,7 +457,7 @@ list() {
       _windows_count="$(
         awk \
           -v _awk_elm="$_elm" \
-          'match($0, "^window\\s+" _awk_elm) {print $0}' "$_resurrect_file" |
+          'match($0, "^window\\s+" _awk_elm) {print $0}' "$resurrect_file_" |
           wc -l |
           xargs
       )"
@@ -471,7 +469,7 @@ list() {
       # pane  session_name window_index active_win?  :*  pane_index  hostname  :directory active_pane? program  :program?/empty
       # active = 1  inactive = 0
       _session_pwd_from_resurrect_file="$(
-        awk -v _awk_var_session="$_elm" 'match($0, "^pane\\s+" _awk_var_session "\\s+0\\s+[0-1]\\s+:.*\\s+1\\s+.+\\s+:(/.+)\\s+[0-1]", matches) {print matches[1]}' "$_resurrect_file"
+        awk -v _awk_var_session="$_elm" 'match($0, "^pane\\s+" _awk_var_session "\\s+0\\s+[0-1]\\s+:.*\\s+1\\s+.+\\s+:(/.+)\\s+[0-1]", matches) {print matches[1]}' "$resurrect_file_"
       )"
 
       if [[ -n "$_session_pwd_from_resurrect_file" ]]; then
@@ -495,7 +493,7 @@ list() {
       fi
     done
 
-    _sessions_info_from_resurrect_file+="\n$(tail -n1 "$_resurrect_file")"
+    _sessions_info_from_resurrect_file+="\n$(tail -n1 "$resurrect_file_")"
 
     if [[ -n "$_sessions_pwds_from_resurrect_file" ]]; then
       _sessions_pwds_from_resurrect_file="\nPWDs:\n$_sessions_pwds_from_resurrect_file"
@@ -506,7 +504,7 @@ list() {
   # User asked that we only query resurrect file - we query and exit.
   if [[ -n "$_from_resurrect_file" ]]; then
     if [[ -n "$_sessions_info_from_resurrect_file" ]]; then
-      echo -e "Sessions from $_resurrect_file:\n$_sessions_info_from_resurrect_file\n$_sessions_pwds_from_resurrect_file"
+      echo -e "Sessions from $resurrect_file_:\n$_sessions_info_from_resurrect_file\n$_sessions_pwds_from_resurrect_file"
       return
     fi
 
