@@ -54,6 +54,7 @@
   "[shellscript]": {
     "editor.autoClosingQuotes": "always",
     "editor.tabSize": 2,
+    "editor.defaultFormatter": "mkhl.shfmt",
   },
   "[bats]": {
     "editor.defaultFormatter": "mkhl.shfmt"
@@ -82,6 +83,8 @@
   ],
   "python.defaultInterpreterPath": "/Users/kanmii/.asdf/shims/python",
   "python.analysis.autoImportCompletions": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
   // END python
   "[nginx]": {
     "editor.defaultFormatter": "raynigon.nginx-formatter"
