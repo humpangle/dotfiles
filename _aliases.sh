@@ -393,8 +393,8 @@ fi
 _____c_help() {
   read -r -d '' var <<'eof' || true
 Launch visual studio code VSCODE. Usage:
-  __c [OPTIONS]
-  __c [OPTIONS] -- <vscode args>
+  __c -h|--help
+  __c [OPTIONS] <FILE_PATH> [ -- <vscode args> ]
 
 By default, we launch vscode with a clean environment.
 
@@ -411,13 +411,19 @@ Examples:
   __c --help
   __c -h
 
-  # Preserve environment
-  __c -p
-  __c --preserve
+  # No arguments
+  __c filepath
 
-  # DEbug command
-  __c -d
-  __c --debug
+  # Preserve environment
+  __c -p filepath
+  __c --preserve filepath
+
+  # Debug command
+  __c -d filepath
+  __c --debug filepath
+
+  # Pass VsCode command line arguments
+  __c filepath -- --status
 eof
 
   echo -e "${var}"
@@ -429,6 +435,7 @@ __c() {
   local _preverve_env
   local _debug
   local _parsed
+  local filepath_=
 
   if ! _parsed="$(
     getopt \
@@ -472,17 +479,31 @@ __c() {
     esac
   done
 
+  filepath_="$1"
+
+  if [ -z "$filepath_" ]; then
+    echo -e "File path is required.\n"
+    _____c_help
+    return
+  fi
+
+  local vscode_args_=("${@:2}")
+
+  filepath_="$(
+    if command -v grealpath &>/dev/null; then grealpath "$filepath_"; else realpath $filepath_; fi
+  )"
+
   local _cmd="$VSCODE_BINARY"
 
   if _has_wsl; then
     _cmd+=" --remote wsl+$WSL_DISTRO_NAME"
   fi
 
-  _cmd+=" $* &>/dev/null"
+  _cmd+=" ${vscode_args_[*]} $filepath_ &>/dev/null"
 
   if [[ -n "$_debug" ]]; then
     echo -e "\n_preverve_env = $_preverve_env"
-    echo -e "\nvscode args = $*"
+    echo -e "\nvscode args = ${vscode_args_[*]}"
     echo -e "\nCommand:\n$_cmd\n"
     return
   fi
