@@ -93,7 +93,7 @@ local plugins_table = {
   -- MANAGE VIM SESSIONS AUTOMACTICALLY
   {
     "dhruvasagar/vim-prosession",
-    enabled = false, -- not plugin_enabled.has_vscode(),
+    enabled = not plugin_enabled.has_vscode(),
     dependencies = {
       "tpope/vim-obsession",
     },
