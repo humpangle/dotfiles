@@ -2608,7 +2608,7 @@ darwin_bash_profile() {
 
   cat <<'EOF' >"$_profile_path"
 ######################################################################
-# Prepend the GNU binaries
+# Prepend the GNU binaries to the path
 _paths=(
   '/opt/homebrew/opt/gnu-tar/libexec/gnubin'
   '/opt/homebrew/opt/make/libexec/gnubin'
