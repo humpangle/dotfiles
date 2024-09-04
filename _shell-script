@@ -181,3 +181,14 @@ if _has_termux; then
   export -f tcg
 # /END/ Clipboard
 fi
+
+c-pv() {
+  if ! command -v python &>/dev/null; then
+    return
+  fi
+
+  local dir_="$1"
+
+  # shellcheck source=/dev/null
+  source "$dir_/bin/activate"
+}
