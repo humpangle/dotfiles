@@ -2654,7 +2654,7 @@ done
 
 export LDFLAGS="$LDFLAGS $ldflags_"
 export CPPFLAGS="$CPPFLAGS $cppflags_"
- export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 unset _paths
 unset __path
