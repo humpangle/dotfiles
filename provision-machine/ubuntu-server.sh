@@ -2642,6 +2642,7 @@ pkgs_=(
 )
 ldflags_=
 cppflags_=
+pkg_config_paths_=
 
 for pkg_ in "${pkgs_[@]}"; do
   ldflag_="-L/opt/homebrew/opt/$pkg_/lib"
@@ -2649,12 +2650,13 @@ for pkg_ in "${pkgs_[@]}"; do
   if ! grep -qE -- "${ldflag_}" <<<"${LDFLAGS}"; then
     ldflags_+=" $ldflag_"
     cppflags_+=" -I/opt/homebrew/opt/$pkg_/include"
+    pkg_config_paths_+="/opt/homebrew/opt/$pkg_/lib/pkgconfig:"
   fi
 done
 
 export LDFLAGS="$LDFLAGS $ldflags_"
 export CPPFLAGS="$CPPFLAGS $cppflags_"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="${pkg_config_paths_}${PKG_CONFIG_PATH}"
 
 unset _paths
 unset __path
@@ -2663,6 +2665,7 @@ unset pkgs_
 unset pkg_
 unset ldflags_
 unset cppflags_
+unset pkg_config_paths_
 ######################################################################
 
 EOF
