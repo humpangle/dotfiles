@@ -1,13 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-data="$1"
-sep="/"
+set -eup
 
-dir_path=${data%$sep*}
-
-if [ "$dir_path" == "$data" ]; then
-  touch "$dir_path"
-else
-  mkdir -p "$dir_path"
-  touch "$data"
-fi
+for entry_; do
+  mkdir -p "$(dirname "$entry_" )"
+  touch "$entry_"
+done
