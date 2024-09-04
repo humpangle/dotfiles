@@ -2620,6 +2620,7 @@ _paths=(
   '/opt/homebrew/opt/m4/bin'
   '/opt/homebrew/opt/icu4c/bin'
   '/opt/homebrew/opt/icu4c/sbin'
+  '/opt/homebrew/opt/mysql-client/bin'
   "$HOME/.local/bin"
   "$HOME/dotfiles/scripts"
 )
@@ -2637,6 +2638,7 @@ PATH="$_joined_paths$PATH"
 pkgs_=(
   zlib
   icu4c
+  mysql-client
 )
 ldflags_=
 cppflags_=
