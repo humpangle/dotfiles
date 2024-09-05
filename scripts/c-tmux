@@ -456,11 +456,10 @@ list() {
     fi
 
     if [ -n "$_session_to_copy" ]; then
-      _session_to_copy="$(
-        _compute_session_to_copy \
-          "$_session_to_copy" \
-          "$session_resurrect_list_as_string_"
-      )"
+      _compute_session_to_copy \
+        "$_session_to_copy" \
+        "$session_resurrect_list_as_string_" \
+        _session_to_copy
     fi
 
     for _elm in $_session_resurrect_list; do
@@ -568,19 +567,23 @@ list() {
 _compute_session_to_copy() {
   local session_to_copy_="$1"
   local session_resurrect_list_as_string_="$2"
+  local -n _return=$3
 
   local matched_sessions_=
-  local matched_session_
-  read -ra matched_sessions_ <<<"$(
-    grep -iP "$session_to_copy_" <<<"$session_resurrect_list_as_string_"
+
+  mapfile -t matched_sessions_ <<<"$(
+    grep -iP "$session_to_copy_" < <(
+      echo -e "${session_resurrect_list_as_string_// /\\n}"
+    )
   )"
 
   local num_matches_="${#matched_sessions_[@]}"
 
   if [[ "$num_matches_" -gt 1 ]]; then
-    echo "There are $num_matches_ matches for $session_to_copy_. Please refine your search."
+    echo -e "\nThere are $num_matches_ matches for \"$session_to_copy_\". Please refine your search."
     echo -e "\nMatched sessions:"
 
+    local matched_session_
     for matched_session_ in "${matched_sessions_[@]}"; do
       echo "$matched_session_"
     done
@@ -595,7 +598,7 @@ _compute_session_to_copy() {
     exit 1
   fi
 
-  echo -n "${matched_sessions_[0]}"
+  _return="${matched_sessions_[0]}"
 }
 
 ___kill_tmux_help() {
