@@ -515,55 +515,55 @@ if has('win')
 
 elseif executable('pbcopy')
   " Yank current directory path into the clipboard
-  nnoremap yd :!printf %d | pbcopy %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+  nnoremap yd :!printf %d | pbcopy %i<cr>:echo expand('%"d') "is yanked to clipboard PBCOPY"<cr>
 
   " Yank current file path into the clipboard (escape spaces)
-  nnoremap yf :!printf %f:p:gs? ?\\ ? | pbcopy %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+  nnoremap yf :!printf %f:p:gs? ?\\ ? | pbcopy %i<cr>:echo expand('%"c:p') "is yanked to clipboard PBCOPY"<cr>
 
   " yank current filename without path into the clipboard
-  nnoremap yn :!printf %c | pbcopy %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
+  nnoremap yn :!printf %c | pbcopy %i<cr>:echo expand('%"c') "is yanked to clipboard PBCOPY"<cr>
 
   " yank root of current file's name into the clipboard
-  nnoremap yr :!printf %c:r | pbcopy %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
+  nnoremap yr :!printf %c:r | pbcopy %i<cr>:echo expand('%"c:r') "is yanked to clipboard PBCOPY"<cr>
 
 elseif executable('termux-clipboard-set')
   " Yank current directory path into the clipboard
-  nnoremap yd :!printf %d | termux-clipboard-set %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+  nnoremap yd :!printf %d | termux-clipboard-set %i<cr>:echo expand('%"d') "is yanked to clipboard TERMUX"<cr>
 
   " Yank current file path into the clipboard (escape spaces)
-  nnoremap yf :!printf %f:p:gs? ?\\ ? | termux-clipboard-set %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+  nnoremap yf :!printf %f:p:gs? ?\\ ? | termux-clipboard-set %i<cr>:echo expand('%"c:p') "is yanked to clipboard TERMUX"<cr>
 
   " yank current filename without path into the clipboard
-  nnoremap yn :!printf %c | termux-clipboard-set %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
+  nnoremap yn :!printf %c | termux-clipboard-set %i<cr>:echo expand('%"c') "is yanked to clipboard TERMUX"<cr>
 
   " yank root of current file's name into the clipboard
-  nnoremap yr :!printf %c:r | termux-clipboard-set %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
+  nnoremap yr :!printf %c:r | termux-clipboard-set %i<cr>:echo expand('%"c:r') "is yanked to clipboard TERMUX"<cr>
 
 elseif executable('clip')
     " Yank current directory path into the clipboard
-    nnoremap yd :!printf %d | clip %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+    nnoremap yd :!printf %d | clip %i<cr>:echo expand('%"d') "is yanked to clipboard with CLIP"<cr>
 
     " yank current file path into the clipboard
-    nnoremap yf :!printf %c:p | clip %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+    nnoremap yf :!printf %c:p | clip %i<cr>:echo expand('%"c:p') "is yanked to clipboard with CLIP"<cr>
 
     " yank current filename without path into the clipboard
-    nnoremap yn :!printf %c | clip %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
+    nnoremap yn :!printf %c | clip %i<cr>:echo expand('%"c') "is yanked to clipboard with CLIP"<cr>
 
     " yank root of current file's name into the clipboard
-    nnoremap yr :!printf %c:r | clip %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
+    nnoremap yr :!printf %c:r | clip %i<cr>:echo expand('%"c:r') "is yanked to clipboard with CLIP"<cr>
 
 elseif executable('xclip')
     " Yank current directory path into the clipboard
-    nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+    nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard with XCLIP"<cr>
 
     " yank current file path into the clipboard
-    nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+    nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard with XCLIP"<cr>
 
     " yank current filename without path into the clipboard
-    nnoremap yn :!echo -n %c | xclip -selection clipboard %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
+    nnoremap yn :!echo -n %c | xclip -selection clipboard %i<cr>:echo expand('%"c') "is yanked to clipboard with XCLIP"<cr>
 
     " yank root of current file's name into the clipboard
-    nnoremap yr :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
+    nnoremap yr :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "is yanked to clipboard with XCLIP"<cr>
 
 elseif executable('xsel')
     " Yank current directory path into primary and selection clipboards
