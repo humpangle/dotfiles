@@ -539,7 +539,7 @@ elseif executable('termux-clipboard-set')
   " yank root of current file's name into the clipboard
   nnoremap yr :!printf %c:r | termux-clipboard-set %i<cr>:echo expand('%"c:r') "is yanked to clipboard TERMUX"<cr>
 
-elseif executable('clip')
+elseif $SSH_TTY && $SSH_CLIENT && executable('clip')
     " Yank current directory path into the clipboard
     nnoremap yd :!printf %d | clip %i<cr>:echo expand('%"d') "is yanked to clipboard with CLIP"<cr>
 
