@@ -513,6 +513,19 @@ if has('win')
     " Yank path to current file to Windows clipboard with forward slashes
     nnoremap yf :!echo %"c:gs!\!/! %i | clip<cr>
 
+elseif $__COPY_PROGRAM__ == 'clip' && executable('clip')
+    " Yank current directory path into the clipboard
+    nnoremap yd :!printf %d | clip %i<cr>:echo expand('%"d') "is yanked to clipboard with CLIP"<cr>
+
+    " yank current file path into the clipboard
+    nnoremap yf :!printf %c:p | clip %i<cr>:echo expand('%"c:p') "is yanked to clipboard with CLIP"<cr>
+
+    " yank current filename without path into the clipboard
+    nnoremap yn :!printf %c | clip %i<cr>:echo expand('%"c') "is yanked to clipboard with CLIP"<cr>
+
+    " yank root of current file's name into the clipboard
+    nnoremap yr :!printf %c:r | clip %i<cr>:echo expand('%"c:r') "is yanked to clipboard with CLIP"<cr>
+
 elseif executable('pbcopy')
   " Yank current directory path into the clipboard
   nnoremap yd :!printf %d | pbcopy %i<cr>:echo expand('%"d') "is yanked to clipboard PBCOPY"<cr>
@@ -538,19 +551,6 @@ elseif executable('termux-clipboard-set')
 
   " yank root of current file's name into the clipboard
   nnoremap yr :!printf %c:r | termux-clipboard-set %i<cr>:echo expand('%"c:r') "is yanked to clipboard TERMUX"<cr>
-
-elseif $SSH_TTY && $SSH_CLIENT && executable('clip')
-    " Yank current directory path into the clipboard
-    nnoremap yd :!printf %d | clip %i<cr>:echo expand('%"d') "is yanked to clipboard with CLIP"<cr>
-
-    " yank current file path into the clipboard
-    nnoremap yf :!printf %c:p | clip %i<cr>:echo expand('%"c:p') "is yanked to clipboard with CLIP"<cr>
-
-    " yank current filename without path into the clipboard
-    nnoremap yn :!printf %c | clip %i<cr>:echo expand('%"c') "is yanked to clipboard with CLIP"<cr>
-
-    " yank root of current file's name into the clipboard
-    nnoremap yr :!printf %c:r | clip %i<cr>:echo expand('%"c:r') "is yanked to clipboard with CLIP"<cr>
 
 elseif executable('xclip')
     " Yank current directory path into the clipboard

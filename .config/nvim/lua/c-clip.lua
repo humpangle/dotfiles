@@ -1,8 +1,4 @@
-if
-  os.getenv("SSH_TTY") == nil
-  or os.getenv("SSH_CLIENT") == nil
-  or not vim.fn.executable("clip")
-then
+if os.getenv("__COPY_PROGRAM__") ~= "clip" or not vim.fn.executable("clip") then
   return
 end
 
