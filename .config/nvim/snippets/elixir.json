@@ -40,6 +40,18 @@
     ],
     "description": "print to console puts inspect"
   },
+  "Vertical inspect with label in pipe": {
+    "prefix": [
+      "inspectpipevertical",
+      "verticalinspectpipe"
+    ],
+    "body": [
+      "|> IO.inspect( label: \"\\n\\n\\n\\n----------------------------------------------------------------------\\n #{__MODULE__}\n${1:label}  \\n----------------------------------------------------------------------\\n\")"
+    ],
+    "description": [
+      "Vertical inspect with label in pipe"
+    ]
+  },
   "tap inspect in a pipe & func": {
     "prefix": [
       "tap_inspect_&",
