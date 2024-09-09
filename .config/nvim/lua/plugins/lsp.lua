@@ -328,6 +328,11 @@ return {
         html = {},
         volar = {},
         black = {},
+        isort = {},
+        flake8 = {},
+        mypy = {},
+        pylint = {},
+        debugpy = {},
       }
 
       local elixir_ls_config_fn = function()
