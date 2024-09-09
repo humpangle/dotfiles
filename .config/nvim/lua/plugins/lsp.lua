@@ -235,15 +235,6 @@ return {
         )
       end
 
-      local elixir_lsp_filetypes = {
-        "elixir",
-        "eelixir",
-        "heex",
-        "surface",
-      }
-
-      local none_existing_vim_filetype = { "1" } -- hopefully a filetype that does not exist.
-
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -258,31 +249,6 @@ return {
         -- gopls = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-
-        pyright = {
-          on_init = function(client)
-            local workspace = client.config.root_dir
-            local python_bin =
-              require("plugins/lsp_utils").get_python_path(
-                workspace
-              )
-
-            client.config.settings.python.pythonPath = python_bin
-            vim.g.python_host_prog = python_bin
-            vim.g.python3_host_prog = python_bin
-          end,
-        },
-
-        -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/lexical/init.lua
-        lexical = {
-          cmd = {
-            -- I have a  global ELIXIR_LEXICAL_BIN in .bashrc and then project specific in the workspace root.
-            os.getenv("ELIXIR_LEXICAL_BIN") or "lexical",
-          },
-          filetypes = utils.get_os_env_or_nil(
-            "NVIM_USE_ELIXIR_LEXICAL"
-          ) or none_existing_vim_filetype,
-        },
 
         bashls = {},
 
@@ -332,40 +298,14 @@ return {
 
         html = {},
         volar = {},
-        black = {},
-        isort = {},
-        flake8 = {},
-        mypy = {},
-        pylint = {},
-        debugpy = {},
       }
 
-      local elixir_ls_config_fn = function()
-        local filetypes = nil
-
-        if utils.os_env_not_empty("NVIM_USE_ELIXIR_LS") then
-          filetypes = elixir_lsp_filetypes
-        elseif utils.os_env_not_empty("NVIM_USE_ELIXIR_LEXICAL") then
-          filetypes = none_existing_vim_filetype
-        else
-          filetypes = elixir_lsp_filetypes
-        end
-
-        local bin_from_env_var =
-          utils.get_os_env_or_nil("ELIXIR_LS_BIN")
-
-        return {
-          elixirls = {
-            cmd = {
-              -- I have a  global ELIXIR_LS_BIN in .bashrc and then project specific in the workspace root.
-              bin_from_env_var or "elixir-ls",
-            },
-            filetypes = filetypes,
-          },
-        }
-      end
-
-      servers = vim.tbl_extend("error", servers, elixir_ls_config_fn())
+      servers = vim.tbl_extend(
+        "error",
+        servers,
+        require("plugins.lsp-python"),
+        require("plugins.lsp-elixir")
+      )
 
       if not plugin_enabled.has_termux() then
         servers = vim.tbl_extend("error", servers, {
