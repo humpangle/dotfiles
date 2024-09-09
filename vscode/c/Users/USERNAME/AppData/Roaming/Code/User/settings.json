@@ -99,6 +99,7 @@
   "files.exclude": {
     "**/___outs": true,
     "**/.elixir_ls": true,
+    "**/.venv": true,
     "**/.vim": true
   },
   "cSpell.userWords": [
@@ -118,6 +119,9 @@
     "html": "html",
   },
   "tailwindCSS.emmetCompletions": true,
+  "emmet.includeLanguages": {
+    "html-eex": "html"
+  },
   "explorer.confirmDragAndDrop": false,
   "remote.autoForwardPortsSource": "output",
   "remote.autoForwardPorts": false,
@@ -269,6 +273,9 @@
     ".spwn": "spwn build",
     ".pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
     ".gleam": "gleam run -m $fileNameWithoutExt"
+  },
+  "files.watcherExclude": {
+    "**/.venv/**": true
   },
   // "window.menuBarVisibility": "compact"
 }
