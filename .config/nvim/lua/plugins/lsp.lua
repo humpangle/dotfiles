@@ -1,14 +1,19 @@
 -- NATIVE NEOVIM LSP
 
-local utils = require("utils")
 local plugin_enabled = require("plugins/plugin_enabled")
+
+if plugin_enabled.has_vscode() or plugin_enabled.coc() then
+  return {}
+end
+
+local utils = require("utils")
 local yamlls_config = require("plugins.yaml_lsp")
 
 return {
   {
     -- Automatically install LSPs and related tools to stdpath for Neovim
     "williamboman/mason.nvim",
-    enabled = not plugin_enabled.has_vscode(),
+    enabled = true,
     dependencies = {
       -- Install or upgrade all of your third-party tools with mason.
       "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -17,7 +22,7 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    enabled = plugin_enabled.lsp(),
+    enabled = true,
     dependencies = {
       -- Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim.
       -- Use lspconfig names instead of Mason names.
