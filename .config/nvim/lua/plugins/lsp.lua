@@ -303,8 +303,8 @@ return {
       servers = vim.tbl_extend(
         "error",
         servers,
-        require("plugins.lsp-python"),
-        require("plugins.lsp-elixir")
+        require("plugins.lsp.python"),
+        require("plugins.lsp.elixir")
       )
 
       if not plugin_enabled.has_termux() then
