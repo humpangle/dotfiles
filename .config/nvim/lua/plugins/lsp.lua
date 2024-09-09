@@ -424,4 +424,6 @@ return {
       end
     end,
   },
+
+  require("plugins.lsp.barbecue-nvim"),
 }
