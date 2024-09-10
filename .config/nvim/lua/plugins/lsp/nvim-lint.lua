@@ -4,6 +4,7 @@ return {
   "mfussenegger/nvim-lint",
   ft = {
     "python",
+    "dockerfile",
   },
   config = function()
     -- Define a table of linters for each filetype (not extension).
@@ -16,14 +17,21 @@ return {
         -- "pylint", -- Linting errors wouldn't clear until you force formatter to run (by distorting current
         -- formatting).
       },
+
+      dockerfile = {
+        "hadolint",
+      },
     }
 
     vim.api.nvim_create_autocmd({
-      "BufWritePost" , -- Lint on save.
+      "BufWritePost", -- Lint on save.
       "InsertLeave", -- More aggressive linting on leaving insert mode.
     }, {
       -- Only run linter for the following extensions. Remove this to always run.
-      pattern = { "*.py" },
+      pattern = {
+        "*.py",
+        "*Dockerfile*",
+      },
       callback = function()
         require("lint").try_lint()
       end,
