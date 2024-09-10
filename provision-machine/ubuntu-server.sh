@@ -2956,6 +2956,48 @@ eom
   fi
 }
 
+install-docker-hadolint() {
+  : "Install hadolint dockerfile linter"
+
+  set -eu
+
+  local archi_=''
+
+  if _is_darwin; then
+    _echo "Installing hadolint via homebrew."
+    brew install hadolint
+    return
+  fi
+
+  if _is_arm_hardware; then
+    archi_="Linux-arm64"
+  else
+    archi_="Linux-x86_64"
+  fi
+
+  local url_="https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-$archi_"
+  _echo "Will download URL: $url_"
+
+  local file_="$HOME/projects/0/hadolint"
+
+  _echo "Removing previous download of $file_"
+  rm -rf "$file_"
+
+  _echo "Downloading..."
+  curl --create-dirs -sfLo "$file_" "$url_"
+
+  _echo "Making downloaded file into executable"
+  chmod 755 "$file_"
+
+  local bin_path_="$HOME/.local/bin/hadolint"
+
+  _echo "Removing previously installed version from $bin_path_"
+  rm -rf "$bin_path_"
+
+  _echo "Moving to bin directory"
+  mv "$file_"  "$bin_path_"
+}
+
 help() {
   : "List available tasks."
 
