@@ -6,6 +6,9 @@ local M = {}
 -- Inspired by:
 --    https://github.com/neovim/nvim-lspconfig/issues/500
 function M.get_python_path(workspace)
+  -- `workspace` variable is available from lsp. We use PWD for any other context.
+  workspace = workspace or vim.fn.getcwd()
+
   -- I have a global `PYTHON_BIN` in .bashrc and project specific.
   local python_bin = os.getenv("PYTHON_BIN")
 
@@ -25,7 +28,10 @@ function M.get_python_path(workspace)
 
   -- Use activated virtualenv (if it exists).
   if vim.env.VIRTUAL_ENV then
-    return lspconfig_util_path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+    local python_from_virtualenv =
+      lspconfig_util_path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+
+    return python_from_virtualenv
   end
 
   -- Find and use virtualenv in workspace directory (if one exists).
