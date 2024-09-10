@@ -61,6 +61,7 @@ return {
       -- some of the config into the mason-nvim-dap handlers table.
       -- Some examples are provided
       -- { "leoluz/nvim-dap-go" }, -- golang
+      -- See plugins/lsp/python-tools.lua for dap configurations for python.
     },
     config = function()
       local dap = require("dap")

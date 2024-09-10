@@ -173,10 +173,21 @@ return {
             "[C]ode [A]ction"
           )
 
-          -- Format the code using builtin LSP code formatter
-          map("<leader>fc", function()
-            vim.lsp.buf.format({ timeout_ms = 500000 })
-          end, "[F]ormat [C]ode")
+          local client =
+            vim.lsp.get_client_by_id(event.data.client_id)
+
+          -- Servers like pyright do not support formatting.
+          if
+            client ~= nil
+            and client.supports_method("textDocument/formatting")
+          then
+            -- Format the code using builtin LSP code formatter
+            map("<leader>fc", function()
+              vim.lsp.buf.format({
+                timeout_ms = 500000,
+              })
+            end, "[F]ormat [C]ode")
+          end
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
@@ -191,8 +202,6 @@ return {
           --    See `:help CursorHold` for information about when this is executed
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
-          local client =
-            vim.lsp.get_client_by_id(event.data.client_id)
 
           if
             client
@@ -426,4 +435,5 @@ return {
   },
 
   require("plugins.lsp.barbecue-nvim"),
+  require("plugins.lsp.python-tools"),
 }
