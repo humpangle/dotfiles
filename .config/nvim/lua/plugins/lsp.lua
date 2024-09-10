@@ -436,4 +436,5 @@ return {
 
   require("plugins.lsp.barbecue-nvim"),
   require("plugins.lsp.python-tools"),
+  require("plugins.lsp.nvim-lint"),
 }
