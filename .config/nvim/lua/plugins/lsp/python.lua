@@ -15,6 +15,6 @@ return {
   isort = {},
   flake8 = {},
   mypy = {},
-  pylint = {},
+  -- pylint = {},
   debugpy = {},
 }
