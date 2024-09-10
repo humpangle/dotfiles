@@ -1,4 +1,16 @@
 {
+  "editor.fontSize": 16, // sp8 default
+  "terminal.integrated.fontSize": 16, // sp8 default
+  "debug.console.fontSize": 14.5, // sp8 default
+
+  // "editor.fontSize": 16, // sp8 thinkvision screen
+  // "terminal.integrated.fontSize": 16, // sp8 thinkvision screen
+  // "debug.console.fontSize": 15, // sp8 thinkvision screen
+
+  // "editor.fontSize": 20, // sp8 capture
+  // "terminal.integrated.fontSize": 20, // sp8 capture
+  // "debug.console.fontSize": 17, // sp8 capture
+
   "workbench.colorTheme": "Default Light+",
   // "workbench.colorTheme": "Default Light+",
   // "workbench.colorTheme": "Default Dark+",
@@ -143,8 +155,6 @@
   "aws.telemetry": false,
   // "terminal.integrated.enablePersistentSessions": false,
   "terminal.integrated.persistentSessionReviveProcess": "never",
-  "terminal.integrated.fontSize": 15, // small screen
-  // "terminal.integrated.fontSize": 17, // big screen
   "terminal.integrated.confirmOnKill": "never",
   "terminal.integrated.enableImages": true,
   "terminal.integrated.scrollback": 100000,
@@ -227,14 +237,11 @@
     "wsl.localhost"
   ],
   "accessibility.underlineLinks": true,
-  // "workbench.activityBar.location": "hidden",
   "window.openFoldersInNewWindow": "on",
   "window.newWindowProfile": null, // | "MacOs" // set in global-profile
   "settingsSync.ignoredSettings": [ // global-profile
     "window.newWindowProfile"
   ],
-  "editor.fontSize": 14.5,
-  "debug.console.fontSize": 14.5,
   "remote.SSH.enableX11Forwarding": false, // global-profile
   "code-runner.executorMapByFileExtension": {
     ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
@@ -275,7 +282,12 @@
     ".gleam": "gleam run -m $fileNameWithoutExt"
   },
   "files.watcherExclude": {
+    "**/.elixir_ls/**": true,
     "**/.venv/**": true
   },
+  "workbench.settings.applyToAllProfiles": [
+    "files.watcherExclude"
+  ],
+  // "workbench.activityBar.location": "hidden",
   // "window.menuBarVisibility": "compact"
 }
