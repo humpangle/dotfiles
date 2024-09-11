@@ -163,6 +163,11 @@ command! mdc :!mkdir -p %a | cd %d/%a
 command! vgrep nvim "+grep %a"
 command! md :!mkdir -p %a
 command! reload :write | restart full
+if executable('t')
+  command! t :!t %a
+else
+  command! t :!touch %a
+endif
 
 " ------------------------------------------------------------------------------
 " File types association
