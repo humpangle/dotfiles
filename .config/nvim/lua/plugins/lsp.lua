@@ -244,6 +244,14 @@ return {
         )
       end
 
+      -- Ensure the servers and tools below are installed
+      --  To check the current status of installed tools and/or manually install
+      --  other tools, you can run
+      --    :Mason
+      --
+      --  You can press `g?` for help in this menu.
+      require("mason").setup() -- we need this here so we can mason related functions
+
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -306,7 +314,6 @@ return {
         },
 
         html = {},
-        volar = {},
       }
 
       servers = vim.tbl_extend(
@@ -317,54 +324,34 @@ return {
       )
 
       if not plugin_enabled.has_termux() then
-        servers = vim.tbl_extend("error", servers, {
-          --[[ The state of typescript LSP is unfortunately a sad one. The official tsserver (typescript) from microsoft is
-            not compatible with LSP protocol (since the project predates the birth of LSP) and microsoft team is making
-            slow progress towards LSP compatibility.
-
-            For now, there is typescript-language-server which sits (as proxy) between LSP clients and tsserver:
-                   lsp client --> typescript-language-server --> tsserver
-            which works, but is claimed to be slow for very large typescript projects. This is what you get by using
-            stock nvim-lspconfig.
-
-            There has been various efforts from the community to augment nvim-lspconfig's typescript-language-server
-            integration (https://github.com/jose-elias-alvarez/typescript.nvim archived) or bypass
-            typescript-language-server completely (https://github.com/pmizio/typescript-tools.nvim -
-            does not work well nvim-lspconfig).
-      --]]
-
-          -- If you want nvim-lspconfig managed tsserver, uncomment the below:
-          tsserver = {},
-
-          lua_ls = {
-            -- cmd = {...},
-            -- filetypes = { ...},
-            -- capabilities = {},
-            settings = {
-              Lua = {
-                completion = {
-                  callSnippet = "Replace",
+        servers = vim.tbl_extend(
+          "error",
+          servers,
+          {
+            lua_ls = {
+              -- cmd = {...},
+              -- filetypes = { ...},
+              -- capabilities = {},
+              settings = {
+                Lua = {
+                  completion = {
+                    callSnippet = "Replace",
+                  },
+                  -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                  -- diagnostics = { disable = { 'missing-fields' } },
                 },
-                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                -- diagnostics = { disable = { 'missing-fields' } },
               },
             },
+
+            dockerls = {},
+
+            terraformls = {},
           },
-
-          dockerls = {},
-
-          terraformls = {},
-        })
+          require("plugins.typescript")
+          --
+        )
       end
       -- /END/ servers variable
-
-      -- Ensure the servers and tools above are installed
-      --  To check the current status of installed tools and/or manually install
-      --  other tools, you can run
-      --    :Mason
-      --
-      --  You can press `g?` for help in this menu.
-      require("mason").setup()
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
