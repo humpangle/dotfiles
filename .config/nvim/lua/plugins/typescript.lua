@@ -16,7 +16,7 @@ local get_vue_lang_server_path = function()
   return vue_language_server_path
 end
 
-return {
+local config = {
   --[[ The state of typescript LSP is unfortunately a sad one. The official tsserver (typescript) from microsoft is
         not compatible with LSP protocol (since the project predates the birth of LSP) and microsoft team is making
         slow progress towards LSP compatibility.
@@ -33,27 +33,7 @@ return {
       --]]
 
   -- If you want nvim-lspconfig managed tsserver:
-  ts_ls = { -- mason: typescript-language-server
-    init_options = {
-      plugins = {
-        {
-          name = "@vue/typescript-plugin",
-          -- *IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `volar `are of identical versions.
-          location = get_vue_lang_server_path(),
-          languages = {
-            "vue",
-          },
-        },
-      },
-    },
-    filetypes = {
-      "typescript",
-      "javascript",
-      "javascriptreact",
-      "typescriptreact",
-      "vue", -- volar hybrid mode
-    },
-  },
+  -- ts_ls = {}, -- see below for actual configuration
 
   volar = { -- mason: vue-language-server
     -- To enable Take Over Mode, override the default filetypes in `setup{}` as follows:
@@ -75,3 +55,34 @@ return {
     -- on_new_config = function(new_config, new_root_dir) end
   },
 }
+
+local typescript_ls_config = { -- mason: typescript-language-server
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        -- *IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `volar `are of identical versions.
+        location = get_vue_lang_server_path(),
+        languages = {
+          "vue",
+        },
+      },
+    },
+  },
+  filetypes = {
+    "typescript",
+    "javascript",
+    "javascriptreact",
+    "typescriptreact",
+    "vue", -- volar hybrid mode
+  },
+}
+
+-- Somehow my macbook uses tsserver while linux uses ts_ls
+if vim.fn.has("mac") == 1 then
+  config["tsserver"] = typescript_ls_config
+else
+  config["ts_ls"] = typescript_ls_config
+end
+
+return config
