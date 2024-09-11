@@ -111,11 +111,11 @@ keymap("n", "<Leader>czz", function()
   local cmd = "Git stash push"
 
   if count == 1 then
-    cmd = cmd .. " --include-untracked"
-  elseif count == 2 then
-    cmd = cmd .. " --all"
-  elseif count == 3 then
     cmd = cmd
+  elseif count == 2 then
+    cmd = cmd .. " --include-untracked"
+  elseif count == 3 then
+    cmd = cmd .. " --all"
   else
     vim.cmd.echo(
       '"count should be 1/--include-untracked 2/--all 3/pathspec"'
