@@ -187,7 +187,7 @@ c-pv() {
     return
   fi
 
-  local dir_="$1"
+  local dir_="${1:-.venv}"
 
   # shellcheck source=/dev/null
   source "$dir_/bin/activate"
