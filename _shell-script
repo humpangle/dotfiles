@@ -202,12 +202,99 @@ if _has_termux; then
 fi
 
 c-pv() {
+  set -eup
+
+  local help_=
+  read -r -d '' help_ <<EOF || :
+Create/activate/deactivate a Virtualenv environment. If no directory is specified, we assume .venv .
+Requires python executable in path.
+
+Usage:
+  c-pv -h
+  c-pv [OPTION] [VIRTUALENV_DIRECTORY]
+
+Options:
+  -h
+      Print help information and exit.
+  -s
+      Create a Virtualenv environment.
+  -d
+      Deactivate
+
+Examples:
+  # Get help
+  c-pv -h
+
+  # Create
+  c-pv -s directory
+  c-pv -s
+
+  # activate
+  c-pv directory
+
+  # deactivate
+  c-pv -d
+EOF
+
   if ! command -v python &>/dev/null; then
+    _echo "$help_"
     return
   fi
 
+  local create_=
+
+  local arg_=
+
+  if ! arg_="$(getopt \
+    -o h,s,d \
+    -n "$0" \
+    -- "$@")"; then
+    _echo "$help_"
+    return
+  fi
+
+  eval set -- "$arg_"
+
+  while true; do
+    case "$1" in
+    -h)
+      _echo "$help_"
+      return
+      ;;
+
+    -d)
+      # Without this, the shell might die (try `rm -rf some_pa` and tab for completion).
+      set +eup
+      deactivate || :
+      return
+      ;;
+
+    -s)
+      create_=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown argument $1"
+      _echo "$help_"
+      return
+      ;;
+    esac
+  done
+
   local dir_="${1:-.venv}"
 
+  if [ -n "$create_" ]; then
+    python -m venv "$dir_"
+  fi
+
+  # Without this, the shell might die (try `rm -rf some_pa` and tab for completion).
+  set +eup
   # shellcheck source=/dev/null
   source "$dir_/bin/activate"
 }
