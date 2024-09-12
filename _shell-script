@@ -201,7 +201,7 @@ if _has_termux; then
 # /END/ Clipboard
 fi
 
-c-pv() {
+-pv() {
   set -eup
 
   local help_=
