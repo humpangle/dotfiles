@@ -24,10 +24,10 @@ _run_f() {
     "${HOME}"
   )
 
-  local exit_parent
+  local exit_parent=''
 
   for parent_dir in "${_parent_search_paths[@]}"; do
-    unset exit_parent
+    exit_parent=''
 
     for path in "${_script_pattern[@]}"; do
       complete_path="${parent_dir}/$path"
