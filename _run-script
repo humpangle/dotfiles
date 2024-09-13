@@ -4,9 +4,7 @@ _run_f() {
   local _script_name
 
   local _script_pattern=(
-    run
     run.sh
-    .run
     .run.sh
     do-run.sh
   )
