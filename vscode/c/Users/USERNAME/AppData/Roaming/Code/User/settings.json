@@ -32,6 +32,8 @@
   "editor.scrollbar.verticalScrollbarSize": 5,
   "editor.scrollbar.horizontalScrollbarSize": 5,
   "editor.renderFinalNewline": "off",
+  "editor.guides.bracketPairs": true,
+  "editor.guides.highlightActiveIndentation": true,
   "editor.quickSuggestions": {
     "other": true,
     "comments": "on",
@@ -56,20 +58,20 @@
   },
   "security.workspace.trust.untrustedFiles": "open", // set in global-profile
   "files.trimTrailingWhitespace": true,
-  "[jsonc]": {
+  "[javascript][javascriptreact][typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json][jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+  "[css][scss][less]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
   },
-  "[typescript]": {},
-  "[shellscript]": {
+  // END Default formatter
+  "[shellscript][bats]": {
+    "editor.defaultFormatter": "mkhl.shfmt",
     "editor.autoClosingQuotes": "always",
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "mkhl.shfmt",
-  },
-  "[bats]": {
-    "editor.defaultFormatter": "mkhl.shfmt"
   },
   "[html-eex]": {
     "editor.trimAutoWhitespace": false,
@@ -139,7 +141,6 @@
   "remote.autoForwardPorts": false,
   "explorer.compactFolders": false,
   "files.eol": "\n",
-  "[javascript]": {},
   "[markdown]": {},
   "[yaml]": {},
   "yaml.schemas": {
@@ -281,11 +282,11 @@
     ".pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
     ".gleam": "gleam run -m $fileNameWithoutExt"
   },
-  "files.watcherExclude": {
+  "files.watcherExclude": { // set in global-profile
     "**/.elixir_ls/**": true,
     "**/.venv/**": true
   },
-  "workbench.settings.applyToAllProfiles": [
+  "workbench.settings.applyToAllProfiles": [ // set in global-profile
     "files.watcherExclude"
   ],
   // "workbench.activityBar.location": "hidden",
