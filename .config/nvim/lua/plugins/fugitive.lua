@@ -305,11 +305,21 @@ keymap("n", "<leader>gg", function()
   end
 
   if count == 2 then
+    vim.cmd("Git log --oneline -- %")
+    return
+  end
+
+  if count == 22 then
+    vim.cmd("0GcLog!")
+    return
+  end
+
+  if count == 3 then
     utils.write_to_command_mode("Git log --oneline -")
   end
 end, {
   noremap = true,
-  desc = "Git commit 1/lone 2/lone-",
+  desc = "Git commit 1/lone 2/lone% 3/lone-",
 })
 
 -- Auto-clean Fugitive Buffers
