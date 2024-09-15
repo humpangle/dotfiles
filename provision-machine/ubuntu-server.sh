@@ -409,6 +409,12 @@ _install_neovim_linux_x86() {
 
   curl -fLo nvim "https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage"
 
+  # Back up currently installed neovim
+  if [ -e /usr/bin/nvim ]; then
+    _echo "Backing up currently installed neovim version"
+    sudo mv /usr/bin/nvim "/usr/bin/nvim-$(date +'%F-%H-%M')"
+  fi
+
   sudo chown root:root nvim
   sudo chmod +x nvim
   sudo mv nvim /usr/bin
