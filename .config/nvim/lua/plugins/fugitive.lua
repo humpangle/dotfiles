@@ -205,7 +205,7 @@ keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
 -- END Git stash related mappings
 
 -- Git commit mappings
-keymap("n", "<leader>gcc", function()
+keymap("n", "<leader>gc", function()
   local count = vim.v.count
 
   if count == 0 then
