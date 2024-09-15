@@ -416,7 +416,7 @@ _install_neovim_linux_x86() {
   fi
 
   sudo chown root:root nvim
-  sudo chmod +x nvim
+  sudo chmod 755 nvim
   sudo mv nvim /usr/bin
 }
 
