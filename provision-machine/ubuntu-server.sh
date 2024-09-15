@@ -407,10 +407,11 @@ _install_neovim_linux_x86() {
 
   _echo "INSTALLING NEOVIM VERSION ${neovim_version}"
 
-  curl -fLo nvim "https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage" &&
-    sudo chown root:root nvim &&
-    sudo chmod +x nvim &&
-    sudo mv nvim /usr/bin
+  curl -fLo nvim "https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage"
+
+  sudo chown root:root nvim
+  sudo chmod +x nvim
+  sudo mv nvim /usr/bin
 }
 
 _install_tmux_plugins() {
