@@ -3002,7 +3002,7 @@ install-docker-hadolint() {
   rm -rf "$bin_path_"
 
   _echo "Moving to bin directory"
-  mv "$file_"  "$bin_path_"
+  mv "$file_" "$bin_path_"
 }
 
 help() {
