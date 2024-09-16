@@ -1,0 +1,43 @@
+{
+  "Compare previous and current props": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "compareprops",
+    "body": [
+      "React.memo(",
+      "  ${1:func},",
+      "",
+      "(a, b) => {",
+      "  Object.entries(a).forEach(([k, v]) => {",
+      "      if (v !== b[k]) {",
+      "          console.log(",
+      "              \"\\n  Logging start\\n\\n\\n\\n a !== b\\n\",",
+      "              k,",
+      "              \"\\n\",",
+      "              v,",
+      "              \"\\n\\n\",",
+      "              b[k],",
+      "              \"\\n\\n\\n\\n    Logging ends\\n\"",
+      "          );",
+      "      }",
+      "  });",
+      "",
+      "      return false;",
+      "  }",
+      "",
+      ");"
+    ],
+    "description": "Compare previous and current props"
+  },
+  "Export react functional Component": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "exportreactfunction",
+    "body": [
+      "import React from \"react\";",
+      "",
+      "export function ${1:Component}(props) {",
+      "  return ${2:<div>1</div>};",
+      "}"
+    ],
+    "description": "Export react functional Component"
+  }
+}

@@ -32,6 +32,15 @@
         "path": "./javascript.json"
       },
       {
+        "language": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ],
+        "path": "./javascript-react.json"
+      },
+      {
         "language": "vue",
         "path": "./vue.json"
       },

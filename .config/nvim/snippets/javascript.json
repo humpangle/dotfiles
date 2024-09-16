@@ -550,7 +550,11 @@
   },
   "For-Each Loop": {
     "prefix": "foreach",
-    "body": ["${1:array}.forEach(${2:element} => {", "\t$0", "});"],
+    "body": [
+      "${1:array}.forEach(${2:element} => {",
+      "\t$0",
+      "});"
+    ],
     "description": "For-Each Loop"
   },
   "For-In Loop": {
@@ -567,27 +571,47 @@
   },
   "For-Of Loop": {
     "prefix": "forof",
-    "body": ["for (const ${1:iterator} of ${2:object}) {", "\t$0", "}"],
+    "body": [
+      "for (const ${1:iterator} of ${2:object}) {",
+      "\t$0",
+      "}"
+    ],
     "description": "For-Of Loop"
   },
   "Function Statement": {
     "prefix": "function",
-    "body": ["function ${1:name}(${2:params}) {", "\t$0", "}"],
+    "body": [
+      "function ${1:name}(${2:params}) {",
+      "\t$0",
+      "}"
+    ],
     "description": "Function Statement"
   },
   "If Statement": {
     "prefix": "if",
-    "body": ["if (${1:condition}) {", "\t$0", "}"],
+    "body": [
+      "if (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
     "description": "If Statement"
   },
   "If-Else Statement": {
     "prefix": "ifelse",
-    "body": ["if (${1:condition}) {", "\t$0", "} else {", "\t", "}"],
+    "body": [
+      "if (${1:condition}) {",
+      "\t$0",
+      "} else {",
+      "\t",
+      "}"
+    ],
     "description": "If-Else Statement"
   },
   "New Statement": {
     "prefix": "new",
-    "body": ["const ${1:name} = new ${2:type}(${3:arguments});$0"],
+    "body": [
+      "const ${1:name} = new ${2:type}(${3:arguments});$0"
+    ],
     "description": "New Statement"
   },
   "Switch Statement": {
@@ -606,94 +630,87 @@
   },
   "While Statement": {
     "prefix": "while",
-    "body": ["while (${1:condition}) {", "\t$0", "}"],
+    "body": [
+      "while (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
     "description": "While Statement"
   },
   "Do-While Statement": {
     "prefix": "dowhile",
-    "body": ["do {", "\t$0", "} while (${1:condition});"],
+    "body": [
+      "do {",
+      "\t$0",
+      "} while (${1:condition});"
+    ],
     "description": "Do-While Statement"
   },
   "Try-Catch Statement": {
     "prefix": "trycatch",
-    "body": ["try {", "\t$0", "} catch (${1:error}) {", "\t", "}"],
+    "body": [
+      "try {",
+      "\t$0",
+      "} catch (${1:error}) {",
+      "\t",
+      "}"
+    ],
     "description": "Try-Catch Statement"
   },
   "Set Timeout Function": {
     "prefix": "settimeout",
-    "body": ["setTimeout(() => {", "\t$0", "}, ${1:timeout});"],
+    "body": [
+      "setTimeout(() => {",
+      "\t$0",
+      "}, ${1:timeout});"
+    ],
     "description": "Set Timeout Function"
   },
   "Set Interval Function": {
     "prefix": "setinterval",
-    "body": ["setInterval(() => {", "\t$0", "}, ${1:interval});"],
+    "body": [
+      "setInterval(() => {",
+      "\t$0",
+      "}, ${1:interval});"
+    ],
     "description": "Set Interval Function"
   },
   "Import external module.": {
     "prefix": "import statement",
-    "body": ["import { $0 } from \"${1:module}\";"],
+    "body": [
+      "import { $0 } from \"${1:module}\";"
+    ],
     "description": "Import external module."
   },
   "Region Start": {
     "prefix": "#region",
-    "body": ["//#region $0"],
+    "body": [
+      "//#region $0"
+    ],
     "description": "Folding Region Start"
   },
   "Region End": {
     "prefix": "#endregion",
-    "body": ["//#endregion"],
+    "body": [
+      "//#endregion"
+    ],
     "description": "Folding Region End"
   },
   "Log warning to console": {
     "prefix": "warn",
-    "body": ["console.warn($1);", "$0"],
+    "body": [
+      "console.warn($1);",
+      "$0"
+    ],
     "description": "Log warning to the console"
   },
   "Log error to console": {
     "prefix": "error",
-    "body": ["console.error($1);", "$0"],
+    "body": [
+      "console.error($1);",
+      "$0"
+    ],
     "description": "Log error to the console"
-  },
-  "Compare previous and current props": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "compareprops",
-    "body": [
-      "React.memo(",
-      "  ${1:func},",
-      "",
-      "(a, b) => {",
-      "  Object.entries(a).forEach(([k, v]) => {",
-      "      if (v !== b[k]) {",
-      "          console.log(",
-      "              \"\\n  Logging start\\n\\n\\n\\n a !== b\\n\",",
-      "              k,",
-      "              \"\\n\",",
-      "              v,",
-      "              \"\\n\\n\",",
-      "              b[k],",
-      "              \"\\n\\n\\n\\n    Logging ends\\n\"",
-      "          );",
-      "      }",
-      "  });",
-      "",
-      "      return false;",
-      "  }",
-      "",
-      ");"
-    ],
-    "description": "Compare previous and current props"
-  },
-  "Export react functional Component": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "exportreactfunction",
-    "body": [
-      "import React from \"react\";",
-      "",
-      "export function ${1:Component}(props) {",
-      "  return ${2:<div>1</div>};",
-      "}"
-    ],
-    "description": "Export react functional Component"
   },
   "Print to console": {
     "prefix": "consoleapplog",
@@ -708,7 +725,6 @@
     "description": "Log to console with some debug info"
   },
   "Print to console error": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consoleerrorlog",
     "body": [
       "console.log(",
@@ -723,15 +739,7 @@
     ],
     "description": "Log to console with some debug info"
   },
-
-  "actReactTest": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "actReactTest",
-    "body": ["act(() => {", "  ${1}", "});"],
-    "description": "actReactTest"
-  },
   "console.log JSON.stringify": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "consolejsonlog",
     "body": [
       "console.log(",
@@ -744,7 +752,6 @@
     "description": "console.log JSON.stringify"
   },
   "describeTest": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "describeTest",
     "body": [
       "describe(\"${1:describe_label}\", () => {",
@@ -756,7 +763,6 @@
     "description": "describe test jest"
   },
   "dom ready": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "domready",
     "body": [
       "function domRead() {}",
@@ -773,26 +779,25 @@
     "description": "dom ready"
   },
   "eslint-disable": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "eslint-disable",
     "body": "/* eslint-disable ${1} */",
     "description": "eslint disable"
   },
   "eslint-disable-next-line": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "eslint-disable-next-line",
     "body": "/* eslint-disable-next-line ${1} */",
     "description": "eslint disable next line"
   },
   "jsdoc": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "jsdoc",
-    "body": ["/**", "* $0", "*/"],
+    "body": [
+      "/**",
+      "* $0",
+      "*/"
+    ],
     "description": "JSDOC for function or variable"
   },
-
   "callback param JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "callbackparam",
     "body": [
       "/**",
@@ -804,7 +809,6 @@
     "description": "JSDOC for callback"
   },
   "first object param of function first time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramobjectf",
     "body": [
       "/**",
@@ -815,8 +819,11 @@
     "description": "first object param of function first time JSDOC"
   },
   "function param first time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["jsdoc-param", "param-jsdoc", "function-jsdoc"],
+    "prefix": [
+      "jsdoc-param",
+      "param-jsdoc",
+      "function-jsdoc"
+    ],
     "body": [
       "/**",
       "* @param {${1:type}} ${2:paramName} ${3:description}${5}",
@@ -826,13 +833,13 @@
     "description": "function param first time JSDOC"
   },
   "function param next time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramn",
-    "body": ["@param {${1:type}} ${2:paramName} ${3:description}"],
+    "body": [
+      "@param {${1:type}} ${2:paramName} ${3:description}"
+    ],
     "description": "function param next time JSDOC"
   },
   "function param object next time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramobjectn",
     "body": [
       "@param {Object} ${1:paramName}",
@@ -841,13 +848,13 @@
     "description": "function param object next time JSDOC"
   },
   "function param return JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramr",
-    "body": ["@return {${1:returnType}}"],
+    "body": [
+      "@return {${1:returnType}}"
+    ],
     "description": "function param return JSDOC"
   },
   "next/addition object param of function JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramobjectn",
     "body": [
       "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
@@ -855,7 +862,6 @@
     "description": "next/addition object param of function JSDOC"
   },
   "next/addition1 object param of function JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramobjectopt",
     "body": [
       "@param {${1:type}} ${2:paramName}.${3:propertyName} ${4:description}"
@@ -863,19 +869,22 @@
     "description": "next/addition object param of function JSDOC"
   },
   "typdef import first time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "typedefimport",
-    "body": ["/**", "* @typedef { import('${1}').${2} } ${2} ${3}", "*/"],
+    "body": [
+      "/**",
+      "* @typedef { import('${1}').${2} } ${2} ${3}",
+      "*/"
+    ],
     "description": "typdef import first time JSDOC"
   },
   "typdef import next time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "typedefimportn",
-    "body": ["* @typedef { import('${1}').${2} } ${2} ${3}"],
+    "body": [
+      "* @typedef { import('${1}').${2} } ${2} ${3}"
+    ],
     "description": "typdef import next time JSDOC"
   },
   "typdef object first time JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "typedefobject",
     "body": [
       "/**",
@@ -886,47 +895,70 @@
     "description": "typdef object first time JSDOC"
   },
   "typdef object next.additional property JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "typedefobjectn",
-    "body": ["@property {${1:type}} ${2:propertyName} ${3:description}"],
+    "body": [
+      "@property {${1:type}} ${2:propertyName} ${3:description}"
+    ],
     "description": "typdef object next.additional property JSDOC"
   },
   "typdef object optional property JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["type_def_object_optional", "optional_type_def_object"],
-    "body": ["@property {${1:type}=} ${2:propertyName} ${3:description}"],
+    "prefix": [
+      "type_def_object_optional",
+      "optional_type_def_object"
+    ],
+    "body": [
+      "@property {${1:type}=} ${2:propertyName} ${3:description}"
+    ],
     "description": "typdef object optional property JSDOC"
   },
   "type assertion JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["type_assert_jsdoc", "jsdoc_assert_type"],
-    "body": ["/** @type {${1:type}} */ (${2:variable_or_value})", "${3}"],
+    "prefix": [
+      "type_assert_jsdoc",
+      "jsdoc_assert_type"
+    ],
+    "body": [
+      "/** @type {${1:type}} */ (${2:variable_or_value})",
+      "${3}"
+    ],
     "description": "type assertion JSDOC"
   },
   "type_var_description": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": [
       "jsdoc_type_var_description",
       "type_var_description_jsdoc",
       "var_type_description"
     ],
-    "body": ["/**", "* ${1:description}", "* @type {${2:type}}", "*/", "${3}"],
+    "body": [
+      "/**",
+      "* ${1:description}",
+      "* @type {${2:type}}",
+      "*/",
+      "${3}"
+    ],
     "description": "type variable declaration JSDOC with description"
   },
   "type_var": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["type_var_jsdoc", "jsdoc_type_var", "var_type_jsdoc"],
-    "body": ["/**", "* @type {${2:type}}", "*/", "${3}"],
+    "prefix": [
+      "type_var_jsdoc",
+      "jsdoc_type_var",
+      "var_type_jsdoc"
+    ],
+    "body": [
+      "/**",
+      "* @type {${2:type}}",
+      "*/",
+      "${3}"
+    ],
     "description": "type variable declaration JSDOC"
   },
   "optional function param JSDOC": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "paramopt",
-    "body": ["@param {${1:type}=} ${2:paramName}"],
+    "body": [
+      "@param {${1:type}=} ${2:paramName}"
+    ],
     "description": "optional function param JSDOC"
   },
   "graphql mutation tag": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "mutationtag",
     "body": [
       "import gql from \"graphql-tag\";",
@@ -944,7 +976,6 @@
     "description": "graphql mutation tag"
   },
   "graphql mutation tag1": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "graphqlmutationtag",
     "body": [
       "import gql from \"graphql-tag\";",
@@ -962,7 +993,6 @@
     "description": "graphql mutation tag"
   },
   "helper funcs": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "helperfuncs",
     "body": [
       "// ====================================================",
@@ -976,37 +1006,46 @@
     "description": "Helper functions header"
   },
   "immediately invoked function expression": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "iife",
-    "body": ["( function ${1:funName}(){", "  ${2}", "})();"],
+    "body": [
+      "( function ${1:funName}(){",
+      "  ${2}",
+      "})();"
+    ],
     "description": "immediately invoked function expression"
   },
   "istanbul ignore else": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "istanbulelse",
-    "body": ["// istanbul ignore else:"],
+    "body": [
+      "// istanbul ignore else:"
+    ],
     "description": "istanbul ignore else"
   },
   "istanbul ignore next": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "istanbulnext",
-    "body": ["// istanbul ignore next:"],
+    "body": [
+      "// istanbul ignore next:"
+    ],
     "description": "istanbul ignore next"
   },
   "istanbul ignore file": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "istanbulfile",
-    "body": ["/* istanbul ignore file */", ""],
+    "body": [
+      "/* istanbul ignore file */",
+      ""
+    ],
     "description": "istanbul ignore next"
   },
   "new promise": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "newpromise",
-    "body": ["new Promise((resolve, reject) => {", "${1}", "})"],
+    "body": [
+      "new Promise((resolve, reject) => {",
+      "${1}",
+      "})"
+    ],
     "description": "new promise"
   },
   "object define property": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "objectdefineProperty",
     "body": [
       "Object.defineProperty(",
@@ -1029,7 +1068,6 @@
     "description": "object define property"
   },
   "react test": {
-    "scope": "javascript,javascriptreact,typescriptreact",
     "prefix": "reacttest-file",
     "body": [
       "/* eslint-disable @typescript-eslint/no-explicit-any */",
@@ -1076,7 +1114,6 @@
     "description": "react test"
   },
   "svelte test": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "sveltetest",
     "body": [
       "/* eslint-disable @typescript-eslint/no-explicit-any */",
@@ -1094,13 +1131,13 @@
     "description": "svelte test"
   },
   "ternary operation": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "ter",
-    "body": ["${1:condition} ? ${2:truthy} : ${0:falsy}"],
+    "body": [
+      "${1:condition} ? ${2:truthy} : ${0:falsy}"
+    ],
     "description": "ternary operation"
   },
   "test react": {
-    "scope": "javascript,javascriptreact,typescriptreact",
     "prefix": "testreact-file",
     "body": [
       "/* eslint-disable @typescript-eslint/no-explicit-any */",
@@ -1168,7 +1205,6 @@
     "description": "test react test"
   },
   "test svelte": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "testsvelte",
     "body": [
       "/* eslint-disable @typescript-eslint/no-explicit-any */",
@@ -1186,25 +1222,27 @@
     "description": "test svelte"
   },
   "useEffect react": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "useEffectReact",
-    "body": ["useEffect(() => { ${2} }, [${1}])"],
+    "body": [
+      "useEffect(() => { ${2} }, [${1}])"
+    ],
     "description": "useEffect react"
   },
   "ts-ignore": {
-    "scope": "javascript,javascriptreact",
     "prefix": "tsignore",
-    "body": ["// @ts-ignore"],
+    "body": [
+      "// @ts-ignore"
+    ],
     "description": "ts-ignore"
   },
   "ts-nocheck": {
-    "scope": "javascript,javascriptreact",
     "prefix": "tsnocheck",
-    "body": ["// @ts-nocheck"],
+    "body": [
+      "// @ts-nocheck"
+    ],
     "description": "ts-nocheck"
   },
   "Reducer definition": {
-    "scope": "typescript,typescriptreact",
     "prefix": "reducer_definition",
     "body": [
       "export function reducer(prevState: StateMachine, actionToApply: Action) {",
@@ -1324,5 +1362,17 @@
       "> = GenericEffectDefinition<EffectArgs, FunctionName, OwnArgs>;"
     ],
     "description": "StateMachine definition"
+  },
+  "throw boom": {
+    "prefix": [
+      "throw_boom",
+      "boom_throw"
+    ],
+    "body": [
+      "throw \"${0:BOOM}\""
+    ],
+    "description": [
+      "throw BOOM"
+    ]
   }
 }
