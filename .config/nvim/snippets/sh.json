@@ -1039,8 +1039,6 @@
   "Snippet sh echo debug": {
     "prefix": [
       "echo_debug",
-      "echo_debug",
-      "echo_debug",
       "debug_echo"
     ],
     "body": [
