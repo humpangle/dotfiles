@@ -1,69 +1,39 @@
 #!/usr/bin/env bash
 
 _run_f() {
-  local _script_name
+  local script_name_="${__EBNIS_RUN_SCRIPT_FULL_PATH__:-}"
 
-  local _script_pattern=(
-    run.sh
-    .run.sh
-    do-run.sh
-  )
+  if [ -z "$script_name_" ]; then
+    echo -e "__EBNIS_RUN_SCRIPT_FULL_PATH__ environment variable must be set and must be full path."
+    return
+  fi
 
-  # Let us search 5 directories level deep for the environment file
-  local _parent_search_paths=(
-    .
-    ..
-    ../..
-    ../../..
-    ../../../..
-    ../../../../..
-    ../../z
-    ../../../z
-    ../../../../z
-    ../../../../../z
-    "${HOME}"
-  )
-
-  local exit_parent=''
-
-  for parent_dir in "${_parent_search_paths[@]}"; do
-    exit_parent=''
-
-    for path in "${_script_pattern[@]}"; do
-      complete_path="${parent_dir}/$path"
-
-      if [[ -e "$complete_path" ]]; then
-        _script_name="$(realpath "$complete_path")"
-        exit_parent=1
-        break
-      fi
-    done
-
-    if [[ -n "${exit_parent}" ]]; then break; fi
-  done
-
-  local _script_dir
-  _script_dir="$(dirname "$_script_name")"
+  local script_dir_
+  script_dir_="$(dirname "$script_name_")"
 
   local _pwd="$PWD"
 
   if [[ "$1" == '--explain' ]]; then
-    echo -e "\nPWD: $_pwd"
-    echo -e "SCRIPT DIRECTORY: $_script_dir"
-    echo -e "SCRIPT NAME: $_script_name\n"
+    echo -e "\nInvoked from directory: $_pwd"
+    echo -e "SCRIPT DIRECTORY:       $script_dir_"
+    echo -e "SCRIPT NAME:            $script_name_\n"
     return
   fi
 
   # Let us run the script at the root of script file
-  cd "$_script_dir" || true
+  if ! cd "$script_dir_"; then
+    echo -e "Can not change to directory $script_dir_."
+    return
+  fi
 
-  __RUN_SCRIPT_CWD__="$_pwd" \
-    bash "$_script_name" "$@"
-  local _exit_code="$?"
+  __EBNIS_RUN_SCRIPT_DIR__="$script_dir_" \
+    bash "$script_name_" "$@"
+
+  local exit_code_="$?"
 
   cd - &>/dev/null || true
 
-  return "$_exit_code"
+  return "$exit_code_"
 }
 
 alias r='_run_f'
