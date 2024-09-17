@@ -76,14 +76,12 @@ return {
           "n",
           "<leader>hS",
           function ()
-            gitsigns.stage_buffer()
+            vim.cmd(":Git add %")
             vim.cmd("edit! %")
             vim.cmd("redraw!")
-            gitsigns.stage_buffer()
-            vim.cmd("edit! %")
+            vim.cmd.echo("'" .. vim.fn.expand("%:.") .. " staged! '")
           end,
-          { desc = "Hunk stage buffer" },
-          bufnr
+          { desc = "Hunk stage buffer" }
         )
 
         utils.map_key(
