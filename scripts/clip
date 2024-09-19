@@ -36,7 +36,7 @@ Host remote_host
   ForwardX11 yes # Optional
 
 Set up ssh config server:
-In /etc/ssh/sshd_config:
+In /etc/ssh/sshd_config or /etc/ssh/sshd_config.d/100-macos.conf:
 Add/update line:
 AcceptEnv LANG LC_* __COPY_PROGRAM__
 eof
