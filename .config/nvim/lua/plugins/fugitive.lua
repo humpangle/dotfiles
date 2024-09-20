@@ -118,7 +118,7 @@ keymap("n", "<Leader>czz", function()
     cmd = cmd .. " --all"
   else
     vim.cmd.echo(
-      '"count should be 1/--include-untracked 2/--all 3/pathspec"'
+      '"count should be 1/plain 2/--include-untracked 2/--all 3/pathspec"'
     )
     return
   end
