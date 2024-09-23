@@ -490,6 +490,7 @@ list() {
         local _cd_and_start_cmd="$_cd1719741431 && $_start1719741519"
 
         if [[ "$_session_to_copy" == "$_elm" ]]; then
+          echo -e "CD and tmux start command:\n$_cd_and_start_cmd"
           copy "$_cd_and_start_cmd" &>/dev/null || :
         fi
 
