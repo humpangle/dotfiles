@@ -432,7 +432,7 @@ list() {
   local _sessions_info_from_resurrect_file=
 
   # The current working directory of each session - as read from resurrect file.
-  local _sessions_pwds_from_resurrect_file
+  local _sessions_pwds_from_resurrect_file=
 
   # Gather information from resurrect file
   if [[ -s "$resurrect_file_" ]]; then
