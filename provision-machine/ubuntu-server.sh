@@ -801,10 +801,15 @@ install_ripgrep() {
 
     rm -rf "$_filename" "$_folder_name"
   else
-    rm -rf "ripgrep_${_version}_amd64.deb"
-    curl -LO "https://github.com/BurntSushi/ripgrep/releases/download/${_version}/ripgrep_${_version}_amd64.deb"
-    sudo dpkg -i "ripgrep*${_version}\_amd64.deb"
-    rm -rf "ripgrep*${_version}\_amd64.deb"
+    local filename_="ripgrep_${_version}-1_amd64.deb"
+    rm -rf "$filename_"
+
+    local url_="https://github.com/BurntSushi/ripgrep/releases/download/${_version}/$filename_"
+    _echo "Downloading from\n$url_"
+    curl -LO "$url_"
+
+    sudo dpkg -i "$filename_"
+    rm -rf "$filename_"
   fi
 }
 
