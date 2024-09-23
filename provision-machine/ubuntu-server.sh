@@ -773,6 +773,8 @@ install_neovim() {
 }
 
 install_ripgrep() {
+  _echo "Attempting to install ripgrep"
+
   if _is_darwin; then
     brew install ripgrep
     return
