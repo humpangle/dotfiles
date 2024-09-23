@@ -393,31 +393,43 @@ _install_erlang_os_deps() {
 }
 
 _install_neovim_linux_x86() {
-  local neovim_version
+  _echo "Removing existing neovim from /usr/bin/nvim"
+  sudo rm -rf /usr/bin/nvim
 
-  neovim_version="$(
-    get_latest_github_release neovim/neovim
-  )"
+  _echo "Downloading build packages"
+  sudo apt install -y \
+    git build-essential cmake ninja-build pkg-config libtool libtool-bin autoconf automake gettext curl
 
-  if [[ ! $(dpkg -l | grep -q fuse2) ]]; then
-    sudo apt-get install -y \
-      fuse \
-      libfuse2
-  fi
+  local this_dir_="$PWD"
+  _echo "Cached current working directory: $this_dir_"
 
-  _echo "INSTALLING NEOVIM VERSION ${neovim_version}"
+  _echo "Entering project 0 directory $PROJECT_0_PATH"
+  cd "$PROJECT_0_PATH"
 
-  curl -fLo nvim "https://github.com/neovim/neovim/releases/download/$neovim_version/nvim.appimage"
+  _echo "Cloning neovim from https://github.com/neovim/neovim.git"
+  git clone https://github.com/neovim/neovim.git
 
-  # Back up currently installed neovim
-  if [ -e /usr/bin/nvim ]; then
-    _echo "Backing up currently installed neovim version"
-    sudo mv /usr/bin/nvim "/usr/bin/nvim-$(date +'%F-%H-%M')"
-  fi
+  _echo "Changing directory into neovim."
+  cd neovim
 
-  sudo chown root:root nvim
-  sudo chmod 755 nvim
-  sudo mv nvim /usr/bin
+  _echo "Caching neovim download directory: $PWD"
+  local neovim_download_dir_="$PWD"
+
+  _echo "Git checkout latest stable version"
+  git checkout stable
+
+  _echo "Running make CMAKE_BUILD_TYPE=RelWithDebInfo"
+  make CMAKE_BUILD_TYPE=RelWithDebInfo
+
+  _echo "Building neovim"
+  cd build
+  cpack -G DEB
+  sudo dpkg -i nvim-linux64.deb
+
+  cd "$this_dir_"
+
+  _echo "Removing neovim download directory"
+  sudo rm -rf "$neovim_download_dir_"
 }
 
 _install_tmux_plugins() {
