@@ -3,13 +3,28 @@
 
 # Alacritty allows us to invoke only one instance from macos applications. This workaround is needed so we can have
 # multiple instances.
-if command -v Alacritty &>/dev/null; then
+alacritty_bin_="$(command -v Alacritty 2>/dev/null)"
+
+if [ -z "$alacritty_bin_" ]; then
+  alacritty_bin_="$(command -v alacritty 2>/dev/null)"
+fi
+
+if [ -n "$alacritty_bin_" ]; then
   __alacritty() {
-    env -i \
-      HOME="$HOME" \
+    if _is_darwin; then
+      env -i \
+        HOME="$HOME" \
+        bash -l -c \
+        "$alacritty_bin_ &>/dev/null" &
+      disown
+    elif [ -n "$ALACRITTY_SOCKET" ]; then # Invoked from a running alacritty instance
+      $alacritty_bin_ msg create-window
+    else
+      # env -i \ # ---> can't seem to be able to refresh environment
       bash -l -c \
-      'Alacritty &>/dev/null' &
-    disown
+        "$alacritty_bin_ &>/dev/null" &
+      disown
+    fi
   }
 
   alias ala='__alacritty'
