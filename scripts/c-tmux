@@ -345,8 +345,6 @@ list() {
 
   : "___help___ ___list_help"
 
-  set -o errexit
-
   local _clients=
   local _from_resurrect_file=
   local _verbose=
