@@ -487,7 +487,7 @@ list() {
 
         local _cd1719741431="cd $_session_pwd_from_resurrect_file"
         local _start1719741519="c-tmux start_tmux -c $_session_pwd_from_resurrect_file $_elm"
-        local _cd_and_start_cmd="$_cd1719741431 && $_start1719741519"
+        local _cd_and_start_cmd="$_cd1719741431 && $_start1719741519 -fs"
 
         if [[ "$_session_to_copy" == "$_elm" ]]; then
           echo -e "\n\nCD and tmux start command:\n$_cd_and_start_cmd\n\n\n"
