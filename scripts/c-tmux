@@ -442,7 +442,7 @@ list() {
 
     local _session_resurrect_list
     _session_resurrect_list="$(
-      awk '/^window\s+/ {print $2}' "$resurrect_file_" |
+      awk '/^window[[:space:]]+/ {print $2}' "$resurrect_file_" |
         sort -u
     )"
 
@@ -474,10 +474,16 @@ list() {
 
       local _session_pwd_from_resurrect_file
       # Matching pattern:
-      # pane  session_name window_index active_win?  :*  pane_index  hostname  :directory active_pane? program  :program?/empty
+      # pane      session_name window_index    active_win?    :[AnyChar]*      pane_index     hostname      :directory
+      #       active_pane? program  :program?/empty
+      # ^pane \s+ $_elm        0           \s+  [0-1]     \s+ :.*         \s+   1        \s+   .+      \s+  :/directory
+      # \s+   [0-1] ...rest
       # active = 1  inactive = 0
+      # pane_index 1 is guaranteed to be available
       _session_pwd_from_resurrect_file="$(
-        awk -v _awk_var_session="$_elm" 'match($0, "^pane\\s+" _awk_var_session "\\s+0\\s+[0-1]\\s+:.*\\s+1\\s+.+\\s+:(/.+)\\s+[0-1]", matches) {print matches[1]}' "$resurrect_file_"
+        sed -nE \
+          "s|(^pane\s+${_elm}\s+0\s+[0-1]\s+:.*\s+1\s+.+\s+:)(/.+)\s+[0-1].+|\2|p" \
+          "$resurrect_file_"
       )"
 
       if [[ -n "$_session_pwd_from_resurrect_file" ]]; then
