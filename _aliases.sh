@@ -399,10 +399,10 @@ alias _pm----help='provison machine'
 # START VSCODE
 # -----------------------------------------------------------------------------
 
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  export VSCODE_BINARY="$(which code)"
-else
+if _has_wsl; then
   export VSCODE_BINARY="/c/Users/$USERNAME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
+else
+  export VSCODE_BINARY="$(which code)"
 fi
 
 _____c_help() {
