@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155
 
+################################################# Install clipper instruction:
+# git clone https://github.com/wincent/clipper.git
+# cd clipper
+# go mod init github.com/wincent/clipper
+# go build
+# mv clipper ~/.local/bin
+
 start-clipper() {
   : "Start the clipper utility used to sync remote machine's clipboard with local client'."
 
