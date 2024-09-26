@@ -109,6 +109,7 @@ keymap("n", "<Leader>czz", function()
 
   local count = vim.v.count
   local cmd = "Git stash push"
+  local current_file_only = false
 
   if count == 1 then
     cmd = cmd
@@ -116,9 +117,11 @@ keymap("n", "<Leader>czz", function()
     cmd = cmd .. " --include-untracked"
   elseif count == 3 then
     cmd = cmd .. " --all"
+  elseif count == 4 then
+    current_file_only = true
   else
     vim.cmd.echo(
-      '"count should be 1/plain 2/--include-untracked 2/--all 3/pathspec"'
+      '"count should be 1/plain 2/--include-untracked 3/--all 4/pathspec"'
     )
     return
   end
@@ -129,7 +132,7 @@ keymap("n", "<Leader>czz", function()
   local left = "<left>"
   local left_repeated_severally = left
 
-  if count == 3 then
+  if current_file_only then
     local file_path = vim.fn.expand("%:.")
     local how_many_times_to_repeat = string.len(file_path) + 5
 
