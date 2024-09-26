@@ -692,3 +692,5 @@ fi
 if command -v livebook &>/dev/null; then
   alias lb=livebook
 fi
+
+alias cdpp='mkdir -p $HOME/projects/pass && cd $HOME/projects/pass'
