@@ -210,8 +210,8 @@ Create/activate/deactivate a Virtualenv environment. If no directory is specifie
 Requires python executable in path.
 
 Usage:
-  c-pv -h
-  c-pv [OPTION] [VIRTUALENV_DIRECTORY]
+  _pv -h
+  _pv [OPTION] [VIRTUALENV_DIRECTORY]
 
 Options:
   -h
@@ -223,17 +223,17 @@ Options:
 
 Examples:
   # Get help
-  c-pv -h
+  _pv -h
 
   # Create
-  c-pv -s directory
-  c-pv -s
+  _pv -s directory
+  _pv -s
 
   # activate
-  c-pv directory
+  _pv directory
 
   # deactivate
-  c-pv -d
+  _pv -d
 EOF
 
   if ! command -v python &>/dev/null; then
