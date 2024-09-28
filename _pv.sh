@@ -140,7 +140,18 @@ _ebnis-create-venv() {
 _ebnis-deactivate-venv() {
   # Without this, the shell might die (try `rm -rf some_pa` and tab for completion).
   set +eup
-  deactivate || :
+
+  # deactivate command will not exist in one of two scenarios:
+  # 1. We have never activated a virtualenv.
+  # 2. We have deactivated from a virtualenv, but not cleanly
+  #
+  # For the second case, we clean up the broken deactivated environment.
+  if command -v deactivate &>/dev/null; then
+    deactivate || :
+  elif [ -n "${VIRTUAL_ENV:-}" ]; then
+    unset VIRTUAL_ENV
+    unset VIRTUAL_ENV_PROMPT
+  fi
 }
 
 _ebnis-wait-for-venv-creation() {
