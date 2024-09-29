@@ -493,7 +493,9 @@ function install-rust {
 
   _may_be_install_asdf "$@"
 
-  _echo "INSTALLING RUST"
+  local version_="${1:-latest}"
+
+  _echo "INSTALLING RUST version $version_"
 
   if ! _is-dev "$@"; then
     _install-deps "${RUST_DEPS[*]}"
@@ -503,33 +505,68 @@ function install-rust {
   . "$HOME/.asdf/asdf.sh"
 
   "$(_asdf-bin-path)" plugin add rust
-  "$(_asdf-bin-path)" install rust $RUST_VERSION
-  "$(_asdf-bin-path)" global rust $RUST_VERSION
+
+  if [ "$version_" = latest ]; then
+    version_="$(
+      asdf list all rust |
+        tail -n1
+    )"
+
+    _echo "INSTALLING RUST latest version $version_"
+  fi
+
+  _echo "Caching current directory $PWD"
+  local this_dir_="$PWD"
+
+  _echo "Changing directory to $PROJECT_0_PATH"
+  cd "$PROJECT_0_PATH" || :
+
+  _echo "Begin installing rust $version_"
+  "$(_asdf-bin-path)" install rust "$version_"
+  _echo "Rust $version_ installed. Configuring..."
+
+  if [ -f ./.tool-versions ]; then
+    _echo "Backing up tool-versions"
+    mv ./.tool-versions ./tool-versions-bak
+  fi
+
+  if asdf current rust &>/dev/null; then
+    _echo "Global rust exists, No configuration needed."
+
+    if [ -f ./.tool-versions-bak ]; then
+      _echo "Restoring tool-versions"
+      mv ./.tool-versions-bak ./tool-versions
+    fi
+
+    cd "$this_dir_"
+
+    return
+  fi
+
+  _echo "Setting global rust version to $version_"
+  "$(_asdf-bin-path)" global rust "$version_"
 
   local rust_install_root
-  rust_install_root="$(_asdf-plugin-install-root rust "$RUST_VERSION")"
+  rust_install_root="$(_asdf-plugin-install-root rust "$version_")"
 
   # shellcheck source=/dev/null
   source "${rust_install_root}/env"
 
   "$(_asdf-bin-path)" reshim rust
 
-  # Install and set as default latest release of cargo
+  _echo "Install and set as default latest release of cargo"
   rustup default stable
 
-  "$(_asdf-bin-path)" reshim rust
-
-  local cargo_bin_path="${rust_install_root}/bin/cargo"
-
-  # Install the lua formatter - stylua
-  "${cargo_bin_path}" install stylua --features lua52
   "$(_asdf-bin-path)" reshim rust
 
   local cargo_bin_dir="${HOME}/.cargo/bin"
 
   if [[ -d "${cargo_bin_dir}" ]]; then
+    _echo "Configure cargo bin directory to $cargo_bin_dir"
     echo "export PATH=${cargo_bin_dir}:\$PATH" >>"${HOME}/.bashrc"
   fi
+
+  cd "$this_dir_"
 }
 
 uninstall-docker() {
