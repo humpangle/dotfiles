@@ -559,7 +559,7 @@ local process_file_path_yanking = function(
 end
 
 -- Yank relative file path
-utils.map_key("n", ",yr", process_file_path_yanking("%:r"))
+utils.map_key("n", ",yr", process_file_path_yanking("%:."))
 -- Yank file name (not path)
 utils.map_key("n", ",yn", process_file_path_yanking("%:t"))
 -- Yank file parent directory
