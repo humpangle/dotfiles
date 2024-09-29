@@ -3,11 +3,6 @@ local plugin_enabled = require("plugins/plugin_enabled")
 
 return {
   {
-    -- Required by mason-nvim-dap
-    "williamboman/mason.nvim",
-  },
-
-  {
     "mfussenegger/nvim-dap",
     enabled = plugin_enabled.dap(),
     cmd = {
@@ -33,6 +28,10 @@ return {
       "DapVirtualTextToggle",
     },
     dependencies = {
+      {
+        "williamboman/mason.nvim",
+      },
+
       -- Installs the debug adapters binaries for you automatically and provides best effort configuration for such
       -- adapter
       "jay-babu/mason-nvim-dap.nvim",
