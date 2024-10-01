@@ -390,7 +390,6 @@ local plugins_table = {
   },
 
   require("plugins/elixir"),
-  require("plugins/google-doc"),
   require("plugins.bigfile-nvim"),
 }
 
