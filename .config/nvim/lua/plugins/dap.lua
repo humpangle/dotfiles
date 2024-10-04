@@ -1,6 +1,10 @@
 -- DAP: Debug Adapter Protocol
 local plugin_enabled = require("plugins/plugin_enabled")
 
+local utils = require("utils")
+
+local keymap = utils.map_key
+
 return {
   {
     "mfussenegger/nvim-dap",
@@ -52,7 +56,6 @@ return {
         dependencies = {
           "nvim-treesitter/nvim-treesitter",
         },
-        opts = {},
       },
 
       -- Some plugins provide *NICER* developer experiences (default config for the speciic language, launching the
@@ -84,10 +87,64 @@ return {
       })
 
       -- Basic debugging keymaps, feel free to change to your liking!
-      vim.keymap.set("n", "<leader>B", function()
-        dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+
+      -- STARTING / STOPPING / SHOWING DAP UI
+      keymap("n", "<leader>Dcc", dap.continue, {
+        desc = "Debug: continue",
+      })
+
+      keymap("n", "<leader>Dtt", dapui.toggle, {
+        desc = "Debug: UI toggle",
+      })
+
+      keymap("n", "<leader>Drr", dap.restart, {
+        desc = "Debug: restart",
+      })
+      -- /END STARTING / STOPPING / SHOWING DAP UI
+
+      keymap("n", "<leader>Dbt", function()
+        dap.toggle_breakpoint()
       end, {
-        desc = "Debug: Set Breakpoint",
+        desc = "Debug: Toggle Breakpoint",
+      })
+
+      keymap("n", "<leader>DbC", dap.clear_breakpoints, {
+        desc = "Debug: Toggle Breakpoint",
+      })
+
+      keymap("n", "<leader>Dbc", function()
+        local prompt = vim.fn.input("Breakpoint condition: ")
+        dap.set_breakpoint(prompt)
+      end, {
+        desc = "Debug: Set Conditional Breakpoint",
+      })
+
+      keymap("n", "<leader>Drc", function()
+        dap.run_to_cursor()
+      end, {
+        desc = "Debug: Run to cursor",
+      })
+
+      keymap("n", "<leader>D?", function()
+        dapui.eval(nil, { enter = true })
+      end, {
+        desc = "Debug: Inspect current value - eval under cursor",
+      })
+
+      keymap("n", "<leader>Dsi", dap.step_into, {
+        desc = "Debug: step_into",
+      })
+
+      keymap("n", "<leader>Dso", dap.step_out, {
+        desc = "Debug: step_out",
+      })
+
+      keymap("n", "<leader>Dsv", dap.step_over, {
+        desc = "Debug: step_over",
+      })
+
+      keymap("n", "<leader>Dsb", dap.step_back, {
+        desc = "Debug: step_back",
       })
 
       -- Dap UI setup
@@ -128,10 +185,35 @@ return {
         {}
       )
 
-      -- You can use nvim-dap events to open and close the windows automatically (:help dap-extensions)
+      -- You can use nvim-dap events to open and close the windows automatically when DAP starts (:help dap-extensions)
       dap.listeners.after.event_initialized.dapui_config = dapui.open
       dap.listeners.before.event_terminated.dapui_config = dapui.close
       dap.listeners.before.event_exited.dapui_config = dapui.close
+
+      -- Some attempt at mitigating leaking tokens/secrets
+      require("nvim-dap-virtual-text").setup({
+        display_callback = function(variable)
+          local variable_val = variable.value
+
+          local name_lower = string.lower(variable.name)
+          local val_lower = string.lower(variable_val)
+
+          if
+            name_lower:match("secret")
+            or name_lower:match("api")
+            or val_lower:match("secret")
+            or val_lower:match("api")
+          then
+            return "*****"
+          end
+
+          if #variable_val > 15 then
+            return " " .. string.sub(variable_val, 1, 15) .. "... "
+          end
+
+          return " " .. variable_val
+        end,
+      })
     end,
   },
 }
