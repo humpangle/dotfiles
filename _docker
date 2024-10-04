@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=2032
 
 if ! command -v docker &>/dev/null; then
   return
@@ -6,12 +7,15 @@ fi
 
 declare -A _alias_map_docker=()
 
-# shellcheck disable=2230
-_docker_bin=
-_docker_bin="$(command -v docker)"
-export _docker_bin
+docker() {
+  if [ "$1" = 'compose' ] && [ -n "$__EBNIS_COMPOSE_CONFIG_FILENAME__" ]; then
+    "$_EBNIS_DOCKER_BIN" compose --file "$__EBNIS_COMPOSE_CONFIG_FILENAME__" "${@:2}"
 
-# shellcheck disable=2032
+    return
+  fi
+
+  "$_EBNIS_DOCKER_BIN" "$@"
+}
 
 function docker-compose {
   docker compose "${@}"

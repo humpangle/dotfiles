@@ -6,6 +6,8 @@ export USERNAME='some-name'
 # /END/ WSL
 # -----------------------------------------------------------------------------
 
+export _EBNIS_DOCKER_BIN='/usr/bin/docker'
+
 if [[ -f "$HOME/dotfiles/_shell-script" ]]; then
   source "$HOME/dotfiles/_shell-script"
 fi
