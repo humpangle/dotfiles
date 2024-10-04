@@ -58,11 +58,6 @@
     "command": "workbench.action.toggleMaximizedPanel",
   },
   {
-    "key": "ctrl+f",
-    "command": "vscode-neovim.ctrl-f",
-    "when": "terminalEditorFocus || (editorTextFocus && neovim.ctrlKeysNormal.f && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions')"
-  },
-  {
     "key": "shift+ctrl+p",
     "command": "workbench.action.showCommands"
   },
@@ -93,22 +88,41 @@
     "key": "ctrl+alt+w",
     "command": "workbench.action.closeWindow"
   },
+  // NEOVIM //////////////////////////////////////////////////
+  {
+    "key": "ctrl+f",
+    "command": "vscode-neovim.ctrl-f",
+    "when": "(terminalEditorFocus || editorTextFocus) && neovim.ctrlKeysNormal.f && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions')"
+  },
   {
     "key": "ctrl+r ctrl+d",
     "command": "vscode-neovim.send",
     "when": "editorTextFocus && neovim.init && neovim.mode == 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'",
     "args": "<C-r><C-d>"
   },
+  {
+    "key": "ctrl+j",
+    "command": "vscode-neovim.send",
+    "when": "(terminalEditorFocus || editorTextFocus) && neovim.ctrlKeysNormal.j && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'",
+    "args": "<C-j>"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "vscode-neovim.send",
+    "when": "(terminalEditorFocus || editorTextFocus) && neovim.ctrlKeysNormal.k && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'",
+    "args": "<C-j>"
+  },
+  // END NEOVIM //////////////////////////////////////////////////
   // {
   //   "key": "ctrl+alt+1",
   //   "command": "workbench.action.terminal.new",
   //   "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
   // },
-  // DISABLED
   // {
   //   "key": "shift+tab+escape",
   //   "command": "-workbench.action.togglePanel"
   // },
+  // DISABLED /////////////////////////////////////////////////
   {
     "key": "ctrl+w",
     "command": "-workbench.action.terminal.killEditor",
@@ -133,5 +147,5 @@
     "command": "-workbench.action.terminal.focusNextPane",
     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
   },
-  // /END/ DISABLED
+  // /END/ DISABLED /////////////////////////////////////////////////
 ]
