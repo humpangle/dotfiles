@@ -189,15 +189,29 @@ local plugins_table = {
   require("plugins.dadbod-ui"),
 
   {
-    "t9md/vim-choosewin",
+    "gbrlsnchs/winpick.nvim",
     enabled = not plugin_enabled.has_vscode(),
     init = function()
-      -- if you want to use overlay feature: does not work well if there is terminal buffer in the tab
-      -- vim.g.choosewin_overlay_enable = 1
-      vim.g.choosewin_overlay_enable = 0
-
       -- invoke with '-'
-      keymap("n", "<leader>-", "<Plug>(choosewin)", { noremap = true })
+      keymap("n", "<leader>-", function()
+        local winpick = require("winpick")
+        local winid = winpick.select()
+
+        if winid then
+          vim.api.nvim_set_current_win(winid)
+        end
+      end, { noremap = true })
+    end,
+    config = function()
+      local winpick = require("winpick")
+
+      winpick.setup({
+        border = "double",
+        filter = nil, -- doesn't ignore any window by default
+        prompt = "Pick a window: ",
+        format_label = winpick.defaults.format_label, -- formatted as "<label>: <buffer name>"
+        chars = nil,
+      })
     end,
   },
 
