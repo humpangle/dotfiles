@@ -50,6 +50,7 @@ _alias_map_docker["dcd"]='docker compose down'
 _alias_map_docker["dcdv"]='docker compose kill && docker compose down -v'
 # shellcheck disable=2016
 _alias_map_docker["dvra"]='docker volume rm $(docker volume ls -q)'
+_alias_map_docker["dv"]='docker volume'
 _alias_map_docker["dvls"]='docker volume ls'
 _alias_map_docker["dvlsq"]='docker volume ls -q'
 _alias_map_docker["ds"]='sudo service docker start'
