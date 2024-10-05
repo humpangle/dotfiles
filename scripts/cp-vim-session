@@ -44,7 +44,7 @@ _cp_vim_session() {
   _source_no_home_prefix_unusual_escaped="$(
     _strip_home_dir_prefix "$_source" |
       xargs -I {} \
-        -S 1024 \
+        -s 1024 \
         bash -c "$(declare -f _escape_unusual_chars); _escape_unusual_chars '{}' 2"
   )"
 
