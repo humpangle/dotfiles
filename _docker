@@ -94,7 +94,7 @@ drimgf() {
   docker images |
     grep -P "$1" |
     awk '{print $3}' |
-    xargs docker rmi
+    xargs "$_EBNIS_DOCKER_BIN" rmi
 }
 
 _alias_map_docker["dimg"]='dimgf'
