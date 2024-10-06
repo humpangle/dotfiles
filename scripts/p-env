@@ -226,17 +226,6 @@ _debug_fn() {
   echo -e "$_string"
 }
 
-# This utility function is necessary because commands `realpath` and `readlink` do not work for non existing
-# paths on macos.
-_resolve_rel_to_abs_path() {
-  if command -v grealpath &>/dev/null; then
-    echo -n "$(grealpath "$1")"
-    return
-  fi
-
-  echo -n "$(realpath "$1")"
-}
-
 _deal_with_trailing_comment() {
   : "This is to deal with such lines as: EXPORTER=endpoints # Export both to stdout and endpoints."
   : "We wish to remove: # Export both to stdout and endpoints."
@@ -380,7 +369,7 @@ if [[ -n "$_out_filename" ]]; then
     # File exists - get absolute file path
     _out_file_full_path_name=$(readlink -f "$_out_filename")
   else
-    _out_file_full_path_name=$(_resolve_rel_to_abs_path "$_out_filename")
+    _out_file_full_path_name=$(realpath "$_out_filename")
   fi
 fi
 

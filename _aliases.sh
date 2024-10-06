@@ -506,7 +506,7 @@ __c() {
   local vscode_args_=("${@:2}")
 
   filepath_="$(
-    if command -v grealpath &>/dev/null; then grealpath "$filepath_"; else realpath $filepath_; fi
+    realpath $filepath_
   )"
 
   local _cmd="$VSCODE_BINARY"
