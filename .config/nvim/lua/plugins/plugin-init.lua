@@ -188,6 +188,7 @@ local plugins_table = {
 
   require("plugins.dadbod-ui"),
 
+  -- choosewin replacement
   {
     "gbrlsnchs/winpick.nvim",
     enabled = not plugin_enabled.has_vscode(),
@@ -206,10 +207,22 @@ local plugins_table = {
       local winpick = require("winpick")
 
       winpick.setup({
-        border = "double",
+        border = "single",
         filter = nil, -- doesn't ignore any window by default
         prompt = "Pick a window: ",
-        format_label = winpick.defaults.format_label, -- formatted as "<label>: <buffer name>"
+        -- format_label = winpick.defaults.format_label, -- formatted as "<label>: <buffer name>"
+        format_label = function(label, _, bufnr)
+          -- :TODO: mark current buffer in different color
+          local buf_name = vim.api.nvim_buf_get_name(bufnr)
+
+          if buf_name:len() == 0 then
+            return label
+          end
+
+          return label
+
+          -- return string.format("%s: %s", label, vim.fn.fnamemodify(buf_name, ":~:."))
+        end,
         chars = nil,
       })
     end,
