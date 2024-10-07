@@ -3061,24 +3061,71 @@ install-docker-hadolint() {
   mv "$file_" "$bin_path_"
 }
 
-help() {
-  : "List available tasks."
+_is_local_function() {
+  local _function_name="$1"
+  local _this_file_content="$2"
 
-  if [[ -z "${1}" ]]; then
-    mapfile -t names < <(compgen -A function | grep -v '^_')
+  # Function name is not a local function - but perhaps inherited from the shell.
+  if ! grep -qP "^$_function_name\(\)\s+\{" <<<"$_this_file_content" &&
+    ! grep -qP "function\s+${_function_name}\s+{" <<<"$_this_file_content"; then
+    return 1
+  fi
+
+  return 0
+}
+
+_command_exists() {
+  local _command_to_test="$1"
+  local _this_file_content
+  _this_file_content="$(cat "$0")"
+
+  mapfile -t _all_function_names < <(compgen -A function | grep -v '^_')
+
+  for _name in "${_all_function_names[@]}"; do
+    if ! _is_local_function "$_name" "$_this_file_content"; then
+      continue
+    fi
+
+    if [[ "$_name" == "$_command_to_test" ]]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+help() {
+  : "List available commands."
+
+  # Matching pattern examples:
+  # `: "___help___ ___some_func_help"`
+  # `: "___help___ ____some-func-help"`
+  local _help_func_pattern="[_]*___[a-zA-Z][a-zA-Z0-9_-]*[_-]help"
+
+  if [[ -z "$1" ]]; then
+    # Regular functions do not start with _.
+    mapfile -t _function_names < <(
+      compgen -A function |
+        grep -v '^_'
+    )
   else
-    mapfile -t names < <(compgen -A function | grep '^_')
+    # Helper functions start with _.
+    mapfile -t _function_names < <(
+      compgen -A function |
+        grep '^_' |
+        grep -v -E "$_help_func_pattern"
+    )
   fi
 
   local _this_file_content
-  _this_file_content="$(cat "${0}")"
+  _this_file_content="$(cat "$0")"
 
   local len=0
   declare -A name_to_len_map=()
 
-  for name in "${names[@]}"; do
-    _len="${#name}"
-    name_to_len_map["$name"]="${_len}"
+  for _name in "${_function_names[@]}"; do
+    _len="${#_name}"
+    name_to_len_map["$_name"]="${_len}"
     if [[ "${_len}" -gt "${len}" ]]; then len=${_len}; fi
   done
 
@@ -3088,16 +3135,13 @@ help() {
 
   len=$((len + 10))
 
-  for name in "${names[@]}"; do
-    # Make sure we are only processing function names from this file's content and no names inherited from
-    # elsewhere such as the shell.
-    if ! grep -qP "^$name\(\)\s+\{" <<<"$_this_file_content" &&
-      ! grep -qP "function\s+${name}\s+{" <<<"$_this_file_content"; then
+  for _name in "${_function_names[@]}"; do
+    if ! _is_local_function "$_name" "$_this_file_content"; then
       continue
     fi
 
     local spaces=""
-    _len="${name_to_len_map[$name]}"
+    _len="${name_to_len_map[$_name]}"
     _len=$((len - _len))
 
     for _ in $(seq "${_len}"); do
@@ -3106,7 +3150,7 @@ help() {
     done
 
     local _function_def_text
-    _function_def_text="$(type "${name}")"
+    _function_def_text="$(type "${_name}")"
 
     local _alias_name
 
@@ -3117,27 +3161,28 @@ help() {
       <<<"${_function_def_text}")"
 
     if [[ -n "${_alias_name}" ]]; then
-      _aliases["${_alias_name}"]="${_aliases["${_alias_name}"]} ${name}"
+      _aliases["${_alias_name}"]="${_aliases["${_alias_name}"]} ${_name}"
       continue
     fi
 
-    local _help_func=''
+    local _help_func
 
-    # Matching pattern example:
-    # `: "___help___ ___elixir-help"`
-    _help_func="$(awk \
-      'match($0, /^ +: *"___help___ +(___[a-zA-Z][a-zA-Z0-9_-]*[_-]help)/, a) {print a[1]}' \
-      <<<"${_function_def_text}")"
+    _help_func="$(
+      awk \
+        -v _awk_help_func_pattern="$_help_func_pattern" \
+        'match($0, "^ +: *\"___help___ +(" _awk_help_func_pattern ")", a) {print a[1]}' \
+        <<<"$_function_def_text"
+    )"
 
     # Get the whole function definition text and extract only the documentation
     # part.
-    if [[ -n "${_help_func}" ]]; then
+    if [[ -n "$_help_func" ]]; then
       mapfile -t _doc_lines < <(
-        eval "${_help_func}" 2>/dev/null
+        eval "$_help_func" 2>/dev/null
       )
     else
       mapfile -t _doc_lines < <(
-        sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p" <<<"${_function_def_text}"
+        sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p" <<<"$_function_def_text"
       )
     fi
 
@@ -3145,24 +3190,24 @@ help() {
 
     if [[ -n "${_doc_lines[*]}" ]]; then
       for _doc in "${_doc_lines[@]}"; do
-        _output+="${name} ${spaces} ${_doc}\n"
+        _output+="$_name $spaces $_doc\n"
       done
     else
-      _output="${name} ${spaces} *************\n"
+      _output="$_name $spaces *************\n"
     fi
 
-    _all_output["${name}"]="${_output}"
-    _name_spaces_map["${name}"]="${name} ${spaces}"
+    _all_output["$_name"]="$_output"
+    _name_spaces_map["$_name"]="$_name $spaces"
   done
 
-  for name in "${!_all_output[@]}"; do
-    _output="${_all_output["${name}"]}"
+  for _name in "${!_all_output[@]}"; do
+    _output="${_all_output["${_name}"]}"
     echo -e "${_output}"
 
-    local _alias_names="${_aliases["${name}"]}"
+    local _alias_names="${_aliases["${_name}"]}"
 
     if [[ -n "${_alias_names}" ]]; then
-      echo -e "${_name_spaces_map["${name}"]} ALIASES: ${_alias_names}\n\n"
+      echo -e "${_name_spaces_map["${_name}"]} ALIASES: ${_alias_names}\n\n"
     fi
   done
 }
