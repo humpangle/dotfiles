@@ -118,8 +118,8 @@ return {
   -- IMPORTANT: sudo luarocks install --lua-version 5.1 tiktoken_core
   {
     "CopilotC-Nvim/CopilotChat.nvim",
-    -- version = "v2.10.0",
-    branch = "canary", -- Use the canary branch if you want to test the latest features but it might be unstable
+    version = "v2.14.2",
+    -- branch = "canary", -- Use the canary branch if you want to test the latest features but it might be unstable
     -- Do not use branch and version together, either use branch or version
     dependencies = {
       { "nvim-lua/plenary.nvim" },
