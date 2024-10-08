@@ -124,6 +124,7 @@ Session.vim
 
 # scratch files
 *.___scratch*
+*___scratch*
 **/session*.vim
 *.___pid*
 *.pid
