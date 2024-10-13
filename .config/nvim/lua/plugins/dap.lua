@@ -7,6 +7,10 @@ local keymap = utils.map_key
 
 return {
   {
+    "Joakker/lua-json5",
+  },
+
+  {
     "mfussenegger/nvim-dap",
     enabled = plugin_enabled.dap(),
     cmd = {
@@ -69,6 +73,9 @@ return {
       local dap = require("dap")
       local dapui = require("dapui")
       local mason_dap = require("mason-nvim-dap")
+
+      -- Use json5 to parse vscode-like launch.json file (with comments)
+      require("dap.ext.vscode").json_decode = require("json5").parse
 
       mason_dap.setup({
         -- Debugger binaries you want mason to install for you.

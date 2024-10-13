@@ -286,7 +286,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "json",
   callback = function()
-    vim.bo.filetype = "jsonc"
+    vim.bo.filetype = "json5"
   end,
 })
 -- END Map files from one type to another

@@ -23,7 +23,7 @@ return {
       "html",
       "ini",
       "jsdoc",
-      "jsonc",
+      "json5",
       "lua",
       "luadoc",
       "markdown",

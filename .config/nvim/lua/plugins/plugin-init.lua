@@ -27,6 +27,16 @@ local plugins_table = {
 
   "nvim-lua/plenary.nvim",
 
+  {
+    "Joakker/lua-json5",
+    cond = true, -- false,
+    priority = 1000,
+    -- If the ./install.sh file does not run
+    --    cd ~/.local/share/nvim/lazy/lua-json5
+    --    ./install.sh
+    build = "./install.sh",
+  },
+
   "bronson/vim-visual-star-search",
 
   require("plugins/cmp"),

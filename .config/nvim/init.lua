@@ -1,3 +1,7 @@
+-- make Joakker/lua-json5 work on macos.
+-- https://github.com/neovim/neovim/issues/21749#issuecomment-1378720864
+table.insert(vim._so_trails, "/?.dylib")
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
