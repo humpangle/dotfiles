@@ -428,7 +428,7 @@ local plugins_table = {
 
   require("plugins/elixir"),
   require("plugins.bigfile-nvim"),
-  require("plugins/copilot"),
+  require("plugins/ai"),
 }
 
 require("lazy").setup(plugins_table, {})
