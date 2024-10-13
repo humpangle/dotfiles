@@ -1,3 +1,19 @@
+-- Inspired by
+-- https://github.com/tpope/vim-fugitive/issues/1517
+local function reload_fugitive_index()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    local bufname = vim.api.nvim_buf_get_name(buf)
+    if
+      vim.startswith(bufname, "fugitive://")
+      and string.find(bufname, ".git//0/")
+    then
+      vim.api.nvim_buf_call(buf, function()
+        vim.cmd("edit! %") -- refresh the buffer
+      end)
+    end
+  end
+end
+
 return {
   "lewis6991/gitsigns.nvim",
   config = function()
@@ -36,12 +52,12 @@ return {
 
         utils.map_key("n", "<leader>hs", function()
           gitsigns.stage_hunk()
-          vim.cmd("edit! %")
+          reload_fugitive_index()
         end, { desc = "Hunk stage" }, bufnr)
 
         utils.map_key("n", "<leader>hr", function()
           gitsigns.reset_hunk()
-          vim.cmd("edit! %")
+          reload_fugitive_index()
         end, { desc = "Hunk reset" }, bufnr)
 
         utils.map_key("v", "<leader>hs", function()
@@ -50,13 +66,15 @@ return {
             vim.fn.line("v"),
           })
 
-          vim.cmd("edit! %")
+          reload_fugitive_index()
         end, { desc = "Hunk stage" }, bufnr)
 
         utils.map_key("n", "<leader>hS", function()
           vim.cmd(":Git add %")
           vim.cmd("edit! %")
           vim.cmd("redraw!")
+
+          reload_fugitive_index()
           vim.cmd.echo("'" .. vim.fn.expand("%:.") .. " staged! '")
         end, { desc = "Hunk stage buffer" })
 
@@ -65,16 +83,20 @@ return {
             vim.fn.line("."),
             vim.fn.line("v"),
           })
+
+          reload_fugitive_index()
         end, { desc = "Hunk reset" }, bufnr)
 
         utils.map_key("n", "<leader>hu", function()
           gitsigns.undo_stage_hunk()
-          vim.cmd("edit! %")
+
+          reload_fugitive_index()
         end, { desc = "Hunk undo stage" }, bufnr)
 
         utils.map_key("n", "<leader>hR", function()
           gitsigns.reset_buffer()
-          vim.cmd("edit! %")
+
+          reload_fugitive_index()
         end, { desc = "Hunk reset buffer" }, bufnr)
 
         utils.map_key(
