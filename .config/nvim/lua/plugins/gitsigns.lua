@@ -53,19 +53,19 @@ return {
           vim.cmd("edit! %")
         end, { desc = "Hunk stage" }, bufnr)
 
-        utils.map_key("v", "<leader>hr", function()
-          gitsigns.reset_hunk({
-            vim.fn.line("."),
-            vim.fn.line("v"),
-          })
-        end, { desc = "Hunk reset" }, bufnr)
-
         utils.map_key("n", "<leader>hS", function()
           vim.cmd(":Git add %")
           vim.cmd("edit! %")
           vim.cmd("redraw!")
           vim.cmd.echo("'" .. vim.fn.expand("%:.") .. " staged! '")
         end, { desc = "Hunk stage buffer" })
+
+        utils.map_key("v", "<leader>hr", function()
+          gitsigns.reset_hunk({
+            vim.fn.line("."),
+            vim.fn.line("v"),
+          })
+        end, { desc = "Hunk reset" }, bufnr)
 
         utils.map_key("n", "<leader>hu", function()
           gitsigns.undo_stage_hunk()
