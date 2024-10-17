@@ -1399,7 +1399,7 @@ function install-nodejs-dev-pkgs {
     wscat
 }
 
-function install-python {
+install-python() {
   : "Install python"
 
   local _version="$PYTHON_VERSION"
