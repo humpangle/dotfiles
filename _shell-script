@@ -121,6 +121,12 @@ fi
 # Put the prompt on a new line in case we have very long PWD pathname.
 _PS1_APPEND='\n\$ '
 
+# # But if we already have the prompt on a newline, do nothing.
+# shellcheck disable=2076
+if [[ "$PS1" =~ "$_PS1_APPEND" ]]; then
+  _PS1_APPEND=""
+fi
+
 # Inverted cursor workaround for windows terminal
 # https://github.com/microsoft/terminal/issues/9610#issuecomment-944940268
 if [ -n "${WT_SESSION:-}" ]; then
