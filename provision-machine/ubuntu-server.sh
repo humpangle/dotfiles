@@ -1404,7 +1404,6 @@ install-python() {
 
   local _version="$PYTHON_VERSION"
   local _dev
-  local _global
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -1434,11 +1433,6 @@ install-python() {
     --version | -v)
       _version="$2"
       shift 2
-      ;;
-
-    --global | -g)
-      _global=1
-      shift
       ;;
 
     --)
@@ -1480,13 +1474,6 @@ install-python() {
 
   "$(_asdf-bin-path)" install python "$_version"
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
-  _tool-versions-backup --backup=python
-
-  "$(_asdf-bin-path)" local python "$_version"
-
   if [[ -n "$_dev" ]]; then
     pip install -U \
       pip \
@@ -1502,22 +1489,6 @@ install-python() {
       pip \
       2>/dev/null ||
       true
-  fi
-
-  "$(_asdf-bin-path)" reshim python || true
-
-  _tool-versions-backup --restore=python
-
-  if [[ -n "$_global" ]]; then
-    "$(_asdf-bin-path)" global python "$_version"
-
-    local _exp_py3_regexp='export PYTHON3="\$\(asdf which python 2>/dev/null\)"'
-
-    if ! grep -qP "$_exp_py3_regexp" .bashrc &>/dev/null; then
-      # shellcheck disable=SC2016
-      echo 'PYTHON3="$(asdf which python 2>/dev/null)"' >>~/.bashrc
-      echo 'export PYTHON3' >>~/.bashrc
-    fi
   fi
 }
 
