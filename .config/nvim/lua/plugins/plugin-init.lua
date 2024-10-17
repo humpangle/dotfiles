@@ -343,6 +343,7 @@ local plugins_table = {
 
   {
     "windwp/nvim-autopairs",
+    enabled = plugin_enabled.nvim_autopairs(),
     event = "InsertEnter",
     opts = {}, -- this is equalent to setup({}) function
   },
