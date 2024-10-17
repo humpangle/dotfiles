@@ -26,8 +26,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export EBNIS_VIM_THEME=gruvbox8_hard
 export EBNIS_VIM_THEME_BG=d
 
-export GOOGLE_DOC_VIM_DIR='/some-path/username@gmail.com/My Drive/google-doc-vim'
-export GOOGLE_DOC_PLUGIN_DIR="$HOME/projects/google-doc-vim/"
 # -----------------------------------------------------------------------------
 # /END/ NVIM
 # -----------------------------------------------------------------------------
