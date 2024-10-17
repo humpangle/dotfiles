@@ -44,13 +44,7 @@ eof
   echo -e "${var}"
 }
 
-nc_flag__=""
-
-if grep -q ubuntu /etc/os-release &>/dev/null; then
-  nc_flag__="-N"
-fi
-
-clip_nc_cmd__="nc $nc_flag__ localhost 8378"
+clip_nc_cmd__="nc ${__NETCAT_SHUTDOWN_AFTER_INPUT_EOF_FLAG__:-} localhost 8378"
 
 while getopts 'hd' clip_opts__; do
   case "$clip_opts__" in
