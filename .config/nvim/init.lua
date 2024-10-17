@@ -2,6 +2,8 @@
 -- https://github.com/neovim/neovim/issues/21749#issuecomment-1378720864
 table.insert(vim._so_trails, "/?.dylib")
 
+vim.opt.shell = os.getenv("SHELL")
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
