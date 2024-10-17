@@ -95,4 +95,12 @@ function M.has_gpt()
   return utils.os_env_not_empty("NVIM_ENABLE_GPT_PLUGIN")
 end
 
+function M.has_lua_json5()
+  if M.has_vscode() then
+    return false
+  end
+
+  return true
+end
+
 return M

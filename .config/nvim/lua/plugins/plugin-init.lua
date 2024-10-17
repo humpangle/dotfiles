@@ -30,6 +30,7 @@ local plugins_table = {
   {
     "Joakker/lua-json5",
     cond = true, -- false,
+    enabled = plugin_enabled.has_lua_json5(),
     priority = 1000,
     -- If the ./install.sh file does not run
     --    cd ~/.local/share/nvim/lazy/lua-json5
