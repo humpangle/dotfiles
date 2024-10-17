@@ -1271,7 +1271,7 @@ eof
   echo "${var}"
 }
 
-function install-nodejs {
+install-nodejs() {
   : "___help___ ___nodejs-help"
 
   local version
