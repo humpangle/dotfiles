@@ -103,4 +103,12 @@ function M.has_lua_json5()
   return true
 end
 
+function M.has_big_file_nvim()
+  if M.has_vscode() then
+    return false
+  end
+
+  return true
+end
+
 return M
