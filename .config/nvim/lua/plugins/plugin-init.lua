@@ -351,6 +351,7 @@ local plugins_table = {
   {
     -- A plugin to color colornames and ANSI codes. :ColoHighlight
     "chrisbra/Colorizer",
+    enabled = plugin_enabled.colorizer(),
   },
   {
     -- Bash Automated Testing System

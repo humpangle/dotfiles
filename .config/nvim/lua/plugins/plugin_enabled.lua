@@ -127,4 +127,12 @@ function M.nvim_autopairs()
   return true
 end
 
+function M.colorizer()
+  if M.has_vscode() then
+    return false
+  end
+
+  return true
+end
+
 return M
