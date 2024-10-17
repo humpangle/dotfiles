@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {}
 
 local has_coc = function()
@@ -62,6 +64,35 @@ end
 
 function M.enable_solarized_color_scheme()
   return M.enable_vim_one_color_scheme()
+end
+
+function M.ai_enabled()
+  if M.has_vscode() then
+    return false
+  end
+
+  if M.has_termux() then
+    return false
+  end
+
+  return utils.os_env_not_empty("NVIM_ENABLE_AI_PLUGINS")
+end
+
+function M.has_official_copilot()
+  return utils.os_env_not_empty("NVIM_ENABLE_OFFICIAL_COPILOT_PLUGIN")
+end
+
+function M.has_unofficial_copilot()
+  return not M.has_official_copilot
+    and utils.os_env_not_empty("NVIM_ENABLE_COMMUNITY_COPILOT_PLUGIN")
+end
+
+function M.has_copilot()
+  return M.has_official_copilot or M.has_unofficial_copilot
+end
+
+function M.has_gpt()
+  return utils.os_env_not_empty("NVIM_ENABLE_GPT_PLUGIN")
 end
 
 return M

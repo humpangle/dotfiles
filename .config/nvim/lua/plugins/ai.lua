@@ -1,6 +1,6 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 
-if plugin_enabled.has_vscode() or plugin_enabled.has_termux() then
+if not plugin_enabled.ai_enabled() then
   return {}
 end
 
@@ -10,7 +10,7 @@ local map_key = utils.map_key
 return {
   {
     "github/copilot.vim",
-    cond = true,
+    cond = plugin_enabled.has_official_copilot(),
     cmd = {
       "Copilot",
     },
@@ -56,7 +56,7 @@ return {
 
   {
     "zbirenbaum/copilot.lua",
-    cond = false,
+    cond = plugin_enabled.has_unofficial_copilot(),
     cmd = {
       "Copilot",
     },
@@ -118,9 +118,10 @@ return {
   -- IMPORTANT: sudo luarocks install --lua-version 5.1 tiktoken_core
   {
     "CopilotC-Nvim/CopilotChat.nvim",
+    -- Do not use branch and version together, either use branch or version
     version = "v2.14.2",
     -- branch = "canary", -- Use the canary branch if you want to test the latest features but it might be unstable
-    -- Do not use branch and version together, either use branch or version
+    cond = plugin_enabled.has_copilot(),
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       {
@@ -466,6 +467,7 @@ return {
   -- OS dependencies `sudo apt-get install sox libsox-fmt-mp3`
   {
     "robitx/gp.nvim",
+    cond = plugin_enabled.has_gpt(),
     config = function()
       local conf = {
         -- For customization, refer to Install > Configuration in the Documentation/Readme

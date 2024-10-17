@@ -27,6 +27,12 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export EBNIS_VIM_THEME=gruvbox8_hard
 export EBNIS_VIM_THEME_BG=d
 
+# Enable/disable plugins
+export NVIM_ENABLE_AI_PLUGINS=1
+export NVIM_ENABLE_OFFICIAL_COPILOT_PLUGIN=
+export NVIM_ENABLE_COMMUNITY_COPILOT_PLUGIN=
+export NVIM_ENABLE_GPT_PLUGIN=1
+
 # -----------------------------------------------------------------------------
 # /END/ NVIM
 # -----------------------------------------------------------------------------
