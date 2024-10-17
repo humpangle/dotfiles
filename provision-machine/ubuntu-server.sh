@@ -1473,23 +1473,6 @@ install-python() {
   "$(_asdf-bin-path)" plugin add python 2>/dev/null
 
   "$(_asdf-bin-path)" install python "$_version"
-
-  if [[ -n "$_dev" ]]; then
-    pip install -U \
-      pip \
-      yt-dlp \
-      pyright \
-      jupyterlab \
-      jedi-language-server \
-      black \
-      2>/dev/null ||
-      true
-  else
-    pip install -U \
-      pip \
-      2>/dev/null ||
-      true
-  fi
 }
 
 function install-ansible {
