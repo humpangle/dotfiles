@@ -1276,8 +1276,6 @@ install-nodejs() {
 
   local version
   local _dev
-  local _set_global=1
-  local _set_local
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -1307,13 +1305,7 @@ install-nodejs() {
 
     --version | -a)
       version="${2}"
-      _set_global=
       shift 2
-      ;;
-
-    --local | -l)
-      _set_local=1
-      shift 1
       ;;
 
     --dev | -d)
@@ -1339,9 +1331,7 @@ install-nodejs() {
   # --------------------------------------------------------------------------
 
   if [[ -z "${version}" ]]; then
-    version=18.17.1
-    _set_global=1
-    _set_local=
+    version=latest
   fi
 
   _may_be_install_asdf "$@"
@@ -1364,30 +1354,6 @@ install-nodejs() {
   "$(_asdf-bin-path)" plugin add nodejs || true
 
   "$(_asdf-bin-path)" install nodejs "${version}"
-
-  if [[ -n "${_set_global}" ]]; then
-    "$(_asdf-bin-path)" global nodejs "${version}"
-  fi
-
-  if [[ -z "${_set_local}" ]]; then
-    _tool-versions-backup --backup=nodejs
-  fi
-
-  "$(_asdf-bin-path)" local nodejs "${version}"
-
-  if [[ -n "${_dev}" ]]; then
-    install-nodejs-dev-pkgs
-  else
-    npm install --global \
-      npm \
-      yarn
-  fi
-
-  "$(_asdf-bin-path)" reshim nodejs
-
-  if [[ -z "${_set_local}" ]]; then
-    _tool-versions-backup --restore=nodejs
-  fi
 }
 
 function ___nodejs-help {
