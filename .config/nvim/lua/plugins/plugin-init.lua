@@ -256,6 +256,7 @@ local plugins_table = {
   -- Courtesy : https://elixirforum.com/t/preview-livebook-in-neovim/65080
   {
     "MeanderingProgrammer/render-markdown.nvim",
+    enabled = plugin_enabled.render_markdown_nvim(),
     opts = {
       file_types = {
         "markdown",
