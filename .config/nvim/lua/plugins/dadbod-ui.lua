@@ -8,7 +8,7 @@ end
 -- https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
 
 local utils = require("utils")
-local keymap = utils.map_key
+local map_key = utils.map_key
 
 return {
   "kristijanhusak/vim-dadbod-ui",
@@ -53,7 +53,7 @@ return {
 
     vim.g.db_ui_use_nerd_fonts = 1
 
-    keymap(
+    map_key(
       "n",
       "<leader>dbi",
       ":tab new<CR>:DBUI<CR><C-w>o<bar><C-w>v<bar>:e ~/.local/share/db_ui/connections.json<CR>",
@@ -63,17 +63,17 @@ return {
       }
     )
 
-    keymap("n", "<leader>dbf", ":DBUIFindBuffer<CR>", {
+    map_key("n", "<leader>dbf", ":DBUIFindBuffer<CR>", {
       noremap = true,
       desc = "DBUIFindBuffer",
     })
 
-    keymap("n", "<leader>dbr", ":DBUIRenameBuffer<CR>", {
+    map_key("n", "<leader>dbr", ":DBUIRenameBuffer<CR>", {
       noremap = true,
       desc = "DBUIRenameBuffer",
     })
 
-    keymap("n", "<leader>dbl", ":DBUILastQueryInfo<CR>", {
+    map_key("n", "<leader>dbl", ":DBUILastQueryInfo<CR>", {
       noremap = true,
       desc = "DBUILastQueryInfo",
     })
