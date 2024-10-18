@@ -135,4 +135,12 @@ function M.colorizer()
   return true
 end
 
+function M.vim_dad_bod()
+  if M.has_vscode() then
+    return false
+  end
+
+  return true
+end
+
 return M

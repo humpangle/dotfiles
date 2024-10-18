@@ -1,13 +1,17 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
+if not plugin_enabled.vim_dad_bod() then
+  return {}
+end
+
 -- Database management
 -- https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
 
-local plugin_enabled = require("plugins/plugin_enabled")
 local utils = require("utils")
 local keymap = utils.map_key
 
 return {
   "kristijanhusak/vim-dadbod-ui",
-  enabled = not plugin_enabled.has_vscode(),
   dependencies = {
     {
       "tpope/vim-dadbod",
