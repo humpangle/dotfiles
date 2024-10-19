@@ -95,6 +95,10 @@ function utils.get_file_name(num)
 end
 
 function utils.DeleteOrCloseBuffer(flag)
+  if vim.fn.expand("%:f") == "" then
+    flag = "f"
+  end
+
   local filetype = vim.bo.filetype
 
   if filetype == "netrw" then
