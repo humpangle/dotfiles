@@ -22,19 +22,42 @@ Create commands to make RedirMessages() easier to use interactively.
     :Tmessage echo "Key mappings for Control+A:" | map <C-A>
 -- ]]
 function utils.RedirMessages(vim_cmd_, dest_cmd)
-  -- Redirect command output to a variable in Lua
-  local message = vim.fn.execute(vim_cmd_)
+  dest_cmd = dest_cmd or ""
+  dest_cmd = dest_cmd:match("^%s*(.-)%s*$")
 
-  -- If a destination command is provided, execute it
-  if dest_cmd and #dest_cmd > 0 then
+  -- Capture command string output in a variable
+  local command_string_output = vim.fn.execute(vim_cmd_)
+
+  -- If a destination command is provided, execute it.
+  -- If non is provided, command output will be redirected to current buffer (0).
+  if dest_cmd ~= "" then
     vim.cmd(dest_cmd)
   end
 
-  -- Insert the captured messages into the current buffer
-  -- Split the message by newline and insert line by line
-  local lines = vim.split(message, "\n")
-  local current_line = vim.api.nvim_win_get_cursor(0)[1]
-  vim.api.nvim_buf_set_lines(0, current_line, current_line, false, lines)
+  local current_row = vim.api.nvim_win_get_cursor(0)[1]
+  local insertion_start_row = nil
+
+  if dest_cmd == "" then
+    -- If directing output to current buffer, start at the cursor position - output messages always start and end with newlines
+    -- so the first visible output will be the line after cursor position.
+    insertion_start_row = current_row
+  else
+    -- If directing to current buffer, start insertion from first row of buffer. Trim leading/trailing newlines from
+    -- command output.
+    insertion_start_row = 0
+    command_string_output = command_string_output:match("^%s*(.-)%s*$")
+  end
+
+  -- Split the output string by newline and insert line by line.
+  local lines_of_output = vim.split(command_string_output, "\n")
+
+  vim.api.nvim_buf_set_lines(
+    0,
+    insertion_start_row,
+    current_row,
+    false,
+    lines_of_output
+  )
 end
 
 return utils
