@@ -134,8 +134,10 @@ end
 function utils.DeleteAllBuffers(delete_flag)
   ---@diagnostic disable-next-line: param-type-mismatch
   local last_b_num = vim.fn.bufnr("$")
-  local normal_buffers, terminal_buffers, no_name_buffers, dbui_buffers =
-    {}, {}, {}, {}
+  local normal_buffers = {}
+  local terminal_buffers = {}
+  local no_name_buffers = {}
+  local dbui_buffers = {}
 
   for index = 1, last_b_num do
     if vim.fn.bufexists(index) == 1 then
