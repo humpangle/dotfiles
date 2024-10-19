@@ -1,9 +1,9 @@
 local utils = {}
 
 --[[
-msgcmd: a vim command that will output a string of messages.
-destcmd: is the place to send the output. If destcmd not specified, output will be sent to current buffer.
-  Other values for destcmd are:
+vim_cmd_: a vim command that will output a string of messages.
+dest_cmd: is the place to send the output. If dest_cmd not specified, output will be sent to current buffer.
+  Other values for dest_cmd are:
     new - horizontal split
     vsplit - vertical split
     tabnew - new tabnew
@@ -21,13 +21,13 @@ Create commands to make RedirMessages() easier to use interactively.
     :VMessage !ls -alh
     :Tmessage echo "Key mappings for Control+A:" | map <C-A>
 -- ]]
-function utils.RedirMessages(msgcmd, destcmd)
+function utils.RedirMessages(vim_cmd_, dest_cmd)
   -- Redirect command output to a variable in Lua
-  local message = vim.fn.execute(msgcmd)
+  local message = vim.fn.execute(vim_cmd_)
 
   -- If a destination command is provided, execute it
-  if destcmd and #destcmd > 0 then
-    vim.cmd(destcmd)
+  if dest_cmd and #dest_cmd > 0 then
+    vim.cmd(dest_cmd)
   end
 
   -- Insert the captured messages into the current buffer
