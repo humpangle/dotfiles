@@ -1,10 +1,13 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 
+if not plugin_enabled.floaterm() then
+  return {}
+end
+
 local utils = require("utils")
 
 return {
   "voldikss/vim-floaterm",
-  enabled = not plugin_enabled.has_vscode(),
   config = function()
 
     -- vim.g.floaterm_keymap_toggle = '<F1>'

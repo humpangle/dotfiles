@@ -151,4 +151,12 @@ function M.fzf()
   return true
 end
 
+function M.floaterm()
+  if M.has_vscode() then
+    return false
+  end
+
+  return true
+end
+
 return M
