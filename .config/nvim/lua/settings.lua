@@ -654,6 +654,10 @@ vim.api.nvim_create_user_command("DelDbUi", function()
   utils.DeleteAllBuffers("dbui")
 end, {})
 
+vim.api.nvim_create_user_command("DbUiDelete", function()
+  utils.DeleteAllBuffers("dbui")
+end, {})
+
 vim.api.nvim_create_user_command("DelFugitive", function()
   utils.DeleteAllBuffers("fugitive")
 end, {})
