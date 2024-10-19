@@ -1,10 +1,13 @@
 -- Highlight, edit, and navigate code
 local plugin_enabled = require("plugins/plugin_enabled")
 
+if not plugin_enabled.treesitter() then
+  return {}
+end
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    enabled = plugin_enabled.treesitter(),
     dependencies = {
       require("plugins/treesitter-textobjects"),
     },
