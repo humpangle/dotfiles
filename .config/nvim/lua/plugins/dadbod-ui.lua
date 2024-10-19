@@ -31,25 +31,27 @@ return {
     "DBUIFindBuffer",
   },
   init = function()
-    -- postgres — postgresql://user1:userpwd@localhost:5432/testdb
-    -- mysql — mysql://user1:userpwd@127.0.0.1:3306/testdb
-    -- sqlite - sqlite:path-to-sqlite-database
+    --[[
+        postgres — postgresql://user1:userpwd@localhost:5432/testdb
+        mysql — mysql://user1:userpwd@127.0.0.1:3306/testdb
+        sqlite - sqlite:path-to-sqlite-database
 
-    -- :w = execute query in current DBUI buffer
+        :w = execute query in current DBUI buffer
 
-    -- Typical entry in ~/.local/share/db_ui/connections.json:
-    -- [
-    --   {
-    --     "url": "postgresql://username:password@127.0.0.1:5432/db_name",
-    --     "name": "folder_name"
-    --   },
-    --   {
-    --     "url": "mysql://username:password@127.0.0.1:5432/db_name",
-    --     "name": "folder_name"
-    --   }
-    -- ]
-    --
-    -- Create ~/.local/share/db_ui/folder_name/*.sql and write your sql queries.
+        Typical entry in ~/.local/share/db_ui/connections.json:
+        [
+          {
+            "url": "postgresql://username:password@127.0.0.1:5432/db_name",
+            "name": "folder_name"
+          },
+          {
+            "url": "mysql://username:password@127.0.0.1:5432/db_name",
+            "name": "folder_name"
+          }
+        ]
+
+        Create ~/.local/share/db_ui/folder_name/*.sql and write your sql queries.
+    --]]
 
     vim.g.db_ui_use_nerd_fonts = 1
 
