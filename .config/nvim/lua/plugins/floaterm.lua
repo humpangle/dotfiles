@@ -61,8 +61,12 @@ return {
       end
 
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
-        vim.cmd("FloatermNew vifm")
-      end, true)
+          vim.cmd("FloatermNew vifm")
+        end,
+        {
+          wipe = true
+        }
+      )
     end, { noremap = true, desc = "Float vifm 1dir 2pwd" })
 
     utils.map_key(

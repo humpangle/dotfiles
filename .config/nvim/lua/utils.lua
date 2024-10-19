@@ -459,7 +459,7 @@ end, true)
 --]]
 utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
   callback,
-  wipe_temp_buffer_before_exec_cb
+  opts
 )
   local buf_path = vim.fn.expand("%:f")
 
@@ -469,12 +469,16 @@ utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
     return
   end
 
-  vim.cmd("new")
+  opts = opts or {}
+
+  local wipe_temp_buffer_before_exec_cb = opts.wipe or false
+
+  local split_direction = opts.split or "new"
+
+  vim.cmd(split_direction)
   local b_num = vim.fn.bufnr()
 
   callback()
-
-  wipe_temp_buffer_before_exec_cb = wipe_temp_buffer_before_exec_cb or false
 
   if wipe_temp_buffer_before_exec_cb and b_num ~= nil then
     vim.cmd("bwipeout! " .. b_num)
