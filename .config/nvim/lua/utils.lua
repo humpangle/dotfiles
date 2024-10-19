@@ -413,4 +413,54 @@ utils.file_exists_and_not_empty = function(file_path)
   end
 end
 
+--[[
+
+Fix for nvim error "Cant't re-enter normal mode from terminal mode" when executing a normal mode command when a
+terminal buffer is in focus.
+
+The chosen fix is to create an empty buffer to take focus away from the terminal buffer. This temporary buffer should
+be wiped or not depending on what happens after returning from the command.
+
+If the error does not occur when returning from the command, pass true for the `wipe_temp_buffer_before_exec_cb`
+parameter. Default is not to wipe the temporary buffer (for commands that trigger the error when returning).
+
+Example Usage:
+
+```lua
+handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+  vim.cmd("echo 'whatever'")
+end)
+```
+
+```lua
+handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+  vim.cmd("echo 'whatever'")
+end, true)
+```
+
+--]]
+utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
+  callback,
+  wipe_temp_buffer_before_exec_cb
+)
+  local buf_path = vim.fn.expand("%:f")
+
+  -- If no terminal buffer is currently focused this **hack** is not necessary.
+  if not buf_path:match("^term://") then
+    callback()
+    return
+  end
+
+  vim.cmd("new")
+  local b_num = vim.fn.bufnr()
+
+  callback()
+
+  wipe_temp_buffer_before_exec_cb = wipe_temp_buffer_before_exec_cb or false
+
+  if wipe_temp_buffer_before_exec_cb and b_num ~= nil then
+    vim.cmd("bwipeout! " .. b_num)
+  end
+end
+
 return utils

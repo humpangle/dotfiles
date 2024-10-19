@@ -1,4 +1,6 @@
-local keymap = vim.keymap.set
+local utils = require("utils")
+
+local keymap = utils.map_key
 
 -- Search file from root directory
 keymap("n", "<leader>fW", ":Files!<CR>", { noremap = true })
@@ -12,7 +14,11 @@ keymap(
 )
 
 -- Find open buffers
-keymap("n", "<Leader>fb", ":Buffers!<CR>", { noremap = true })
+keymap("n", "<Leader>fb", function()
+  utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+    vim.cmd("Buffers!")
+  end)
+end, { noremap = true })
 
 -- Search buffers history
 keymap("n", "<Leader>fh", ":History!<CR>", { noremap = true })

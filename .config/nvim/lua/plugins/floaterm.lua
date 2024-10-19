@@ -1,10 +1,11 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 
+local utils = require("utils")
+
 return {
   "voldikss/vim-floaterm",
   enabled = not plugin_enabled.has_vscode(),
   config = function()
-    local utils = require("utils")
 
     -- vim.g.floaterm_keymap_toggle = '<F1>'
     -- vim.g.floaterm_keymap_next   = '<F2>'
@@ -56,7 +57,9 @@ return {
         vim.cmd("let @z=" .. '"' .. path .. '"')
       end
 
-      vim.cmd("FloatermNew vifm")
+      utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+        vim.cmd("FloatermNew vifm")
+      end, true)
     end, { noremap = true, desc = "Float vifm 1dir 2pwd" })
 
     utils.map_key(
