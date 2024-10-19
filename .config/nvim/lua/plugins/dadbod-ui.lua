@@ -115,6 +115,8 @@ return {
         .. "** folder_name is the `name` key in the Settings object **"
         .. "\\n\\n"
         .. "~/.local/share/db_ui/folder_name/*.sql"
+        .. "\\n"
+        .. "~/.local/share/db_ui"
 
       -- vim.cmd('echo "' .. help_string .. '"')
       s_utils.RedirMessages('echo "' .. help_string .. '"', "vnew")
