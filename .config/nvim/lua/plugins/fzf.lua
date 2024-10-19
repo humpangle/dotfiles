@@ -1,3 +1,9 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
+if not plugin_enabled.fzf() then
+  return {}
+end
+
 local utils = require("utils")
 
 local keymap = utils.map_key

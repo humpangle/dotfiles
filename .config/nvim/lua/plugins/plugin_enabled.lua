@@ -143,4 +143,12 @@ function M.vim_dad_bod()
   return true
 end
 
+function M.fzf()
+  if M.has_vscode() then
+    return false
+  end
+
+  return true
+end
+
 return M
