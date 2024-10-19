@@ -650,7 +650,7 @@ end, { noremap = true })
 -- Remove Contents of Current File and Enter Insert Mode
 utils.map_key("n", "c=", utils.EbnisClearAllBuffer, { noremap = true })
 
-vim.api.nvim_create_user_command("DeleteDbUi", function()
+vim.api.nvim_create_user_command("DelDbUi", function()
   utils.DeleteAllBuffers("dbui")
 end, {})
 
