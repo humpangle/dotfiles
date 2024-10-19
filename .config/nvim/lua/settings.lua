@@ -606,22 +606,22 @@ utils.map_key(
 )
 
 -- Redirect messages to current buffer
-vim.api.nvim_create_user_command("BufMessage", function(input)
-  s_utils.RedirMessages(input.args, "")
+vim.api.nvim_create_user_command("Bmessage", function(input)
+  s_utils.RedirMessages(input.args)
 end, { nargs = "+", complete = "command" })
 
 -- Redirect messages to new horizontal split buffer
-vim.api.nvim_create_user_command("WinMessage", function(input)
+vim.api.nvim_create_user_command("Wmessage", function(input)
   s_utils.RedirMessages(input.args, "new")
 end, { nargs = "+", complete = "command" })
 
 -- Redirect messages to buffer in newly created tab
-vim.api.nvim_create_user_command("TabMessage", function(input)
+vim.api.nvim_create_user_command("Tmessage", function(input)
   s_utils.RedirMessages(input.args, "tabnew")
 end, { nargs = "+", complete = "command" })
 
 -- Redirect messages to new vertical split buffer
-vim.api.nvim_create_user_command("VMessage", function(input)
+vim.api.nvim_create_user_command("Vmessage", function(input)
   s_utils.RedirMessages(input.args, "vnew")
 end, { nargs = "+", complete = "command" })
 
