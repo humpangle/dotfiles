@@ -9,7 +9,6 @@ local utils = require("utils")
 return {
   "voldikss/vim-floaterm",
   config = function()
-
     -- vim.g.floaterm_keymap_toggle = '<F1>'
     -- vim.g.floaterm_keymap_next   = '<F2>'
     -- vim.g.floaterm_keymap_prev   = '<F3>'
@@ -49,9 +48,21 @@ return {
       local count = vim.v.count
       local path = nil
 
+      --  Use netrw
       if count == 1 then
-        path = vim.fn.expand("%:p:h")
+        utils.handle_cant_re_enter_normal_mode_from_terminal_mode(
+          function()
+            vim.cmd("Vexplore1")
+          end,
+          {
+            wipe = true,
+            split = "vnew",
+          }
+        )
+        return
       elseif count == 2 then
+        path = vim.fn.expand("%:p:h")
+      elseif count == 3 then
         path = vim.fn.getcwd()
       end
 
@@ -61,12 +72,10 @@ return {
       end
 
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
-          vim.cmd("FloatermNew vifm")
-        end,
-        {
-          wipe = true
-        }
-      )
+        vim.cmd("FloatermNew vifm")
+      end, {
+        wipe = true,
+      })
     end, { noremap = true, desc = "Float vifm 1dir 2pwd" })
 
     utils.map_key(
