@@ -131,7 +131,7 @@ function utils.EbnisClearAllBuffer()
   vim.cmd("startinsert")
 end
 
-function utils.DeleteAllBuffers(f)
+function utils.DeleteAllBuffers(delete_flag)
   ---@diagnostic disable-next-line: param-type-mismatch
   local last_b_num = vim.fn.bufnr("$")
   local normal_buffers, terminal_buffers, no_name_buffers, dbui_buffers =
@@ -141,7 +141,7 @@ function utils.DeleteAllBuffers(f)
     if vim.fn.bufexists(index) == 1 then
       local b_name = vim.fn.bufname(index)
       if
-        f == "dbui"
+        delete_flag == "dbui"
         and (
           string.match(b_name, ".dbout")
           or string.match(b_name, "share/db_ui/")
@@ -173,18 +173,18 @@ function utils.DeleteAllBuffers(f)
   end
 
   -- all buffers
-  if f == "a" then
+  if delete_flag == "a" then
     wipeout_buffers(no_name_buffers)
     wipeout_buffers(terminal_buffers)
     delete_buffers(normal_buffers)
   -- empty / no-name buffers
-  elseif f == "e" then
+  elseif delete_flag == "e" then
     wipeout_buffers(no_name_buffers)
   -- terminal buffers
-  elseif f == "t" then
+  elseif delete_flag == "t" then
     wipeout_buffers(terminal_buffers)
   -- dbui buffers
-  elseif f == "dbui" then
+  elseif delete_flag == "dbui" then
     wipeout_buffers(dbui_buffers)
   end
 end
