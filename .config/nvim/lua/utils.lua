@@ -149,24 +149,19 @@ function utils.DeleteAllBuffers(delete_flag)
     if vim.fn.bufexists(index) == 1 then
       local b_name = vim.fn.bufname(index)
 
-      if
-        delete_flag == "dbui"
-        and (
-          string.match(b_name, ".dbout")
-          or string.match(b_name, "share/db_ui/")
-        )
-      then
+      if delete_flag == "dbui" and (string.match(b_name, ".dbout")) then
+        -- or string.match(b_name, "share/db_ui/")
         table.insert(dbui_buffers, index)
+      elseif
+        delete_flag == "fugitive" and utils.is_fugitive_buffer(b_name)
+      then
+        table.insert(fugitive_buffers, index)
+      elseif b_name == "" or b_name == "," then
+        table.insert(no_name_buffers, index)
+      elseif string.match(b_name, "term://") then
+        table.insert(terminal_buffers, index)
       else
-        if b_name == "" or b_name == "," then
-          table.insert(no_name_buffers, index)
-        elseif string.match(b_name, "term://") then
-          table.insert(terminal_buffers, index)
-        elseif utils.is_fugitive_buffer(b_name) then
-          table.insert(fugitive_buffers, index)
-        else
-          table.insert(normal_buffers, index)
-        end
+        table.insert(normal_buffers, index)
       end
     end
   end
