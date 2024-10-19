@@ -131,6 +131,11 @@ function utils.EbnisClearAllBuffer()
   vim.cmd("startinsert")
 end
 
+---@param buffer_name string
+function utils.is_fugitive_buffer(buffer_name)
+  return vim.startswith(buffer_name, "fugitive://")
+end
+
 function utils.DeleteAllBuffers(delete_flag)
   ---@diagnostic disable-next-line: param-type-mismatch
   local last_b_num = vim.fn.bufnr("$")
@@ -138,10 +143,12 @@ function utils.DeleteAllBuffers(delete_flag)
   local terminal_buffers = {}
   local no_name_buffers = {}
   local dbui_buffers = {}
+  local fugitive_buffers = {}
 
   for index = 1, last_b_num do
     if vim.fn.bufexists(index) == 1 then
       local b_name = vim.fn.bufname(index)
+
       if
         delete_flag == "dbui"
         and (
@@ -155,6 +162,8 @@ function utils.DeleteAllBuffers(delete_flag)
           table.insert(no_name_buffers, index)
         elseif string.match(b_name, "term://") then
           table.insert(terminal_buffers, index)
+        elseif utils.is_fugitive_buffer(b_name) then
+          table.insert(fugitive_buffers, index)
         else
           table.insert(normal_buffers, index)
         end
@@ -179,6 +188,7 @@ function utils.DeleteAllBuffers(delete_flag)
     wipeout_buffers(no_name_buffers)
     wipeout_buffers(terminal_buffers)
     delete_buffers(normal_buffers)
+    wipeout_buffers(fugitive_buffers)
   -- empty / no-name buffers
   elseif delete_flag == "e" then
     wipeout_buffers(no_name_buffers)
@@ -188,6 +198,8 @@ function utils.DeleteAllBuffers(delete_flag)
   -- dbui buffers
   elseif delete_flag == "dbui" then
     wipeout_buffers(dbui_buffers)
+  elseif delete_flag == "fugitive" then
+    wipeout_buffers(fugitive_buffers)
   end
 end
 
