@@ -130,7 +130,10 @@ vim.opt.cursorline = true
 -- vim.opt.cursorcolumn = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+-- I have a workflow with vim-dadbod-ui where I keep a split window with top window serving as column headers. This
+-- setting prevents this workflow.
+-- Use <C-e> to scroll past bottom of screen
+vim.opt.scrolloff = 0 --  10
 
 vim.opt.foldmethod = "indent"
 vim.opt.foldnestmax = 10
