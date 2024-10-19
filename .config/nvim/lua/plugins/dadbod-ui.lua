@@ -8,6 +8,7 @@ end
 -- https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
 
 local utils = require("utils")
+local s_utils = require("settings-utils")
 local map_key = utils.map_key
 
 return {
@@ -78,6 +79,48 @@ return {
     map_key("n", "<leader>dbl", ":DBUILastQueryInfo<CR>", {
       noremap = true,
       desc = "DBUILastQueryInfo",
+    })
+
+    map_key("n", "<leader>dbH", function()
+      local help_string = "* Help for Vim DadBod UI *"
+        .. "\\n\\n"
+        .. "** Data Source Name (dns) syntax **"
+        .. "\\n"
+        .. "postgresql://user1:userpwd@localhost:5432/testdb"
+        .. "\\n"
+        .. "mysql://user1:userpwd@127.0.0.1:3306/testdb"
+        .. "\\n"
+        .. "sqlite:path-to-sqlite-database"
+        .. "\\n\\n"
+        .. "** Settings file **"
+        .. "\\n"
+        .. "~/.local/share/db_ui/connections.json"
+        .. "\\n"
+        .. "```json"
+        .. "\\n"
+        .. "["
+        .. "\\n"
+        .. "  {"
+        .. "\\n"
+        .. '    \\"url\\": \\"postgresql://username:password@127.0.0.1:5432/db_name\\",'
+        .. "\\n"
+        .. '    \\"name\\": \\"folder_name\\"'
+        .. "\\n"
+        .. "  }"
+        .. "\\n"
+        .. "]"
+        .. "\\n"
+        .. "```"
+        .. "\\n\\n"
+        .. "** folder_name is the `name` key in the Settings object **"
+        .. "\\n\\n"
+        .. "~/.local/share/db_ui/folder_name/*.sql"
+
+      -- vim.cmd('echo "' .. help_string .. '"')
+      s_utils.RedirMessages('echo "' .. help_string .. '"', "vnew")
+    end, {
+      noremap = true,
+      desc = "DBUI help information",
     })
   end,
 }
