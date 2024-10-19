@@ -84,4 +84,7 @@ return {
       vim.treesitter.language.register("markdown", "livebook")
     end,
   },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+  },
 }
