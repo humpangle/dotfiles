@@ -11,6 +11,11 @@ local utils = require("utils")
 local s_utils = require("settings-utils")
 local map_key = utils.map_key
 
+local match_vim_dadbod_ui_temp_query_file = function(str)
+  local pattern = "^/tmp/nvim%..+/%d+%.dbout$"
+  return string.match(str, pattern) ~= nil
+end
+
 return {
   "kristijanhusak/vim-dadbod-ui",
   dependencies = {
@@ -79,6 +84,45 @@ return {
     map_key("n", "<leader>dbl", ":DBUILastQueryInfo<CR>", {
       noremap = true,
       desc = "DBUILastQueryInfo",
+    })
+
+    map_key("n", "<leader>dbw", function()
+      local buffer_name = vim.fn.expand("%:p")
+      if not match_vim_dadbod_ui_temp_query_file(buffer_name) then
+        return
+      end
+
+      vim.bo.modifiable = true
+      vim.bo.filetype = "markdown"
+
+      local slime_dir = "~/.local/share/db_ui"
+      vim.fn.mkdir(slime_dir, "p")
+
+      local timestamp = os.date("%s")
+      local new_name = slime_dir
+        .. "/zz_query-result--"
+        .. timestamp
+        .. ".md"
+
+      pcall(function()
+        vim.cmd("saveas " .. vim.fn.fnameescape(new_name))
+      end)
+
+      vim.cmd("tab split")
+      vim.cmd("e %")
+
+      vim.cmd("bdelete! " .. buffer_name)
+    end, {
+      noremap = true,
+      desc = "DBUI xxxx",
+    })
+
+    map_key("n", "<leader>dbW", function()
+      vim.cmd("w!")
+      vim.cmd("DbUiDelete")
+    end, {
+      noremap = true,
+      desc = "DBUI Write And Delete",
     })
 
     map_key("n", "<leader>dbH", function()
