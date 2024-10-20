@@ -159,4 +159,12 @@ function M.floaterm()
   return true
 end
 
+function M.notest()
+  if M.has_vscode() then
+    return false
+  end
+
+  return true
+end
+
 return M
