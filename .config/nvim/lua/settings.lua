@@ -455,7 +455,7 @@ utils.map_key("n", "yol", ":lclose<CR>", { noremap = true })
 utils.map_key("n", "yoq", ":cclose<CR>", { noremap = true })
 
 -- Force sync buffer content with external:
-utils.map_key("n", "<Leader>%e", ":e! %<CR>", { noremap = true })
+utils.map_key("n", "ff", ":e! %<CR>", { noremap = true })
 
 -- Create the new directory you're already working in:
 utils.map_key("n", ",md", ":!mkdir -p %:h<cr>:w %<CR>", { noremap = true })
