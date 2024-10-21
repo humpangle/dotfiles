@@ -96,62 +96,70 @@ return {
       -- Basic debugging keymaps, feel free to change to your liking!
 
       -- STARTING / STOPPING / SHOWING DAP UI
-      keymap("n", "<leader>Dcc", dap.continue, {
-        desc = "Debug: continue",
+      keymap("n", "<leader>dac", dap.continue, {
+        desc = "DAP: continue",
       })
 
-      keymap("n", "<leader>Dtt", dapui.toggle, {
-        desc = "Debug: UI toggle",
+      keymap("n", "<leader>dax", dap.close, {
+        desc = "DAP: close",
       })
 
-      keymap("n", "<leader>Drr", dap.restart, {
-        desc = "Debug: restart",
+      keymap("n", "<leader>dat", dapui.toggle, {
+        desc = "DAP: UI toggle",
+      })
+
+      keymap("n", "<leader>daT", dap.terminate, {
+        desc = "DAP: Terminate",
+      })
+
+      keymap("n", "<leader>dar", dap.restart, {
+        desc = "DAP: restart",
       })
       -- /END STARTING / STOPPING / SHOWING DAP UI
 
-      keymap("n", "<leader>Dbt", function()
+      keymap("n", "<leader>dab", function()
         dap.toggle_breakpoint()
       end, {
-        desc = "Debug: Toggle Breakpoint",
+        desc = "DAP: Toggle Breakpoint",
       })
 
-      keymap("n", "<leader>DbC", dap.clear_breakpoints, {
-        desc = "Debug: Toggle Breakpoint",
-      })
-
-      keymap("n", "<leader>Dbc", function()
+      keymap("n", "<leader>daB", function()
         local prompt = vim.fn.input("Breakpoint condition: ")
         dap.set_breakpoint(prompt)
       end, {
-        desc = "Debug: Set Conditional Breakpoint",
+        desc = "DAP: Set Conditional Breakpoint",
       })
 
-      keymap("n", "<leader>Drc", function()
-        dap.run_to_cursor()
-      end, {
-        desc = "Debug: Run to cursor",
+      keymap("n", "<leader>daC", dap.clear_breakpoints, {
+        desc = "DAP: Clear Breakpoint",
       })
 
-      keymap("n", "<leader>D?", function()
+      keymap("n", "<leader>da?", function()
         dapui.eval(nil, { enter = true })
       end, {
-        desc = "Debug: Inspect current value - eval under cursor",
+        desc = "DAP: Inspect current value - eval under cursor",
       })
 
-      keymap("n", "<leader>Dsi", dap.step_into, {
-        desc = "Debug: step_into",
+      keymap("n", "<leader>da0", function()
+        dap.run_to_cursor()
+      end, {
+        desc = "DAP: Run to cursor",
       })
 
-      keymap("n", "<leader>Dso", dap.step_out, {
-        desc = "Debug: step_out",
+      keymap("n", "<leader>da1", dap.step_over, {
+        desc = "DAP: step_over",
       })
 
-      keymap("n", "<leader>Dsv", dap.step_over, {
-        desc = "Debug: step_over",
+      keymap("n", "<leader>da2", dap.step_into, {
+        desc = "DAP: step_into",
       })
 
-      keymap("n", "<leader>Dsb", dap.step_back, {
-        desc = "Debug: step_back",
+      keymap("n", "<leader>da3", dap.step_out, {
+        desc = "DAP: step_out",
+      })
+
+      keymap("n", "<leader>da4", dap.step_back, {
+        desc = "DAP: step_back",
       })
 
       -- Dap UI setup
