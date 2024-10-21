@@ -86,7 +86,7 @@ return {
           desc = "Neotest Run File",
         },
         {
-          "<leader>ntr",
+          "<leader>ntt",
           function()
             require("neotest").run.run()
           end,
@@ -114,7 +114,7 @@ return {
           desc = "Toggle Summary",
         },
         {
-          "<leader>nto",
+          "<leader>ntO",
           function()
             require("neotest").output.open({
               enter = true,
@@ -124,7 +124,7 @@ return {
           desc = "Neotest Show Output",
         },
         {
-          "<leader>ntt",
+          "<leader>nto",
           function()
             require("neotest").output_panel.toggle()
           end,
