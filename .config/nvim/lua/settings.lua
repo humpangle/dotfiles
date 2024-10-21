@@ -105,7 +105,10 @@ vim.opt.signcolumn = "yes"
 
 -- Decrease update time
 -- Many plugins require update time shorter than default of 4000ms
-vim.opt.updatetime = 100
+
+-- "antoinemadec/FixCursorHold.nvim" plugin divorces the cursorholdevent (reason plugins need short updatetime) from
+-- updatetime - so this setting override is no longer needed except if we remove the plugin.
+-- vim.opt.updatetime = 100
 
 -- Increase mapped sequence wait time (for those who type slowy)
 -- Will not work well with which-key plugin (requires about 250)
