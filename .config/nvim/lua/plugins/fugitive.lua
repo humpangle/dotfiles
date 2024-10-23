@@ -61,12 +61,16 @@ local git_stash_list_fn = function(callback)
   end
 end
 
-keymap(
-  "n",
-  "<Leader>czl",
-  git_stash_list_fn(),
-  { noremap = true, silent = true, desc = "Git stash list" }
-)
+keymap("n", "<Leader>czl", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.cmd("G stash list")
+    return
+  end
+
+  git_stash_list_fn()()
+end, { noremap = true, silent = true, desc = "Git stash list" })
 
 local description_with_count = function(mapping_str)
   return string.format(
