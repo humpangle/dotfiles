@@ -95,6 +95,17 @@ function utils.get_file_name(num)
 end
 
 function utils.DeleteOrCloseBuffer(flag)
+  if vim.fn.expand("%") == "Neotest Output Panel" then
+    vim.cmd.echo(
+      '"'
+        .. "You may not delete Neotest Output Panel."
+        .. "\\n"
+        .. "Use <leader>nto to close."
+        .. '"'
+    )
+    return
+  end
+
   if vim.fn.expand("%:f") == "" then
     flag = "f"
   end
