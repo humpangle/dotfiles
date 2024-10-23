@@ -3,7 +3,7 @@ if not utils_status_ok then
   return
 end
 
-local keymap = utils.map_key
+local map_key = utils.map_key
 
 local vscode = require("vscode-neovim")
 local vcall = vscode.call
@@ -67,74 +67,74 @@ vim.o.undodir = vim.fn.expand("$HOME/.vim/undodir/")
 -- https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste
 vim.o.paste = true
 
-keymap("n", "<leader>fc", function()
+map_key("n", "<leader>fc", function()
   vcall("editor.action.formatDocument")
 end, no_re_map_silent_opts)
 
 -- format paragraphs/lines to 80 chars
-keymap("n", "<Leader>pp", "gqap", no_re_map_silent_opts)
+map_key("n", "<Leader>pp", "gqap", no_re_map_silent_opts)
 
-keymap("x", "<Leader>pp", "gqa", no_re_map_silent_opts)
+map_key("x", "<Leader>pp", "gqa", no_re_map_silent_opts)
 
 -- ------------------------ Save file
-keymap("n", "<Leader>ww", ":w<CR>", no_re_map_silent_opts)
+map_key("n", "<Leader>ww", ":w<CR>", no_re_map_silent_opts)
 
-keymap("n", "<Leader>wa", ":wa<CR>", no_re_map_silent_opts)
+map_key("n", "<Leader>wa", ":wa<CR>", no_re_map_silent_opts)
 
-keymap("n", "<Leader>wq", ":wq<CR>", no_re_map_silent_opts)
+map_key("n", "<Leader>wq", ":wq<CR>", no_re_map_silent_opts)
 -- ---------------------- END Save file
 
 -- ---------------------- Quit vim
-keymap("n", "<leader>qq", function()
+map_key("n", "<leader>qq", function()
   vcall("workbench.action.closeActiveEditor")
 end, no_re_map_silent_opts)
 
-keymap("n", "<leader>bd", function()
+map_key("n", "<leader>bd", function()
   vcall("workbench.action.closeActiveEditor")
 end, no_re_map_silent_opts)
 
-keymap("n", "<leader>qA", function()
+map_key("n", "<leader>qA", function()
   vcall("workbench.action.closeWindow")
 end, no_re_map_silent_opts)
 
-keymap("n", "<leader>qg", function()
+map_key("n", "<leader>qg", function()
   vcall("workbench.action.closeEditorsInGroup")
 end, no_re_map_silent_opts)
 
-keymap("n", "<leader>qG", function()
+map_key("n", "<leader>qG", function()
   vcall("workbench.action.closeEditorsInOtherGroups")
 end, no_re_map_silent_opts)
 -- ---------------------- END Quit vim
 
 -- ---------------------- better code indentations in visual mode.
-keymap("x", "<", "<gv", no_re_map_silent_opts)
-keymap("x", ">", ">gv", no_re_map_silent_opts)
+map_key("x", "<", "<gv", no_re_map_silent_opts)
+map_key("x", ">", ">gv", no_re_map_silent_opts)
 -- ---------------------- END better code indentations in visual mode.
 
 -- ---------------------- Yank to system clipboard
-keymap("n", '"+yy', '0"+yg_', no_re_map_silent_opts)
-keymap("v", "<Leader>Y", '"+y', no_re_map_silent_opts)
-keymap("v", "<Leader>x", '"+x', no_re_map_silent_opts)
-keymap("n", "<Leader>x", '"+x', no_re_map_silent_opts)
-keymap("n", "<Leader>P", '"+P', no_re_map_silent_opts)
-keymap("v", "<Leader>P", '"+P', no_re_map_silent_opts)
+map_key("n", '"+yy', '0"+yg_', no_re_map_silent_opts)
+map_key("v", "<Leader>Y", '"+y', no_re_map_silent_opts)
+map_key("v", "<Leader>x", '"+x', no_re_map_silent_opts)
+map_key("n", "<Leader>x", '"+x', no_re_map_silent_opts)
+map_key("n", "<Leader>P", '"+P', no_re_map_silent_opts)
+map_key("v", "<Leader>P", '"+P', no_re_map_silent_opts)
 -- ---------------------- END Yank to system clipboard
 
 -- ---------------------- Yank all
-keymap("n", "<Leader>y+", ':%y<bar>:let @+=@"<CR>', no_re_map_silent_opts)
-keymap("n", "<Leader>YY", ':%y<bar>:let @+=@"<CR>', no_re_map_silent_opts)
-keymap("n", "<Leader>ya", ':%y<bar>:let @a=@"<CR>', no_re_map_silent_opts)
+map_key("n", "<Leader>y+", ':%y<bar>:let @+=@"<CR>', no_re_map_silent_opts)
+map_key("n", "<Leader>YY", ':%y<bar>:let @+=@"<CR>', no_re_map_silent_opts)
+map_key("n", "<Leader>ya", ':%y<bar>:let @a=@"<CR>', no_re_map_silent_opts)
 -- Yank highlighted
-keymap("n", ",yy", 'vgny<bar>:let @+=@"<CR> <bar>"', no_re_map_silent_opts)
+map_key("n", ",yy", 'vgny<bar>:let @+=@"<CR> <bar>"', no_re_map_silent_opts)
 -- Yank highlighted
-keymap("n", ",cc", 'vgny<bar>:let @a=@"<CR> <bar>"', no_re_map_silent_opts)
+map_key("n", ",cc", 'vgny<bar>:let @a=@"<CR> <bar>"', no_re_map_silent_opts)
 -- ---------------------- END Yank all
 
 --  Remove Contents of Current File, save file and enter normal mode
-keymap("n", "d=", "ggdG<bar>:w<CR>", { noremap = true })
+map_key("n", "d=", "ggdG<bar>:w<CR>", { noremap = true })
 
 -- Remove Contents of Current File and Enter Insert Mode
-keymap("n", "c=", "ggcG", { noremap = true })
+map_key("n", "c=", "ggcG", { noremap = true })
 
 -- ------------------------ Copy file path
 
@@ -147,7 +147,7 @@ local convert_to_unix_path = function(file_path)
 end
 
 -- Yank relative file path
-keymap("n", ",yr", function()
+map_key("n", ",yr", function()
   vcall("copyRelativeFilePath")
   local path = convert_to_unix_path(vim.fn.getreg("+"))
   vim.fn.setreg("+", path)
@@ -155,7 +155,7 @@ keymap("n", ",yr", function()
 end, no_re_map_opts)
 
 -- Yank absolute file path
-keymap("n", ",yf", function()
+map_key("n", ",yf", function()
   vcall("copyFilePath")
   local path = convert_to_unix_path(vim.fn.getreg("+"))
   vim.fn.setreg("+", path)
@@ -163,7 +163,7 @@ keymap("n", ",yf", function()
 end, no_re_map_opts)
 
 -- Yank file directory path.
-keymap("n", ",yd", function()
+map_key("n", ",yd", function()
   -- Copy absolute file path into register + .
   vcall("copyFilePath")
 
@@ -182,7 +182,7 @@ keymap("n", ",yd", function()
 end, no_re_map_opts)
 
 -- Yank file name.
-keymap("n", ",yn", function()
+map_key("n", ",yn", function()
   -- Copy absolute file path into register + .
   vcall("copyFilePath")
 
@@ -200,53 +200,53 @@ end, no_re_map_opts)
 -- ------------------------ END Copy file path
 
 -- ---------------------- Dump vim register into a buffer in vertical split.
-keymap("n", "<leader>re", ":reg<CR>", no_re_map_silent_opts)
+map_key("n", "<leader>re", ":reg<CR>", no_re_map_silent_opts)
 
-keymap("n", ",o", function()
+map_key("n", ",o", function()
   vcall("editor.action.organizeImports")
 end, no_re_map_silent_opts)
 
 -- Rename variable
-keymap("n", "<leader>rn", function()
+map_key("n", "<leader>rn", function()
   vcall("editor.action.rename")
 end, no_re_map_silent_opts)
 
 -- ------------------------ Go to problem
-keymap("n", "]d", function()
+map_key("n", "]d", function()
   vcall("editor.action.marker.next")
 end, no_re_map_silent_opts)
 
-keymap("n", "[d", function()
+map_key("n", "[d", function()
   vcall("editor.action.marker.prev")
 end, no_re_map_silent_opts)
 -- ------------------------ END Go to problem
 
-keymap("n", "gr", function()
+map_key("n", "gr", function()
   vcall("editor.action.referenceSearch.trigger")
 end, no_re_map_silent_opts)
 
-keymap("x", "gr", function()
+map_key("x", "gr", function()
   vcall("editor.action.referenceSearch.trigger")
 end, no_re_map_silent_opts)
 
 -- ------------------------ Folds
-keymap("n", "zM", function()
+map_key("n", "zM", function()
   vcall("editor.foldAll")
 end, no_re_map_silent_opts)
 
-keymap("n", "zR", function()
+map_key("n", "zR", function()
   vcall("editor.unfoldAll")
 end, no_re_map_silent_opts)
 -- ------------------------ END Folds
 
-keymap(
+map_key(
   "n",
   ",ec",
   ":Edit " .. vim.fn.expand("$MYVIMRC") .. "<CR>",
   no_re_map_silent_opts
 )
 
-keymap("n", "<leader>ca", function()
+map_key("n", "<leader>ca", function()
   vcall("editor.action.quickFix")
 end, no_re_map_silent_opts)
 
@@ -256,14 +256,14 @@ local function insert_current_datetime()
   vim.api.nvim_put({ datetime }, "c", true, true)
 end
 
-keymap(
+map_key(
   "n",
   "<leader>D",
   insert_current_datetime,
   { noremap = true, silent = true, desc = "Insert datetime" }
 )
 
-keymap(
+map_key(
   "i",
   "<C-r><C-d>",
   insert_current_datetime,
