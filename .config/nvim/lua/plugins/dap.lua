@@ -3,7 +3,7 @@ local plugin_enabled = require("plugins/plugin_enabled")
 
 local utils = require("utils")
 
-local keymap = utils.map_key
+local map_key = utils.map_key
 
 return {
   {
@@ -96,69 +96,69 @@ return {
       -- Basic debugging keymaps, feel free to change to your liking!
 
       -- STARTING / STOPPING / SHOWING DAP UI
-      keymap("n", "<leader>dac", dap.continue, {
+      map_key("n", "<leader>dac", dap.continue, {
         desc = "DAP: continue",
       })
 
-      keymap("n", "<leader>dax", dap.close, {
+      map_key("n", "<leader>dax", dap.close, {
         desc = "DAP: close",
       })
 
-      keymap("n", "<leader>dat", dapui.toggle, {
+      map_key("n", "<leader>dat", dapui.toggle, {
         desc = "DAP: UI toggle",
       })
 
-      keymap("n", "<leader>daT", dap.terminate, {
+      map_key("n", "<leader>daT", dap.terminate, {
         desc = "DAP: Terminate",
       })
 
-      keymap("n", "<leader>dar", dap.restart, {
+      map_key("n", "<leader>dar", dap.restart, {
         desc = "DAP: restart",
       })
       -- /END STARTING / STOPPING / SHOWING DAP UI
 
-      keymap("n", "<leader>dab", function()
+      map_key("n", "<leader>dab", function()
         dap.toggle_breakpoint()
       end, {
         desc = "DAP: Toggle Breakpoint",
       })
 
-      keymap("n", "<leader>daB", function()
+      map_key("n", "<leader>daB", function()
         local prompt = vim.fn.input("Breakpoint condition: ")
         dap.set_breakpoint(prompt)
       end, {
         desc = "DAP: Set Conditional Breakpoint",
       })
 
-      keymap("n", "<leader>daC", dap.clear_breakpoints, {
+      map_key("n", "<leader>daC", dap.clear_breakpoints, {
         desc = "DAP: Clear Breakpoint",
       })
 
-      keymap("n", "<leader>da?", function()
+      map_key("n", "<leader>da?", function()
         dapui.eval(nil, { enter = true })
       end, {
         desc = "DAP: Inspect current value - eval under cursor",
       })
 
-      keymap("n", "<leader>da0", function()
+      map_key("n", "<leader>da0", function()
         dap.run_to_cursor()
       end, {
         desc = "DAP: Run to cursor",
       })
 
-      keymap("n", "<leader>da1", dap.step_over, {
+      map_key("n", "<leader>da1", dap.step_over, {
         desc = "DAP: step_over",
       })
 
-      keymap("n", "<leader>da2", dap.step_into, {
+      map_key("n", "<leader>da2", dap.step_into, {
         desc = "DAP: step_into",
       })
 
-      keymap("n", "<leader>da3", dap.step_out, {
+      map_key("n", "<leader>da3", dap.step_out, {
         desc = "DAP: step_out",
       })
 
-      keymap("n", "<leader>da4", dap.step_back, {
+      map_key("n", "<leader>da4", dap.step_back, {
         desc = "DAP: step_back",
       })
 
