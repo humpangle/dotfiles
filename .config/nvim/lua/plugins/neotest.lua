@@ -99,11 +99,6 @@ return {
 
       keys = {
         {
-          "<leader>nt",
-          "",
-          desc = "+Neotest",
-        },
-        {
           "<leader>ntf",
           function()
             require("neotest").run.run(vim.fn.expand("%"))
