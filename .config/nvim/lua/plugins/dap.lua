@@ -75,7 +75,11 @@ return {
       local mason_dap = require("mason-nvim-dap")
 
       -- Use json5 to parse vscode-like launch.json file (with comments)
-      require("dap.ext.vscode").json_decode = require("json5").parse
+      local json5_exists, json5 = pcall(require, "json5")
+
+      if json5_exists then
+        require("dap.ext.vscode").json_decode = json5.parse
+      end
 
       mason_dap.setup({
         -- Debugger binaries you want mason to install for you.
