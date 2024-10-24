@@ -111,6 +111,14 @@ return {
           desc = "Neotest Run File",
         },
         {
+          "<leader>ntF",
+          function()
+            ---@diagnostic disable-next-line: missing-fields
+            require("neotest").run.run({ status = "failed" })
+          end,
+          desc = "Neotest Failed",
+        },
+        {
           "<leader>ntt",
           function()
             require("neotest").run.run()
