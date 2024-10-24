@@ -65,9 +65,34 @@ return {
           pytest_discover_instances = true,
         })
 
+        ---@diagnostic disable-next-line: missing-fields
         neotest.setup({
           adapters = {
             pytest_adapter,
+          },
+          discovery = {
+            -- Number of workers to parse files concurrently. A value of 0 automatically assigns number based on CPU.
+            -- Set to 1 if experiencing lag.
+            concurrent = 12,
+            -- Drastically improve performance in ginormous projects by only AST-parsing the currently opened buffer.
+            enabled = false,
+            -- enabled = true,
+          },
+          running = {
+            -- Run tests concurrently when an adapter provides multiple commands to run.
+            concurrent = true,
+          },
+          ---@diagnostic disable-next-line: missing-fields
+          summary = {
+            -- Enable/disable animation of icons.
+            animated = false,
+          },
+          -- Set to true to open quickfix window on test failure
+          quickfix = {
+            enabled = false,
+            -- enabled = true,
+            -- open = true,
+            open = false,
           },
         })
       end,
