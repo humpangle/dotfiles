@@ -5,6 +5,10 @@ local utils = require("utils")
 
 local map_key = utils.map_key
 
+local function do_echo(text)
+  vim.cmd.echo('"' .. "DAP " .. text .. '"')
+end
+
 return {
   {
     "Joakker/lua-json5",
@@ -145,24 +149,37 @@ return {
       })
 
       map_key("n", "<leader>da0", function()
+        do_echo("run to cursor")
         dap.run_to_cursor()
       end, {
         desc = "DAP: Run to cursor",
       })
 
-      map_key("n", "<leader>da1", dap.step_over, {
+      map_key("n", "<leader>da1", function()
+        do_echo("step over")
+        dap.step_over()
+      end, {
         desc = "DAP: step_over",
       })
 
-      map_key("n", "<leader>da2", dap.step_into, {
+      map_key("n", "<leader>da2", function()
+        do_echo("step into")
+        dap.step_into()
+      end, {
         desc = "DAP: step_into",
       })
 
-      map_key("n", "<leader>da3", dap.step_out, {
+      map_key("n", "<leader>da3", function()
+        do_echo("step out")
+        dap.step_out()
+      end, {
         desc = "DAP: step_out",
       })
 
-      map_key("n", "<leader>da4", dap.step_back, {
+      map_key("n", "<leader>da4", function()
+        do_echo("step back")
+        dap.step_back()
+      end, {
         desc = "DAP: step_back",
       })
 
