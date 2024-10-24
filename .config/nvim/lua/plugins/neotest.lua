@@ -156,6 +156,13 @@ return {
           desc = "Toggle Output Panel",
         },
         {
+          "<leader>ntc",
+          function()
+            require("neotest").output_panel.clear()
+          end,
+          desc = "Toggle Output Panel",
+        },
+        {
           "<leader>ntS",
           function()
             require("neotest").run.stop()
