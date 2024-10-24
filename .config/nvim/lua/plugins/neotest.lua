@@ -4,6 +4,11 @@ if not plugin_enabled.notest() then
   return {}
 end
 
+local function do_echo(text, on_going)
+  on_going = on_going == nil and " ONGOING..." or ""
+  vim.cmd.echo('"' .. "NETOTEST " .. text .. on_going .. '"')
+end
+
 return {
   {
     {
@@ -24,9 +29,11 @@ return {
             {
               "<leader>ntd",
               function()
+                do_echo("Debug")
+                ---@diagnostic disable-next-line: missing-fields
                 require("neotest").run.run({ strategy = "dap" })
               end,
-              desc = "Neotest Debug Nearesr"
+              desc = "Neotest Debug At Cursor"
             },
           },
         },
@@ -62,7 +69,7 @@ return {
           -- end,
           -- !!EXPERIMENTAL!! Enable shelling out to `pytest` to discover test
           -- instances for files containing a parametrize mark (default: false)
-          pytest_discover_instances = true,
+          pytest_discover_instances = false, -- true, -- true makes neotest-python very slow
         })
 
         ---@diagnostic disable-next-line: missing-fields
@@ -101,13 +108,15 @@ return {
         {
           "<leader>ntf",
           function()
+            do_echo("current file")
             require("neotest").run.run(vim.fn.expand("%"))
           end,
-          desc = "Neotest Run File",
+          desc = "Neotest File",
         },
         {
           "<leader>ntF",
           function()
+            do_echo("failed")
             ---@diagnostic disable-next-line: missing-fields
             require("neotest").run.run({ status = "failed" })
           end,
@@ -116,6 +125,7 @@ return {
         {
           "<leader>ntt",
           function()
+            do_echo("At Cursor")
             require("neotest").run.run()
           end,
           desc = "Neotest at cursor",
@@ -123,6 +133,7 @@ return {
         {
           "<leader>nta",
           function()
+            do_echo("ALL TESTS")
             require("neotest").run.run(vim.uv.cwd())
           end,
           desc = "Netotest ALL TESTS",
@@ -130,6 +141,7 @@ return {
         {
           "<leader>ntA",
           function()
+            do_echo("Attach to floating output.", "")
             require("neotest").run.attach()
           end,
           desc = "Netotest Running?",
@@ -137,6 +149,7 @@ return {
         {
           "<leader>ntl",
           function()
+            do_echo("RNNING LAST")
             require("neotest").run.run_last()
           end,
           desc = "Neotest Run Last",
@@ -144,6 +157,7 @@ return {
         {
           "<leader>nts",
           function()
+            do_echo("Summary toggle", "")
             require("neotest").summary.toggle()
           end,
           desc = "Toggle Summary",
@@ -168,6 +182,7 @@ return {
         {
           "<leader>ntc",
           function()
+            do_echo("Clear output panel", "")
             require("neotest").output_panel.clear()
           end,
           desc = "Toggle Output Panel",
@@ -175,6 +190,7 @@ return {
         {
           "<leader>ntS",
           function()
+            do_echo("STOP")
             require("neotest").run.stop()
           end,
           desc = "Stop",
@@ -182,6 +198,7 @@ return {
         {
           "<leader>ntw",
           function()
+            do_echo("toggle watch", "")
             require("neotest").watch.toggle(vim.fn.expand("%"))
           end,
           desc = "Neoetst Toggle Watch",
