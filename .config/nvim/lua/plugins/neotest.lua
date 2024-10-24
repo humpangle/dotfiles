@@ -133,6 +133,13 @@ return {
           desc = "Run All Test Files",
         },
         {
+          "<leader>ntA",
+          function()
+            require("neotest").run.attach()
+          end,
+          desc = "Netotest Running?",
+        },
+        {
           "<leader>ntl",
           function()
             require("neotest").run.run_last()
