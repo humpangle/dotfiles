@@ -100,7 +100,7 @@ return {
       -- Basic debugging keymaps, feel free to change to your liking!
 
       -- STARTING / STOPPING / SHOWING DAP UI
-      map_key("n", "<leader>dac", dap.continue, {
+      map_key("n", "<leader>daa", dap.continue, {
         desc = "DAP: continue",
       })
 
@@ -134,7 +134,7 @@ return {
         desc = "DAP: Set Conditional Breakpoint",
       })
 
-      map_key("n", "<leader>daC", dap.clear_breakpoints, {
+      map_key("n", "<leader>dac", dap.clear_breakpoints, {
         desc = "DAP: Clear Breakpoint",
       })
 
