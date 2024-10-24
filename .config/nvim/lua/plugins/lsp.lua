@@ -320,7 +320,8 @@ return {
         "error",
         servers,
         require("plugins.lsp.python"),
-        require("plugins.lsp.elixir")
+        require("plugins.lsp.elixir"),
+        plugin_enabled.terraform_lsp() and { terraformls = {} } or {}
       )
 
       if not plugin_enabled.has_termux() then
@@ -344,8 +345,6 @@ return {
             },
 
             dockerls = {},
-
-            terraformls = {},
           },
           require("plugins.typescript")
           --
@@ -357,8 +356,8 @@ return {
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
 
-      if not plugin_enabled.has_termux() then
-        -- stylua does noot work onn android.
+      if plugin_enabled.stylua_lsp_formatter() then
+        -- stylua does not work on android.
         vim.list_extend(ensure_installed, {
           "stylua", -- Used to format Lua code
         })

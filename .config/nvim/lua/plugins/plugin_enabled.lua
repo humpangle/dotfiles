@@ -175,4 +175,20 @@ function M.isort_auto()
   return utils.get_os_env_or_nil("NVIM_ISORT_PLUGIN_AUTO") ~= "0"
 end
 
+function M.elixir_lsp()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_ELIXIR_PLUGINS") ~= "0"
+end
+
+function M.terraform_lsp()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_TERRAFORM_LSP") ~= "0"
+end
+
+function M.stylua_lsp_formatter()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_STYLUA_LSP_FORMATTER") ~= "0"
+end
+
 return M

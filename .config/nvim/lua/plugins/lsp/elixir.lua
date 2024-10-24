@@ -1,3 +1,9 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
+if not plugin_enabled.elixir_lsp() then
+  return {}
+end
+
 local utils = require("utils")
 
 local elixir_lsp_filetypes = {
