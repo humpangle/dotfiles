@@ -125,7 +125,7 @@ return {
           function()
             require("neotest").run.run(vim.uv.cwd())
           end,
-          desc = "Run All Test Files",
+          desc = "Netotest ALL TESTS",
         },
         {
           "<leader>ntA",
