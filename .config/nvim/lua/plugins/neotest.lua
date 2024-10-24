@@ -118,7 +118,7 @@ return {
           function()
             require("neotest").run.run()
           end,
-          desc = "Run Nearest",
+          desc = "Neotest at cursor",
         },
         {
           "<leader>nta",
