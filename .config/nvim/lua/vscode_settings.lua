@@ -269,3 +269,29 @@ map_key(
   insert_current_datetime,
   { noremap = true, silent = true, desc = "Insert datetime" }
 )
+
+map_key("n", "<leader>dab", function()
+  vcall("editor.debug.action.toggleBreakpoint")
+end, {
+  desc = "DAP: Toggle Breakpoint",
+})
+
+map_key("n", "<leader>ntT", function()
+  vcall("testing.refreshTests")
+end, { desc = "Neotest Refresh Tests" })
+
+map_key("n", "<leader>ntd", function()
+  vcall("testing.debugAtCursor")
+end, { desc = "Neotest Debug Nearest" })
+
+map_key("n", "<leader>nta", function()
+  vcall("testing.runAll")
+end, { desc = "Neotest ALL" })
+
+map_key("n", "<leader>ntt", function()
+  vcall("testing.runAtCursor")
+end, { desc = "Neotest Nearest" })
+
+map_key("n", "<leader>ntf", function()
+  vcall("testing.runCurrentFile")
+end, { desc = "Neotest File" })
