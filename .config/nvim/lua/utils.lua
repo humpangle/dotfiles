@@ -470,7 +470,12 @@ utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
   local buf_path = vim.fn.expand("%:f")
 
   -- If no terminal buffer is currently focused this **hack** is not necessary.
-  if not buf_path:match("^term://") then
+  if
+    not (
+      buf_path:match("^term://")
+      or buf_path:match("^fugitive://.+/%.git//")
+    )
+  then
     callback()
     return
   end
