@@ -4,6 +4,8 @@ if not plugin_enabled.notest() then
   return {}
 end
 
+local utils = require("utils")
+
 local function do_echo(text, on_going)
   on_going = on_going == nil and " ONGOING..." or ""
   vim.cmd.echo('"' .. "NETOTEST " .. text .. on_going .. '"')
@@ -38,6 +40,16 @@ return {
           },
         },
       },
+      init = function()
+        vim.g.__ebnis_neotest_python_args = {}
+
+        vim.api.nvim_create_user_command("NeotestPythonArgs", function()
+          local args =
+            'vim.g.__ebnis_neotest_python_args = { "--log-level", "DEBUG", "--verbosity=0", "--capture=no", "--disable-warnings", "--ignore=" }'
+
+          utils.write_to_command_mode("lua " .. args)
+        end, { nargs = "*" })
+      end,
       config = function()
         local neotest = require("neotest")
 
@@ -49,10 +61,7 @@ return {
           },
           -- Command line arguments for runner
           -- Can also be a function to return dynamic values
-          args = {
-            "--log-level",
-            "DEBUG",
-          },
+          args = vim.g.__ebnis_neotest_python_args,
           -- Runner to use. Will use pytest if available by default.
           -- Can be a function to return dynamic value.
           runner = "pytest",
