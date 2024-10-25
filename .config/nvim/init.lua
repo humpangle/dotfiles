@@ -2,7 +2,7 @@
 -- https://github.com/neovim/neovim/issues/21749#issuecomment-1378720864
 table.insert(vim._so_trails, "/?.dylib")
 
-vim.opt.shell = os.getenv("SHELL")
+vim.opt.shell = os.getenv("SHELL") or "/bin/bash"
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
