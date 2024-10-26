@@ -108,7 +108,7 @@ return {
         vim.cmd("saveas " .. vim.fn.fnameescape(new_name))
       end)
 
-      vim.cmd("tab split")
+      -- vim.cmd("tab split")
       vim.cmd("e %")
 
       vim.cmd("bdelete! " .. buffer_name)
