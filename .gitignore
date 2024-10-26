@@ -1,3 +1,4 @@
 snippet_in.txt
 snippet_out.json
 !dotfiles.code-workspace
+.config/alacritty/alacritty.toml
