@@ -95,6 +95,10 @@ action = "ScrollToBottom"
 key    = "End"
 mods   = "Shift"
 
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key    = "F11"
+
 [mouse]
 # hide_when_typing = true
 hide_when_typing = false
