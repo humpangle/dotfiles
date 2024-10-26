@@ -62,6 +62,17 @@ vim.g.encoding = "utf8"
 -- Draw column lines at
 vim.opt.cc = "120,80"
 
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = {
+    "*/.local/share/db_ui/**/*.md",
+    "*_query-result--*.md",
+    "term://*"
+  },
+  callback = function()
+    vim.opt_local.wrap = false
+  end,
+})
+
 -- Maximum lenght of a line of text. When doing automatic formatting, a line of texts will wrap at this column.
 vim.opt.textwidth = 119
 
