@@ -138,4 +138,14 @@ _docker_image_repo_tag_merge_func() {
 alias dimrt=_docker_image_repo_tag_merge_func
 alias dimrt__description='_docker_image_repo_tag_merge_func dimm docker image repo tag merge/join'
 
+# docker compose kill and up
+dckr() {
+  local service_="$1"
+  local args_=("${@:2}")
+
+  docker compose kill "$service_"
+  docker compose up "${args_[@]}" "$service_"
+}
+alias dckr__description='dck && dcud docker compose kill && docker compose up --detached'
+
 _alias_map_complete _alias_map_docker
