@@ -46,17 +46,18 @@ local git_stash_list_fn = function(callback)
       handle:close()
     end
 
-    if result and result ~= "" then
-      local cmd =
-        ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>"
-
-      if callback then
-        callback(cmd)
-      else
-        vim.cmd(cmd)
-      end
-    else
+    if not (result and result ~= "") then
       vim.cmd.echo('"No stashes found"')
+      return
+    end
+
+    local cmd =
+    ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>"
+
+    if callback then
+      callback(cmd)
+    else
+      vim.cmd(cmd)
     end
   end
 end
@@ -90,11 +91,11 @@ keymap(
 
     -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we cannot
     -- have git stash index 99).
-    if count == 99 then -- simulate count 0
+    if count == 99 then   -- simulate count 0
       cmd = ":G stash drop stash@{0}<Left>"
     elseif count > 0 then -- count given (not 0)
       cmd = ":G stash drop stash@{" .. count .. "}<Left>"
-    else -- no count
+    else                  -- no count
       -- List stashes so we can select count
       vim.cmd(list_stash_cmd)
     end
@@ -153,13 +154,13 @@ keymap("n", "<Leader>czz", function()
   -- Move the cursor back by one position to place it after the commit hash and before the end quote
   vim.fn.feedkeys(
     ":"
-      .. cmd
-      .. vim.api.nvim_replace_termcodes(
-        left_repeated_severally,
-        true,
-        true,
-        true
-      ),
+    .. cmd
+    .. vim.api.nvim_replace_termcodes(
+      left_repeated_severally,
+      true,
+      true,
+      true
+    ),
     "t"
   )
 end, {
@@ -172,12 +173,12 @@ local git_stash_apply_or_pop = function(apply_or_pop, maybe_include_index)
     local count = vim.v.count
 
     local cmd = ":Git stash "
-      .. apply_or_pop
-      .. " --quiet "
-      .. (maybe_include_index and "--index " or "")
-      .. "stash@{"
-      .. (count == 99 and 0 or (count > 0 and count or "")) -- Count 99 simulates count 0 (See czd -->> git stash drop).
-      .. "}<Left>"
+        .. apply_or_pop
+        .. " --quiet "
+        .. (maybe_include_index and "--index " or "")
+        .. "stash@{"
+        .. (count == 99 and 0 or (count > 0 and count or "")) -- Count 99 simulates count 0 (See czd -->> git stash drop).
+        .. "}<Left>"
 
     if count < 1 then -- No count given.
       vim.cmd(list_stash_cmd)
@@ -252,10 +253,10 @@ keymap("n", "<leader>gu", function()
 
     if git_user ~= nil and git_user_email ~= nil then
       cmd = ":Git config user.name "
-        .. git_user
-        .. "<bar>"
-        .. ":Git config user.email "
-        .. git_user_email
+          .. git_user
+          .. "<bar>"
+          .. ":Git config user.email "
+          .. git_user_email
     end
   end
 
