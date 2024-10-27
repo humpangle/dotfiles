@@ -51,8 +51,7 @@ local git_stash_list_fn = function(callback)
       return
     end
 
-    local cmd =
-    ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'<CR>"
+    local cmd = ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'"
 
     if callback then
       callback(cmd)
