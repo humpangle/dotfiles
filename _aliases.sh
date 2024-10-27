@@ -6,7 +6,7 @@
 alacritty_bin_="$(command -v Alacritty 2>/dev/null)"
 
 if [ -z "$alacritty_bin_" ]; then
-  alacritty_bin_="$(command -v alacritty 2>/dev/null)"
+  export alacritty_bin_="$(command -v alacritty 2>/dev/null)"
 fi
 
 if [ -n "$alacritty_bin_" ]; then
@@ -17,13 +17,8 @@ if [ -n "$alacritty_bin_" ]; then
         bash -l -c \
         "$alacritty_bin_ &>/dev/null" &
       disown
-    elif [ -n "$ALACRITTY_SOCKET" ]; then # Invoked from a running alacritty instance
-      $alacritty_bin_ msg create-window
     else
-      # env -i \ # ---> can't seem to be able to refresh environment
-      bash -l -c \
-        "$alacritty_bin_ &>/dev/null" &
-      disown
+      $alacritty_bin_ msg create-window
     fi
   }
 
