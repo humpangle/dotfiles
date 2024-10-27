@@ -36,18 +36,26 @@ end, { noremap = true })
 
 -- Git stash list inspired by
 --   https://github.com/tpope/vim-fugitive/issues/236#issuecomment-1737935479
+local has_git_stash = function()
+  local handle = io.popen("git stash list")
+  local result = nil
+
+  if handle ~= nil then
+    result = handle:read("*a")
+    handle:close()
+  end
+
+  if not (result and result ~= "") then
+    vim.cmd.echo('"No stashes found"')
+    return false
+  end
+
+  return true
+end
+
 local git_stash_list_fn = function(callback)
   return function()
-    local handle = io.popen("git stash list")
-    local result = nil
-
-    if handle ~= nil then
-      result = handle:read("*a")
-      handle:close()
-    end
-
-    if not (result and result ~= "") then
-      vim.cmd.echo('"No stashes found"')
+    if not has_git_stash() then
       return
     end
 
@@ -65,7 +73,9 @@ keymap("n", "<Leader>czl", function()
   local count = vim.v.count
 
   if count == 0 then
-    vim.cmd("G stash list")
+    if has_git_stash() then
+      vim.cmd("G stash list")
+    end
     return
   end
 
