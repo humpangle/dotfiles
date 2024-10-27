@@ -523,9 +523,16 @@ __c() {
     bash -lc \
       "$_cmd" &
   else
+    # Cache environment variables that must be set
+    local home_="$HOME"
+    local wayland_display_="$WAYLAND_DISPLAY"
+    local display_="$DISPLAY"
+
     env -i \
-      HOME="$HOME" \
-      bash -lc \
+      WAYLAND_DISPLAY="$wayland_display_" \
+      DISPLAY="$display_" \
+      HOME="$home_" \
+      bash -l -c \
       "$_cmd" &
   fi
 
