@@ -43,12 +43,32 @@ return {
       init = function()
         vim.g.__ebnis_neotest_python_args = {}
 
-        vim.api.nvim_create_user_command("NeotestPythonArgs", function()
-          local args =
-            'vim.g.__ebnis_neotest_python_args = { "--log-level", "DEBUG", "--verbosity=0", "--capture=no", "--disable-warnings", "--ignore=" }'
+        vim.api.nvim_create_user_command(
+          "NeoPyArgs",
+          function(opts)
+            local count = opts.fargs[1]
+            -- vim.print(count)
 
-          utils.write_to_command_mode("lua " .. args)
-        end, { nargs = "*" })
+            if count == nil then
+              local args_text =
+                'vim.g.__ebnis_neotest_python_args = { "--log-level","DEBUG","--verbosity","0","--capture","no","--disable-warnings","--ignore"}<left>'
+
+              utils.write_to_command_mode("lua " .. args_text)
+              return
+            end
+
+            if count == "1" then
+              local args_text =
+                "vim.g.__ebnis_neotest_python_args = {}"
+
+              utils.write_to_command_mode("lua " .. args_text)
+              return
+            end
+
+            vim.cmd("lua =vim.g.__ebnis_neotest_python_args")
+          end,
+          { nargs = "*" }
+        )
       end,
       config = function()
         local neotest = require("neotest")
@@ -61,7 +81,10 @@ return {
           },
           -- Command line arguments for runner
           -- Can also be a function to return dynamic values
-          args = vim.g.__ebnis_neotest_python_args,
+          -- args = {}, -- vim.g.__ebnis_neotest_python_args,
+          args = function()
+            return vim.g.__ebnis_neotest_python_args
+          end,
           -- Runner to use. Will use pytest if available by default.
           -- Can be a function to return dynamic value.
           runner = "pytest",
