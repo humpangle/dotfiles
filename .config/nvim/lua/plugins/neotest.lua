@@ -43,32 +43,27 @@ return {
       init = function()
         vim.g.__ebnis_neotest_python_args = {}
 
-        vim.api.nvim_create_user_command(
-          "NeoPyArgs",
-          function(opts)
-            local count = opts.fargs[1]
-            -- vim.print(count)
+        vim.api.nvim_create_user_command("NeoPyArgs", function(opts)
+          local count = opts.fargs[1]
 
-            if count == nil then
-              local args_text =
-                'vim.g.__ebnis_neotest_python_args = { "--log-level","DEBUG","--verbosity","0","--capture","no","--disable-warnings","--ignore"}<left>'
+          if count == nil then
+            local args_text =
+              'vim.g.__ebnis_neotest_python_args = { "--log-level","DEBUG","--verbosity","0","--capture","no","--disable-warnings","--ignore"}<left>'
 
-              utils.write_to_command_mode("lua " .. args_text)
-              return
-            end
+            utils.write_to_command_mode("lua " .. args_text)
+            return
+          end
 
-            if count == "1" then
-              local args_text =
-                "vim.g.__ebnis_neotest_python_args = {}"
+          if count == "1" then
+            local args_text =
+              "vim.g.__ebnis_neotest_python_args = {}"
 
-              utils.write_to_command_mode("lua " .. args_text)
-              return
-            end
+            utils.write_to_command_mode("lua " .. args_text)
+            return
+          end
 
-            vim.cmd("lua =vim.g.__ebnis_neotest_python_args")
-          end,
-          { nargs = "*" }
-        )
+          vim.cmd("lua =vim.g.__ebnis_neotest_python_args")
+        end, { nargs = "*" })
       end,
       config = function()
         local neotest = require("neotest")
