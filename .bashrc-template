@@ -36,6 +36,11 @@ export NVIM_ENABLE_ELIXIR_PLUGINS=1
 export NVIM_ENABLE_TERRAFORM_LSP=1
 export NVIM_ENABLE_STYLUA_LSP_FORMATTER=1
 export NVIM_ISORT_PLUGIN_AUTO=0
+export NVIM_ENABLE_TAILWINDCSS_LSP=0
+export NVIM_ENABLE_EMMET_LSP=0
+export NVIM_ENABLE_TYPESCRIPT_LSP=0
+export NVIM_ENABLE_DOCKER_LSP=0
+export NVIM_ENABLE_YAML_LSP=0
 
 # -----------------------------------------------------------------------------
 # /END/ NVIM

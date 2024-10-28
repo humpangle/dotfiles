@@ -1,6 +1,12 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
 local M = {}
 
 function M.yaml_companion_plugin_init()
+  if not plugin_enabled.yaml_lsp() then
+    return {}
+  end
+
   return {
     "someone-stole-my-name/yaml-companion.nvim",
 
@@ -19,6 +25,10 @@ function M.yaml_companion_plugin_init()
 end
 
 function M.config_from_yaml_companion_plugin()
+  if not plugin_enabled.yaml_lsp() then
+    return {}
+  end
+
   local yaml_companion_config = require("yaml-companion").setup({
     -- Detect schemas based on file content (e.g. presence of `kind` attribute in k8s and that atribute value matches
     -- some predefined k8s resources values).
@@ -104,12 +114,20 @@ function M.config_from_yaml_companion_plugin()
     },
   })
 
-  return yaml_companion_config
+  return {
+    yamlls = yaml_companion_config,
+  }
 end
 
 -- Get schema for current buffer (for example: for display in statusline). Add it to lualine plugin configuration.
 function M.get_yaml_schema()
-  local schema = require("yaml-companion").get_buf_schema(0)
+  local ok, yaml_companion = pcall(require, "yaml_companion")
+
+  if not ok then
+    return ""
+  end
+
+  local schema = yaml_companion.get_buf_schema(0)
 
   if schema.result[1].name == "none" then
     return ""

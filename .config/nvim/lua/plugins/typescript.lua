@@ -1,3 +1,9 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
+if not plugin_enabled.typescript_lsp() then
+  return {}
+end
+
 local get_vue_lang_server_path = function()
   -- We expect the path here -
   -- os.getenv("HOME") .. "/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",

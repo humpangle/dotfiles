@@ -269,8 +269,6 @@ return {
 
         bashls = {},
 
-        yamlls = yamlls_config.config_from_yaml_companion_plugin(),
-
         jsonls = {
           settings = {
             json = {
@@ -292,27 +290,6 @@ return {
           },
         },
 
-        tailwindcss = {},
-
-        emmet_language_server = {
-          filetypes = {
-            "css",
-            "eruby",
-            "html",
-            "javascript",
-            "javascriptreact",
-            "less",
-            "sass",
-            "scss",
-            "pug",
-            "typescriptreact",
-            "eex",
-            "elixir",
-            "eelixir",
-            "heex",
-          },
-        },
-
         html = {},
       }
 
@@ -321,34 +298,35 @@ return {
         servers,
         require("plugins.lsp.python"),
         require("plugins.lsp.elixir"),
-        plugin_enabled.terraform_lsp() and { terraformls = {} } or {}
+        (plugin_enabled.docker_lsp() and { dockerls = {} } or {}),
+        (plugin_enabled.terraform_lsp() and { terraformls = {} } or {}),
+        (
+          plugin_enabled.tailwindcss_lsp()
+            and { tailwindcss = {} }
+          or {}
+        ),
+        require("plugins.lsp.emmet"),
+        require("plugins.typescript"),
+        yamlls_config.config_from_yaml_companion_plugin()
       )
 
       if not plugin_enabled.has_termux() then
-        servers = vim.tbl_extend(
-          "error",
-          servers,
-          {
-            lua_ls = {
-              -- cmd = {...},
-              -- filetypes = { ...},
-              -- capabilities = {},
-              settings = {
-                Lua = {
-                  completion = {
-                    callSnippet = "Replace",
-                  },
-                  -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                  -- diagnostics = { disable = { 'missing-fields' } },
+        servers = vim.tbl_extend("error", servers, {
+          lua_ls = {
+            -- cmd = {...},
+            -- filetypes = { ...},
+            -- capabilities = {},
+            settings = {
+              Lua = {
+                completion = {
+                  callSnippet = "Replace",
                 },
+                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                -- diagnostics = { disable = { 'missing-fields' } },
               },
             },
-
-            dockerls = {},
           },
-          require("plugins.typescript")
-          --
-        )
+        })
       end
       -- /END/ servers variable
 

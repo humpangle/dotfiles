@@ -191,4 +191,24 @@ function M.stylua_lsp_formatter()
   return utils.get_os_env_or_nil("NVIM_ENABLE_STYLUA_LSP_FORMATTER") ~= "0"
 end
 
+function M.tailwindcss_lsp()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_TAILWINDCSS_LSP") ~= "0"
+end
+
+function M.emmet_lsp()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_EMMET_LSP") ~= "0"
+end
+
+function M.typescript_lsp()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_TYPESCRIPT_LSP") ~= "0"
+end
+
+function M.docker_lsp()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_DOCKER_LSP") ~= "0"
+end
+
+function M.yaml_lsp()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_YAML_LSP") ~= "0"
+end
+
 return M
