@@ -250,6 +250,29 @@ return {
           return " " .. variable_val
         end,
       })
+
+      vim.api.nvim_create_user_command("DAPListBreakpoints", function()
+        local breakpoints = require("dap.breakpoints").get()
+        local quickfix_list = {}
+
+        for buf_nr, bp_list in pairs(breakpoints) do
+          local filename = vim.api.nvim_buf_get_name(buf_nr)
+          for _, bp in ipairs(bp_list) do
+            table.insert(quickfix_list, {
+              filename = filename,
+              lnum = bp.line,
+              text = "Breakpoint",
+            })
+          end
+        end
+
+        vim.fn.setqflist({}, " ", {
+          title = "Breakpoints",
+          items = quickfix_list,
+        })
+
+        vim.cmd("copen")
+      end, { nargs = "*" })
     end,
   },
 }
