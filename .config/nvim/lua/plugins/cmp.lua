@@ -103,8 +103,17 @@ return {
           option = {
             -- https://github.com/hrsh7th/cmp-buffer#get_bufnrs-type-fun-number
             get_bufnrs = function()
-              -- completion from all buffers.
-              return vim.api.nvim_list_bufs()
+              -- Completion from all buffers, excluding "Neotest Output Panel"
+              local bufnrs = {}
+
+              for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+                local name = vim.api.nvim_buf_get_name(bufnr)
+                if not name:match("Neotest Output Panel") then
+                  table.insert(bufnrs, bufnr)
+                end
+              end
+
+              return bufnrs
             end,
           },
         },
