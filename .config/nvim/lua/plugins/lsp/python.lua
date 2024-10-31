@@ -1,3 +1,5 @@
+-- basedpyright = {
+
 return {
   pyright = {
     on_init = function(client)
@@ -9,6 +11,21 @@ return {
       vim.g.python_host_prog = python_bin
       vim.g.python3_host_prog = python_bin
     end,
+
+    -- settings = {
+    --   pyright = {
+    --     analysis = {
+    --       typeCheckingMode = "off", -- off, basic, standard, strict, all
+    --     },
+    --   },
+    -- python = {
+    --   analysis = {
+    --     diagnosticSeverityOverrides = {
+    --       reportMissingImports = "none",
+    --     },
+    --   },
+    -- },
+    -- },
   },
 
   black = {},
