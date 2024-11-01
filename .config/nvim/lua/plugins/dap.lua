@@ -179,17 +179,17 @@ return {
       })
 
       map_key("n", "<leader>da1", function()
-        do_echo("step over")
-        dap.step_over()
-      end, {
-        desc = "DAP: step_over",
-      })
-
-      map_key("n", "<leader>da2", function()
         do_echo("step into")
         dap.step_into()
       end, {
         desc = "DAP: step_into",
+      })
+
+      map_key("n", "<leader>da2", function()
+        do_echo("step over")
+        dap.step_over()
+      end, {
+        desc = "DAP: step_over",
       })
 
       map_key("n", "<leader>da3", function()
@@ -227,15 +227,15 @@ return {
         ---@diagnostic disable-next-line: missing-fields
         controls = {
           icons = {
-            pause = "⏸",
-            play = "▶",
-            step_into = "⏎",
-            step_over = "⏭",
-            step_out = "⏮",
-            step_back = "b",
-            run_last = "▶▶",
-            terminate = "⏹",
-            disconnect = "⏏",
+            pause = "P",
+            play = "0", -- run to cursor
+            step_into = "1",
+            step_over = "2",
+            step_out = "3",
+            step_back = "4",
+            run_last = "L",
+            terminate = "T",
+            disconnect = "D",
           },
         },
       })
