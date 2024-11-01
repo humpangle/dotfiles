@@ -108,7 +108,7 @@ function _G.LightlineObsession()
 
   -- This means we started session manually - we simply show the session filename (minus directory) used to start
   -- session.
-  return active_color_indicator .. prefix .. session_file:match("([^/]+)$")
+  return active_color_indicator .. prefix .. "CU" -- session_file:match("([^/]+)$")
 end
 
 local function tab_modified(tab_num)
