@@ -5,6 +5,7 @@ if not plugin_enabled.notest() then
 end
 
 local utils = require("utils")
+local s_utils = require("settings-utils")
 
 local function do_echo(text, on_going)
   on_going = on_going == nil and " ONGOING..." or ""
@@ -46,23 +47,47 @@ return {
         vim.api.nvim_create_user_command("NeoPyArgs", function(opts)
           local count = opts.fargs[1]
 
-          if count == nil then
-            local args_text =
-              'vim.g.__ebnis_neotest_python_args = { "--log-level","DEBUG","--verbosity","0","--capture","no","--disable-warnings","--ignore"}<left>'
-
-            utils.write_to_command_mode("lua " .. args_text)
-            return
-          end
-
           if count == "1" then
-            local args_text =
-              "vim.g.__ebnis_neotest_python_args = {}"
-
-            utils.write_to_command_mode("lua " .. args_text)
+            utils.write_to_command_mode(
+              "lua vim.g.__ebnis_neotest_python_args = {}"
+            )
             return
           end
 
-          vim.cmd("lua =vim.g.__ebnis_neotest_python_args")
+          local args_text = "lua vim.g.__ebnis_neotest_python_args = "
+            .. "\\n"
+            .. "{"
+            .. "\\n"
+            .. "}"
+            .. "\\n"
+            .. '\\"--log-level\\", \\"DEBUG\\",'
+            .. "\\n"
+            .. '\\"--verbosity\\", \\"0\\",'
+            .. "\\n"
+            .. '\\"--capture\\", \\"no\\",'
+            .. "\\n"
+            .. '\\"--disable-warnings\\",'
+            .. "\\n"
+            .. '\\"--ignore\\",'
+
+          local current_args_value_string = '{ "'
+            .. table.concat(
+              vim.g.__ebnis_neotest_python_args,
+              '", "'
+            )
+            .. '" }'
+
+          current_args_value_string =
+            current_args_value_string:gsub('"', '\\"')
+
+          s_utils.RedirMessages(
+            'echo "'
+              .. args_text
+              .. "\\n\\\n"
+              .. current_args_value_string
+              .. '"',
+            "new"
+          )
         end, { nargs = "*" })
       end,
       config = function()
