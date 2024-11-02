@@ -12,20 +12,16 @@ return {
       vim.g.python3_host_prog = python_bin
     end,
 
-    -- settings = {
-    --   pyright = {
-    --     analysis = {
-    --       typeCheckingMode = "off", -- off, basic, standard, strict, all
-    --     },
-    --   },
-    -- python = {
-    --   analysis = {
-    --     diagnosticSeverityOverrides = {
-    --       reportMissingImports = "none",
-    --     },
-    --   },
-    -- },
-    -- },
+    settings = {
+      python = {
+        analysis = {
+          typeCheckingMode = "basic", -- off, basic, standard, strict, all
+          diagnosticSeverityOverrides = {
+            reportMissingImports = "none",
+          },
+        },
+      },
+    },
   },
 
   black = {},
