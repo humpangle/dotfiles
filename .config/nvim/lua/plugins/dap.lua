@@ -24,6 +24,11 @@ local list_breakpoints_in_qickfix = function()
     end
   end
 
+  if #quickfix_list == 0 then
+    vim.cmd.echo('"' .. "DAP: No breakpoints!" .. '"')
+    return
+  end
+
   vim.fn.setqflist({}, " ", {
     title = "Breakpoints",
     items = quickfix_list,
