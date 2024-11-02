@@ -5,6 +5,7 @@ if not plugin_enabled.notest() then
 end
 
 local utils = require("utils")
+local map_key = utils.map_key
 local s_utils = require("settings-utils")
 
 local function do_echo(text, on_going)
@@ -42,6 +43,20 @@ return {
         },
       },
       init = function()
+        map_key(
+          "n",
+          "<leader>nt1",
+          "?========= test session starts ========<CR>",
+          {}
+        )
+
+        map_key(
+          "n",
+          "<leader>nt2",
+          "?=========== FAILURES ======================<CR>",
+          {}
+        )
+
         vim.g.__ebnis_neotest_python_args = { "--disable-warnings" }
 
         vim.api.nvim_create_user_command("NeoPyArgs", function(opts)
