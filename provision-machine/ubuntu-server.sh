@@ -2981,6 +2981,23 @@ install-docker-hadolint() {
   mv "$file_" "$bin_path_"
 }
 
+install-draw-on-your-screen() {
+  local extensions_path_="$HOME/.local/share/gnome-shell/extensions"
+  local download_basename_="draw-on-your-screen2@zhrexl.github.com"
+  local download_full_path_="$extensions_path_/$download_basename_"
+
+  _echo "Cloning to $download_full_path_"
+  git clone \
+    https://github.com/zhrexl/DrawOnYourScreen2.git \
+    "$download_full_path_"
+
+  _echo "Saving gsettings"
+  sudo cp "$download_full_path_/schemas/org.gnome.shell.extensions.draw-on-your-screen.gschema.xml" \
+    /usr/share/glib-2.0/schemas/
+
+  sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
+}
+
 # -----------------------------------------------------------------------------
 # GLOBAL HELP FUNCTION
 # -----------------------------------------------------------------------------
