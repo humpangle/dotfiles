@@ -153,6 +153,10 @@ return {
             -- open = true,
             open = false,
           },
+          ---@diagnostic disable-next-line: missing-fields
+          output_panel = {
+            open = "tab split",
+          },
         })
       end,
 
