@@ -12,6 +12,30 @@ local function do_echo(text, on_going)
   vim.cmd.echo('"' .. "NETOTEST " .. text .. on_going .. '"')
 end
 
+local interact_with_output_panel = function(operation_callback)
+  return function()
+    local count = vim.v.count
+
+    if count == 0 then
+      operation_callback()
+      return
+    end
+
+    local neotest = require("neotest")
+
+    if count == 1 then
+      neotest.output_panel.clear()
+    elseif count == 2 then
+      neotest.output_panel.open()
+    elseif count == 21 then
+      neotest.output_panel.open()
+      neotest.output_panel.clear()
+    end
+
+    operation_callback()
+  end
+end
+
 return {
   {
     {
@@ -163,10 +187,10 @@ return {
       keys = {
         {
           "<leader>ntf",
-          function()
+          interact_with_output_panel(function()
             do_echo("current file")
             require("neotest").run.run(vim.fn.expand("%"))
-          end,
+          end),
           desc = "Neotest File",
         },
         {
@@ -180,18 +204,18 @@ return {
         },
         {
           "<leader>ntt",
-          function()
+          interact_with_output_panel(function()
             do_echo("At Cursor")
             require("neotest").run.run()
-          end,
+          end),
           desc = "Neotest at cursor",
         },
         {
           "<leader>nta",
-          function()
+          interact_with_output_panel(function()
             do_echo("ALL TESTS")
             require("neotest").run.run(vim.uv.cwd())
-          end,
+          end),
           desc = "Netotest ALL TESTS",
         },
         {
