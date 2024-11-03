@@ -5,7 +5,6 @@ if not plugin_enabled.notest() then
 end
 
 local utils = require("utils")
-local map_key = utils.map_key
 local s_utils = require("settings-utils")
 
 local function do_echo(text, on_going)
@@ -43,20 +42,6 @@ return {
         },
       },
       init = function()
-        map_key(
-          "n",
-          "<leader>nt1",
-          "?========= test session starts ========<CR>",
-          {}
-        )
-
-        map_key(
-          "n",
-          "<leader>nt2",
-          "?=========== FAILURES ======================<CR>",
-          {}
-        )
-
         vim.g.__ebnis_neotest_python_args = { "--disable-warnings" }
 
         vim.api.nvim_create_user_command("NeoPyArgs", function(opts)
@@ -242,7 +227,30 @@ return {
         {
           "<leader>nto",
           function()
-            require("neotest").output_panel.toggle()
+            local count = vim.v.count
+
+            if count == 0 then
+              require("neotest").output_panel.toggle()
+              return
+            end
+
+            local search_text = ""
+
+            if count == 1 then
+              search_text =
+                "========= test session starts ========"
+            elseif count == 2 then
+              search_text =
+                "=========== FAILURES ======================"
+            elseif count == 3 then
+              search_text = ".py F"
+            elseif count == 4 then
+              search_text = "------- Captured "
+            end
+
+            vim.fn.setreg("/", search_text)
+            vim.cmd("set hlsearch")
+            vim.cmd("normal! N")
           end,
           desc = "Toggle Output Panel",
         },
