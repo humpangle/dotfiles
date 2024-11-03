@@ -167,6 +167,14 @@ function M.notest()
   return true
 end
 
+function M.isort()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_PYTHON_ISORT") ~= "0"
+end
+
 function M.isort_auto()
   if M.has_vscode() then
     return false
