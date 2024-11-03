@@ -3072,26 +3072,27 @@ help() {
     local _function_def_text
     _function_def_text="$(type "${_name}")"
 
-    local _alias_name
+    local _alias_name=""
 
     # Matching pattern example:
     # `: "___alias___ install-elixir"`
-    _alias_name="$(awk \
-      'match($0, /^ +: *"___alias___ +([a-zA-Z_-][a-zA-Z0-9_-]*)/, a) {print a[1]}' \
-      <<<"${_function_def_text}")"
+    _alias_name="$(
+      sed -n \
+        's/^ *: *"___alias___ *\([a-zA-Z_-][a-zA-Z0-9_-]*\).*/\1/p' \
+        <<<"${_function_def_text}"
+    )"
 
     if [[ -n "${_alias_name}" ]]; then
       _aliases["${_alias_name}"]="${_aliases["${_alias_name}"]} ${_name}"
       continue
     fi
 
-    local _help_func
+    local _help_func=""
 
     _help_func="$(
-      awk \
-        -v _awk_help_func_pattern="$_help_func_pattern" \
-        'match($0, "^ +: *\"___help___ +(" _awk_help_func_pattern ")", a) {print a[1]}' \
-        <<<"$_function_def_text"
+      sed -nE \
+        "s/^[[:space:]]+:[[:space:]]*\"___help___[[:space:]]+([a-zA-Z0-9_-]*).*/\1/p" \
+        <<<"${_function_def_text}"
     )"
 
     # Get the whole function definition text and extract only the documentation
