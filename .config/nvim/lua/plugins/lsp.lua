@@ -412,4 +412,24 @@ return {
       require("refactoring").setup({})
     end,
   },
+
+  {
+    -- for settings to put in json file, check:
+    -- https://github.com/fannheyward/coc-pyright
+    -- https://raw.githubusercontent.com/microsoft/pyright/master/packages/vscode-pyright/package.json
+    "tamago324/nlsp-settings.nvim",
+    enabled = false,
+    config = function()
+      local nlspsettings = require("nlspsettings")
+
+      ---@diagnostic disable-next-line: missing-fields
+      nlspsettings.setup({
+        config_home = vim.fn.stdpath("config") .. "/nlsp-settings",
+        local_settings_dir = ".___scratch-nlsp-settings",
+        local_settings_root_markers_fallback = { ".git" },
+        append_default_schemas = true,
+        loader = "json",
+      })
+    end,
+  },
 }
