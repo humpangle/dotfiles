@@ -66,7 +66,7 @@ vim.api.nvim_create_autocmd("BufRead", {
   pattern = {
     "*/.local/share/db_ui/**/*.md",
     "*_query-result--*.md",
-    "term://*"
+    "term://*",
   },
   callback = function()
     vim.opt_local.wrap = false
