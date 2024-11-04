@@ -608,6 +608,23 @@ utils.map_key("n", "<leader>wd", function()
   print("Current working directory is: " .. vim.fn.getcwd())
 end)
 
+-- Yank current line number
+utils.map_key("n", ",yl", function()
+  local line_number_str = tostring(vim.fn.line("."))
+
+  vim.fn.setreg("+", line_number_str)
+
+  vim.cmd.echo(
+    "'"
+      .. "+"
+      .. " -> "
+      .. "current line number"
+      .. " = "
+      .. line_number_str
+      .. "'"
+  )
+end, { noremap = true, silent = true })
+
 -- Find and replace in current buffer only
 -- press * {shift 8) to search for word under cursor and key combo below to replace in entire file
 -- utils.map_key({ "n", "x" }, "<leader>rr", ":%s///g<left><left>")
