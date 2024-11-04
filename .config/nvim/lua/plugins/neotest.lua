@@ -273,8 +273,7 @@ return {
             elseif count == 3 then
               search_text = ".py F"
             elseif count == 4 then
-              search_text =
-                "_______________________________________________________ test_"
+              search_text = "___________ test_"
             elseif count == 5 then
               search_text = "------- Captured "
             end
