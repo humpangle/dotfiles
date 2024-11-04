@@ -144,7 +144,15 @@ end
 
 ---@param buffer_name string
 function utils.is_fugitive_buffer(buffer_name)
-  return vim.startswith(buffer_name, "fugitive://")
+  if vim.startswith(buffer_name, "fugitive://") then
+    return true
+  end
+
+  if vim.endswith(buffer_name, ".fugitiveblame") then
+    return true
+  end
+
+  return false
 end
 
 function utils.DeleteAllBuffers(delete_flag)
