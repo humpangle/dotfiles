@@ -268,10 +268,10 @@ return {
               search_text =
                 "========= test session starts ========"
             elseif count == 2 then
+              search_text = ".py F"
+            elseif count == 3 then
               search_text =
                 "=========== FAILURES ======================"
-            elseif count == 3 then
-              search_text = ".py F"
             elseif count == 4 then
               search_text = "___________ test_"
             elseif count == 5 then
