@@ -28,6 +28,7 @@ return {
         "ini",
         "jsdoc",
         "json5",
+        "jsonc", -- required by "folke/neoconf.nvim"
         "lua",
         "luadoc",
         "markdown",

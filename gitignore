@@ -121,6 +121,7 @@ Session.vim
 **/.vim/coc-settings.json
 **/spell/*.spl
 *.lua.swp
+**/.neoconf.json
 
 # scratch files
 *.___scratch*
