@@ -27,6 +27,8 @@ local plugins_table = {
 
   "nvim-lua/plenary.nvim",
 
+  require("plugins/which-key-nvim"),
+
   {
     "Joakker/lua-json5",
     cond = true, -- false,
