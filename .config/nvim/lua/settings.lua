@@ -804,7 +804,7 @@ end
 -- -----/END TERMINAL
 
 -- Show the registers
-utils.map_key("n", "<leader>re", ":reg<CR>", { noremap = true })
+-- utils.map_key("n", "<leader>re", ":reg<CR>", { noremap = true }) -- neoclip uses it now
 -- Dump vim register into a buffer in vertical split.
 utils.map_key("n", "<localleader>re", ":VMessage reg<CR>", { noremap = true })
 
