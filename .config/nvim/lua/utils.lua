@@ -155,6 +155,19 @@ function utils.is_fugitive_buffer(buffer_name)
   return false
 end
 
+---@param buffer_name string
+function utils.is_dap_buffer(buffer_name)
+  if vim.startswith(buffer_name, "DAP ") then
+    return true
+  end
+
+  if vim.startswith(buffer_name, "[dap-repl-") then
+    return true
+  end
+
+  return false
+end
+
 function utils.DeleteAllBuffers(delete_flag)
   ---@diagnostic disable-next-line: param-type-mismatch
   local last_b_num = vim.fn.bufnr("$")
@@ -163,6 +176,7 @@ function utils.DeleteAllBuffers(delete_flag)
   local no_name_buffers = {}
   local dbui_buffers = {}
   local fugitive_buffers = {}
+  local dap_buffers = {}
 
   for index = 1, last_b_num do
     if vim.fn.bufexists(index) == 1 then
@@ -175,6 +189,8 @@ function utils.DeleteAllBuffers(delete_flag)
         delete_flag == "fugitive" and utils.is_fugitive_buffer(b_name)
       then
         table.insert(fugitive_buffers, index)
+      elseif delete_flag == "dap" and utils.is_dap_buffer(b_name) then
+        table.insert(dap_buffers, index)
       elseif b_name == "" or b_name == "," then
         table.insert(no_name_buffers, index)
       elseif string.match(b_name, "term://") then
@@ -214,6 +230,8 @@ function utils.DeleteAllBuffers(delete_flag)
     wipeout_buffers(dbui_buffers)
   elseif delete_flag == "fugitive" then
     wipeout_buffers(fugitive_buffers)
+  elseif delete_flag == "dap" then
+    wipeout_buffers(dap_buffers)
   end
 end
 
