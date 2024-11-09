@@ -832,3 +832,17 @@ utils.map_key(
   insert_current_datetime,
   { noremap = true, silent = true, desc = "Insert datetime" }
 )
+
+utils.map_key({ "n", "x" }, "<leader>WW", function()
+  local filename = utils.create_slime_dir()
+    .. "/---out-file-"
+    .. os.date("%s")
+
+  pcall(function()
+    vim.cmd("saveas " .. vim.fn.fnameescape(filename))
+  end)
+end, {
+  noremap = true,
+  silent = true,
+  desc = "Save file to scratch file.",
+})
