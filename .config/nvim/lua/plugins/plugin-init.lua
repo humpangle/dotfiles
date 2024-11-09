@@ -221,20 +221,30 @@ local plugins_table = {
 
       winpick.setup({
         border = "single",
-        filter = nil, -- doesn't ignore any window by default
+        -- doesn't ignore any window by default
+        filter = function(win_id, _, default_filter_value)
+          if not vim.api.nvim_win_is_valid(win_id) then
+            return false
+          end
+
+          local config = vim.api.nvim_win_get_config(win_id)
+
+          if not config.focusable then
+            return false
+          end
+
+          return default_filter_value
+        end,
         prompt = "Pick a window: ",
         -- format_label = winpick.defaults.format_label, -- formatted as "<label>: <buffer name>"
-        format_label = function(label, _, bufnr)
+        format_label = function(label, win_id)
           -- :TODO: mark current buffer in different color
-          local buf_name = vim.api.nvim_buf_get_name(bufnr)
 
-          if buf_name:len() == 0 then
-            return label
+          if win_id == vim.api.nvim_get_current_win() then
+            return label .. label
           end
 
           return label
-
-          -- return string.format("%s: %s", label, vim.fn.fnamemodify(buf_name, ":~:."))
         end,
         chars = nil,
       })
