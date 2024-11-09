@@ -5,8 +5,6 @@ if not utils_status_ok then
   return
 end
 
-local PlenaryPath = require("plenary.path")
-
 local keymap = utils.map_key
 
 -- Key to show slime config for the first time - <C-c><C-c>
@@ -92,25 +90,16 @@ vim.api.nvim_create_user_command("Slime0", function(opts)
   local timestamp = os.date("%s")
 
   if action == "local" then
-    slime_dir = vim.fn.getcwd() .. "/.___scratch"
-    local slime_dir_obj = PlenaryPath:new(slime_dir)
-
-    -- if there is a file (not directory) at this path, rename it so we can create a directory with same name below.
-    if slime_dir_obj:is_file() then
-      os.rename(slime_dir, slime_dir .. "--" .. timestamp)
-    end
+    slime_dir = utils.create_slime_dir()
   else
     slime_dir = vim.fn.expand("$HOME") .. "/.bash_histories"
+    vim.fn.mkdir(slime_dir, "p")
   end
-
-  -- Create the directory if it does not exist already.
-  vim.fn.mkdir(slime_dir, "p")
 
   -- We merely want to query for the history directory.
   if action == "hist_dir" then
     vim.fn.setreg("+", slime_dir)
     vim.cmd(utils.clip_cmd_exec)
-    print(slime_dir)
     return
   end
 

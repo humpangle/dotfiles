@@ -522,4 +522,21 @@ utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
   end
 end
 
+utils.create_slime_dir = function()
+  local PlenaryPath = require("plenary.path")
+  local slime_dir = vim.fn.getcwd() .. "/.___scratch"
+  local slime_dir_obj = PlenaryPath:new(slime_dir)
+
+  local timestamp = os.date("%s")
+
+  -- if there is a file (not directory) at this path, rename it so we can create a directory with same name below.
+  if slime_dir_obj:is_file() then
+    os.rename(slime_dir, slime_dir .. "--" .. timestamp)
+  end
+
+  vim.fn.mkdir(slime_dir, "p")
+
+  return slime_dir
+end
+
 return utils
