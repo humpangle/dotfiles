@@ -11,8 +11,6 @@ INITIAL_WSL_C_PATH=/mnt/c
 
 # Version Identifiers. Syntax is:
 #   WHATEVER_VERSION="version number"
-ERLANG_VERSION="26.2.5"
-ELIXIR_VERSION="1.16.3-otp-26"
 PYTHON_VERSION="3.11.9"
 RUST_VERSION="1.65.0"
 
@@ -1027,12 +1025,12 @@ function install-asdf {
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch $version
 }
 
-function install-erlang {
+install-erlang() {
   : "Install erlang"
 
   _may_be_install_asdf
 
-  local version
+  local version_=latest
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -1041,8 +1039,8 @@ function install-erlang {
 
   if ! parsed="$(
     getopt \
-      --longoptions=erlang:,elixir: \
-      --options=e:,x: \
+      --longoptions=erlang: \
+      --options=v: \
       --name "$0" \
       -- "$@"
   )"; then
@@ -1054,8 +1052,8 @@ function install-erlang {
 
   while true; do
     case "$1" in
-    --erlang | -e)
-      version="$2"
+    --version | -v)
+      version_="$2"
       shift 2
       ;;
 
@@ -1075,17 +1073,7 @@ function install-erlang {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  if [[ -z "${version}" ]] ||
-    [[ "${version}" == "latest" ]]; then
-    version="${ERLANG_VERSION}"
-  fi
-
-  if asdf list erlang | grep -q "${version}"; then
-    _echo "Erlang version ${version} already installed. Exiting!"
-    return
-  fi
-
-  _echo "INSTALLING ERLANG version: ${version}"
+  _echo "INSTALLING ERLANG version: ${version_}"
 
   _install_erlang_os_deps
 
@@ -1096,11 +1084,11 @@ function install-erlang {
   export KERL_INSTALL_MANPAGES=
   export KERL_INSTALL_HTMLDOCS=
 
-  "$(_asdf-bin-path)" plugin add erlang || true
-  "$(_asdf-bin-path)" install erlang "${version}"
+  "$(_asdf-bin-path)" plugin add erlang || :
+  "$(_asdf-bin-path)" install erlang "${version_}"
 }
 
-function install-rebar3 {
+install-rebar3() {
   : "Install rebar3"
 
   local rebar3_version=3.20.0
@@ -1122,16 +1110,12 @@ function i-elixir {
   install-elixir "${@}"
 }
 
-function install-elixir {
+install-elixir() {
   : "___help___ ___elixir-help"
 
   _may_be_install_asdf
 
-  local version="${ELIXIR_VERSION}"
-  local _erlang_version
-  local _file
-
-  local _args=("${*}")
+  local version_="latest"
 
   # --------------------------------------------------------------------------
   # PARSE ARGUMENTS
@@ -1140,8 +1124,8 @@ function install-elixir {
 
   if ! parsed="$(
     getopt \
-      --longoptions=help,file:,elixir:,erlang: \
-      --options=h,f:,x:,e: \
+      --longoptions=help,version: \
+      --options=h,v: \
       --name "$0" \
       -- "$@"
   )"; then
@@ -1159,19 +1143,8 @@ function install-elixir {
       return
       ;;
 
-    --elixir | -x)
-      version="${2}"
-      _no_set_global=1
-      shift 2
-      ;;
-
-    --erlang | -e)
-      _erlang_version="$2"
-      shift 2
-      ;;
-
-    --file | -f)
-      _file="${2}"
+    --version | -v)
+      version_="${2}"
       shift 2
       ;;
 
@@ -1192,34 +1165,7 @@ function install-elixir {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  if [[ -n "${_file}" ]] && [[ -e "${_file}" ]]; then
-    local _content
-    _content="$(cat "${_file}")"
-
-    version="$(
-      _extract-version elixir "${_file}"
-    )"
-
-    _erlang_version="$(
-      _extract-version erlang "${_file}"
-    )"
-  fi
-
-  # We install erlang if no erlang previously installed on this machine or
-  # user specifies an erlang version
-  if [[ -n "${_erlang_version}" ]] ||
-    [[ "${_erlang_version}" == "latest" ]] ||
-    ! "$(_asdf-bin-path)" current erlang 2>/dev/null | grep -q "$ERLANG_VERSION"; then
-    install-erlang --erlang "${_erlang_version}"
-  fi
-
-  if asdf list elixir | grep -q "${version}"; then
-    _echo "Elixir version ${version} already installed. Exiting!"
-    wait
-    return
-  fi
-
-  _echo "INSTALLING ELIXIR ${version}"
+  _echo "INSTALLING ELIXIR ${version_}"
 
   if _is_darwin; then
     brew install unzip
@@ -1233,13 +1179,12 @@ function install-elixir {
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
 
-  "$(_asdf-bin-path)" plugin add elixir || true
+  "$(_asdf-bin-path)" plugin add elixir || :
 
-  "$(_asdf-bin-path)" install elixir "$version" &
-  wait
+  "$(_asdf-bin-path)" install elixir "$version_"
 }
 
-function elixir-post-install {
+elixir-post-install() {
   : "Install hex and rebar"
 
   # Compile Hex from scratch for this OTP version (fix for apple silicon)
@@ -1255,17 +1200,24 @@ function ___elixir-help {
 Install elixir with ASDF. Usage:
   pm install-elixir [OPTIONS]
 
+Without specifying an option, we will install latest asdf elixir version.
+
 Options:
   --help/-h.                    Print help message and exit
-  --elixir/-x elixir_version.   Specify elixir version.
-  --erlang/-e erlang_version.   Specify erlang version.
+  -v/--version.                 Specify elixir version.
 
 Examples:
+  # Get help
+  pm install-elixir -h
   pm install-elixir --help
+
+  # Install latest asdf elixir
   pm install-elixir
   pm i-elixir
-  pm install-elixir --elixir=1.14.3 --erlang=25.2
-  pm install-elixir --elixir=1.14.3 --erlang=latest
+
+  # Install specified version
+  pm install-elixir --version=1.14.3
+  pm install-elixir -v 1.14.3
 eof
 
   echo "${var}"
