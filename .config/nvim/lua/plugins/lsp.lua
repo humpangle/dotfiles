@@ -11,10 +11,25 @@ local yamlls_config = require("plugins.yaml_lsp")
 
 return {
   {
-    -- configure Neovim using JSON files (can have comments)
-    -- for settings to put in json file, check:
-    -- https://github.com/fannheyward/coc-pyright
-    -- https://raw.githubusercontent.com/microsoft/pyright/master/packages/vscode-pyright/package.json
+    --[[
+        configure Neovim using JSON files (can have comments)
+        for settings to put in json file, check:
+        https://github.com/fannheyward/coc-pyright
+        https://raw.githubusercontent.com/microsoft/pyright/master/packages/vscode-pyright/package.json
+
+        create at the root of project .neoconf.json (invoke :Neoconf local) and put (for example):
+        {
+          "lspconfig": {
+            "pyright": {
+              "python.analysis.diagnosticSeverityOverrides": {
+                "reportUnusedVariable": "none"
+              },
+              "python.analysis.typeCheckingMode": "off"
+            }
+          }
+        }
+    ]]
+
     "folke/neoconf.nvim",
   },
   {
