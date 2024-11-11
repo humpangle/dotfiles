@@ -846,3 +846,9 @@ end, {
   silent = true,
   desc = "Save file to scratch file.",
 })
+
+local echo_session = function()
+  vim.cmd.echo('"' .. vim.v.this_session .. '"')
+end
+
+vim.api.nvim_create_user_command("SessionEbnis", echo_session, {})
