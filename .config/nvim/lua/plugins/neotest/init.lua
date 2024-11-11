@@ -273,7 +273,7 @@ return {
               search_text =
                 "=========== FAILURES ======================"
             elseif count == 4 then
-              search_text = "___________ test_"
+              search_text = "_ test_.\\+ _"
             elseif count == 5 then
               search_text = "= short test summary info ="
             elseif count == 6 then
