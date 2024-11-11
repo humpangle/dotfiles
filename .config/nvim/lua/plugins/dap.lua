@@ -1,6 +1,10 @@
 -- DAP: Debug Adapter Protocol
 local plugin_enabled = require("plugins/plugin_enabled")
 
+if not plugin_enabled.dap() then
+  return {}
+end
+
 local utils = require("utils")
 
 local map_key = utils.map_key
@@ -44,7 +48,6 @@ return {
 
   {
     "mfussenegger/nvim-dap",
-    enabled = plugin_enabled.dap(),
     cmd = {
       "DapClearBreakpoints",
       "DapContinue",
