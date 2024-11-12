@@ -219,4 +219,8 @@ function M.yaml_lsp()
   return utils.get_os_env_or_nil("NVIM_ENABLE_YAML_LSP") ~= "0"
 end
 
+function M.netrw()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_NETRW") ~= "0"
+end
+
 return M
