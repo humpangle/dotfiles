@@ -11,6 +11,7 @@ return {
     dependencies = {
       require("plugins/treesitter-textobjects"),
 
+      -- https://github.com/LiadOz/nvim-dap-repl-highlights/issues/12
       plugin_enabled.dap() and {
         "LiadOz/nvim-dap-repl-highlights",
       } or {},
