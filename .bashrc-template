@@ -42,6 +42,7 @@ export NVIM_ENABLE_EMMET_LSP=0
 export NVIM_ENABLE_TYPESCRIPT_LSP=0
 export NVIM_ENABLE_DOCKER_LSP=0
 export NVIM_ENABLE_YAML_LSP=0
+export NVIM_ENABLE_NETRW=0
 
 # -----------------------------------------------------------------------------
 # /END/ NVIM
