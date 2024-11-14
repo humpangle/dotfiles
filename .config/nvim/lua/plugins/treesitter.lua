@@ -25,9 +25,16 @@ return {
           additional_vim_regex_highlighting = {
             "ruby",
           },
-          disable = {
-            "gitcommit", -- treesitter highlighting does not work well inside buffer of this type.
-          },
+          disable = function(_, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(
+              vim.loop.fs_stat,
+              vim.api.nvim_buf_get_name(buf)
+            )
+            if ok and stats and stats.size > max_filesize then
+              return true
+            end
+          end,
         },
         ensure_installed = {
           "bash",
