@@ -97,6 +97,17 @@ return {
 
       local lspconfig = require("lspconfig")
 
+      utils.map_key("n", "<leader>ll", function()
+        if vim.v.count == 0 then
+          vim.cmd("LspStop")
+          vim.cmd.echo('"LspStopped 1<leader>ll to start"')
+          return
+        end
+
+        vim.cmd(":LspStart")
+        vim.cmd.echo('"LspStart"')
+      end, { desc = "LspStop and LspStart" })
+
       -- Diagnostic keymaps
       utils.map_key(
         "n",
@@ -171,22 +182,6 @@ return {
             "<leader>D",
             require("telescope.builtin").lsp_type_definitions,
             "Type [D]efinition"
-          )
-
-          -- Fuzzy find all the symbols in your current document.
-          --  Symbols are things like variables, functions, types, etc.
-          map(
-            "<leader>bs",
-            require("telescope.builtin").lsp_document_symbols,
-            "[B]uffer [S]ymbols"
-          )
-
-          -- Fuzzy find all the symbols in your current workspace.
-          --  Similar to document symbols, except searches over your entire project.
-          map(
-            "<leader>ws",
-            require("telescope.builtin").lsp_dynamic_workspace_symbols,
-            "[W]orkspace [S]ymbols"
           )
 
           -- Rename the variable under your cursor.
