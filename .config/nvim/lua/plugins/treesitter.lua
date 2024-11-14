@@ -10,10 +10,55 @@ return {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       require("plugins/treesitter-textobjects"),
+
+      plugin_enabled.dap() and {
+        "LiadOz/nvim-dap-repl-highlights",
+      } or {},
     },
+
     build = ":TSUpdate",
     config = function()
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+
+      local ensure_installed = {
+        "bash",
+        "css",
+        "dockerfile",
+        "eex",
+        "elixir",
+        "heex",
+        "erlang",
+        "gitignore",
+        "go",
+        "helm",
+        "html",
+        "ini",
+        "jsdoc",
+        "json5",
+        "jsonc", -- required by "folke/neoconf.nvim"
+        "lua",
+        "luadoc",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "regex",
+        "scss",
+        "sql",
+        "ssh_config",
+        "terraform",
+        "tmux",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "yaml",
+      }
+
+      if plugin_enabled.dap() then
+        require("nvim-dap-repl-highlights").setup() -- must be setup before nvim-treesitter
+        table.insert(ensure_installed, "dap_repl")
+      end
 
       ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
@@ -36,40 +81,7 @@ return {
             end
           end,
         },
-        ensure_installed = {
-          "bash",
-          "css",
-          "dockerfile",
-          "eex",
-          "elixir",
-          "heex",
-          "erlang",
-          "gitignore",
-          "go",
-          "helm",
-          "html",
-          "ini",
-          "jsdoc",
-          "json5",
-          "jsonc", -- required by "folke/neoconf.nvim"
-          "lua",
-          "luadoc",
-          "markdown",
-          "markdown_inline",
-          "python",
-          "regex",
-          "scss",
-          "sql",
-          "ssh_config",
-          "terraform",
-          "tmux",
-          "toml",
-          "tsx",
-          "typescript",
-          "vim",
-          "vimdoc",
-          "yaml",
-        },
+        ensure_installed = ensure_installed,
         -- Autoinstall languages that are not installed
         auto_install = true,
         indent = {
