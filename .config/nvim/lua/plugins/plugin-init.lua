@@ -23,6 +23,7 @@ vim.g.have_nerd_font = true
 
 local plugins_table = {
   -- THEMES / COLORSCHEME
+  require("plugins.bigfile-nvim"),
   require("plugins/color-schemes"),
 
   "nvim-lua/plenary.nvim",
@@ -443,7 +444,6 @@ local plugins_table = {
   },
 
   require("plugins/elixir"),
-  require("plugins.bigfile-nvim"),
   require("plugins/ai"),
   require("plugins/neotest"),
   require("plugins/nvim-neoclip"),

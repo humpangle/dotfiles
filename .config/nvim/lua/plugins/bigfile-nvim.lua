@@ -5,6 +5,7 @@ return {
   -- https://github.com/LunarVim/bigfile.nvim
   "LunarVim/bigfile.nvim",
   event = "BufReadPre",
+  priority = 1000,
   enabled = plugin_enabled.has_big_file_nvim(),
   opts = {
     filesize = 2, -- size of the file in MiB, the plugin round file sizes to the closest MiB
