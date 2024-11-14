@@ -220,6 +220,25 @@ return {
         desc = "DAP: list breakpoints",
       })
 
+      map_key({ "n", "x" }, "<leader>dap", function()
+        local lines = ""
+        local mode = vim.fn.mode()
+
+        if mode == "n" then
+          vim.cmd("normal! vgny")
+          lines = vim.fn.getreg('"')
+        else
+          local lines_table =
+            vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
+          lines = table.concat(lines_table, "\n")
+        end
+
+        dap.repl.open()
+        dap.repl.execute(lines)
+      end, {
+        desc = "DAP: send variable to repl",
+      })
+
       -- Dap UI setup
       -- For more information, see |:help nvim-dap-ui|
       ---@diagnostic disable-next-line: missing-fields
