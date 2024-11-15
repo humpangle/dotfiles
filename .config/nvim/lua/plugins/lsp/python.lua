@@ -24,6 +24,7 @@ return {
     },
   },
 
+  -- for mason to automatically download
   black = {},
   isort = {},
   flake8 = {},
