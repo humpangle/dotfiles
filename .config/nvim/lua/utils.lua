@@ -169,8 +169,6 @@ function utils.is_dap_buffer(buffer_name)
 end
 
 function utils.DeleteAllBuffers(delete_flag)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  local last_b_num = vim.fn.bufnr("$")
   local normal_buffers = {}
   local terminal_buffers = {}
   local no_name_buffers = {}
@@ -178,38 +176,37 @@ function utils.DeleteAllBuffers(delete_flag)
   local fugitive_buffers = {}
   local dap_buffers = {}
 
-  for index = 1, last_b_num do
-    if vim.fn.bufexists(index) == 1 then
-      local b_name = vim.fn.bufname(index)
+  for _, buf_num in ipairs(vim.api.nvim_list_bufs()) do
+    local b_name = vim.fn.bufname(buf_num)
 
-      if delete_flag == "dbui" and (string.match(b_name, ".dbout")) then
-        -- or string.match(b_name, "share/db_ui/")
-        table.insert(dbui_buffers, index)
-      elseif
-        delete_flag == "fugitive" and utils.is_fugitive_buffer(b_name)
-      then
-        table.insert(fugitive_buffers, index)
-      elseif delete_flag == "dap" and utils.is_dap_buffer(b_name) then
-        table.insert(dap_buffers, index)
-      elseif b_name == "" or b_name == "," then
-        table.insert(no_name_buffers, index)
-      elseif string.match(b_name, "term://") then
-        table.insert(terminal_buffers, index)
-      else
-        table.insert(normal_buffers, index)
-      end
+    if delete_flag == "dbui" and (string.match(b_name, ".dbout")) then
+      -- or string.match(b_name, "share/db_ui/")
+      table.insert(dbui_buffers, buf_num)
+    elseif
+      delete_flag == "fugitive" and utils.is_fugitive_buffer(b_name)
+    then
+      table.insert(fugitive_buffers, buf_num)
+    elseif delete_flag == "dap" and utils.is_dap_buffer(b_name) then
+      table.insert(dap_buffers, buf_num)
+    elseif
+      b_name == ""
+      or b_name == ","
+      or not vim.api.nvim_buf_get_option(buf_num, "buflisted")
+    then
+      table.insert(no_name_buffers, buf_num)
+    elseif string.match(b_name, "term://") then
+      table.insert(terminal_buffers, buf_num)
+    else
+      table.insert(normal_buffers, buf_num)
     end
   end
+
+  local index_ = 0
 
   local function wipeout_buffers(buffer_list)
-    if #buffer_list > 0 then
-      vim.cmd("bwipeout! " .. table.concat(buffer_list, " "))
-    end
-  end
-
-  local function delete_buffers(buffer_list)
-    if #buffer_list > 0 then
-      vim.cmd("bd " .. table.concat(buffer_list, " "))
+    for _, buf_num in ipairs(buffer_list) do
+      vim.api.nvim_buf_delete(buf_num, { force = true })
+      index_ = index_ + 1
     end
   end
 
@@ -217,7 +214,7 @@ function utils.DeleteAllBuffers(delete_flag)
   if delete_flag == "a" then
     wipeout_buffers(no_name_buffers)
     wipeout_buffers(terminal_buffers)
-    delete_buffers(normal_buffers)
+    wipeout_buffers(normal_buffers)
     wipeout_buffers(fugitive_buffers)
   -- empty / no-name buffers
   elseif delete_flag == "e" then
@@ -233,6 +230,8 @@ function utils.DeleteAllBuffers(delete_flag)
   elseif delete_flag == "dap" then
     wipeout_buffers(dap_buffers)
   end
+
+  vim.cmd.echo("'" .. index_ .. " buffers wiped!'")
 end
 
 local function is_terminal_buffer()
