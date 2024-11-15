@@ -189,9 +189,8 @@ function utils.DeleteAllBuffers(delete_flag)
     elseif delete_flag == "dap" and utils.is_dap_buffer(b_name) then
       table.insert(dap_buffers, buf_num)
     elseif
-      b_name == ""
-      or b_name == ","
-      or not vim.api.nvim_buf_get_option(buf_num, "buflisted")
+      b_name == "" or b_name == ","
+      -- or not vim.api.nvim_buf_get_option(buf_num, "buflisted")
     then
       table.insert(no_name_buffers, buf_num)
     elseif string.match(b_name, "term://") then
