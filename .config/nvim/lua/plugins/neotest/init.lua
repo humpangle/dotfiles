@@ -12,29 +12,6 @@ local function do_echo(text, on_going)
   vim.cmd.echo('"' .. "NETOTEST " .. text .. on_going .. '"')
 end
 
-local interact_with_output_panel = function(operation_callback)
-  return function()
-    local count = vim.v.count
-
-    if count == 0 then
-      operation_callback()
-      return
-    end
-
-    local neotest = require("neotest")
-
-    if count == 1 then
-      neotest.output_panel.clear()
-    elseif count == 2 then
-      neotest.output_panel.open()
-    elseif count == 21 then
-      neotest.output_panel.open()
-      neotest.output_panel.clear()
-    end
-
-    operation_callback()
-  end
-end
 
 return {
   {
@@ -79,37 +56,37 @@ return {
           end
 
           local args_text = "lua vim.g.__ebnis_neotest_python_args = "
-            .. "\\n"
-            .. "{"
-            .. "\\n"
-            .. "}"
-            .. "\\n"
-            .. '\\"--log-level\\", \\"DEBUG\\",'
-            .. "\\n"
-            .. '\\"--verbosity\\", \\"0\\",'
-            .. "\\n"
-            .. '\\"--capture\\", \\"no\\",'
-            .. "\\n"
-            .. '\\"--disable-warnings\\",'
-            .. "\\n"
-            .. '\\"--ignore\\",'
+              .. "\\n"
+              .. "{"
+              .. "\\n"
+              .. "}"
+              .. "\\n"
+              .. '\\"--log-level\\", \\"DEBUG\\",'
+              .. "\\n"
+              .. '\\"--verbosity\\", \\"0\\",'
+              .. "\\n"
+              .. '\\"--capture\\", \\"no\\",'
+              .. "\\n"
+              .. '\\"--disable-warnings\\",'
+              .. "\\n"
+              .. '\\"--ignore\\",'
 
           local current_args_value_string = '{ "'
-            .. table.concat(
-              vim.g.__ebnis_neotest_python_args,
-              '", "'
-            )
-            .. '" }'
+              .. table.concat(
+                vim.g.__ebnis_neotest_python_args,
+                '", "'
+              )
+              .. '" }'
 
           current_args_value_string =
-            current_args_value_string:gsub('"', '\\"')
+              current_args_value_string:gsub('"', '\\"')
 
           s_utils.RedirMessages(
             'echo "'
-              .. args_text
-              .. "\\n\\\n"
-              .. current_args_value_string
-              .. '"',
+            .. args_text
+            .. "\\n\\\n"
+            .. current_args_value_string
+            .. '"',
             "new"
           )
         end, { nargs = "*" })
@@ -187,10 +164,10 @@ return {
       keys = {
         {
           "<leader>ntf",
-          interact_with_output_panel(function()
+          function()
             do_echo("current file")
             require("neotest").run.run(vim.fn.expand("%"))
-          end),
+          end,
           desc = "Neotest File",
         },
         {
@@ -204,18 +181,18 @@ return {
         },
         {
           "<leader>ntt",
-          interact_with_output_panel(function()
+          function()
             do_echo("At Cursor")
             require("neotest").run.run()
-          end),
+          end,
           desc = "Neotest at cursor",
         },
         {
           "<leader>nta",
-          interact_with_output_panel(function()
+          function()
             do_echo("ALL TESTS")
             require("neotest").run.run(vim.uv.cwd())
-          end),
+          end,
           desc = "Netotest ALL TESTS",
         },
         {
@@ -266,12 +243,12 @@ return {
 
             if count == 1 then
               search_text =
-                "========= test session starts ========"
+              "========= test session starts ========"
             elseif count == 2 then
               search_text = ".py F"
             elseif count == 3 then
               search_text =
-                "=========== FAILURES ======================"
+              "=========== FAILURES ======================"
             elseif count == 4 then
               search_text = "_ test_.\\+ _"
             elseif count == 5 then
