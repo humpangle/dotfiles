@@ -165,14 +165,6 @@ return {
         {
           "<leader>ntf",
           function()
-            do_echo("current file")
-            require("neotest").run.run(vim.fn.expand("%"))
-          end,
-          desc = "Neotest File",
-        },
-        {
-          "<leader>ntF",
-          function()
             do_echo("failed")
             ---@diagnostic disable-next-line: missing-fields
             require("neotest").run.run({ status = "failed" })
@@ -182,10 +174,18 @@ return {
         {
           "<leader>ntt",
           function()
-            do_echo("At Cursor")
-            require("neotest").run.run()
+            local count = vim.v.count
+
+            if count == 0 then
+              do_echo("At Cursor")
+              require("neotest").run.run()
+              return
+            end
+
+            do_echo("current file")
+            require("neotest").run.run(vim.fn.expand("%"))
           end,
-          desc = "Neotest at cursor",
+          desc = "Neotest at cursor/file",
         },
         {
           "<leader>nta",
