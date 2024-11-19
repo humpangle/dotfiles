@@ -788,3 +788,5 @@ local echo_session = function()
 end
 
 vim.api.nvim_create_user_command("SessionEbnis", echo_session, {})
+
+vim.api.nvim_create_user_command("AnsiColorize", require("ansi-colorize"), {})
