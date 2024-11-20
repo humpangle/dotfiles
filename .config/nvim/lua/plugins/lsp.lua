@@ -104,8 +104,11 @@ return {
           return
         end
 
-        vim.cmd(":LspStart")
-        vim.cmd.echo('"LspStart"')
+        if vim.v.count == 1 then
+          vim.cmd(":LspStart")
+          vim.cmd.echo('"LspStart"')
+          return
+        end
       end, { desc = "LspStop and LspStart" })
 
       -- Diagnostic keymaps
