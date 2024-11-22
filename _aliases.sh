@@ -18,11 +18,20 @@ if [ -n "$alacritty_bin_" ]; then
         "$alacritty_bin_ &>/dev/null" &
       disown
     else
-      $alacritty_bin_ msg create-window
+      if [ -n "$EBNIS_ALACRITY_SOCKET" ]; then
+        ALACRITTY_SOCKET="$EBNIS_ALACRITY_SOCKET" \
+          $alacritty_bin_ \
+          --socket="$EBNIS_ALACRITY_SOCKET" \
+          --config-file="$EBNIS_ALACRITY_CONFIG" \
+          msg create-window
+      else
+        $alacritty_bin_ msg create-window
+      fi
     fi
   }
 
   alias ala='__alacritty'
+  alias ala-lenovo='export EBNIS_ALACRITY_CONFIG=$HOME/.config/alacritty/alacritty-lenovo.toml EBNIS_ALACRITY_SOCKET=/run/user/1001/Alacritty-lenvo.sock'
 fi
 
 declare -A alias_map=()
