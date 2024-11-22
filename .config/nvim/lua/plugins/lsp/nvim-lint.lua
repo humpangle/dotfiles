@@ -42,6 +42,11 @@ return {
     local list_linters = function()
       local linters = lint.get_running()
 
+      if #linters == 0 then
+        vim.cmd.echo('"No running linters"')
+        return
+      end
+
       vim.cmd.echo("'" .. table.concat(linters, ", ") .. "'")
     end
 
