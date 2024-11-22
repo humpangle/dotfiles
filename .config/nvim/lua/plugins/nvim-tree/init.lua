@@ -27,7 +27,7 @@ return {
         end
 
         if count == 1 then
-          vim.cmd("NvimTreeOpen")
+          vim.cmd("NvimTreeOpen " .. vim.fn.getcwd())
         end
       end, {
         desc = "Nvim-tree --",
@@ -40,6 +40,7 @@ return {
         on_attach = helpers.on_attach,
 
         disable_netrw = true,
+        hijack_netrw = false,
 
         view = {
           width = 60,
@@ -48,7 +49,12 @@ return {
         },
 
         renderer = {
-          -- group_empty = true,
+          icons = {
+            show = {
+              diagnostics = false,
+              git = false,
+            },
+          },
         },
 
         filters = {
@@ -56,14 +62,27 @@ return {
         },
 
         filesystem_watchers = {
-          enable = true,
-          debounce_delay = 50,
-          ignore_dirs = {
-            "/.ccls-cache",
-            "/build",
-            "/node_modules",
-            "/target",
+          enable = false,
+        },
+
+        actions = {
+          change_dir = {
+            -- Change the working directory when changing directories in the tree.
+            enable = false,
+            -- Use `:cd` instead of `:lcd` when changing directories.
+            -- Consider that this might cause issues with the
+            global = false,
+            -- Restrict changing to a directory above the global cwd.
+            restrict_above_cwd = false,
           },
+        },
+
+        git = {
+          enable = false,
+        },
+
+        diagnostics = {
+          enable = false,
         },
       })
     end,

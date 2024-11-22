@@ -25,6 +25,30 @@ M.on_attach = function(bufnr)
 
   -- map_key("n", "Y", api.fs.copy.relative_path, opts("Copy Relative Path"))
 
+  -- map_key("n", "<C-k>", api.node.show_info_popup, opts("Info"))
+  -- map_key("n", "<Tab>", api.node.open.preview, opts("Open Preview")) ---- I use tab key to navigate windows
+
+  -- map_key(
+  --   "n",
+  --   "]e",
+  --   api.node.navigate.diagnostics.next,
+  --   opts("Next Diagnostic")
+  -- )
+
+  -- map_key(
+  --   "n",
+  --   "[e",
+  --   api.node.navigate.diagnostics.prev,
+  --   opts("Prev Diagnostic")
+  -- )
+
+  -- map_key(
+  --   "n",
+  --   "I",
+  --   api.tree.toggle_gitignore_filter,
+  --   opts("Toggle Filter: Git Ignore")
+  -- )
+
   map_key("n", "<C-]>", api.tree.change_root_to_node, opts("CD"))
 
   map_key(
@@ -34,7 +58,6 @@ M.on_attach = function(bufnr)
     opts("Open: In Place")
   )
 
-  map_key("n", "<C-k>", api.node.show_info_popup, opts("Info"))
   map_key("n", "<C-r>", api.fs.rename_sub, opts("Rename: Omit Filename"))
 
   map_key("n", "<C-v>", api.node.open.vertical, opts("Open: Vertical Split"))
@@ -54,7 +77,6 @@ M.on_attach = function(bufnr)
   )
 
   map_key("n", "<CR>", api.node.open.edit, opts("Open"))
-  map_key("n", "<Tab>", api.node.open.preview, opts("Open Preview"))
   map_key("n", ">", api.node.navigate.sibling.next, opts("Next Sibling"))
 
   map_key("n", "<", api.node.navigate.sibling.prev, opts("Previous Sibling"))
@@ -89,20 +111,6 @@ M.on_attach = function(bufnr)
   map_key("n", "E", api.tree.expand_all, opts("Expand All"))
   map_key("n", "e", api.fs.rename_basename, opts("Rename: Basename"))
 
-  map_key(
-    "n",
-    "]e",
-    api.node.navigate.diagnostics.next,
-    opts("Next Diagnostic")
-  )
-
-  map_key(
-    "n",
-    "[e",
-    api.node.navigate.diagnostics.prev,
-    opts("Prev Diagnostic")
-  )
-
   map_key("n", "F", api.live_filter.clear, opts("Live Filter: Clear"))
   map_key("n", "f", api.live_filter.start, opts("Live Filter: Start"))
   map_key("n", "g?", api.tree.toggle_help, opts("Help"))
@@ -114,13 +122,6 @@ M.on_attach = function(bufnr)
     "H",
     api.tree.toggle_hidden_filter,
     opts("Toggle Filter: Dotfiles")
-  )
-
-  map_key(
-    "n",
-    "I",
-    api.tree.toggle_gitignore_filter,
-    opts("Toggle Filter: Git Ignore")
   )
 
   map_key("n", "J", api.node.navigate.sibling.last, opts("Last Sibling"))
@@ -195,6 +196,10 @@ M.on_attach = function(bufnr)
   end, opts("Copy Name"))
 
   map_key("n", "t", api.node.open.tab, opts("Open: New Tab"))
+
+  map_key("n", "i", api.node.show_info_popup, opts("Info"))
+
+  -- map_key("n", "h", api.tree.change_root_to_parent, opts("Up"))
 end
 
 return M
