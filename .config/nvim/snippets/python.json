@@ -4,20 +4,6 @@
     "body": ["#!/usr/bin/env python"],
     "description": ["python shebang"]
   },
-  "django model": {
-    "prefix": ["django_model"],
-    "body": [
-      "from django.db import models",
-      "",
-      "",
-      "class ${1:model_class}(models.Model):",
-      "\t\t\tname = models.CharField(max_length=100)",
-      "",
-      "\t\t\tdef __str__(self):",
-      "\t\t\t\t\t\t\treturn self.name"
-    ],
-    "description": "Django model"
-  },
   "print python to console": {
     "prefix": ["print_to_console", "console_print"],
     "body": [
