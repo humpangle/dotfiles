@@ -8,10 +8,10 @@
     "prefix": ["print_to_console", "console_print"],
     "body": [
       "\nprint(",
-      "\t\"\\n\\nlogging starts--------------------------------------------------\\n\\n\",  # noqa",
-      "\t'${1:topic}\\n',",
+      "\t\"\\n\\nlogging starts-----------------------------------------------------------------\\n\\n\",  # noqa",
+      "\t'TOPIC: ${1:topic}\\n',",
       "\t${2:code},",
-      "\t\"\\n\\nlogging ends-------------------------------------\\n\\n\",  # noqa",
+      "\t\"\\n\\nlogging ends-------------------------------------------------------------------\\n\\n\",  # noqa",
       ")\n"
     ],
     "description": "print python to console"
