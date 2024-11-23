@@ -9,7 +9,7 @@ function utils.ebnis_save_commit_buffer()
   end
 
   local max_tab_number =
-      vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
+    vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
   local current_tab_number = vim.fn.tabpagenr("$")
 
   if max_tab_number == current_tab_number then
@@ -72,12 +72,12 @@ function utils.get_file_name(num)
       local next_path_segment = path_segments_list[i]
 
       local first_letter_of_next_path_segment =
-          string.sub(next_path_segment, 1, 1)
+        string.sub(next_path_segment, 1, 1)
 
       -- for dot file, we take the dot and next char
       if first_letter_of_next_path_segment == "." then
         first_letter_of_next_path_segment =
-            string.sub(next_path_segment, 1, 2)
+          string.sub(next_path_segment, 1, 2)
       end
 
       table.insert(
@@ -87,8 +87,8 @@ function utils.get_file_name(num)
     end
 
     return table.concat(first_letters_of_path_segments_list, "/")
-        .. "/"
-        .. tail
+      .. "/"
+      .. tail
   end
 
   return file_name
@@ -98,10 +98,10 @@ function utils.DeleteOrCloseBuffer(flag)
   if vim.fn.expand("%") == "Neotest Output Panel" then
     vim.cmd.echo(
       '"'
-      .. "You may not delete Neotest Output Panel."
-      .. "\\n"
-      .. "Use <leader>nto to close."
-      .. '"'
+        .. "You may not delete Neotest Output Panel."
+        .. "\\n"
+        .. "Use <leader>nto to close."
+        .. '"'
     )
     return
   end
@@ -203,14 +203,12 @@ function utils.DeleteAllBuffers(delete_flag)
       -- or string.match(b_name, "share/db_ui/")
       table.insert(dbui_buffers, buf_num)
     elseif
-        delete_flag == "fugitive" and utils.is_fugitive_buffer(b_name)
+      delete_flag == "fugitive" and utils.is_fugitive_buffer(b_name)
     then
       table.insert(fugitive_buffers, buf_num)
     elseif delete_flag == "dap" and utils.is_dap_buffer(b_name) then
       table.insert(dap_buffers, buf_num)
-    elseif
-        is_deleteable_unlisted_buffer(b_name, buf_num)
-    then
+    elseif is_deleteable_unlisted_buffer(b_name, buf_num) then
       table.insert(no_name_buffers, buf_num)
     elseif string.match(b_name, "term://") then
       table.insert(terminal_buffers, buf_num)
@@ -234,13 +232,13 @@ function utils.DeleteAllBuffers(delete_flag)
     wipeout_buffers(terminal_buffers)
     wipeout_buffers(normal_buffers)
     wipeout_buffers(fugitive_buffers)
-    -- empty / no-name buffers
+  -- empty / no-name buffers
   elseif delete_flag == "e" then
     wipeout_buffers(no_name_buffers)
-    -- terminal buffers
+  -- terminal buffers
   elseif delete_flag == "t" then
     wipeout_buffers(terminal_buffers)
-    -- dbui buffers
+  -- dbui buffers
   elseif delete_flag == "dbui" then
     wipeout_buffers(dbui_buffers)
   elseif delete_flag == "fugitive" then
@@ -321,7 +319,7 @@ function utils.DeleteFile(which)
       delete_prompt = "y"
     else
       delete_prompt =
-          vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
+        vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
     end
 
     if delete_prompt:lower() == "y" then
@@ -349,10 +347,10 @@ function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
   -- We prepend the keymap (left) and mode to the description so when we search with description as search term, the
   -- keymap also shows up.
   opts.desc = mapping_str
-      .. " "
-      .. vim.inspect(mode)
-      .. " "
-      .. (opts.desc or "")
+    .. " "
+    .. vim.inspect(mode)
+    .. " "
+    .. (opts.desc or "")
 
   vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
@@ -452,7 +450,7 @@ utils.clear_terminal = function()
     -- Enter terminal-insert mode with control-L
     vim.fn.feedkeys("a", "n") -- a-control-L
   else
-    vim.fn.feedkeys("", "n")  -- control-L
+    vim.fn.feedkeys("", "n") -- control-L
   end
 
   local sb = vim.bo.scrollback
@@ -507,17 +505,17 @@ end, true)
 
 --]]
 utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
-    callback,
-    opts
+  callback,
+  opts
 )
   local buf_path = vim.fn.expand("%:f")
 
   -- If no terminal buffer is currently focused this **hack** is not necessary.
   if
-      not (
-        buf_path:match("^term://")
-        or buf_path:match("^fugitive://.+/%.git//")
-      )
+    not (
+      buf_path:match("^term://")
+      or buf_path:match("^fugitive://.+/%.git//")
+    )
   then
     callback()
     return
