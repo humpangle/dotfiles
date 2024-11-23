@@ -32,13 +32,19 @@ vim.g.slime_default_config = slime_config
 
 vim.g.slime_bracketed_paste = 1
 
+vim.g.slime_neovim_menu_order = {
+  { jobid = "" },
+  { name = "" },
+}
+
 local helper_func = function(target)
   -- https://github.com/jpalardy/vim-slime/blob/main/assets/doc/targets/neovim.md
   if target == "neovim" then
     vim.g.slime_input_pid = false
     vim.g.slime_suggest_default = false
+    -- prompt for menu to show which terminal to select
     vim.g.slime_menu_config = true
-    vim.g.slime_neovim_ignore_unlisted = false -- true
+    vim.g.slime_neovim_ignore_unlisted = true
   end
 
   vim.b.slime_target = target
@@ -46,7 +52,7 @@ local helper_func = function(target)
 
   -- Both of the below work 😀
   -- vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>SlimeConfig", true, true, true), "")
-  vim.cmd(":SlimeConfig")
+  vim.cmd("SlimeConfig")
 end
 
 keymap("n", ",sln", function()
