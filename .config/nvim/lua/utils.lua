@@ -177,6 +177,10 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
     return false
   end
 
+  if vim.startswith(b_name, "neo-tree") then
+    return false
+  end
+
   if b_name == "" or b_name == "," then
     return true
   end
