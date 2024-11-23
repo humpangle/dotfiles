@@ -1,6 +1,6 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 
-if plugin_enabled.has_vscode() then
+if plugin_enabled.has_vscode() or true then
   return {}
 end
 
