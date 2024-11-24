@@ -1,5 +1,16 @@
 local M = {}
 
+local copy_path = function(part)
+  return function(state)
+    local node = state.tree:get_node()
+    local path = node:get_id()
+    local value = vim.fn.fnamemodify(path, part)
+    vim.fn.setreg("*", value)
+    vim.fn.setreg("+", value)
+    vim.cmd.echo('"' .. value .. '"')
+  end
+end
+
 M.config = {
   -- If a user has a sources list it will replace this one.
   -- Only sources listed here will be loaded.
@@ -47,10 +58,10 @@ M.config = {
   popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
   resize_timer_interval = 500, -- in ms, needed for containers to redraw right aligned and faded content
   -- set to -1 to disable the resize timer entirely
-  --                           -- NOTE: this will speed up to 50 ms for 1 second following a resize
+  -- NOTE: this will speed up to 50 ms for 1 second following a resize
   sort_case_insensitive = false, -- used when sorting files and directories in the tree
   sort_function = nil, -- uses a custom function for sorting files and directories in the tree
-  use_popups_for_input = true, -- If false, inputs will use vim.ui.input() instead of custom floats.
+  use_popups_for_input = false, -- true, -- If false, inputs will use vim.ui.input() instead of custom floats.
   use_default_mappings = false, -- true,
   -- source_selector provides clickable tabs to switch between sources.
   source_selector = {
@@ -235,13 +246,13 @@ M.config = {
       -- Take values in { false (no highlight), true (only loaded),
       -- "all" (both loaded and unloaded)}. For more information,
       -- see the `show_unloaded` config of the `buffers` source.
-      use_git_status_colors = true,
+      use_git_status_colors = false, -- true,
       highlight = "NeoTreeFileName",
     },
     git_status = {
       symbols = {
         -- Change type
-        added = "✚", -- NOTE: you can set any of these to an empty string to not show them
+        added = "", -- NOTE: you can set any of these to an empty string to not show them
         deleted = "✖",
         modified = "",
         renamed = "󰁕",
@@ -256,19 +267,19 @@ M.config = {
     },
     -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
     file_size = {
-      enabled = true,
+      enabled = false, -- true,
       required_width = 64, -- min width of window required to show this column
     },
     type = {
-      enabled = true,
+      enabled = false, -- true,
       required_width = 110, -- min width of window required to show this column
     },
     last_modified = {
-      enabled = true,
+      enabled = false, -- true,
       required_width = 88, -- min width of window required to show this column
     },
     created = {
-      enabled = false,
+      enabled = false, -- false,
       required_width = 120, -- min width of window required to show this column
     },
     symlink_target = {
@@ -362,12 +373,16 @@ M.config = {
   -- }                         |  }                        |      end
   --
   -- see `:h neo-tree-custom-commands-global`
-  commands = {}, -- A list of functions
-
+  commands = { -- A list of functions
+    yank_filename = copy_path(":t"),
+    yank_relative_path = copy_path(":."),
+    yank_absolute_path = copy_path(":p"),
+    yank_folder = copy_path(":p:h"),
+  }, -- A list of functions
   window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
     -- possible options. These can also be functions that return these options.
     position = "left", -- left, right, top, bottom, float, current
-    width = 40, -- applies to left and right positions
+    width = 80, -- applies to left and right positions
     height = 15, -- applies to top and bottom positions
     auto_expand_width = false, -- expand the window when file exceeds the window width. does not work with position = "float"
     popup = { -- settings that apply to float position only
@@ -400,7 +415,10 @@ M.config = {
       ["<esc>"] = "cancel", -- close preview or floating neo-tree window
       ["P"] = {
         "toggle_preview",
-        config = { use_float = true, use_image_nvim = false },
+        config = {
+          use_float = true,
+          use_image_nvim = true, -- false,
+        },
       },
       ["<C-f>"] = { "scroll_preview", config = { direction = -10 } },
       ["<C-b>"] = { "scroll_preview", config = { direction = 10 } },
@@ -423,7 +441,7 @@ M.config = {
         "add",
         -- some commands may take optional config options, see `:h neo-tree-mappings` for details
         config = {
-          show_path = "none", -- "none", "relative", "absolute"
+          show_path = "relative", -- "none", "relative", "absolute"
         },
       },
       ["A"] = "add_directory", -- also accepts the config.show_path and config.insert_as options.
@@ -469,6 +487,10 @@ M.config = {
         ["on"] = { "order_by_name", nowait = false },
         ["os"] = { "order_by_size", nowait = false },
         ["ot"] = { "order_by_type", nowait = false },
+        ["1y"] = "yank_filename",
+        ["2y"] = "yank_relative_path",
+        ["3y"] = "yank_absolute_path",
+        ["4y"] = "yank_folder",
       },
       fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
         ["<down>"] = "move_cursor_down",
@@ -477,6 +499,7 @@ M.config = {
         ["<C-p>"] = "move_cursor_up",
       },
     },
+
     async_directory_scan = "auto", -- "auto"   means refreshes are async, but it's synchronous when called from the Neotree commands.
     -- "always" means directory scans are always async.
     -- "never"  means directory scans are never async.
