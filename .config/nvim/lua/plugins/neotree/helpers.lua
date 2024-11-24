@@ -412,7 +412,7 @@ M.config = {
       ["<2-LeftMouse>"] = "open",
       ["<cr>"] = "open",
       -- ["<cr>"] = { "open", config = { expand_nested_files = true } }, -- expand nested file takes precedence
-      ["<esc>"] = "cancel", -- close preview or floating neo-tree window
+      ["<esc>"] = "cancel", -- close preview or floating neo-tree window (NOTE: does not work so I use leader qq)
       ["P"] = {
         "toggle_preview",
         config = {
@@ -470,7 +470,7 @@ M.config = {
         -- ["D"] = "fuzzy_sorter_directory",
         ["f"] = "filter_on_submit",
         ["<C-x>"] = "clear_filter",
-        ["<bs>"] = "navigate_up",
+        ["-"] = "navigate_up", -- <bs>
         ["."] = "set_root",
         ["[g"] = "prev_git_modified",
         ["]g"] = "next_git_modified",
