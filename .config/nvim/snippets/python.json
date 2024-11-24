@@ -7,7 +7,7 @@
   "print python to console": {
     "prefix": ["print_to_console", "console_print"],
     "body": [
-      "\nprint(",
+      "\nprint(  # print to console",
       "\t\"\\n\\nlogging starts-----------------------------------------------------------------\\n\\n\",  # noqa",
       "\t'TOPIC: ${1:topic}\\n',",
       "\t${2:code},",
