@@ -448,7 +448,6 @@ local plugins_table = {
   require("plugins/ai"),
   require("plugins/neotest"),
   require("plugins/nvim-neoclip"),
-  -- require("plugins/nvim-tree"),
   require("plugins/neotree"),
 }
 
