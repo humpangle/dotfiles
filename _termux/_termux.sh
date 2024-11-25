@@ -2,7 +2,7 @@ set -o errexit
 set -o pipefail
 
 if [[ -z "$EBNIS_PHONE_ID" ]]; then
-  echo "Set \"EBNIS_PHONE_ID\" environment variable e.g." >&2
+  echo "[ERROR]: Please set \"EBNIS_PHONE_ID\" environment variable e.g." >&2
   echo "export EBNIS_PHONE_ID='android_redme_note_8_pro'" >&2
   echo "export EBNIS_PHONE_ID='samsung_galaxy_s24'" >&2
   exit 1
