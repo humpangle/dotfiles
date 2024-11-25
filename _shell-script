@@ -195,11 +195,6 @@ ___source_scripts() {
 ___source_scripts
 
 if _has_termux; then
-  which() {
-    command -v "$@"
-  }
-  export -f which
-
   # /START/ Clipboard
   tcs() {
     termux-clipboard-set "$@"
