@@ -135,4 +135,12 @@ ln -s "$_dotfiles_termux_dir/.tmux.conf" "$HOME"
 mkdir -p "$HOME/.tmux/resurrect"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+
+git clone git://git.wincent.dev/clipper.git
+cd clipper
+go mod init clipper.go
+go build
+mv clipper.go "$HOME/.local/bin/clipper"
+cd -
+
 echo -e "\n\nsource $bashrc_\n\n"
