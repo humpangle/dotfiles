@@ -44,56 +44,16 @@ _storage_download="$HOME/storage/downloads"
 _android_host_out_folder="$_storage_download/__termux"
 _dotfiles_termux_dir="$HOME/dotfiles"
 
-_bashrc="$HOME/.bashrc"
-cp "$PREFIX/etc/bash.bashrc" "$_bashrc"
+bashrc_="$HOME/.bashrc"
+cp "$PREFIX/etc/bash.bashrc" "$bashrc_"
+
+echo -e "\n##########################################################\n" >> "$bashrc_"
+
+if [ -e "$_dotfiles_termux_dir" ]; then
+  cat "$_dotfiles_termux_dir/.bashrc-termux-template" >>"$bashrc_"
+fi
 
 mkdir -p "$HOME/.local/bin"
-
-cat <<'EOM' >>"$_bashrc"
-
-##########################################################
-
-[ -f "$HOME/dotfiles/_shell-script" ] && source "$HOME/dotfiles/_shell-script"
-
-export MY_TERMUX_SHARE_DIR="$HOME/storage/downloads/_termux_share"
-mkdir -p "$MY_TERMUX_SHARE_DIR"
-
-export SINGLE_FILE_WEB_PAGES_DOWNLOAD_DIR="$MY_TERMUX_SHARE_DIR/web-pages"
-
-# -----------------------------------------------------------------------------
-# PROGRAMMING LANGUAGES RELATED
-# -----------------------------------------------------------------------------
-PYTHON3="$(command -v python 2>/dev/null)"
-export PYTHON3
-
-# -----------------------------------------------------------------------------
-# ELIXIR LEXICAL
-# -----------------------------------------------------------------------------
-export NVIM_USE_ELIXIR_LEXICAL=
-export ELIXIR_LEXICAL_BIN=''
-export ELIXIR_LEXICAL_BIN=''
-# -----------------------------------------------------------------------------
-# /END/ ELIXIR LEXICAL
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-# ELIXIR ELIXIR_LS
-# -----------------------------------------------------------------------------
-export NVIM_USE_ELIXIR_LS=
-export ELIXIR_LS_BIN=
-# -----------------------------------------------------------------------------
-# /END/ ELIXIR ELIXIR_LS
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-# /END/ PROGRAMMING LANGUAGES RELATED
-# -----------------------------------------------------------------------------
-
-export DEFAULT_TMUX_SESSION=dot
-
-export EBNIS_VIM_THEME_BG=l
-export EBNIS_VIM_THEME_BG=d
-EOM
 
 echo "export EBNIS_PHONE_ID='$EBNIS_PHONE_ID'"
 
@@ -175,4 +135,4 @@ ln -s "$_dotfiles_termux_dir/.tmux.conf" "$HOME"
 mkdir -p "$HOME/.tmux/resurrect"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-echo -e "\n\nsource $_bashrc\n\n"
+echo -e "\n\nsource $bashrc_\n\n"

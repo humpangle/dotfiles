@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 # shellcheck disable=
 
+_has_termux() {
+  if [[ -d "/data/data/com.termux/files/home" ]]; then
+    return 0
+  fi
+
+  return 1
+}
+
+if _has_termux; then
+  export MY_TERMUX_SHARE_DIR="$HOME/storage/downloads/_termux_share"
+  mkdir -p "$MY_TERMUX_SHARE_DIR"
+fi
+
 # The full path to this script --> /some_prefix/dotfiles/_shell-script
 _bash_src="${BASH_SOURCE[0]}"
 
@@ -52,14 +65,6 @@ _is_darwin() {
   else
     return 1
   fi
-}
-
-_has_termux() {
-  if [[ -d "/data/data/com.termux/files/home" ]]; then
-    return 0
-  fi
-
-  return 1
 }
 
 _has_wsl() {

@@ -1,0 +1,164 @@
+# -----------------------------------------------------------------------------
+# WSL
+# -----------------------------------------------------------------------------
+export USERNAME='some-name'
+# -----------------------------------------------------------------------------
+# /END/ WSL
+# -----------------------------------------------------------------------------
+
+export _EBNIS_DOCKER_BIN='/usr/bin/docker'
+
+if [[ -f "$HOME/dotfiles/_shell-script" ]]; then
+  # shellcheck source=/dev/null
+  source "$HOME/dotfiles/_shell-script"
+fi
+
+if [[ -d "$HOME/dotfiles/scripts" ]]; then
+  chmod 755 "$HOME/dotfiles/scripts"/*
+fi
+
+export INTELEPHENSE_LICENCE=''
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# -----------------------------------------------------------------------------
+# NVIM
+# -----------------------------------------------------------------------------
+export EBNIS_VIM_THEME=darkblue
+export EBNIS_VIM_THEME_BG=d
+
+# Enable/disable plugins
+export NVIM_ENABLE_AI_PLUGINS=0
+export NVIM_ENABLE_OFFICIAL_COPILOT_PLUGIN=0
+export NVIM_ENABLE_COMMUNITY_COPILOT_PLUGIN=0
+export NVIM_ENABLE_GPT_PLUGIN=0
+export NVIM_ENABLE_ELIXIR_PLUGINS=0
+export NVIM_ENABLE_TERRAFORM_LSP=0
+export NVIM_ENABLE_STYLUA_LSP_FORMATTER=0
+export NVIM_ISORT_PLUGIN_AUTO=0
+export NVIM_ENABLE_PYTHON_ISORT=0
+export NVIM_ENABLE_TAILWINDCSS_LSP=0
+export NVIM_ENABLE_EMMET_LSP=0
+export NVIM_ENABLE_TYPESCRIPT_LSP=0
+export NVIM_ENABLE_DOCKER_LSP=0
+export NVIM_ENABLE_YAML_LSP=0
+export NVIM_ENABLE_NETRW=0
+
+# -----------------------------------------------------------------------------
+# /END/ NVIM
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# PROGRAMMING LANGUAGES RELATED
+# -----------------------------------------------------------------------------
+
+export GLOBAL_PYTHON_BIN="/data/data/com.termux/files/usr/bin/python"
+# In your project folder, set
+# export PYTHON_BIN=
+
+if ! _is_darwin && command -v pipx &>/dev/null; then
+  eval "$(register-python-argcomplete pipx)"
+fi
+
+# -----------------------------------------------------------------------------
+# ELIXIR LEXICAL
+# -----------------------------------------------------------------------------
+export NVIM_USE_ELIXIR_LEXICAL=
+export ELIXIR_LEXICAL_BIN="$HOME/.elixir_lexical_ebnis/1.16.3-otp-26--26.2.5.1--v0.6.1/bin/start_lexical.sh"
+# -----------------------------------------------------------------------------
+# /END/ ELIXIR LEXICAL
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# ELIXIR ELIXIR_LS
+# -----------------------------------------------------------------------------
+export NVIM_USE_ELIXIR_LS=
+export ELIXIR_LS_BIN="$HOME/.elixir_ls_ebnis/1.17.2-otp-27--27.0.1--v0.22.1/language_server.sh"
+# -----------------------------------------------------------------------------
+# /END/ ELIXIR ELIXIR_LS
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# /END/ PROGRAMMING LANGUAGES RELATED
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# GIT
+# -----------------------------------------------------------------------------
+export GIT_USER=some-name
+export GIT_USER_EMAIL=some-name@some-email.com
+# -----------------------------------------------------------------------------
+# /END/ GIT
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# WEB PAGES DOWNLOAD
+# -----------------------------------------------------------------------------
+export SINGLE_FILE_WEB_PAGES_DOWNLOAD_DIR="$MY_TERMUX_SHARE_DIR/web-pages"
+# export PATH_SEPARATOR_SINGLE_FILE_WEB_PAGES_DOWNLOAD_DIR="\\"
+# -----------------------------------------------------------------------------
+# /END/ WEB PAGES DOWNLOAD
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# LIVEBOOK
+# -----------------------------------------------------------------------------
+export LIVEBOOK_DATA_PATH="$HOME/projects/elixir/lb/_config"
+export LIVEBOOK_PORT=0
+export LIVEBOOK_SHUTDOWN_ENABLED=true
+export LIVEBOOK_HOME="$HOME/projects/elixir/lb"
+# -----------------------------------------------------------------------------
+# /END/ LIVEBOOK
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# TMUX
+# -----------------------------------------------------------------------------
+export DEFAULT_TMUX_SESSION=dot
+# -----------------------------------------------------------------------------
+# /END/ TMUX
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# AI AND GPTs
+# -----------------------------------------------------------------------------
+export CONTAINER_OPEN_WEB_UI_NAME=open-webui
+export CONTAINER_OPEN_WEB_UI_PUBLISH_PORT=3000
+export CONTAINER_OPEN_WEB_UI_MAP_VOLUME_DATA="$HOME/open-webui/data"
+export CONTAINER_OPEN_WEB_UI_RESTART_VALUE=no
+export DEEPSEEK_API_KEY=
+export OPENAI_API_KEY=
+export OPENROUTER_API_KEY=
+export ANTHROPIC_API_KEY=
+# -----------------------------------------------------------------------------
+# /END/ AI AND GPTs
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# SSH FROM TERMUX
+# -----------------------------------------------------------------------------
+# export __COPY_PROGRAM__=clip
+# export ___EBNIS_SMALL_SCREEN___=1
+unset __COPY_PROGRAM__
+unset ___EBNIS_SMALL_SCREEN___
+# -----------------------------------------------------------------------------
+# /END/ SSH FROM TERMUX
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# MAKE clipper WORK WITH NETCAT nc
+# -----------------------------------------------------------------------------
+export __NETCAT_SHUTDOWN_AFTER_INPUT_EOF_FLAG__=-N
+# -----------------------------------------------------------------------------
+# /END/ MAKE clipper WORK WITH NETCAT nc
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# RUNNER.sh
+# -----------------------------------------------------------------------------
+# export __EBNIS_RUN_SCRIPT_FULL_PATH__="$HOME/projects/z/run.sh"
+# export __EBNIS_CODES_DIR_ROOT__="$HOME/projects/codes/d"
+# export __EBNIS_CODE_DIR__=$PWD
+# -----------------------------------------------------------------------------
+# /END/ RUNNER.sh
+# -----------------------------------------------------------------------------

@@ -75,16 +75,25 @@ function M.ai_enabled()
     return false
   end
 
-  return utils.os_env_not_empty("NVIM_ENABLE_AI_PLUGINS")
+  return utils.get_os_env_or_nil("NVIM_ENABLE_AI_PLUGINS") ~= 0
 end
 
 function M.has_official_copilot()
-  return utils.os_env_not_empty("NVIM_ENABLE_OFFICIAL_COPILOT_PLUGIN")
+  if M.has_vscode() then
+    return false
+  end
+
+  if M.has_termux() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_OFFICIAL_COPILOT_PLUGIN") ~= 0
 end
 
 function M.has_unofficial_copilot()
   return not M.has_official_copilot
-    and utils.os_env_not_empty("NVIM_ENABLE_COMMUNITY_COPILOT_PLUGIN")
+    and utils.get_os_env_or_nil("NVIM_ENABLE_COMMUNITY_COPILOT_PLUGIN")
+      ~= 0
 end
 
 function M.has_copilot()
@@ -92,7 +101,15 @@ function M.has_copilot()
 end
 
 function M.has_gpt()
-  return utils.os_env_not_empty("NVIM_ENABLE_GPT_PLUGIN")
+  if M.has_vscode() then
+    return false
+  end
+
+  if M.has_termux() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_GPT_PLUGIN") ~= 0
 end
 
 function M.has_lua_json5()

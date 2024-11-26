@@ -9,52 +9,56 @@ pkg update \
 && pkg install root-repo \
 && pkg install x11-repo \
 && pkg install -y \
+      bat \
+      binutils-is-llvm \
+      build-essential \
+      clang \
+      cmake \
+      curl \
+      elixir \
+      erlang \
       git \
       gnupg \
-      pass \
-      neovim \
-      vifm \
-      root-repo \
-      x11-repo \
-      curl \
+      golang \
       iproute2 \
-      nodejs-lts \
-      tmux \
-      ncurses-utils \
-      clang \
-      termux-api \
-      man
-      ripgrep \
-      bat \
-      make \
-      build-essential \
-      openssl \
-      zlib \
-      libbz2 \
-      readline \
-      libsqlite \
-      pkg-config \
-      python \
-      erlang \
-      elixir \
-      lua-language-server \
-      stylua \
-      cmake \
-      ninja \
-      libopenblas \
       libandroid-execinfo \
-      patchelf \
-      binutils-is-llvm \
+      libbz2 \
+      libopenblas \
+      libsqlite \
+      lua-language-server \
+      make \
+      man \
+      ncurses-utils \
+      neovim \
       netcat-openbsd \
+      ninja \
+      nodejs-lts \
+      openssl \
+      pass \
+      patchelf \
+      pkg-config \
+      poot \
+      python \
+      readline \
+      ripgrep \
+      root-repo \
+      rust \
+      shfmt \
+      stylua \
+      termux-api \
+      tmux \
+      vifm \
+      which \
+      x11-repo \
+      zlib \
 && pip3 install \
-      setuptools \
-      wheel \
-      packaging \
-      pyproject_metadata \
       cython \
       meson-python \
-      versioneer \
-      shfmt
+      packaging \
+      pyproject_metadata \
+      setuptools \
+      versioneer
+      wheel \
 
 # ncurses-utils provides tput command.
 # ripgrep provides rg command
