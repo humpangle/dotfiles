@@ -47,9 +47,9 @@ _dotfiles_termux_dir="$HOME/dotfiles"
 bashrc_="$HOME/.bashrc"
 cp "$PREFIX/etc/bash.bashrc" "$bashrc_"
 
-echo -e "\n##########################################################\n" >> "$bashrc_"
+echo -e "\n##########################################################\n" >>"$bashrc_"
 
-if [ -e "$_dotfiles_termux_dir" ]; then
+if [ -e "$_dotfiles_termux_dir/.bashrc-termux-template" ]; then
   cat "$_dotfiles_termux_dir/.bashrc-termux-template" >>"$bashrc_"
 fi
 
@@ -119,7 +119,9 @@ ln -s \
 _echo "Configuring neovim config files"
 rm -rf "$HOME/.config/nvim"
 mkdir -p "$HOME/.config"
+mkdir -p "$HOME/.run/logs"
 ln -s "$_dotfiles_termux_dir/.config/nvim" "$HOME/.config"
+ln -s "$_dotfiles_termux_dir/clipper/configs/termux.json" "$HOME/.clipper.json"
 
 _echo "Linking git config files"
 _git_configs=(gitignore gitconfig gitattributes)
