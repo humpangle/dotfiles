@@ -1522,9 +1522,9 @@ function install-php {
 
   _may_be_install_asdf
 
-  _echo "INSTALLING PHP"
+  local version_="${1:-latest}"
 
-  local version=8.2.11
+  _echo "INSTALLING PHP $version_"
 
   sudo apt-get update
 
@@ -1560,11 +1560,24 @@ function install-php {
 
   "$(_asdf-bin-path)" plugin add php
 
-  "$(_asdf-bin-path)" install php $version
-  "$(_asdf-bin-path)" global php $version
+  "$(_asdf-bin-path)" install php "$version_"
+}
+
+post-install-php() {
 
   # shellcheck source=/dev/null
   . "$HOME/.asdf/asdf.sh"
+
+  local version_=""
+  version_="$(
+    asdf current php 2>/dev/null |
+      awk '{print $2}'
+  )"
+
+  if [ -z "$version_" ]; then
+    echo -e "Error: version is required. Exiting!"
+    return
+  fi
 
   curl -fL \
     https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /tmp/php-cs-fixer
@@ -1573,7 +1586,7 @@ function install-php {
   sudo mv /tmp/php-cs-fixer /usr/local/bin/php-cs-fixer
 
   local _php_version_install_root
-  _php_version_install_root="$(_asdf-plugin-install-root php "$version")"
+  _php_version_install_root="$(_asdf-plugin-install-root php "$version_")"
 
   local _ini_file="${_php_version_install_root}/conf.d/php.ini"
   local _extensions_root="${_php_version_install_root}/lib/php/extensions"
