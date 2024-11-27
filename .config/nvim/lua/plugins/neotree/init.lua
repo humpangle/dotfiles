@@ -26,7 +26,7 @@ return {
       end
 
       if count == 1 then
-        vim.cmd("Neotree position=float")
+        vim.cmd("Neotree source=filesystem position=float reveal")
         return
       end
 
