@@ -45,7 +45,7 @@ M.config = {
   -- This is needed if you use expanders because they render in the indent.
   log_level = "info", -- "trace", "debug", "info", "warn", "error", "fatal"
   log_to_file = false, -- true, false, "/path/to/file.log", use :NeoTreeLogs to show the file
-  open_files_in_last_window = false, -- true, -- false = open files in top left window
+  open_files_in_last_window = true, -- false = open files in top left window
   open_files_do_not_replace_types = {
     "terminal",
     "Trouble",
@@ -529,6 +529,7 @@ M.config = {
       hide_by_name = {
         ".DS_Store",
         "thumbs.db",
+        "__pycache__",
         -- "node_modules",
       },
       hide_by_pattern = { -- uses glob style patterns
