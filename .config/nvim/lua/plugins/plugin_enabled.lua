@@ -240,4 +240,12 @@ function M.netrw()
   return utils.get_os_env_or_nil("NVIM_ENABLE_NETRW") ~= "0"
 end
 
+function M.php_lsp()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_PHP_PLUGIN") ~= "0"
+end
+
 return M

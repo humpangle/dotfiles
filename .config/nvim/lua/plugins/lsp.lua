@@ -333,7 +333,8 @@ return {
         ),
         require("plugins.lsp.emmet"),
         require("plugins.typescript"),
-        yamlls_config.config_from_yaml_companion_plugin()
+        yamlls_config.config_from_yaml_companion_plugin(),
+        require("plugins.lsp.php")
       )
 
       if not plugin_enabled.has_termux() then

@@ -17,8 +17,6 @@ if [[ -d "$HOME/dotfiles/scripts" ]]; then
   chmod 755 "$HOME/dotfiles/scripts"/*
 fi
 
-export INTELEPHENSE_LICENCE=''
-
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # -----------------------------------------------------------------------------
@@ -43,6 +41,8 @@ export NVIM_ENABLE_TYPESCRIPT_LSP=0
 export NVIM_ENABLE_DOCKER_LSP=0
 export NVIM_ENABLE_YAML_LSP=0
 export NVIM_ENABLE_NETRW=0
+export NVIM_ENABLE_PHP_PLUGIN=0
+export INTELEPHENSE_LICENCE=''
 
 # -----------------------------------------------------------------------------
 # /END/ NVIM
