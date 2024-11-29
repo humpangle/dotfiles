@@ -1,7 +1,35 @@
+---@diagnostic disable: missing-fields
+---
 local plugin_enabled = require("plugins/plugin_enabled")
 
 if plugin_enabled.has_vscode() then
   return {}
+end
+
+local image_nvim = function()
+  if plugin_enabled.has_termux() then
+    return {}
+  end
+
+  return {
+    "3rd/image.nvim",
+    -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
+    -- Instead use::
+    -- asdf install lua 5.1
+    -- asdf global lua 5.1
+    -- luarocks install magick
+    build = false,
+    config = function()
+      require("image").setup({
+        backend = "kitty",
+        processor = "magick_rock", -- or "magick_cli"
+      })
+    end,
+
+    dependencies = {
+      "leafo/magick",
+    },
+  }
 end
 
 return {
@@ -11,8 +39,8 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     "MunifTanjim/nui.nvim",
-      -- Optional image support in preview window: See `# Preview Mode` for more information
-    not plugin_enabled.has_termux() and "3rd/image.nvim" or {},
+    -- Optional image support in preview window: See `# Preview Mode` for more information
+    image_nvim(),
   },
   init = function()
     local map_key = require("utils").map_key
