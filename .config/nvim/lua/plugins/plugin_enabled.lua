@@ -67,33 +67,25 @@ function M.enable_solarized_color_scheme()
 end
 
 function M.ai_enabled()
-  if M.has_vscode() then
+  if M.has_vscode() or M.has_termux() then
     return false
   end
 
-  if M.has_termux() then
-    return false
-  end
-
-  return utils.get_os_env_or_nil("NVIM_ENABLE_AI_PLUGINS") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_AI_PLUGINS") == "1"
 end
 
 function M.has_official_copilot()
-  if M.has_vscode() then
+  if M.has_vscode() or M.has_termux() then
     return false
   end
 
-  if M.has_termux() then
-    return false
-  end
-
-  return utils.get_os_env_or_nil("NVIM_ENABLE_OFFICIAL_COPILOT_PLUGIN") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_OFFICIAL_COPILOT_PLUGIN") == "1"
 end
 
 function M.has_unofficial_copilot()
   return not M.has_official_copilot
     and utils.get_os_env_or_nil("NVIM_ENABLE_COMMUNITY_COPILOT_PLUGIN")
-      ~= "0"
+      == "1"
 end
 
 function M.has_copilot()
@@ -101,15 +93,11 @@ function M.has_copilot()
 end
 
 function M.has_gpt()
-  if M.has_vscode() then
+  if M.has_vscode() or M.has_termux() then
     return false
   end
 
-  if M.has_termux() then
-    return false
-  end
-
-  return utils.get_os_env_or_nil("NVIM_ENABLE_GPT_PLUGIN") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_GPT_PLUGIN") == "1"
 end
 
 function M.has_lua_json5()
@@ -189,7 +177,7 @@ function M.isort()
     return false
   end
 
-  return utils.get_os_env_or_nil("NVIM_ENABLE_PYTHON_ISORT") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_PYTHON_ISORT") == "1"
 end
 
 function M.isort_auto()
@@ -197,47 +185,39 @@ function M.isort_auto()
     return false
   end
 
-  return utils.get_os_env_or_nil("NVIM_ISORT_PLUGIN_AUTO") ~= "0"
-end
-
-function M.elixir_lsp()
-  if M.has_vscode() then
-    return false
-  end
-
-  return utils.get_os_env_or_nil("NVIM_ENABLE_ELIXIR_PLUGINS") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ISORT_PLUGIN_AUTO") == "1"
 end
 
 function M.terraform_lsp()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_TERRAFORM_LSP") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_TERRAFORM_LSP") == "1"
 end
 
 function M.stylua_lsp_formatter()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_STYLUA_LSP_FORMATTER") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_STYLUA_LSP_FORMATTER") == "1"
 end
 
 function M.tailwindcss_lsp()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_TAILWINDCSS_LSP") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_TAILWINDCSS_LSP") == "1"
 end
 
 function M.emmet_lsp()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_EMMET_LSP") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_EMMET_LSP") == "1"
 end
 
 function M.typescript_lsp()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_TYPESCRIPT_LSP") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_TYPESCRIPT_LSP") == "1"
 end
 
 function M.docker_lsp()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_DOCKER_LSP") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_DOCKER_LSP") == "1"
 end
 
 function M.yaml_lsp()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_YAML_LSP") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_YAML_LSP") == "1"
 end
 
 function M.netrw()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_NETRW") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_NETRW") == "1"
 end
 
 function M.php_lsp()
@@ -245,7 +225,32 @@ function M.php_lsp()
     return false
   end
 
-  return utils.get_os_env_or_nil("NVIM_ENABLE_PHP_PLUGIN") ~= "0"
+  return utils.get_os_env_or_nil("NVIM_ENABLE_PHP_PLUGIN") == "1"
+end
+
+function M.elixir_ls()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_ELIXIR_LS") == "1"
+end
+
+function M.lexical()
+  if M.has_vscode() then
+    return false
+  end
+
+  return not M.elixir_ls()
+    and utils.get_os_env_or_nil("NVIM_ENABLE_ELIXIR_LEXICAL") == "1"
+end
+
+function M.elixir_lsp()
+  if M.has_vscode() then
+    return false
+  end
+
+  return M.elixir_ls() or M.lexical()
 end
 
 return M
