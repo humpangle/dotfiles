@@ -774,9 +774,18 @@ utils.map_key({ "n", "x" }, "<leader>WW", function()
     .. "/---out-file-"
     .. os.date("%s")
 
+  local readonly = vim.bo.readonly
+  -- local buftype = vim.bo.buftype
+
+  vim.bo.readonly = false
+  vim.bo.buftype = ""
+
   pcall(function()
-    vim.cmd("saveas " .. vim.fn.fnameescape(filename))
+    vim.cmd("saveas! " .. vim.fn.fnameescape(filename))
   end)
+
+  vim.bo.readonly = readonly
+  -- vim.bo.buftype = buftype
 end, {
   noremap = true,
   silent = true,
