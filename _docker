@@ -7,15 +7,17 @@ fi
 
 declare -A _alias_map_docker=()
 
-docker() {
-  if [ "$1" = 'compose' ] && [ -n "$__EBNIS_COMPOSE_CONFIG_FILENAME__" ]; then
-    "$_EBNIS_DOCKER_BIN" compose --file "$__EBNIS_COMPOSE_CONFIG_FILENAME__" "${@:2}"
+if [ -n "$_EBNIS_DOCKER_BIN" ]; then
+  docker() {
+    if [ "$1" = 'compose' ] && [ -n "$__EBNIS_COMPOSE_CONFIG_FILENAME__" ]; then
+      "$_EBNIS_DOCKER_BIN" compose --file "$__EBNIS_COMPOSE_CONFIG_FILENAME__" "${@:2}"
 
-    return
-  fi
+      return
+    fi
 
-  "$_EBNIS_DOCKER_BIN" "$@"
-}
+    "$_EBNIS_DOCKER_BIN" "$@"
+  }
+fi
 
 function docker-compose {
   docker compose "${@}"
