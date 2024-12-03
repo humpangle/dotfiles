@@ -17,6 +17,8 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
 
     "$_EBNIS_DOCKER_BIN" "$@"
   }
+
+  export -f docker
 fi
 
 function docker-compose {
