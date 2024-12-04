@@ -283,17 +283,23 @@ keymap("n", "<leader>gu", function()
 end, { noremap = true, desc = "Git config user name. 1=email 2=env defaults" })
 
 -- Rebase keymaps
-keymap("n", "<Leader>r<Space>", function()
+local git_rebase_root_mappings_fn = function()
   local count = vim.v.count
 
   if count == 1 then
     utils.write_to_command_mode("G rebase -i --root")
+  elseif count == 2 then
+    utils.write_to_command_mode("G reset --soft ")
+  elseif count == 3 then
+    utils.write_to_command_mode("G reset --hard ")
   else
     utils.write_to_command_mode("G rebase -i ")
   end
-end, {
+end
+local git_rebase_root_mappings_desc = [[G rebase 1/root 2/soft 3/hard]]
+keymap("n", "<Leader>r<Space>", git_rebase_root_mappings_fn, {
   noremap = true,
-  desc = [[Populate command line with :Git rebase. 1=--root]],
+  desc = git_rebase_root_mappings_desc,
 })
 
 keymap("n", "<Leader>rr", function()
@@ -391,6 +397,12 @@ vim.api.nvim_create_autocmd("FileType", {
       buffer = true,
       noremap = true,
       desc = "Git commit 1/empty 2/amend 3/amendNoEdit",
+    })
+
+    keymap("n", "r<space>", git_rebase_root_mappings_fn, {
+      buffer = true,
+      noremap = true,
+      desc = git_rebase_root_mappings_desc,
     })
   end,
 })
