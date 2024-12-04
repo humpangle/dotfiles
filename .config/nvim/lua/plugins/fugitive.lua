@@ -59,7 +59,8 @@ local git_stash_list_fn = function(callback)
       return
     end
 
-    local cmd = ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'"
+    local cmd =
+      ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'"
 
     if callback then
       callback(cmd)
@@ -100,11 +101,11 @@ keymap(
 
     -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we cannot
     -- have git stash index 99).
-    if count == 99 then   -- simulate count 0
+    if count == 99 then -- simulate count 0
       cmd = ":G stash drop stash@{0}<Left>"
     elseif count > 0 then -- count given (not 0)
       cmd = ":G stash drop stash@{" .. count .. "}<Left>"
-    else                  -- no count
+    else -- no count
       -- List stashes so we can select count
       vim.cmd(list_stash_cmd)
     end
@@ -163,13 +164,13 @@ keymap("n", "<Leader>czz", function()
   -- Move the cursor back by one position to place it after the commit hash and before the end quote
   vim.fn.feedkeys(
     ":"
-    .. cmd
-    .. vim.api.nvim_replace_termcodes(
-      left_repeated_severally,
-      true,
-      true,
-      true
-    ),
+      .. cmd
+      .. vim.api.nvim_replace_termcodes(
+        left_repeated_severally,
+        true,
+        true,
+        true
+      ),
     "t"
   )
 end, {
@@ -182,12 +183,12 @@ local git_stash_apply_or_pop = function(apply_or_pop, maybe_include_index)
     local count = vim.v.count
 
     local cmd = ":Git stash "
-        .. apply_or_pop
-        .. " --quiet "
-        .. (maybe_include_index and "--index " or "")
-        .. "stash@{"
-        .. (count == 99 and 0 or (count > 0 and count or "")) -- Count 99 simulates count 0 (See czd -->> git stash drop).
-        .. "}<Left>"
+      .. apply_or_pop
+      .. " --quiet "
+      .. (maybe_include_index and "--index " or "")
+      .. "stash@{"
+      .. (count == 99 and 0 or (count > 0 and count or "")) -- Count 99 simulates count 0 (See czd -->> git stash drop).
+      .. "}<Left>"
 
     if count < 1 then -- No count given.
       vim.cmd(list_stash_cmd)
@@ -222,11 +223,11 @@ keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
 -- END Git stash related mappings
 
 -- Git commit mappings
-keymap("n", "<leader>gc", function()
+local git_commit_mappings_fn = function()
   local count = vim.v.count
 
   if count == 0 then
-    vim.cmd("Git commit")
+    vim.cmd("Git commit -S")
     return
   end
 
@@ -240,11 +241,13 @@ keymap("n", "<leader>gc", function()
     cmd = "--amend --no-edit"
   end
 
-  utils.write_to_command_mode("Git commit " .. cmd)
-end, {
+  utils.write_to_command_mode("Git commit -S " .. cmd)
+end
+local git_commit_mappings_opts = {
   noremap = true,
   desc = "Git commit 1/empty 2/amend 3/amendNoEdit",
-})
+}
+keymap("n", "<leader>gc", git_commit_mappings_fn, git_commit_mappings_opts)
 
 -- Git config.user
 keymap("n", "<leader>gu", function()
@@ -262,10 +265,10 @@ keymap("n", "<leader>gu", function()
 
     if git_user ~= nil and git_user_email ~= nil then
       cmd = ":Git config user.name "
-          .. git_user
-          .. "<bar>"
-          .. ":Git config user.email "
-          .. git_user_email
+        .. git_user
+        .. "<bar>"
+        .. ":Git config user.email "
+        .. git_user_email
     end
   end
 
@@ -377,6 +380,17 @@ vim.api.nvim_create_autocmd("FileType", {
     keymap("n", "<leader>wq", utils.ebnis_save_commit_buffer, {
       noremap = true,
       buffer = true,
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "fugitive",
+  callback = function()
+    keymap("n", "cc", git_commit_mappings_fn, {
+      buffer = true,
+      noremap = true,
+      desc = "Git commit 1/empty 2/amend 3/amendNoEdit",
     })
   end,
 })
