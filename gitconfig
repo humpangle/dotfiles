@@ -61,3 +61,7 @@
   required = true
 [safe]
   directory = *
+[gpg]
+  format = ssh
+[user]
+  signingkey = ~/.ssh/git-sign.pub
