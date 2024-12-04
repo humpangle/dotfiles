@@ -10,8 +10,12 @@ _do_cd() {
     level="$1"
   fi
 
+  local old_pwd_="$PWD"
+
   for _l in $(seq "$level"); do
     cd .. || exit 1
+
+    export OLDPWD="$old_pwd_"
   done
 }
 
