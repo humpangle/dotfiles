@@ -259,7 +259,7 @@ return {
 
             vim.fn.setreg("/", search_text)
             vim.cmd("set hlsearch")
-            pcall(vim.cmd, "normal! N")
+            pcall(vim.cmd.normal, { "N", bang = true })
           end,
           desc = "Toggle Output Panel",
         },
