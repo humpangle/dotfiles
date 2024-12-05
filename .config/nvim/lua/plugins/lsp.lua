@@ -350,7 +350,8 @@ return {
         require("plugins.lsp.emmet"),
         require("plugins.typescript"),
         yamlls_config.config_from_yaml_companion_plugin(),
-        require("plugins.lsp.php")
+        require("plugins.lsp.php"),
+        require("plugins.lsp.mason-ensure-installed")
       )
 
       if not plugin_enabled.has_termux() then
