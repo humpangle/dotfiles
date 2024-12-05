@@ -338,7 +338,7 @@ return {
       servers = vim.tbl_extend(
         "error",
         servers,
-        require("plugins.lsp.python"),
+        require("plugins.lsp.python-lsp"),
         require("plugins.lsp.elixir"),
         (plugin_enabled.docker_lsp() and { dockerls = {} } or {}),
         (plugin_enabled.terraform_lsp() and { terraformls = {} } or {}),
