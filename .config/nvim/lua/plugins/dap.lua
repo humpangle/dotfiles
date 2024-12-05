@@ -256,13 +256,13 @@ return {
           icons = {
             pause = "P",
             play = "0", -- run to cursor
-            step_into = "1",
-            step_over = "2",
-            step_out = "3",
-            step_back = "4",
-            run_last = "L",
-            terminate = "T",
-            disconnect = "D",
+            step_into = "-1-",
+            step_over = "-2-",
+            step_out = "-3-",
+            step_back = "-4-",
+            run_last = "-L-",
+            terminate = "-T-",
+            disconnect = "-D-",
           },
         },
       })
