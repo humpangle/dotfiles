@@ -12,7 +12,6 @@ local function do_echo(text, on_going)
   vim.cmd.echo('"' .. "NETOTEST " .. text .. on_going .. '"')
 end
 
-
 return {
   {
     {
@@ -43,7 +42,8 @@ return {
         },
       },
       init = function()
-        vim.g.__ebnis_neotest_python_args = { "--disable-warnings", "-vvv" }
+        vim.g.__ebnis_neotest_python_args =
+          { "--disable-warnings", "-vvv" }
 
         vim.api.nvim_create_user_command("NeoPyArgs", function(opts)
           local count = opts.fargs[1]
@@ -56,37 +56,37 @@ return {
           end
 
           local args_text = "lua vim.g.__ebnis_neotest_python_args = "
-              .. "\\n"
-              .. "{"
-              .. "\\n"
-              .. "}"
-              .. "\\n"
-              .. '\\"--log-level\\", \\"DEBUG\\",'
-              .. "\\n"
-              .. '\\"--verbosity\\", \\"0\\",'
-              .. "\\n"
-              .. '\\"--capture\\", \\"no\\",'
-              .. "\\n"
-              .. '\\"--disable-warnings\\",'
-              .. "\\n"
-              .. '\\"--ignore\\",'
+            .. "\\n"
+            .. "{"
+            .. "\\n"
+            .. "}"
+            .. "\\n"
+            .. '\\"--log-level\\", \\"DEBUG\\",'
+            .. "\\n"
+            .. '\\"--verbosity\\", \\"0\\",'
+            .. "\\n"
+            .. '\\"--capture\\", \\"no\\",'
+            .. "\\n"
+            .. '\\"--disable-warnings\\",'
+            .. "\\n"
+            .. '\\"--ignore\\",'
 
           local current_args_value_string = '{ "'
-              .. table.concat(
-                vim.g.__ebnis_neotest_python_args,
-                '", "'
-              )
-              .. '" }'
+            .. table.concat(
+              vim.g.__ebnis_neotest_python_args,
+              '", "'
+            )
+            .. '" }'
 
           current_args_value_string =
-              current_args_value_string:gsub('"', '\\"')
+            current_args_value_string:gsub('"', '\\"')
 
           s_utils.RedirMessages(
             'echo "'
-            .. args_text
-            .. "\\n\\\n"
-            .. current_args_value_string
-            .. '"',
+              .. args_text
+              .. "\\n\\\n"
+              .. current_args_value_string
+              .. '"',
             "new"
           )
         end, { nargs = "*" })
@@ -243,18 +243,18 @@ return {
 
             if count == 1 then
               search_text =
-              "========= test session starts ========"
+                "========= test session starts ========"
             elseif count == 2 then
               search_text = ".py F"
             elseif count == 3 then
               search_text =
-              "=========== FAILURES ======================"
+                "=========== FAILURES ======================"
             elseif count == 4 then
               search_text = "_ test_.\\+ _"
             elseif count == 5 then
-              search_text = "= short test summary info ="
-            elseif count == 6 then
               search_text = "------- Captured "
+            elseif count == 6 then
+              search_text = "= short test summary info ="
             end
 
             vim.fn.setreg("/", search_text)
