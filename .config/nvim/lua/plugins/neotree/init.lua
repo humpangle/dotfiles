@@ -7,7 +7,7 @@ if plugin_enabled.has_vscode() then
 end
 
 local image_nvim = function()
-  if plugin_enabled.has_termux() then
+  if not plugin_enabled.image_nvim() then
     return {}
   end
 
