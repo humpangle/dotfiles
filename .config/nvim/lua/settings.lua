@@ -145,6 +145,23 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = true
 utils.map_key("n", "yoh", "<cmd>nohlsearch<CR>")
 
+-- When a file is modified in vim, vim might replace the file (thus changing the inode - file metadata). Imagine that
+-- file is opened by the `tee` command. If you now edit the file in vim and inode changes, `tee` will not be aware of
+-- the new inode and will keep trying to write to the previous inode (which no longer exist). Thus `tee` will see the
+-- file as deleted. `vim.bo.backupcopy = "yes"` instructs vim to always modify the file in place (thus never changing
+-- the inode).
+utils.map_key("n", "yoB", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.bo.backupcopy = "yes"
+  else
+    vim.bo.backupcopy = ""
+  end
+
+  vim.cmd.echo('"vim.bo.backupcopy=' .. vim.bo.backupcopy .. '"')
+end, { noremap = true, silent = false })
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
