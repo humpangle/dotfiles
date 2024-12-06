@@ -255,6 +255,9 @@ return {
               search_text = "------- Captured "
             elseif count == 6 then
               search_text = "= short test summary info ="
+            elseif count == 7 then
+              search_text =
+                "^\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}.\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}"
             end
 
             vim.fn.setreg("/", search_text)
