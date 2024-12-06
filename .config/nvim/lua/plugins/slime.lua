@@ -18,10 +18,15 @@ local keymap = utils.map_key
 -- E.g. if terminal is on 6th window, 4th pane, and session is `dot` you
 -- should have
 --     dot:6.4
+-- A very useful syntax (used below) is
+--      :.
+-- Nothing before `:` means use current session.
+-- Nothing before `.` means use current window.
+-- All that is left is a number after `.` for the required pane number.
 
 local slime_config = {
   socket_name = "default",
-  target_pane = "dot:",
+  target_pane = ":.", -- This means: current session and current window. All that is left to fill is pane number.
 }
 
 vim.g.slime_default_config = slime_config
