@@ -12,7 +12,6 @@ return {
   priority = 10000,
   opts = {
     filesize = 1.5, -- size of the file in MiB, the plugin round file sizes to the closest MiB
-    pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
     features = { -- features to disable
       "lsp", -- detaches the lsp client from buffer
       "treesitter", -- disables treesitter for the buffer
@@ -25,6 +24,12 @@ return {
     },
   },
   config = function(_, opts)
+    -- https://github.com/LunarVim/bigfile.nvim#overriding-the-detection-of-big-files
+    opts.pattern = function(bufnr)
+      local filename = vim.api.nvim_buf_get_name(bufnr)
+      return filename:sub(-4) == ".log"
+    end
+
     require("bigfile").setup(opts)
   end,
 }
