@@ -95,30 +95,31 @@ return {
       vim.bo.modifiable = true
       vim.bo.filetype = "markdown"
 
-      local slime_dir = "~/.local/share/db_ui"
-      vim.fn.mkdir(slime_dir, "p")
+      local db_ui_dir = "~/.local/share/db_ui"
+      vim.fn.mkdir(db_ui_dir, "p")
 
-      local timestamp = os.date("%s")
-      local new_name = slime_dir
+      local timestamp = os.date("%FT%H-%M-%S")
+      local new_name = db_ui_dir
         .. "/zz_query-result--"
         .. timestamp
         .. ".md"
 
-      pcall(function()
-        vim.cmd("saveas " .. vim.fn.fnameescape(new_name))
-      end)
+      vim.cmd.saveas({ vim.fn.fnameescape(new_name), bang = true })
 
-      -- vim.cmd("tab split")
       vim.cmd("e %")
-
       vim.cmd("bdelete! " .. buffer_name)
+      -- The keymap `dbW` saves the db_ui sql file and deletes all db ui reuslt buffers. But noticeably, it will close
+      -- the window where the latest result was written to. Thus we split that window vertically so that when the
+      -- latest written to window is closed, we get the other split.
+      vim.cmd("vsplit")
+      vim.cmd.normal({ " dbW" })
     end, {
       noremap = true,
-      desc = "DBUI xxxx",
+      desc = "DBUI save result buffer",
     })
 
     map_key("n", "<leader>dbW", function()
-      vim.cmd("w!")
+      vim.cmd({ cmd = "wa", bang = true })
       vim.cmd("DbUiDelete")
     end, {
       noremap = true,
