@@ -117,6 +117,9 @@ return {
         { name = "luasnip" },
         {
           name = "buffer",
+          -- See also
+          -- https://github.com/hrsh7th/nvim-cmp/issues/1522#issuecomment-1986818011
+          -- on how to disable CMP
           option = {
             -- https://github.com/hrsh7th/cmp-buffer#get_bufnrs-type-fun-number
             -- https://github.com/hrsh7th/cmp-buffer#visible-buffers
