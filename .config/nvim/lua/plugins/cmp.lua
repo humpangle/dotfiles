@@ -1,10 +1,27 @@
 -- Autocompletion
 local plugin_enabled = require("plugins/plugin_enabled")
 
+if not plugin_enabled.install_cmp() then
+  return {}
+end
+
+local is_buffer_source = function(bufnr)
+  local filename = vim.api.nvim_buf_get_name(bufnr)
+
+  if filename:match("Neotest Output Panel") then
+    return false
+  end
+
+  if filename:sub(-4) == ".log" then
+    return false
+  end
+
+  return true
+end
+
 return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
-  enabled = plugin_enabled.cmp(),
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
@@ -102,14 +119,15 @@ return {
           name = "buffer",
           option = {
             -- https://github.com/hrsh7th/cmp-buffer#get_bufnrs-type-fun-number
+            -- https://github.com/hrsh7th/cmp-buffer#visible-buffers
             get_bufnrs = function()
-              -- Completion from all buffers, excluding "Neotest Output Panel"
               local bufnrs = {}
 
-              for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-                local name = vim.api.nvim_buf_get_name(bufnr)
-                if not name:match("Neotest Output Panel") then
-                  table.insert(bufnrs, bufnr)
+              for _, win in ipairs(vim.api.nvim_list_wins()) do
+                local buf_no = vim.api.nvim_win_get_buf(win)
+
+                if is_buffer_source(buf_no) then
+                  table.insert(bufnrs, buf_no)
                 end
               end
 
@@ -130,8 +148,8 @@ return {
         -- This step is not supported in many windows environments.
         -- Remove the below condition to re-enable on windows.
         if
-          vim.fn.has("win32") == 1
-          or vim.fn.executable("make") == 0
+            vim.fn.has("win32") == 1
+            or vim.fn.executable("make") == 0
         then
           return
         end

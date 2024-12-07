@@ -20,8 +20,16 @@ function M.has_vscode()
   end
 end
 
-function M.cmp()
-  return (not M.has_vscode() and not has_coc())
+function M.install_cmp()
+  if M.has_vscode() then
+    return false
+  end
+
+  if has_coc() then
+    return false
+  end
+
+  return true
 end
 
 function M.lsp()
