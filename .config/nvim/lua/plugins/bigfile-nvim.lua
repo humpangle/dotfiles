@@ -1,12 +1,15 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 
+if not plugin_enabled.has_big_file_nvim() then
+  return {}
+end
+
 -- Improve performance of editing big files
 return {
   -- https://github.com/LunarVim/bigfile.nvim
   "LunarVim/bigfile.nvim",
   event = "BufReadPre",
   priority = 10000,
-  enabled = plugin_enabled.has_big_file_nvim(),
   opts = {
     filesize = 1.5, -- size of the file in MiB, the plugin round file sizes to the closest MiB
     pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
