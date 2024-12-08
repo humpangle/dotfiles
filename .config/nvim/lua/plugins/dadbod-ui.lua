@@ -71,7 +71,10 @@ return {
       }
     )
 
-    map_key("n", "<leader>dbf", ":DBUIFindBuffer<CR>", {
+    map_key("n", "<leader>dbf", function()
+      vim.cmd("DBUIFindBuffer")
+      vim.bo.filetype = "markdown.sql"
+    end, {
       noremap = true,
       desc = "DBUIFindBuffer",
     })
