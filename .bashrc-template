@@ -57,12 +57,15 @@ export ELIXIR_LEXICAL_BIN="$HOME/.elixir_lexical_ebnis/1.16.3-otp-26--26.2.5.1--
 # PROGRAMMING LANGUAGES RELATED
 # -----------------------------------------------------------------------------
 
-export GLOBAL_PYTHON_BIN="$HOME/.asdf/installs/python/3.11.9/bin/python"
+global_python_bin_="$HOME/.asdf/installs/python/3.11.9/bin/python"
+if [ -e "$global_python_bin_" ]; then
+  export GLOBAL_PYTHON_BIN="$global_python_bin_"
+fi
 # In your project folder, set
 # export PYTHON_BIN=
 
 if ! _is_darwin && command -v pipx &>/dev/null; then
-  eval "$(register-python-argcomplete pipx)"
+  eval "$(register-python-argcomplete pipx &>/dev/null || :)"
 fi
 
 # -----------------------------------------------------------------------------

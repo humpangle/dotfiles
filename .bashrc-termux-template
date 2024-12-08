@@ -52,12 +52,15 @@ export INTELEPHENSE_LICENCE=''
 # PROGRAMMING LANGUAGES RELATED
 # -----------------------------------------------------------------------------
 
-export GLOBAL_PYTHON_BIN="/data/data/com.termux/files/usr/bin/python"
+global_python_bin_="/data/data/com.termux/files/usr/bin/python"
+if [ -e "$global_python_bin_" ]; then
+  export GLOBAL_PYTHON_BIN="$global_python_bin_"
+fi
 # In your project folder, set
 # export PYTHON_BIN=
 
 if ! _is_darwin && command -v pipx &>/dev/null; then
-  eval "$(register-python-argcomplete pipx)"
+  eval "$(register-python-argcomplete pipx &>/dev/null || :)"
 fi
 
 # -----------------------------------------------------------------------------
