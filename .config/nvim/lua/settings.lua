@@ -259,6 +259,13 @@ local patterns = {
     },
     filetype = "yaml.ansible",
   },
+  {
+    pattern = {
+      "*.sql.md",
+      "*.md.sql",
+    },
+    filetype = "markdown.sql",
+  },
 }
 
 for _, p in ipairs(patterns) do
