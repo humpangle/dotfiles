@@ -183,15 +183,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
--- Ensure C and H files end with a newline
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.c", "*.h" },
-  callback = function()
-    -- Append a newline at the end of the file if it doesn't exist
-    vim.cmd([[silent! %s/\%$/\r/e]])
-  end,
-})
-
 local filetypes_group =
   vim.api.nvim_create_augroup("filetypes", { clear = true })
 -- Change filetype based on patterns
