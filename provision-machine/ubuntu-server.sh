@@ -462,9 +462,9 @@ function install-golang {
 
   _may_be_install_asdf "$@"
 
-  _echo "INSTALLING GOLANG"
+  local version_="${1:-latest}"
 
-  local version=1.21.5
+  _echo "INSTALLING GOLANG $version_"
 
   if ! _is-dev "$@"; then
     _install-deps "${GOLANG_DEPS[*]}"
@@ -475,15 +475,7 @@ function install-golang {
 
   "$(_asdf-bin-path)" plugin add golang
 
-  "$(_asdf-bin-path)" install golang $version
-  "$(_asdf-bin-path)" global golang $version
-
-  local go_bin_path
-  go_bin_path="$(_asdf-plugin-install-root golang "$version")/go/bin/go"
-
-  # Github repo archived
-  "${go_bin_path}" install github.com/lighttiger2505/sqls@latest
-  "$(_asdf-bin-path)" reshim golang
+  "$(_asdf-bin-path)" install golang "$version_"
 }
 
 function install-rust {
