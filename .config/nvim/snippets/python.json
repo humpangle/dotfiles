@@ -57,5 +57,22 @@
       "    ${0:pass}"
     ],
     "description": "try/except"
+  },
+  "pytest echo db": {
+    "prefix": [
+      "pytest_echo_db",
+      "echo_db_pytest",
+      "db_echo_pytest",
+      "db_pytest_echo"
+    ],
+    "body": [
+      "# TODO:kanmii: debug logging - MUST BE REMOVED !!!!!",
+      "@pytest.fixture(autouse=True)",
+      "def db_engine_echo___(db_engine):",
+      "    db_engine.echo = False"
+    ],
+    "description": [
+      "pytest echo db"
+    ]
   }
 }
