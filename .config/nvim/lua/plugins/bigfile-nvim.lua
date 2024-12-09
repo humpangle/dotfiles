@@ -27,7 +27,13 @@ return {
     -- https://github.com/LunarVim/bigfile.nvim#overriding-the-detection-of-big-files
     opts.pattern = function(bufnr)
       local filename = vim.api.nvim_buf_get_name(bufnr)
-      return filename:sub(-4) == ".log"
+
+      if filename:sub(-4) == ".log" then
+        vim.api.nvim_buf_set_option(bufnr, "backupcopy", "yes")
+        return true
+      end
+
+      return false
     end
 
     require("bigfile").setup(opts)
