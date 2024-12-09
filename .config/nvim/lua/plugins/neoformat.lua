@@ -86,6 +86,20 @@ vim.g.neoformat_enabled_heex = {
   "mixformatheex",
 }
 
+vim.g.neoformat_sql_sqlformatter = {
+  exe = "sql-formatter",
+
+  args = {
+    '"%:p"',
+  },
+
+  stdin = 1,
+}
+
+vim.g.neoformat_enabled_sql = {
+  "sqlformatter",
+}
+
 -- vim.g.neoformat_enabled_php = {
 --  "php-cs-fixer",
 -- }
