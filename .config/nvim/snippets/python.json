@@ -1,11 +1,22 @@
 {
   "bash": {
-    "prefix": ["bash", "#!", "shebang"],
-    "body": ["#!/usr/bin/env python"],
-    "description": ["python shebang"]
+    "prefix": [
+      "bash",
+      "#!",
+      "shebang"
+    ],
+    "body": [
+      "#!/usr/bin/env python"
+    ],
+    "description": [
+      "python shebang"
+    ]
   },
   "print python to console": {
-    "prefix": ["print_to_console", "console_print"],
+    "prefix": [
+      "print_to_console",
+      "console_print"
+    ],
     "body": [
       "\nprint(  # print to console",
       "\t\"\\n\\nlogging starts-----------------------------------------------------------------\\n\\n\",  # noqa",
@@ -22,34 +33,57 @@
     "description": "helper function"
   },
   "coding utf-8": {
-    "prefix": ["coding_utf8", "encoding_utf"],
+    "prefix": [
+      "coding_utf8",
+      "encoding_utf"
+    ],
     "body": "# -*- coding: utf-8 -*-\n\n",
     "description": "coding utf-8"
   },
   "E501": {
-    "prefix": ["noqa_e501"],
+    "prefix": [
+      "noqa_e501"
+    ],
     "body": "  # noqa E501",
     "description": "noqa E501"
   },
   "type ignore": {
-    "prefix": ["type_ignore"],
+    "prefix": [
+      "type_ignore"
+    ],
     "body": "  # type: ignore${1} # noqa F821",
     "description": "type ignore"
   },
   "sys.exc_info": {
-    "prefix": ["sys_exec_info", "exec_info_sys"],
+    "prefix": [
+      "sys_exec_info",
+      "exec_info_sys"
+    ],
     "body": [
       "import sys;print('\\n\\n',  *sys.exc_info(), sep='\\n\\n');print('\\n\\n')"
     ],
     "description": "sys.exc_info"
   },
   "name = main": {
-    "prefix": ["if_name_main", "if_main_name", "name_main", "main_name"],
-    "body": ["if __name__ == '__main__':", "    ${0:pass}"],
-    "description": ["If __name__ == __main__"]
+    "prefix": [
+      "if_name_main",
+      "if_main_name",
+      "name_main",
+      "main_name"
+    ],
+    "body": [
+      "if __name__ == '__main__':",
+      "    ${0:pass}"
+    ],
+    "description": [
+      "If __name__ == __main__"
+    ]
   },
   "try:except:": {
-    "prefix": ["try", "try_except"],
+    "prefix": [
+      "try",
+      "try_except"
+    ],
     "body": [
       "try:",
       "    ${1:pass}",
