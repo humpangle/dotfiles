@@ -23,7 +23,7 @@ erl_crash.dump
 # build/
 
 # BETTER DO THIS:
-.vscode/*
+**/.vscode/*
 **/build/*
 
 # Configuration file with private data:
