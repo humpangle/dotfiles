@@ -109,6 +109,9 @@ return {
           vim.cmd.echo('"LspStart"')
           return
         end
+
+        vim.cmd("TSContextToggle")
+        vim.cmd.echo('"TSContextToggle"')
       end, { desc = "LspStop and LspStart" })
 
       -- Diagnostic keymaps
