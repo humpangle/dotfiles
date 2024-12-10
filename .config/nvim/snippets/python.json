@@ -103,7 +103,8 @@
       "# TODO:kanmii: debug logging - MUST BE REMOVED !!!!!",
       "@pytest.fixture(autouse=True)",
       "def db_engine_echo___(db_engine):",
-      "    db_engine.echo = False"
+      "    db_engine.echo = True",
+      "    # db_engine.echo = False"
     ],
     "description": [
       "pytest echo db"
