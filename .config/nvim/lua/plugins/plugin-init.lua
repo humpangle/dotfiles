@@ -57,6 +57,7 @@ local plugins_table = {
   -- FUZZY FINDER
   -- sudo apt install bat -- Syntax highlighting
   --  brew install bat
+  require("plugins/fzf-lua"),
   {
     "junegunn/fzf.vim",
     enabled = not plugin_enabled.has_vscode(),
