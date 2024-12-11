@@ -239,6 +239,8 @@ local git_commit_mappings_fn = function()
     cmd = "--amend"
   elseif count == 3 then
     cmd = "--amend --no-edit"
+  else
+    cmd = ""
   end
 
   utils.write_to_command_mode("Git commit -S " .. cmd)
