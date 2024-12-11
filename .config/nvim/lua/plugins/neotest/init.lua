@@ -188,19 +188,17 @@ return {
               require("neotest").run.run(vim.fn.expand("%"))
               return
             end
+
+            if count == 1 then
+              do_echo("ALL TESTS")
+              require("neotest").run.run(vim.uv.cwd())
+              return
+            end
           end,
-          desc = "Neotest at cursor/file",
+          desc = "Neotest at cursor/file/ALL",
         },
         {
           "<leader>nta",
-          function()
-            do_echo("ALL TESTS")
-            require("neotest").run.run(vim.uv.cwd())
-          end,
-          desc = "Netotest ALL TESTS",
-        },
-        {
-          "<leader>ntA",
           function()
             do_echo("Attach to floating output.", "")
             require("neotest").run.attach()
