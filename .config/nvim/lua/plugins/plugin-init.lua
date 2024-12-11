@@ -22,8 +22,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.have_nerd_font = true
 
 local plugins_table = {
-  -- THEMES / COLORSCHEME
   require("plugins.bigfile-nvim"),
+  -- THEMES / COLORSCHEME
   require("plugins/color-schemes"),
 
   "nvim-lua/plenary.nvim",
