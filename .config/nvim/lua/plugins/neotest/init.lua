@@ -183,8 +183,11 @@ return {
               return
             end
 
-            do_echo("current file")
-            require("neotest").run.run(vim.fn.expand("%"))
+            if count == 1 then
+              do_echo("current file")
+              require("neotest").run.run(vim.fn.expand("%"))
+              return
+            end
           end,
           desc = "Neotest at cursor/file",
         },
