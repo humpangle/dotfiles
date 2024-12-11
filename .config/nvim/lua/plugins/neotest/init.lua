@@ -174,6 +174,7 @@ return {
         {
           "<leader>ntt",
           function()
+            vim.o.background = "dark"
             local count = vim.v.count
 
             if count == 0 then
