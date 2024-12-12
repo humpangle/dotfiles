@@ -27,6 +27,7 @@
   quotePath = false
 [commit]
   verbose = true
+  gpgsign = true
 [difftool]
   prompt = false
 [diff]
