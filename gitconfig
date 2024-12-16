@@ -64,5 +64,7 @@
   directory = *
 [gpg]
   format = ssh
-[user]
-  signingkey = ~/.ssh/git-sign.pub
+# [user]
+#   signingkey = ~/.ssh/ssh-key.pub
+# [gpg "ssh"]
+#   allowedSignersFile = ~/.config/git/allowed-signers
