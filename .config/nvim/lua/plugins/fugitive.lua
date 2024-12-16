@@ -227,7 +227,7 @@ local git_commit_mappings_fn = function()
   local count = vim.v.count
 
   if count == 0 then
-    vim.cmd("Git commit -S")
+    vim.cmd("Git commit")
     return
   end
 
@@ -243,7 +243,7 @@ local git_commit_mappings_fn = function()
     cmd = ""
   end
 
-  utils.write_to_command_mode("Git commit -S " .. cmd)
+  utils.write_to_command_mode("Git commit " .. cmd)
 end
 local git_commit_mappings_opts = {
   noremap = true,
