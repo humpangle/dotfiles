@@ -239,6 +239,22 @@ local git_commit_mappings_fn = function()
     cmd = "--amend"
   elseif count == 3 then
     cmd = "--amend --no-edit"
+  elseif count == 4 then
+    utils.write_to_command_mode(
+      "G verify-commit " .. vim.fn.expand("<cword>") .. " "
+    )
+    return
+  elseif count == 41 then
+    utils.write_to_command_mode(
+      "G verify-commit -v " .. vim.fn.expand("<cword>") .. " "
+    )
+    return
+  elseif count == 5 then
+    utils.write_to_command_mode("G verify-commit ")
+    return
+  elseif count == 51 then
+    utils.write_to_command_mode("G verify-commit -v ")
+    return
   else
     cmd = ""
   end
@@ -247,7 +263,7 @@ local git_commit_mappings_fn = function()
 end
 local git_commit_mappings_opts = {
   noremap = true,
-  desc = "Git commit 1/empty 2/amend 3/amendNoEdit",
+  desc = "Git commit 1/empty 2/amend 3/amendNoEdit 4/verify",
 }
 keymap("n", "<leader>gc", git_commit_mappings_fn, git_commit_mappings_opts)
 
