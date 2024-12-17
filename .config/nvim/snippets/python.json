@@ -111,5 +111,18 @@
     "description": [
       "pytest echo db"
     ]
+  },
+  "pytest skip": {
+    "prefix": [
+      "pytest_skip",
+      "skip_pytest"
+    ],
+    "body": [
+      "# $0import pytest",
+      "@pytest.mark.skip${1:(reason=\"reason\")}"
+    ],
+    "description": [
+      "pytest skip"
+    ]
   }
 }
