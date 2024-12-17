@@ -53,12 +53,12 @@ return {
       local count = vim.v.count
 
       if count == 0 then
-        vim.cmd("Neotree source=filesystem position=left reveal")
+        vim.cmd("Neotree source=filesystem position=float reveal")
         return
       end
 
       if count == 1 then
-        vim.cmd("Neotree source=filesystem position=float reveal")
+        vim.cmd("Neotree source=filesystem position=left reveal")
         return
       end
 
