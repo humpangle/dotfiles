@@ -241,12 +241,12 @@ local git_commit_mappings_fn = function()
     cmd = "--amend --no-edit"
   elseif count == 4 then
     utils.write_to_command_mode(
-      "G verify-commit " .. vim.fn.expand("<cword>") .. " "
+      "G verify-commit -v " .. vim.fn.expand("<cword>") .. " "
     )
     return
   elseif count == 41 then
     utils.write_to_command_mode(
-      "G verify-commit -v " .. vim.fn.expand("<cword>") .. " "
+      "G verify-commit " .. vim.fn.expand("<cword>") .. " "
     )
     return
   elseif count == 5 then
