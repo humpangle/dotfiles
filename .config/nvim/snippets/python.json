@@ -21,9 +21,9 @@
       "# TODO:kanmii: debug logging - MUST BE REMOVED !!!!!",
       "print(  # print to console",
       "\t\"\\n\\nlogging starts------------------------------------------------------------------\\n\\n\",  # noqa",
-      "\t'TOPIC: ${1:topic}',",
+      "\t\"TOPIC: $1 $0\",",
       "\t'\\n',",
-      "\t${2:code},",
+      "\t${1:code},",
       "\t\"\\n\\nlogging ends--------------------------------------------------------------------\\n\\n\",  # noqa",
       ")\n"
     ],
