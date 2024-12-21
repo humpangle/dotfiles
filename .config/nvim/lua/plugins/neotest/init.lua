@@ -61,15 +61,20 @@ return {
             .. "\\n"
             .. "}"
             .. "\\n"
+            .. "\\n"
             .. '\\"--log-level\\", \\"DEBUG\\",'
             .. "\\n"
-            .. '\\"--verbosity\\", \\"0\\",'
+            .. '\\"--log-level\\", \\"INFO\\",'
+            .. "\\n"
+            .. '\\"-vvv\\",'
             .. "\\n"
             .. '\\"--capture\\", \\"no\\",'
             .. "\\n"
             .. '\\"--disable-warnings\\",'
             .. "\\n"
             .. '\\"--ignore\\",'
+            .. "\\n"
+            .. '\\"--verbosity\\", \\"0\\",'
 
           local current_args_value_string = '{ "'
             .. table.concat(
