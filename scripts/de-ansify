@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+_do() {
+  : "Remove ANSI color codes and windows line endings from a file."
+  : "Usage: de_ansify <file> "
+
+  sed -iE \
+    "s|\x1b\[[;0-9]*m||g" \
+    "$1"
+
+  sed -iE \
+    "s|\xd$||g" \
+    "$1"
+}
+
+_do "$@"
