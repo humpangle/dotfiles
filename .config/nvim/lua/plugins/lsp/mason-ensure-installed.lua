@@ -11,4 +11,6 @@ return {
       "mysql.markdown",
     },
   },
+
+  hadolint = {},
 }
