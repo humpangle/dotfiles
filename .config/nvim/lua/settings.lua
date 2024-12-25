@@ -705,24 +705,19 @@ utils.map_key("n", ",rd", utils.DeleteFile("d"), { noremap = true })
 utils.map_key("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Terminal in new tab/split
-utils.map_key(
-  "n",
-  ",tt",
-  ":tab split<bar>:term<CR>:echo &channel<CR>",
-  { noremap = true }
-)
-utils.map_key(
-  "n",
-  ",tv",
-  ":vertical split<bar>:term<CR>:echo &channel<CR>",
-  { noremap = true }
-)
-utils.map_key(
-  "n",
-  ",ts",
-  ":split<bar>:term<CR>:echo &channel<CR>",
-  { noremap = true }
-)
+utils.map_key("n", ",tt", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.cmd("split")
+  elseif count == 1 then
+    vim.cmd("vertical split")
+  else
+    vim.cmd("tab split")
+  end
+
+  vim.cmd("term")
+end, { noremap = true, desc = "terminal 0=s 1=v 2=t" })
 
 -- Delete all terminal buffers
 utils.map_key("n", "<leader>bT", function()
