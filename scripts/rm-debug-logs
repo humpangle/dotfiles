@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+remove_debug_logs() {
+  # Usage: remove_debug_logs path_to_file
+  local file="$1"
+
+  # This sed command:
+  # - searches for the start marker (# NOTE: --START-- DEBUG LOG {)
+  #   and the end marker (# NOTE: --END-- DEBUG LOG }),
+  # - deletes all lines between (and including) those two markers.
+  sed -i '/# NOTE: --START-- DEBUG LOG {/,/# NOTE: --END-- DEBUG LOG }/d' "$file"
+}
+
+remove_debug_logs "$@"
