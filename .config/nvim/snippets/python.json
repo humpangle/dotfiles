@@ -18,14 +18,19 @@
       "console_print"
     ],
     "body": [
-      "# TODO:kanmii: debug logging - MUST BE REMOVED !!!!!",
-      "print(  # print to console",
-      "\t\"\\n\\nlogging starts------------------------------------------------------------------\\n\\n\",  # noqa",
-      "\t\"TOPIC: $1 $0\",",
-      "\t'\\n',",
+      "",
+      "# NOTE: --START-- DEBUG LOG {",
+      "print(",
+      "\t\"\\n\\n((\\n\",",
+      "\t\"  LOG TOPIC: $1$0\",",
+      "\t\"\\n\\n(\\n\",",
       "\t${1:code},",
-      "\t\"\\n\\nlogging ends--------------------------------------------------------------------\\n\\n\",  # noqa",
-      ")\n"
+      "\t\"\\n)\\n\\n\",",
+      "\t__file__,",
+      "\t\"\\n))\\n\",",
+      ")",
+      "# NOTE: --END-- DEBUG LOG }",
+      ""
     ],
     "description": "print python to console"
   },
