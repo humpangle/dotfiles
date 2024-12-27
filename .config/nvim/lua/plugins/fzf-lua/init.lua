@@ -127,6 +127,13 @@ return {
         noremap = true,
         desc = "LSP workspace symbols",
       })
+
+      map_key("n", "gd", function()
+        vim.cmd("FzfLua lsp_definitions")
+      end, {
+        noremap = true,
+        desc = "LSP Goto Definition",
+      })
     end,
   },
 }

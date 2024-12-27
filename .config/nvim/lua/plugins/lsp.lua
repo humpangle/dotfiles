@@ -161,7 +161,7 @@ return {
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
           map(
-            "gd",
+            "gD",
             require("telescope.builtin").lsp_definitions,
             "[G]oto [D]efinition"
           )
