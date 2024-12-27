@@ -108,6 +108,8 @@ return {
           -- Command line arguments for runner
           -- Can also be a function to return dynamic values
           -- args = {}, -- vim.g.__ebnis_neotest_python_args,
+          -- putting in a function allows us to change the configuration on the fly (instead of needing to restart nvim
+          -- just to change configuration).
           args = function()
             return vim.g.__ebnis_neotest_python_args
           end,
