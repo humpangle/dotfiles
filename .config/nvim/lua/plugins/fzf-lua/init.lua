@@ -7,6 +7,41 @@ end
 local utils = require("utils")
 local map_key = utils.map_key
 
+local invoke_telescope_func = function(func_name)
+  local ok, telescope_builtins_module = pcall(require, "telescope.builtin")
+  if not ok then
+    return
+  end
+
+  if
+    telescope_builtins_module[func_name]
+    and type(telescope_builtins_module[func_name]) == "function"
+  then
+    telescope_builtins_module[func_name]()
+  end
+end
+
+local map_to_fzf_lua_or_telescope = function(
+  key,
+  func_name,
+  desc,
+  may_be_telescope_func_name
+)
+  map_key("n", key, function()
+    local count = vim.v.count
+
+    if count == 0 then
+      vim.cmd("FzfLua " .. func_name)
+      return
+    end
+
+    invoke_telescope_func(may_be_telescope_func_name or func_name)
+  end, {
+    noremap = true,
+    desc = "LSP " .. desc,
+  })
+end
+
 return {
   {
     "ibhagwan/fzf-lua",
@@ -106,34 +141,44 @@ return {
         desc = "Git stashes list",
       })
 
-      map_key("n", "<leader>bs", function()
-        vim.cmd("FzfLua lsp_document_symbols")
-      end, {
-        noremap = true,
-        desc = "LSP buffer symbols",
-      })
+      -- Fuzzy find all the symbols in your current document. Symbols are things like variables, functions, types, etc.
+      map_to_fzf_lua_or_telescope(
+        "ds",
+        "lsp_document_symbols",
+        "[D]ocument [S]ymbols"
+      )
 
-      map_key("n", "<leader>gr", function()
-        vim.cmd("FzfLua lsp_references")
-      end, {
-        noremap = true,
-        desc = "LSP Symbol Under Cursor References",
-      })
+      -- Find references(places where identifiers are used/referenced) for the word under your cursor.
+      map_to_fzf_lua_or_telescope(
+        "gr",
+        "lsp_references",
+        "[G]oto [R]eferences"
+      )
 
-      map_key("n", "<leader>ws", function()
-        -- vim.cmd("FzfLua lsp_workspace_symbols")
-        vim.cmd("FzfLua lsp_live_workspace_symbols")
-      end, {
-        noremap = true,
-        desc = "LSP workspace symbols",
-      })
+      -- Jump to the definition of the word under your cursor.
+      --  This is where a variable was first declared, or where a function is defined, etc.
+      --  To jump back, press <C-t>.
+      map_to_fzf_lua_or_telescope(
+        "gd",
+        "lsp_definitions",
+        "[G]oto [D]efinition"
+      )
 
-      map_key("n", "gd", function()
-        vim.cmd("FzfLua lsp_definitions")
-      end, {
-        noremap = true,
-        desc = "LSP Goto Definition",
-      })
+      -- Jump to the implementation of the word under your cursor.
+      --  Useful when your language has ways of declaring types without an actual implementation.
+      map_to_fzf_lua_or_telescope(
+        "gi",
+        "lsp_implementations",
+        "[G]oto [I]mplementation"
+      )
+
+      -- Fuzzy find all the symbols in your current workspace. Similar to document symbols, except searches over your entire project.
+      map_to_fzf_lua_or_telescope(
+        "ws",
+        "lsp_live_workspace_symbols",
+        "[W]orkspace [S]ymbols",
+        "lsp_dynamic_workspace_symbols"
+      )
     end,
   },
 }
