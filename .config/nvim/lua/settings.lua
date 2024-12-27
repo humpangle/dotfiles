@@ -382,7 +382,6 @@ utils.map_key("n", ",cc", do_yanka_highlighted("letter"), { noremap = true })
 utils.map_key("n", "<Tab>", "<C-w>w", { noremap = false })
 
 -- Tab operations
-utils.map_key("n", "<Leader>tn", "<cmd>tabnew<CR>", { noremap = true })
 utils.map_key("n", "<Leader>ts", "<cmd>tab split<cr>", { noremap = true })
 utils.map_key("n", ",tc", ":tabclose<CR>", { noremap = true })
 utils.map_key(
@@ -393,8 +392,17 @@ utils.map_key(
 )
 
 -- New split operations
-utils.map_key("n", ",vn", ":vnew<CR>", { noremap = true })
-utils.map_key("n", ",sn", ":new<CR>", { noremap = true })
+utils.map_key("n", ",bn", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.cmd("new")
+  elseif count == 1 then
+    vim.cmd("vnew")
+  elseif count == 2 then
+    vim.cmd("tabnew")
+  end
+end, { noremap = true })
 
 -- Reorder tabs
 utils.map_key("n", "<C-Left>", ":-tabmove<CR>", { noremap = true })
