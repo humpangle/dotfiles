@@ -143,7 +143,7 @@ return {
 
       -- Fuzzy find all the symbols in your current document. Symbols are things like variables, functions, types, etc.
       map_to_fzf_lua_or_telescope(
-        "ds",
+        "<leader>bs",
         "lsp_document_symbols",
         "[D]ocument [S]ymbols"
       )
@@ -174,7 +174,7 @@ return {
 
       -- Fuzzy find all the symbols in your current workspace. Similar to document symbols, except searches over your entire project.
       map_to_fzf_lua_or_telescope(
-        "ws",
+        "<leader>ws",
         "lsp_live_workspace_symbols",
         "[W]orkspace [S]ymbols",
         "lsp_dynamic_workspace_symbols"
