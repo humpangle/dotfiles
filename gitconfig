@@ -27,7 +27,6 @@
   quotePath = false
 [commit]
   verbose = true
-  gpgsign = true
 [difftool]
   prompt = false
 [diff]
@@ -62,9 +61,3 @@
   required = true
 [safe]
   directory = *
-[gpg]
-  format = ssh
-# [user]
-#   signingkey = ~/.ssh/ssh-key.pub
-# [gpg "ssh"]
-#   allowedSignersFile = ~/.config/git/allowed-signers

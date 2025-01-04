@@ -70,6 +70,12 @@
           "markdown"
         ],
         "path": "./markdown.json"
+      },
+      {
+        "language": [
+          "gitconfig"
+        ],
+        "path": "./gitconfig.json"
       }
     ]
   }

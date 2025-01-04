@@ -1,0 +1,21 @@
+{
+  "local signing": {
+    "prefix": [
+      "local_signing",
+      "signing_local"
+    ],
+    "body": [
+      "[user]",
+      "  signingkey = ~/.ssh/ssh-key.pub",
+      "[commit]",
+      "  gpgsign = true",
+      "[gpg]",
+      "  format = ssh",
+      "[gpg \"ssh\"]",
+      "  allowedSignersFile = ~/.config/git/allowed-signers"
+    ],
+    "description": [
+      "Signing Local"
+    ]
+  }
+}
