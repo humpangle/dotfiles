@@ -635,13 +635,18 @@ utils.map_key("n", "<leader>bw", "<cmd>bw%<CR>", { noremap = true })
 
 --  Remove Contents of Current File
 utils.map_key("n", "d=", function()
-  vim.cmd("e! %")
-  vim.cmd("%delete_")
-  vim.cmd("w!")
-end, { noremap = true })
+  local count = vim.v.count
 
--- Remove Contents of Current File and Enter Insert Mode
-utils.map_key("n", "c=", utils.EbnisClearAllBuffer, { noremap = true })
+  if count == 0 then
+    vim.cmd("e! %")
+    vim.cmd("%delete_")
+    vim.cmd("w!")
+    return
+  end
+
+  -- Remove Contents of Current File and Enter Insert Mode
+  utils.EbnisClearAllBuffer()
+end, { noremap = true })
 
 vim.api.nvim_create_user_command("DelDbUi", function()
   utils.DeleteAllBuffers("dbui")
