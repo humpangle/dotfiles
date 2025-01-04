@@ -9,6 +9,7 @@ xargs() {
 
   gxargs "$@"
 }
+export -f xargs
 
 realpath() {
   if ! command -v grealpath &>/dev/null; then
@@ -18,3 +19,4 @@ realpath() {
 
   grealpath "$@"
 }
+export -f realpath
