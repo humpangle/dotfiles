@@ -122,10 +122,16 @@ local plugins_table = {
   require("plugins/floaterm"),
 
   -- "gc" to comment visual regions/lines
+  -- "gb" to comment visual regions/block
   {
     "numToStr/Comment.nvim",
     enabled = not plugin_enabled.has_vscode(),
-    opts = {},
+    config = function()
+      require("Comment").setup()
+
+      local ft = require("Comment.ft")
+      ft.gitconfig = "#%s"
+    end,
   },
 
   -- "easymotion/vim-easymotion",
