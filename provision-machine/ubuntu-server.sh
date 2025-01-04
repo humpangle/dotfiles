@@ -2973,18 +2973,22 @@ _is_local_function() {
 }
 
 _command_exists() {
-  local _command_to_test="$1"
-  local _this_file_content
-  _this_file_content="$(cat "$0")"
+  local command_to_test_="$1"
+  local this_file_content_=""
+  this_file_content_="$(cat "$0")"
 
-  mapfile -t _all_function_names < <(compgen -A function | grep -v '^_')
+  local all_function_names_=()
+  mapfile -t all_function_names_ < <(
+    compgen -A function
+  )
 
-  for _name in "${_all_function_names[@]}"; do
-    if ! _is_local_function "$_name" "$_this_file_content"; then
+  local func_name_=""
+  for func_name_ in "${all_function_names_[@]}"; do
+    if ! _is_local_function "$func_name_" "$this_file_content_"; then
       continue
     fi
 
-    if [[ "$_name" == "$_command_to_test" ]]; then
+    if [[ "$func_name_" == "$command_to_test_" ]]; then
       return 0
     fi
   done
@@ -2992,128 +2996,235 @@ _command_exists() {
   return 1
 }
 
+___help_help() {
+  local _usage
+
+  read -r -d '' _usage <<'eom' || :
+Get documentation about available commands/functions. Usage:
+  script_or_executable help [OPTIONS]
+
+By default, we return only external functions unless option `i` is passed in which case we return only internal
+(helper) functions or option `a` is given which causes us to print both internal and external functions.
+
+Options:
+  -h
+    Print this helper information and exit.
+  -i
+    Return only internal (helper) functions.
+  -a
+    Return all functions - both internal and external.
+  -p
+    Prepend prefix i.e. _func_name ----------- to every line so developer can grep the functon name and get all
+    documentation strings for that function name. Without this option, caller may only get examples where the functon
+    name is referenced.
+
+Examples:
+  # Get help
+  script_or_executable help -h
+
+  # Grep for command/function documentation
+  script_or_executable help -p | grep ^func_or_command_name
+eom
+
+  echo -e "$_usage"
+}
+
 help() {
-  : "List available commands."
+  : "___help___ ___help_help"
+  local function_type_="external"
+  local include_prefix_=""
+
+  local opt_=""
+  while getopts ':aip' opt_; do
+    case "$opt_" in
+    a)
+      function_type_='all'
+      ;;
+
+    i)
+      function_type_='internal'
+      ;;
+
+    p)
+      include_prefix_=1
+      ;;
+
+    *)
+      ___help_help
+      exit 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
 
   # Matching pattern examples:
   # `: "___help___ ___some_func_help"`
   # `: "___help___ ____some-func-help"`
   local _help_func_pattern="[_]*___[a-zA-Z][a-zA-Z0-9_-]*[_-]help"
 
-  if [[ -z "$1" ]]; then
-    # Regular functions do not start with _.
-    mapfile -t _function_names < <(
+  local function_names_=()
+
+  if [ "$function_type_" = external ]; then
+    # External functions do not start with _.
+    mapfile -t function_names_ < <(
       compgen -A function |
         grep -v '^_'
     )
-  else
-    # Helper functions start with _.
-    mapfile -t _function_names < <(
+  elif [ "$function_type_" = internal ]; then
+    # Internal helper functions start with _, but not __
+    mapfile -t function_names_ < <(
       compgen -A function |
         grep '^_' |
+        grep -v '^__' |
+        grep -v -E "$_help_func_pattern"
+    )
+  elif [ "$function_type_" = all ]; then
+    mapfile -t function_names_ < <(
+      compgen -A function |
+        grep -v '^__' |
         grep -v -E "$_help_func_pattern"
     )
   fi
 
-  local _this_file_content
-  _this_file_content="$(cat "$0")"
+  local this_file_content_=""
+  this_file_content_="$(cat "$0")"
 
-  local len=0
-  declare -A name_to_len_map=()
+  local longest_func_name_len_=0
+  local func_name_len_=0
+  declare -A name_to_len_map_=()
 
-  for _name in "${_function_names[@]}"; do
-    _len="${#_name}"
-    name_to_len_map["$_name"]="${_len}"
-    if [[ "${_len}" -gt "${len}" ]]; then len=${_len}; fi
+  local func_name_=""
+  for func_name_ in "${function_names_[@]}"; do
+    func_name_len_="${#func_name_}"
+    name_to_len_map_["$func_name_"]="${func_name_len_}"
+    if [[ "${func_name_len_}" -gt "${longest_func_name_len_}" ]]; then
+      longest_func_name_len_=${func_name_len_}
+    fi
   done
 
-  declare -A _all_output=()
+  declare -A all_output_=()
   declare -A _aliases=()
-  declare -A _name_spaces_map=()
+  declare -A name_spaces_map_=()
 
-  len=$((len + 10))
+  longest_func_name_len_=$((longest_func_name_len_ + 10))
 
-  for _name in "${_function_names[@]}"; do
-    if ! _is_local_function "$_name" "$_this_file_content"; then
+  local output_prefix_=""
+
+  for func_name_ in "${function_names_[@]}"; do
+    if ! _is_local_function "$func_name_" "$this_file_content_"; then
       continue
     fi
 
-    local spaces=""
-    _len="${name_to_len_map[$_name]}"
-    _len=$((len - _len))
+    local spaces_=""
+    func_name_len_="${name_to_len_map_[$func_name_]}"
+    func_name_len_=$((longest_func_name_len_ - func_name_len_))
 
-    for _ in $(seq "${_len}"); do
-      spaces="${spaces}-"
-      ((++t))
+    for _ in $(seq "${func_name_len_}"); do
+      spaces_+="-"
     done
 
-    local _function_def_text
-    _function_def_text="$(type "${_name}")"
+    local function_def_text_=""
+    function_def_text_="$(type "${func_name_}")"
 
-    local _alias_name=""
+    local alias_name_=""
 
     # Matching pattern example:
     # `: "___alias___ install-elixir"`
-    _alias_name="$(
+    alias_name_="$(
       sed -n \
         's/^ *: *"___alias___ *\([a-zA-Z_-][a-zA-Z0-9_-]*\).*/\1/p' \
-        <<<"${_function_def_text}"
+        <<<"${function_def_text_}"
     )"
 
-    if [[ -n "${_alias_name}" ]]; then
-      _aliases["${_alias_name}"]="${_aliases["${_alias_name}"]} ${_name}"
+    if [[ -n "${alias_name_}" ]]; then
+      _aliases["${alias_name_}"]="${_aliases["${alias_name_}"]} ${func_name_}"
       continue
     fi
 
-    local _help_func=""
-
-    _help_func="$(
+    local help_func_=""
+    help_func_="$(
+      # Given:
+      # `: "___help___ ___some_func_help"`
+      # Then we extract "___some_func_help" into variable help_func_
       sed -nE \
         "s/^[[:space:]]+:[[:space:]]*\"___help___[[:space:]]+([a-zA-Z0-9_-]*).*/\1/p" \
-        <<<"${_function_def_text}"
+        <<<"${function_def_text_}"
     )"
 
     # Get the whole function definition text and extract only the documentation
     # part.
-    if [[ -n "$_help_func" ]]; then
-      mapfile -t _doc_lines < <(
-        eval "$_help_func" 2>/dev/null
+    local doc_lines_=()
+    if [[ -n "$help_func_" ]]; then
+      # So we have a helper function - we just eval the helper function and split by new lines.
+      mapfile -t doc_lines_ < <(
+        eval "$help_func_" 2>/dev/null
       )
     else
-      mapfile -t _doc_lines < <(
-        sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p" <<<"$_function_def_text"
+      # Function is not using a helper function but documentation texts - so we extract the documentation texts and
+      # split by new lines.
+      mapfile -t doc_lines_ < <(
+        # ^              Assert position at the start of the line
+        # [[:space:]]*   Match any whitespace (spaces, tabs) zero or more times
+        # :              Match a literal colon
+        # [[:space:]]?   Match an optional whitespace
+        # \"(.*)\"       Match a quoted string and capture the content within the quotes (documentation text)
+        # ;              Match a semicolon (shell line termination placed there by command: type _func_name)
+        #
+        # Examples:
+        # : "This is a documentation line";
+        # :"This is a documentation line";
+        sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p" <<<"$function_def_text_"
       )
     fi
 
-    local _output=""
+    local output_=""
+    output_prefix_="$func_name_ $spaces_ "
 
-    if [[ -n "${_doc_lines[*]}" ]]; then
-      for _doc in "${_doc_lines[@]}"; do
-        _output+="$_name $spaces $_doc\n"
+    if [[ -n "${doc_lines_[*]}" ]]; then
+      if [ -z "$include_prefix_" ]; then
+        output_+="${output_prefix_}\n"
+        output_prefix_=""
+      fi
+
+      for _doc in "${doc_lines_[@]}"; do
+        # _func_name -------------------- List tmux sessions and clients. Usage:
+        output_+="${output_prefix_}$_doc\n"
       done
     else
-      _output="$_name $spaces *************\n"
+      # _func_name -------------------- *************
+      output_="${output_prefix_}*************\n"
     fi
 
-    _all_output["$_name"]="$_output"
-    _name_spaces_map["$_name"]="$_name $spaces"
+    all_output_["$func_name_"]="$output_"
+    name_spaces_map_["$func_name_"]="$output_prefix_"
   done
 
-  for _name in "${!_all_output[@]}"; do
-    _output="${_all_output["${_name}"]}"
-    echo -e "${_output}"
+  for func_name_ in "${!all_output_[@]}"; do
+    output_="${all_output_["$func_name_"]}"
+    echo -e "$output_"
 
-    local _alias_names="${_aliases["${_name}"]}"
+    local alias_names_="${_aliases["$func_name_"]}"
 
-    if [[ -n "${_alias_names}" ]]; then
-      echo -e "${_name_spaces_map["${_name}"]} ALIASES: ${_alias_names}\n\n"
+    if [[ -n "${alias_names_}" ]]; then
+      echo -e "${name_spaces_map_["$func_name_"]} ALIASES: ${alias_names_}\n\n"
     fi
   done
 }
 
-# -----------------------------------------------------------------------------
-# /END/ GLOBAL HELP FUNCTION
-# -----------------------------------------------------------------------------
-
-TIMEFORMAT=$'Task completed in %3lR\n'
-time "${@:-help}"
+if [ -z "$1" ]; then
+  # default_command "$@"
+  help "$@"
+elif [[ "$1" == "help" ]]; then
+  help "${@:2}"
+elif [[
+  "$1" == -h* ||
+  "$1" == -i* ||
+  "$1" == -a* ||
+  "$1" == -p* ]]; then
+  help "$@"
+elif _command_exists "$1"; then
+  "$@"
+else
+  echo "Command not found \"$1\". Type \"help -a\" for available commands." >&2
+  exit 127
+fi
