@@ -1,11 +1,29 @@
 #!/usr/bin/env bash
 
 _run_f() {
+  # If the __EBNIS_RUN_SCRIPT_FULL_PATH__ environment variable exists, that will be our script_name_
   local script_name_="${__EBNIS_RUN_SCRIPT_FULL_PATH__:-}"
 
   if [ -z "$script_name_" ]; then
-    echo -e "__EBNIS_RUN_SCRIPT_FULL_PATH__ environment variable must be set and must be full path."
-    return
+    # If the script_name_ environment variable is not set, we search for following files in PWD and if found use as
+    # script_name_
+    local allowed_script_names_=(
+      run.sh
+      run
+    )
+
+    local item_=""
+    for item_ in "${allowed_script_names_[@]}"; do
+      if [ -e "$item_" ]; then
+        script_name_="$PWD/$item_"
+        break
+      fi
+    done
+
+    if [ -z "$script_name_" ]; then
+      echo -e "__EBNIS_RUN_SCRIPT_FULL_PATH__ environment variable must be set and must be full path."
+      return
+    fi
   fi
 
   local script_dir_
@@ -35,7 +53,6 @@ _run_f() {
 
   return "$exit_code_"
 }
-
 alias r='_run_f'
 
 _____run_well_known_paths_help() {
