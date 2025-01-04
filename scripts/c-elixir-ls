@@ -59,7 +59,7 @@ git_clone() {
   local _tag="$1"
 
   if [[ -e "$_copy_src" ]]; then
-    _echo "Elixir ls already cloned - we will try to pull latest code from remote repository."
+    _echo "Elixir ls already cloned into \"$_copy_src\" - we will try to pull latest code from remote repository."
 
     (
       if ! cd "$_copy_src"; then
@@ -67,7 +67,7 @@ git_clone() {
         exit 1
       fi
 
-      _echo "Restoring chnages made to $_copy_src"
+      _echo "Restoring changes made to \"$_copy_src\""
       git restore . &>/dev/null
 
       _echo "Which commit is currently checked out?"
@@ -76,10 +76,16 @@ git_clone() {
       _echo "Switching to $_main_branch branch"
       git checkout $_main_branch &>/dev/null
 
+      _echo "Let us check again which commit is currently checked out?"
+      git branch
+
       _echo "Fetching and merging latest code."
       git pull origin $_main_branch
 
       _echo "Done pulling latest changes from remote."
+
+      _echo "Fetching tags"
+      git fetch --all --tags
 
       if [[ -n "$_tag" ]]; then
         _echo "Checking out tag $_tag"
