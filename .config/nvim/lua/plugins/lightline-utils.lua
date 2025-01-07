@@ -100,7 +100,7 @@ function _G.LightlineObsession()
 
   -- This will indicate the session was started by vim prosession plugin. We can safely assume the session name is
   -- vim.g.prosession_dir .. working_directory.vim
-  local vim_procession_indicator = "PS"
+  local vim_procession_indicator = "$"
 
   if string.find(session_file, vim.g.prosession_dir, 1, true) then
     return active_color_indicator .. prefix .. vim_procession_indicator
@@ -108,7 +108,7 @@ function _G.LightlineObsession()
 
   -- This means we started session manually - we simply show the session filename (minus directory) used to start
   -- session.
-  return active_color_indicator .. prefix .. "CU" -- session_file:match("([^/]+)$")
+  return active_color_indicator .. prefix .. "C" -- session_file:match("([^/]+)$")
 end
 
 local function tab_modified(tab_num)
