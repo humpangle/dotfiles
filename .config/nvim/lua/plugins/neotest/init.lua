@@ -246,7 +246,7 @@ return {
           function()
             local count = vim.v.count
 
-            if count == 0 then
+            if count == 99 then
               require("neotest").output_panel.toggle()
               return
             end
