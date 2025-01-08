@@ -822,3 +822,33 @@ end
 vim.api.nvim_create_user_command("SessionEbnis", echo_session, {})
 
 vim.api.nvim_create_user_command("AnsiColorize", require("ansi-colorize"), {})
+
+utils.map_key("n", "gf", function()
+  local filepath = vim.fn.expand("<cWORD>")
+  local parts = vim.split(filepath, ":", { plain = true })
+  local file = parts[1]
+
+  if not file then
+    print("invalid file: " .. filepath)
+    return
+  end
+
+  local count = vim.v.count
+
+  if count == 1 then
+    vim.cmd("split")
+  elseif count == 2 then
+    vim.cmd("vsplit")
+  elseif count == 3 then
+    vim.cmd("tab split")
+  end
+
+  vim.cmd("edit " .. file)
+
+  if #parts == 2 then
+    local line = tonumber(parts[2])
+    if file and line then
+      vim.fn.cursor(line, 1)
+    end
+  end
+end, { desc = "Go to file and line" })
