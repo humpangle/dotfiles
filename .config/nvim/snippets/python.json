@@ -15,7 +15,9 @@
   "print python to console": {
     "prefix": [
       "print_to_console",
-      "console_print"
+      "console_print",
+      "print_inspect",
+      "inspect_print"
     ],
     "body": [
       "",
