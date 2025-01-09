@@ -98,19 +98,7 @@ local plugins_table = {
     "tpope/vim-unimpaired",
   },
 
-  -- Manage Vim Sessions Manually
-  {
-    "tpope/vim-obsession",
-    enabled = not plugin_enabled.has_vscode(),
-  },
-  -- MANAGE VIM SESSIONS AUTOMACTICALLY
-  {
-    "dhruvasagar/vim-prosession",
-    enabled = not plugin_enabled.has_vscode(),
-    dependencies = {
-      "tpope/vim-obsession",
-    },
-  },
+  require("plugins.vim-obsession"),
 
   -- Statusline / tabline
   -- require("plugins.lualine"),
