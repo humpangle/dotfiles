@@ -391,7 +391,7 @@ utils.map_key(
   { noremap = true }
 )
 
--- New split operations
+-- New buffer operations
 utils.map_key("n", ",bn", function()
   local count = vim.v.count
 
