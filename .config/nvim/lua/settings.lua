@@ -395,12 +395,12 @@ utils.map_key(
 utils.map_key("n", ",bn", function()
   local count = vim.v.count
 
-  if count == 0 then
-    vim.cmd("new")
-  elseif count == 1 then
+  if count == 2 then
     vim.cmd("vnew")
-  elseif count == 2 then
+  elseif count == 3 then
     vim.cmd("tabnew")
+  else
+    vim.cmd("new")
   end
 end, { noremap = true })
 
