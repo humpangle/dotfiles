@@ -587,7 +587,15 @@ end, { noremap = true, silent = true })
 -- Find and replace in current buffer only
 -- press * {shift 8) to search for word under cursor and key combo below to replace in entire file
 -- utils.map_key({ "n", "x" }, "<leader>rr", ":%s///g<left><left>")
-utils.map_key({ "n", "x" }, "<leader>rc", ":%s///gc<left><left><left>")
+utils.map_key({ "n", "x" }, "<leader>rc", function()
+  local cmd = "%s///g"
+
+  if vim.v.count == 0 then
+    cmd = cmd .. "c<left>"
+  end
+
+  utils.write_to_command_mode(cmd .. "<left><left>")
+end, { desc = "Replace highlighted text 1/no-confirm" })
 
 -- Search for the strings using `fzf`, press <tab> to select multiple (<s-tab> to deselect) and <cr> to populate QuickFix list
 -- After searching for strings, press this mapping to do a project wide find and replace. It's similar to <leader>r
