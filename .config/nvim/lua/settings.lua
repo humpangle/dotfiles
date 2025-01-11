@@ -721,12 +721,12 @@ utils.map_key("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 utils.map_key("n", ",tt", function()
   local count = vim.v.count
 
-  if count == 0 then
-    vim.cmd("split")
-  elseif count == 1 then
+  if count == 2 then
     vim.cmd("vertical split")
-  else
+  elseif count == 3 then
     vim.cmd("tab split")
+  else
+    vim.cmd("split")
   end
 
   vim.cmd("term")
