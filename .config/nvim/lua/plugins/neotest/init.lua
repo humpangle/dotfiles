@@ -67,6 +67,50 @@ local jest_adapter = function()
   return require("neotest-jest")(config)
 end
 
+local elixir_adapter = function()
+  return require("neotest-elixir")({
+    -- The Mix task to use to run the tests
+    -- Can be a function to return a dynamic value.
+    -- Default: "test"
+    mix_task = {
+      "test",
+      -- "my_custom_task",
+    },
+    -- Other formatters to pass to the test command as the formatters are overridden
+    -- Can be a function to return a dynamic value.
+    -- Default: {"ExUnit.CLIFormatter"}
+    extra_formatters = {
+      -- "ExUnit.CLIFormatter",
+      -- "ExUnitNotifier",
+    },
+    -- Extra test block identifiers
+    -- Can be a function to return a dynamic value.
+    -- Block identifiers "test", "feature" and "property" are always supported by default.
+    -- Default: {}
+    extra_block_identifiers = {
+      -- "test_with_mock",
+    },
+    -- Extra arguments to pass to mix test
+    -- Can be a function that receives the position, to return a dynamic value
+    -- Default: {}
+    args = {
+      "--trace",
+    },
+    -- Command wrapper
+    -- Must be a function that receives the mix command as a table, to return a dynamic value
+    -- Default: function(cmd) return cmd end
+    post_process_command = function(cmd)
+      -- return vim.tbl_flatten({ { "env", "FOO=bar" }, cmd })
+      return cmd
+    end,
+    -- Delays writes so that results are updated at most every given milliseconds
+    -- Decreasing this number improves snappiness at the cost of performance
+    -- Can be a function to return a dynamic value.
+    -- Default: 1000
+    write_delay = 1000,
+  })
+end
+
 return {
   {
     {
@@ -96,6 +140,7 @@ return {
           },
         },
         "nvim-neotest/neotest-jest",
+        "jfpedroza/neotest-elixir",
         -- /END/ adapters
       },
       init = function()
@@ -168,6 +213,7 @@ return {
           adapters = {
             pytest_adapter(),
             jest_adapter(),
+            elixir_adapter(),
           },
           discovery = {
             -- Number of workers to parse files concurrently. A value of 0 automatically assigns number based on CPU.
