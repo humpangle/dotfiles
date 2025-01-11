@@ -277,6 +277,19 @@ local plugins_table = {
       "markdown",
       "livebook",
     },
+    init = function()
+      keymap("n", "<leader>mt", function()
+        local count = vim.v.count
+
+        local arg = "toggle"
+
+        if count == 1 then
+          arg = "toggle"
+        end
+
+        vim.cmd("RenderMarkdown " .. arg)
+      end, { noremap = true })
+    end,
   },
   {
     "iamcco/markdown-preview.nvim",
