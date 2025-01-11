@@ -13,14 +13,20 @@ local invoke_telescope_func = function(func_name)
     return
   end
 
-  if
-    telescope_builtins_module[func_name]
-    and type(telescope_builtins_module[func_name]) == "function"
-  then
-    telescope_builtins_module[func_name]()
+  local func_to_invoke = telescope_builtins_module[func_name]
+  if func_to_invoke and type(func_to_invoke) == "function" then
+    func_to_invoke()
   end
 end
 
+--[[ How it works: If count contains a number greater than 3, then we invoke telescope e.g. 4gd, 51gd
+  Example usage:
+    go to definition:    fzf-lua  telescope
+      current window:    gd       4gd or gd4
+      horizontal split:  1gd      15gd or 51gd
+      vertical split:    2gd      42gd
+      tab split:         3gd      37gd
+]]
 local map_to_fzf_lua_or_telescope = function(
   key,
   func_name,
@@ -29,8 +35,20 @@ local map_to_fzf_lua_or_telescope = function(
 )
   map_key("n", key, function()
     local count = vim.v.count
+    local string_count = "" .. count
 
-    if count == 0 then
+    -- If count contains 1/2/3, we split window
+    -- otherwise we exec in place.
+    if string_count:match("1") then
+      vim.cmd("split")
+    elseif string_count:match("2") then
+      vim.cmd("vsplit")
+    elseif string_count:match("3") then
+      vim.cmd("tab split")
+    end
+
+    -- If count begins with 0, we invoke fzf-lua.
+    if string_count:match("^0") then
       vim.cmd("FzfLua " .. func_name)
       return
     end
