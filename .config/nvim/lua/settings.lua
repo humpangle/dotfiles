@@ -473,7 +473,19 @@ utils.map_key("n", "ff", ":e! %<CR>", { noremap = true })
 utils.map_key("n", ",md", ":!mkdir -p %:h<cr>:w %<CR>", { noremap = true })
 
 -- Edit .bashrc file:
-utils.map_key("n", ",.", ":tab split<CR>:e ~/.bashrc<CR>", { noremap = true })
+utils.map_key("n", ",.", function()
+  local count = vim.v.count
+
+  if count == 2 then
+    vim.cmd("vsplit")
+  elseif count == 3 then
+    vim.cmd("tab split")
+  else
+    vim.cmd("split")
+  end
+
+  vim.cmd("edit ~/.bashrc")
+end, { noremap = true, desc = "Open .bashrc" })
 
 -- Edit init.vim:
 utils.map_key("n", ",ec", ":tab split<CR>:e $MYVIMRC<CR>", { noremap = true })
