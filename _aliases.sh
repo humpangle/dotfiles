@@ -1,39 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034,2209,2135,2155,2139,2086,2033
 
-# Alacritty allows us to invoke only one instance from macos applications. This workaround is needed so we can have
-# multiple instances.
-alacritty_bin_="$(command -v Alacritty 2>/dev/null)"
-
-if [ -z "$alacritty_bin_" ]; then
-  export alacritty_bin_="$(command -v alacritty 2>/dev/null)"
-fi
-
-if [ -n "$alacritty_bin_" ]; then
-  __alacritty() {
-    if _is_darwin; then
-      env -i \
-        HOME="$HOME" \
-        bash -l -c \
-        "$alacritty_bin_ &>/dev/null" &
-      disown
-    else
-      if [ -n "$EBNIS_ALACRITY_SOCKET" ]; then
-        ALACRITTY_SOCKET="$EBNIS_ALACRITY_SOCKET" \
-          $alacritty_bin_ \
-          --socket="$EBNIS_ALACRITY_SOCKET" \
-          --config-file="$EBNIS_ALACRITY_CONFIG" \
-          msg create-window
-      else
-        $alacritty_bin_ msg create-window
-      fi
-    fi
-  }
-
-  alias ala='__alacritty'
-  alias ala-lenovo='export EBNIS_ALACRITY_CONFIG=$HOME/.config/alacritty/alacritty-lenovo.toml EBNIS_ALACRITY_SOCKET=/run/user/1001/Alacritty-lenvo.sock'
-fi
-
 declare -A alias_map=()
 
 # -----------------------------------------------------------------------------

@@ -4,6 +4,3 @@
 [submodule "test/test_helper/bats-assert"]
   path = test/test_helper/bats-assert
   url = https://github.com/bats-core/bats-assert.git
-[submodule ".config/alacritty/themes"]
-  path = .config/alacritty/themes
-  url = git@github.humpangle:humpangle/alacritty-theme.git
