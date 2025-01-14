@@ -845,10 +845,9 @@ vim.api.nvim_create_user_command("AnsiColorize", require("ansi-colorize"), {})
 
 utils.map_key("n", "gf", function()
   local filepath = vim.fn.expand("<cWORD>")
-  local parts = vim.split(filepath, ":", { plain = true })
-  local file = parts[1]
+  local file, line = filepath:match([=[^['"]?(.-)['"]?[>]?:?(%d*)[:',"]?$]=])
 
-  if not file then
+  if not file or file == "" then
     print("invalid file: " .. filepath)
     return
   end
@@ -864,11 +863,7 @@ utils.map_key("n", "gf", function()
   end
 
   vim.cmd("edit " .. file)
-
-  if #parts == 2 then
-    local line = tonumber(parts[2])
-    if file and line then
-      vim.fn.cursor(line, 1)
-    end
+  if file and line then
+    vim.fn.cursor(line, 1)
   end
 end, { desc = "Go to file and line" })
