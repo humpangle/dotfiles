@@ -376,6 +376,11 @@ end, {
   desc = "Git commit 1/all 2/file% 3/all-",
 })
 
+-- git blame
+keymap("n", "<leader>gb", function()
+  vim.cmd("Git blame")
+end, { desc = "G blame" })
+
 -- Auto-clean Fugitive Buffers
 vim.api.nvim_create_autocmd("BufReadPost", {
   pattern = "fugitive://*",
