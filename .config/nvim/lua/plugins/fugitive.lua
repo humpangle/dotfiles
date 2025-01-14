@@ -363,7 +363,13 @@ keymap("n", "<leader>gg", function()
     return
   end
 
-  if count == 23 then
+  local str_count = "" .. count
+  if str_count:match("23") then
+    if str_count:match("^%d23") or str_count:match("23%d$") then
+      vim.cmd("0GcLog!")
+      return
+    end
+
     vim.cmd("only")
     vim.cmd("0GcLog!")
     vim.cmd("vsplit")
