@@ -27,6 +27,7 @@
       "\t\"  LOG TOPIC: $1$2\",",
       "\t\"\\n\\n(\\n\",",
       "\t${1:code},",
+      "\t\"\\nTYPE:\",",
       "\ttype($1),$0",
       "\t\"\\n)\\n\\n\",",
       "\tf\"{__file__}:{(lambda: __import__('inspect').currentframe().f_lineno)()}\"",
