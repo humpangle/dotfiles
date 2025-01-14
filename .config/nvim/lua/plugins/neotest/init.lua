@@ -264,7 +264,7 @@ return {
               search_text =
                 "========= test session starts ========"
             elseif count == 2 then
-              search_text = ".py F"
+              search_text = "\\.py[^:]*F"
             elseif count == 3 then
               search_text =
                 "=========== FAILURES ======================"
