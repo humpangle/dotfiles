@@ -364,7 +364,11 @@ keymap("n", "<leader>gg", function()
   end
 
   if count == 23 then
+    vim.cmd("only")
     vim.cmd("0GcLog!")
+    vim.cmd("vsplit")
+    vim.cmd("diffthis")
+    vim.cmd("wincmd h")
     return
   end
 
