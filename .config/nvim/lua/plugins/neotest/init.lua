@@ -197,6 +197,14 @@ return {
           output_panel = {
             open = "tab split",
           },
+
+          -- icons = {
+          --   running = "🏃",
+          --   failed = "✖",
+          --   passed = "✔",
+          --   skipped = "⤵",
+          --   unknown = "",
+          -- },
         })
       end,
 
