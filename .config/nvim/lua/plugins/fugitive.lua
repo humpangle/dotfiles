@@ -375,6 +375,8 @@ keymap("n", "<leader>gg", function()
     vim.cmd("vsplit")
     vim.cmd("diffthis")
     vim.cmd("wincmd h")
+    vim.cmd("normal ]q") -- move to next item in quickfix window
+    vim.cmd("diffthis") -- show diff
     return
   end
 
