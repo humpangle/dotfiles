@@ -152,3 +152,15 @@ export __NETCAT_SHUTDOWN_AFTER_INPUT_EOF_FLAG__=-N
 # -----------------------------------------------------------------------------
 # /END/ RUNNER.sh
 # -----------------------------------------------------------------------------
+
+if [ -e .___scratch-env.sh ]; then
+  _setenvs .___scratch-env.sh
+fi
+
+cd() {
+  builtin cd "$@" || exit # perform the actual cd
+
+  if [ -e .___scratch-env.sh ]; then
+    _setenvs .___scratch-env.sh
+  fi
+}
