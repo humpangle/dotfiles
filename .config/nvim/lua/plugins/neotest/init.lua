@@ -48,6 +48,25 @@ local pytest_adapter = function()
   })
 end
 
+local jest_adapter = function()
+  local jest_cmd = "npm test --"
+  -- See https://github.com/nvim-neotest/neotest-jest/issues/84
+  -- for issue with trailing --
+
+  local config = {
+    jestCommand = jest_cmd,
+    -- jestConfigFile = "custom.jest.config.ts",
+    -- env = {
+    --   CI = true,
+    -- },
+    cwd = function()
+      return vim.fn.getcwd()
+    end,
+  }
+
+  return require("neotest-jest")(config)
+end
+
 return {
   {
     {
@@ -76,6 +95,8 @@ return {
             },
           },
         },
+        "nvim-neotest/neotest-jest",
+        -- /END/ adapters
       },
       init = function()
         -- default pytest args
@@ -146,6 +167,7 @@ return {
         neotest.setup({
           adapters = {
             pytest_adapter(),
+            jest_adapter(),
           },
           discovery = {
             -- Number of workers to parse files concurrently. A value of 0 automatically assigns number based on CPU.
