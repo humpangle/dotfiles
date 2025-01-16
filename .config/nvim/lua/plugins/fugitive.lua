@@ -358,7 +358,7 @@ keymap("n", "<leader>gg", function()
     return
   end
 
-  if count == 22 then
+  if count == 21 then
     vim.cmd("Git log -- %")
     return
   end
