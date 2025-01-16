@@ -10,6 +10,8 @@ _run_f() {
     local allowed_script_names_=(
       run.sh
       run
+      .___scratch/run.sh
+      .___scratch/run
     )
 
     local item_=""
@@ -28,6 +30,8 @@ _run_f() {
 
   local script_dir_
   script_dir_="$(dirname "$script_name_")"
+  # Remove the .___scratch from path as the PWD should be the parent
+  script_dir_="${script_dir_/%.___scratch/}"
 
   local _pwd="$PWD"
 
