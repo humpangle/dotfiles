@@ -269,7 +269,7 @@ return {
               search_text =
                 "=========== FAILURES ======================"
             elseif count == 4 then
-              search_text = "_ test_.\\+ _"
+              search_text = "_ .*test_.\\+ _"
             elseif count == 5 then
               search_text = "------- Captured "
             elseif count == 6 then
