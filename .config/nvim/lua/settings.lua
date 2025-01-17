@@ -850,6 +850,11 @@ utils.map_key("n", "gf", function()
     return
   end
 
+  local pattern = "^[ab]/"
+  if file:match(pattern) then
+    file = file:gsub(pattern, "")
+  end
+
   local count = vim.v.count
 
   if count == 1 then
