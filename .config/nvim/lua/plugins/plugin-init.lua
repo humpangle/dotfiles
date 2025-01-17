@@ -450,6 +450,11 @@ local plugins_table = {
     end,
   },
 
+  {
+    "CarloWood/vim-plugin-AnsiEsc",
+    enabled = not plugin_enabled.has_vscode(),
+  },
+
   require("plugins/elixir"),
   require("plugins/ai"),
   require("plugins/neotest"),
