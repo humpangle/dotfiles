@@ -389,9 +389,16 @@ end, {
 })
 
 -- git blame
-keymap("n", "<leader>gb", function()
-  vim.cmd("Git blame")
-end, { desc = "G blame" })
+keymap({ "n", "x" }, "<leader>gb", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.cmd("Git blame")
+    return
+  end
+
+  utils.write_to_command_mode("GBrowse")
+end, { desc = "G blame/GBrowse" })
 
 -- Auto-clean Fugitive Buffers
 vim.api.nvim_create_autocmd("BufReadPost", {
