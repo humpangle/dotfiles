@@ -841,8 +841,6 @@ end
 
 vim.api.nvim_create_user_command("SessionEbnis", echo_session, {})
 
-vim.api.nvim_create_user_command("AnsiColorize", require("ansi-colorize"), {})
-
 utils.map_key("n", "gf", function()
   local filepath = vim.fn.expand("<cWORD>")
   local file, line = filepath:match([=[^['"]?(.-)['"]?[>]?:?(%d*)[:',"]?$]=])
