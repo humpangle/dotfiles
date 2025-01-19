@@ -841,32 +841,4 @@ end
 
 vim.api.nvim_create_user_command("SessionEbnis", echo_session, {})
 
-utils.map_key("n", "gf", function()
-  local filepath = vim.fn.expand("<cWORD>")
-  local file, line = filepath:match([=[^['"]?(.-)['"]?[>]?:?(%d*)[:',"]?$]=])
-
-  if not file or file == "" then
-    print("invalid file: " .. filepath)
-    return
-  end
-
-  local pattern = "^[ab]/"
-  if file:match(pattern) then
-    file = file:gsub(pattern, "")
-  end
-
-  local count = vim.v.count
-
-  if count == 1 then
-    vim.cmd("split")
-  elseif count == 2 then
-    vim.cmd("vsplit")
-  elseif count == 3 then
-    vim.cmd("tab split")
-  end
-
-  vim.cmd("edit " .. file)
-  if file and line then
-    vim.fn.cursor(line, 1)
-  end
-end, { desc = "Go to file and line" })
+utils.map_key("n", "gf", utils.go_to_file, { desc = "Go to file and line" })
