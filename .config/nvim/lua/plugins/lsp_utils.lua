@@ -18,31 +18,30 @@ function M.get_python_path(workspace)
 
   -- Find and use virtualenv via poetry in workspace directory.
   local poetry_lock_matched =
-    vim.fn.glob(lspconfig_util_path.join(workspace, "poetry.lock"))
+    vim.fn.glob(vim.fs.joinpath(workspace, "poetry.lock"))
 
   if poetry_lock_matched ~= "" then
     local venv = vim.fn.trim(vim.fn.system("poetry env info -p"))
 
-    return lspconfig_util_path.join(venv, "bin", "python")
+    return vim.fs.joinpath(venv, "bin", "python")
   end
 
   -- Use activated virtualenv (if it exists).
   if vim.env.VIRTUAL_ENV then
     local python_from_virtualenv =
-      lspconfig_util_path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+      vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
 
     return python_from_virtualenv
   end
 
   -- Find and use virtualenv in workspace directory (if one exists).
   for _, pattern in ipairs({ "*", ".*" }) do
-    local venv_matched = vim.fn.glob(
-      lspconfig_util_path.join(workspace, pattern, "pyvenv.cfg")
-    )
+    local venv_matched =
+      vim.fn.glob(vim.fs.joinpath(workspace, pattern, "pyvenv.cfg"))
 
     if venv_matched ~= "" then
-      return lspconfig_util_path.join(
-        lspconfig_util_path.dirname(venv_matched),
+      return vim.fs.joinpath(
+        vim.fs.dirname(venv_matched),
         "bin",
         "python"
       )
