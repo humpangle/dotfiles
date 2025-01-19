@@ -1,6 +1,3 @@
-local lspconfig_util = require("lspconfig/util")
-local lspconfig_util_path = lspconfig_util.path
-
 local M = {}
 
 -- Inspired by:
