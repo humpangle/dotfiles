@@ -28,6 +28,7 @@ _bash_src="${BASH_SOURCE[0]}"
 #   linux      -> /home/<username>
 #   multipass  -> /home/<host_username>
 export DOTFILE_PARENT_PATH="${_bash_src/\/dotfiles\/_shell-script/''}"
+export DOTFILE_ROOT="$DOTFILE_PARENT_PATH/dotfiles"
 
 # Add to $PATH only if `it` does not exist in the $PATH
 # fish shell has the `fish_add_path` function which does something similar
