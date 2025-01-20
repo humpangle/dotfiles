@@ -181,6 +181,10 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
     return false
   end
 
+  if vim.api.nvim_buf_get_option(buf_num, "filetype") == "qf" then
+    return false
+  end
+
   if b_name == "" or b_name == "," then
     return true
   end
