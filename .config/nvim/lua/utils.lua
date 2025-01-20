@@ -554,18 +554,40 @@ utils.create_slime_dir = function()
   return slime_dir
 end
 
-utils.go_to_file = function()
-  local filepath = vim.fn.expand("<cWORD>")
-  local file, line = filepath:match([=[^['"]?(.-)['"]?[>]?:?(%d*)[:',"]?$]=])
+local go_to_file_strip_git_diff = function(file_path)
+  local git_diff_prefix_pattern = "^[ab]/"
 
-  if not file or file == "" then
-    print("invalid file: " .. filepath)
+  if file_path:match(git_diff_prefix_pattern) then
+    return file_path:gsub(git_diff_prefix_pattern, "")
+  end
+
+  return file_path
+end
+
+local go_to_file_strip_prefix = function(file_path)
+  local prefix = utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_STRIP_PREFIX")
+
+  if prefix == nil then
+    return file_path
+  end
+
+  return file_path:gsub(prefix, "")
+end
+
+utils.go_to_file = function()
+  local cword_file_path = vim.fn.expand("<cWORD>")
+
+  local file_path, line =
+    cword_file_path:match([=[^['"]?(.-)['"]?[>]?:?(%d*)[:',"]?$]=])
+
+  if not file_path or file_path == "" then
+    print("invalid file: " .. cword_file_path)
     return
   end
 
-  local pattern = "^[ab]/"
-  if file:match(pattern) then
-    file = file:gsub(pattern, "")
+  if vim.fn.glob(file_path) == "" then
+    file_path = go_to_file_strip_git_diff(file_path)
+    file_path = go_to_file_strip_prefix(file_path)
   end
 
   local count = vim.v.count
@@ -578,8 +600,8 @@ utils.go_to_file = function()
     vim.cmd("tab split")
   end
 
-  vim.cmd("edit " .. file)
-  if file and line then
+  vim.cmd("edit " .. file_path)
+  if file_path and line then
     vim.fn.cursor(line, 1)
   end
 end
