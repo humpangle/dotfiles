@@ -788,7 +788,7 @@ end
 utils.map_key("n", "<localleader>re", ":VMessage reg<CR>", { noremap = true })
 
 local function insert_current_datetime()
-  local format_string = "%Y-%m-%d %H:%M:%S"
+  local format_string = "%Y-%m-%dT%H-%M-%S"
 
   if vim.v.count == 1 then
     format_string = "%s"
