@@ -130,9 +130,9 @@ function _G.FilenameTab(tab_num)
     return "[No Name]"
   elseif
     string.match(filename, "^fugitive:/")
-    and string.match(filename, "%.git//$")
+    and string.match(filename, "%.git.*//$")
   then
-    return ".git"
+    return "fgit" -- fugitive git
   elseif string.match(filename, "NetrwTreeListing$") then
     return "N"
   end
