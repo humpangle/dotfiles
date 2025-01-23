@@ -1,5 +1,9 @@
+local is_term = function(filename)
+  return filename:match("^term://")
+end
+
 local function abbreviate_path(file_path)
-  if string.match(file_path, "^term://") then
+  if is_term(file_path) then
     -- It's a terminal buffer, we return the basename
     return vim.fn.fnamemodify(file_path, ":t")
   end
@@ -55,7 +59,7 @@ local compute_file_path = function(side)
     file_path = abbreviate_path(file_path)
   end
 
-  if file_path_original:match("^term://") then
+  if is_term(file_path_original) then
     return file_path .. "," .. vim.o.channel
   end
 
@@ -122,9 +126,10 @@ local function tab_modified(tab_num)
 end
 
 function _G.FilenameTab(tab_num)
-  local buflist = vim.fn.tabpagebuflist(tab_num)
-  local winnr = vim.fn.tabpagewinnr(tab_num)
-  local filename = vim.fn.expand("#" .. buflist[winnr] .. ":f")
+  local buf_list_for_tab = vim.fn.tabpagebuflist(tab_num)
+  local current_win_num = vim.fn.tabpagewinnr(tab_num)
+  local buf_num = buf_list_for_tab[current_win_num]
+  local filename = vim.fn.expand("#" .. buf_num .. ":f")
 
   if filename == "" then
     return "[No Name]"
@@ -133,9 +138,12 @@ function _G.FilenameTab(tab_num)
     and string.match(filename, "%.git.*//$")
   then
     return "fgit" -- fugitive git
+  elseif is_term(filename) then
+    return vim.fn.expand("#" .. buf_num .. ":t") .. "," .. vim.api.nvim_buf_get_option(buf_num, "channel")
   end
 
-  return vim.fn.expand("#" .. buflist[winnr] .. ":t") .. tab_modified(tab_num)
+  local file_name_tail = vim.fn.expand("#" .. buf_num .. ":t")
+  return file_name_tail .. tab_modified(tab_num)
 end
 
 vim.cmd([[
