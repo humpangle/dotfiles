@@ -133,8 +133,6 @@ function _G.FilenameTab(tab_num)
     and string.match(filename, "%.git.*//$")
   then
     return "fgit" -- fugitive git
-  elseif string.match(filename, "NetrwTreeListing$") then
-    return "N"
   end
 
   return vim.fn.expand("#" .. buflist[winnr] .. ":t") .. tab_modified(tab_num)
