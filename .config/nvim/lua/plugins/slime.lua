@@ -65,7 +65,23 @@ keymap("n", ",sl", function()
     slime_config.target_pane = default_target_pane .. count
 
     vim.b.slime_config = slime_config
-    print(slime_config.socket_name .. " " .. slime_config.target_pane)
+
+    -- :lua vim.g.slime_default_config = { socket_name='default', target_pane=':.2' }
+    -- cursor will be at 2 (pane number)
+    local args = "lua vim.g.slime_default_config = { "
+      .. "socket_name="
+      .. "'"
+      .. slime_config.socket_name
+      .. "'"
+      .. ", "
+      .. "target_pane="
+      .. "'"
+      .. slime_config.target_pane
+      .. "'"
+      .. " }"
+      .. "<left><left><left>"
+
+    utils.write_to_command_mode(args)
   end
 end, { noremap = true, desc = "Slime config 0/nvim 1/tmux" })
 
