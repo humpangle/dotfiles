@@ -24,9 +24,10 @@ local keymap = utils.map_key
 -- Nothing before `.` means use current window.
 -- All that is left is a number after `.` for the required pane number.
 
+local default_target_pane = ":."
 local slime_config = {
   socket_name = "default",
-  target_pane = ":.", -- This means: current session and current window. All that is left to fill is pane number.
+  target_pane = default_target_pane, -- This means: current session and current window. All that is left to fill is pane number.
 }
 
 vim.g.slime_default_config = slime_config
@@ -42,31 +43,31 @@ vim.g.slime_neovim_menu_order = {
   { name = "" },
 }
 
-local helper_func = function(target)
+keymap("n", ",sl", function()
+  local count = vim.v.count
+
   -- https://github.com/jpalardy/vim-slime/blob/main/assets/doc/targets/neovim.md
-  if target == "neovim" then
+
+  if count == 0 then
+    vim.b.slime_target = "neovim"
+
     vim.g.slime_input_pid = false
     vim.g.slime_suggest_default = false
     -- prompt for menu to show which terminal to select
     vim.g.slime_menu_config = true
     vim.g.slime_neovim_ignore_unlisted = true
+
+    -- Both of the below work 😀
+    -- vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>SlimeConfig", true, true, true), "")
+    vim.cmd("SlimeConfig")
+  else
+    vim.b.slime_target = "tmux"
+    slime_config.target_pane = default_target_pane .. count
+
+    vim.b.slime_config = slime_config
+    print(slime_config.socket_name .. " " .. slime_config.target_pane)
   end
-
-  vim.b.slime_target = target
-  vim.b.slime_config = slime_config
-
-  -- Both of the below work 😀
-  -- vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>SlimeConfig", true, true, true), "")
-  vim.cmd("SlimeConfig")
-end
-
-keymap("n", ",sln", function()
-  helper_func("neovim")
-end, { noremap = true, desc = "Slime config neovim" })
-
-keymap("n", ",slt", function()
-  helper_func("tmux")
-end, { noremap = true, desc = "Slime config tmux" })
+end, { noremap = true, desc = "Slime config 0/nvim 1/tmux" })
 
 local is_only = function(text)
   return text == "o" or text == "on" or text == "only"
