@@ -14,7 +14,7 @@ local diagnostic_ui_keymap_handler = function()
 
   if count == 1 then
     vim.diagnostic.open_float({ focusable = true })
-    vim.diagnostic.open_float({ focusable = true })
+    vim.diagnostic.open_float({ focusable = true }) -- second invocation is to focus the popup
   else
     vim.diagnostic.setloclist()
   end
