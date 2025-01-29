@@ -9,6 +9,15 @@ end
 local utils = require("utils")
 local yamlls_config = require("plugins.yaml_lsp")
 
+local diagnostic_ui_keymap_handler = function()
+  local count = vim.v.count
+
+  if count == 1 then
+    vim.diagnostic.open_float({ focusable = true })
+    vim.diagnostic.open_float({ focusable = true })
+  end
+end
+
 return {
   {
     --[[
@@ -176,6 +185,12 @@ return {
             "<leader>ca",
             vim.lsp.buf.code_action,
             "[C]ode [A]ction"
+          )
+
+          map(
+            "<leader>lse",
+            diagnostic_ui_keymap_handler,
+            "Expand an Error into a float"
           )
 
           local client =
