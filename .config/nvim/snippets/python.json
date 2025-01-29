@@ -108,7 +108,11 @@
       "pytest_echo_db",
       "echo_db_pytest",
       "db_echo_pytest",
-      "db_pytest_echo"
+      "db_pytest_echo",
+      "db_log_pytest_echo",
+      "log_db_pytest_echo",
+      "debug_db_pytest",
+      "pytest_debug_db"
     ],
     "body": [
       "# TODO:kanmii: debug logging - MUST BE REMOVED !!!!!",
