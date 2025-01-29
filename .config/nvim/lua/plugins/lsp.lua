@@ -15,6 +15,8 @@ local diagnostic_ui_keymap_handler = function()
   if count == 1 then
     vim.diagnostic.open_float({ focusable = true })
     vim.diagnostic.open_float({ focusable = true })
+  else
+    vim.diagnostic.setloclist()
   end
 end
 
@@ -142,12 +144,6 @@ return {
         vim.diagnostic.open_float,
         { desc = "Show diagnostic [E]rror messages" }
       )
-      utils.map_key(
-        "n",
-        "<leader>q",
-        vim.diagnostic.setloclist,
-        { desc = "Open diagnostic [Q]uickfix list" }
-      )
 
       --  This function gets run when an LSP attaches to a particular buffer. That is to say, every time a new file is
       --  opened that is associated with an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -190,7 +186,7 @@ return {
           map(
             "<leader>lse",
             diagnostic_ui_keymap_handler,
-            "Expand an Error into a float"
+            "Open diagnostics 0/qf 1/popup"
           )
 
           local client =
