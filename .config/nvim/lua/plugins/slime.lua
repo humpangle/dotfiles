@@ -30,8 +30,6 @@ local slime_config = {
   target_pane = default_target_pane, -- This means: current session and current window. All that is left to fill is pane number.
 }
 
-vim.g.slime_default_config = slime_config
-
 -- Some REPLs can interfere with your text pasting. The
 -- [bracketed-paste](https://cirw.in/blog/bracketed-paste) mode exists to allow
 -- raw pasting.
@@ -66,9 +64,9 @@ keymap("n", ",sl", function()
 
     vim.b.slime_config = slime_config
 
-    -- :lua vim.g.slime_default_config = { socket_name='default', target_pane=':.2' }
+    -- :lua vim.b.slime_config = { socket_name='default', target_pane=':.2' }
     -- cursor will be at 2 (pane number)
-    local args = "lua vim.g.slime_default_config = { "
+    local args = "lua vim.b.slime_config = { "
       .. "socket_name="
       .. "'"
       .. slime_config.socket_name
