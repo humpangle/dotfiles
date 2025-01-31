@@ -60,7 +60,20 @@ keymap("n", ",sl", function()
     vim.cmd("SlimeConfig")
   else
     vim.b.slime_target = "tmux"
-    slime_config.target_pane = default_target_pane .. count
+
+    local target_pane = default_target_pane .. count
+
+    local count_as_string = "" .. count
+    local two_digits_count_pattern = "^(%d+)(%d)$"
+
+    local window_index, pane_index =
+      count_as_string:match(two_digits_count_pattern)
+
+    if window_index and pane_index then
+      target_pane = ":" .. window_index .. "." .. pane_index
+    end
+
+    slime_config.target_pane = target_pane
 
     vim.b.slime_config = slime_config
 
@@ -81,7 +94,10 @@ keymap("n", ",sl", function()
 
     utils.write_to_command_mode(args)
   end
-end, { noremap = true, desc = "Slime config 0/nvim 1/tmux" })
+end, {
+  noremap = true,
+  desc = "Slime config 0/nvim 1/tmux 114/tmux 11=win 4=pane",
+})
 
 local is_only = function(text)
   return text == "o" or text == "on" or text == "only"
