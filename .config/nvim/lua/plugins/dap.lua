@@ -157,20 +157,18 @@ return {
       -- /END STARTING / STOPPING / SHOWING DAP UI
 
       map_key("n", "<leader>dab", function()
-        dap.toggle_breakpoint()
+        local count = vim.v.count
+
+        if count == 0 then
+          dap.toggle_breakpoint()
+        elseif count == 1 then
+          local prompt = vim.fn.input("Breakpoint condition: ")
+          dap.set_breakpoint(prompt)
+        elseif count == 3 then
+          dap.clear_breakpoints()
+        end
       end, {
         desc = "DAP: Toggle Breakpoint",
-      })
-
-      map_key("n", "<leader>daB", function()
-        local prompt = vim.fn.input("Breakpoint condition: ")
-        dap.set_breakpoint(prompt)
-      end, {
-        desc = "DAP: Set Conditional Breakpoint",
-      })
-
-      map_key("n", "<leader>dac", dap.clear_breakpoints, {
-        desc = "DAP: Clear Breakpoint",
       })
 
       map_key("n", "<leader>da?", function()
