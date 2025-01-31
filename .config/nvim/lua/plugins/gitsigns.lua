@@ -119,6 +119,16 @@ return {
           bufnr
         )
 
+        utils.map_key("n", "<leader>hp", function()
+          local count = vim.v.count
+
+          if count == 0 then
+            gitsigns.preview_hunk_inline()
+          else
+            gitsigns.preview_hunk()
+          end
+        end, { desc = "Hunk preview 0/inline 1/" }, bufnr)
+
         utils.map_key("n", "<leader>hD", function()
           vim.cmd("edit! %")
           gitsigns.diffthis("~")
