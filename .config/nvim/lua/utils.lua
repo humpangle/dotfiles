@@ -368,7 +368,7 @@ function utils.write_to_command_mode(string)
   )
 end
 
-utils.get_cmd_string = function()
+utils.get_copy_cmd_string = function()
   if utils.get_os_env_or_nil("__COPY_PROGRAM__") == nil then
     return nil
   end
@@ -406,14 +406,14 @@ utils.get_cmd_string = function()
 end
 
 utils.clip_cmd_exec = function(reg_value)
-  local cmd = utils.get_cmd_string()
+  local copy_cmd = utils.get_copy_cmd_string()
 
-  if cmd == nil then
+  if copy_cmd == nil then
     return
   end
 
-  vim.fn.system(cmd, reg_value)
-  return cmd
+  vim.fn.system(copy_cmd, reg_value)
+  return copy_cmd
 end
 
 utils.ord_to_char = function(ord)
