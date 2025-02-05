@@ -309,14 +309,19 @@ local git_rebase_root_mappings_fn = function()
   elseif count == 2 then
     utils.write_to_command_mode("G rebase -i --root")
   elseif count == 3 then
+    utils.write_to_command_mode("G reset --soft HEAD~")
+  elseif count == 33 then
     utils.write_to_command_mode("G reset --soft ")
   elseif count == 4 then
+    utils.write_to_command_mode("G reset --hard HEAD~")
+  elseif count == 44 then
     utils.write_to_command_mode("G reset --hard ")
   else
     utils.write_to_command_mode("G rebase -i ")
   end
 end
-local git_rebase_root_mappings_desc = [[G rebase 1/root 2/soft 3/hard]]
+local git_rebase_root_mappings_desc =
+  [[G rebase 0/i 1/iH 2/iroot 3/softH 33/soft 4/hardH 44/hard]]
 keymap("n", "<Leader>r<Space>", git_rebase_root_mappings_fn, {
   noremap = true,
   desc = git_rebase_root_mappings_desc,
