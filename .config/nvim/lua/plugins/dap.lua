@@ -207,16 +207,18 @@ return {
         elseif count == 1 then
           local prompt = vim.fn.input("Breakpoint condition: ")
           dap.set_breakpoint(prompt)
-        elseif count == 3 then
+        elseif count == 2 then
           dap.clear_breakpoints()
           vim.notify("All Breakpoints Cleared!")
-        elseif count == 4 then
+        elseif count == 3 then
           gotoBreakpoint("next")
-        elseif count == 5 then
+        elseif count == 4 then
           gotoBreakpoint("prev")
+        elseif count == 5 then
+          list_breakpoints_in_qickfix()
         end
       end, {
-        desc = "DAP: Toggle Breakpoint",
+        desc = "DAP: breakpoints 0/toggle 1/cond 2/clear 3/next 4/prev 5/list",
       })
 
       map_key("n", "<leader>da?", function()
@@ -258,12 +260,6 @@ return {
         dap.step_back()
       end, {
         desc = "DAP: step_back",
-      })
-
-      map_key("n", "<leader>dal", function()
-        list_breakpoints_in_qickfix()
-      end, {
-        desc = "DAP: list breakpoints",
       })
 
       map_key({ "n", "x" }, "<leader>dap", function()
