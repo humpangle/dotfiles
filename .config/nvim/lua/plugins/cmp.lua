@@ -160,7 +160,9 @@ return {
       end)(),
       config = function()
         -- load snippets from path/of/your/nvim/config/my-cool-snippets
-        require("luasnip.loaders.from_vscode").lazy_load({
+        -- lazy_load seems to be problematic (sometimes shows and then does not show other times)
+        -- but load affects performance (so...)
+        require("luasnip.loaders.from_vscode").load({
           paths = { "./snippets" }, -- relative to the directory of $MYVIMRC
         })
       end,
