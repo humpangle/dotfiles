@@ -504,6 +504,15 @@ end, { noremap = true })
 
 -- Copying File Paths and Names
 
+local maybe_augment_line_number = function(file_path)
+  if vim.v.count == 0 then
+    return file_path
+  end
+
+  local line_number_str = tostring(vim.fn.line("."))
+  return file_path .. "#L" .. line_number_str
+end
+
 -- value_getter_directive may be:
 --   a filename modifier
 --   the literal string `cwd`
@@ -520,18 +529,20 @@ local process_file_path_yanking = function(
 
     register = register or "+"
 
-    local fp
+    local file_path
     if value_getter_directive == "cwd" then
-      fp = vim.fn.getcwd()
+      file_path = vim.fn.getcwd()
     else
-      fp = vim.fn.expand(value_getter_directive)
+      file_path = vim.fn.expand(value_getter_directive)
     end
 
-    vim.fn.setreg('"', fp)
-    vim.fn.setreg(register, fp)
+    file_path = maybe_augment_line_number(file_path)
+
+    vim.fn.setreg('"', file_path)
+    vim.fn.setreg(register, file_path)
 
     if register == "+" then
-      utils.clip_cmd_exec(fp)
+      utils.clip_cmd_exec(file_path)
     end
 
     vim.cmd.echo(
@@ -540,7 +551,7 @@ local process_file_path_yanking = function(
         .. " -> "
         .. value_getter_directive
         .. " = "
-        .. fp
+        .. file_path
         .. "'"
     )
   end
