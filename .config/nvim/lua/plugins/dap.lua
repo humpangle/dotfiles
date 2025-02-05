@@ -45,10 +45,10 @@ end
 local function gotoBreakpoint(dir)
   -- https://github.com/mfussenegger/nvim-dap/issues/792#issuecomment-1980921023
   local breakpoints = require("dap.breakpoints").get()
-  if #breakpoints == 0 then
-    vim.notify("No breakpoints set", vim.log.levels.WARN)
-    return
-  end
+  -- if #breakpoints == 0 then
+  --   vim.notify("No breakpoints set", vim.log.levels.WARN)
+  --   return
+  -- end
   local points = {}
   for bufnr, buffer in pairs(breakpoints) do
     for _, point in ipairs(buffer) do
