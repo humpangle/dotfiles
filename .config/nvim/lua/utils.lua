@@ -569,6 +569,11 @@ local go_to_file_strip_git_diff = function(file_path)
 end
 
 local go_to_file_strip_prefix = function(file_path)
+  local p = "[:#]L$"
+  if file_path:match(p) then
+    return file_path:gsub(p, "")
+  end
+
   local prefix = utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_STRIP_PREFIX")
 
   if prefix == nil then
@@ -578,11 +583,28 @@ local go_to_file_strip_prefix = function(file_path)
   return file_path:gsub(prefix, "")
 end
 
+local match_file_path_and_number = function(cword_file_path)
+  local patterns = {
+    [=[^['"]?(.-)['"]?[>]?:?(%d*)[:',"]?$]=],
+  }
+
+  local file_path = nil
+  local line = nil
+
+  for _, pattern in pairs(patterns) do
+    file_path, line = cword_file_path:match(pattern)
+
+    if file_path and file_path ~= "" then
+      return file_path, line
+    end
+  end
+
+  return file_path, line
+end
+
 utils.go_to_file = function()
   local cword_file_path = vim.fn.expand("<cWORD>")
-
-  local file_path, line =
-    cword_file_path:match([=[^['"]?(.-)['"]?[>]?:?(%d*)[:',"]?$]=])
+  local file_path, line = match_file_path_and_number(cword_file_path)
 
   if not file_path or file_path == "" then
     print("invalid file: " .. cword_file_path)
