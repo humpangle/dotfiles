@@ -558,22 +558,22 @@ utils.create_slime_dir = function()
   return slime_dir
 end
 
-local go_to_file_strip_git_diff = function(file_path)
-  local git_diff_prefix_pattern = "^[ab]/"
+local go_to_file_strip_patterns = function(file_path)
+  local patterns = {
+    "^[ab]/", -- git prefix
+    "[:#]L$", -- file_path#L1234
+  }
 
-  if file_path:match(git_diff_prefix_pattern) then
-    return file_path:gsub(git_diff_prefix_pattern, "")
+  for _, pattern in pairs(patterns) do
+    if file_path:match(pattern) then
+      file_path = file_path:gsub(pattern, "")
+    end
   end
 
   return file_path
 end
 
 local go_to_file_strip_prefix = function(file_path)
-  local p = "[:#]L$"
-  if file_path:match(p) then
-    return file_path:gsub(p, "")
-  end
-
   local prefix = utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_STRIP_PREFIX")
 
   if prefix == nil then
@@ -612,7 +612,7 @@ utils.go_to_file = function()
   end
 
   if vim.fn.glob(file_path) == "" then
-    file_path = go_to_file_strip_git_diff(file_path)
+    file_path = go_to_file_strip_patterns(file_path)
     file_path = go_to_file_strip_prefix(file_path)
   end
 
