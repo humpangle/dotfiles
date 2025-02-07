@@ -611,6 +611,13 @@ utils.go_to_file = function()
     return
   end
 
+  if not line then
+    -- We may have a line of text such as:
+    -- file_path whatever text line 168
+    local text_on_line = vim.fn.getline(".")
+    line = text_on_line:match("line%s*(%d+)")
+  end
+
   if vim.fn.glob(file_path) == "" then
     file_path = go_to_file_strip_patterns(file_path)
     file_path = go_to_file_strip_prefix(file_path)
@@ -627,7 +634,7 @@ utils.go_to_file = function()
   end
 
   vim.cmd("edit " .. file_path)
-  if file_path and line then
+  if line then
     vim.fn.cursor(line, 1)
   end
 end
