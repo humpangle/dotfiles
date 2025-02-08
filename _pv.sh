@@ -26,6 +26,11 @@ Options:
       Create a Virtualenv environment.
   -d
       Deactivate
+  -l <num_level>
+      How many levels up parent directory must we search for the virtualenv directory. This assumes the virtualenv
+      directory already exists - it will not be created if it does not exist. NOTE: for now we just change directory to
+      the nearest parent's virtualenv. User can than invoke the virtualenv activation and `cd -` back to the original
+      environment.
 
 Examples:
   # Get help
@@ -39,6 +44,9 @@ Examples:
   _pv -s directory
   _pv -s
 
+  # Activate virtualenv, search 4 levels up parent directories
+  _pv -l 4
+
   # activate
   _pv directory
 
@@ -51,12 +59,12 @@ EOF
     return
   fi
 
-  local create_=
-
   local arg_=
+  local create_=
+  local level_=""
 
   if ! arg_="$(getopt \
-    -o h,s,d \
+    -o h,s,d,l: \
     -n "$0" \
     -- "$@")"; then
     _echo "$help_"
@@ -80,6 +88,11 @@ EOF
     -s)
       create_=1
       shift
+      ;;
+
+    -l)
+      level_="$2"
+      shift 2
       ;;
 
     --)
@@ -106,10 +119,23 @@ EOF
 
   # Virtualenv has not been initialized.
   # initialize and activate.
-  if [ ! -d "$dir_" ]; then
+  if [ ! -d "$dir_" ] && [ -z "$level_" ]; then
     _ebnis-create-venv "$dir_"
     _ebnis-wait-for-venv-creation "$dir_"
     _ebnis-activate-venv "$dir_"
+    return
+  fi
+
+  local cd_="$PWD"
+
+  if [ -n "$level_" ]; then
+    _www \
+      cd_ \
+      "$dir_" \
+      "$level_"
+
+    cd "$cd_" || exit 1
+    cd - &>/dev/null
     return
   fi
 
@@ -160,4 +186,22 @@ _ebnis-wait-for-venv-creation() {
   while [ ! -d "$dir_" ]; do
     sleep
   done
+}
+
+_find_nearest_virtualenv_dir() {
+  local -n return_var_=$1
+  local dir_nearest_="$2"
+  local level_nearest_="$3"
+  return_var_="$dir_nearest_"
+
+  for _l in $(seq "$level_nearest_"); do
+    if [ -e "$return_var_" ]; then
+      break
+    fi
+
+    return_var_="../$return_var_"
+  done
+
+  return_var_="$(dirname "$return_var_")"
+  return_var_="$(realpath "$return_var_")"
 }
