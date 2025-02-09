@@ -589,33 +589,50 @@ local match_file_path_and_number = function(cword_file_path)
   }
 
   local file_path = nil
-  local line = nil
+  local line_number = nil
 
   for _, pattern in pairs(patterns) do
-    file_path, line = cword_file_path:match(pattern)
+    file_path, line_number = cword_file_path:match(pattern)
 
     if file_path and file_path ~= "" then
-      return file_path, line
+      return file_path, line_number
     end
   end
 
-  return file_path, line
+  return file_path, line_number
+end
+
+local extract_line_number = function()
+  local line_text = vim.fn.getline(".")
+  local line_number = nil
+
+  local patterns = {
+    "line%s*(%d+)", -- file_path whatever text line 168
+    "%d+%%%s+(%d+)", -- file_path 80% 12
+  }
+
+  for _, pattern in pairs(patterns) do
+    line_number = line_text:match(pattern)
+
+    if line_number ~= nil then
+      return line_number
+    end
+  end
+
+  return line_number
 end
 
 utils.go_to_file = function()
   local cword_file_path = vim.fn.expand("<cWORD>")
-  local file_path, line = match_file_path_and_number(cword_file_path)
+  local file_path, line_number = match_file_path_and_number(cword_file_path)
 
   if not file_path or file_path == "" then
     print("invalid file: " .. cword_file_path)
     return
   end
 
-  if not line then
-    -- We may have a line of text such as:
-    -- file_path whatever text line 168
-    local text_on_line = vim.fn.getline(".")
-    line = text_on_line:match("line%s*(%d+)")
+  if line_number == nil or line_number == "" then
+    line_number = extract_line_number()
   end
 
   if vim.fn.glob(file_path) == "" then
@@ -634,8 +651,8 @@ utils.go_to_file = function()
   end
 
   vim.cmd("edit " .. file_path)
-  if line then
-    vim.fn.cursor(line, 1)
+  if line_number then
+    vim.fn.cursor(line_number, 1)
   end
 end
 
