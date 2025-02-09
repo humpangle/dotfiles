@@ -33,6 +33,7 @@
       "\tf\"{__file__}:{(lambda: __import__('inspect').currentframe().f_lineno)()}\"",
       "\t\"\\n))\\n\",",
       ")",
+      "# assert 1 == 2",
       "# NOTE: --END-- DEBUG LOG }",
       ""
     ],
