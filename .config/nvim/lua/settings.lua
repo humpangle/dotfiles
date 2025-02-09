@@ -557,20 +557,17 @@ local process_file_path_yanking = function(
   end
 end
 
--- Yank relative file path
+-- relative file path
 utils.map_key("n", ",yr", process_file_path_yanking("%:."))
--- Yank file name (not path)
+utils.map_key("n", ",cr", process_file_path_yanking("%:.", "letter"))
+-- file name (not path)
 utils.map_key("n", ",yn", process_file_path_yanking("%:t"))
--- Yank file parent directory
-utils.map_key("n", ",yd", process_file_path_yanking("%:p:h"))
--- Yank absolute file path
-utils.map_key("n", ",yf", process_file_path_yanking("%:p"))
--- Copy relative path
-utils.map_key("n", ",cr", process_file_path_yanking("%", "letter"))
--- Copy absolute path
-utils.map_key("n", ",cf", process_file_path_yanking("%:p", "letter"))
--- Copy file name
 utils.map_key("n", ",cn", process_file_path_yanking("%:t", "letter"))
+-- file parent directory
+utils.map_key("n", ",yd", process_file_path_yanking("%:p:h"))
+-- absolute file path
+utils.map_key("n", ",yf", process_file_path_yanking("%:p"))
+utils.map_key("n", ",cf", process_file_path_yanking("%:p", "letter"))
 
 -- Yank current working directory
 utils.map_key("n", ",yw", process_file_path_yanking("cwd"))
