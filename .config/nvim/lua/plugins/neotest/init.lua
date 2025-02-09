@@ -362,6 +362,7 @@ return {
               to_call = "n"
             end
 
+            vim.cmd({ cmd = "edit", bang = true })
             vim.fn.setreg("/", search_text)
             vim.cmd("set hlsearch")
             pcall(vim.cmd.normal, { to_call, bang = true })
