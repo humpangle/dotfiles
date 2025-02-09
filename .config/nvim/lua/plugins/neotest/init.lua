@@ -349,15 +349,22 @@ return {
             elseif count == 5 then
               search_text = "------- Captured "
             elseif count == 6 then
-              search_text = "= short test summary info ="
+              search_text = "ERROR\\s\\+"
             elseif count == 7 then
+              search_text = "= short test summary info ="
+            elseif count == 8 then
               search_text =
                 "^\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}.\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}"
             end
 
+            local to_call = "N"
+            if count == 6 then
+              to_call = "n"
+            end
+
             vim.fn.setreg("/", search_text)
             vim.cmd("set hlsearch")
-            pcall(vim.cmd.normal, { "N", bang = true })
+            pcall(vim.cmd.normal, { to_call, bang = true })
           end,
           desc = "Toggle Output Panel",
         },
