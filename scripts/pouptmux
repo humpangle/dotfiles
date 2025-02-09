@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+width_=${2:-90%}
+height_=${2:-90%}
+
+if [ "$(tmux display-message -p -F "#{session_name}")" = "dot" ]; then
+  tmux detach-client
+else
+  tmux popup \
+    -d "$HOME/dotfiles" \
+    -w "$width_" \
+    -h "$height_" \
+    -e TMUX_POPUP_SESSION=dot \
+    -E \
+    "tmux attach -t dot || tmux new -s dot"
+fi
