@@ -26,23 +26,30 @@ return {
       vim.g.floaterm_shell = os.getenv("SHELL")
     end
 
-    utils.map_key(
-      "n",
-      "<Leader>tt",
-      ":FloatermToggle<CR>",
-      { noremap = true }
-    )
+    utils.map_key("n", "<leader>tt", function()
+      local count = vim.v.count
 
-    utils.map_key(
-      "n",
-      "<Leader>ff",
-      ":FloatermNew --height=0.99 --width=0.99 --title=",
-      { noremap = true }
-    )
+      if count == 0 then
+        vim.cmd("FloatermToggle")
+      elseif count == 1 then
+        vim.cmd("FloatermNew --hight=0.99 --width=0.99 --title=")
+      elseif count == 2 then
+        vim.cmd({ cmd = "FloatermKill", bang = true })
+      elseif count == 3 then
+        vim.cmd("FloatermNext")
+      elseif count == 4 then
+        vim.cmd("FloatermPrev")
+      elseif count == 5 then
+        vim.cmd("Floaterms")
+      elseif count == 9 then
+        vim.cmd.normal({ "yip" })
 
-    utils.map_key("n", ",FL", ":Floaterms<CR>", { noremap = true })
+        local reg_value = vim.fn.getreg('"')
+        reg_value = reg_value:gsub("[\n\\]", " ")
 
-    utils.map_key("n", "<Leader>FK", ":FloatermKill!", { noremap = true })
+        vim.cmd("FloatermNew! --name=bla " .. reg_value)
+      end
+    end, { noremap = true, desc = "floaterm 0/tt 1/new 2/ls" })
 
     utils.map_key("n", "<Leader>vi", function()
       local count = vim.v.count
