@@ -129,7 +129,7 @@ EOF
   local cd_="$PWD"
 
   if [ -n "$level_" ]; then
-    _www \
+    _find_nearest_virtualenv_dir \
       cd_ \
       "$dir_" \
       "$level_"
