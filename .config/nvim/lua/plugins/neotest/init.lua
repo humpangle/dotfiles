@@ -283,7 +283,7 @@ return {
               return
             end
 
-            if count == 1 then
+            if count == 2 then
               do_echo("ALL TESTS")
               require("neotest").run.run(vim.uv.cwd())
               return
