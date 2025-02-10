@@ -57,13 +57,13 @@ return {
         return
       end
 
-      -- if count == 1 then
-      --   vim.cmd("Neotree source=filesystem position=left reveal")
-      --   return
-      -- end
-
       if count == 1 then
         vim.cmd("Neotree source=buffers position=float")
+        return
+      end
+
+      if count == 2 then
+        vim.cmd("Neotree source=filesystem position=left reveal")
         return
       end
     end, {
