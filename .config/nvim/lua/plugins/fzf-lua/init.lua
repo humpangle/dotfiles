@@ -190,7 +190,7 @@ return {
         "[G]oto [I]mplementation"
       )
 
-      -- Fuzzy find all the symbols in your current workspace. Similar to document symbols, except searches over your entire project.
+      -- Fuzzy find all the symbols in your current workspace/project. Similar to document symbols, except searches over your entire project.
       map_to_fzf_lua_or_telescope(
         "<leader>ws",
         "lsp_live_workspace_symbols",
