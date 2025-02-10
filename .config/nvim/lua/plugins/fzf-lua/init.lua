@@ -47,8 +47,8 @@ local map_to_fzf_lua_or_telescope = function(
       vim.cmd("tab split")
     end
 
-    -- If count begins with 0, we invoke fzf-lua.
-    if string_count:match("^0") then
+    -- If count matches no other string
+    if string_count:match("^%d$") then
       vim.cmd("FzfLua " .. func_name)
       return
     end
