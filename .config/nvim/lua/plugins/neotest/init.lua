@@ -131,6 +131,7 @@ return {
             {
               "<leader>ntd",
               function()
+                vim.o.background = "dark"
                 do_echo("Debug")
                 ---@diagnostic disable-next-line: missing-fields
                 require("neotest").run.run({ strategy = "dap" })
