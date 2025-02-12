@@ -341,10 +341,10 @@ return {
               search_text =
                 "========= test session starts ========"
             elseif count == 2 then
-              search_text = "\\.py[^:]*F"
+              search_text = "\\.py[^:]*[FE]" -- fail or error
             elseif count == 3 then
               search_text =
-                "=========== FAILURES ======================"
+                "=========== \\(FAILURES\\|ERRORS\\) ======================"
             elseif count == 4 then
               search_text = "_ .*test_.\\+ _"
             elseif count == 5 then
