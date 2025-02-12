@@ -313,6 +313,10 @@ local git_rebase_root_mappings_fn = function()
   elseif count == 3 then
     utils.write_to_command_mode("G reset --soft HEAD~")
   elseif count == 33 then
+    utils.write_to_command_mode(
+      "G reset --soft " .. vim.fn.expand("<cword>")
+    )
+  elseif count == 34 then
     utils.write_to_command_mode("G reset --soft ")
   elseif count == 4 then
     utils.write_to_command_mode("G reset --hard HEAD~")
