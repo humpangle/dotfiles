@@ -30,7 +30,7 @@ return {
         utils.write_to_command_mode("Obsession session.vim")
       else
         utils.write_to_command_mode(
-          "Obsession session.vim<left><left><left><left>"
+          "Obsession session"
         )
       end
     end)
