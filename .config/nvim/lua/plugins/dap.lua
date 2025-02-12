@@ -297,7 +297,7 @@ return {
         controls = {
           icons = {
             pause = "P",
-            play = "0", -- run to cursor
+            play = "-0-", -- run to cursor
             step_into = "-1-",
             step_over = "-2-",
             step_out = "-3-",
