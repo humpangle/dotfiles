@@ -5,6 +5,8 @@ if not plugin_enabled.treesitter() then
   return {}
 end
 
+local map_key = require("utils").map_key
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -101,5 +103,13 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
+    config = function()
+      local tsc = require("treesitter-context")
+      tsc.setup()
+
+      map_key("n", "<leader>lse1", function()
+        tsc.go_to_context(vim.v.count1)
+      end, { desc = "treesitter context go up", silent = true })
+    end,
   },
 }
