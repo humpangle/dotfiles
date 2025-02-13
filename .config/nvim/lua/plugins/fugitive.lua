@@ -322,6 +322,8 @@ local git_rebase_root_mappings_fn = function()
     utils.write_to_command_mode("G reset --hard HEAD~")
   elseif count == 44 then
     utils.write_to_command_mode("G reset --hard ")
+  elseif count == 11 then
+    utils.write_to_command_mode("G rebase ")
   else
     utils.write_to_command_mode("G rebase -i ")
   end
