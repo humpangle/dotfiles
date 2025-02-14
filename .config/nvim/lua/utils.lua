@@ -656,4 +656,14 @@ utils.go_to_file = function()
   end
 end
 
+utils.get_visual_selection = function()
+  local visually_selected_text = vim.fn.getreg("/")
+
+  if visually_selected_text == nil then
+    return ""
+  end
+
+  return visually_selected_text:match("^\\<(.-)\\>$")
+end
+
 return utils

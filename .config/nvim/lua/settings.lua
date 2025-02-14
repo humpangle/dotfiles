@@ -363,7 +363,7 @@ local function do_yanka_highlighted(register_flag)
     vim.api.nvim_command("normal! vgny")
 
     -- Copy the yanked text to the specified register
-    vim.fn.setreg(register, vim.fn.getreg('"'))
+    vim.fn.setreg(register, utils.get_visual_selection())
 
     -- Without redrawing, nothing will be echoed
     vim.cmd({ cmd = "redraw", bang = true })
@@ -608,10 +608,15 @@ end, { noremap = true, silent = true })
 -- press * {shift 8) to search for word under cursor and key combo below to replace in entire file
 -- utils.map_key({ "n", "x" }, "<leader>rr", ":%s///g<left><left>")
 utils.map_key({ "n", "x" }, "<leader>rc", function()
+  local count = vim.v.count
   local cmd = "%s///g"
 
-  if vim.v.count == 0 then
+  if count == 0 then
     cmd = cmd .. "c<left>"
+  end
+
+  if count == 2 then
+    cmd = "%s//" .. utils.get_visual_selection() .. "/g"
   end
 
   utils.write_to_command_mode(cmd .. "<left><left>")
