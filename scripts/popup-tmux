@@ -4,7 +4,8 @@
 width_=${2:-90%}
 height_=${2:-90%}
 
-if [ "$(tmux display-message -p -F "#{session_name}")" = "dot" ]; then
+tmux_session="${DEFAULT_TMUX_SESSION:-dot}"
+if [ "$(tmux display-message -p -F "#{session_name}")" = "$tmux_session" ]; then
   tmux detach-client
 else
   tmux popup \
@@ -13,5 +14,5 @@ else
     -h "$height_" \
     -e TMUX_POPUP_SESSION=dot \
     -E \
-    "tmux attach -t dot || tmux new -s dot"
+    "tmux attach -t $tmux_session || tmux new -s $tmux_session"
 fi
