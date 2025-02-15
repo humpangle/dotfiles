@@ -1,23 +1,86 @@
 #!/usr/bin/env bash
 # shellcheck disable=
 
-run-default() {
-  width_=${1:-90%}
-  height_=${2:-90%}
+global_session_name_=${DEFAULT_TMUX_SESSION:-dot}
 
-  tmux_session="${DEFAULT_TMUX_SESSION:-dot}"
-  if [ "$(tmux display-message -p -F "#{session_name}")" = "$tmux_session" ]; then
-    tmux detach-client
-  else
-    tmux popup \
-      -d "$HOME/dotfiles" \
-      -w "$width_" \
-      -h "$height_" \
-      -e TMUX_POPUP_SESSION=dot \
-      -E \
-      "tmux attach -t $tmux_session || tmux new -s $tmux_session"
-  fi
+run-default() {
+  _do-popup \
+    "$global_session_name_"
 }
+
+run-other() {
+  if [ -z "$TMUX_POPUP_SESSION_NAME_AND_PATH" ]; then
+    run-default
+    return
+  fi
+
+  # TMUX_POPUP_SESSION_NAME_AND_PATH=some-session-name:/some/path
+  IFS=: read -ra session_and_path_array_ <<<"$TMUX_POPUP_SESSION_NAME_AND_PATH"
+
+  local popup_session_name_="${session_and_path_array_[0]}"
+  popup_session_name_="${popup_session_name_%-pop}"
+  popup_session_name_+="-pop"
+
+  local path_=""
+  path_"$(
+    realpath "${session_and_path_array_[1]}"
+  )"
+
+  _do-popup \
+    -p "$path_" \
+    "$popup_session_name_"
+}
+
+_do-popup() {
+  local opt_
+  local width_="90%"
+  local height_="90%"
+  local session_path_="$HOME/dotfiles"
+
+  while getopts "w:h:p:" opt_; do
+    case "$opt_" in
+    w)
+      width_="$OPTARG"
+      ;;
+    h)
+      height_="$OPTARG"
+      ;;
+    p)
+      session_path_="$OPTARG"
+      ;;
+    *)
+      echo "Unknown option $OPTARG "
+      exit 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  local popup_session_name_="$1"
+
+  local running_session_=""
+  running_session_="$(tmux display-message -p -F "#{session_name}")"
+
+  # If we already have a popup session running, quit it - we do not want nested popup sessions.
+  if [ "$running_session_" = "$popup_session_name_" ] ||
+    [ "$running_session_" = "$global_session_name_" ] ||
+    grep -qP -- "-pop$" <<<"$running_session_"; then
+    tmux detach-client
+    return
+  fi
+
+  tmux display-popup \
+    -d "$session_path_" \
+    -w "$width_" \
+    -h "$height_" \
+    -e TMUX_POPUP_SESSION="$popup_session_name_" \
+    -E \
+    "tmux attach -t $popup_session_name_ || tmux new -s $popup_session_name_"
+}
+
+# -----------------------------------------------------------------------------
+# HELP FUNC
+# -----------------------------------------------------------------------------
 
 _is_local_function() {
   local _function_name="$1"
@@ -272,7 +335,7 @@ help() {
 }
 
 if [ -z "$1" ]; then
-  run-default "$@"
+  run-default
 elif [[ "$1" == "help" ]]; then
   help "${@:2}"
 elif [[
