@@ -664,6 +664,7 @@ utils.get_visual_selection = function()
   end
 
   return visually_selected_text:match("^\\<(.-)\\>$")
+    or visually_selected_text
 end
 
 return utils
