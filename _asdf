@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-if [ ! -d "$HOME/.asdf" ]; then
+ASDF_DATA_DIR="$HOME/.asdf"
+if [ ! -d "$ASDF_DATA_DIR" ]; then
   return
 fi
-# shellcheck source=/dev/null
-. "$HOME/.asdf/asdf.sh"
-# shellcheck source=/dev/null
-. "$HOME/.asdf/completions/asdf.bash"
+export ASDF_DATA_DIR
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
 
 if asdf current nodejs &>/dev/null; then
   TS_SERVER_GBLOBAL_LIBRARY_PATH="$HOME/.asdf/installs/nodejs/$(asdf current nodejs | awk '{print $2}')/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js"
