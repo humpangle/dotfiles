@@ -16,3 +16,5 @@ _pv
 # Use tmux for such things as running tests and one-off commands.
 export TMUX_POPUP_SESSION_NAME_AND_PATH="some-session-name:/some-path"
 export TMUX_POPUP_SESSION_NAME_AND_PATH="some-session-name"
+
+_setenvs .env.d
