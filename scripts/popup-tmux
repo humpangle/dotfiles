@@ -63,7 +63,7 @@ _do-popup() {
 
   # If we already have a popup session running, quit it - we do not want nested popup sessions.
   if [ "$running_session_" = "$popup_session_name_" ] ||
-    [ "$running_session_" = "$global_session_name_" ] ||
+    [ "$running_session_" = "$global_session_name_" ] || # TODO: this will be problematic if launched not from popup.
     grep -qP -- "-pop$" <<<"$running_session_"; then
     tmux detach-client
     return
