@@ -250,10 +250,10 @@ local git_commit_mappings_fn = function()
     )
     return
   elseif count == 5 then
-    utils.write_to_command_mode("G verify-commit ")
-    return
-  elseif count == 51 then
-    utils.write_to_command_mode("G verify-commit -v ")
+    local search_text = "[ ./]\\+"
+    vim.fn.setreg("/", search_text)
+    vim.cmd("set hlsearch")
+    pcall(vim.cmd.normal, { "n", bang = true })
     return
   else
     cmd = ""
@@ -263,7 +263,7 @@ local git_commit_mappings_fn = function()
 end
 local git_commit_mappings_opts = {
   noremap = true,
-  desc = "Git commit 1/empty 2/amend 3/amendNoEdit 4/verify",
+  desc = "Git commit 1/empty 2/amend 3/amendNoEdit 4/verify 5/search",
 }
 keymap("n", "<leader>gc", git_commit_mappings_fn, git_commit_mappings_opts)
 
