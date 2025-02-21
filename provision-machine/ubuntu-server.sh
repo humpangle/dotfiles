@@ -140,10 +140,6 @@ function _echo {
   echo -e "\n${text}  ${line}${line}\n"
 }
 
-function _asdf-bin-path {
-  realpath "$HOME/.asdf/bin/asdf" 2>/dev/null
-}
-
 function _write-local-bin-path-to-paths {
   if ! grep -q "PATH=.*${LOCAL_BIN_PATH}" "$HOME/.bashrc"; then
     echo "export PATH=${LOCAL_BIN_PATH}:\$PATH" >>"$HOME/.bashrc"
@@ -233,12 +229,6 @@ function _update-and-upgrade-os-packages {
   fi
 }
 
-function _may_be_install_asdf {
-  if [[ ! -e "$(_asdf-bin-path)" ]]; then
-    install-asdf "$@"
-  fi
-}
-
 function _is-dev {
   [[ "${*}" =~ dev ]] && true
 }
@@ -252,90 +242,6 @@ function _install-deps {
 
 function _extract-version {
   awk -v word="${1}" 'match($0, word "\\s+([.a-zA-Z0-9_-]+)", a) {print a[1]}' "${2}"
-}
-
-function _tool-versions-backup {
-  : "Examples: "
-  : " _tool-versions-backup --backup=nodejs"
-  : " _tool-versions-backup --restore=nodejs"
-  : " _tool-versions-backup --backup=elixir,erlang"
-  : " _tool-versions-backup --restore=elixir,erlang"
-
-  local _backup
-  local _restore
-
-  # --------------------------------------------------------------------------
-  # PARSE ARGUMENTS
-  # --------------------------------------------------------------------------
-  local parsed
-
-  if ! parsed="$(
-    getopt \
-      --longoptions=restore:,backup: \
-      --options=r:,b: \
-      --name "$0" \
-      -- "$@"
-  )"; then
-    exit 1
-  fi
-
-  # Provides proper quoting
-  eval set -- "$parsed"
-
-  while true; do
-    case "$1" in
-    --backup | -b)
-      _backup=$2
-      shift 2
-      ;;
-
-    --restore | -r)
-      _restore=$2
-      shift 2
-      ;;
-
-    --)
-      shift
-      break
-      ;;
-
-    *)
-      Echo "Unknown option ${1}."
-      exit 1
-      ;;
-    esac
-  done
-  # --------------------------------------------------------------------------
-  # END PARSE ARGUMENTS
-  # --------------------------------------------------------------------------
-
-  local _tool_version_bak=./.tool-versions-bak
-  local _tool_version_original=./.tool-versions
-
-  if [[ -n "${_restore}" ]]; then
-    IFS=, read -r -a _tools_array <<<"${_restore}"
-
-    for _el in "${_tools_array[@]}"; do
-      "$(_asdf-bin-path)" reshim "${_el}"
-    done
-
-    _echo "Removing temporary local .tool-versions created for ${_restore}"
-    rm -rf "$_tool_version_original"
-
-    if [[ -e "$_tool_version_bak" ]]; then
-      _echo "Rename local $_tool_version_bak to $_tool_version_original"
-      mv "$_tool_version_bak" "$_tool_version_original"
-    fi
-
-    return
-  fi
-
-  # CREATING = backup
-  _echo "Backing up $_tool_version_original (if it exists) to $_tool_version_bak for ${_backup}"
-
-  if [[ -e "$_tool_version_original" ]]; then
-    mv "$_tool_version_original" "$_tool_version_bak"
-  fi
 }
 
 function _get_script_version {
@@ -460,8 +366,6 @@ _install_tmux_plugins() {
 function install-golang {
   : "Install golang"
 
-  _may_be_install_asdf "$@"
-
   local version_="${1:-latest}"
 
   _echo "INSTALLING GOLANG $version_"
@@ -470,18 +374,12 @@ function install-golang {
     _install-deps "${GOLANG_DEPS[*]}"
   fi
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
-  "$(_asdf-bin-path)" plugin add golang
-
-  "$(_asdf-bin-path)" install golang "$version_"
+  asdf plugin add golang
+  asdf install golang "$version_"
 }
 
 function install-rust {
   : "Install rust"
-
-  _may_be_install_asdf "$@"
 
   local version_="${1:-latest}"
 
@@ -491,10 +389,7 @@ function install-rust {
     _install-deps "${RUST_DEPS[*]}"
   fi
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
-  "$(_asdf-bin-path)" plugin add rust
+  asdf plugin add rust
 
   if [ "$version_" = latest ]; then
     version_="$(
@@ -512,29 +407,11 @@ function install-rust {
   cd "$PROJECT_0_PATH" || :
 
   _echo "Begin installing rust $version_"
-  "$(_asdf-bin-path)" install rust "$version_"
+  asdf install rust "$version_"
   _echo "Rust $version_ installed. Configuring..."
 
-  if [ -f ./.tool-versions ]; then
-    _echo "Backing up tool-versions"
-    mv ./.tool-versions ./tool-versions-bak
-  fi
-
-  if asdf current rust &>/dev/null; then
-    _echo "Global rust exists, No configuration needed."
-
-    if [ -f ./.tool-versions-bak ]; then
-      _echo "Restoring tool-versions"
-      mv ./.tool-versions-bak ./tool-versions
-    fi
-
-    cd "$this_dir_"
-
-    return
-  fi
-
   _echo "Setting global rust version to $version_"
-  "$(_asdf-bin-path)" global rust "$version_"
+  asdf set rust "$version_"
 
   local rust_install_root
   rust_install_root="$(_asdf-plugin-install-root rust "$version_")"
@@ -542,12 +419,12 @@ function install-rust {
   # shellcheck source=/dev/null
   source "${rust_install_root}/env"
 
-  "$(_asdf-bin-path)" reshim rust
+  asdf reshim rust
 
   _echo "Install and set as default latest release of cargo"
   rustup default stable
 
-  "$(_asdf-bin-path)" reshim rust
+  asdf reshim rust
 
   local cargo_bin_dir="${HOME}/.cargo/bin"
 
@@ -675,13 +552,11 @@ install-asdf-postgres() {
 
   if [[ -z "$_version" ]]; then
     _version="$(
-      "$(_asdf-bin-path)" list all postgres |
+      asdf list all postgres |
         grep -P "^\d+\.\d+$" |
         tail -1
     )"
   fi
-
-  _may_be_install_asdf "$@"
 
   if _is_linux; then
     sudo apt-get update
@@ -706,11 +581,11 @@ install-asdf-postgres() {
       icu4c
   fi
 
-  "$(_asdf-bin-path)" plugin add postgres
-  "$(_asdf-bin-path)" install postgres "$version_"
+  asdf plugin add postgres
+  asdf install postgres "$version_"
 
   echo -e \
-    "Set global version using command: \nasdf global postgres $version_"
+    "Set global version using command: \nasdf set -u postgres $version_"
 }
 
 function install-postgres {
@@ -996,31 +871,8 @@ function install-git {
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/gitignore"
 }
 
-function install-asdf {
-  : "Install asdf"
-
-  local version=v0.13.1
-
-  _echo "INSTALLING ASDF"
-
-  if ! _is-dev "$@"; then
-    _update-and-upgrade-os-packages
-  fi
-
-  if _is_darwin; then
-    brew install \
-      coreutils \
-      curl \
-      git
-  fi
-
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch $version
-}
-
 install-erlang() {
   : "Install erlang"
-
-  _may_be_install_asdf
 
   local version_=latest
 
@@ -1076,8 +928,8 @@ install-erlang() {
   export KERL_INSTALL_MANPAGES=
   export KERL_INSTALL_HTMLDOCS=
 
-  "$(_asdf-bin-path)" plugin add erlang || :
-  "$(_asdf-bin-path)" install erlang "${version_}"
+  asdf plugin add erlang || :
+  asdf install erlang "${version_}"
 }
 
 install-rebar3() {
@@ -1104,8 +956,6 @@ function i-elixir {
 
 install-elixir() {
   : "___help___ ___elixir-help"
-
-  _may_be_install_asdf
 
   local version_="latest"
 
@@ -1168,12 +1018,9 @@ install-elixir() {
       unzip
   fi
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
+  asdf plugin add elixir || :
 
-  "$(_asdf-bin-path)" plugin add elixir || :
-
-  "$(_asdf-bin-path)" install elixir "$version_"
+  asdf install elixir "$version_"
 }
 
 elixir-post-install() {
@@ -1278,8 +1125,6 @@ install-nodejs() {
     version=latest
   fi
 
-  _may_be_install_asdf "$@"
-
   _echo "INSTALLING NODEJS version ${version}"
 
   if [[ -n "${_dev}" ]]; then
@@ -1292,12 +1137,9 @@ install-nodejs() {
     fi
   fi
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
+  asdf plugin add nodejs || true
 
-  "$(_asdf-bin-path)" plugin add nodejs || true
-
-  "$(_asdf-bin-path)" install nodejs "${version}"
+  asdf install nodejs "${version}"
 }
 
 function ___nodejs-help {
@@ -1395,8 +1237,6 @@ install-python() {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  _may_be_install_asdf "$_dev"
-
   _echo "INSTALLING PYTHON $_version"
 
   if _is_darwin; then
@@ -1411,12 +1251,9 @@ install-python() {
     _install-deps "${PYTHON_DEPS[*]}"
   fi
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
+  asdf plugin add python 2>/dev/null
 
-  "$(_asdf-bin-path)" plugin add python 2>/dev/null
-
-  "$(_asdf-bin-path)" install python "$_version"
+  asdf install python "$_version"
 }
 
 function install-ansible {
@@ -1426,9 +1263,6 @@ function install-ansible {
   #   install-py
   # fi
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
   pip install -U \
     psycopg2 \
     ansible
@@ -1436,8 +1270,6 @@ function install-ansible {
 
 function install-lua {
   : "Install lua"
-
-  _may_be_install_asdf "$@"
 
   local version=5.4.4
 
@@ -1452,29 +1284,12 @@ function install-lua {
       linux-headers-$(uname -r)
   fi
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
-  "$(_asdf-bin-path)" plugin add lua
-
-  "$(_asdf-bin-path)" install lua $version
-  "$(_asdf-bin-path)" global lua $version
-
-  # We source scripts to bring stylua executable into shell
-  # shellcheck source=/dev/null
-  . "$HOME/.bashrc"
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
-  if ! command -v stylua; then
-    install-rust "$@"
-  fi
+  asdf plugin add lua
+  asdf install lua $version
 }
 
 function install-mysql {
   : "Install mysql"
-
-  _may_be_install_asdf
 
   _echo "INSTALLING msql"
 
@@ -1489,30 +1304,21 @@ function install-mysql {
     libncurses5 \
     numactl
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
-  "$(_asdf-bin-path)" plugin add mysql
-  "$(_asdf-bin-path)" install mysql $version
-  "$(_asdf-bin-path)" global mysql $version
-
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
+  asdf plugin add mysql
+  asdf install mysql $version
 
   export DATADIR="$HOME/mysql_data_${version//./_}"
   mkdir -p "$DATADIR"
   mysqld --initialize-insecure --datadir="$DATADIR"
   mysql_ssl_rsa_setup --datadir="$DATADIR"
 
-  "$(_asdf-bin-path)" reshim mysql
+  asdf reshim mysql
 
   unset DATADIR
 }
 
 function install-php {
   : "Install php"
-
-  _may_be_install_asdf
 
   local version_="${1:-latest}"
 
@@ -1547,19 +1353,12 @@ function install-php {
     zlib1g-dev \
     plocate
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
+  asdf plugin add php
 
-  "$(_asdf-bin-path)" plugin add php
-
-  "$(_asdf-bin-path)" install php "$version_"
+  asdf install php "$version_"
 }
 
 post-install-php() {
-
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
   local version_=""
   version_="$(
     asdf current php 2>/dev/null |
@@ -1583,13 +1382,11 @@ post-install-php() {
   local _ini_file="${_php_version_install_root}/conf.d/php.ini"
   local _extensions_root="${_php_version_install_root}/lib/php/extensions"
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-  "$(_asdf-bin-path)" reshim php
+  asdf reshim php
 
   pear config-set php_ini "${_ini_file}"
   pecl config-set php_ini "${_ini_file}"
-  "$(_asdf-bin-path)" reshim php
+  asdf reshim php
 
   pecl channel-update pecl.php.net
   pecl install xdebug
@@ -1604,9 +1401,7 @@ post-install-php() {
     _echo "opcache extension path not found"
   fi
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-  "$(_asdf-bin-path)" reshim php
+  asdf reshim php
 }
 
 function set-password-less-shell {
@@ -1742,9 +1537,6 @@ function setup-dev {
 
   # Installing lua will also install rust because of stylua
   install-lua dev || true
-
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
 
   # Many times, installing rust will just error (mostly for network reasons)
   # So we try again just one more time.
@@ -2026,22 +1818,20 @@ function install-terraform {
   # END PARSE ARGUMENTS
   # --------------------------------------------------------------------------
 
-  _may_be_install_asdf
-
-  "$(_asdf-bin-path)" plugin add \
+  asdf plugin add \
     terraform \
     https://github.com/asdf-community/asdf-hashicorp.git &>/dev/null
 
   if [[ -z "$_version" ]]; then
     _version="$(
-      "$(_asdf-bin-path)" list all terraform |
+      asdf list all terraform |
         grep -P "^\d+\.\d+\.\d+$" |
         tail -1
     )"
   fi
 
   _echo "Installing terraform version $_version"
-  "$(_asdf-bin-path)" install terraform "$_version"
+  asdf install terraform "$_version"
 
   _echo "Installing terraform auto completion"
   install-terraform-completion
@@ -2088,15 +1878,8 @@ function install-sqlite {
     build-essential \
     file
 
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/asdf.sh"
-
-  "$(_asdf-bin-path)" plugin add sqlite || true
-
-  "$(_asdf-bin-path)" install sqlite "${version}"
-  "$(_asdf-bin-path)" global sqlite "${version}"
-
-  "$(_asdf-bin-path)" reshim sqlite
+  asdf plugin add sqlite || true
+  asdf install sqlite "${version}"
 }
 
 function install-mongo-db {
