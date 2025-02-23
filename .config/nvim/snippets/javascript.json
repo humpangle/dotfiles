@@ -713,14 +713,22 @@
     "description": "Log error to the console"
   },
   "Print to console": {
-    "prefix": "consoleapplog",
+    "prefix": [
+      "console_app_log",
+      "print_to_console",
+      "log_to_console"
+    ],
     "body": [
+      "",
+      "// NOTE: --START-- DEBUG LOG {",
       "console.log(",
       "  `\\n\\n\\nSTART ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`,",
       "  `\\n>>>>>>>>>>>>>> $2 ${1:label1}\\n`, ${1:label1},",
       "  //$0 `\\n\\n>>>>>>>>>>>>>> label2\\n`, label2,",
       "  `\\nEND ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\\n\\n\\n`",
-      ");"
+      ");",
+      "// NOTE: --END-- DEBUG LOG }",
+      ""
     ],
     "description": "Log to console with some debug info"
   },
