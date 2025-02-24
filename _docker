@@ -9,8 +9,24 @@ declare -A _alias_map_docker=()
 
 if [ -n "$_EBNIS_DOCKER_BIN" ]; then
   docker() {
+    : "__EBNIS_COMPOSE_CONFIG_FILENAME__='file1 file2' docker compose up"
+    : "__EBNIS_COMPOSE_CONFIG_FILENAME__='file1' docker compose up"
+    : "docker compose up"
+
     if [ "$1" = 'compose' ] && [ -n "$__EBNIS_COMPOSE_CONFIG_FILENAME__" ]; then
-      "$_EBNIS_DOCKER_BIN" compose --file "$__EBNIS_COMPOSE_CONFIG_FILENAME__" "${@:2}"
+
+      local args_=()
+      local compose_files_=()
+      read -ra compose_files_ <<<"$__EBNIS_COMPOSE_CONFIG_FILENAME__"
+
+      for compose_file_ in "${compose_files_[@]}"; do
+        args_=("${args_[@]}" "--file")
+        args_=("${args_[@]}" "$compose_file_")
+      done
+
+      args_=("${args_[@]}" "${@:2}")
+
+      "$_EBNIS_DOCKER_BIN" compose "${args_[@]}"
 
       return
     fi
