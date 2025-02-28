@@ -1,4 +1,5 @@
-local keymap = vim.keymap.set
+local utils = require("utils")
+local map_key = utils.map_key
 
 -- -- Global debugging variables
 -- vim.g.neoformat_verbose = 1
@@ -12,19 +13,19 @@ local do_format = function()
   -- vim.cmd("silent w")
 end
 
-keymap(
+map_key(
   { "n", "x" },
   "<leader>Nn",
   do_format,
   { noremap = true, desc = "[N]eoformat [n]ormal mode" }
 )
 
-keymap("n", "<leader>Nv", function()
+map_key("n", "<leader>Nv", function()
   vim.g.neoformat_verbose = 1
 
   do_format()
 end, { noremap = true, desc = "[N]eoformat [v]erbose" })
--- keymap("n", "<leader>fc", do_format, { noremap = true })
+-- map_key("n", "<leader>fc", do_format, { noremap = true })
 
 -- [[ Install binaries for formatting ]]
 --
