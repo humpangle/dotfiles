@@ -6,6 +6,25 @@ local map_key = utils.map_key
 -- vim.g.neoformat_only_msg_on_error = 1
 
 local do_format = function()
+  -- Reset verbosity in case we already increased verbosity in an earlier call.
+  vim.g.neoformat_verbose = 0
+
+  local count = vim.v.count
+  local mode = vim.fn.mode()
+
+  if count == 1 then
+    if mode == "n" then
+      vim.cmd.normal({ "vip" })
+    end
+
+    utils.write_to_command_mode("'<,'>Neoformat! ")
+    return
+  end
+
+  if count ~= 0 then
+    vim.g.neoformat_verbose = 1
+  end
+
   vim.cmd("Neoformat")
   -- Neoformat converts spaces to tabs - we retab to force spaces
   vim.cmd({ cmd = "retab", bang = true })
@@ -14,18 +33,18 @@ local do_format = function()
 end
 
 map_key(
-  { "n", "x" },
+  "n",
   "<leader>Nn",
   do_format,
-  { noremap = true, desc = "[N]eoformat [n]ormal mode" }
+  { noremap = true, desc = "Neoformat 1/visual-select-choose-formatter" }
 )
 
-map_key("n", "<leader>Nv", function()
-  vim.g.neoformat_verbose = 1
-
-  do_format()
-end, { noremap = true, desc = "[N]eoformat [v]erbose" })
--- map_key("n", "<leader>fc", do_format, { noremap = true })
+map_key(
+  "v",
+  "<leader>Nn",
+  do_format,
+  { noremap = true, desc = "Neoformat 1/visual-select-choose-formatter" }
+)
 
 -- [[ Install binaries for formatting ]]
 --
