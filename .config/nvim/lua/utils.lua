@@ -660,7 +660,7 @@ utils.get_visual_selection = function()
   local text = visually_selected_text:match("^\\<(.-)\\>$")
     or visually_selected_text
 
-  return text:gsub("\\.", ".")
+  return text:gsub("\\%.", "."):gsub("\\/", "/")
 end
 
 return utils
