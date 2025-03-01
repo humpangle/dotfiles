@@ -98,14 +98,6 @@ return {
           reload_fugitive_index()
         end, { desc = "Hunk reset buffer" }, bufnr)
 
-        utils.map_key(
-          "n",
-          "<leader>hp",
-          gitsigns.preview_hunk,
-          { desc = "Hunk preview" },
-          bufnr
-        )
-
         utils.map_key("n", "<leader>hb", function()
           gitsigns.blame_line({ full = true })
         end, { desc = "Hunk blame line" }, bufnr)
@@ -122,9 +114,9 @@ return {
           local count = vim.v.count
 
           if count == 0 then
-            gitsigns.preview_hunk_inline()
-          else
             gitsigns.preview_hunk()
+          else
+            gitsigns.preview_hunk_inline()
           end
         end, { desc = "Hunk preview 0/inline 1/" }, bufnr)
 
