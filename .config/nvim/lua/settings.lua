@@ -349,7 +349,7 @@ utils.map_key(
   { noremap = true }
 )
 
-local function do_yanka_highlighted(register_flag)
+local function do_yank_highlighted(register_flag)
   local register = nil
 
   return function()
@@ -375,8 +375,8 @@ local function do_yanka_highlighted(register_flag)
 end
 
 -- Yank highlighted to system clipboard / register a
-utils.map_key("n", ",yy", do_yanka_highlighted("+"), { noremap = true })
-utils.map_key("n", ",cc", do_yanka_highlighted("letter"), { noremap = true })
+utils.map_key("n", ",yy", do_yank_highlighted("+"), { noremap = true })
+utils.map_key("n", ",cc", do_yank_highlighted("letter"), { noremap = true })
 
 -- Move between windows in a tab
 utils.map_key("n", "<Tab>", "<C-w>w", { noremap = false })
