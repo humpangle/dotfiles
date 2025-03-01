@@ -71,6 +71,25 @@ return {
       }
     )
 
+    map_key({ "n", "x" }, "<leader>dbe", function()
+      local count = vim.v.count
+
+      if count == 0 then
+        vim.cmd.normal({ "vip" })
+      end
+
+      local keys = vim.api.nvim_replace_termcodes(
+        "<Plug>(DBUI_ExecuteQuery)",
+        true,
+        true,
+        true
+      )
+      vim.api.nvim_feedkeys(keys, "x", false)
+    end, {
+      noremap = true,
+      desc = "DBUI_ExecuteQuery",
+    })
+
     map_key("n", "<leader>dbf", function()
       vim.cmd("DBUIFindBuffer")
       vim.bo.filetype = "markdown.sql"
