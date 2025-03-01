@@ -50,8 +50,16 @@ return {
         end, { desc = "Hunk previous." })
         -- / Navigation
 
-        utils.map_key("n", "<leader>hs", function()
-          gitsigns.stage_hunk()
+        utils.map_key({ "n", "v" }, "<leader>hs", function()
+          if vim.fn.mode() == "v" then
+            gitsigns.stage_hunk({
+              vim.fn.line("."),
+              vim.fn.line("v"),
+            })
+          else
+            gitsigns.stage_hunk()
+          end
+
           reload_fugitive_index()
         end, { desc = "Hunk stage" }, bufnr)
 
@@ -59,15 +67,6 @@ return {
           gitsigns.reset_hunk()
           reload_fugitive_index()
         end, { desc = "Hunk reset" }, bufnr)
-
-        utils.map_key("v", "<leader>hs", function()
-          gitsigns.stage_hunk({
-            vim.fn.line("."),
-            vim.fn.line("v"),
-          })
-
-          reload_fugitive_index()
-        end, { desc = "Hunk stage" }, bufnr)
 
         utils.map_key("n", "<leader>hS", function()
           vim.cmd(":Git add %")
