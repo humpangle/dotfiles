@@ -109,6 +109,14 @@ return {
     })
 
     map_key("n", "<leader>dbw", function()
+      local count = vim.v.count
+
+      if count == 1 then
+        vim.cmd({ cmd = "wa", bang = true })
+        vim.cmd("DbUiDelete")
+        return
+      end
+
       local buffer_name = vim.fn.expand("%:p")
       if not match_vim_dadbod_ui_temp_query_file(buffer_name) then
         return
@@ -134,18 +142,11 @@ return {
       -- the window where the latest result was written to. Thus we split that window vertically so that when the
       -- latest written to window is closed, we get the other split.
       vim.cmd("vsplit")
-      vim.cmd.normal({ " dbW" })
-    end, {
-      noremap = true,
-      desc = "DBUI save result buffer",
-    })
-
-    map_key("n", "<leader>dbW", function()
       vim.cmd({ cmd = "wa", bang = true })
       vim.cmd("DbUiDelete")
     end, {
       noremap = true,
-      desc = "DBUI Write And Delete",
+      desc = "DBUI save result buffer 1/DbUiDelete",
     })
 
     map_key("n", "<leader>dbH", function()
