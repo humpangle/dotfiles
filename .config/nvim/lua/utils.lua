@@ -561,7 +561,6 @@ end
 local go_to_file_strip_patterns = function(file_path)
   local patterns = {
     "^[ab]/", -- git prefix
-    "[:#]L$", -- file_path#L1234
   }
 
   for _, pattern in pairs(patterns) do
@@ -573,7 +572,7 @@ local go_to_file_strip_patterns = function(file_path)
   return file_path
 end
 
-local go_to_file_strip_prefix = function(file_path)
+local go_to_file_strip_prefix_in_env = function(file_path)
   local prefix = utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_STRIP_PREFIX")
 
   if prefix == nil then
@@ -583,36 +582,19 @@ local go_to_file_strip_prefix = function(file_path)
   return file_path:gsub(prefix, "")
 end
 
-local match_file_path_and_number = function(cword_file_path)
-  local patterns = {
-    [=[^['"]?(.-)['"]?[>]?:?(%d*)[:',"]?$]=],
-  }
-
-  local file_path = nil
-  local line_number = nil
-
-  for _, pattern in pairs(patterns) do
-    file_path, line_number = cword_file_path:match(pattern)
-
-    if file_path and file_path ~= "" then
-      return file_path, line_number
-    end
-  end
-
-  return file_path, line_number
-end
-
-local extract_line_number = function()
+local extract_line_number = function(cfile)
   local line_text = vim.fn.getline(".")
   local line_number = nil
+  local last_path_index = cfile:match("([^/]+)$")
 
   local patterns = {
     "line%s*(%d+)", -- file_path whatever text line 168
     "%d+%%%s+(%d+)", -- file_path 80% 12
+    "[:](%d+)", -- file_path:67
   }
 
   for _, pattern in pairs(patterns) do
-    line_number = line_text:match(pattern)
+    line_number = line_text:match(last_path_index .. ".*" .. pattern)
 
     if line_number ~= nil then
       return line_number
@@ -623,22 +605,33 @@ local extract_line_number = function()
 end
 
 utils.go_to_file = function()
-  local cword_file_path = vim.fn.expand("<cWORD>")
-  local file_path, line_number = match_file_path_and_number(cword_file_path)
+  local cfile = vim.fn.expand("<cfile>")
 
-  if not file_path or file_path == "" then
-    print("invalid file: " .. cword_file_path)
+  if not cfile or cfile == "" then
+    print("invalid file: " .. cfile)
     return
   end
 
-  if line_number == nil or line_number == "" then
-    line_number = extract_line_number()
+  local file_path = nil
+  local cfile1, line_number = cfile:match("^(.+)#(%d+)$")
+
+  if cfile1 ~= nil then
+    file_path = cfile1
+  else
+    file_path = cfile
   end
 
   if vim.fn.glob(file_path) == "" then
+    file_path = go_to_file_strip_prefix_in_env(file_path)
     file_path = go_to_file_strip_patterns(file_path)
-    file_path = go_to_file_strip_prefix(file_path)
   end
+
+  if vim.fn.glob(file_path) == "" then
+    print("invalid file: " .. file_path)
+    return
+  end
+
+  line_number = line_number or extract_line_number(cfile)
 
   local count = vim.v.count
 
@@ -651,6 +644,7 @@ utils.go_to_file = function()
   end
 
   vim.cmd("edit " .. file_path)
+
   if line_number then
     vim.fn.cursor(line_number, 1)
   end
