@@ -82,7 +82,8 @@ _alias_map_docker["dcc"]='docker compose config'
 _alias_map_docker["drmlogs__description"]='docker rm logs containers..'
 _alias_map_docker["d-dangling"]='dim -qf dangling=true | xargs docker rmi -f 2>/dev/null'
 _alias_map_docker["ddangling"]='d-dangling'
-_alias_map_docker["dcrml"]='dcps -aq | xargs drmlogs'
+_alias_map_docker["dcrml"]='drmlogs -c'
+_alias_map_docker["dtruncatel"]='drmlogs'
 _alias_map_docker["dcrm"]='docker compose rm'
 
 # docker compose up --daemon and logs --follow

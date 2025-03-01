@@ -2,12 +2,40 @@
 
 # https://stackoverflow.com/a/42510314
 
-if [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
-  echo "Usage: drmlogs container_name_or_ID [..container_name_or_ID]"
-else
-  for var in "$@"; do
-    log_path=$(docker inspect --format='{{.LogPath}}' "$var")
-    echo "truncating $log_path"
-    echo "" | sudo tee "$log_path"
+__drmlogs__() {
+  local var_=""
+  local is_compose_=""
+
+  while getopts ":ch" var_; do
+    case "$var_" in
+    h)
+      echo "Usage: drmlogs container_name_or_ID [..container_name_or_ID]"
+      echo "Usage: drmlogs -c compose_servicename [..compose_servicename]"
+      exit
+      ;;
+
+    c)
+      is_compose_=1
+      ;;
+
+    *)
+      echo "Unknown options \"$OPTARG\""
+      exit 1
+      ;;
+    esac
   done
-fi
+  shift $((OPTIND - 1))
+
+  for container_ in "$@"; do
+    if [ -n "$is_compose_" ]; then
+      container_="$(docker compose ps --quiet "$container_")"
+    fi
+
+    log_path_=$(docker inspect --format='{{.LogPath}}' "$container_")
+
+    echo "" | sudo tee "$log_path_"
+    echo -e "truncated\n$log_path_"
+  done
+}
+
+__drmlogs__ "$@"
