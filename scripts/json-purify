@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+
+# import os
+
+
+def json_purifier(input_path):
+    output_path = re.sub(r"\.json$", "", input_path) + "-0j.json"
+
+    with open(input_path, "r", encoding="utf-8") as infile:
+        lines = infile.readlines()
+
+    cleaned_lines = []
+
+    # Remove `//` comment lines and strip trailing commas
+    for line in lines:
+        stripped = line.strip()
+
+        # Remove full-line `//` comments
+        if stripped.startswith("//"):
+            continue
+
+        # Remove trailing commas if the next non-empty line starts with ] or }
+        cleaned_lines.append(line)
+
+    # Join back into a single string for trailing comma fix
+    content = "".join(cleaned_lines)
+
+    # Remove trailing commas before a closing } or ]
+    content = re.sub(r",(\s*[}\]])", r"\1", content)
+
+    with open(output_path, "w", encoding="utf-8") as outfile:
+        outfile.write(content)
+
+    print(output_path, end=None)
+
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: json_purifier <json-file-path>")
+        sys.exit(1)
+
+    json_purifier(sys.argv[1])
+
+
+if __name__ == "__main__":
+    main()
