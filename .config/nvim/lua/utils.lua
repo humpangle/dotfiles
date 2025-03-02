@@ -631,14 +631,18 @@ utils.go_to_file = function()
     file_path = go_to_file_strip_patterns(file_path)
   end
 
+  local count = vim.v.count
+
   if vim.fn.glob(file_path) == "" then
+    if count == 9 then
+      vim.fn.setreg("a", file_path)
+    end
+
     print("invalid file: " .. file_path)
     return
   end
 
   line_number = line_number or extract_line_number(cfile)
-
-  local count = vim.v.count
 
   if count == 1 then
     vim.cmd("split")
