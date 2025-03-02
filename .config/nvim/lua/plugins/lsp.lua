@@ -15,6 +15,8 @@ local diagnostic_ui_keymap_handler = function()
   if count == 1 then
     vim.diagnostic.open_float({ focusable = true })
     vim.diagnostic.open_float({ focusable = true }) -- second invocation is to focus the popup
+  elseif count == 2 then
+    require("treesitter-context").go_to_context(vim.v.count1)
   else
     vim.diagnostic.setloclist()
   end
