@@ -368,7 +368,7 @@ return {
             vim.cmd("set hlsearch")
             pcall(vim.cmd.normal, { to_call, bang = true })
           end,
-          desc = "Toggle Output Panel",
+          desc = "<leader>nto Toggle Output Panel 1/session-start 2/.py FE 3/failures/errors 4/__test__ 5/captured",
         },
         {
           "<leader>ntc",
