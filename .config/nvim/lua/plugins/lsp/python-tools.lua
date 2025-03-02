@@ -47,19 +47,4 @@ return {
         end,
       }
     or {},
-
-  {
-    -- https://github.com/mfussenegger/nvim-dap-python
-    "mfussenegger/nvim-dap-python",
-    ft = "python",
-    dependencies = {
-      -- https://github.com/mfussenegger/nvim-dap
-      "mfussenegger/nvim-dap",
-    },
-    config = function()
-      local python_bin = require("plugins/lsp_utils").get_python_path()
-
-      require("dap-python").setup(python_bin)
-    end,
-  },
 }
