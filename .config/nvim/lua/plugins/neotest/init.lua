@@ -355,7 +355,7 @@ return {
               search_text = "= short test summary info ="
             elseif count == 8 then
               search_text =
-                "^\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}.\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}"
+                "\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}[^\\d]\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}"
             end
 
             local to_call = "N"
