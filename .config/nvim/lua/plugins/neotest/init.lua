@@ -289,7 +289,7 @@ return {
               return
             end
           end,
-          desc = "Neotest at cursor/file/ALL",
+          desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/debug",
         },
         {
           "<leader>nta",
