@@ -140,6 +140,19 @@ return {
         },
       },
 
+      {
+        -- Easy modification of command line arguments passed to the debuggee
+        -- Saving/restoring of breakpoints and watches across sessions
+        "daic0r/dap-helper.nvim",
+        -- dependencies = {
+        --   "rcarriga/nvim-dap-ui",
+        --   "mfussenegger/nvim-dap",
+        -- },
+        config = function()
+          require("dap-helper").setup()
+        end,
+      },
+
       -- Some plugins provide *NICER* developer experiences (default config for the speciic language, launching the
       -- debugger binary automatically etc) for nvim-dap. One trick is to read the source of the plugin and *steal*
       -- some of the config into the mason-nvim-dap handlers table.
@@ -354,19 +367,6 @@ return {
         list_breakpoints_in_qickfix,
         { nargs = "*" }
       )
-    end,
-  },
-
-  {
-    -- Easy modification of command line arguments passed to the debuggee
-    -- Saving/restoring of breakpoints and watches across sessions
-    "daic0r/dap-helper.nvim",
-    dependencies = {
-      "rcarriga/nvim-dap-ui",
-      "mfussenegger/nvim-dap",
-    },
-    config = function()
-      require("dap-helper").setup()
     end,
   },
 }
