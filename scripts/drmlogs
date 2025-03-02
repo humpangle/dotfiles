@@ -28,7 +28,7 @@ __drmlogs__() {
 
   for container_ in "$@"; do
     if [ -n "$is_compose_" ]; then
-      container_="$(docker compose ps --quiet "$container_")"
+      container_="$(docker compose ps --quiet --all "$container_")"
     fi
 
     log_path_=$(docker inspect --format='{{.LogPath}}' "$container_")
