@@ -6,7 +6,6 @@ if not plugin_enabled.dap() then
 end
 
 local utils = require("utils")
-
 local map_key = utils.map_key
 
 local function do_echo(text)
@@ -245,7 +244,8 @@ return {
         desc = "DAP: breakpoints 0/toggle 1/cond 2/clear 3/next 4/prev 5/list",
       })
 
-      map_key("n", "<leader>da?", function()
+      ---@diagnostic disable: missing-fields
+      map_key("n", "<leader>da=", function()
         dapui.eval(nil, { enter = true })
       end, {
         desc = "DAP: Inspect current value - eval under cursor",
