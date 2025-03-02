@@ -324,7 +324,7 @@ return {
           or {}
         ),
         require("plugins.lsp.emmet"),
-        require("plugins.typescript"),
+        require("plugins.lsp.typescript"),
         yamlls_config.config_from_yaml_companion_plugin(),
         require("plugins.lsp.php"),
         require("plugins.lsp.mason-ensure-installed")
