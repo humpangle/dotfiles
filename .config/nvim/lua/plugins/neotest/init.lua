@@ -5,6 +5,7 @@ if not plugin_enabled.notest() then
 end
 
 local utils = require("utils")
+local map_key = utils.map_key
 local s_utils = require("settings-utils")
 
 local function do_echo(text, on_going)
@@ -200,6 +201,59 @@ return {
         "new"
       )
     end, { nargs = "*" })
+
+    -- keymaps
+    map_key("n", "<leader>ntO", function()
+      require("neotest").output.open({
+        enter = true,
+        auto_close = true,
+      })
+    end, {
+      desc = "Neotest Show Output",
+    })
+
+    map_key("n", "<leader>nto", function()
+      local count = vim.v.count
+
+      if count == 99 then
+        require("neotest").output_panel.toggle()
+        return
+      end
+
+      local search_text = ""
+
+      if count == 1 then
+        search_text = "========= test session starts ========"
+      elseif count == 2 then
+        search_text = "\\.py[^:]*[FE]" -- fail or error
+      elseif count == 3 then
+        search_text =
+          "=========== \\(FAILURES\\|ERRORS\\) ======================"
+      elseif count == 4 then
+        search_text = "_ .*test_.\\+ _"
+      elseif count == 5 then
+        search_text = "------- Captured "
+      elseif count == 6 then
+        search_text = "ERROR\\s\\+"
+      elseif count == 7 then
+        search_text = "= short test summary info ="
+      elseif count == 8 then
+        search_text =
+          "\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}[^\\d]\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}"
+      end
+
+      local to_call = "N"
+      if count == 6 then
+        to_call = "n"
+      end
+
+      vim.cmd({ cmd = "edit", bang = true })
+      vim.fn.setreg("/", search_text)
+      vim.cmd("set hlsearch")
+      pcall(vim.cmd.normal, { to_call, bang = true })
+    end, {
+      desc = "99/Toggle-Output-Panel 1/session-start 2/.py FE 3/failures/errors 4/__test__ 5/captured",
+    })
   end,
   config = function()
     local neotest = require("neotest")
@@ -309,60 +363,6 @@ return {
         require("neotest").summary.toggle()
       end,
       desc = "Toggle Summary",
-    },
-    {
-      "<leader>ntO",
-      function()
-        require("neotest").output.open({
-          enter = true,
-          auto_close = true,
-        })
-      end,
-      desc = "Neotest Show Output",
-    },
-    {
-      "<leader>nto",
-      function()
-        local count = vim.v.count
-
-        if count == 99 then
-          require("neotest").output_panel.toggle()
-          return
-        end
-
-        local search_text = ""
-
-        if count == 1 then
-          search_text = "========= test session starts ========"
-        elseif count == 2 then
-          search_text = "\\.py[^:]*[FE]" -- fail or error
-        elseif count == 3 then
-          search_text =
-            "=========== \\(FAILURES\\|ERRORS\\) ======================"
-        elseif count == 4 then
-          search_text = "_ .*test_.\\+ _"
-        elseif count == 5 then
-          search_text = "------- Captured "
-        elseif count == 6 then
-          search_text = "ERROR\\s\\+"
-        elseif count == 7 then
-          search_text = "= short test summary info ="
-        elseif count == 8 then
-          search_text =
-            "\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}[^\\d]\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}"
-        end
-
-        local to_call = "N"
-        if count == 6 then
-          to_call = "n"
-        end
-
-        vim.cmd({ cmd = "edit", bang = true })
-        vim.fn.setreg("/", search_text)
-        vim.cmd("set hlsearch")
-        pcall(vim.cmd.normal, { to_call, bang = true })
-      end,
-      desc = "<leader>nto Toggle Output Panel 1/session-start 2/.py FE 3/failures/errors 4/__test__ 5/captured",
     },
     {
       "<leader>ntc",
