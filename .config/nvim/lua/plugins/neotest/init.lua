@@ -335,8 +335,14 @@ return {
           require("neotest").run.run({ status = "failed" })
           return
         end
+
+        if count == 4 then
+          do_echo("RNNING LAST")
+          require("neotest").run.run_last()
+          return
+        end
       end,
-      desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/failed",
+      desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/failed 4/last",
     },
     {
       "<leader>nta",
@@ -345,14 +351,6 @@ return {
         require("neotest").run.attach()
       end,
       desc = "Netotest Running?",
-    },
-    {
-      "<leader>ntl",
-      function()
-        do_echo("RNNING LAST")
-        require("neotest").run.run_last()
-      end,
-      desc = "Neotest Run Last",
     },
     {
       "<leader>nts",
