@@ -306,15 +306,6 @@ return {
 
   keys = {
     {
-      "<leader>ntf",
-      function()
-        do_echo("failed")
-        ---@diagnostic disable-next-line: missing-fields
-        require("neotest").run.run({ status = "failed" })
-      end,
-      desc = "Neotest Failed",
-    },
-    {
       "<leader>ntt",
       function()
         vim.o.background = "dark"
@@ -337,8 +328,15 @@ return {
           require("neotest").run.run(vim.uv.cwd())
           return
         end
+
+        if count == 3 then
+          do_echo("failed")
+          ---@diagnostic disable-next-line: missing-fields
+          require("neotest").run.run({ status = "failed" })
+          return
+        end
       end,
-      desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/debug",
+      desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/failed",
     },
     {
       "<leader>nta",
