@@ -112,20 +112,18 @@ local elixir_adapter = function()
 end
 
 return {
-  {
-    {
-      "nvim-neotest/neotest",
-      dependencies = {
-        "nvim-neotest/nvim-nio",
-        "nvim-lua/plenary.nvim",
-        "antoinemadec/FixCursorHold.nvim",
-        "nvim-treesitter/nvim-treesitter",
+  "nvim-neotest/neotest",
+  dependencies = {
+    "nvim-neotest/nvim-nio",
+    "nvim-lua/plenary.nvim",
+    "antoinemadec/FixCursorHold.nvim",
+    "nvim-treesitter/nvim-treesitter",
 
-        -- adapters
-        "nvim-neotest/neotest-python",
-        {
-          "mfussenegger/nvim-dap",
-          optional = true,
+    -- adapters
+    "nvim-neotest/neotest-python",
+    {
+      "mfussenegger/nvim-dap",
+      optional = true,
           -- stylua: ignore
           keys = {
             {
@@ -139,262 +137,256 @@ return {
               desc = "Neotest Debug At Cursor"
             },
           },
-        },
-        "nvim-neotest/neotest-jest",
-        "jfpedroza/neotest-elixir",
-        -- /END/ adapters
+    },
+    "nvim-neotest/neotest-jest",
+    "jfpedroza/neotest-elixir",
+    -- /END/ adapters
+  },
+  init = function()
+    -- default pytest args
+    vim.g.__ebnis_neotest_python_args = {
+      "--disable-warnings",
+      "-vvv",
+      "--log-level",
+      "INFO",
+      "--capture",
+      "no",
+    }
+
+    vim.api.nvim_create_user_command("NeoPyArgs", function(opts)
+      local count = opts.fargs[1]
+
+      if count == "1" then
+        utils.write_to_command_mode(
+          "lua vim.g.__ebnis_neotest_python_args = {}"
+        )
+        return
+      end
+
+      local args_text = "lua vim.g.__ebnis_neotest_python_args = "
+        .. "\\n"
+        .. "{"
+        .. "\\n"
+        .. "}"
+        .. "\\n"
+        .. "\\n"
+        .. '\\"--log-level\\", \\"DEBUG\\",'
+        .. "\\n"
+        .. '\\"--log-level\\", \\"INFO\\",'
+        .. "\\n"
+        .. '\\"-vvv\\",'
+        .. "\\n"
+        .. '\\"--capture\\", \\"no\\",'
+        .. "\\n"
+        .. '\\"--disable-warnings\\",'
+        .. "\\n"
+        .. '\\"--ignore\\",'
+        .. "\\n"
+        .. '\\"--verbosity\\", \\"0\\",'
+
+      local current_args_value_string = '{ "'
+        .. table.concat(vim.g.__ebnis_neotest_python_args, '", "')
+        .. '" }'
+
+      current_args_value_string =
+        current_args_value_string:gsub('"', '\\"')
+
+      s_utils.RedirMessages(
+        'echo "'
+          .. args_text
+          .. "\\n\\\n"
+          .. current_args_value_string
+          .. '"',
+        "new"
+      )
+    end, { nargs = "*" })
+  end,
+  config = function()
+    local neotest = require("neotest")
+
+    ---@diagnostic disable-next-line: missing-fields
+    neotest.setup({
+      adapters = {
+        pytest_adapter(),
+        jest_adapter(),
+        elixir_adapter(),
       },
-      init = function()
-        -- default pytest args
-        vim.g.__ebnis_neotest_python_args = {
-          "--disable-warnings",
-          "-vvv",
-          "--log-level",
-          "INFO",
-          "--capture",
-          "no",
-        }
+      discovery = {
+        -- Number of workers to parse files concurrently. A value of 0 automatically assigns number based on CPU.
+        -- Set to 1 if experiencing lag.
+        concurrent = 12,
+        -- Drastically improve performance in ginormous projects by only AST-parsing the currently opened buffer.
+        enabled = false,
+        -- enabled = true,
+      },
+      running = {
+        -- Run tests concurrently when an adapter provides multiple commands to run.
+        concurrent = true,
+      },
+      ---@diagnostic disable-next-line: missing-fields
+      summary = {
+        -- Enable/disable animation of icons.
+        animated = false,
+      },
+      -- Set to true to open quickfix window on test failure
+      quickfix = {
+        enabled = false,
+        -- enabled = true,
+        -- open = true,
+        open = false,
+      },
+      ---@diagnostic disable-next-line: missing-fields
+      output_panel = {
+        open = "tab split",
+      },
 
-        vim.api.nvim_create_user_command("NeoPyArgs", function(opts)
-          local count = opts.fargs[1]
+      -- icons = {
+      --   running = "🏃",
+      --   failed = "✖",
+      --   passed = "✔",
+      --   skipped = "⤵",
+      --   unknown = "",
+      -- },
+    })
+  end,
 
-          if count == "1" then
-            utils.write_to_command_mode(
-              "lua vim.g.__ebnis_neotest_python_args = {}"
-            )
-            return
-          end
-
-          local args_text = "lua vim.g.__ebnis_neotest_python_args = "
-            .. "\\n"
-            .. "{"
-            .. "\\n"
-            .. "}"
-            .. "\\n"
-            .. "\\n"
-            .. '\\"--log-level\\", \\"DEBUG\\",'
-            .. "\\n"
-            .. '\\"--log-level\\", \\"INFO\\",'
-            .. "\\n"
-            .. '\\"-vvv\\",'
-            .. "\\n"
-            .. '\\"--capture\\", \\"no\\",'
-            .. "\\n"
-            .. '\\"--disable-warnings\\",'
-            .. "\\n"
-            .. '\\"--ignore\\",'
-            .. "\\n"
-            .. '\\"--verbosity\\", \\"0\\",'
-
-          local current_args_value_string = '{ "'
-            .. table.concat(
-              vim.g.__ebnis_neotest_python_args,
-              '", "'
-            )
-            .. '" }'
-
-          current_args_value_string =
-            current_args_value_string:gsub('"', '\\"')
-
-          s_utils.RedirMessages(
-            'echo "'
-              .. args_text
-              .. "\\n\\\n"
-              .. current_args_value_string
-              .. '"',
-            "new"
-          )
-        end, { nargs = "*" })
-      end,
-      config = function()
-        local neotest = require("neotest")
-
+  keys = {
+    {
+      "<leader>ntf",
+      function()
+        do_echo("failed")
         ---@diagnostic disable-next-line: missing-fields
-        neotest.setup({
-          adapters = {
-            pytest_adapter(),
-            jest_adapter(),
-            elixir_adapter(),
-          },
-          discovery = {
-            -- Number of workers to parse files concurrently. A value of 0 automatically assigns number based on CPU.
-            -- Set to 1 if experiencing lag.
-            concurrent = 12,
-            -- Drastically improve performance in ginormous projects by only AST-parsing the currently opened buffer.
-            enabled = false,
-            -- enabled = true,
-          },
-          running = {
-            -- Run tests concurrently when an adapter provides multiple commands to run.
-            concurrent = true,
-          },
-          ---@diagnostic disable-next-line: missing-fields
-          summary = {
-            -- Enable/disable animation of icons.
-            animated = false,
-          },
-          -- Set to true to open quickfix window on test failure
-          quickfix = {
-            enabled = false,
-            -- enabled = true,
-            -- open = true,
-            open = false,
-          },
-          ---@diagnostic disable-next-line: missing-fields
-          output_panel = {
-            open = "tab split",
-          },
+        require("neotest").run.run({ status = "failed" })
+      end,
+      desc = "Neotest Failed",
+    },
+    {
+      "<leader>ntt",
+      function()
+        vim.o.background = "dark"
+        local count = vim.v.count
 
-          -- icons = {
-          --   running = "🏃",
-          --   failed = "✖",
-          --   passed = "✔",
-          --   skipped = "⤵",
-          --   unknown = "",
-          -- },
+        if count == 0 then
+          do_echo("At Cursor")
+          require("neotest").run.run()
+          return
+        end
+
+        if count == 1 then
+          do_echo("current file")
+          require("neotest").run.run(vim.fn.expand("%"))
+          return
+        end
+
+        if count == 2 then
+          do_echo("ALL TESTS")
+          require("neotest").run.run(vim.uv.cwd())
+          return
+        end
+      end,
+      desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/debug",
+    },
+    {
+      "<leader>nta",
+      function()
+        do_echo("Attach to floating output.", "")
+        require("neotest").run.attach()
+      end,
+      desc = "Netotest Running?",
+    },
+    {
+      "<leader>ntl",
+      function()
+        do_echo("RNNING LAST")
+        require("neotest").run.run_last()
+      end,
+      desc = "Neotest Run Last",
+    },
+    {
+      "<leader>nts",
+      function()
+        do_echo("Summary toggle", "")
+        require("neotest").summary.toggle()
+      end,
+      desc = "Toggle Summary",
+    },
+    {
+      "<leader>ntO",
+      function()
+        require("neotest").output.open({
+          enter = true,
+          auto_close = true,
         })
       end,
+      desc = "Neotest Show Output",
+    },
+    {
+      "<leader>nto",
+      function()
+        local count = vim.v.count
 
-      keys = {
-        {
-          "<leader>ntf",
-          function()
-            do_echo("failed")
-            ---@diagnostic disable-next-line: missing-fields
-            require("neotest").run.run({ status = "failed" })
-          end,
-          desc = "Neotest Failed",
-        },
-        {
-          "<leader>ntt",
-          function()
-            vim.o.background = "dark"
-            local count = vim.v.count
+        if count == 99 then
+          require("neotest").output_panel.toggle()
+          return
+        end
 
-            if count == 0 then
-              do_echo("At Cursor")
-              require("neotest").run.run()
-              return
-            end
+        local search_text = ""
 
-            if count == 1 then
-              do_echo("current file")
-              require("neotest").run.run(vim.fn.expand("%"))
-              return
-            end
+        if count == 1 then
+          search_text = "========= test session starts ========"
+        elseif count == 2 then
+          search_text = "\\.py[^:]*[FE]" -- fail or error
+        elseif count == 3 then
+          search_text =
+            "=========== \\(FAILURES\\|ERRORS\\) ======================"
+        elseif count == 4 then
+          search_text = "_ .*test_.\\+ _"
+        elseif count == 5 then
+          search_text = "------- Captured "
+        elseif count == 6 then
+          search_text = "ERROR\\s\\+"
+        elseif count == 7 then
+          search_text = "= short test summary info ="
+        elseif count == 8 then
+          search_text =
+            "\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}[^\\d]\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}"
+        end
 
-            if count == 2 then
-              do_echo("ALL TESTS")
-              require("neotest").run.run(vim.uv.cwd())
-              return
-            end
-          end,
-          desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/debug",
-        },
-        {
-          "<leader>nta",
-          function()
-            do_echo("Attach to floating output.", "")
-            require("neotest").run.attach()
-          end,
-          desc = "Netotest Running?",
-        },
-        {
-          "<leader>ntl",
-          function()
-            do_echo("RNNING LAST")
-            require("neotest").run.run_last()
-          end,
-          desc = "Neotest Run Last",
-        },
-        {
-          "<leader>nts",
-          function()
-            do_echo("Summary toggle", "")
-            require("neotest").summary.toggle()
-          end,
-          desc = "Toggle Summary",
-        },
-        {
-          "<leader>ntO",
-          function()
-            require("neotest").output.open({
-              enter = true,
-              auto_close = true,
-            })
-          end,
-          desc = "Neotest Show Output",
-        },
-        {
-          "<leader>nto",
-          function()
-            local count = vim.v.count
+        local to_call = "N"
+        if count == 6 then
+          to_call = "n"
+        end
 
-            if count == 99 then
-              require("neotest").output_panel.toggle()
-              return
-            end
-
-            local search_text = ""
-
-            if count == 1 then
-              search_text =
-                "========= test session starts ========"
-            elseif count == 2 then
-              search_text = "\\.py[^:]*[FE]" -- fail or error
-            elseif count == 3 then
-              search_text =
-                "=========== \\(FAILURES\\|ERRORS\\) ======================"
-            elseif count == 4 then
-              search_text = "_ .*test_.\\+ _"
-            elseif count == 5 then
-              search_text = "------- Captured "
-            elseif count == 6 then
-              search_text = "ERROR\\s\\+"
-            elseif count == 7 then
-              search_text = "= short test summary info ="
-            elseif count == 8 then
-              search_text =
-                "\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}[^\\d]\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}"
-            end
-
-            local to_call = "N"
-            if count == 6 then
-              to_call = "n"
-            end
-
-            vim.cmd({ cmd = "edit", bang = true })
-            vim.fn.setreg("/", search_text)
-            vim.cmd("set hlsearch")
-            pcall(vim.cmd.normal, { to_call, bang = true })
-          end,
-          desc = "<leader>nto Toggle Output Panel 1/session-start 2/.py FE 3/failures/errors 4/__test__ 5/captured",
-        },
-        {
-          "<leader>ntc",
-          function()
-            do_echo("Clear output panel", "")
-            require("neotest").output_panel.clear()
-          end,
-          desc = "Toggle Output Panel",
-        },
-        {
-          "<leader>ntS",
-          function()
-            do_echo("STOP")
-            require("neotest").run.stop()
-          end,
-          desc = "Stop",
-        },
-        {
-          "<leader>ntw",
-          function()
-            do_echo("toggle watch", "")
-            require("neotest").watch.toggle(vim.fn.expand("%"))
-          end,
-          desc = "Neoetst Toggle Watch",
-        },
-      },
+        vim.cmd({ cmd = "edit", bang = true })
+        vim.fn.setreg("/", search_text)
+        vim.cmd("set hlsearch")
+        pcall(vim.cmd.normal, { to_call, bang = true })
+      end,
+      desc = "<leader>nto Toggle Output Panel 1/session-start 2/.py FE 3/failures/errors 4/__test__ 5/captured",
+    },
+    {
+      "<leader>ntc",
+      function()
+        do_echo("Clear output panel", "")
+        require("neotest").output_panel.clear()
+      end,
+      desc = "Toggle Output Panel",
+    },
+    {
+      "<leader>ntS",
+      function()
+        do_echo("STOP")
+        require("neotest").run.stop()
+      end,
+      desc = "Stop",
+    },
+    {
+      "<leader>ntw",
+      function()
+        do_echo("toggle watch", "")
+        require("neotest").watch.toggle(vim.fn.expand("%"))
+      end,
+      desc = "Neoetst Toggle Watch",
     },
   },
 }
