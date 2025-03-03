@@ -341,8 +341,14 @@ return {
           require("neotest").run.run_last()
           return
         end
+
+        if count == 5 then
+          do_echo("STOP")
+          require("neotest").run.stop()
+          return
+        end
       end,
-      desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/failed 4/last",
+      desc = "<leader>ntt Neotest run 0/nearest 1/file 2/ALL 3/failed 4/last 5/stop",
     },
     {
       "<leader>nta",
@@ -367,14 +373,6 @@ return {
         require("neotest").output_panel.clear()
       end,
       desc = "Toggle Output Panel",
-    },
-    {
-      "<leader>ntS",
-      function()
-        do_echo("STOP")
-        require("neotest").run.stop()
-      end,
-      desc = "Stop",
     },
     {
       "<leader>ntw",
