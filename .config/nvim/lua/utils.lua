@@ -618,7 +618,7 @@ utils.go_to_file = function()
   end
 
   local file_path = nil
-  local cfile1, line_number = cfile:match("^(.+)#(%d+)$")
+  local cfile1, line_number = cfile:match("^(.+)#L?(%d+)$")
 
   if cfile1 ~= nil then
     file_path = cfile1
