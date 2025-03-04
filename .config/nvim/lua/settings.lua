@@ -611,12 +611,12 @@ utils.map_key({ "n", "x" }, "<leader>rc", function()
   local count = vim.v.count
   local cmd = "%s///g"
 
-  if count == 0 then
-    cmd = cmd .. "c<left>"
-  end
-
-  if count == 2 then
+  if count == 1 then
     cmd = "%s//" .. utils.get_visual_selection() .. "/g"
+  elseif count == 2 then
+    cmd = cmd .. "c<left>"
+  elseif count == 22 then
+    cmd = "%s//" .. utils.get_visual_selection() .. "/gc<left>"
   end
 
   utils.write_to_command_mode(cmd .. "<left><left>")
