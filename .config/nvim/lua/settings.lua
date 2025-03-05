@@ -480,8 +480,6 @@ utils.map_key("n", ",.", function()
     vim.cmd("vsplit")
   elseif count == 3 then
     vim.cmd("tab split")
-  else
-    vim.cmd("split")
   end
 
   vim.cmd("edit ~/.bashrc")
