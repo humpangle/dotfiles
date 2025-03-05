@@ -1,5 +1,6 @@
 [alias]
   br = branch
+  brsc = branch --show-current
   st = status
   ps = push
   psf = push --force-with-lease
