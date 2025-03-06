@@ -74,13 +74,13 @@ keymap("n", "<Leader>czl", function()
   local count = vim.v.count
 
   if count == 0 then
-    if has_git_stash() then
-      vim.cmd("G stash list")
-    end
+    git_stash_list_fn()()
     return
   end
 
-  git_stash_list_fn()()
+  if has_git_stash() then
+    vim.cmd("G stash list")
+  end
 end, { noremap = true, silent = true, desc = "Git stash list" })
 
 local description_with_count = function(mapping_str)
