@@ -324,10 +324,16 @@ local git_rebase_root_mappings_fn = function()
     utils.write_to_command_mode(
       "G reset --hard " .. vim.fn.expand("<cword>")
     )
-  elseif count == 11 then
-    utils.write_to_command_mode("G rebase ")
-  else
+  elseif count == 9 then
+    utils.write_to_command_mode("G merge main")
+  elseif count == 91 then
+    utils.write_to_command_mode("G merge master")
+  elseif count == 92 then
+    utils.write_to_command_mode("G merge develop")
+  elseif count == 99 then
     utils.write_to_command_mode("G rebase -i ")
+  else
+    utils.write_to_command_mode("G rebase ")
   end
 end
 local git_rebase_root_mappings_desc =
