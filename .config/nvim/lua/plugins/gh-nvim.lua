@@ -8,8 +8,9 @@ local utils = require("utils")
 
 return {
   {
-    -- "ldelossa/gh.nvim",
-    "cosmicbuffalo/gh.nvim", -- use this one fixes https://github.com/ldelossa/gh.nvim/issues/94
+    -- "ldelossa/gh.nvim", -- original
+    -- "cosmicbuffalo/gh.nvim", -- fixes https://github.com/ldelossa/gh.nvim/issues/94
+    "humpangle/gh.nvim", -- my fork
     commit = "73a8bd7",
     dependencies = {
       {
