@@ -20,6 +20,7 @@ return {
     local gitsigns = require("gitsigns")
 
     gitsigns.setup({
+      current_line_blame = true,
       signs = {
         add = { text = "+" },
         change = { text = "~" },
