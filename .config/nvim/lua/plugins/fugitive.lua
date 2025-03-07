@@ -249,11 +249,18 @@ local git_commit_mappings_fn = function()
       "G verify-commit -v " .. vim.fn.expand("<cword>") .. " "
     )
     return
+  -- git branch
   elseif count == 5 then
     local search_text = "[ ./]\\+"
     vim.fn.setreg("/", search_text)
     vim.cmd("set hlsearch")
     pcall(vim.cmd.normal, { "n", bang = true })
+    return
+  elseif count == 51 then
+    local git_head = vim.fn.FugitiveHead()
+    vim.fn.setreg("+", git_head)
+    utils.clip_cmd_exec(git_head)
+    vim.notify("current branch -> " .. git_head)
     return
   else
     cmd = ""
