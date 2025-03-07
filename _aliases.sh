@@ -192,6 +192,7 @@ if command -v nvim &>/dev/null; then
   alias vi='/usr/bin/vim'
   alias vimdiff="nvim -d"
   alias v="nvim"
+  alias vp="_pv -d && _pv && nvim"
   alias v.="nvim ."
   alias sv="sudo -E nvim_sudo_e"
   alias vmin='nvim -u ~/.config/nvim/settings-min.vim'
