@@ -223,6 +223,13 @@ keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
 -- END Git stash related mappings
 
 -- Git commit mappings
+
+local function open_commit(split_cmd)
+  local commit_ish = vim.fn.expand("<cword>")
+  vim.cmd(split_cmd)
+  vim.cmd("Gedit " .. commit_ish)
+end
+
 local git_commit_mappings_fn = function()
   local count = vim.v.count
 
@@ -261,6 +268,15 @@ local git_commit_mappings_fn = function()
     vim.fn.setreg("+", git_head)
     utils.clip_cmd_exec(git_head)
     vim.notify("current branch -> " .. git_head)
+    return
+  -- git show
+  elseif count == 6 then
+    open_commit("split")
+    return
+  elseif count == 62 then
+    return open_commit("vsplit")
+  elseif count == 63 then
+    open_commit("tab split")
     return
   else
     cmd = ""
