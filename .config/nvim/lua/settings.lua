@@ -163,6 +163,19 @@ utils.map_key("n", "yoB", function()
   vim.cmd.echo('"vim.bo.backupcopy=' .. vim.bo.backupcopy .. '"')
 end, { noremap = true, silent = false })
 
+local cwd_spellfile = vim.fn.getcwd()
+  .. "/"
+  .. ".---scratch"
+  .. "."
+  .. vim.o.spelllang
+  .. ".utf-8.add"
+local default_spellfile = vim.fn.stdpath("config")
+  .. "/spell/"
+  .. vim.o.spelllang
+  .. ".utf-8.add"
+
+vim.opt.spellfile = cwd_spellfile .. "," .. default_spellfile
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
