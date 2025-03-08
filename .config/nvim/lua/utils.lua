@@ -672,4 +672,14 @@ utils.get_visual_selection = function()
   return text:gsub("\\%.", "."):gsub("\\/", "/")
 end
 
+local SPLIT_DIRECTIONS = {
+  s = "split",
+  v = "vsplit",
+  t = "tab split",
+}
+
+utils.split_direction = function(text)
+  return SPLIT_DIRECTIONS[text] or "split"
+end
+
 return utils

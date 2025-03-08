@@ -748,6 +748,31 @@ utils.map_key("n", ",rd", utils.DeleteFile("d"), { noremap = true })
 
 utils.map_key("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
+local function send_to_term_with_slime(split_direction)
+  local current_buf = vim.api.nvim_get_current_buf()
+
+  -- Yank current paragraph
+  vim.cmd("normal! yip")
+  local paragraph = vim.fn.getreg('"')
+
+  vim.cmd(utils.split_direction(split_direction))
+  vim.cmd("term")
+
+  vim.b[current_buf].slime_config = {
+    jobid = vim.b.terminal_job_id, -- neovim terminal job id
+  }
+  vim.b[current_buf].slime_target = "neovim"
+
+  -- Switch back to the original buffer to make slime work
+  if split_direction == "t" then
+    vim.cmd.normal({ "gT" })
+  else
+    vim.cmd.wincmd("p")
+  end
+
+  vim.fn["slime#send"](paragraph)
+end
+
 -- Terminal in new tab/split
 utils.map_key("n", ",tt", function()
   local count = vim.v.count
@@ -756,6 +781,15 @@ utils.map_key("n", ",tt", function()
     vim.cmd("vertical split")
   elseif count == 3 then
     vim.cmd("tab split")
+  elseif count == 9 then
+    send_to_term_with_slime()
+    return
+  elseif count == 92 then
+    send_to_term_with_slime("v")
+    return
+  elseif count == 93 then
+    send_to_term_with_slime("t")
+    return
   else
     vim.cmd("split")
   end
