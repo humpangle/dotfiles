@@ -203,14 +203,12 @@ function utils.DeleteAllBuffers(delete_flag)
   for _, buf_num in ipairs(vim.api.nvim_list_bufs()) do
     local b_name = vim.fn.bufname(buf_num)
 
-    if delete_flag == "dbui" and (string.match(b_name, ".dbout")) then
+    if string.match(b_name, ".dbout") then
       -- or string.match(b_name, "share/db_ui/")
       table.insert(dbui_buffers, buf_num)
-    elseif
-      delete_flag == "fugitive" and utils.is_fugitive_buffer(b_name)
-    then
+    elseif utils.is_fugitive_buffer(b_name) then
       table.insert(fugitive_buffers, buf_num)
-    elseif delete_flag == "dap" and utils.is_dap_buffer(b_name) then
+    elseif utils.is_dap_buffer(b_name) then
       table.insert(dap_buffers, buf_num)
     elseif is_deleteable_unlisted_buffer(b_name, buf_num) then
       table.insert(no_name_buffers, buf_num)
@@ -251,7 +249,9 @@ function utils.DeleteAllBuffers(delete_flag)
     wipeout_buffers(dap_buffers)
   end
 
-  vim.cmd.echo("'" .. index_ .. " buffers wiped!'")
+  vim.cmd.echo(
+    "'" .. index_ .. ' buffers wiped with flag "' .. delete_flag .. "\" !'"
+  )
 end
 
 local function is_terminal_buffer()
