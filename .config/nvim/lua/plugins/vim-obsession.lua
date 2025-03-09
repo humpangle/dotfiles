@@ -29,9 +29,7 @@ return {
       elseif count == 2 then
         utils.write_to_command_mode("Obsession session.vim")
       else
-        utils.write_to_command_mode(
-          "Obsession session"
-        )
+        utils.write_to_command_mode("Obsession session")
       end
     end)
   end,
