@@ -245,10 +245,28 @@ return {
       })
 
       ---@diagnostic disable: missing-fields
-      map_key("n", "<leader>da=", function()
-        dapui.eval(nil, { enter = true })
+      map_key({ "n", "x" }, "<leader>da=", function()
+        if vim.v.count == 0 then
+          dapui.eval(nil, { enter = true })
+          return
+        end
+
+        local lines = ""
+        local mode = vim.fn.mode()
+
+        if mode == "n" then
+          vim.cmd("normal! vgny")
+          lines = vim.fn.getreg('"')
+        else
+          local lines_table =
+            vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
+          lines = table.concat(lines_table, "\n")
+        end
+
+        dap.repl.open()
+        dap.repl.execute(lines)
       end, {
-        desc = "DAP: Inspect current value - eval under cursor",
+        desc = "DAP: 0/eval under cursor 2/send region to repl",
       })
 
       map_key("n", "<leader>da0", function()
@@ -284,25 +302,6 @@ return {
         dap.step_back()
       end, {
         desc = "DAP: step_back",
-      })
-
-      map_key({ "n", "x" }, "<leader>dap", function()
-        local lines = ""
-        local mode = vim.fn.mode()
-
-        if mode == "n" then
-          vim.cmd("normal! vgny")
-          lines = vim.fn.getreg('"')
-        else
-          local lines_table =
-            vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
-          lines = table.concat(lines_table, "\n")
-        end
-
-        dap.repl.open()
-        dap.repl.execute(lines)
-      end, {
-        desc = "DAP: send variable to repl",
       })
 
       -- Dap UI setup
