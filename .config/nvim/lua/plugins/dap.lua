@@ -192,6 +192,7 @@ return {
           "js",
           -- 'chrome',
           "bash",
+          "php",
         },
 
         automatic_installation = true,
