@@ -682,4 +682,23 @@ utils.split_direction = function(text)
   return SPLIT_DIRECTIONS[text] or "split"
 end
 
+utils.write_to_out_file = function()
+  local filename = utils.create_slime_dir()
+    .. "/---out-file-"
+    .. os.date("%s")
+
+  local readonly = vim.bo.readonly
+  -- local buftype = vim.bo.buftype
+
+  vim.bo.readonly = false
+  vim.bo.buftype = ""
+
+  pcall(function()
+    vim.cmd("saveas! " .. vim.fn.fnameescape(filename))
+  end)
+
+  vim.bo.readonly = readonly
+  -- vim.bo.buftype = buftype
+end
+
 return utils

@@ -395,7 +395,8 @@ keymap("n", "<leader>gg", function()
   end
 
   if count == 11 then
-    vim.cmd("Git log")
+    vim.cmd("Wmessage !git log")
+    utils.write_to_out_file()
     return
   end
 
