@@ -9,7 +9,7 @@ local utils = require("utils")
 local map_key = utils.map_key
 
 local function do_echo(text)
-  vim.cmd.echo('"' .. "DAP " .. text .. '"')
+  vim.cmd.echo('"' .. "DAP: " .. text .. '"')
 end
 
 local list_breakpoints_in_qickfix = function()
@@ -201,24 +201,36 @@ return {
       -- Basic debugging keymaps, feel free to change to your liking!
 
       -- STARTING / STOPPING / SHOWING DAP UI
-      map_key("n", "<leader>daa", dap.continue, {
-        desc = "DAP: continue",
+      map_key("n", "<leader>daa", function()
+        do_echo("continue")
+        dap.continue()
+      end, {
+        desc = "continue",
       })
 
-      map_key("n", "<leader>dax", dap.close, {
-        desc = "DAP: close",
+      map_key("n", "<leader>dax", function()
+        do_echo("close")
+        dap.close()
+      end, {
+        desc = "close",
       })
 
-      map_key("n", "<leader>dat", dapui.toggle, {
-        desc = "DAP: UI toggle",
+      map_key("n", "<leader>dat", function()
+        do_echo("UI Toggle")
+        dapui.toggle()
+      end, {
+        desc = "UI toggle",
       })
 
-      map_key("n", "<leader>daT", dap.terminate, {
-        desc = "DAP: Terminate",
+      map_key("n", "<leader>daT", function()
+        do_echo("terminate")
+        dap.terminate()
+      end, {
+        desc = "Terminate",
       })
 
       map_key("n", "<leader>dar", dap.restart, {
-        desc = "DAP: restart",
+        desc = "restart",
       })
       -- /END STARTING / STOPPING / SHOWING DAP UI
 
