@@ -6,7 +6,7 @@ if not plugin_enabled.dap() then
 end
 
 local utils = require("utils")
-local map_key = utils.map_key
+local map_lazy_key = utils.map_lazy_key
 
 local function do_echo(text)
   vim.cmd.echo('"' .. "DAP: " .. text .. '"')
@@ -112,6 +112,127 @@ return {
       "DapVirtualTextForceRefresh",
       "DapVirtualTextToggle",
     },
+    keys = {
+      map_lazy_key("<leader>daa", function()
+        do_echo("continue")
+        require("dap").continue()
+      end, {
+        desc = "continue",
+      }),
+
+      map_lazy_key("<leader>dab", function()
+        local dap = require("dap")
+        local count = vim.v.count
+
+        if count == 0 then
+          dap.toggle_breakpoint()
+        elseif count == 1 then
+          local prompt = vim.fn.input("Breakpoint condition: ")
+          dap.set_breakpoint(prompt)
+        elseif count == 2 then
+          dap.clear_breakpoints()
+          vim.notify("All Breakpoints Cleared!")
+        elseif count == 3 then
+          gotoBreakpoint("next")
+        elseif count == 4 then
+          gotoBreakpoint("prev")
+        elseif count == 5 then
+          list_breakpoints_in_qickfix()
+        end
+      end, {
+        desc = "DAP: breakpoints 0/toggle 1/cond 2/clear 3/next 4/prev 5/list",
+      }),
+
+      map_lazy_key("<leader>da=", function()
+        local dap = require("dap")
+        local dapui = require("dapui")
+
+        if vim.v.count == 0 then
+          ---@diagnostic disable: missing-fields
+          dapui.eval(nil, { enter = true })
+          return
+        end
+
+        local lines = ""
+        local mode = vim.fn.mode()
+
+        if mode == "n" then
+          vim.cmd("normal! vgny")
+          lines = vim.fn.getreg('"')
+        else
+          local lines_table =
+            vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
+          lines = table.concat(lines_table, "\n")
+        end
+
+        dap.repl.open()
+        dap.repl.execute(lines)
+      end, { "n", "x" }, {
+        desc = "DAP: 0/eval under cursor 2/send region to repl",
+      }),
+
+      map_lazy_key("<leader>dax", function()
+        do_echo("close")
+        require("dap").close()
+      end, {
+        desc = "close",
+      }),
+
+      map_lazy_key("<leader>dat", function()
+        do_echo("UI Toggle")
+        require("dapui").toggle()
+      end, {
+        desc = "UI toggle",
+      }),
+
+      map_lazy_key("<leader>daT", function()
+        do_echo("terminate")
+        require("dap").terminate()
+      end, {
+        desc = "Terminate",
+      }),
+
+      map_lazy_key("<leader>dar", function()
+        require("dap").restart()
+      end, {
+        desc = "restart",
+      }),
+
+      map_lazy_key("<leader>da0", function()
+        do_echo("run to cursor")
+        require("dap").run_to_cursor()
+      end, {
+        desc = "DAP: Run to cursor",
+      }),
+
+      map_lazy_key("<leader>da1", function()
+        do_echo("step into")
+        require("dap").step_into()
+      end, {
+        desc = "DAP: step_into",
+      }),
+
+      map_lazy_key("<leader>da2", function()
+        do_echo("step over")
+        require("dap").step_over()
+      end, {
+        desc = "DAP: step_over",
+      }),
+
+      map_lazy_key("<leader>da3", function()
+        do_echo("step out")
+        require("dap").step_out()
+      end, {
+        desc = "DAP: step_out",
+      }),
+
+      map_lazy_key("<leader>da4", function()
+        do_echo("step back")
+        require("dap").step_back()
+      end, {
+        desc = "DAP: step_back",
+      }),
+    },
     dependencies = {
       {
         "williamboman/mason.nvim",
@@ -197,124 +318,6 @@ return {
 
         automatic_installation = true,
         handlers = nil,
-      })
-
-      -- Basic debugging keymaps, feel free to change to your liking!
-
-      -- STARTING / STOPPING / SHOWING DAP UI
-      map_key("n", "<leader>daa", function()
-        do_echo("continue")
-        dap.continue()
-      end, {
-        desc = "continue",
-      })
-
-      map_key("n", "<leader>dax", function()
-        do_echo("close")
-        dap.close()
-      end, {
-        desc = "close",
-      })
-
-      map_key("n", "<leader>dat", function()
-        do_echo("UI Toggle")
-        dapui.toggle()
-      end, {
-        desc = "UI toggle",
-      })
-
-      map_key("n", "<leader>daT", function()
-        do_echo("terminate")
-        dap.terminate()
-      end, {
-        desc = "Terminate",
-      })
-
-      map_key("n", "<leader>dar", dap.restart, {
-        desc = "restart",
-      })
-      -- /END STARTING / STOPPING / SHOWING DAP UI
-
-      map_key("n", "<leader>dab", function()
-        local count = vim.v.count
-
-        if count == 0 then
-          dap.toggle_breakpoint()
-        elseif count == 1 then
-          local prompt = vim.fn.input("Breakpoint condition: ")
-          dap.set_breakpoint(prompt)
-        elseif count == 2 then
-          dap.clear_breakpoints()
-          vim.notify("All Breakpoints Cleared!")
-        elseif count == 3 then
-          gotoBreakpoint("next")
-        elseif count == 4 then
-          gotoBreakpoint("prev")
-        elseif count == 5 then
-          list_breakpoints_in_qickfix()
-        end
-      end, {
-        desc = "DAP: breakpoints 0/toggle 1/cond 2/clear 3/next 4/prev 5/list",
-      })
-
-      ---@diagnostic disable: missing-fields
-      map_key({ "n", "x" }, "<leader>da=", function()
-        if vim.v.count == 0 then
-          dapui.eval(nil, { enter = true })
-          return
-        end
-
-        local lines = ""
-        local mode = vim.fn.mode()
-
-        if mode == "n" then
-          vim.cmd("normal! vgny")
-          lines = vim.fn.getreg('"')
-        else
-          local lines_table =
-            vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
-          lines = table.concat(lines_table, "\n")
-        end
-
-        dap.repl.open()
-        dap.repl.execute(lines)
-      end, {
-        desc = "DAP: 0/eval under cursor 2/send region to repl",
-      })
-
-      map_key("n", "<leader>da0", function()
-        do_echo("run to cursor")
-        dap.run_to_cursor()
-      end, {
-        desc = "DAP: Run to cursor",
-      })
-
-      map_key("n", "<leader>da1", function()
-        do_echo("step into")
-        dap.step_into()
-      end, {
-        desc = "DAP: step_into",
-      })
-
-      map_key("n", "<leader>da2", function()
-        do_echo("step over")
-        dap.step_over()
-      end, {
-        desc = "DAP: step_over",
-      })
-
-      map_key("n", "<leader>da3", function()
-        do_echo("step out")
-        dap.step_out()
-      end, {
-        desc = "DAP: step_out",
-      })
-
-      map_key("n", "<leader>da4", function()
-        do_echo("step back")
-        dap.step_back()
-      end, {
-        desc = "DAP: step_back",
       })
 
       -- Dap UI setup

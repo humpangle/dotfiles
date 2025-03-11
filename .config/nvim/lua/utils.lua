@@ -359,6 +359,33 @@ function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
   vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
 
+function utils.map_lazy_key(mapping_str, command_to_map_to, mode, opts)
+  mode = mode or "n"
+  opts = opts or { desc = "" }
+
+  -- We prepend the keymap (left) and mode to the description so when we search with description as search term, the
+  -- keymap also shows up.
+  opts.desc = mapping_str
+    .. " "
+    .. vim.inspect(mode)
+    .. " "
+    .. (opts.desc or "")
+
+  -- https://lazy.folke.io/spec/lazy_loading#%EF%B8%8F-lazy-key-mappings
+  local entry = {
+    mapping_str,
+    command_to_map_to,
+    mode,
+    opts,
+  }
+
+  for k, v in pairs(opts) do
+    entry[k] = v
+  end
+
+  return entry
+end
+
 function utils.write_to_command_mode(string)
   -- Prepend ':' to enter command mode, don't append '<CR>' to avoid executing
   -- Use 't' flag in feedkeys to interpret keys as if typed by the user
