@@ -871,24 +871,7 @@ utils.map_key(
   { noremap = true, silent = true, desc = "Insert datetime" }
 )
 
-utils.map_key({ "n", "x" }, "<leader>WW", function()
-  local filename = utils.create_slime_dir()
-    .. "/---out-file-"
-    .. os.date("%s")
-
-  local readonly = vim.bo.readonly
-  -- local buftype = vim.bo.buftype
-
-  vim.bo.readonly = false
-  vim.bo.buftype = ""
-
-  pcall(function()
-    vim.cmd("saveas! " .. vim.fn.fnameescape(filename))
-  end)
-
-  vim.bo.readonly = readonly
-  -- vim.bo.buftype = buftype
-end, {
+utils.map_key({ "n", "x" }, "<leader>WW", utils.write_to_out_file, {
   noremap = true,
   silent = true,
   desc = "Save file to scratch file.",
