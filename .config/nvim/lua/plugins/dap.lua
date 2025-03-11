@@ -393,6 +393,30 @@ return {
         list_breakpoints_in_qickfix,
         { nargs = "*" }
       )
+
+      -- This is the executable that the vscode-php-debug extension provides
+      dap.adapters.php = {
+        type = "executable",
+        -- command = vim.fn.stdpath('data') .. "/mason/bin/php-debug-adapter",
+        command = vim.fn.exepath("php-debug-adapter"), -- same as above
+        -- command = "node",
+        -- args = {
+        --   "/ome-path/vscode-php-debug/out/phpDebug.js",
+        -- },
+      }
+
+      -- dap.configurations.php = {
+      --   {
+      --     name = "Listen for Xdebug",
+      --     type = "php", -- Must match the adapter definition’s key
+      --     request = "launch",
+      --     port = 9003, -- Must match xdebug.client_port
+      --     -- Map code in the container to code on your host
+      --     pathMappings = {
+      --       ["/data/docroot/web"] = "${workspaceFolder}/web",
+      --     },
+      --   },
+      -- }
     end,
   },
 }
