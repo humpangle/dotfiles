@@ -111,13 +111,13 @@ return {
     map_key("n", "<leader>dbw", function()
       local count = vim.v.count
 
-      if count == 1 then
+      if count == 2 then
         vim.cmd({ cmd = "wa", bang = true })
         vim.cmd("DbUiDelete")
         return
       end
 
-      if count == 2 then
+      if count == 1 then
         vim.cmd.normal({ "vip" })
 
         utils.write_to_command_mode("'<,'>Neoformat! sql<CR>")
