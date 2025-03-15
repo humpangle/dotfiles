@@ -608,9 +608,8 @@ install_neovim() {
   asdf install neovim latest
   asdf set -u neovim "$(asdf list neovim)"
 
-  if [[ ! -d ~/.fzf ]]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --all
+  if [[ ! -d "$HOME/.fzf" ]]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
   fi
 
   install_bat

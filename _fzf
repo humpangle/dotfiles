@@ -4,9 +4,9 @@ if [ ! -d "$HOME/.fzf" ]; then
   return
 fi
 
-if [[ -e ~/.fzf.bash ]]; then
+if [[ -e "$HOME/.fzf.bash" ]]; then
   # shellcheck source=/dev/null
-  source ~/.fzf.bash
+  source "$HOME/.fzf.bash"
 
   # Set up fzf key bindings and fuzzy completion
   eval "$(fzf --bash)"
