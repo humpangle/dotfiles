@@ -573,7 +573,7 @@ utils.create_slime_dir = function()
   local slime_dir = vim.fn.getcwd() .. "/.___scratch"
   local slime_dir_obj = PlenaryPath:new(slime_dir)
 
-  local timestamp = os.date("%s")
+  local timestamp = os.date("%FT%H-%M-%S")
 
   -- if there is a file (not directory) at this path, rename it so we can create a directory with same name below.
   if slime_dir_obj:is_file() then
@@ -712,7 +712,7 @@ end
 utils.write_to_out_file = function()
   local filename = utils.create_slime_dir()
     .. "/---out-file-"
-    .. os.date("%s")
+    .. os.date("%FT%H-%M-%S")
 
   local readonly = vim.bo.readonly
   -- local buftype = vim.bo.buftype
