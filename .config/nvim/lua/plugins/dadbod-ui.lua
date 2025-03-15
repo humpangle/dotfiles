@@ -117,6 +117,13 @@ return {
         return
       end
 
+      if count == 2 then
+        vim.cmd.normal({ "vip" })
+
+        utils.write_to_command_mode("'<,'>Neoformat! sql<CR>")
+        return
+      end
+
       local buffer_name = vim.fn.expand("%:p")
       if not match_vim_dadbod_ui_temp_query_file(buffer_name) then
         return
