@@ -809,8 +809,8 @@ install_vifm() {
     sudo apt-get install -y `# I need to determine minimum deps for building vifm.` \
       curl \
       g++ \
-      ca-certificates
-    gnupg \
+      ca-certificates \
+      gnupg \
       build-essential \
       make \
       libevent-dev \
