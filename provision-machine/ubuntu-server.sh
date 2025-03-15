@@ -491,7 +491,6 @@ install-asdf-postgres() {
       ;;
     v)
       version_="$2"
-      shift
       ;;
 
     *)
@@ -500,6 +499,7 @@ install-asdf-postgres() {
       ;;
     esac
   done
+  shift $((OPTIND - 1))
 
   if [[ -z "$_version" ]]; then
     _version="$(
