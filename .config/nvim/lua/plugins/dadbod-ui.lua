@@ -129,28 +129,27 @@ return {
         return
       end
 
-      vim.bo.modifiable = true
-      vim.bo.filetype = "markdown"
-
-      local db_ui_dir = "~/.local/share/db_ui"
-      vim.fn.mkdir(db_ui_dir, "p")
-
-      local timestamp = os.date("%FT%H-%M-%S")
-      local new_name = db_ui_dir
-        .. "/zz_query-result--"
-        .. timestamp
+      local filename = utils.create_slime_dir()
+        .. "/q-"
+        .. os.date("%FT%H-%M-%S")
         .. ".md"
 
-      vim.cmd.saveas({ vim.fn.fnameescape(new_name), bang = true })
+      pcall(function()
+        vim.cmd("saveas! " .. vim.fn.fnameescape(filename))
+      end)
 
-      vim.cmd("e %")
+      vim.bo.filetype = "markdown"
+      -- The file will be of type 'dbui'. The delete action below will delete all files of this type.
+      vim.bo.buftype = ""
+
+      os.execute("rm -rf " .. vim.fn.shellescape(buffer_name))
       vim.cmd("bdelete! " .. buffer_name)
-      -- The keymap `dbW` saves the db_ui sql file and deletes all db ui reuslt buffers. But noticeably, it will close
-      -- the window where the latest result was written to. Thus we split that window vertically so that when the
-      -- latest written to window is closed, we get the other split.
-      vim.cmd("vsplit")
       vim.cmd({ cmd = "wa", bang = true })
       vim.cmd("DbUiDelete")
+
+      -- dbui file is always readonly -  make it modifiable
+      vim.bo.modifiable = true
+      vim.cmd("e %")
     end, {
       noremap = true,
       desc = "DBUI save result buffer 1/DbUiDelete",
