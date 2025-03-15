@@ -50,14 +50,6 @@ TMUX_DEPS=(
   'xclip'
 )
 
-# Shellcheck check bash/shell files for syntax/style errors
-NEOVIM_DEPS=(
-  'xclip'
-  'shellcheck'
-  'ssh-askpass-gnome'
-  'ssh-askpass'
-)
-
 NODEJS_DEPS=(
   'python3'
   'g++'
@@ -216,7 +208,6 @@ function _update-and-upgrade-os-packages {
       deps="${LUA_DEPS[*]} \
         ${RUST_DEPS[*]} \
         ${TMUX_DEPS[*]} \
-        ${NEOVIM_DEPS[*]} \
         ${NODEJS_DEPS[*]} \
         ${PYTHON_DEPS[*]} \
         ${GOLANG_DEPS[*]} "
@@ -294,46 +285,6 @@ _install_erlang_os_deps() {
     _install-deps "${ERLANG_DEPS[*]}"
     sudo apt-get autoremove -y
   fi
-}
-
-_install_neovim_linux_x86() {
-  _echo "Removing existing neovim from /usr/bin/nvim"
-  sudo rm -rf /usr/bin/nvim
-
-  _echo "Downloading build packages"
-  sudo apt install -y \
-    git build-essential cmake ninja-build pkg-config libtool libtool-bin autoconf automake gettext curl
-
-  local this_dir_="$PWD"
-  _echo "Cached current working directory: $this_dir_"
-
-  _echo "Entering project 0 directory $PROJECT_0_PATH"
-  cd "$PROJECT_0_PATH"
-
-  _echo "Cloning neovim from https://github.com/neovim/neovim.git"
-  git clone https://github.com/neovim/neovim.git
-
-  _echo "Changing directory into neovim."
-  cd neovim
-
-  _echo "Caching neovim download directory: $PWD"
-  local neovim_download_dir_="$PWD"
-
-  _echo "Git checkout latest stable version"
-  git checkout stable
-
-  _echo "Running make CMAKE_BUILD_TYPE=RelWithDebInfo"
-  make CMAKE_BUILD_TYPE=RelWithDebInfo
-
-  _echo "Building neovim"
-  cd build
-  cpack -G DEB
-  sudo dpkg -i nvim-linux64.deb
-
-  cd "$this_dir_"
-
-  _echo "Removing neovim download directory"
-  sudo rm -rf "$neovim_download_dir_"
 }
 
 _install_tmux_plugins() {
@@ -653,17 +604,9 @@ install_tmux() {
 install_neovim() {
   : "Install neovim"
 
-  if _is_darwin; then
-    brew install neovim
-  elif _is_arm_hardware; then
-    sudo snap install nvim --classic
-  else
-    _install_neovim_linux_x86 "$@"
-  fi
-
-  if ! _is-dev "$@"; then
-    _install-deps "${NEOVIM_DEPS[*]}"
-  fi
+  asdf plugin add neovim
+  asdf install neovim latest
+  asdf set -u neovim "$(asdf list neovim)"
 
   if [[ ! -d ~/.fzf ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
