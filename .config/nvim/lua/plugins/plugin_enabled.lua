@@ -196,6 +196,38 @@ function M.isort()
   return utils.get_os_env_or_nil("NVIM_ENABLE_PYTHON_ISORT") == "1"
 end
 
+function M.bash_lsp()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_BASH_LSP") == "1"
+end
+
+function M.json_ls()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_JSON_LSP") == "1"
+end
+
+function M.sql_ls()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_SQL_LSP") == "1"
+end
+
+function M.python()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_PYTHON_PLUGINS") == "1"
+end
+
 function M.isort_auto()
   if M.has_vscode() then
     return false

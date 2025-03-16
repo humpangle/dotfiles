@@ -3,6 +3,11 @@
 local utils = require("utils")
 local plugin_enabled = require("plugins/plugin_enabled")
 
+
+if not plugin_enabled.python() then
+  return {}
+end
+
 return {
   {
     -- https://github.com/psf/black
@@ -27,24 +32,24 @@ return {
     end,
   },
   plugin_enabled.isort()
-      and {
-        -- https://github.com/fisadev/vim-isort
-        "fisadev/vim-isort",
-        ft = "python",
-        config = function()
-          -- Disable default key binding
-          vim.g.vim_isort_map = ""
+  and {
+    -- https://github.com/fisadev/vim-isort
+    "fisadev/vim-isort",
+    ft = "python",
+    config = function()
+      -- Disable default key binding
+      vim.g.vim_isort_map = ""
 
-          if plugin_enabled.isort_auto() then
-            -- Automatically format file buffer when saving
-            vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-              pattern = "*.py",
-              callback = function()
-                vim.cmd("Isort")
-              end,
-            })
-          end
-        end,
-      }
-    or {},
+      if plugin_enabled.isort_auto() then
+        -- Automatically format file buffer when saving
+        vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+          pattern = "*.py",
+          callback = function()
+            vim.cmd("Isort")
+          end,
+        })
+      end
+    end,
+  }
+  or {},
 }

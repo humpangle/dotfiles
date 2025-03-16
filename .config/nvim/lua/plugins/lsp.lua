@@ -285,49 +285,28 @@ return {
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 
-        bashls = {},
-
-        jsonls = {
-          settings = {
-            json = {
-              validate = {
-                -- Validation is enabled by default in jsonls. But if an option is overriden (which we have done in order
-                -- to use schemastore plugin since jsonls does not download schemas like yamlls) all other options are
-                -- unset. Other LSP plugins do not exhibit this behavior (i.e. if you override one, others are left
-                -- untouched).
-                enable = true,
-              },
-
-              schemas = require("schemastore").json.schemas({
-                select = {
-                  "package.json",
-                  "GitHub Workflow Template Properties",
-                },
-              }),
-            },
-          },
-        },
-
         html = {},
       }
 
       servers = vim.tbl_extend(
         "error",
         servers,
-        require("plugins.lsp.python-lsp"),
-        require("plugins.lsp.elixir"),
-        (plugin_enabled.docker_lsp() and { dockerls = {} } or {}),
+        (plugin_enabled.bash_lsp() and { bashls = {} } or {}),
         (plugin_enabled.terraform_lsp() and { terraformls = {} } or {}),
         (
           plugin_enabled.tailwindcss_lsp()
             and { tailwindcss = {} }
           or {}
         ),
+        require("plugins.lsp.json"),
+        require("plugins.lsp.python-lsp"),
+        require("plugins.lsp.elixir"),
+        require("plugins.lsp.docker"),
         require("plugins.lsp.emmet"),
         require("plugins.lsp.typescript"),
         yamlls_config.config_from_yaml_companion_plugin(),
         require("plugins.lsp.php"),
-        require("plugins.lsp.mason-ensure-installed")
+        require("plugins.lsp.sql")
       )
 
       if not plugin_enabled.has_termux() then
@@ -365,6 +344,7 @@ return {
         ensure_installed = ensure_installed,
       })
 
+      ---@diagnostic disable-next-line: missing-fields
       require("mason-lspconfig").setup({
         handlers = {
           function(server_name)

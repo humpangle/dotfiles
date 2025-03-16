@@ -1,3 +1,9 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
+if not plugin_enabled.python() then
+  return {}
+end
+
 -- basedpyright = {
 
 return {
