@@ -1110,6 +1110,11 @@ eof
 }
 
 install-nodejs() {
+  : "___alias___ install_nodejs"
+  install_nodejs "$@"
+}
+
+install_nodejs() {
   : "___help___ ___nodejs-help"
 
   local version
