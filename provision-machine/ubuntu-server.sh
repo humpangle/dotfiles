@@ -686,15 +686,34 @@ install_tmux() {
   _install_tmux_plugins "$@"
 }
 
+install-neovim() {
+  : "___alias___ install_neovim"
+  install_neovim
+}
+
 install_neovim() {
   : "Install neovim"
 
+  _echo "Installing neovim"
+
+  install_asdf
   asdf plugin add neovim
   asdf install neovim latest
   asdf set -u neovim "$(asdf list neovim)"
 
+  mkdir -p "$HOME/.config"
+
+  if [[ -d "$DOTFILE_ROOT" ]]; then
+    local _dest="$HOME/.config/nvim"
+    local _source="$DOTFILE_ROOT/.config/nvim"
+
+    _echo "Linking $_source to $_dest."
+    ln -s "$_source" "$_dest"
+  fi
+
   if [[ ! -d "$HOME/.fzf" ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+    "$HOME/.fzf/install" --all
   fi
 
   install_bat
