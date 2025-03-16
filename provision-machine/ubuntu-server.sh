@@ -19,7 +19,7 @@ RUST_VERSION="1.65.0"
 # -----------------------------------------------------------------------------
 
 BASH_APPEND_PATH="${HOME}/__bash-append.sh"
-LOCAL_BIN_PATH="$HOME/.local/bin"
+LOCAL_BIN="$HOME/.local/bin"
 
 PROJECT_0_PATH="$HOME/projects/0"
 mkdir -p "$PROJECT_0_PATH"
@@ -133,8 +133,8 @@ function _echo {
 }
 
 function _write-local-bin-path-to-paths {
-  if ! grep -q "PATH=.*${LOCAL_BIN_PATH}" "$HOME/.bashrc"; then
-    echo "export PATH=${LOCAL_BIN_PATH}:\$PATH" >>"$HOME/.bashrc"
+  if ! grep -q "PATH=.*${LOCAL_BIN}" "$HOME/.bashrc"; then
+    echo "export PATH=${LOCAL_BIN}:\$PATH" >>"$HOME/.bashrc"
   fi
 }
 
@@ -706,14 +706,14 @@ function install-bins {
 
   sudo apt-get update
 
-  mkdir -p "${LOCAL_BIN_PATH}"
+  mkdir -p "${LOCAL_BIN}"
 
   _write-local-bin-path-to-paths
 
   declare -a local_bin_scripts=(p-env ebnis-save-tmux.sh)
 
   for _script in "${local_bin_scripts[@]}"; do
-    local _script_output_path="${LOCAL_BIN_PATH}/${_script}"
+    local _script_output_path="${LOCAL_BIN}/${_script}"
 
     curl -fLo "${_script_output_path}" \
       "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/scripts/${_script}"
@@ -1411,7 +1411,7 @@ function setup-dev {
   install_vifm dev
   install-chrome
 
-  mkdir -p "${LOCAL_BIN_PATH}" \
+  mkdir -p "${LOCAL_BIN}" \
     ~/.ssh \
     ~/.config \
     ~/.vifm \
@@ -1967,7 +1967,7 @@ function install-kind {
     "https://github.com/kubernetes-sigs/kind/releases/download/$_latest_version/kind-linux-amd64"
 
   chmod 755 ./kind
-  mv ./kind "$LOCAL_BIN_PATH"
+  mv ./kind "$LOCAL_BIN"
 
   cd - &>/dev/null
 }
@@ -1988,7 +1988,7 @@ function install-kubectl {
   _echo "kubectl downloaded, moving to local bin."
 
   chmod 755 kubectl
-  mv kubectl "$LOCAL_BIN_PATH"
+  mv kubectl "$LOCAL_BIN"
 
   _echo "Installing bash completion for kubectl"
 
@@ -2017,7 +2017,7 @@ function install-helm {
   tar xvzf "$_filename"
 
   chmod +x "$_dirname/helm"
-  mv "$_dirname/helm" "$LOCAL_BIN_PATH"
+  mv "$_dirname/helm" "$LOCAL_BIN"
 
   rm -rf "$_dirname" "$_filename"
 
@@ -2042,7 +2042,7 @@ function install_shfmt {
 
   _echo "Installing shfmt version \"$shfmt_version\""
 
-  mkdir -p "${LOCAL_BIN_PATH}"
+  mkdir -p "${LOCAL_BIN}"
 
   rm -rf "$HOME/.local/bin/shfmt"
 
