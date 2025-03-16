@@ -146,6 +146,67 @@ function _wsl-setup {
     mv wsl.conf /etc/wsl.conf
 }
 
+install-asdf() {
+  : "___alias___ install_asdf"
+  install_asdf "${@}"
+}
+
+install_asdf() {
+  _echo "Installing asdf"
+
+  local arg_=""
+  local force_=""
+
+  while getopts ":hf" arg_; do
+    case "$arg_" in
+    h)
+      echo ""
+      return
+      ;;
+    f)
+      force_=1
+      ;;
+    *)
+      echo "Unknown option \"$OPTARG\" "
+      exit 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  if [ -z "$force_" ] && command -v asdf &>/dev/null; then
+    return
+  fi
+
+  if _is_darwin; then
+    brew install asdf
+    return
+  fi
+
+  run_as_root \
+    apt-get install \
+    --no-install-recommends -y \
+    dirmngr \
+    gpg \
+    gawk
+
+  local version_=""
+  version_="$(get_latest_github_release asdf-vm/asdf)"
+
+  local archi_="linux-amd64"
+
+  if _is_arm_hardware; then
+    archi_="linux-arm64"
+  fi
+
+  curl -Lo asdf.tar.gz \
+    "https://github.com/asdf-vm/asdf/releases/download/$version_/asdf-$version_-$archi_.tar.gz"
+
+  tar -xzf asdf.tar.gz
+  rm -rf asdf.tar.gz
+  mv asdf "$LOCAL_BIN"
+}
+
 function _asdf-plugin-install-root {
   local plugin="$1"
   local version="$2"
