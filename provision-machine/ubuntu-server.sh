@@ -142,7 +142,8 @@ function _wsl-setup {
   curl -fLO \
     "$DOTFILE_GIT_DOWNLOAD_URL_PREFIX/etc/wsl.conf"
 
-  sudo mv wsl.conf /etc/wsl.conf
+  run_as_root \
+    mv wsl.conf /etc/wsl.conf
 }
 
 function _asdf-plugin-install-root {
@@ -166,7 +167,8 @@ function _setup-wsl-home {
     return
   fi
 
-  sudo cp ~/dotfiles/etc/wsl.conf /etc/wsl.conf
+  run_as_root \
+    cp ~/dotfiles/etc/wsl.conf /etc/wsl.conf
 
   echo 'export USE_WSL_INTERNET_RESOLVER=1' >>~/.bashrc
 
@@ -197,11 +199,15 @@ function _setup-wsl-home {
 
 function _update-and-upgrade-os-packages {
   if _is_linux; then
-    sudo apt-get update
-    sudo apt-get upgrade -y
+    run_as_root \
+      apt-get update
+
+    run_as_root \
+      apt-get upgrade -y
 
     if ! _is-dev "$@"; then
-      sudo apt-get install -y \
+      run_as_root \
+        apt-get install -y \
         git \
         curl
     else
@@ -216,7 +222,8 @@ function _update-and-upgrade-os-packages {
       eval "$cmd"
     fi
 
-    sudo apt-get autoremove -y
+    run_as_root \
+      apt-get autoremove -y
   fi
 }
 
@@ -225,7 +232,8 @@ function _is-dev {
 }
 
 function _install-deps {
-  sudo apt-get update
+  run_as_root \
+    apt-get update
 
   local cmd="sudo apt-get install -y $1"
   eval "$cmd"
@@ -283,7 +291,8 @@ _install_erlang_os_deps() {
       fop
   else
     _install-deps "${ERLANG_DEPS[*]}"
-    sudo apt-get autoremove -y
+    run_as_root \
+      apt-get autoremove -y
   fi
 }
 
@@ -391,9 +400,11 @@ uninstall-docker() {
   : "Uninstall docker on debian linux"
 
   # We don't want to get apt autoremove suggestions.
-  sudo apt autoremove -y
+  run_as_root \
+    apt autoremove -y
 
-  sudo apt-get purge -y \
+  run_as_root \
+    apt-get purge -y \
     docker.io \
     docker-doc \
     docker-compose \
@@ -419,21 +430,34 @@ install-docker() {
 
   # Delete this file in case docker was previously installed as the new installation below will append to the file
   # causing invalid json.
-  sudo rm -rf /etc/docker/daemon.json
+  run_as_root \
+    rm -rf /etc/docker/daemon.json
 
   # Add Docker's official GPG key:
-  sudo apt-get update
-  sudo apt-get install ca-certificates curl
-  sudo install -m 0755 -d /etc/apt/keyrings
-  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  run_as_root \
+    apt-get update
+
+  run_as_root \
+    apt-get install ca-certificates curl
+
+  run_as_root \
+    install -m 0755 -d /etc/apt/keyrings
+
+  run_as_root \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+
+  run_as_root \
+    chmod a+r /etc/apt/keyrings/docker.asc
 
   # Add the repository to Apt sources:
   echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
-    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
-  sudo apt-get update
+    run_as_root \
+      tee /etc/apt/sources.list.d/docker.list >/dev/null
+
+  run_as_root \
+    apt-get update
 
   # Install docker and its components:
   sudo apt-get install -y \
@@ -746,9 +770,10 @@ install_vifm() {
   _echo "INSTALLING VIFM VERSION ${version}"
 
   if ! _is-dev "$@"; then
-    sudo apt-get update
+    run_as_root apt-get update
 
-    sudo apt-get install -y `# I need to determine minimum deps for building vifm.` \
+    run_as_root \
+      apt-get install -y `# I need to determine minimum deps for building vifm.` \
       curl \
       g++ \
       ca-certificates \
@@ -2678,6 +2703,14 @@ install-draw-on-your-screen() {
     /usr/share/glib-2.0/schemas/
 
   sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
+}
+
+run_as_root() {
+  if [ "$(id -u)" -eq 0 ]; then
+    "$@"
+  else
+    sudo "$@"
+  fi
 }
 
 # -----------------------------------------------------------------------------
