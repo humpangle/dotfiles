@@ -24,8 +24,13 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # -----------------------------------------------------------------------------
 # NVIM
 # -----------------------------------------------------------------------------
+
+# nvim themes
 export EBNIS_VIM_THEME=gruvbox8_hard
 export EBNIS_VIM_THEME_BG=d
+
+# nvim session management
+export NVIM_SESSION_NAME_SUFFIX=
 
 # Enable/disable plugins
 export NVIM_ENABLE_AI_PLUGINS=

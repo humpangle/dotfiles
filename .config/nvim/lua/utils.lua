@@ -728,4 +728,14 @@ utils.write_to_out_file = function()
   -- vim.bo.buftype = buftype
 end
 
+utils.get_session_file = function()
+  local suffix = utils.get_os_env_or_nil("NVIM_SESSION_NAME_SUFFIX")
+
+  if suffix then
+    return "session-" .. suffix
+  end
+
+  return "session"
+end
+
 return utils

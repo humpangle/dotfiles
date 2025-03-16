@@ -12,6 +12,8 @@ local file_session_vim_exists = function()
   return vim.fn.glob("session.vim") ~= ""
 end
 
+local session_name = utils.get_session_file()
+
 return {
   "tpope/vim-obsession",
   init = function()
@@ -20,16 +22,20 @@ return {
 
       if count == 0 then
         if file_session_vim_exists() then
-          utils.write_to_command_mode("so session.vim")
+          utils.write_to_command_mode("so " .. session_name .. ".vim")
         else
-          utils.write_to_command_mode("Obsession session.vim")
+          utils.write_to_command_mode(
+            "Obsession " .. session_name .. ".vim"
+          )
         end
       elseif count == 1 then
-        utils.write_to_command_mode("so session")
+        utils.write_to_command_mode("so " .. session_name)
       elseif count == 2 then
-        utils.write_to_command_mode("Obsession session.vim")
+        utils.write_to_command_mode(
+          "Obsession " .. session_name .. ".vim"
+        )
       else
-        utils.write_to_command_mode("Obsession session")
+        utils.write_to_command_mode("Obsession " .. session_name)
       end
     end)
   end,
