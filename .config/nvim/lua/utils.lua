@@ -168,6 +168,19 @@ function utils.is_dap_buffer(buffer_name)
   return false
 end
 
+---@param buffer_name string
+function utils.is_octo_buffer(buffer_name)
+  if vim.startswith(buffer_name, "octo://") then
+    return true
+  end
+
+  if vim.startswith(buffer_name, "OctoChangedFiles") then
+    return true
+  end
+
+  return false
+end
+
 local is_deleteable_unlisted_buffer = function(b_name, buf_num)
   if b_name == "Neotest Output Panel" then
     return false
@@ -181,7 +194,17 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
     return false
   end
 
-  if vim.api.nvim_buf_get_option(buf_num, "filetype") == "qf" then
+  if vim.startswith(b_name, "octo://") then
+    return false
+  end
+
+  local filetype = vim.api.nvim_buf_get_option(buf_num, "filetype")
+
+  if filetype == "octo_panel" then
+    return false
+  end
+
+  if filetype == "qf" then
     return false
   end
 
@@ -199,6 +222,7 @@ function utils.DeleteAllBuffers(delete_flag)
   local dbui_buffers = {}
   local fugitive_buffers = {}
   local dap_buffers = {}
+  local octo_buffers = {} -- octo github pr/issues/review plugin
 
   for _, buf_num in ipairs(vim.api.nvim_list_bufs()) do
     local b_name = vim.fn.bufname(buf_num)
@@ -210,6 +234,8 @@ function utils.DeleteAllBuffers(delete_flag)
       table.insert(fugitive_buffers, buf_num)
     elseif utils.is_dap_buffer(b_name) then
       table.insert(dap_buffers, buf_num)
+    elseif utils.is_octo_buffer(b_name) then
+      table.insert(octo_buffers, buf_num)
     elseif is_deleteable_unlisted_buffer(b_name, buf_num) then
       table.insert(no_name_buffers, buf_num)
     elseif string.match(b_name, "term://") then
@@ -247,6 +273,8 @@ function utils.DeleteAllBuffers(delete_flag)
     wipeout_buffers(fugitive_buffers)
   elseif delete_flag == "dap" then
     wipeout_buffers(dap_buffers)
+  elseif delete_flag == "octo" then
+    wipeout_buffers(octo_buffers)
   end
 
   vim.cmd.echo(
