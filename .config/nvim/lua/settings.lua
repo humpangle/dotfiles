@@ -693,14 +693,35 @@ utils.map_key("n", "d=", function()
   utils.EbnisClearAllBuffer()
 end, { noremap = true })
 
--- Delete all buffers
-utils.map_key("n", "<leader>bA", function()
-  utils.DeleteAllBuffers("a")
-end, { noremap = true })
-
--- Delete all empty buffers
 utils.map_key("n", "<leader>be", function()
-  utils.DeleteAllBuffers("e")
+  local count = vim.v.count
+
+  if count == 0 then
+    -- Delete all empty buffers
+    utils.DeleteAllBuffers("e")
+    return
+  end
+
+  if count == 1 then
+    utils.DeleteAllBuffers("fugitive")
+    return
+  end
+
+  if count == 2 then
+    -- delete all
+    utils.DeleteAllBuffers("a")
+    return
+  end
+
+  if count == 3 then
+    utils.DeleteAllBuffers("dap")
+    return
+  end
+
+  if count == 4 then
+    utils.DeleteAllBuffers("octo")
+    return
+  end
 end, { noremap = true })
 
 -- Inserts the current date and time into the buffer
