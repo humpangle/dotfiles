@@ -693,14 +693,6 @@ utils.map_key("n", "d=", function()
   utils.EbnisClearAllBuffer()
 end, { noremap = true })
 
--- Delete vim fugitive buffers
-vim.api.nvim_create_user_command("DelFugitive", function()
-  utils.DeleteAllBuffers("fugitive")
-end, {})
-vim.api.nvim_create_user_command("FugitiveDelete", function()
-  utils.DeleteAllBuffers("fugitive")
-end, {})
-
 -- Delete all buffers
 utils.map_key("n", "<leader>bA", function()
   utils.DeleteAllBuffers("a")
