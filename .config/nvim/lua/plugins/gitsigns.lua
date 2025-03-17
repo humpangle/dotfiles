@@ -5,7 +5,10 @@ local function reload_fugitive_index()
     local bufname = vim.api.nvim_buf_get_name(buf)
     if
       vim.startswith(bufname, "fugitive://")
-      and string.find(bufname, ".git//")
+      and (
+        vim.endswith(bufname, ".git//")
+        or vim.endswith(bufname, vim.fn.expand("%:r"))
+      )
     then
       vim.api.nvim_buf_call(buf, function()
         vim.cmd("edit! %") -- refresh the buffer
