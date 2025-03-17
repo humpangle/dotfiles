@@ -394,7 +394,6 @@ local plugins_table = {
   require("plugins/neotest"),
   require("plugins/nvim-neoclip"),
   require("plugins/neotree"),
-  require("plugins/gh-nvim"),
 }
 
 require("lazy").setup(plugins_table, {})
