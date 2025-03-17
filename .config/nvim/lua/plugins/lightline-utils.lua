@@ -47,6 +47,10 @@ local get_yaml_schema = function()
   return yaml_schema
 end
 
+local get_terminal_name_suffix = function(channel)
+  return "," .. channel .. "," .. vim.fn.jobpid(channel)
+end
+
 local compute_file_path = function(side)
   local left = side == "left"
 
@@ -60,7 +64,7 @@ local compute_file_path = function(side)
   end
 
   if is_term(file_path_original) then
-    return file_path .. "," .. vim.o.channel
+    return file_path .. get_terminal_name_suffix(vim.o.channel)
   end
 
   local git_branch = ""
@@ -139,7 +143,10 @@ function _G.FilenameTab(tab_num)
   then
     return "fgit" -- fugitive git
   elseif is_term(filename) then
-    return vim.fn.expand("#" .. buf_num .. ":t") .. "," .. vim.api.nvim_buf_get_option(buf_num, "channel")
+    return vim.fn.expand("#" .. buf_num .. ":t")
+      .. get_terminal_name_suffix(
+        vim.api.nvim_buf_get_option(buf_num, "channel")
+      )
   end
 
   local file_name_tail = vim.fn.expand("#" .. buf_num .. ":t")
