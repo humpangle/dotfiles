@@ -90,6 +90,14 @@ return {
 
   {
     "mfussenegger/nvim-dap",
+    init = function()
+      vim.api.nvim_create_user_command("Deldap", function()
+        utils.DeleteAllBuffers("dap")
+      end, {})
+      vim.api.nvim_create_user_command("DapDelete", function()
+        utils.DeleteAllBuffers("dap")
+      end, {})
+    end,
     cmd = {
       "DapClearBreakpoints",
       "DapContinue",

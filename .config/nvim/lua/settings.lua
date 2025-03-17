@@ -709,14 +709,6 @@ vim.api.nvim_create_user_command("FugitiveDelete", function()
   utils.DeleteAllBuffers("fugitive")
 end, {})
 
--- Delete vim dap buffers
-vim.api.nvim_create_user_command("Deldap", function()
-  utils.DeleteAllBuffers("dap")
-end, {})
-vim.api.nvim_create_user_command("DapDelete", function()
-  utils.DeleteAllBuffers("dap")
-end, {})
-
 -- Delete all buffers
 utils.map_key("n", "<leader>bA", function()
   utils.DeleteAllBuffers("a")
