@@ -216,7 +216,7 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
 end
 
 function utils.DeleteAllBuffers(delete_flag)
-  local normal_buffers = {}
+  -- local normal_buffers = {}
   local terminal_buffers = {}
   local no_name_buffers = {}
   local dbui_buffers = {}
@@ -240,8 +240,8 @@ function utils.DeleteAllBuffers(delete_flag)
       table.insert(no_name_buffers, buf_num)
     elseif string.match(b_name, "term://") then
       table.insert(terminal_buffers, buf_num)
-    else
-      table.insert(normal_buffers, buf_num)
+      -- else
+      --   table.insert(normal_buffers, buf_num)
     end
   end
 
@@ -257,8 +257,8 @@ function utils.DeleteAllBuffers(delete_flag)
   -- all buffers
   if delete_flag == "a" then
     wipeout_buffers(no_name_buffers)
-    wipeout_buffers(terminal_buffers)
-    wipeout_buffers(normal_buffers)
+    -- wipeout_buffers(terminal_buffers)
+    -- wipeout_buffers(normal_buffers)
     wipeout_buffers(fugitive_buffers)
   -- empty / no-name buffers
   elseif delete_flag == "e" then
