@@ -722,7 +722,7 @@ utils.map_key("n", "<leader>be", function()
     utils.DeleteAllBuffers("octo")
     return
   end
-end, { noremap = true })
+end, { noremap = true, desc = "0/empty 1/fugitive 2/all 3/dap 4/octo" })
 
 -- Inserts the current date and time into the buffer
 utils.map_key("n", ",tm", function()
