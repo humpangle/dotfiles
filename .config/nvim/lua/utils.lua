@@ -260,6 +260,8 @@ function utils.DeleteAllBuffers(delete_flag)
     -- wipeout_buffers(terminal_buffers)
     -- wipeout_buffers(normal_buffers)
     wipeout_buffers(fugitive_buffers)
+    wipeout_buffers(dap_buffers)
+    wipeout_buffers(octo_buffers)
   -- empty / no-name buffers
   elseif delete_flag == "e" then
     wipeout_buffers(no_name_buffers)
