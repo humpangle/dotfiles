@@ -127,6 +127,7 @@ Session.vim
 *.___scratch*
 *.---scratch*
 *___scratch*
+*---scratch*
 **/session*.vim
 *.___pid*
 *.pid
