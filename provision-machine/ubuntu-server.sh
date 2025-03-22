@@ -563,6 +563,11 @@ eof
 }
 
 install-asdf-postgres() {
+  : "___alias___ install_asdf_postgres"
+  install_asdf_postgres "$@"
+}
+
+install_asdf_postgres() {
   : "___help___ ___install-asdf-postgres_help"
 
   local version_=
