@@ -140,6 +140,10 @@ return {
         elseif count == 2 then
           dap.clear_breakpoints()
           vim.notify("All Breakpoints Cleared!")
+        elseif count == 21 then
+          dap.clear_breakpoints()
+          dap.toggle_breakpoint()
+          vim.notify("All Breakpoints Cleared and Set!")
         elseif count == 3 then
           gotoBreakpoint("next")
         elseif count == 4 then
