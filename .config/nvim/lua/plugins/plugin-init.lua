@@ -397,4 +397,5 @@ local plugins_table = {
   require("plugins/octo-nvim"),
 }
 
+---@diagnostic disable:missing-fields
 require("lazy").setup(plugins_table, {})
