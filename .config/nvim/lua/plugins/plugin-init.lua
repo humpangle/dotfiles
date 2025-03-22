@@ -395,6 +395,7 @@ local plugins_table = {
   require("plugins/nvim-neoclip"),
   require("plugins/neotree"),
   require("plugins/octo-nvim"),
+  require("plugins/mini-align"),
 }
 
 ---@diagnostic disable:missing-fields
