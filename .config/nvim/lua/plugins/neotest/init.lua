@@ -145,14 +145,20 @@ return {
   },
   init = function()
     -- default pytest args
-    vim.g.__ebnis_neotest_python_args = {
-      "--disable-warnings",
-      "-vvv",
-      "--log-level",
-      "INFO",
-      "--capture",
-      "no",
-    }
+    local default_pytest_args = utils.get_os_env_or_nil("EBNIS_PYTEST_ARGS")
+
+    default_pytest_args = default_pytest_args
+      and vim.json.decode(default_pytest_args)
+
+    vim.g.__ebnis_neotest_python_args = default_pytest_args
+      or {
+        "--disable-warnings",
+        "-vvv",
+        "--log-level",
+        "INFO",
+        "--capture",
+        "no",
+      }
 
     vim.api.nvim_create_user_command("NeoPyArgs", function(opts)
       local count = opts.fargs[1]
