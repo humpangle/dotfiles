@@ -5,6 +5,7 @@ if plugin_enabled.has_vscode() then
 end
 
 local utils = require("utils")
+local map_lazy_key = utils.map_lazy_key
 
 return {
   "pwntester/octo.nvim",
@@ -26,6 +27,50 @@ return {
   cmd = {
     "Octo",
   },
+  keys = {
+    map_lazy_key("<leader>gh0", function()
+      vim.cmd("Octo")
+    end, { desc = "Octo" }),
+
+    map_lazy_key("<leader>ghp", function()
+      local count = vim.v.count
+
+      if count == 0 then
+        vim.cmd("tab split")
+        vim.cmd("Octo pr list")
+        return
+      end
+
+      if count == 1 then
+        vim.cmd("Octo pr checkout")
+        return
+      end
+
+      if count == 2 then
+        vim.cmd("Octo pr reload")
+        return
+      end
+    end, { desc = "Octo PR 0/ls 1/checkout 2/reload" }),
+
+    map_lazy_key("<leader>ghr", function()
+      local count = vim.v.count
+
+      if count == 0 then
+        vim.cmd("Octo review")
+        return
+      end
+
+      if count == 1 then
+        vim.cmd("Octo review resume")
+        return
+      end
+
+      if count == 2 then
+        vim.cmd("Octo review submit")
+        return
+      end
+    end, { desc = "Octo Review 0/start 1/resume 2/submit" }),
+  },
   config = function()
     require("octo").setup({
       -- `true` will not work where nvim CWD != git CWD
@@ -42,10 +87,6 @@ return {
           copy_url = {
             lhs = "<C-y>",
             desc = "copy url to system clipboard",
-          },
-          checkout_pr = {
-            lhs = "<C-o>",
-            desc = "checkout pull request",
           },
           merge_pr = { lhs = "<C-r>", desc = "merge pull request" },
         },
