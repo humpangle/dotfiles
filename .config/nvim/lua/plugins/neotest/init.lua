@@ -209,19 +209,17 @@ return {
     end, { nargs = "*" })
 
     -- keymaps
-    map_key("n", "<leader>ntO", function()
-      require("neotest").output.open({
-        enter = true,
-        auto_close = true,
-      })
-    end, {
-      desc = "Neotest Show Output",
-    })
-
     map_key("n", "<leader>nto", function()
       local count = vim.v.count
 
       if count == 99 then
+        require("neotest").output.open({
+          enter = true,
+          auto_close = true,
+        })
+      end
+
+      if count == 98 then
         require("neotest").output_panel.toggle()
         return
       end
@@ -258,7 +256,7 @@ return {
       vim.cmd("set hlsearch")
       pcall(vim.cmd.normal, { to_call, bang = true })
     end, {
-      desc = "99/Toggle-Output-Panel 1/session-start 2/.py FE 3/failures/errors 4/__test__ 5/captured",
+      desc = "99/inline-output 98/Toggle-Tab-Output-Panel 1/session-start 2/.py FE 3/failures/errors 4/__test__ 5/captured",
     })
   end,
   config = function()
