@@ -6,7 +6,22 @@ end
 local keymap = utils.map_key
 
 keymap("n", "<leader>g.", ":Git add .<CR>", { noremap = true })
-keymap("n", "<leader>gd", ":Gvdiffsplit!<CR>", { noremap = true })
+keymap("n", "<leader>gd", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.cmd("Gvdiffsplit!")
+    return
+  end
+
+  if count == 1 then
+    vim.cmd("Ghdiffsplit!")
+    return
+  end
+end, {
+  noremap = true,
+  desc = "0/v 1/h",
+})
 
 keymap("n", "<leader>gf", function()
   utils.write_to_command_mode(
