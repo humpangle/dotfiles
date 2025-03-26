@@ -72,6 +72,8 @@ return {
     )
 
     map_key({ "n", "x" }, "<leader>dbe", function()
+      vim.cmd("DbUiDelete")
+
       local count = vim.v.count
 
       if count == 0 then
@@ -111,16 +113,16 @@ return {
     map_key("n", "<leader>dbw", function()
       local count = vim.v.count
 
-      if count == 2 then
-        vim.cmd({ cmd = "wa", bang = true })
-        vim.cmd("DbUiDelete")
-        return
-      end
-
       if count == 1 then
         vim.cmd.normal({ "vip" })
 
         utils.write_to_command_mode("'<,'>Neoformat! sql<CR>")
+        return
+      end
+
+      if count == 2 then
+        vim.cmd({ cmd = "wa", bang = true })
+        vim.cmd("DbUiDelete")
         return
       end
 
@@ -152,7 +154,7 @@ return {
       vim.cmd("e %")
     end, {
       noremap = true,
-      desc = "DBUI save result buffer 1/DbUiDelete",
+      desc = "DBUI 0/save result buffer 1/format 2/DbUiDelete",
     })
 
     map_key("n", "<leader>dbH", function()
