@@ -165,6 +165,8 @@ export __NETCAT_SHUTDOWN_AFTER_INPUT_EOF_FLAG__=-N
 # /END/ RUNNER.sh
 # -----------------------------------------------------------------------------
 
+# See $HOME/dotfiles/.bashrc-template--env-scratch-example.sh
+# for inspiration for content
 if [ -e .___scratch-env.sh ]; then
   # shellcheck disable=1091
   source .___scratch-env.sh
