@@ -14,6 +14,7 @@ if [ -n "$alacritty_bin_" ]; then
     if _is_darwin; then
       env -i \
         HOME="$HOME" \
+        TERM='alacritty' \
         bash -l -c \
         "$alacritty_bin_ &>/dev/null" &
       disown
