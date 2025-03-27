@@ -167,6 +167,7 @@ if command -v tmux &>/dev/null; then
 
     alias st='c-tmux start_tmux'
     alias lst='c-tmux list'
+    alias lstd='c-tmux list -fx ^dot'
     alias kt='c-tmux kill_tmux'
   fi
 
