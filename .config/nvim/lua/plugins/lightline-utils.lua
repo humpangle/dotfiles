@@ -48,7 +48,7 @@ local get_yaml_schema = function()
 end
 
 local get_terminal_name_suffix = function(channel)
-  return "," .. channel .. "," .. vim.fn.jobpid(channel)
+  return "," .. channel -- .. "," .. vim.fn.jobpid(channel)
 end
 
 local compute_file_path = function(side)
