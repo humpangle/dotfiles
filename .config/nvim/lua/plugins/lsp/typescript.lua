@@ -53,6 +53,10 @@ local config = {
     -- },
     -- hybrid mode setting
     filetypes = {
+      "typescript",
+      "javascript",
+      "javascriptreact",
+      "typescriptreact",
       "vue",
     },
 
@@ -85,10 +89,10 @@ local typescript_ls_config = { -- mason: typescript-language-server
 }
 
 -- Somehow my macbook uses tsserver while linux uses ts_ls
-if vim.fn.has("mac") == 1 then
-  config["tsserver"] = typescript_ls_config
-else
-  config["ts_ls"] = typescript_ls_config
-end
+-- if vim.fn.has("mac") == 1 then
+--   config["tsserver"] = typescript_ls_config
+-- else
+--   config["ts_ls"] = typescript_ls_config
+-- end
 
 return config
