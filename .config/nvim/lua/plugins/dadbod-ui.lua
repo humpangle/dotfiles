@@ -73,6 +73,7 @@ return {
 
     map_key({ "n", "x" }, "<leader>dbe", function()
       vim.cmd("DbUiDelete")
+      vim.cmd("DbUiDelete")
 
       local count = vim.v.count
 
