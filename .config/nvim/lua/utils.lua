@@ -667,31 +667,43 @@ local extract_line_number = function(cfile)
 end
 
 utils.go_to_file = function()
-  local cfile = vim.fn.expand("<cfile>")
-
-  if not cfile or cfile == "" then
-    print("invalid file: " .. cfile)
-    return
-  end
-
+  local count = vim.v.count
+  local split_num = "" .. count
   local file_path = nil
-  local cfile1, line_number = cfile:match("^(.+)#L?(%d+)$")
+  local line_number = nil
+  local cfile = nil
 
-  if cfile1 ~= nil then
-    file_path = cfile1
+  -- Get file_path
+  if count >= 20 then
+    split_num = split_num:match("^%d(%d)$")
+    file_path = vim.fn.expand("%:.")
   else
-    file_path = cfile
+    cfile = vim.fn.expand("<cfile>")
+
+    if not cfile or cfile == "" then
+      print("invalid file: " .. cfile)
+      return
+    end
+
+    local cfile1 = nil
+
+    cfile1, line_number = cfile:match("^(.+)#L?(%d+)$")
+
+    if cfile1 ~= nil then
+      file_path = cfile1
+    else
+      file_path = cfile
+    end
   end
 
+  -- Apply file_path transformations
   if vim.fn.glob(file_path) == "" then
     file_path = go_to_file_strip_prefix_in_env(file_path)
     file_path = go_to_file_strip_patterns(file_path)
   end
 
-  local count = vim.v.count
-
   if vim.fn.glob(file_path) == "" then
-    if count == 9 then
+    if split_num == "9" then
       vim.fn.setreg("a", file_path)
     end
 
@@ -699,13 +711,15 @@ utils.go_to_file = function()
     return
   end
 
-  line_number = line_number or extract_line_number(cfile)
+  if cfile then
+    line_number = line_number or extract_line_number(cfile)
+  end
 
-  if count == 1 then
+  if split_num == "1" then
     vim.cmd("split")
-  elseif count == 2 then
+  elseif split_num == "2" then
     vim.cmd("vsplit")
-  elseif count == 3 then
+  elseif split_num == "3" then
     vim.cmd("tab split")
   end
 
