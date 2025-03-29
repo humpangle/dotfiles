@@ -66,10 +66,20 @@ return {
       end
 
       if count == 2 then
-        vim.cmd("Octo review submit")
+        vim.cmd("Octo review close")
+      end
+
+      if count == 3 then
+        vim.cmd("Octo review resume")
+
+        vim.defer_fn(function()
+          vim.cmd("Octo review submit")
+          vim.cmd("Octo review resume")
+        end, 8000)
+
         return
       end
-    end, { desc = "Octo Review 0/start 1/resume 2/submit" }),
+    end, { desc = "Octo Review 0/start 1/resume 2/close 3/submit" }),
   },
   config = function()
     require("octo").setup({
