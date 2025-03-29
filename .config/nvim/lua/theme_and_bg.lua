@@ -24,6 +24,9 @@ local theme_fn_map = {
     vim.g.one_allow_italics = 1
     vim.cmd.colorscheme("gruvbox8_soft")
   end,
+  tokyonight = function()
+    vim.cmd.colorscheme("tokyonight")
+  end,
 }
 
 if not plugin_enabled.has_termux() then
