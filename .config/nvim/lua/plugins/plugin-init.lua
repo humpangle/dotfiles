@@ -401,6 +401,7 @@ local plugins_table = {
   require("plugins/neotree"),
   require("plugins/octo-nvim"),
   require("plugins/mini-align"),
+  require("plugins/indent-blankline"),
 }
 
 ---@diagnostic disable:missing-fields
