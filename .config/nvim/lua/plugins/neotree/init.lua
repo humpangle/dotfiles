@@ -66,24 +66,21 @@ return {
         vim.cmd("Neotree source=filesystem position=left reveal")
         return
       end
-
-      vim.opt_local.relativenumber = true
-      vim.opt_local.number = true
-      vim.cmd("setlocal number")
     end, {
       desc = "Neotree --",
     })
 
-    vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-      group = vim.api.nvim_create_augroup("filetypes", { clear = true }),
-      pattern = {
-        "neo-tree",
-        "neo-tree filesystem*",
-      },
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "neo-tree",
+      group = vim.api.nvim_create_augroup(
+        "NeoTreeLineNumbers",
+        { clear = true }
+      ),
       callback = function()
-        vim.opt_local.relativenumber = true
-        vim.opt_local.number = true
-        vim.cmd("setlocal number")
+        vim.defer_fn(function()
+          vim.opt_local.number = true
+          vim.opt_local.relativenumber = true
+        end, 1)
       end,
     })
   end,
