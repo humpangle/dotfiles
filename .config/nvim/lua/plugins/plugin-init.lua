@@ -29,6 +29,11 @@ local plugins_table = {
   "nvim-lua/plenary.nvim",
 
   {
+    "nvim-tree/nvim-web-devicons",
+    opts = {},
+  },
+
+  {
     "Joakker/lua-json5",
     cond = true, -- false,
     enabled = plugin_enabled.has_lua_json5(),
