@@ -110,10 +110,10 @@ return {
 
       local lspconfig = require("lspconfig")
 
-      utils.map_key("n", "<leader>ll", function()
+      utils.map_key("n", "<leader>ls1", function()
         if vim.v.count == 0 then
           vim.cmd("LspStop")
-          vim.cmd.echo('"LspStopped 1<leader>ll to start"')
+          vim.cmd.echo('"LspStopped 1<leader>ls1 to start"')
           return
         end
 
@@ -125,7 +125,26 @@ return {
 
         vim.cmd("TSContextToggle")
         vim.cmd.echo('"TSContextToggle"')
-      end, { desc = "LspStop and LspStart" })
+      end, { desc = "0/stop 1/start 2/TSContextToggle" })
+
+      utils.map_key("n", "<leader>ls0", function()
+        local count = vim.v.count
+
+        if count == 0 then
+          vim.cmd("LspInfo")
+          return
+        end
+
+        if count == 1 then
+          vim.cmd("LspLog")
+          return
+        end
+
+        if count == 2 then
+          vim.cmd("LspUninstall")
+          return
+        end
+      end, { desc = "0/info 1/log 2/uninstall" })
 
       -- Diagnostic keymaps
       utils.map_key(
