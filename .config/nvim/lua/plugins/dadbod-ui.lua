@@ -72,12 +72,18 @@ return {
     )
 
     map_key({ "n", "x" }, "<leader>dbe", function()
-      vim.cmd("DbUiDelete")
-      vim.cmd("DbUiDelete")
-
       local count = vim.v.count
 
-      if count == 0 then
+      if count ~= 0 then
+        vim.cmd({ cmd = "wa", bang = true })
+        vim.cmd("DbUiDelete")
+        return
+      end
+
+      vim.cmd("DbUiDelete")
+      vim.cmd("DbUiDelete")
+
+      if vim.fn.mode() == "n" then
         vim.cmd.normal({ "vip" })
       end
 
@@ -90,7 +96,7 @@ return {
       vim.api.nvim_feedkeys(keys, "x", false)
     end, {
       noremap = true,
-      desc = "DBUI_ExecuteQuery",
+      desc = "0/exec 1/write 2/delete-buffers",
     })
 
     map_key("n", "<leader>dbf", function()
