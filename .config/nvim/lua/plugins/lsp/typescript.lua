@@ -5,9 +5,6 @@ if not plugin_enabled.typescript_lsp() then
 end
 
 local get_vue_lang_server_path = function()
-  -- We expect the path here -
-  -- os.getenv("HOME") .. "/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
-
   local mason_registry = require("mason-registry")
 
   local ok, pkg = pcall(mason_registry.get_package, "vue-language-server")
@@ -19,6 +16,8 @@ local get_vue_lang_server_path = function()
   local vue_language_server_path = pkg:get_install_path()
     .. "/node_modules/@vue/language-server"
 
+  -- We expect the return value (path) like:
+  -- os.getenv("HOME") .. "/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
   return vue_language_server_path
 end
 
@@ -42,27 +41,10 @@ local config = {
   -- ts_ls = {}, -- see below for actual configuration
 
   volar = { -- mason: vue-language-server
-    -- To enable Take Over Mode, override the default filetypes in `setup{}` as follows:
-    -- Take Over Mode will run its own tsserver, unlike hybrid mode which uses your own tsserver
-    -- filetypes = {
-    --   "typescript",
-    --   "javascript",
-    --   "javascriptreact",
-    --   "typescriptreact",
-    --   "vue",
-    -- },
-    -- hybrid mode setting
+    -- Hybrid mode setting (only manages vue's html and css). ts_ls will manage typescript/javascript.
     filetypes = {
-      "typescript",
-      "javascript",
-      "javascriptreact",
-      "typescriptreact",
       "vue",
     },
-
-    -- Using take over mode and want to use custom tsserver? See Volar configuration for on_new_config at:
-    -- $HOME/.local/share/nvim/lazy/nvim-lspconfig/doc/server_configurations.txt
-    -- on_new_config = function(new_config, new_root_dir) end
   },
 }
 
@@ -73,8 +55,10 @@ local typescript_ls_config = { -- mason: typescript-language-server
         name = "@vue/typescript-plugin",
         -- *IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `volar `are of identical versions.
         location = get_vue_lang_server_path(),
-        languages = {
+        languages = { -- ts_ls will manage typescript/javascript sections of vue file in volar hybrid mode
           "vue",
+          "typescript",
+          "javascript",
         },
       },
     },
@@ -89,10 +73,10 @@ local typescript_ls_config = { -- mason: typescript-language-server
 }
 
 -- Somehow my macbook uses tsserver while linux uses ts_ls
--- if vim.fn.has("mac") == 1 then
---   config["tsserver"] = typescript_ls_config
--- else
---   config["ts_ls"] = typescript_ls_config
--- end
+if vim.fn.has("mac") == 1 then
+  config["tsserver"] = typescript_ls_config
+else
+  config["ts_ls"] = typescript_ls_config
+end
 
 return config
