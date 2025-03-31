@@ -35,7 +35,12 @@ return {
           "Obsession " .. session_name .. ".vim"
         )
       else
-        utils.write_to_command_mode("Obsession " .. session_name)
+        utils.write_to_command_mode(
+          "Obsession "
+            .. session_name
+            .. "-.vim"
+            .. "<left><left><left><left>"
+        )
       end
     end)
   end,
