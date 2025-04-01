@@ -157,6 +157,7 @@ if command -v tmux &>/dev/null; then
   export TP="${TMUX_PANE}"
 
   alias kts='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
+  alias tks='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
   alias ts='ebnis-save-tmux.sh'
   alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
