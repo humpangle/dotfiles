@@ -71,11 +71,14 @@ return {
     })
 
     vim.api.nvim_create_autocmd("FileType", {
-      pattern = "neo-tree",
       group = vim.api.nvim_create_augroup(
         "NeoTreeLineNumbers",
         { clear = true }
       ),
+      pattern = {
+        "neo-tree",
+        "neo-tree filesystem*",
+      },
       callback = function()
         vim.defer_fn(function()
           vim.opt_local.number = true
