@@ -163,3 +163,6 @@ ___logs/
 
 # Apple
 *.DS_Store*
+
+# Some weird file probably created by neovim lsp
+**/server\ exited\ unexpectedly
