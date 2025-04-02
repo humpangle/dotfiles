@@ -723,7 +723,8 @@
       "// NOTE: --START-- DEBUG LOG {",
       "console.log(",
       "  `\\n\\n\\nSTART ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`,",
-      "  `\\n>>>>>>>>>>>>>> $2 ${1:label1}\\n`, ${1:label1},",
+      "  `\\n>>>>>>>>>>>>>> $2 ${1:identifier}\\n`,",
+      " ${1:identifier},",
       "  //$0 `\\n\\n>>>>>>>>>>>>>> label2\\n`, label2,",
       "  `\\nEND ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\\n\\n\\n`",
       ");",
@@ -733,8 +734,15 @@
     "description": "Log to console with some debug info"
   },
   "Print to console error": {
-    "prefix": "consoleerrorlog",
+    "prefix": [
+      "console_error_log",
+      "console_log_error",
+      "error_print_to_console",
+      "error_log_to_console"
+    ],
     "body": [
+      "",
+      "// NOTE: --START-- DEBUG LOG {",
       "console.log(",
       "  `\\n======================Logging start==================\\n",
       "      Label: ${1:label}$2",
@@ -743,19 +751,32 @@
       "  `\\n\\n`,",
       "  ${1:code},",
       "  `\\n\\n=====================Logging ends===================\\n`",
-      ");"
+      ");",
+      "// NOTE: --END-- DEBUG LOG }",
+      ""
     ],
     "description": "Log to console with some debug info"
   },
   "console.log JSON.stringify": {
-    "prefix": "consolejsonlog",
+    "prefix": [
+      "console_json_log",
+      "console_log_json",
+      "print_to_console_json",
+      "print_json_to_console",
+      "json_print_to_console"
+    ],
     "body": [
+      "",
+      "// NOTE: --START-- DEBUG LOG {",
       "console.log(",
       "  `\\n\\n\\nSTART ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`,",
-      "  `\\n>>>>>>>>>>>>>> $0 ${1:label1}\\n`,",
-      "  JSON.stringify($1, null, 2),",
+      "  `\\n>>>>>>>>>>>>>> $2 ${1:identifier}\\n`,",
+      "  JSON.stringify($1:identifier, null, 2),",
+      "  //$0 `\\n\\n>>>>>>>>>>>>>> label2\\n`, label2,",
       "  `\\nEND ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\\n\\n\\n`",
-      ");"
+      ");",
+      "// NOTE: --END-- DEBUG LOG }",
+      ""
     ],
     "description": "console.log JSON.stringify"
   },
