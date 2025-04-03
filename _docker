@@ -31,7 +31,7 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
 
       if [ "$2" = "logs" ]; then
         local log_file_=""
-        log_file_="$PWD/.___scratch-$(date +'%FT%T').log"
+        log_file_="$PWD/.___scratch-docker-logs-$(date +'%FT%T').log"
 
         copy "$log_file_"
         echo -e "\n\n\n Log file => $log_file_ \n\n"
