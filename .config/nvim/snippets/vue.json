@@ -28,5 +28,17 @@
       "</style>"
     ],
     "description": "style scoped vue attribute"
+  },
+  "defineProps-TS": {
+    "prefix": [
+      "definePropsTS",
+      "propsDefineTs"
+    ],
+    "body": [
+      "const props = defineProps<{",
+      "\t$0",
+      "}>()"
+    ],
+    "description": "A list/hash of attributes that are exposed to accept data from the parent component. "
   }
 }
