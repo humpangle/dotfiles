@@ -13,21 +13,33 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
     : "__EBNIS_COMPOSE_CONFIG_FILENAME__='file1' docker compose up"
     : "docker compose up"
 
-    if [ "$1" = 'compose' ] && [ -n "$__EBNIS_COMPOSE_CONFIG_FILENAME__" ]; then
-
+    if [ "$1" = 'compose' ]; then
+      local args_after_compose_=("${@:2}")
       local args_=()
-      local compose_files_=()
-      read -ra compose_files_ <<<"$__EBNIS_COMPOSE_CONFIG_FILENAME__"
 
-      for compose_file_ in "${compose_files_[@]}"; do
-        args_=("${args_[@]}" "--file")
-        args_=("${args_[@]}" "$compose_file_")
-      done
+      if [ -n "$__EBNIS_COMPOSE_CONFIG_FILENAME__" ]; then
+        local compose_files_=()
+        read -ra compose_files_ <<<"$__EBNIS_COMPOSE_CONFIG_FILENAME__"
 
-      args_=("${args_[@]}" "${@:2}")
+        for compose_file_ in "${compose_files_[@]}"; do
+          args_=("${args_[@]}" "--file")
+          args_=("${args_[@]}" "$compose_file_")
+        done
+      fi
 
-      "$_EBNIS_DOCKER_BIN" compose "${args_[@]}"
+      args_=("${args_[@]}" "${args_after_compose_[@]}")
 
+      if [ "$2" = "logs" ]; then
+        local log_file_=""
+        log_file_="$PWD/.___scratch-$(date +'%FT%T').log"
+
+        copy "$log_file_"
+        echo -e "\n\n\n Log file => $log_file_ \n\n"
+
+        "$_EBNIS_DOCKER_BIN" compose "${args_[@]}" | tee -a "$log_file_"
+      else
+        "$_EBNIS_DOCKER_BIN" compose "${args_[@]}"
+      fi
       return
     fi
 
