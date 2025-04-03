@@ -70,17 +70,17 @@ return {
       end
 
       if count == 3 then
+        vim.cmd("Octo review submit")
+        return
+      end
+
+      if count == 33 then
         vim.cmd("Octo review resume")
 
         vim.defer_fn(function()
           vim.cmd("Octo review submit")
         end, 4000)
 
-        return
-      end
-
-      if count == 31 then
-        vim.cmd("Octo review submit")
         return
       end
     end, { desc = "Octo Review 0/start 1/resume 2/close 3/submit" }),
