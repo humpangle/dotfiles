@@ -80,9 +80,6 @@ return {
         return
       end
 
-      vim.cmd("DbUiDelete")
-      vim.cmd("DbUiDelete")
-
       if vim.fn.mode() == "n" then
         vim.cmd.normal({ "vip" })
       end
@@ -147,6 +144,9 @@ return {
         vim.cmd("saveas! " .. vim.fn.fnameescape(filename))
       end)
 
+      -- We need to split away otherwise the DbUiDelete below will close the buffer.
+      vim.cmd("tab split")
+
       vim.bo.filetype = "markdown"
       -- The file will be of type 'dbui'. The delete action below will delete all files of this type.
       vim.bo.buftype = ""
@@ -159,6 +159,8 @@ return {
       -- dbui file is always readonly -  make it modifiable
       vim.bo.modifiable = true
       vim.cmd("e %")
+
+      vim.cmd.normal("gT")
     end, {
       noremap = true,
       desc = "DBUI 0/save result buffer 1/format 2/DbUiDelete",
