@@ -724,8 +724,9 @@
       "console.log(",
       "  `\\n\\n\\nSTART ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`,",
       "  `\\n>>>>>>>>>>>>>> $2 ${1:identifier}\\n`,",
-      " ${1:identifier},",
-      "  //$0 `\\n\\n>>>>>>>>>>>>>> label2\\n`, label2,",
+      " ${1},",
+      " // JSON.stringify($1, null, 2),",
+      "  //$0 `\\n\\n>>>>>>>>>>>>>> label2\\n`, label2, `\\n`,",
       "  `\\nEND ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\\n\\n\\n`",
       ");",
       "// NOTE: --END-- DEBUG LOG }",
@@ -756,29 +757,6 @@
       ""
     ],
     "description": "Log to console with some debug info"
-  },
-  "console.log JSON.stringify": {
-    "prefix": [
-      "console_json_log",
-      "console_log_json",
-      "print_to_console_json",
-      "print_json_to_console",
-      "json_print_to_console"
-    ],
-    "body": [
-      "",
-      "// NOTE: --START-- DEBUG LOG {",
-      "console.log(",
-      "  `\\n\\n\\nSTART ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`,",
-      "  `\\n>>>>>>>>>>>>>> $2 ${1:identifier}\\n`,",
-      "  JSON.stringify($1:identifier, null, 2),",
-      "  //$0 `\\n\\n>>>>>>>>>>>>>> label2\\n`, label2,",
-      "  `\\nEND ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\\n\\n\\n`",
-      ");",
-      "// NOTE: --END-- DEBUG LOG }",
-      ""
-    ],
-    "description": "console.log JSON.stringify"
   },
   "describeTest": {
     "prefix": "describeTest",
