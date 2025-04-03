@@ -28,11 +28,11 @@ return {
     "Octo",
   },
   keys = {
-    map_lazy_key("<leader>gh0", function()
+    map_lazy_key("<leader>ghh", function()
       vim.cmd("Octo")
     end, { desc = "Octo" }),
 
-    map_lazy_key("<leader>ghp", function()
+    map_lazy_key("<leader>ghp", function() -- pull request
       local count = vim.v.count
 
       if count == 0 then
@@ -52,7 +52,7 @@ return {
       end
     end, { desc = "Octo PR 0/ls 1/checkout 2/reload" }),
 
-    map_lazy_key("<leader>ghr", function()
+    map_lazy_key("<leader>ghr", function() -- review
       local count = vim.v.count
 
       if count == 0 then
@@ -74,12 +74,49 @@ return {
 
         vim.defer_fn(function()
           vim.cmd("Octo review submit")
-          vim.cmd("Octo review resume")
-        end, 8000)
+        end, 4000)
 
         return
       end
+
+      if count == 31 then
+        vim.cmd("Octo review submit")
+        return
+      end
     end, { desc = "Octo Review 0/start 1/resume 2/close 3/submit" }),
+
+    map_lazy_key("<leader>ghc", function() -- comment
+      local count = vim.v.count
+
+      if count == 0 then
+        vim.cmd("Octo comment add")
+        return
+      end
+
+      if count == 1 then
+        vim.cmd("Octo comment suggest")
+        return
+      end
+
+      if count == 2 then
+        vim.cmd("Octo comment delete")
+        return
+      end
+
+      if count == 3 then
+        vim.cmd("Octo comment url")
+        return
+      end
+    end, { desc = "Octo Comment 0/add" }),
+
+    map_lazy_key("<leader>ghx", function() -- reaction
+      local count = vim.v.count
+
+      if count == 0 then
+        vim.cmd("Octo reaction thumbs_up")
+        return
+      end
+    end, { desc = "Octo Reaction 0/thumbs_up" }),
   },
   config = function()
     require("octo").setup({
