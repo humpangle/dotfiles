@@ -34,9 +34,16 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
         log_file_="$PWD/.___scratch-docker-logs-$(date +'%FT%T').log"
 
         copy "$log_file_"
-        echo -e "\n\n\n Log file => $log_file_ \n\n"
+        echo -e "\n\n\n Log file =>\n$log_file_"
+        echo -e "Copied to clipboard!\n\n"
 
-        "$_EBNIS_DOCKER_BIN" compose "${args_[@]}" | tee -a "$log_file_"
+        "$_EBNIS_DOCKER_BIN" compose "${args_[@]}" &>"$log_file_" &
+
+        echo "$!" >"${log_file_}.pid"
+        echo -e "Sleeping for 2 seconds!\n\n"
+
+        sleep 2
+        tail -f "$log_file_"
       else
         "$_EBNIS_DOCKER_BIN" compose "${args_[@]}"
       fi
