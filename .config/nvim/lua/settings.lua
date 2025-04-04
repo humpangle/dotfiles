@@ -839,9 +839,29 @@ end
 -- -----/END TERMINAL
 
 -- Show the registers
--- utils.map_key("n", "<leader>re", ":reg<CR>", { noremap = true }) -- neoclip uses it now
--- Dump vim register into a buffer in vertical split.
-utils.map_key("n", "<localleader>re", ":VMessage reg<CR>", { noremap = true })
+utils.map_key("n", "<leader>re", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.cmd("reg")
+    return
+  end
+
+  if count == 1 then
+    vim.cmd("Wmessage reg")
+    return
+  end
+
+  if count == 2 then
+    vim.cmd("Vmessage reg")
+    return
+  end
+
+  if count == 3 then
+    vim.cmd("Tmessage reg")
+    return
+  end
+end, { noremap = true, desc = "Registers" })
 
 local function insert_current_datetime()
   local format_string = "%Y-%m-%dT%H-%M-%S"
