@@ -47,10 +47,15 @@ return {
       end
 
       if count == 2 then
+        utils.write_to_command_mode("Octo pr close")
+        return
+      end
+
+      if count == 3 then
         vim.cmd("Octo pr reload")
         return
       end
-    end, { desc = "Octo PR 0/ls 1/checkout 2/reload" }),
+    end, { desc = "Octo PR 0/ls 1/checkout 2/close 3/reload" }),
 
     map_lazy_key("<leader>ghr", function() -- review
       local count = vim.v.count
