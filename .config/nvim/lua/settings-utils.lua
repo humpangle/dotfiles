@@ -18,7 +18,7 @@ Create commands to make RedirMessages() easier to use interactively.
   Here are some examples of their use:
     :Bmessage registers
     :Wmessage ls
-    :VMessage !ls -alh
+    :Vmessage !ls -alh
     :Tmessage echo "Key mappings for Control+A:" | map <C-A>
 -- ]]
 function utils.RedirMessages(vim_cmd_, dest_cmd)

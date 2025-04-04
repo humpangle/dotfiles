@@ -664,7 +664,7 @@ vim.api.nvim_create_user_command("Vmessage", function(input)
 end, { nargs = "+", complete = "command" })
 
 -- Go to Buffer Number
--- utils.map_key('n', '<leader>bl', '<cmd>VMessage ls<CR>', { noremap = true, silent = false })
+-- utils.map_key('n', '<leader>bl', '<cmd>Vmessage ls<CR>', { noremap = true, silent = false })
 
 -- Delete current buffer
 utils.map_key("n", "<leader>bd", function()
