@@ -395,7 +395,6 @@ local plugins_table = {
   require("plugins/elixir"),
   require("plugins/ai"),
   require("plugins/neotest"),
-  require("plugins/nvim-neoclip"),
   require("plugins/neotree"),
   require("plugins/octo-nvim"),
   require("plugins/mini-align"),
