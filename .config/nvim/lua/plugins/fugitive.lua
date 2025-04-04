@@ -382,16 +382,23 @@ keymap("n", "<Leader>r<Space>", git_rebase_root_mappings_fn, {
 })
 
 keymap("n", "<Leader>rr", function()
-  utils.write_to_command_mode("G rebase --continue")
-end, { noremap = true, desc = [[Continue the current rebase.]] })
+  local count = vim.v.count
 
-keymap("n", "<Leader>ra", function()
-  utils.write_to_command_mode("G rebase --abort")
-end, { noremap = true, desc = [[Abort the current rebase.]] })
+  if count == 0 then
+    utils.write_to_command_mode("G rebase --continue")
+    return
+  end
 
-keymap("n", "<Leader>re", function()
-  utils.write_to_command_mode("G rebase --edit-todo")
-end, { noremap = true, desc = [[Edit the current rebase todo list.]] })
+  if count == 1 then
+    utils.write_to_command_mode("G rebase --edit-todo")
+    return
+  end
+
+  if count == 2 then
+    utils.write_to_command_mode("G rebase --abort")
+    return
+  end
+end, { noremap = true, desc = [[Git rebase 0/continue 1/edit 2/abort]] })
 -- /END Rebase keymaps
 
 -- Git mappings
