@@ -2,16 +2,6 @@ local utils = require("utils")
 
 local M = {}
 
-local has_coc = function()
-  if vim.g.vscode or M.has_termux() then
-    return false
-  end
-
-  local coc_env = os.getenv("COC")
-
-  return coc_env ~= nil and coc_env ~= ""
-end
-
 function M.has_vscode()
   if vim.g.vscode then
     return true
@@ -25,31 +15,23 @@ function M.install_cmp()
     return false
   end
 
-  if has_coc() then
-    return false
-  end
-
   return true
 end
 
 function M.lsp()
-  return (not M.has_vscode() and not has_coc())
+  return (not M.has_vscode())
 end
 
 function M.treesitter()
-  return (not M.has_vscode() and not has_coc())
+  return (not M.has_vscode())
 end
 
 function M.telescope()
-  return (not M.has_vscode() and not has_coc())
+  return (not M.has_vscode())
 end
 
 function M.dap()
   return not M.has_vscode()
-end
-
-function M.coc()
-  return has_coc()
 end
 
 function M.has_termux()

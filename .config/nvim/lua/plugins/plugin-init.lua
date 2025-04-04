@@ -55,8 +55,6 @@ local plugins_table = {
   -- Fuzzy Finder (files, lsp, etc)
   require("plugins/telescope"),
 
-  require("plugins/coc"),
-
   -- FUZZY FINDER
   -- sudo apt install bat -- Syntax highlighting
   --  brew install bat
