@@ -239,7 +239,7 @@ keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
 
 -- Git commit mappings
 
-local function open_commit(split_cmd)
+local function open_commit_under_cursor(split_cmd)
   local commit_ish = vim.fn.expand("<cword>")
   vim.cmd(split_cmd)
   vim.cmd("Gedit " .. commit_ish)
@@ -247,6 +247,9 @@ end
 
 local git_commit_mappings_fn = function()
   local count = vim.v.count
+  local count_string = "" .. count
+  local pattern = "^(%d)(%d?)$"
+  local first, last = count_string:match(pattern)
 
   if count == 0 then
     vim.cmd("Git commit")
@@ -272,26 +275,30 @@ local git_commit_mappings_fn = function()
     )
     return
   -- git branch
-  elseif count == 5 then
-    local search_text = "[ ./]\\+"
-    vim.fn.setreg("/", search_text)
-    vim.cmd("set hlsearch")
-    pcall(vim.cmd.normal, { "n", bang = true })
-    return
-  elseif count == 51 then
+  elseif first == "5" then
+    if last == "5" then -- 55
+      local search_text = "[ ./]\\+"
+      vim.fn.setreg("/", search_text)
+      vim.cmd("set hlsearch")
+      pcall(vim.cmd.normal, { "n", bang = true })
+      return
+    end
+
     local git_head = vim.fn.FugitiveHead()
-    vim.fn.setreg("+", git_head)
+    local reg = (last == "1" and "a") or "+"
+    vim.fn.setreg(reg, git_head)
     utils.clip_cmd_exec(git_head)
-    vim.notify("current branch -> " .. git_head)
+    vim.notify("(Reg " .. reg .. ") current branch -> " .. git_head)
     return
   -- git show
   elseif count == 6 then
-    open_commit("split")
+    open_commit_under_cursor("split")
     return
   elseif count == 62 then
-    return open_commit("vsplit")
+    open_commit_under_cursor("vsplit")
+    return
   elseif count == 63 then
-    open_commit("tab split")
+    open_commit_under_cursor("tab split")
     return
   else
     cmd = ""
