@@ -278,7 +278,7 @@ local patterns = {
       "*.sql.md",
       "*.md.sql",
     },
-    filetype = "markdown.sql",
+    filetype = "sql",
   },
 }
 
@@ -893,11 +893,5 @@ utils.map_key({ "n", "x" }, "<leader>WW", utils.write_to_out_file, {
   silent = true,
   desc = "Save file to scratch file.",
 })
-
-local echo_session = function()
-  vim.cmd.echo('"' .. vim.v.this_session .. '"')
-end
-
-vim.api.nvim_create_user_command("SessionEbnis", echo_session, {})
 
 utils.map_key("n", "gf", utils.go_to_file, { desc = "Go to file and line" })
