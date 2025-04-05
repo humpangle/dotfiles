@@ -9,52 +9,51 @@ end
 -- Manage Vim Sessions Manually
 
 local file_session_vim_exists = function()
-  return vim.fn.glob("session.vim") ~= ""
+  return vim.fn.glob("session*.vim") ~= ""
 end
 
 local session_name = utils.get_session_file()
 
-local echo_session = function()
-  vim.cmd.echo('"' .. vim.v.this_session .. '"')
+local get_session_path_relative = function()
+  return vim.fn.fnamemodify(vim.v.this_session, ":.")
+end
+
+local start_session_file = function()
+  utils.write_to_command_mode(
+    "Obsession " .. session_name .. "-.vim" .. "<left><left><left><left>"
+  )
 end
 
 return {
   "tpope/vim-obsession",
   init = function()
-    vim.api.nvim_create_user_command("SessionEbnis", echo_session, {})
+    vim.api.nvim_create_user_command("SessionEbnis", get_session_path_relative, {})
 
     map_key("n", "<leader>ob", function()
+      if not file_session_vim_exists() then
+        start_session_file()
+        return
+      end
+
       local count = vim.v.count
 
       if count == 0 then
-        if file_session_vim_exists() then
-          utils.write_to_command_mode("so " .. session_name)
-        else
-          utils.write_to_command_mode(
-            "Obsession " .. session_name .. ".vim"
-          )
-        end
-      elseif count == 1 then
         utils.write_to_command_mode("so " .. session_name)
-      elseif count == 2 then
-        utils.write_to_command_mode(
-          "Obsession " .. session_name .. ".vim"
-        )
-      elseif count == 3 then
-        utils.write_to_command_mode(
-          "Obsession "
-            .. session_name
-            .. "-.vim"
-            .. "<left><left><left><left>"
-        )
+      elseif count == 1 then
+        start_session_file()
+        return
       elseif count == 5 then
-        echo_session()
+        vim.cmd.echo('"' .. get_session_path_relative() .. '"')
+        return
       elseif count == 55 then
         local reg = "+"
-        vim.fn.setreg(reg, vim.v.this_session)
-        utils.clip_cmd_exec(vim.v.this_session)
-        vim.notify("Copied to + : " .. vim.v.this_session)
+        local session_path_relative = get_session_path_relative()
+        vim.fn.setreg(reg, session_path_relative)
+        utils.clip_cmd_exec(session_path_relative)
+        vim.notify("Copied to + : " .. session_path_relative)
       end
-    end)
+    end, {
+      desc = "Obsession */startFile 0/continue 1/startFile 5/list 55/copy",
+    })
   end,
 }
