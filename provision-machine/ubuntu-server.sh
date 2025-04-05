@@ -2803,6 +2803,27 @@ run_as_root() {
   fi
 }
 
+install-inotify-info() {
+  : "___alias___ install_inotify_info"
+  install_inotify_info
+}
+
+install_inotify_info() {
+  : "Install inotify-info for trouble shooting inotify issues"
+
+  local here_="$PWD"
+  cd "$PROJECT_0_PATH"
+  rm -rf "inotify-info"
+  git clone \
+    https://github.com/mikesart/inotify-info
+  cd inotify-info
+  run_as_root make
+  run_as_root make install
+  cd - &>/dev/null
+  run_as_root rm -rf inotify-info
+  cd "$here_"
+}
+
 # -----------------------------------------------------------------------------
 # GLOBAL HELP FUNCTION
 # -----------------------------------------------------------------------------
