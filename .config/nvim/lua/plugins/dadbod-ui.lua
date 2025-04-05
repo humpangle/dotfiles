@@ -98,7 +98,7 @@ return {
 
     map_key("n", "<leader>dbf", function()
       vim.cmd("DBUIFindBuffer")
-      vim.bo.filetype = "markdown.sql"
+      vim.bo.filetype = "sql"
     end, {
       noremap = true,
       desc = "DBUIFindBuffer",

@@ -11,10 +11,6 @@ return {
     filetypes = {
       "sql",
       "mysql",
-      "markdown.sql",
-      "markdown.mysql",
-      "sql.markdown",
-      "mysql.markdown",
     },
   },
 }
