@@ -323,15 +323,15 @@ return {
         conditionally_install("bash_lsp", "bashls"),
         conditionally_install("terraform_lsp", "terraformls"),
         conditionally_install("tailwindcss_lsp", "tailwindcss"),
-        require("plugins.lsp.json"),
-        require("plugins.lsp.python-lsp"),
-        require("plugins.lsp.elixir"),
-        require("plugins.lsp.docker"),
-        require("plugins.lsp.emmet"),
-        require("plugins.lsp.typescript"),
         yamlls_config.config_from_yaml_companion_plugin(),
-        require("plugins.lsp.php"),
-        require("plugins.lsp.sql")
+        require("plugins.lsp-extras.json"),
+        require("plugins.lsp-extras.python-lsp"),
+        require("plugins.lsp-extras.elixir"),
+        require("plugins.lsp-extras.docker"),
+        require("plugins.lsp-extras.emmet"),
+        require("plugins.lsp-extras.typescript"),
+        require("plugins.lsp-extras.php"),
+        require("plugins.lsp-extras.sql")
       )
 
       if not plugin_enabled.has_termux() then
@@ -423,7 +423,7 @@ return {
     end,
   },
 
-  require("plugins.lsp.barbecue-nvim"),
-  require("plugins.lsp.python-tools"),
-  require("plugins.lsp.nvim-lint"),
+  require("plugins.lsp-extras.barbecue-nvim"),
+  require("plugins.lsp-extras.python-tools"),
+  require("plugins.lsp-extras.nvim-lint"),
 }
