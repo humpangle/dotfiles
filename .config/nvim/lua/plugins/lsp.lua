@@ -9,19 +9,6 @@ end
 local utils = require("utils")
 local yamlls_config = require("plugins.yaml_lsp")
 
-local diagnostic_ui_keymap_handler = function()
-  local count = vim.v.count
-
-  if count == 1 then
-    vim.diagnostic.open_float({ focusable = true })
-    vim.diagnostic.open_float({ focusable = true }) -- second invocation is to focus the popup
-  elseif count == 2 then
-    require("treesitter-context").go_to_context(vim.v.count1)
-  else
-    vim.diagnostic.setloclist()
-  end
-end
-
 ---@param conditon string
 ---@param lsp string
 local conditionally_install = function(conditon, lsp)
@@ -120,23 +107,6 @@ return {
 
       local lspconfig = require("lspconfig")
 
-      utils.map_key("n", "<leader>ls1", function()
-        if vim.v.count == 0 then
-          vim.cmd("LspStop")
-          vim.cmd.echo('"LspStopped 1<leader>ls1 to start"')
-          return
-        end
-
-        if vim.v.count == 1 then
-          vim.cmd(":LspStart")
-          vim.cmd.echo('"LspStart"')
-          return
-        end
-
-        vim.cmd("TSContextToggle")
-        vim.cmd.echo('"TSContextToggle"')
-      end, { desc = "0/stop 1/start 2/TSContextToggle" })
-
       utils.map_key("n", "<leader>ls0", function()
         local count = vim.v.count
 
@@ -151,10 +121,22 @@ return {
         end
 
         if count == 2 then
-          vim.cmd("LspUninstall")
+          vim.cmd("LspStop")
+          vim.cmd.echo('"LspStopped 1<leader>ls1 to start"')
           return
         end
-      end, { desc = "0/info 1/log 2/uninstall" })
+
+        if count == 3 then
+          vim.cmd("LspStart")
+          vim.cmd.echo('"LspStart"')
+          return
+        end
+
+        if count == 4 then
+          vim.cmd("TSContextToggle")
+          vim.cmd.echo('"TSContextToggle"')
+        end
+      end, { desc = "0/info 1/log 2/stop 3/start 4/tscontext" })
 
       -- Diagnostic keymaps
       utils.map_key(
@@ -214,11 +196,20 @@ return {
             "[C]ode [A]ction"
           )
 
-          map(
-            "<leader>lse",
-            diagnostic_ui_keymap_handler,
-            "Open diagnostics 0/qf 1/popup"
-          )
+          map("<leader>lse", function()
+            local count = vim.v.count
+
+            if count == 1 then
+              vim.diagnostic.open_float({ focusable = true })
+              vim.diagnostic.open_float({ focusable = true }) -- second invocation is to focus the popup
+            elseif count == 2 then
+              require("treesitter-context").go_to_context(
+                vim.v.count1
+              )
+            else
+              vim.diagnostic.setloclist()
+            end
+          end, "Open diagnostics 0/qf 1/popup")
 
           local client =
             vim.lsp.get_client_by_id(event.data.client_id)
