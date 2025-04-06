@@ -400,7 +400,7 @@ return {
       --  :LspInstall nginx
 
       if vim.fn.executable("nginx-language-server") == 1 then
-        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#nginx_language_server
+        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#nginx_language_server
         lspconfig.nginx_language_server.setup({
           capabilities = lsp_extended_capabilities,
         })
