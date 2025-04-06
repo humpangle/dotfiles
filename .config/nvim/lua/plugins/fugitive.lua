@@ -308,7 +308,7 @@ local git_commit_mappings_fn = function()
 end
 local git_commit_mappings_opts = {
   noremap = true,
-  desc = "Git commit 1/empty 2/amend 3/amendNoEdit 4/verify 5/search",
+  desc = "Git commit 1/empty 2/amend 3/amendNoEdit 4/verify 5/search 6/show",
 }
 keymap("n", "<leader>gc", git_commit_mappings_fn, git_commit_mappings_opts)
 
