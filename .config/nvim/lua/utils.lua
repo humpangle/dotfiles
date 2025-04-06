@@ -633,9 +633,10 @@ local go_to_file_strip_prefix_in_env = function(file_path)
   -- export NVIM_GO_TO_FILE_GF_STRIP_PREFIX=/some/path1/::other/part2
   local prefixes = utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_STRIP_PREFIX")
 
-  if prefixes == nil then
-    return file_path
-  end
+  prefixes = (prefixes and "::" or "")
+    .. "fugitive://.+/.git//[%a%d]+/"
+    .. "::"
+    .. "octo://.+/RIGHT/"
 
   for _, prefix in pairs(vim.split(prefixes, "::")) do
     file_path = file_path:gsub(prefix, "")
