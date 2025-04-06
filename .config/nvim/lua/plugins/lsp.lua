@@ -24,7 +24,7 @@ end
 
 ---@param conditon string
 ---@param lsp string
-local conditionally_enable = function(conditon, lsp)
+local conditionally_install = function(conditon, lsp)
   local config = {}
   if plugin_enabled[conditon]() then
     config[lsp] = {}
@@ -320,9 +320,9 @@ return {
       servers = vim.tbl_extend(
         "error",
         servers,
-        conditionally_enable("bash_lsp", "bashls"),
-        conditionally_enable("terraform_lsp", "terraformls"),
-        conditionally_enable("tailwindcss_lsp", "tailwindcss"),
+        conditionally_install("bash_lsp", "bashls"),
+        conditionally_install("terraform_lsp", "terraformls"),
+        conditionally_install("tailwindcss_lsp", "tailwindcss"),
         require("plugins.lsp.json"),
         require("plugins.lsp.python-lsp"),
         require("plugins.lsp.elixir"),
