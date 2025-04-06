@@ -374,8 +374,10 @@ local function do_yank_highlighted(register_flag)
     register = register or register_flag
 
     -- Yank the currently highlighted texts to the unnamed register
-    vim.api.nvim_command("normal! vgny")
+    -- vim.api.nvim_command("normal! vgny")
 
+    -- is it necessary?
+    -- vim.cmd({ cmd = "wshada", bang = true })
     -- Copy the yanked text to the specified register
     vim.fn.setreg(register, utils.get_visual_selection())
 
