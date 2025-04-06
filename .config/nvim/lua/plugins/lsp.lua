@@ -22,6 +22,16 @@ local diagnostic_ui_keymap_handler = function()
   end
 end
 
+---@param conditon string
+---@param lsp string
+local conditionally_enable = function(conditon, lsp)
+  local config = {}
+  if plugin_enabled[conditon]() then
+    config[lsp] = {}
+  end
+  return config
+end
+
 return {
   {
     --[[
@@ -310,13 +320,9 @@ return {
       servers = vim.tbl_extend(
         "error",
         servers,
-        (plugin_enabled.bash_lsp() and { bashls = {} } or {}),
-        (plugin_enabled.terraform_lsp() and { terraformls = {} } or {}),
-        (
-          plugin_enabled.tailwindcss_lsp()
-            and { tailwindcss = {} }
-          or {}
-        ),
+        conditionally_enable("bash_lsp", "bashls"),
+        conditionally_enable("terraform_lsp", "terraformls"),
+        conditionally_enable("tailwindcss_lsp", "tailwindcss"),
         require("plugins.lsp.json"),
         require("plugins.lsp.python-lsp"),
         require("plugins.lsp.elixir"),
