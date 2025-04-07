@@ -370,9 +370,8 @@ return {
             -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend(
               "force",
-              {},
-              lsp_extended_capabilities,
-              server.capabilities or {}
+              server.capabilities or {},
+              lsp_extended_capabilities
             )
 
             pcall(lspconfig[server_name].setup, server)
