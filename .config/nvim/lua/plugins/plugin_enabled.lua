@@ -299,6 +299,16 @@ function M.vim_lsp()
   return utils.get_os_env_or_nil("NVIM_ENABLE_VIM_LSP") == "1"
 end
 
+M.firenvim = function()
+  if M.has_termux() then
+    return false
+  end
+  if M.has_vscode() then
+    return false
+  end
+  return utils.get_os_env_or_nil("NVIM_ENABLE_FIRE_NVIM") == "1"
+end
+
 M.has_web_browsers = function()
   if M.has_termux() then
     return false

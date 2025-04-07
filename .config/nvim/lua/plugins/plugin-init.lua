@@ -401,6 +401,7 @@ local plugins_table = {
   require("plugins/indent-blankline"),
   require("plugins/web-browsers"),
   require("plugins/anki-nvim"),
+  require("plugins/firenvim"),
 }
 
 ---@diagnostic disable:missing-fields

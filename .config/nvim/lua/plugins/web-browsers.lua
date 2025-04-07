@@ -43,8 +43,4 @@ return {
       "W3mVSplit",
     },
   },
-  {
-    "glacambre/firenvim",
-    build = ":call firenvim#install(0)",
-  },
 }
