@@ -7,7 +7,7 @@ if plugin_enabled.has_vscode() then
 end
 
 local utils = require("utils")
-local yamlls_config = require("plugins.yaml_lsp")
+local yamlls_config = require("plugins.lsp-extras.yaml_lsp")
 
 ---@param conditon string
 ---@param lsp string

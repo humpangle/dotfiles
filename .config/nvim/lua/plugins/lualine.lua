@@ -21,7 +21,7 @@ return {
 
       sections = {
         lualine_x = {
-          require("plugins.yaml_lsp").get_yaml_schema,
+          require("plugins.lsp-extras.yaml_lsp").get_yaml_schema,
           "fileformat",
           "filetype",
         },

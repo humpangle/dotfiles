@@ -306,7 +306,7 @@ return {
         ft = "python",
         config = function()
           local python_bin =
-            require("plugins/lsp_utils").get_python_path()
+            require("plugins/lsp-extras/lsp_utils").get_python_path()
 
           require("dap-python").setup(python_bin)
         end,

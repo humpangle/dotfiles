@@ -50,7 +50,7 @@ local plugins_table = {
 
   -- Highlight, edit, and navigate code
   require("plugins/treesitter"),
-  require("plugins/lsp"),
+  require("plugins/nvim-lspconfig"),
   require("plugins/dap"),
   -- Fuzzy Finder (files, lsp, etc)
   require("plugins/telescope"),

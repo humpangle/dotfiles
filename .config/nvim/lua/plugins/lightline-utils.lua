@@ -32,7 +32,7 @@ local function abbreviate_path(file_path)
 end
 
 local get_yaml_schema = function()
-  local ok, yaml_lsp = pcall(require, "yaml_lsp")
+  local ok, yaml_lsp = pcall(require, "plugins.lsp-extras.yaml_lsp")
 
   if not ok then
     return ""

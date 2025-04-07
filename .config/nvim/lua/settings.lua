@@ -10,7 +10,7 @@ end
 
 local plugin_enabled = require("plugins/plugin_enabled")
 
-local python_interpreter = require("plugins/lsp_utils").get_python_path()
+local python_interpreter = require("plugins/lsp-extras/lsp_utils").get_python_path()
 vim.g.python3_host_prog = python_interpreter
 
 -- Disable Python2 support
