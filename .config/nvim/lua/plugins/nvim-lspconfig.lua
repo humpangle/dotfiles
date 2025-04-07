@@ -122,7 +122,7 @@ return {
 
         if count == 2 then
           vim.cmd("LspStop")
-          vim.cmd.echo('"LspStopped 1<leader>ls1 to start"')
+          vim.cmd.echo('"LspStopped 3<leader>ls0 to start"')
           return
         end
 
