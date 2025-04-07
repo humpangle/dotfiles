@@ -138,20 +138,6 @@ return {
         end
       end, { desc = "0/info 1/log 2/stop 3/start 4/tscontext" })
 
-      -- Diagnostic keymaps
-      utils.map_key("n", "[d", function()
-        vim.diagnostic.jump({ count = 1 })
-      end, { desc = "Go to previous [D]iagnostic message" })
-      utils.map_key("n", "]d", function()
-        vim.diagnostic.jump({ count = -1 })
-      end, { desc = "Go to next [D]iagnostic message" })
-      utils.map_key(
-        "n",
-        "<leader>e",
-        vim.diagnostic.open_float,
-        { desc = "Show diagnostic [E]rror messages" }
-      )
-
       --  This function gets run when an LSP attaches to a particular buffer. That is to say, every time a new file is
       --  opened that is associated with an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --  function will be executed to configure the current buffer
@@ -193,17 +179,24 @@ return {
           map("<leader>lse", function()
             local count = vim.v.count
 
+            if count == 0 then
+              vim.diagnostic.setloclist()
+              return
+            end
+
             if count == 1 then
               vim.diagnostic.open_float({ focusable = true })
               vim.diagnostic.open_float({ focusable = true }) -- second invocation is to focus the popup
-            elseif count == 2 then
+              return
+            end
+
+            if count == 2 then
               require("treesitter-context").go_to_context(
                 vim.v.count1
               )
-            else
-              vim.diagnostic.setloclist()
+              return
             end
-          end, "Open diagnostics 0/qf 1/popup")
+          end, "Open diagnostics 0/loc 1/popup 2/trsGoToContext")
 
           local client =
             vim.lsp.get_client_by_id(event.data.client_id)
