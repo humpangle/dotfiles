@@ -899,9 +899,4 @@ utils.map_key({ "n", "x" }, "<leader>WW", utils.write_to_out_file, {
 
 utils.map_key("n", "gf", utils.go_to_file, { desc = "Go to file and line" })
 
-vim.diagnostic.config({
-  virtual_lines = true,
-  -- virtual_lines = {
-  --   current_line = true,
-  -- },
-})
+require('settings.diagnostics')
