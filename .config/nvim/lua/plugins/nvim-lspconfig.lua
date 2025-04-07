@@ -139,18 +139,12 @@ return {
       end, { desc = "0/info 1/log 2/stop 3/start 4/tscontext" })
 
       -- Diagnostic keymaps
-      utils.map_key(
-        "n",
-        "[d",
-        vim.diagnostic.goto_prev,
-        { desc = "Go to previous [D]iagnostic message" }
-      )
-      utils.map_key(
-        "n",
-        "]d",
-        vim.diagnostic.goto_next,
-        { desc = "Go to next [D]iagnostic message" }
-      )
+      utils.map_key("n", "[d", function()
+        vim.diagnostic.jump({ count = 1 })
+      end, { desc = "Go to previous [D]iagnostic message" })
+      utils.map_key("n", "]d", function()
+        vim.diagnostic.jump({ count = -1 })
+      end, { desc = "Go to next [D]iagnostic message" })
       utils.map_key(
         "n",
         "<leader>e",
