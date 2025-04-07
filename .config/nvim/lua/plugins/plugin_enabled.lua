@@ -291,4 +291,8 @@ function M.image_nvim()
   return utils.get_os_env_or_nil("NVIM_ENABLE_IMAGE_NVIM") == "1"
 end
 
+function M.anki()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_ANKI") == "1"
+end
+
 return M
