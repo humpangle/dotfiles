@@ -10,7 +10,8 @@ end
 
 local plugin_enabled = require("plugins/plugin_enabled")
 
-local python_interpreter = require("plugins/lsp-extras/lsp_utils").get_python_path()
+local python_interpreter =
+  require("plugins/lsp-extras/lsp_utils").get_python_path()
 vim.g.python3_host_prog = python_interpreter
 
 -- Disable Python2 support
@@ -897,3 +898,10 @@ utils.map_key({ "n", "x" }, "<leader>WW", utils.write_to_out_file, {
 })
 
 utils.map_key("n", "gf", utils.go_to_file, { desc = "Go to file and line" })
+
+vim.diagnostic.config({
+  virtual_lines = true,
+  -- virtual_lines = {
+  --   current_line = true,
+  -- },
+})
