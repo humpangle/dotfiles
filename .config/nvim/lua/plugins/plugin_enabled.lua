@@ -295,4 +295,18 @@ function M.anki()
   return utils.get_os_env_or_nil("NVIM_ENABLE_ANKI") == "1"
 end
 
+function M.vim_lsp()
+  return utils.get_os_env_or_nil("NVIM_ENABLE_VIM_LSP") == "1"
+end
+
+M.has_web_browsers = function()
+  if M.has_termux() then
+    return false
+  end
+  if M.has_vscode() then
+    return false
+  end
+  return true
+end
+
 return M
