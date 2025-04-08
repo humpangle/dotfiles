@@ -640,7 +640,9 @@ if command -v nginx &>/dev/null; then
 fi
 
 # GIT
-alias gss='git status'
+alias gss='git status --short'
+alias gssl='git status'
+alias gssp='git status --porcelain'
 # alias gst='git stash'
 # alias gsp='git stash pop'
 alias gsl='git stash list'
