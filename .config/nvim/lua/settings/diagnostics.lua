@@ -36,9 +36,28 @@ map_key("n", "<leader>lsd", function()
     return
   end
 
+  if count == 1 then
+    vim.diagnostic.open_float({ focusable = true })
+    vim.diagnostic.open_float({ focusable = true }) -- second invocation is to focus the popup
+    return
+  end
+
+  if count == 5 then
+    vim.diagnostic.setloclist()
+    return
+  end
+
+  if count == 55 then
+    vim.diagnostic.open_float({ focusable = true, scope = "buffer" })
+    vim.diagnostic.open_float({ focusable = true, scope = "buffer" })
+    return
+  end
+
   if count == 99 then
     local config_opts_as_str = vim.inspect(config_opts)
     print(config_opts_as_str)
     return
   end
-end, { desc = "diagnostic 0/toggleVirtuals 99/debug" })
+end, {
+  desc = "diagnostic 0/toggleVirtuals 1/linePopUp 5/listLoc 55/listFloat  99/debug",
+})

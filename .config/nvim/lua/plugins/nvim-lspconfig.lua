@@ -183,21 +183,6 @@ return {
             "[C]ode [A]ction"
           )
 
-          map("<leader>lse", function()
-            local count = vim.v.count
-
-            if count == 0 then
-              vim.diagnostic.setloclist()
-              return
-            end
-
-            if count == 1 then
-              vim.diagnostic.open_float({ focusable = true })
-              vim.diagnostic.open_float({ focusable = true }) -- second invocation is to focus the popup
-              return
-            end
-          end, "Open diagnostics 0/loc 1/popup")
-
           local client =
             vim.lsp.get_client_by_id(event.data.client_id)
 
