@@ -135,8 +135,19 @@ return {
         if count == 4 then
           vim.cmd("TSContextToggle")
           vim.cmd.echo('"TSContextToggle"')
+          return
         end
-      end, { desc = "0/info 1/log 2/stop 3/start 4/tscontext" })
+
+        if count == 5 then
+          -- TODO: implement dynamic level up
+          -- 50 == 1, 51 == 1, 52 == 2
+          local level_up = 1
+          require("treesitter-context").go_to_context(level_up)
+          return
+        end
+      end, {
+        desc = "0/info 1/log 2/stop 3/start 4/tsContextToggle 5/trsGoToContext",
+      })
 
       --  This function gets run when an LSP attaches to a particular buffer. That is to say, every time a new file is
       --  opened that is associated with an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -185,14 +196,7 @@ return {
               vim.diagnostic.open_float({ focusable = true }) -- second invocation is to focus the popup
               return
             end
-
-            if count == 2 then
-              require("treesitter-context").go_to_context(
-                vim.v.count1
-              )
-              return
-            end
-          end, "Open diagnostics 0/loc 1/popup 2/trsGoToContext")
+          end, "Open diagnostics 0/loc 1/popup")
 
           local client =
             vim.lsp.get_client_by_id(event.data.client_id)
