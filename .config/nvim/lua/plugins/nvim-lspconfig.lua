@@ -132,21 +132,21 @@ return {
           return
         end
 
-        if count == 4 then
+        if count == 44 then
           vim.cmd("TSContextToggle")
           vim.cmd.echo('"TSContextToggle"')
           return
         end
 
-        if count == 5 then
+        if count == 4 then
           -- TODO: implement dynamic level up
-          -- 50 == 1, 51 == 1, 52 == 2
+          -- 40 == 1, 41 == 1, 42 == 2
           local level_up = 1
           require("treesitter-context").go_to_context(level_up)
           return
         end
       end, {
-        desc = "0/info 1/log 2/stop 3/start 4/tsContextToggle 5/trsGoToContext",
+        desc = "0/info 1/log 2/stop 3/start 44/tsContextToggle 4*/trsGoToContext",
       })
 
       --  This function gets run when an LSP attaches to a particular buffer. That is to say, every time a new file is
