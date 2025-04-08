@@ -369,6 +369,7 @@ return {
       end
 
       -- mason does not know how to setup lua_ls on termux, so we do it manually.
+      ---@diagnostic disable:missing-fields
       if plugin_enabled.has_termux() then
         lspconfig.lua_ls.setup({
           settings = {
