@@ -189,7 +189,7 @@ return {
           -- Servers like pyright do not support formatting.
           if
             client ~= nil
-            and client.supports_method("textDocument/formatting")
+            and client:supports_method("textDocument/formatting")
           then
             -- Format the code using builtin LSP code formatter
             map("<leader>fc", function()
