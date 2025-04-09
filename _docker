@@ -4,6 +4,10 @@
 if ! command -v docker &>/dev/null; then
   return
 fi
+_DOCKER_GLOBAL_LOG_DIR_="$HOME/.docker-ebnis-logs"
+mkdir -p "$_DOCKER_GLOBAL_LOG_DIR_"
+alias dld='$_DOCKER_GLOBAL_LOG_DIR_'
+alias dldc='copy $_DOCKER_GLOBAL_LOG_DIR_'
 
 declare -A _alias_map_docker=()
 
@@ -31,18 +35,16 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
 
       if [ "$2" = "logs" ]; then
         local log_file_=""
-        log_file_="$PWD/.___scratch-docker-logs-$(date +'%FT%T').log"
+        log_file_="$_DOCKER_GLOBAL_LOG_DIR_/$(date +'%FT%T').log"
 
-        copy "$log_file_"
         echo -e "\n\n\n Log file =>\n$log_file_"
-        echo -e "Copied to clipboard!\n\n"
 
         "$_EBNIS_DOCKER_BIN" compose "${args_[@]}" &>"$log_file_" &
 
         echo "$!" >"${log_file_}.pid"
-        echo -e "Sleeping for 2 seconds!\n\n"
+        echo -e "Sleeping for 1 second!\n\n"
 
-        sleep 2
+        sleep 1
         tail -f "$log_file_"
       else
         "$_EBNIS_DOCKER_BIN" compose "${args_[@]}"
