@@ -19,7 +19,7 @@ local conditionally_install = function(conditon, lsp)
   return config
 end
 
---[[ default keymaps;
+--[[ default keymaps; https://gpanders.com/blog/whats-new-in-neovim-0-11/#more-default-mappings
   grn
     in Normal mode maps to vim.lsp.buf.rename()
   grr
