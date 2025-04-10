@@ -36,13 +36,12 @@ return {
       local count = vim.v.count
 
       if count == 0 then
-        vim.cmd("tab split")
-        vim.cmd("Octo pr list")
+        vim.cmd("Octo pr create")
         return
       end
 
       if count == 1 then
-        vim.cmd("Octo pr checkout")
+        vim.cmd("Octo pr reload")
         return
       end
 
@@ -52,10 +51,16 @@ return {
       end
 
       if count == 3 then
-        vim.cmd("Octo pr reload")
+        vim.cmd("Octo pr checkout")
         return
       end
-    end, { desc = "Octo PR 0/ls 1/checkout 2/close 3/reload" }),
+
+      if count == 5 then
+        vim.cmd("tab split")
+        vim.cmd("Octo pr list")
+        return
+      end
+    end, { desc = "Octo PR 0/create 1/reload 2/close 3/checkout 5/list" }),
 
     map_lazy_key("<leader>ghr", function() -- review
       local count = vim.v.count
