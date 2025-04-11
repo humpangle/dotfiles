@@ -32,6 +32,14 @@ return {
       vim.cmd("Octo")
     end, { desc = "Octo" }),
 
+    map_lazy_key("<leader>gh0", function()
+      if vim.bo.filetype == "octo" then
+        vim.bo.filetype = "markdown"
+      else
+        vim.bo.filetype = "octo"
+      end
+    end, { desc = "0/toggleFileType octo->markdown" }),
+
     map_lazy_key("<leader>ghp", function() -- pull request
       local count = vim.v.count
 
