@@ -108,7 +108,11 @@ return {
       -- Does not seem to work for now.
       {
         "folke/twilight.nvim",
-        opts = {},
+        opts = {
+          dimming = {
+            alpha = 0.6, -- amount of dimming
+          },
+        },
       },
 
       -- Allows us to use the schemastore catalog
