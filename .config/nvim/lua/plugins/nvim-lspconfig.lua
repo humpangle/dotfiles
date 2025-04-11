@@ -169,8 +169,14 @@ return {
           require("treesitter-context").go_to_context(level_up)
           return
         end
+
+        if count == 45 then
+          vim.cmd("Twilight")
+          vim.notify("Twilight toggled")
+          return
+        end
       end, {
-        desc = "0/info 1/log 2/stop 3/start 44/tsContextToggle 4*/trsGoToContext",
+        desc = "0/info 1/log 2/stop 3/start 44/tsContextToggle 45/twilightToggle 4*/trsGoToContext",
       })
 
       --  This function gets run when an LSP attaches to a particular buffer. That is to say, every time a new file is
