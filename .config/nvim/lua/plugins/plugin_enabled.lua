@@ -170,14 +170,6 @@ function M.notest()
   return true
 end
 
-function M.isort()
-  if M.has_vscode() then
-    return false
-  end
-
-  return utils.get_os_env_or_nil("NVIM_ENABLE_PYTHON_ISORT") == "1"
-end
-
 function M.bash_lsp()
   if M.has_vscode() then
     return false
@@ -208,14 +200,6 @@ function M.python()
   end
 
   return utils.get_os_env_or_nil("NVIM_ENABLE_PYTHON_PLUGINS") == "1"
-end
-
-function M.isort_auto()
-  if M.has_vscode() then
-    return false
-  end
-
-  return utils.get_os_env_or_nil("NVIM_ISORT_PLUGIN_AUTO") == "1"
 end
 
 function M.terraform_lsp()
