@@ -117,7 +117,7 @@ return {
         vim.cmd("Octo comment url")
         return
       end
-    end, { desc = "Octo Comment 0/add" }),
+    end, { desc = "Octo Comment 0/add 1/suggest 2/delete 3/url" }),
 
     map_lazy_key("<leader>ghx", function() -- reaction
       local count = vim.v.count
