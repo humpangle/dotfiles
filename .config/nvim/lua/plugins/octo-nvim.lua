@@ -95,29 +95,43 @@ return {
       end
     end, { desc = "Octo Review 0/start 1/resume 2/close 3/submit" }),
 
-    map_lazy_key("<leader>ghc", function() -- comment
-      local count = vim.v.count
+    map_lazy_key(
+      "<leader>ghc",
+      function() -- comment
+        local count = vim.v.count
 
-      if count == 0 then
-        vim.cmd("Octo comment add")
-        return
-      end
+        if count == 0 then
+          vim.cmd("Octo comment add")
+          return
+        end
 
-      if count == 1 then
-        vim.cmd("Octo comment suggest")
-        return
-      end
+        if count == 1 then
+          vim.cmd("Octo comment suggest")
+          return
+        end
 
-      if count == 2 then
-        vim.cmd("Octo comment delete")
-        return
-      end
+        if count == 2 then
+          vim.cmd("Octo comment delete")
+          return
+        end
 
-      if count == 3 then
-        vim.cmd("Octo comment url")
-        return
-      end
-    end, { desc = "Octo Comment 0/add 1/suggest 2/delete 3/url" }),
+        if count == 3 then
+          vim.cmd("Octo comment url")
+          return
+        end
+
+        if count == 4 then
+          require("octo.navigation").next_comment()
+          return
+        end
+
+        if count == 44 then
+          require("octo.navigation").prev_comment()
+          return
+        end
+      end,
+      { desc = "Octo Comment 0/add 1/suggest 2/delete 3/url 44/nextPrev" }
+    ),
 
     map_lazy_key("<leader>ghx", function() -- reaction
       local count = vim.v.count
