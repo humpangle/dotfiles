@@ -41,7 +41,7 @@ return {
       end
 
       if count == 1 then
-        vim.cmd("Octo pr reload")
+        vim.cmd("Octo pr checkout")
         return
       end
 
@@ -51,7 +51,7 @@ return {
       end
 
       if count == 3 then
-        vim.cmd("Octo pr checkout")
+        vim.cmd("Octo pr reload")
         return
       end
 
