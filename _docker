@@ -35,7 +35,7 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
 
       if [ "$2" = "logs" ]; then
         local log_file_=""
-        log_file_="$_DOCKER_GLOBAL_LOG_DIR_/$(date +'%FT%T').log"
+        log_file_="$_DOCKER_GLOBAL_LOG_DIR_/$(date +'%FT%H-%M-%S').log"
 
         echo -e "\n\n\n Log file =>\n$log_file_"
 
