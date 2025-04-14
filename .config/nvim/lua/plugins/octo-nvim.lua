@@ -59,6 +59,12 @@ return {
       end
 
       if count == 3 then
+        vim.cmd("Octo pr url")
+        vim.notify("PR URL: " .. vim.fn.getreg("+"))
+        return
+      end
+
+      if count == 4 then
         vim.cmd("Octo pr reload")
         return
       end
@@ -68,7 +74,9 @@ return {
         vim.cmd("Octo pr list")
         return
       end
-    end, { desc = "Octo PR 0/create 1/reload 2/close 3/checkout 5/list" }),
+    end, {
+      desc = "Octo PR 0/create 1/checkout 2/close 3/url 4/reload 5/list",
+    }),
 
     map_lazy_key("<leader>ghr", function() -- review
       local count = vim.v.count
