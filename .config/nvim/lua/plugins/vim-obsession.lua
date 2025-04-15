@@ -27,7 +27,11 @@ end
 return {
   "tpope/vim-obsession",
   init = function()
-    vim.api.nvim_create_user_command("SessionEbnis", get_session_path_relative, {})
+    vim.api.nvim_create_user_command(
+      "SessionEbnis",
+      get_session_path_relative,
+      {}
+    )
 
     map_key("n", "<leader>ob", function()
       if not file_session_vim_exists() then
