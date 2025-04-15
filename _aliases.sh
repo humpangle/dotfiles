@@ -190,6 +190,9 @@ fi
 # -----------------------------------------------------------------------------
 if command -v nvim &>/dev/null; then
   export EDITOR="nvim"
+  # https://bsky.app/profile/bobbby.online/post/3llwpqtwwf22r
+  # in an iex shell and press ESCAPE+o
+  export VISUAL="nvim"
 
   # vim
   alias vi='/usr/bin/vim'
