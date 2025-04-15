@@ -47,14 +47,16 @@ return {
         start_session_file()
         return
       elseif count == 5 then
-        vim.cmd.echo('"Current session: ' .. get_session_path_relative() .. '"')
+        vim.notify("CURRENT SESSION: " .. get_session_path_relative())
         return
       elseif count == 55 then
         local reg = "+"
         local session_path_relative = get_session_path_relative()
         vim.fn.setreg(reg, session_path_relative)
         utils.clip_cmd_exec(session_path_relative)
-        vim.notify("Current session copied to + : " .. session_path_relative)
+        vim.notify(
+          "CURRENT SESSION COPIED TO +: " .. session_path_relative
+        )
       end
     end, {
       desc = "Obsession */startFile 0/continue 1/startFile 5/list 55/copy",
