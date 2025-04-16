@@ -157,7 +157,12 @@ keymap("n", "<Leader>czz", function()
   end
 
   -- Append text for custom message with the latest commit hash and place cursor between quotes
-  cmd = cmd .. " -m '" .. latest_commit .. ": '"
+  cmd = cmd
+    .. " -m '"
+    .. latest_commit
+    .. " "
+    .. vim.fn.FugitiveHead()
+    .. ": '"
 
   local left = "<left>"
   local left_repeated_severally = left
