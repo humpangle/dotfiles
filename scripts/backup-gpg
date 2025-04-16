@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+required_env_keys=(
+  GPG_GIT_REMOTE_URL
+  GIT_USER
+  GIT_USER_EMAIL
+)
+
+for env_key_ in "${required_env_keys[@]}"; do
+  printf -v env_val_ "%q" "${!env_key_}"
+
+  if [ -z "$env_val_" ] || [ "$env_val_" == "''" ]; then
+    echo -e "\n$env_key_ environment variable is required."
+    exit 1
+  fi
+done
+
+BACKUP_DIR="$HOME/.gnupg-bak"
+mkdir -p "$BACKUP_DIR"
+
+echo -e "\n[*] Backing up GPG configuration and keys to: $BACKUP_DIR"
+
+# Copy non-sensitive config files
+cp -v "$HOME/.gnupg/gpg.conf" "$BACKUP_DIR/" 2>/dev/null || echo -e "\nNo gpg.conf"
+cp -v "$HOME/.gnupg/gpg-agent.conf" "$BACKUP_DIR/" 2>/dev/null || echo -e "\nNo gpg-agent.conf"
+cp -v "$HOME/.gnupg/dirmngr.conf" "$BACKUP_DIR/" 2>/dev/null || echo -e "\nNo dirmngr.conf"
+
+# Export public keys
+gpg --export --armor >"$BACKUP_DIR/pubkeys.asc"
+echo -e "\n[*] Exported public keys to pubkeys.asc"
+
+# Export private keys (DO NOT SHARE THIS FILE)
+gpg --export-secret-keys --armor >"$BACKUP_DIR/secretkeys.asc"
+echo -e "\n[*] Exported private keys to secretkeys.asc"
+
+# Optional: backup revocation certificates too
+mkdir -p "$BACKUP_DIR/revocation-certs"
+cp -v "$HOME/.gnupg/openpgp-revocs.d/"* "$BACKUP_DIR/revocation-certs/" 2>/dev/null || echo -e "\nNo revocation certs"
+
+cd "$BACKUP_DIR"
+
+cat >.gitignore <<EOF
+# Ignore auto-generated or sensitive files
+*.bak
+*.lock
+*.tmp
+random_seed
+trustdb.gpg
+private-keys-v1.d/
+openpgp-revocs.d/
+EOF
+
+if [ ! -d ".git" ]; then
+  git init
+  git config user.name "$GIT_USER"
+  git config user.email "$GIT_USER_EMAIL"
+  git remote add origin "$GPG_GIT_REMOTE_URL"
+fi
+
+git add .
+git commit -m "GPG backup on $(date '+%FT%H-%M-%S')" ||
+  echo -e "\nNothing new to commit"
+
+echo -e "\nBack up written to:\n$BACKUP_DIR"
