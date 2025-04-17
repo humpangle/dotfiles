@@ -899,4 +899,8 @@ utils.map_key({ "n", "x" }, "<leader>WW", utils.write_to_out_file, {
 
 utils.map_key("n", "gf", utils.go_to_file, { desc = "Go to file and line" })
 
-require('settings.diagnostics')
+vim.api.nvim_create_user_command("SortJson", function()
+  vim.cmd("%!jq --sort-keys .")
+end, { desc = "Sort Json Keys" })
+
+require("settings.diagnostics")
