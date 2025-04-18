@@ -3,6 +3,9 @@
 set -eup
 
 for entry_; do
-  mkdir -p "$(dirname "$entry_" )"
-  touch "$entry_"
+  mkdir -p "$(dirname "$entry_")"
+
+  if [ ! -e "$entry_" ]; then
+    touch "$entry_"
+  fi
 done
