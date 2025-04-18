@@ -1,38 +1,47 @@
 local utils = require("utils")
 local map_key = utils.map_key
 
-local config_opts = {
-  virtual_text = true,
-  virtual_lines = false,
-}
-
-local default_config = {
-  virtual_text = true,
-  -- virtual_lines = true,
-  virtual_lines = {
-    current_line = true,
+local diagnostic_modes = {
+  {
+    config = {
+      virtual_text = true,
+      virtual_lines = false,
+    },
+    message = "Diagnostic virtual LINES enabled",
   },
+  {
+    config = {
+      virtual_text = true,
+      virtual_lines = {
+        current_line = true,
+      },
+    },
+    message = "Diagnostic virtual LINES disabled",
+  },
+  -- We may add more modes here if needed, e.g.:
+  -- {
+  --   config = {
+  --     virtual_text = false,
+  --     virtual_lines = false,
+  --   },
+  --   message = "Diagnostics OFF",
+  -- },
 }
 
-vim.diagnostic.config(config_opts)
+local current_mode_index = 1
+vim.diagnostic.config(diagnostic_modes[current_mode_index].config)
 
 map_key("n", "<leader>lsd", function()
   local count = vim.v.count
 
   if count == 0 then
-    local msg = ""
-    if config_opts.virtual_lines == false then
-      config_opts.virtual_lines = default_config.virtual_lines
-      config_opts.virtual_text = false
-      msg = "Diagnostic virtual LINES enabled"
-    elseif config_opts.virtual_text == false then
-      config_opts.virtual_text = default_config.virtual_text
-      config_opts.virtual_lines = false
-      msg = "Diagnostic virtual TEXT enabled"
-    end
+    -- Cycle to the next mode
+    local next_mode_index = (current_mode_index % #diagnostic_modes) + 1
+    current_mode_index = next_mode_index
 
-    vim.diagnostic.config(config_opts)
-    vim.notify(msg)
+    local new_mode = diagnostic_modes[current_mode_index]
+    vim.diagnostic.config(new_mode.config)
+    vim.notify(new_mode.message)
     return
   end
 
@@ -54,7 +63,8 @@ map_key("n", "<leader>lsd", function()
   end
 
   if count == 99 then
-    local config_opts_as_str = vim.inspect(config_opts)
+    local config_opts_as_str =
+      vim.inspect(diagnostic_modes[current_mode_index].config)
     print(config_opts_as_str)
     return
   end
