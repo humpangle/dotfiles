@@ -171,8 +171,14 @@ return {
         end
 
         if count == 45 then
-          vim.cmd("Twilight")
-          vim.notify("Twilight toggled")
+          local twilight_view = require("twilight.view")
+          if twilight_view.enabled then
+            twilight_view.disable()
+            vim.notify("Twilight disabled")
+          else
+            twilight_view.enable()
+            vim.notify("Twilight enabled")
+          end
           return
         end
       end, {
