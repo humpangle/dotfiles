@@ -4,6 +4,7 @@ $HOME/.aider.conf.yml
 
 aider \
 --no-auto-commits
+--model gemini-2.5-pro
 
 
 --edit-format editor-diff
