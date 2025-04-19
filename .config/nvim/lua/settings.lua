@@ -520,7 +520,8 @@ end, { noremap = true })
 -- Copying File Paths and Names
 
 local maybe_augment_line_number = function(file_path)
-  if vim.v.count == 0 then
+  local count_contains_1 = tostring(vim.v.count):find("1")
+  if not count_contains_1 then
     return file_path
   end
 
@@ -580,10 +581,11 @@ utils.map_key("n", ",yn", process_file_path_yanking("%:t"))
 utils.map_key("n", ",cn", process_file_path_yanking("%:t", "letter"))
 -- file parent directory
 utils.map_key("n", ",yd", function()
-  local value_getter_directive = "%:.:h" -- relative path by default
+  local value_getter_directive = "%:.:h"
 
-  if vim.v.count == 9 then
-    value_getter_directive = "%:p:h" -- absolute path if count is 9
+  local count_contains_9 = tostring(vim.v.count):find("9")
+  if count_contains_9 then
+    value_getter_directive = "%:p:h"
   end
 
   process_file_path_yanking(value_getter_directive)()
