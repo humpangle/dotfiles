@@ -579,7 +579,15 @@ utils.map_key("n", ",cr", process_file_path_yanking("%:.", "letter"))
 utils.map_key("n", ",yn", process_file_path_yanking("%:t"))
 utils.map_key("n", ",cn", process_file_path_yanking("%:t", "letter"))
 -- file parent directory
-utils.map_key("n", ",yd", process_file_path_yanking("%:p:h"))
+utils.map_key("n", ",yd", function()
+  local value_getter_directive = "%:.:h" -- relative path by default
+
+  if vim.v.count == 9 then
+    value_getter_directive = "%:p:h" -- absolute path if count is 9
+  end
+
+  process_file_path_yanking(value_getter_directive)()
+end, { noremap = true })
 -- absolute file path
 utils.map_key("n", ",yf", process_file_path_yanking("%:p"))
 utils.map_key("n", ",cf", process_file_path_yanking("%:p", "letter"))
