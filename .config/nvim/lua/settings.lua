@@ -590,6 +590,17 @@ utils.map_key("n", ",yd", function()
 
   process_file_path_yanking(value_getter_directive)()
 end, { noremap = true })
+
+utils.map_key("n", ",cd", function()
+  local value_getter_directive = "%:.:h"
+
+  local count_contains_9 = tostring(vim.v.count):find("9")
+  if count_contains_9 then
+    value_getter_directive = "%:p:h"
+  end
+
+  process_file_path_yanking(value_getter_directive, '\"')()
+end, { noremap = true })
 -- absolute file path
 utils.map_key("n", ",yf", process_file_path_yanking("%:p"))
 utils.map_key("n", ",cf", process_file_path_yanking("%:p", "letter"))
