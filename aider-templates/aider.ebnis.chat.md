@@ -1,4 +1,6 @@
 t .aider.ebnis.chat
+$HOME/dotfiles/aider-templates/aider.conf.yml
+$HOME/.aider.conf.yml
 
 aider \
 --no-auto-commits
@@ -18,106 +20,106 @@ aider \
 
 -------------------------------------------------------------------------------
 # In‑chat commands (https://aider.chat/docs/usage/commands.html#in-chat-commands)
-/add  
+/add
 – add a file to chat
 
-/ask  
+/ask
 – pose a question to the model
 
-/architect  
+/architect
 – switch to architect edit format
 
-/chat-mode  
+/chat-mode
 – toggle between chat and code modes
 
-/code  
+/code
 – start a code‑edit block
 
-/commit  
+/commit
 – commit changes with a generated message
 
-/copy  
+/copy
 – copy the last assistant response to clipboard
 
-/context  
+/context
 – display the repo map and context
 
-/diff  
+/diff
 – show differences between file versions
 
-/drop  
+/drop
 – remove the last message from history
 
-/exit  
+/exit
 – quit the Aider session
 
-/git  
+/git
 – run a git command
 
-/help  
+/help
 – show this list of in‑chat commands
 
-/lint  
+/lint
 – run linting on the relevant files
 
-/ls  
+/ls
 – list files in the repository
 
-/map  
+/map
 – inspect or refresh the repo map
 
-/map-refresh  
+/map-refresh
 – force a repo map refresh
 
-/model  
+/model
 – show or switch the AI model
 
-/multiline-mode  
+/multiline-mode
 – toggle multi‑line input mode
 
-/paste  
+/paste
 – paste clipboard contents into the chat
 
-/read-only  
+/read-only
 – list read‑only files added
 
-/report  
+/report
 – generate a summary report
 
-/reset  
+/reset
 – reset the conversation context
 
-/run  
+/run
 – execute code in an editor buffer
 
-/save  
+/save
 – save the current chat to disk
 
-/settings  
+/settings
 – view or modify Aider settings
 
-/test  
+/test
 – run tests after edits
 
-/tokens  
+/tokens
 – display token usage statistics
 
-/think-tokens  
+/think-tokens
 – show thinking‑tokens usage
 
-/undo  
+/undo
 – revert the last edit
 
-/quit  
+/quit
 – same as /exit
 
-/edit  
+/edit
 – switch to the default code editing mode
 
-/editor  
+/editor
 – show or set your preferred code editor
 
-/editor-model  
+/editor-model
 – assign a specific model to handle editor-based edits
 -------------------------------------------------------------------------------
 
