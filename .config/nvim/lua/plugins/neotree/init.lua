@@ -66,6 +66,14 @@ return {
         vim.cmd("Neotree source=filesystem position=left reveal")
         return
       end
+
+      -- reveal on first tab.
+      if count == 3 then
+        vim.cmd("tab split")
+        vim.cmd("Neotree source=filesystem position=current reveal")
+        vim.cmd("0tabmove")
+        return
+      end
     end, {
       desc = "Neotree --",
     })
