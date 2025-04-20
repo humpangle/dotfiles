@@ -376,8 +376,9 @@ M.config = {
   commands = { -- A list of functions
     yank_filename = copy_path(":t"),
     yank_relative_path = copy_path(":."),
+    yank_relative_dir = copy_path(":.:h"),
+    yank_absolute_dir = copy_path(":p:h"),
     yank_absolute_path = copy_path(":p"),
-    yank_folder = copy_path(":p:h"),
   }, -- A list of functions
   window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
     -- possible options. These can also be functions that return these options.
@@ -489,8 +490,9 @@ M.config = {
         ["ot"] = { "order_by_type", nowait = false },
         ["1y"] = "yank_filename",
         ["2y"] = "yank_relative_path",
-        ["3y"] = "yank_absolute_path",
-        ["4y"] = "yank_folder",
+        ["3y"] = "yank_relative_dir",
+        ["4y"] = "yank_absolute_dir",
+        ["5y"] = "yank_absolute_path",
       },
       fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
         ["<down>"] = "move_cursor_down",
