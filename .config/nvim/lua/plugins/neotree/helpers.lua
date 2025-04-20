@@ -1,10 +1,10 @@
 local M = {}
 
-local copy_path = function(part)
+local copy_path = function(name_modifier)
   return function(state)
     local node = state.tree:get_node()
     local path = node:get_id()
-    local value = vim.fn.fnamemodify(path, part)
+    local value = vim.fn.fnamemodify(path, name_modifier)
     vim.fn.setreg("*", value)
     vim.fn.setreg("+", value)
     vim.notify(value)
