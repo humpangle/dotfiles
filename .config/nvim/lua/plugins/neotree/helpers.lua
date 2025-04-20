@@ -7,7 +7,7 @@ local copy_path = function(part)
     local value = vim.fn.fnamemodify(path, part)
     vim.fn.setreg("*", value)
     vim.fn.setreg("+", value)
-    vim.cmd.echo('"' .. value .. '"')
+    vim.notify(value)
   end
 end
 
