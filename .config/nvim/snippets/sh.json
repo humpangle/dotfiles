@@ -1064,9 +1064,11 @@
       "if_1_equal_1"
     ],
     "body": [
+      "",
       "if [[ 1 -eq 1 ]]; then",
       "  ${0:return}",
-      "fi"
+      "fi",
+      ""
     ],
     "description": [
       "Snippet: one equal one"
