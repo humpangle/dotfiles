@@ -24,8 +24,6 @@ alias ..='cd ..'
 alias ls='ls --color=auto'
 alias ll='ls -AlhF'
 
-alias C="clear && printf '\e[3J'"
-
 alias shl='source ~/.bashrc'
 # shellcheck disable=2139,2154
 alias shell="export SHELL=$__shell_path"
