@@ -11,6 +11,36 @@ local copy_path = function(name_modifier)
   end
 end
 
+local function copy_path_git_root(mode)
+  return function(state)
+    local node = state.tree:get_node()
+    local path = node:get_id()
+    local path_dir = vim.fn.fnamemodify(path, ":p:h")
+
+    local git_cmd = "git -C "
+      .. vim.fn.fnameescape(path_dir)
+      .. " rev-parse --show-toplevel"
+
+    local git_root = vim.fn.systemlist(git_cmd)[1]
+
+    if vim.v.shell_error ~= 0 or not git_root then
+      vim.notify("Not a Git repository", vim.log.levels.WARN)
+      return
+    end
+
+    local value =
+      vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
+
+    if mode == "d" then
+      value = vim.fn.fnamemodify(value, ":h")
+    end
+
+    vim.fn.setreg("*", value)
+    vim.fn.setreg("+", value)
+    vim.notify(value)
+  end
+end
+
 M.config = {
   -- If a user has a sources list it will replace this one.
   -- Only sources listed here will be loaded.
@@ -379,6 +409,9 @@ M.config = {
     yank_relative_dir = copy_path(":.:h"),
     yank_absolute_dir = copy_path(":p:h"),
     yank_absolute_path = copy_path(":p"),
+
+    yank_relative_path_git_working_dir = copy_path_git_root("r"),
+    yank_relative_dir_git_working_dir = copy_path_git_root("d"),
   }, -- A list of functions
   window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
     -- possible options. These can also be functions that return these options.
@@ -493,6 +526,8 @@ M.config = {
         ["3y"] = "yank_relative_dir",
         ["4y"] = "yank_absolute_dir",
         ["5y"] = "yank_absolute_path",
+        ["62y"] = "yank_relative_path_git_working_dir",
+        ["63y"] = "yank_relative_dir_git_working_dir",
       },
       fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
         ["<down>"] = "move_cursor_down",
