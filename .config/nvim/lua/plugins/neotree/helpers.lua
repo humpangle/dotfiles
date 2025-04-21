@@ -15,7 +15,7 @@ end
 
 local function copy_path_git_root(mode)
   return function(state)
-    local git_root = utils.get_os_env_or_nil("EBNIS_GIT_DIR_ROOT")
+    local git_root = utils.get_git_root()
     if not git_root then
       vim.notify("Not a Git repository", vim.log.levels.WARN)
       return

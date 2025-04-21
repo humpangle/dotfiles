@@ -783,4 +783,8 @@ utils.get_session_file = function()
   return "session"
 end
 
+utils.get_git_root = function()
+  return utils.get_os_env_or_nil("EBNIS_GIT_DIR_ROOT")
+end
+
 return utils
