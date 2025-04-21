@@ -716,7 +716,13 @@ utils.go_to_file = function()
     line_number = line_number or extract_line_number(cfile)
   end
 
-  if split_num == "1" then
+  -- Yank absolute path.
+  if split_num == "9" then
+    local abs_path = vim.fn.fnamemodify(file_path, ":p")
+    vim.fn.setreg('+', abs_path)
+    print(abs_path)
+    return
+  elseif split_num == "1" then
     vim.cmd("split")
   elseif split_num == "2" then
     vim.cmd("vsplit")
