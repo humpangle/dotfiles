@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {}
 
 local copy_path = function(name_modifier)
@@ -13,21 +15,14 @@ end
 
 local function copy_path_git_root(mode)
   return function(state)
-    local node = state.tree:get_node()
-    local path = node:get_id()
-    local path_dir = vim.fn.fnamemodify(path, ":p:h")
-
-    local git_cmd = "git -C "
-      .. vim.fn.fnameescape(path_dir)
-      .. " rev-parse --show-toplevel"
-
-    local git_root = vim.fn.systemlist(git_cmd)[1]
-
-    if vim.v.shell_error ~= 0 or not git_root then
+    local git_root = utils.get_os_env_or_nil("EBNIS_GIT_DIR_ROOT")
+    if not git_root then
       vim.notify("Not a Git repository", vim.log.levels.WARN)
       return
     end
 
+    local node = state.tree:get_node()
+    local path = node:get_id()
     local value =
       vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
 
