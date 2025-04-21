@@ -719,7 +719,7 @@ utils.go_to_file = function()
   -- Yank absolute path.
   if split_num == "9" then
     local abs_path = vim.fn.fnamemodify(file_path, ":p")
-    vim.fn.setreg('+', abs_path)
+    vim.fn.setreg("+", abs_path)
     print(abs_path)
     return
   elseif split_num == "1" then
