@@ -323,6 +323,54 @@ ollama_stop() {
   echo "Ollama serving on PID/PORT $_pid/${info_[port]} stopped."
 }
 
+aidercs() {
+  : "___alias___ aider_chat_start"
+  aider_chat_start "$@"
+}
+
+aider_chat_start() {
+  : "Ensure the aider chat template file exists in the current directory."
+
+  local target_file_=".aider.ebnis.chat.md"
+
+  local cwd_=""
+  cwd_="$(pwd)"
+
+  local target_path_="$cwd_/$target_file_"
+
+  if [[ -f "$target_path_" ]]; then
+    echo "File '$target_path_' found. Exiting..."
+    return 0
+  fi
+
+  # directory where this file (script) resides
+  # dotfiles/scripts/_ai
+  local scripts_dir_=""
+
+  # dotfiles/scripts/.. => dotfiles/
+  local dotfiles_root_=""
+
+  scripts_dir_="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+  dotfiles_root_="$(dirname "$scripts_dir_")"
+
+  # dotfiles/aider-templates/aider.ebnis.chat.md
+  local source_template_="$dotfiles_root_/aider-templates/aider.ebnis.chat.md"
+
+  if [[ ! -f "$source_template_" ]]; then
+    echo "Error: Source template file not found at '$source_template_'" >&2
+    return 1
+  fi
+
+  echo "File '$target_file_' not found. Copying template..."
+  if cp "$source_template_" "$target_path_"; then
+    echo "Created '$target_file_' from template."
+    return 0
+  else
+    echo "Error: Failed to copy template '$source_template_' to '$target_path_'." >&2
+    return 1
+  fi
+}
+
 _is_local_function() {
   local _function_name="$1"
   local _this_file_content="$2"
