@@ -1,21 +1,34 @@
-t .aider.ebnis.chat
+t .aider.ebnis.chat.md
 $HOME/dotfiles/aider-templates/aider.conf.yml
 $HOME/.aider.conf.yml
 
 aider \
---no-auto-commits
+--no-auto-commits \
 --model gemini-2.5-pro
+
+
+--model gemini-2.5-pro
+--model ollama_chat/deepseek-r1:14b
+--model ollama_chat/qwen2.5-coder:3b
 
 
 --edit-format editor-diff
 --edit-format editor-whole
 --copy-paste
 --no-git
---model gemini-2.5-pro
---model ollama_chat/deepseek-r1:14b
+--cache-prompts
+
 --list-models gemini/
 --list-models openai/
 
+--chat-history-file .aider.chat.history.md
+--chat-history-file .aider.chat.history-$(date +'%FT%H-%M-%S').md
+
+--input-history-file .aider.input.history
+--input-history-file .aider.input.history-$(date +'%FT%H-%M-%S')
+
+--subtree-only
+--aiderignore
 
 | tee .aider.ebnis.chat.out
 
@@ -41,6 +54,9 @@ aider \
 
 /copy
 – copy the last assistant response to clipboard
+
+/copy-context
+- Copy the current chat context as markdown, suitable to paste into a web UI
 
 /context
 – display the repo map and context
@@ -126,7 +142,8 @@ aider \
 
 -------------------------------------------------------------------------------
 "*SEARCH/REPLACE* instruction to llm to propose edit"
-Please apply necessary changes taking into consideration "*SEARCH/REPLACE* instruction to llm to propose edit"
+Please apply necessary changes taking into consideration "*SEARCH/REPLACE* instruction"
+Please update the *SEARCH/REPLACE block* to add the new functions to `scripts/_ai`.
 
 Whenever you propose edits to existing files, use only *SEARCH/REPLACE* blocks in this exact format:
 #
@@ -152,10 +169,19 @@ Additional requirements:
 
 -------------------------------------------------------------------------------
 
+.aiderignore
+
+# Ignore everything
+/*
+# Allow specific directories and their contents
+#!foo/
+# Allow nested files under these directories
+#!foo/**
 
 -------------------------------------------------------------------------------
 
 Suggest commit message
+Updated project files attached - please update your context.
 
 -------------------------------------------------------------------------------
 
