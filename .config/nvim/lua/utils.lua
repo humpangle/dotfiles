@@ -653,7 +653,7 @@ local extract_line_number = function(cfile)
   local patterns = {
     "line%s*(%d+)", -- file_path whatever text line 168
     "%d+%%%s+(%d+)", -- file_path 80% 12
-    "[:](%d+)", -- file_path:67
+    "[:|](%d+)", -- file_path:67 / file_path|478 (used in vim loclist)
   }
 
   for _, pattern in pairs(patterns) do
