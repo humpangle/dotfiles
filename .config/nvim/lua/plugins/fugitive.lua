@@ -257,7 +257,16 @@ local git_commit_mappings_fn = function()
   local first, last = count_string:match(pattern)
 
   if count == 0 then
+    -- split the current buffer horizontally spanning the bottom
+    vim.cmd("botright split")
+    -- open a fugitive commit buffer
     vim.cmd("Git commit")
+    -- move **UP** to previous window (the one splitted horizontally previously)
+    vim.cmd.wincmd("p")
+    -- close that window (this will cause the cursor to move the original window that was splitted)
+    vim.cmd("quit")
+    -- move **DOWN** to the fugitive commit buffer
+    vim.cmd.wincmd("j")
     return
   end
 
