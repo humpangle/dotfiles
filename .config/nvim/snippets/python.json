@@ -147,5 +147,14 @@
     "description": [
       "pytest skip"
     ]
+  },
+  "pragma no cover": {
+    "prefix": [
+      "pragmaNoCover"
+    ],
+    "body": "  # pragma: no cover",
+    "description": [
+      "Pragma No Cover"
+    ]
   }
 }
