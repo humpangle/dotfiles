@@ -514,8 +514,7 @@ end, { noremap = true })
 -- Copying File Paths and Names
 
 local maybe_augment_line_number = function(file_path)
-  local count_contains_1 = tostring(vim.v.count):find("1")
-  if not count_contains_1 then
+  if vim.v.count ~= 99 then
     return file_path
   end
 
