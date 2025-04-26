@@ -387,7 +387,7 @@ end
 
 -- Yank highlighted to system clipboard / register a
 utils.map_key("n", ",yy", do_yank_highlighted("+"), { noremap = true })
-utils.map_key("n", ",cc", do_yank_highlighted("+"), { noremap = true })
+utils.map_key("n", ",cc", do_yank_highlighted("a"), { noremap = true })
 
 -- Move between windows in a tab
 utils.map_key("n", "<Tab>", "<C-w>w", { noremap = false })
@@ -557,10 +557,10 @@ end
 
 -- relative file path
 utils.map_key("n", ",yr", process_file_path_yanking("%:.", "+"))
-utils.map_key("n", ",cr", process_file_path_yanking("%:.", '"'))
+utils.map_key("n", ",cr", process_file_path_yanking("%:.", "a"))
 -- file name (not path)
 utils.map_key("n", ",yn", process_file_path_yanking("%:t", "+"))
-utils.map_key("n", ",cn", process_file_path_yanking("%:t", '"'))
+utils.map_key("n", ",cn", process_file_path_yanking("%:t", "a"))
 -- file parent directory
 utils.map_key("n", ",yd", function()
   local path_modifier = "%:.:h"
@@ -581,16 +581,16 @@ utils.map_key("n", ",cd", function()
     path_modifier = "%:p:h"
   end
 
-  process_file_path_yanking(path_modifier, '"')()
+  process_file_path_yanking(path_modifier, "a")()
 end, { noremap = true })
 -- absolute file path
 utils.map_key("n", ",yf", process_file_path_yanking("%:p", "+"))
-utils.map_key("n", ",cf", process_file_path_yanking("%:p", "+"))
+utils.map_key("n", ",cf", process_file_path_yanking("%:p", "a"))
 
 -- Yank current working directory
 utils.map_key("n", ",yw", process_file_path_yanking("cwd"))
 -- Copy current working directory to register a
-utils.map_key("n", ",cw", process_file_path_yanking("cwd", "+"))
+utils.map_key("n", ",cw", process_file_path_yanking("cwd", "a"))
 
 --  Some plugins change my CWD to currently opened file - I change it back
 -- Change CWD to the directory of the current file
