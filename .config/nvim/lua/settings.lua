@@ -364,16 +364,8 @@ utils.map_key(
   { noremap = true }
 )
 
-local function do_yank_highlighted(register_flag)
-  local register = nil
-
+local function do_yank_highlighted(register)
   return function()
-    if register_flag == "letter" then
-      register = utils.ord_to_char(vim.v.count)
-    end
-
-    register = register or register_flag
-
     -- Yank the currently highlighted texts to the unnamed register
     -- vim.api.nvim_command("normal! vgny")
 
@@ -395,7 +387,7 @@ end
 
 -- Yank highlighted to system clipboard / register a
 utils.map_key("n", ",yy", do_yank_highlighted("+"), { noremap = true })
-utils.map_key("n", ",cc", do_yank_highlighted("letter"), { noremap = true })
+utils.map_key("n", ",cc", do_yank_highlighted("+"), { noremap = true })
 
 -- Move between windows in a tab
 utils.map_key("n", "<Tab>", "<C-w>w", { noremap = false })
@@ -534,19 +526,8 @@ end
 -- value_getter_directive may be:
 --   a filename modifier
 --   the literal string `cwd`
-local process_file_path_yanking = function(
-  value_getter_directive,
-  register_flag
-)
-  local register = nil
-
+local process_file_path_yanking = function(value_getter_directive, register)
   return function()
-    if register_flag == "letter" then
-      register = utils.ord_to_char(vim.v.count)
-    end
-
-    register = register or "+"
-
     local file_path
     if value_getter_directive == "cwd" then
       file_path = vim.fn.getcwd()
@@ -576,11 +557,11 @@ local process_file_path_yanking = function(
 end
 
 -- relative file path
-utils.map_key("n", ",yr", process_file_path_yanking("%:."))
-utils.map_key("n", ",cr", process_file_path_yanking("%:.", "letter"))
+utils.map_key("n", ",yr", process_file_path_yanking("%:.", "+"))
+utils.map_key("n", ",cr", process_file_path_yanking("%:.", '"'))
 -- file name (not path)
-utils.map_key("n", ",yn", process_file_path_yanking("%:t"))
-utils.map_key("n", ",cn", process_file_path_yanking("%:t", "letter"))
+utils.map_key("n", ",yn", process_file_path_yanking("%:t", "+"))
+utils.map_key("n", ",cn", process_file_path_yanking("%:t", '"'))
 -- file parent directory
 utils.map_key("n", ",yd", function()
   local path_modifier = "%:.:h"
@@ -590,7 +571,7 @@ utils.map_key("n", ",yd", function()
     path_modifier = "%:p:h"
   end
 
-  process_file_path_yanking(path_modifier)()
+  process_file_path_yanking(path_modifier, "+")()
 end, { noremap = true })
 
 utils.map_key("n", ",cd", function()
@@ -601,16 +582,16 @@ utils.map_key("n", ",cd", function()
     path_modifier = "%:p:h"
   end
 
-  process_file_path_yanking(path_modifier)()
+  process_file_path_yanking(path_modifier, '"')()
 end, { noremap = true })
 -- absolute file path
-utils.map_key("n", ",yf", process_file_path_yanking("%:p"))
-utils.map_key("n", ",cf", process_file_path_yanking("%:p", "letter"))
+utils.map_key("n", ",yf", process_file_path_yanking("%:p", "+"))
+utils.map_key("n", ",cf", process_file_path_yanking("%:p", "+"))
 
 -- Yank current working directory
 utils.map_key("n", ",yw", process_file_path_yanking("cwd"))
 -- Copy current working directory to register a
-utils.map_key("n", ",cw", process_file_path_yanking("cwd", "letter"))
+utils.map_key("n", ",cw", process_file_path_yanking("cwd", "+"))
 
 --  Some plugins change my CWD to currently opened file - I change it back
 -- Change CWD to the directory of the current file
