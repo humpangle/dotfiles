@@ -522,7 +522,7 @@ M.config = {
         ["4y"] = "yank_relative_dir",
         ["5y"] = "yank_absolute_dir",
         ["62y"] = "yank_relative_path_git_working_dir",
-        ["63y"] = "yank_relative_dir_git_working_dir",
+        ["64y"] = "yank_relative_dir_git_working_dir",
       },
       fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
         ["<down>"] = "move_cursor_down",
