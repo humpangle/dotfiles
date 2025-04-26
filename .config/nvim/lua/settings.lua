@@ -565,8 +565,7 @@ utils.map_key("n", ",cn", process_file_path_yanking("%:t", "a"))
 utils.map_key("n", ",yd", function()
   local path_modifier = "%:.:h"
 
-  local count_contains_9 = tostring(vim.v.count):find("9")
-  if count_contains_9 then
+  if vim.v.count == 3 then
     path_modifier = "%:p:h"
   end
 
@@ -576,8 +575,7 @@ end, { noremap = true })
 utils.map_key("n", ",cd", function()
   local path_modifier = "%:.:h"
 
-  local count_contains_9 = tostring(vim.v.count):find("9")
-  if count_contains_9 then
+  if vim.v.count == 3 then
     path_modifier = "%:p:h"
   end
 
