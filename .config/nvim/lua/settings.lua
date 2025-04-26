@@ -601,7 +601,7 @@ utils.map_key("n", ",cd", function()
     value_getter_directive = "%:p:h"
   end
 
-  process_file_path_yanking(value_getter_directive, '\"')()
+  process_file_path_yanking(value_getter_directive)()
 end, { noremap = true })
 -- absolute file path
 utils.map_key("n", ",yf", process_file_path_yanking("%:p"))
