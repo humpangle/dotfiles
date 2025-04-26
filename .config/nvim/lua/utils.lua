@@ -791,7 +791,13 @@ utils.get_session_file = function()
 end
 
 utils.get_git_root = function()
-  return utils.get_os_env_or_nil("EBNIS_GIT_DIR_ROOT")
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+
+  if git_root == nil or vim.fn.glob(git_root) == "" then
+    return nil
+  end
+
+  return git_root
 end
 
 return utils
