@@ -401,9 +401,9 @@ M.config = {
   commands = { -- A list of functions
     yank_filename = copy_path(":t"),
     yank_relative_path = copy_path(":."),
+    yank_absolute_path = copy_path(":p"),
     yank_relative_dir = copy_path(":.:h"),
     yank_absolute_dir = copy_path(":p:h"),
-    yank_absolute_path = copy_path(":p"),
 
     yank_relative_path_git_working_dir = copy_path_git_root("r"),
     yank_relative_dir_git_working_dir = copy_path_git_root("d"),
