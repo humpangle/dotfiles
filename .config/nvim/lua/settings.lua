@@ -583,25 +583,25 @@ utils.map_key("n", ",yn", process_file_path_yanking("%:t"))
 utils.map_key("n", ",cn", process_file_path_yanking("%:t", "letter"))
 -- file parent directory
 utils.map_key("n", ",yd", function()
-  local value_getter_directive = "%:.:h"
+  local path_modifier = "%:.:h"
 
   local count_contains_9 = tostring(vim.v.count):find("9")
   if count_contains_9 then
-    value_getter_directive = "%:p:h"
+    path_modifier = "%:p:h"
   end
 
-  process_file_path_yanking(value_getter_directive)()
+  process_file_path_yanking(path_modifier)()
 end, { noremap = true })
 
 utils.map_key("n", ",cd", function()
-  local value_getter_directive = "%:.:h"
+  local path_modifier = "%:.:h"
 
   local count_contains_9 = tostring(vim.v.count):find("9")
   if count_contains_9 then
-    value_getter_directive = "%:p:h"
+    path_modifier = "%:p:h"
   end
 
-  process_file_path_yanking(value_getter_directive)()
+  process_file_path_yanking(path_modifier)()
 end, { noremap = true })
 -- absolute file path
 utils.map_key("n", ",yf", process_file_path_yanking("%:p"))
