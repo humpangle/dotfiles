@@ -214,6 +214,7 @@ Examples of when to suggest shell commands:
 -------------------------------------------------------------------------------
 
 Suggest commit message
+
 Updated project files attached - please update your context.
 
 -------------------------------------------------------------------------------
