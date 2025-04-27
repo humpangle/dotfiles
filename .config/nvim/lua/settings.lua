@@ -832,7 +832,6 @@ utils.map_key("n", "<localleader>tt", function()
     return
   elseif count == 4 then
     vim.cmd("botright split")
-    return
   else
     vim.cmd("split")
   end
