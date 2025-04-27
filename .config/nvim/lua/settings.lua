@@ -386,24 +386,24 @@ local function do_yank_highlighted(register)
 end
 
 -- Yank highlighted to system clipboard / register a
-utils.map_key("n", ",yy", do_yank_highlighted("+"), { noremap = true })
-utils.map_key("n", ",cc", do_yank_highlighted("a"), { noremap = true })
+utils.map_key("n", "<localleader>yy", do_yank_highlighted("+"), { noremap = true })
+utils.map_key("n", "<localleader>cc", do_yank_highlighted("a"), { noremap = true })
 
 -- Move between windows in a tab
 utils.map_key("n", "<Tab>", "<C-w>w", { noremap = false })
 
 -- Tab operations
 utils.map_key("n", "<Leader>ts", "<cmd>tab split<cr>", { noremap = true })
-utils.map_key("n", ",tc", ":tabclose<CR>", { noremap = true })
+utils.map_key("n", "<localleader>tc", ":tabclose<CR>", { noremap = true })
 utils.map_key(
   "n",
-  ",td",
+  "<localleader>td",
   ":execute 'bwipeout! '.join(tabpagebuflist())<CR>",
   { noremap = true }
 )
 
 -- New buffer operations
-utils.map_key("n", ",bn", function()
+utils.map_key("n", "<localleader>bn", function()
   local count = vim.v.count
 
   if count == 2 then
@@ -481,10 +481,10 @@ utils.map_key("n", "yoq", ":cclose<CR>", { noremap = true })
 utils.map_key("n", "ff", ":e! %<CR>", { noremap = true })
 
 -- Create the new directory you're already working in:
-utils.map_key("n", ",md", ":!mkdir -p %:h<cr>:w %<CR>", { noremap = true })
+utils.map_key("n", "<localleader>md", ":!mkdir -p %:h<cr>:w %<CR>", { noremap = true })
 
 -- Edit .bashrc file:
-utils.map_key("n", ",.", function()
+utils.map_key("n", "<localleader>.", function()
   local count = vim.v.count
 
   if count == 2 then
@@ -497,13 +497,13 @@ utils.map_key("n", ",.", function()
 end, { noremap = true, desc = "Open .bashrc" })
 
 -- Edit init.vim:
-utils.map_key("n", ",ec", ":tab split<CR>:e $MYVIMRC<CR>", { noremap = true })
+utils.map_key("n", "<localleader>ec", ":tab split<CR>:e $MYVIMRC<CR>", { noremap = true })
 
 -- Source init.vim:
-utils.map_key("n", ",sc", ":so $MYVIMRC<CR>", { noremap = true })
+utils.map_key("n", "<localleader>sc", ":so $MYVIMRC<CR>", { noremap = true })
 
 -- Source Lua file and then source init.vim:
-utils.map_key("n", ",ss", ":source %<CR>:so $MYVIMRC<CR>", { noremap = true })
+utils.map_key("n", "<localleader>ss", ":source %<CR>:so $MYVIMRC<CR>", { noremap = true })
 
 -- Check file in ShellCheck:
 utils.map_key("n", "<Leader>sc,", function()
@@ -556,13 +556,13 @@ local process_file_path_yanking = function(value_getter_directive, register)
 end
 
 -- relative file path
-utils.map_key("n", ",yr", process_file_path_yanking("%:.", "+"))
-utils.map_key("n", ",cr", process_file_path_yanking("%:.", "a"))
+utils.map_key("n", "<localleader>yr", process_file_path_yanking("%:.", "+"))
+utils.map_key("n", "<localleader>cr", process_file_path_yanking("%:.", "a"))
 -- file name (not path)
-utils.map_key("n", ",yn", process_file_path_yanking("%:t", "+"))
-utils.map_key("n", ",cn", process_file_path_yanking("%:t", "a"))
+utils.map_key("n", "<localleader>yn", process_file_path_yanking("%:t", "+"))
+utils.map_key("n", "<localleader>cn", process_file_path_yanking("%:t", "a"))
 -- file parent directory
-utils.map_key("n", ",yd", function()
+utils.map_key("n", "<localleader>yd", function()
   local path_modifier = "%:.:h"
 
   if vim.v.count == 3 then
@@ -572,7 +572,7 @@ utils.map_key("n", ",yd", function()
   process_file_path_yanking(path_modifier, "+")()
 end, { noremap = true })
 
-utils.map_key("n", ",cd", function()
+utils.map_key("n", "<localleader>cd", function()
   local path_modifier = "%:.:h"
 
   if vim.v.count == 3 then
@@ -582,13 +582,13 @@ utils.map_key("n", ",cd", function()
   process_file_path_yanking(path_modifier, "a")()
 end, { noremap = true })
 -- absolute file path
-utils.map_key("n", ",yf", process_file_path_yanking("%:p", "+"))
-utils.map_key("n", ",cf", process_file_path_yanking("%:p", "a"))
+utils.map_key("n", "<localleader>yf", process_file_path_yanking("%:p", "+"))
+utils.map_key("n", "<localleader>cf", process_file_path_yanking("%:p", "a"))
 
 -- Yank current working directory
-utils.map_key("n", ",yw", process_file_path_yanking("cwd"))
+utils.map_key("n", "<localleader>yw", process_file_path_yanking("cwd"))
 -- Copy current working directory to register a
-utils.map_key("n", ",cw", process_file_path_yanking("cwd", "a"))
+utils.map_key("n", "<localleader>cw", process_file_path_yanking("cwd", "a"))
 
 --  Some plugins change my CWD to currently opened file - I change it back
 -- Change CWD to the directory of the current file
@@ -604,7 +604,7 @@ utils.map_key("n", "<leader>wd", function()
 end)
 
 -- Yank current line number
-utils.map_key("n", ",yl", function()
+utils.map_key("n", "<localleader>yl", function()
   local line_number_str = tostring(vim.fn.line("."))
 
   vim.fn.setreg("+", line_number_str)
@@ -729,7 +729,7 @@ utils.map_key("n", "<leader>be", function()
 end, { noremap = true, desc = "0/empty 1/fugitive 2/all 3/dap 4/octo" })
 
 -- Inserts the current date and time into the buffer
-utils.map_key("n", ",tm", function()
+utils.map_key("n", "<localleader>tm", function()
   -- Get the current date and time in the desired format
   -- The `.. ""` is to silence the warning `Cannot assign `string|osdate` to `string`.  - `osdate` cannot match `string``
   local date_str = os.date("%Y-%m-%d %H:%M:%S") .. ""
@@ -750,8 +750,8 @@ utils.map_key(
 )
 
 -- Delete file and folder
-utils.map_key("n", ",rm", utils.DeleteFile(), { noremap = true })
-utils.map_key("n", ",rd", utils.DeleteFile("d"), { noremap = true })
+utils.map_key("n", "<localleader>rm", utils.DeleteFile(), { noremap = true })
+utils.map_key("n", "<localleader>rd", utils.DeleteFile("d"), { noremap = true })
 
 -- ----- TERMINAL
 
@@ -789,7 +789,7 @@ local function send_to_term_with_slime(split_direction)
 end
 
 -- Terminal in new tab/split
-utils.map_key("n", ",tt", function()
+utils.map_key("n", "<localleader>tt", function()
   local count = vim.v.count
 
   if count == 2 then
@@ -879,7 +879,7 @@ local function insert_current_datetime()
   vim.api.nvim_put({ datetime }, "c", true, true)
 end
 
-utils.map_key("n", ",D", insert_current_datetime, {
+utils.map_key("n", "<localleader>D", insert_current_datetime, {
   noremap = true,
   silent = true,
   desc = "Insert datetime. Count 1 for timestamp.",

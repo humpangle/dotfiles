@@ -87,7 +87,7 @@ return {
 
     utils.map_key(
       "n",
-      ",FU",
+      "<localleader>FU",
       ":FloatermUpdate --height=0.99 --width=0.99 --title",
       { noremap = true }
     )

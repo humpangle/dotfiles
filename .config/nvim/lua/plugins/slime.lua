@@ -41,7 +41,7 @@ vim.g.slime_neovim_menu_order = {
   { name = "" },
 }
 
-keymap("n", ",sl", function()
+keymap("n", "<localleader>sl", function()
   local count = vim.v.count
 
   -- https://github.com/jpalardy/vim-slime/blob/main/assets/doc/targets/neovim.md
