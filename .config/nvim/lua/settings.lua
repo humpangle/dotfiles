@@ -611,7 +611,7 @@ utils.map_key("n", "<localleader>yf", process_file_path_yanking("%:p", "+"))
 utils.map_key("n", "<localleader>cf", process_file_path_yanking("%:p", "a"))
 
 -- Yank current working directory
-utils.map_key("n", "<localleader>yw", process_file_path_yanking("cwd"))
+utils.map_key("n", "<localleader>yw", process_file_path_yanking("cwd", "+"))
 -- Copy current working directory to register a
 utils.map_key("n", "<localleader>cw", process_file_path_yanking("cwd", "a"))
 
