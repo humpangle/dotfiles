@@ -425,6 +425,16 @@ function utils.write_to_command_mode(string)
   )
 end
 
+utils.get_git_root = function()
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+
+  if git_root == nil or vim.fn.glob(git_root) == "" then
+    return nil
+  end
+
+  return git_root
+end
+
 utils.get_copy_cmd_string = function()
   if utils.get_os_env_or_nil("__COPY_PROGRAM__") == nil then
     return nil
@@ -704,6 +714,15 @@ utils.go_to_file = function()
     file_path = go_to_file_strip_patterns(file_path)
   end
 
+  -- If file_path does not exist, we will try again by pre-pending git root (perhaps cwd is not git root but file_path
+  -- is relative to git root)
+  if vim.fn.glob(file_path) == "" then
+    local git_root = utils.get_git_root()
+    if git_root then
+      file_path = git_root .. "/" .. file_path:gsub("^/", "")
+    end
+  end
+
   if vim.fn.glob(file_path) == "" then
     if split_num == "9" then
       vim.fn.setreg("a", file_path)
@@ -788,16 +807,6 @@ utils.get_session_file = function()
   end
 
   return "session"
-end
-
-utils.get_git_root = function()
-  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
-
-  if git_root == nil or vim.fn.glob(git_root) == "" then
-    return nil
-  end
-
-  return git_root
 end
 
 return utils
