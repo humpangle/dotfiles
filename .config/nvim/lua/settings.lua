@@ -580,35 +580,80 @@ local process_file_path_yanking = function(value_getter_directive, register)
   end
 end
 
--- relative file path
-utils.map_key("n", "<localleader>yr", process_file_path_yanking("%:.", "+"))
-utils.map_key("n", "<localleader>cr", process_file_path_yanking("%:.", "a"))
--- file name (not path)
-utils.map_key("n", "<localleader>yn", process_file_path_yanking("%:t", "+"))
-utils.map_key("n", "<localleader>cn", process_file_path_yanking("%:t", "a"))
--- file parent directory
-utils.map_key("n", "<localleader>yd", function()
-  local path_modifier = "%:.:h"
+-- Dynamic file path yanking based on count
+local function dynamic_process_file_path_yanking(register)
+  return function()
+    local count = vim.v.count
+    local value_getter_directive = "%:p" -- Default to absolute path
 
-  if vim.v.count == 3 then
-    path_modifier = "%:p:h"
+    if count == 1 then
+      value_getter_directive = "%:t"
+    elseif count == 2 then
+      value_getter_directive = "%:."
+    elseif count == 3 then
+      value_getter_directive = "%:p"
+    elseif count == 4 then
+      value_getter_directive = "%:.:h"
+    elseif count == 5 then
+      value_getter_directive = "%:p:h"
+    elseif count == 62 then
+      local git_root = utils.get_git_root()
+
+      if not git_root then
+        vim.notify("Not inside a git repository", vim.log.levels.WARN)
+        return
+      end
+
+      local path = vim.fn.expand("%:p")
+      local relative_path =
+        vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
+
+      vim.fn.setreg('"', relative_path)
+      vim.fn.setreg(register, relative_path)
+
+      if register == "+" then
+        utils.clip_cmd_exec(relative_path)
+      end
+      vim.notify(
+        register .. " -> relative git root path = " .. relative_path
+      )
+      return
+    elseif count == 64 then
+      local git_root = utils.get_git_root()
+
+      if not git_root then
+        vim.notify("Not inside a git repository", vim.log.levels.WARN)
+        return
+      end
+
+      local path = vim.fn.expand("%:p")
+      local relative_path =
+        vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
+
+      local relative_dir = vim.fn.fnamemodify(relative_path, ":h")
+      vim.fn.setreg('"', relative_dir)
+      vim.fn.setreg(register, relative_dir)
+      if register == "+" then
+        utils.clip_cmd_exec(relative_dir)
+      end
+      vim.notify(
+        register .. " -> relative git root dir = " .. relative_dir
+      )
+      return
+    end
+
+    process_file_path_yanking(value_getter_directive, register)()
   end
+end
 
-  process_file_path_yanking(path_modifier, "+")()
-end, { noremap = true })
-
-utils.map_key("n", "<localleader>cd", function()
-  local path_modifier = "%:.:h"
-
-  if vim.v.count == 3 then
-    path_modifier = "%:p:h"
-  end
-
-  process_file_path_yanking(path_modifier, "a")()
-end, { noremap = true })
--- absolute file path
-utils.map_key("n", "<localleader>yf", process_file_path_yanking("%:p", "+"))
-utils.map_key("n", "<localleader>cf", process_file_path_yanking("%:p", "a"))
+utils.map_key("n", "<localleader>yf", dynamic_process_file_path_yanking("+"), {
+  noremap = true,
+  desc = "Yank path: 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
+})
+utils.map_key("n", "<localleader>cf", dynamic_process_file_path_yanking("a"), {
+  noremap = true,
+  desc = "Copy path to 'a': 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
+})
 
 -- Yank current working directory
 utils.map_key("n", "<localleader>yw", process_file_path_yanking("cwd", "+"))
