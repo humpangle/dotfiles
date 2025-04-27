@@ -386,8 +386,18 @@ local function do_yank_highlighted(register)
 end
 
 -- Yank highlighted to system clipboard / register a
-utils.map_key("n", "<localleader>yy", do_yank_highlighted("+"), { noremap = true })
-utils.map_key("n", "<localleader>cc", do_yank_highlighted("a"), { noremap = true })
+utils.map_key(
+  "n",
+  "<localleader>yy",
+  do_yank_highlighted("+"),
+  { noremap = true }
+)
+utils.map_key(
+  "n",
+  "<localleader>cc",
+  do_yank_highlighted("a"),
+  { noremap = true }
+)
 
 -- Move between windows in a tab
 utils.map_key("n", "<Tab>", "<C-w>w", { noremap = false })
@@ -481,7 +491,12 @@ utils.map_key("n", "yoq", ":cclose<CR>", { noremap = true })
 utils.map_key("n", "ff", ":e! %<CR>", { noremap = true })
 
 -- Create the new directory you're already working in:
-utils.map_key("n", "<localleader>md", ":!mkdir -p %:h<cr>:w %<CR>", { noremap = true })
+utils.map_key(
+  "n",
+  "<localleader>md",
+  ":!mkdir -p %:h<cr>:w %<CR>",
+  { noremap = true }
+)
 
 -- Edit .bashrc file:
 utils.map_key("n", "<localleader>.", function()
@@ -497,13 +512,23 @@ utils.map_key("n", "<localleader>.", function()
 end, { noremap = true, desc = "Open .bashrc" })
 
 -- Edit init.vim:
-utils.map_key("n", "<localleader>ec", ":tab split<CR>:e $MYVIMRC<CR>", { noremap = true })
+utils.map_key(
+  "n",
+  "<localleader>ec",
+  ":tab split<CR>:e $MYVIMRC<CR>",
+  { noremap = true }
+)
 
 -- Source init.vim:
 utils.map_key("n", "<localleader>sc", ":so $MYVIMRC<CR>", { noremap = true })
 
 -- Source Lua file and then source init.vim:
-utils.map_key("n", "<localleader>ss", ":source %<CR>:so $MYVIMRC<CR>", { noremap = true })
+utils.map_key(
+  "n",
+  "<localleader>ss",
+  ":source %<CR>:so $MYVIMRC<CR>",
+  { noremap = true }
+)
 
 -- Check file in ShellCheck:
 utils.map_key("n", "<Leader>sc,", function()
@@ -804,6 +829,9 @@ utils.map_key("n", "<localleader>tt", function()
     return
   elseif count == 93 then
     send_to_term_with_slime("t")
+    return
+  elseif count == 4 then
+    vim.cmd("botright split")
     return
   else
     vim.cmd("split")
