@@ -420,6 +420,12 @@ utils.map_key("n", "<localleader>bn", function()
     vim.cmd("vnew")
   elseif count == 3 then
     vim.cmd("tabnew")
+  elseif count == 4 then
+    vim.cmd("botright split")
+    vim.cmd("new")
+    vim.cmd.wincmd("p")
+    vim.cmd("quit")
+    vim.cmd.wincmd("j")
   else
     vim.cmd("new")
   end
