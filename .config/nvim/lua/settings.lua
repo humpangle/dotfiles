@@ -372,9 +372,14 @@ local function do_yank_highlighted(register)
     -- is it necessary?
     -- vim.cmd({ cmd = "wshada", bang = true })
     -- Copy the yanked text to the specified register
-    vim.fn.setreg(register, utils.get_visual_selection())
-    vim.fn.setreg("/", utils.get_visual_selection())
-    vim.fn.setreg('"', utils.get_visual_selection())
+    local content = utils.get_visual_selection()
+    vim.fn.setreg(register, content)
+    vim.fn.setreg("/", content)
+    vim.fn.setreg('"', content)
+
+    if register == "+" then
+      vim.fn.setreg("*", content)
+    end
 
     -- Without redrawing, nothing will be echoed
     vim.cmd({ cmd = "redraw", bang = true })
