@@ -4,7 +4,8 @@ $HOME/.aider.conf.yml
 
 aider \
 --no-auto-commits \
---model gemini-2.5-pro
+--model gemini-2.5-pro \
+--cache-prompts
 
 
 --model gemini-2.5-pro
@@ -56,6 +57,7 @@ aider \
 – copy the last assistant response to clipboard
 
 /copy-context
+
 - Copy the current chat context as markdown, suitable to paste into a web UI
 
 /context
@@ -68,7 +70,9 @@ aider \
 – remove the last message from history
 
 /exit
+
 – quit the Aider session
+
 
 /git
 – run a git command
@@ -128,7 +132,9 @@ aider \
 – revert the last edit
 
 /quit
+
 – same as /exit
+
 
 /edit
 – switch to the default code editing mode
@@ -142,8 +148,8 @@ aider \
 
 -------------------------------------------------------------------------------
 "*SEARCH/REPLACE* instruction to llm to propose edit"
-Please apply necessary changes taking into consideration "*SEARCH/REPLACE* instruction"
-Please update the *SEARCH/REPLACE block* to add the new functions to `scripts/_ai`.
+Apply necessary changes taking into consideration "*SEARCH/REPLACE* instruction"
+Update the *SEARCH/REPLACE block* to add the new functions to `scripts/_ai`.
 
 Whenever you propose edits to existing files, use only *SEARCH/REPLACE* blocks in this exact format:
 ## *SEARCH/REPLACE block* Rules:
@@ -217,7 +223,6 @@ Suggest commit message
 
 Updated project files attached - please update your context.
 
--------------------------------------------------------------------------------
+Apply suggested changes
 
-#=======================================================================================================================
-#=======================================================================================================================
+-------------------------------------------------------------------------------
