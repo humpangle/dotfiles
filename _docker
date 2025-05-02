@@ -36,21 +36,17 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
       if [ "$2" = "logs" ]; then
         local log_file_=""
         log_file_="$_DOCKER_GLOBAL_LOG_DIR_/$(date +'%FT%H-%M-%S').log"
+        local cmd_="$_EBNIS_DOCKER_BIN compose ${args_[*]}"
 
-        echo -e "\n\n\n Log file =>\n$log_file_"
+        echo -e "$PWD\n$cmd_\n" >"$log_file_"
+        echo -e "\n$cmd_ \nLog file =>\n$log_file_\n"
 
-        "$_EBNIS_DOCKER_BIN" compose "${args_[@]}" &>"$log_file_" &
-
-        echo "$!" >"${log_file_}.pid"
-        echo "$PWD" >>"${log_file_}.pid"
-        echo "$_EBNIS_DOCKER_BIN compose ${args_[*]}" >>"${log_file_}.pid"
-        echo -e "Sleeping for 1 second!\n\n"
-
-        sleep 1
-        tail -f "$log_file_"
-      else
-        "$_EBNIS_DOCKER_BIN" compose "${args_[@]}"
+        "$_EBNIS_DOCKER_BIN" compose "${args_[@]}" | tee -a "$log_file_"
+        return
       fi
+
+      "$_EBNIS_DOCKER_BIN" compose "${args_[@]}"
+
       return
     fi
 
