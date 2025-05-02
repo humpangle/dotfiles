@@ -373,13 +373,13 @@ local function do_yank_highlighted(register)
     -- vim.cmd({ cmd = "wshada", bang = true })
     -- Copy the yanked text to the specified register
     local content = utils.get_visual_selection()
-    vim.fn.setreg(register, content)
-    vim.fn.setreg("/", content)
-    vim.fn.setreg('"', content)
-
     if register == "+" then
       vim.fn.setreg("*", content)
     end
+
+    vim.fn.setreg(register, content)
+    vim.fn.setreg("/", content)
+    vim.fn.setreg('"', content)
 
     -- Without redrawing, nothing will be echoed
     vim.cmd({ cmd = "redraw", bang = true })
