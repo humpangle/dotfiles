@@ -1,0 +1,66 @@
+{
+  "update git patch": {
+    "prefix": [
+      "gitPatchUpdate",
+      "updateGitPatch",
+      "patchGitUpdate"
+    ],
+    "body": [
+      "Update your context with git patch",
+      ""
+    ],
+    "description": [
+      "update with git patch"
+    ]
+  },
+  "update git patch suggest commit": {
+    "prefix": [
+      "gitPatchUpdateCommit",
+      "updateGitPatchCommit",
+      "updateGitPatchCommit",
+      "commitUpdateGitPatch"
+    ],
+    "body": [
+      "Update your context with git patch and suggest commit message",
+      ""
+    ],
+    "description": [
+      "update git patch suggest commit"
+    ]
+  },
+  "Suggest commit msg": {
+    "prefix": [
+      "suggest_commit_message",
+      "commit_message_suggest"
+    ],
+    "body": "Suggest commit message",
+    "description": [
+      "Suggest commit msg"
+    ]
+  },
+  "Apply suggested changes": {
+    "prefix": [
+      "apply_changes",
+      "changes_apply"
+    ],
+    "body": "Apply suggested changes",
+    "description": [
+      "Apply suggested changes"
+    ]
+  },
+  "Triple fence": {
+    "prefix": [
+      "triple_fence",
+      "fence_triple"
+    ],
+    "body":[
+      "\"\"\"",
+      "\"\"\"",
+      ""
+
+    ],
+    "description": [
+      "Triple fence"
+    ]
+  }
+}

@@ -76,6 +76,14 @@
           "gitconfig"
         ],
         "path": "./gitconfig.json"
+      },
+      {
+        "language": [
+          "markdown",
+          "gitsendemail",
+          "gitcommit"
+        ],
+        "path": "./llm.json"
       }
     ]
   }
