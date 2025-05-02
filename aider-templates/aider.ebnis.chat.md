@@ -1,16 +1,18 @@
-t .aider.ebnis.chat.md
 $HOME/dotfiles/aider-templates/aider.conf.yml
 $HOME/.aider.conf.yml
+$DOTFILE_ROOT/aider-templates/.___scratch-models/open-ai
+
+aider \
+--list-models \
+gemini/ > \
+$DOTFILE_ROOT/aider-templates/.___scratch-models/gemini
 
 aider \
 --no-auto-commits \
 --model gemini-2.5-pro \
 --cache-prompts
 
-
---model gemini-2.5-pro
---model ollama_chat/deepseek-r1:14b
---model ollama_chat/qwen2.5-coder:3b
+--reasoning-effort high \
 
 
 --edit-format editor-diff
@@ -18,9 +20,6 @@ aider \
 --copy-paste
 --no-git
 --cache-prompts
-
---list-models gemini/
---list-models openai/
 
 --chat-history-file .aider.chat.history.md
 --chat-history-file .aider.chat.history-$(date +'%FT%H-%M-%S').md
@@ -207,7 +206,6 @@ Examples of when to suggest shell commands:
 - Etc.
 
 -------------------------------------------------------------------------------
-
 .aiderignore
 
 # Ignore everything
@@ -216,13 +214,5 @@ Examples of when to suggest shell commands:
 #!foo/
 # Allow nested files under these directories
 #!foo/**
-
--------------------------------------------------------------------------------
-
-Suggest commit message
-
-Updated project files attached - please update your context.
-
-Apply suggested changes
 
 -------------------------------------------------------------------------------
