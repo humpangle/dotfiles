@@ -77,23 +77,6 @@ return {
     end, {
       desc = "Neotree --",
     })
-
-    vim.api.nvim_create_autocmd("FileType", {
-      group = vim.api.nvim_create_augroup(
-        "NeoTreeLineNumbers",
-        { clear = true }
-      ),
-      pattern = {
-        "neo-tree",
-        "neo-tree filesystem*",
-      },
-      callback = function()
-        vim.defer_fn(function()
-          vim.opt_local.number = true
-          vim.opt_local.relativenumber = true
-        end, 1)
-      end,
-    })
   end,
   config = function()
     -- If you want icons for diagnostic errors, you'll need to define them somewhere:
