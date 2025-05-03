@@ -417,9 +417,9 @@ M.config = {
     popup = { -- settings that apply to float position only
       size = {
         height = "90%",
-        width = "90%",
+        width = "35%",
       },
-      position = "50%", -- 50% means center it
+      position = "25%", -- 50% means center it
       -- you can also specify border here, if you want a different setting from
       -- the global popup_border_style.
     },
