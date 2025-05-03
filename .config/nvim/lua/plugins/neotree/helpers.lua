@@ -316,6 +316,7 @@ M.config = {
       { "indent" },
       { "icon" },
       { "current_filter" },
+      -- https://github.com/nvim-neo-tree/neo-tree.nvim/discussions/267#discussioncomment-2547669
       -- CUSTOM CONTAINER
       -- WHY: If name is too long in float, default container will not allow scrolling to end of line to see full file name
       { "name", zindex = 10 },
