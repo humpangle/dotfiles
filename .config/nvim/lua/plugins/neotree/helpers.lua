@@ -316,62 +316,111 @@ M.config = {
       { "indent" },
       { "icon" },
       { "current_filter" },
+      -- CUSTOM CONTAINER
+      -- WHY: If name is too long in float, default container will not allow scrolling to end of line to see full file name
+      { "name", zindex = 10 },
       {
-        "container",
-        content = {
-          { "name", zindex = 10 },
-          {
-            "symlink_target",
-            zindex = 10,
-            highlight = "NeoTreeSymbolicLinkTarget",
-          },
-          { "clipboard", zindex = 10 },
-          {
-            "diagnostics",
-            errors_only = true,
-            zindex = 20,
-            align = "right",
-            hide_when_expanded = true,
-          },
-          {
-            "git_status",
-            zindex = 10,
-            align = "right",
-            hide_when_expanded = true,
-          },
-          { "file_size", zindex = 10, align = "right" },
-          { "type", zindex = 10, align = "right" },
-          { "last_modified", zindex = 10, align = "right" },
-          { "created", zindex = 10, align = "right" },
-        },
+        "symlink_target",
+        zindex = 10,
+        highlight = "NeoTreeSymbolicLinkTarget",
       },
+      { "clipboard", zindex = 10 },
+      {
+        "diagnostics",
+        errors_only = true,
+        zindex = 20,
+        align = "right",
+        hide_when_expanded = true,
+      },
+      {
+        "git_status",
+        zindex = 10,
+        align = "right",
+        hide_when_expanded = true,
+      },
+      { "file_size", zindex = 10, align = "right" },
+      { "type", zindex = 10, align = "right" },
+      { "last_modified", zindex = 10, align = "right" },
+      { "created", zindex = 10, align = "right" },
+      -- /END CUSTOM CONTAINER
+      --
+      -- {
+      --   "container",
+      --   content = {
+      --     { "name", zindex = 10 },
+      --     {
+      --       "symlink_target",
+      --       zindex = 10,
+      --       highlight = "NeoTreeSymbolicLinkTarget",
+      --     },
+      --     { "clipboard", zindex = 10 },
+      --     {
+      --       "diagnostics",
+      --       errors_only = true,
+      --       zindex = 20,
+      --       align = "right",
+      --       hide_when_expanded = true,
+      --     },
+      --     {
+      --       "git_status",
+      --       zindex = 10,
+      --       align = "right",
+      --       hide_when_expanded = true,
+      --     },
+      --     { "file_size", zindex = 10, align = "right" },
+      --     { "type", zindex = 10, align = "right" },
+      --     { "last_modified", zindex = 10, align = "right" },
+      --     { "created", zindex = 10, align = "right" },
+      --   },
+      -- },
     },
     file = {
       { "indent" },
       { "icon" },
+      -- CUSTOM CONTAINER
       {
-        "container",
-        content = {
-          {
-            "name",
-            zindex = 10,
-          },
-          {
-            "symlink_target",
-            zindex = 10,
-            highlight = "NeoTreeSymbolicLinkTarget",
-          },
-          { "clipboard", zindex = 10 },
-          { "bufnr", zindex = 10 },
-          { "modified", zindex = 20, align = "right" },
-          { "diagnostics", zindex = 20, align = "right" },
-          { "git_status", zindex = 10, align = "right" },
-          { "file_size", zindex = 10, align = "right" },
-          { "type", zindex = 10, align = "right" },
-          { "last_modified", zindex = 10, align = "right" },
-          { "created", zindex = 10, align = "right" },
-        },
+        "name",
+        zindex = 10,
       },
+      {
+        "symlink_target",
+        zindex = 10,
+        highlight = "NeoTreeSymbolicLinkTarget",
+      },
+      { "clipboard", zindex = 10 },
+      { "bufnr", zindex = 10 },
+      { "modified", zindex = 20, align = "right" },
+      { "diagnostics", zindex = 20, align = "right" },
+      { "git_status", zindex = 10, align = "right" },
+      { "file_size", zindex = 10, align = "right" },
+      { "type", zindex = 10, align = "right" },
+      { "last_modified", zindex = 10, align = "right" },
+      { "created", zindex = 10, align = "right" },
+      -- END CUSTOM CONTAINER
+      -- default container
+      -- {
+      --   "container",
+      --   content = {
+      --     {
+      --       "name",
+      --       zindex = 10,
+      --     },
+      --     {
+      --       "symlink_target",
+      --       zindex = 10,
+      --       highlight = "NeoTreeSymbolicLinkTarget",
+      --     },
+      --     { "clipboard", zindex = 10 },
+      --     { "bufnr", zindex = 10 },
+      --     { "modified", zindex = 20, align = "right" },
+      --     { "diagnostics", zindex = 20, align = "right" },
+      --     { "git_status", zindex = 10, align = "right" },
+      --     { "file_size", zindex = 10, align = "right" },
+      --     { "type", zindex = 10, align = "right" },
+      --     { "last_modified", zindex = 10, align = "right" },
+      --     { "created", zindex = 10, align = "right" },
+      --   },
+      -- },
     },
     message = {
       { "indent", with_markers = false },
@@ -413,7 +462,7 @@ M.config = {
     position = "left", -- left, right, top, bottom, float, current
     width = 80, -- applies to left and right positions
     height = 15, -- applies to top and bottom positions
-    auto_expand_width = false, -- expand the window when file exceeds the window width. does not work with position = "float"
+    auto_expand_width = true, -- expand the window when file exceeds the window width. does not work with position = "float"
     popup = { -- settings that apply to float position only
       size = {
         height = "90%",
