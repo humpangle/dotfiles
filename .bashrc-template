@@ -9,6 +9,7 @@ export USERNAME='some-name'
 # -----------------------------------------------------------------------------
 
 export _EBNIS_DOCKER_BIN='/usr/bin/docker'
+export _EBNIS_NVIM_BIN='/usr/bin/nvim'
 
 if [[ -f "$HOME/dotfiles/_shell-script" ]]; then
   # shellcheck source=/dev/null

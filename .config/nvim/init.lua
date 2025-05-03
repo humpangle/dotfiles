@@ -1,3 +1,14 @@
+-- Automatically add the directory containing this init.lua to runtimepath
+local config_path = vim.fn.fnamemodify(vim.env.MYVIMRC or "", ":p:h")
+vim.opt.runtimepath:prepend(config_path)
+
+-- Also update Lua's package.path so require() works properly
+package.path = config_path
+  .. "/lua/?.lua;"
+  .. config_path
+  .. "/lua/?/init.lua;"
+  .. package.path
+
 -- make Joakker/lua-json5 work on macos.
 -- https://github.com/neovim/neovim/issues/21749#issuecomment-1378720864
 table.insert(vim._so_trails, "/?.dylib")
