@@ -500,7 +500,7 @@ M.config = {
       },
       ["<C-f>"] = { "scroll_preview", config = { direction = -10 } },
       ["<C-b>"] = { "scroll_preview", config = { direction = 10 } },
-      ["l"] = "focus_preview",
+      ["1l"] = "focus_preview",
       ["s"] = "open_split",
       -- ["S"] = "split_with_window_picker",
       ["S"] = "open_vsplit",
