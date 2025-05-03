@@ -3,7 +3,7 @@ import sys
 import re
 import ast
 
-from typing import Any, Sequence, Union
+from typing import Any
 
 
 def escape(value: Any) -> str:
@@ -61,7 +61,7 @@ def inline_parameters(sql_text: str) -> str:
     param_index = 0
     parameters_len = len(parameters)
 
-    def replacer(match_obj: re.Match) -> str:
+    def replacer(_: re.Match) -> str:
         """Replaces the next '?' with an escaped parameter."""
         nonlocal param_index
         if param_index >= parameters_len:
