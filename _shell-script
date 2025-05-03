@@ -153,6 +153,7 @@ ___source_scripts() {
   local _helper_scrips=(
     _bash_history
     _aliases.sh
+    _nvim
     _fzf
     _set-envs
     _erlang-elixir-flags
