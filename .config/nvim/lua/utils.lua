@@ -435,6 +435,8 @@ utils.get_git_root = function()
   return git_root
 end
 
+-- TODO:  read -N flag and port from environment variables
+-- should we scope to only remote SSH seesions?
 utils.get_copy_cmd_string = function()
   if utils.get_os_env_or_nil("__COPY_PROGRAM__") == nil then
     return nil
