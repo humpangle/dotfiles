@@ -154,6 +154,11 @@ unset ___EBNIS_SMALL_SCREEN___
 # /END/ SSH
 # -----------------------------------------------------------------------------
 
+# Detect SSH connection using 'who' and unset __COPY_PROGRAM__ if true
+if who | grep -qE '^\S+\s+pts/[0-9]+'; then
+  unset __COPY_PROGRAM__
+fi
+
 # -----------------------------------------------------------------------------
 # MAKE clipper WORK WITH NETCAT nc
 # -----------------------------------------------------------------------------
