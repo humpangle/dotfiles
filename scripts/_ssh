@@ -21,11 +21,30 @@ export __COPY_PROGRAM__=clip
   echo "SSH block appended to ~/.bashrc"
 }
 
+delete_ssh_block() {
+  sed -i '/# -----------------------------------------------------------------------------/{
+    N
+    /# SSH/{
+      :a
+      N
+      /# \/END\/ SSH/!ba
+      N
+      /# -----------------------------------------------------------------------------/!ba
+      d
+    }
+  }' ~/.bashrc
+  echo "SSH block removed from ~/.bashrc"
+}
+
 # Parse options
-while getopts ":c" opt; do
+while getopts ":cd" opt; do
   case $opt in
   c)
     append_ssh_block
+    exit 0
+    ;;
+  d)
+    delete_ssh_block
     exit 0
     ;;
   *)
