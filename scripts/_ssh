@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+usage() {
+  echo "Usage: $0 -c"
+  exit 1
+}
+
+append_ssh_block() {
+  local block="
+# -----------------------------------------------------------------------------
+# SSH
+# -----------------------------------------------------------------------------
+export EBNIS_VIM_THEME=darkblue
+export ___EBNIS_SMALL_SCREEN___=1
+export __COPY_PROGRAM__=clip
+# -----------------------------------------------------------------------------
+# /END/ SSH
+# -----------------------------------------------------------------------------
+"
+  echo "$block" >>~/.bashrc
+  echo "SSH block appended to ~/.bashrc"
+}
+
+# Parse options
+while getopts ":c" opt; do
+  case $opt in
+  c)
+    append_ssh_block
+    exit 0
+    ;;
+  *)
+    usage
+    ;;
+  esac
+done
+
+usage
