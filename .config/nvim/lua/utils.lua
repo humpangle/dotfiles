@@ -435,8 +435,7 @@ utils.get_git_root = function()
   return git_root
 end
 
--- TODO:  read -N flag and port from environment variables
--- should we scope to only remote SSH seesions?
+-- TODO: should we scope to only remote SSH seesions?
 utils.get_copy_cmd_string = function()
   if utils.get_os_env_or_nil("__COPY_PROGRAM__") == nil then
     return nil
@@ -449,24 +448,9 @@ utils.get_copy_cmd_string = function()
     return cmd
   end
 
-  local result = nil
-  local nc_flag = ""
-
-  -- Ubuntu OS requires the -N flag to the netcat nc executable.
-  local handle = io.popen(
-    "grep -q 'ubuntu' /etc/os-release &>/dev/null && echo 'yes' || echo 'no'"
-  )
-
-  if handle then
-    result = handle:read("*a"):gsub("%s+", "")
-    handle:close()
-  end
-
-  if result == "yes" then
-    nc_flag = "-N"
-  end
-
-  cmd = "nc " .. nc_flag .. " localhost 8378"
+  cmd = "nc "
+    .. (utils.get_os_env_or_nil("__NETCAT_SHUTDOWN_AFTER_INPUT_EOF_FLAG__") or "")
+    .. " localhost 8378"
 
   -- Cache the value for future read
   vim.g.___clip_cmd_string__ = cmd
