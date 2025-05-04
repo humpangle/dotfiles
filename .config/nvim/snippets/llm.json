@@ -21,6 +21,7 @@
       "commitUpdateGitPatch"
     ],
     "body": [
+      "",
       "Update your context with git patch and suggest commit message",
       ""
     ],
@@ -33,7 +34,11 @@
       "suggest_commit_message",
       "commit_message_suggest"
     ],
-    "body": "Suggest commit message",
+    "body": [
+      "",
+      "Suggest commit message",
+      ""
+    ],
     "description": [
       "Suggest commit msg"
     ]
@@ -57,8 +62,8 @@
     ],
     "body": [
       "\"\"\"",
-      "\"\"\"",
-      ""
+      "$0",
+      "\"\"\""
     ],
     "description": [
       "Triple fence"
