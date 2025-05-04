@@ -460,6 +460,8 @@ list() {
         _session_to_copy
     fi
 
+    local should_copy_session_=""
+
     for _elm in $_session_resurrect_list; do
       local _windows_count
       _windows_count="$(
@@ -494,8 +496,7 @@ list() {
         local _cd_and_start_cmd="$_cd1719741431 && $_start1719741519 -fs"
 
         if [[ "$_session_to_copy" == "$_elm" ]]; then
-          echo -e "\n\nCD and tmux start command:\n$_cd_and_start_cmd\n\n\n"
-          copy "$_cd_and_start_cmd" &>/dev/null || :
+          should_copy_session_="$_cd_and_start_cmd"
         fi
 
         if [[ -n "$_verbose" ]]; then
@@ -520,6 +521,7 @@ list() {
   if [[ -n "$_from_resurrect_file" ]]; then
     if [[ -n "$_sessions_info_from_resurrect_file" ]]; then
       echo -e "Sessions from $resurrect_file_:\n$_sessions_info_from_resurrect_file\n$_sessions_pwds_from_resurrect_file"
+      _echo_session_to_copy "$should_copy_session_"
       return
     fi
 
@@ -534,6 +536,7 @@ list() {
     if _clients="$(tmux list-clients 2>&1)"; then
       if [[ -n "$_clients" ]]; then
         echo -e "$_clients\n$_sessions_pwds_from_resurrect_file"
+        _echo_session_to_copy "$should_copy_session_"
         return
       fi
     fi
@@ -545,10 +548,12 @@ list() {
   if _sessions="$(tmux ls 2>&1)"; then
     if [[ -n "$_names_only" ]]; then
       awk -F ':' '{print $1}' <<<"$_sessions"
+      _echo_session_to_copy "$should_copy_session_"
       return
     fi
 
     echo -e "$_sessions\n$_sessions_pwds_from_resurrect_file"
+    _echo_session_to_copy "$should_copy_session_"
     return
   fi
 
@@ -561,7 +566,7 @@ list() {
     fi
 
     echo -e "\n$_sessions_pwds_from_resurrect_file"
-
+    _echo_session_to_copy "$should_copy_session_"
     return
   fi
 
@@ -604,6 +609,17 @@ _compute_session_to_copy() {
   fi
 
   _return="${matched_sessions_[0]}"
+}
+
+_echo_session_to_copy() {
+  local to_echo_="$1"
+
+  if [ -z "$to_echo_" ]; then
+    return
+  fi
+
+  echo -e "CD and tmux start command:\n$to_echo_"
+  copy "$to_echo_" &>/dev/null || :
 }
 
 ___kill_tmux_help() {
