@@ -51,13 +51,14 @@
   "Triple fence": {
     "prefix": [
       "triple_fence",
-      "fence_triple"
+      "fence_triple",
+      "quote_triple",
+      "triple_quote"
     ],
-    "body":[
+    "body": [
       "\"\"\"",
       "\"\"\"",
       ""
-
     ],
     "description": [
       "Triple fence"
