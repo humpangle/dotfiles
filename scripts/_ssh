@@ -10,6 +10,8 @@ usage() {
 }
 
 append_ssh_block() {
+  delete_ssh_block # Remove existing block first
+
   local block="
 # -----------------------------------------------------------------------------
 # SSH
