@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 usage() {
-  echo "Usage: $0 -c"
+  echo "Usage: $0 [-c | -d]"
+  echo "  -c    Append SSH environment block to ~/.bashrc"
+  echo "  -d    Delete SSH environment block from ~/.bashrc"
   exit 1
 }
 
