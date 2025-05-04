@@ -793,17 +793,12 @@ utils.map_key("n", "<leader>be", function()
   end
 
   if count == 2 then
-    vim.ui.select(
-      { "No", "Yes" },
-      { prompt = "Delete all buffers?" },
-      function(choice)
-        if choice == "Yes" then
-          utils.DeleteAllBuffers("a")
-        else
-          vim.notify("Not deleting ALL buffers - too destructive!")
-        end
-      end
-    )
+    local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
+    if answer:lower() == "Yes" then
+      utils.DeleteAllBuffers("a")
+    else
+      vim.notify("Not deleting ALL buffers - too destructive!")
+    end
     return
   end
 
