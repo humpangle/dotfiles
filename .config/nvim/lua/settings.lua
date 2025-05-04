@@ -794,7 +794,7 @@ utils.map_key("n", "<leader>be", function()
 
   if count == 2 then
     local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
-    if answer:lower() == "Yes" then
+    if answer == "Yes" then
       utils.DeleteAllBuffers("a")
     else
       vim.notify("Not deleting ALL buffers - too destructive!")
