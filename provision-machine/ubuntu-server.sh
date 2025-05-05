@@ -725,6 +725,19 @@ install_neovim() {
   install_ripgrep
 }
 
+install_neovim_from_source() {
+  sudo apt update
+  sudo apt install ninja-build gettext cmake unzip curl build-essential
+
+  git clone https://github.com/neovim/neovim.git
+  cd neovim
+  git checkout v0.11.1
+  make CMAKE_BUILD_TYPE=Release
+  sudo make install
+  cd -
+  sudo rm -rf neovim
+}
+
 install_ripgrep() {
   _echo "Attempting to install ripgrep"
 
