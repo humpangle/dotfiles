@@ -1,3 +1,4 @@
+$HOME/dotfiles/aider-templates/aider.ebnis.chat.md
 $HOME/dotfiles/aider-templates/aider.conf.yml
 $HOME/.aider.conf.yml
 $DOTFILE_ROOT/aider-templates/.___scratch-models/open-ai
@@ -41,7 +42,12 @@ aider \
 – pose a question to the model
 
 /architect
+
 – switch to architect edit format
+
+/editor-model
+
+– assign a specific model to handle editor-based edits
 
 /chat-mode
 – toggle between chat and code modes
@@ -141,14 +147,16 @@ aider \
 /editor
 – show or set your preferred code editor
 
-/editor-model
-– assign a specific model to handle editor-based edits
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
 "*SEARCH/REPLACE* instruction to llm to propose edit"
-Apply necessary changes taking into consideration "*SEARCH/REPLACE* instruction"
-Update the *SEARCH/REPLACE block* to add the new functions to `scripts/_ai`.
+
+Apply changes taking into consideration "*SEARCH/REPLACE* instruction"
+
+Update *SEARCH/REPLACE block* to add the new functions to `scripts/_ai`.
+
+Apply *SEARCH/REPLACE block* only, exactly as pasted into the chat
 
 Whenever you propose edits to existing files, use only *SEARCH/REPLACE* blocks in this exact format:
 ## *SEARCH/REPLACE block* Rules:
