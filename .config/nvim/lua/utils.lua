@@ -641,6 +641,34 @@ local go_to_file_strip_prefix_in_env = function(file_path)
   return file_path
 end
 
+local go_to_file_prepend_prefix_in_env = function(file_path)
+  -- export NVIM_GO_TO_FILE_GF_PREPEND_PREFIX=/some/path1/::other/part2
+  local prefixes =
+    utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_PREPEND_PREFIX")
+
+  if not prefixes then
+    return file_path
+  end
+
+  for _, prefix in ipairs(vim.split(prefixes, "::", { plain = true })) do
+    if prefix ~= "" then
+      -- ensure exactly one slash between prefix and file_path
+      local sep = prefix:sub(-1) == "/" and "" or "/"
+      local candidate = prefix .. sep .. file_path
+
+      -- check file exists
+      if
+        vim.fn.filereadable(candidate) == 1
+        or vim.fn.isdirectory(candidate) == 1
+      then
+        return candidate
+      end
+    end
+  end
+
+  return file_path
+end
+
 local extract_line_number = function(cfile)
   local line_text = vim.fn.getline(".")
   local line_number = nil
@@ -698,6 +726,7 @@ utils.go_to_file = function()
   if vim.fn.glob(file_path) == "" then
     file_path = go_to_file_strip_prefix_in_env(file_path)
     file_path = go_to_file_strip_patterns(file_path)
+    file_path = go_to_file_prepend_prefix_in_env(file_path)
   end
 
   -- If file_path does not exist, we will try again by pre-pending git root (perhaps cwd is not git root but file_path

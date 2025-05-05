@@ -5,6 +5,7 @@
 
 # Allows nvim gf keymap to work properly, especially, in git diff views where the root of the project is not git root
 export NVIM_GO_TO_FILE_GF_STRIP_PREFIX=backend/api.scheduler/::/opt/app/
+export NVIM_GO_TO_FILE_GF_PREPEND_PREFIX=db/changelog/::a/b
 
 # Source python virtualenv helper script
 # shellcheck disable=1091
@@ -28,15 +29,4 @@ export EBNIS_VIM_THEME_BG=l
 export EBNIS_VIM_THEME_BG=d
 # -----------------------------------------------------------------------------
 # /END/ NVIM
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-# SSH FROM TERMUX
-# -----------------------------------------------------------------------------
-export __COPY_PROGRAM__=clip
-export ___EBNIS_SMALL_SCREEN___=1
-# unset __COPY_PROGRAM__
-unset ___EBNIS_SMALL_SCREEN___
-# -----------------------------------------------------------------------------
-# /END/ SSH FROM TERMUX
 # -----------------------------------------------------------------------------
