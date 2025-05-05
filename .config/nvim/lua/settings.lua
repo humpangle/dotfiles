@@ -337,7 +337,7 @@ utils.map_key("v", "<", "<gv", {})
 utils.map_key("v", ">", ">gv", {})
 
 -- Yank all
-utils.map_key("n", "<leader>YY", '<cmd>%y<CR><cmd>let @+=@"<CR>', function()
+utils.map_key("n", "<leader>YY", function()
   local count = vim.v.count
   vim.cmd("%y")
   local yanked = vim.fn.getreg('"')
