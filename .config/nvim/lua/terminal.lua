@@ -42,13 +42,13 @@ utils.map_key("n", "<localleader>tt", function()
     vim.cmd("vertical split")
   elseif count == 3 then
     vim.cmd("tab split")
-  elseif count == 9 then
+  elseif count == 6 then
     send_to_term_with_slime()
     return
-  elseif count == 92 then
+  elseif count == 62 then
     send_to_term_with_slime("v")
     return
-  elseif count == 93 then
+  elseif count == 63 then
     send_to_term_with_slime("t")
     return
   elseif count == 4 then
