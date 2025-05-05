@@ -336,33 +336,17 @@ utils.map_key("n", "<Leader>qA", ":qa!<CR>", { noremap = true })
 utils.map_key("v", "<", "<gv", {})
 utils.map_key("v", ">", ">gv", {})
 
--- Yank / Copy and paste from system clipboard (Might require xclip install)
-utils.map_key("n", '"+yy', '0"+yg_', { noremap = true })
-utils.map_key("v", "<Leader>Y", '"+y', { noremap = true })
-utils.map_key("v", "<Leader>x", '"+x', { noremap = true })
-utils.map_key("n", "<Leader>x", '"+x', { noremap = true })
-utils.map_key("n", "<Leader>P", '"+P', { noremap = true })
-utils.map_key("v", "<Leader>P", '"+P', { noremap = true })
-
 -- Yank all
-utils.map_key(
-  "n",
-  "<Leader>y+",
-  '<cmd>%y<CR><cmd>let @+=@"<CR>',
-  { noremap = true }
-)
-utils.map_key(
-  "n",
-  "<Leader>YY",
-  '<cmd>%y<CR><cmd>let @+=@"<CR>',
-  { noremap = true }
-)
-utils.map_key(
-  "n",
-  "<Leader>ya",
-  '<cmd>%y<CR><cmd>let @a=@"<CR>',
-  { noremap = true }
-)
+utils.map_key("n", "<leader>YY", '<cmd>%y<CR><cmd>let @+=@"<CR>', function()
+  local count = vim.v.count
+  vim.cmd("%y")
+  local yanked = vim.fn.getreg('"')
+  if count == 0 then
+    vim.fn.setreg("+", yanked)
+  else
+    vim.fn.setreg("a", yanked)
+  end
+end, { noremap = true, desc = "Yank all buffer 0/system 1/a" })
 
 local function do_yank_highlighted(register)
   return function()
