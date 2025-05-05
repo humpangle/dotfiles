@@ -717,12 +717,16 @@ install_neovim() {
   fi
 
   if [[ ! -d "$HOME/.fzf" ]]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
-    "$HOME/.fzf/install" --all
+    install_fzf
   fi
 
   install_bat
   install_ripgrep
+}
+
+install_fzf() {
+  git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+  "$HOME/.fzf/install" --all
 }
 
 install_neovim_from_source() {
