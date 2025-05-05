@@ -74,6 +74,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
       silent = true,
       desc = "Clear terminal. Supply count > 0 to enter insert mode.",
     }, 0)
+
+    vim.opt.number = true
+    vim.opt.relativenumber = true
   end,
 })
 
