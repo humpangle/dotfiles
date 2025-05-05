@@ -97,7 +97,7 @@ vim.opt.signcolumn = "yes"
 -- updatetime - so this setting override is no longer needed except if we remove the plugin.
 -- vim.opt.updatetime = 100
 
--- Increase mapped sequence wait time (for those who type slowy)
+-- Increase mapped sequence wait time (for those who type slowly)
 -- Will not work well with which-key plugin (requires about 250)
 vim.opt.timeoutlen = 5000
 
