@@ -578,7 +578,7 @@ end
 -- Dynamic file path yanking based on count
 local function dynamic_process_file_path_yanking(register)
   return function()
-    local count = vim.v.count
+    local count = vim.v.count1
     local value_getter_directive = "%:p" -- Default to absolute path
 
     if count == 1 then
