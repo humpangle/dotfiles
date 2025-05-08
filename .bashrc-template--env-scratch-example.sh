@@ -7,6 +7,9 @@
 # Prepend to PATH so your executables/scripts are first in line
 export PATH="$PWD/node_modules/.bin/:$PATH"
 
+# When present, invoke with NVIM user command :Lint and keymap <leader>NN
+export EBNIS_LINT_CMDS="eslint --fix __f_::stylelint --fix __f_"
+
 # Allows nvim gf keymap to work properly, especially, in git diff views where the root of the project is not git root
 export NVIM_GO_TO_FILE_GF_STRIP_PREFIX=backend/api.scheduler/::/opt/app/
 export NVIM_GO_TO_FILE_GF_PREPEND_PREFIX=db/changelog/::a/b
