@@ -118,3 +118,37 @@ vim.g.neoformat_enabled_heex = {
 --     au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
 --   a
 -- ]])
+
+local lint_env_val = utils.get_os_env_or_nil("EBNIS_LINT_CMDS")
+if lint_env_val then
+  vim.api.nvim_create_user_command("Lint", function()
+    local cmds =
+      vim.split(lint_env_val, "::", { trimempty = true, plain = true })
+
+    local file = vim.fn.expand("%:p")
+    local outputs = {}
+    vim.cmd("w")
+
+    for _, cmd in pairs(cmds) do
+      cmd = cmd:gsub("__f_", file)
+      local output = vim.fn.systemlist(cmd)
+
+      for _, v in pairs(output) do
+        if v then
+          table.insert(outputs, v)
+        end
+      end
+
+      vim.cmd({ cmd = "edit", bang = true })
+    end
+
+    if #outputs > 0 then
+      print(table.concat(outputs, "\n"))
+    end
+  end, {
+    nargs = 0,
+    desc = "Run all linters from $EBNIS_LINT_CMDS",
+  })
+
+  utils.map_key("n", "<leader>NN", ":Lint<CR>", { noremap = true })
+end
