@@ -4,6 +4,9 @@
 # See $HOME/dotfiles/.bashrc-template--env-scratch-example.sh
 # Example common entries in `.___scratch-env.sh`
 
+# Prepend to PATH so your executables/scripts are first in line
+export PATH="$PWD/node_modules/.bin/:$PATH"
+
 # Allows nvim gf keymap to work properly, especially, in git diff views where the root of the project is not git root
 export NVIM_GO_TO_FILE_GF_STRIP_PREFIX=backend/api.scheduler/::/opt/app/
 export NVIM_GO_TO_FILE_GF_PREPEND_PREFIX=db/changelog/::a/b
