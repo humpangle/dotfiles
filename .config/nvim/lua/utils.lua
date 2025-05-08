@@ -635,7 +635,20 @@ local go_to_file_strip_prefix_in_env = function(file_path)
     .. "octo://.+/RIGHT/"
 
   for _, prefix in pairs(vim.split(prefixes, "::")) do
-    file_path = file_path:gsub(prefix, "")
+    if prefix ~= "" then
+      -- ensure exactly one slash between prefix and file_path
+      local sep = prefix:sub(-1) == "/" and "" or "/"
+      prefix = prefix .. sep
+
+      local candidate = file_path:gsub(prefix, "")
+
+      if
+        vim.fn.filereadable(candidate) == 1
+        or vim.fn.isdirectory(candidate) == 1
+      then
+        return candidate
+      end
+    end
   end
 
   return file_path
