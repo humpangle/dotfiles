@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=2034
 
+# See $HOME/dotfiles/.bashrc-template--env-scratch-example.sh
 # Example common entries in `.___scratch-env.sh`
 
 # Allows nvim gf keymap to work properly, especially, in git diff views where the root of the project is not git root
