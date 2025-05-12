@@ -291,7 +291,7 @@ local git_commit_mappings_fn = function()
   -- git branch
   elseif first == "5" then
     if last == "5" then -- 55
-      local search_text = "[ ./]\\+"
+      local search_text = "[ ./)(]\\+"
       vim.fn.setreg("/", search_text)
       vim.cmd("set hlsearch")
       pcall(vim.cmd.normal, { "n", bang = true })
