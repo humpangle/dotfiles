@@ -78,7 +78,6 @@ aider \
 
 – quit the Aider session
 
-
 /git
 – run a git command
 
@@ -139,7 +138,6 @@ aider \
 /quit
 
 – same as /exit
-
 
 /edit
 – switch to the default code editing mode
