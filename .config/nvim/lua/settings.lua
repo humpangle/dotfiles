@@ -887,3 +887,4 @@ vim.api.nvim_create_user_command("SortJson", function()
 end, { desc = "Sort Json Keys" })
 
 require("settings.diagnostics")
+require("escapings")

@@ -837,4 +837,50 @@ utils.get_session_file = function()
   return "session"
 end
 
+-- Replaces /, \, :, and other problematic characters with '-'
+function utils.sanitize_filename(name)
+  local use_clip = false
+
+  -- If no name passed in, pull from the '+' register
+  if name == nil then
+    name = vim.fn.getreg("+") or ""
+    use_clip = true
+  end
+
+  local escaped_name = name:gsub('[/\\:*?"<>|]', "-")
+
+  if use_clip then
+    vim.fn.setreg("+", escaped_name)
+    utils.clip_cmd_exec(escaped_name)
+  end
+
+  return escaped_name
+end
+
+--- Escape a string for use in a Vim regex and (optionally) update the '+' register.
+---
+--- If `text` is `nil`, reads from the '+' register, escapes that, writes it back,
+--- and returns the escaped result. Otherwise just escapes and returns `text`.
+---
+---@param text? string
+---@return string escaped_text
+function utils.escape_register_plus(text)
+  local use_clip = false
+
+  -- If no text passed in, pull from the '+' register
+  if text == nil then
+    text = vim.fn.getreg("+") or ""
+    use_clip = true
+  end
+
+  local escaped_text = vim.fn.escape(text, "/.*$^~[]")
+
+  if use_clip then
+    vim.fn.setreg("+", escaped_text)
+    utils.clip_cmd_exec(escaped_text)
+  end
+
+  return escaped_text
+end
+
 return utils
