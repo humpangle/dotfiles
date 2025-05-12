@@ -1,4 +1,5 @@
 local utils = require("utils")
+local plugin_enabled = require("plugins/plugin_enabled")
 
 local M = {}
 
@@ -34,6 +35,26 @@ local function copy_path_git_root(mode)
     vim.fn.setreg("+", value)
     vim.notify(value)
   end
+end
+
+local win_popup_size = { -- settings that apply to float position only
+  size = {
+    height = "90%",
+    width = "35%",
+  },
+  position = "25%", -- 50% means center it
+  -- you can also specify border here, if you want a different setting from
+  -- the global popup_border_style.
+}
+
+if plugin_enabled.is_small_screen() then
+  win_popup_size = {
+    size = {
+      height = "90%",
+      width = "92%",
+    },
+    position = "50%",
+  }
 end
 
 M.config = {
@@ -464,15 +485,7 @@ M.config = {
     width = 80, -- applies to left and right positions
     height = 15, -- applies to top and bottom positions
     auto_expand_width = true, -- expand the window when file exceeds the window width. does not work with position = "float"
-    popup = { -- settings that apply to float position only
-      size = {
-        height = "90%",
-        width = "35%",
-      },
-      position = "25%", -- 50% means center it
-      -- you can also specify border here, if you want a different setting from
-      -- the global popup_border_style.
-    },
+    popup = win_popup_size,
     same_level = false, -- Create and paste/move files/directories on the same level as the directory under cursor (as opposed to within the directory under cursor).
     insert_as = "child", -- Affects how nodes get inserted into the tree during creation/pasting/moving of files if the node under the cursor is a directory:
     -- "child":   Insert nodes as children of the directory under cursor.
