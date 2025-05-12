@@ -874,7 +874,15 @@ utils.map_key(
   { noremap = true, silent = true, desc = "Insert datetime" }
 )
 
-utils.map_key({ "n", "x" }, "<leader>WW", utils.write_to_out_file, {
+utils.map_key({ "n", "x" }, "<leader>WW", function()
+  utils.write_to_out_file()
+
+  local count = vim.v.count
+
+  if count == 0 then
+    utils.RenameFile()
+  end
+end, {
   noremap = true,
   silent = true,
   desc = "Save file to scratch file.",
