@@ -4,7 +4,7 @@ usage() {
   echo "Usage: $0 [-c] [-s] [-t] [-d] [-n]"
   echo "  -c  Add __COPY_PROGRAM__=clip"
   echo "  -s  Add ___EBNIS_SMALL_SCREEN___=1"
-  echo "  -t  Add EBNIS_VIM_THEME=darkblue"
+  echo "  -t  Add EBNIS_VIM_UBER_THEME=darkblue"
   echo "  -d  Delete SSH block from ~/.bashrc"
   echo "  -n  Preview SSH block without writing to ~/.bashrc"
   exit 1
@@ -22,7 +22,7 @@ export __COPY_PROGRAM__=clip"
 export ___EBNIS_SMALL_SCREEN___=1"
 
   [[ $include_theme == 1 ]] && block+="
-export EBNIS_VIM_THEME=darkblue"
+export EBNIS_VIM_UBER_THEME=darkblue"
 
   block+="
 # -----------------------------------------------------------------------------

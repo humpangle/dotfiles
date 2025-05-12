@@ -55,7 +55,9 @@ if not plugin_enabled.has_termux() then
   })
 end
 
-local env_vim_theme = utils.get_os_env_or_nil("EBNIS_VIM_THEME")
+local env_vim_theme = utils.get_os_env_or_nil("EBNIS_VIM_UBER_THEME")
+  or utils.get_os_env_or_nil("EBNIS_VIM_THEME")
+
 local env_vim_bg = utils.get_os_env_or_nil("EBNIS_VIM_THEME_BG")
 
 if env_vim_theme ~= nil then
