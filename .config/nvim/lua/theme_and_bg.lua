@@ -1,4 +1,5 @@
 local plugin_enabled = require("plugins/plugin_enabled")
+local utils = require("utils")
 
 local theme_fn_map = {
   -- BACKGROUNDS
@@ -54,8 +55,8 @@ if not plugin_enabled.has_termux() then
   })
 end
 
-local env_vim_theme = os.getenv("EBNIS_VIM_THEME")
-local env_vim_bg = os.getenv("EBNIS_VIM_THEME_BG")
+local env_vim_theme = utils.get_os_env_or_nil("EBNIS_VIM_THEME")
+local env_vim_bg = utils.get_os_env_or_nil("EBNIS_VIM_THEME_BG")
 
 if env_vim_theme ~= nil then
   if theme_fn_map[env_vim_theme] ~= nil then
