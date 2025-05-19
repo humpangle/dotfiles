@@ -188,9 +188,9 @@ return {
 
         dap.repl.open()
         dap.repl.execute(lines)
-      end, { "n", "x" }, {
+      end, {
         desc = "DAP: 0/eval under cursor 2/send region to repl",
-      }),
+      }, { "n", "x" }),
 
       map_lazy_key("<leader>dax", function()
         do_echo("close")

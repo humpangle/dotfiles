@@ -422,7 +422,7 @@ function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
   vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
 
-function utils.map_lazy_key(mapping_str, command_to_map_to, mode, opts)
+function utils.map_lazy_key(mapping_str, command_to_map_to, opts, mode)
   mode = mode or "n"
   opts = opts or { desc = "" }
 
