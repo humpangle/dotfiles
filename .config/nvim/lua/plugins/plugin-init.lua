@@ -278,6 +278,7 @@ local plugins_table = {
       file_types = {
         "markdown",
         "livebook",
+        "Avante",
       },
     },
     dependencies = {
@@ -287,6 +288,7 @@ local plugins_table = {
     ft = {
       "markdown",
       "livebook",
+      "Avante",
     },
     init = function()
       keymap("n", "<leader>mt", function()
@@ -402,6 +404,7 @@ local plugins_table = {
 
   require("plugins/elixir"),
   require("plugins/ai"),
+  require("plugins/ai/avante-nvim"),
   require("plugins/neotest"),
   require("plugins/neotree"),
   require("plugins/octo-nvim"),

@@ -798,8 +798,20 @@ utils.map_key(
       utils.DeleteAllBuffers("octo")
       return
     end
+
+    if count == 5 then
+      if utils.is_avante_buffer() then
+        vim.cmd.normal("gT")
+      end
+
+      pcall(function()
+        utils.DeleteAllBuffers("avante")
+      end)
+
+      return
+    end
   end,
-  { noremap = true, desc = "0/empty 1/fugitive 2/all 3/dap 4/octo" }
+  { noremap = true, desc = "0/empty 1/fugitive 2/all 3/dap 4/octo 5/avante" }
 )
 
 -- Inserts the current date and time into the buffer

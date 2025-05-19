@@ -81,7 +81,8 @@
         "language": [
           "markdown",
           "gitsendemail",
-          "gitcommit"
+          "gitcommit",
+          "AvanteInput"
         ],
         "path": "./llm.json"
       }
