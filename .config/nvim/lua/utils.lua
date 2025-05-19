@@ -208,7 +208,7 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
     return false
   end
 
-  local filetype = vim.api.nvim_buf_get_option(buf_num, "filetype")
+  local filetype = vim.bo[buf_num].filetype
 
   if filetype == "octo_panel" then
     return false
@@ -226,7 +226,7 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
     return true
   end
 
-  return not vim.api.nvim_buf_get_option(buf_num, "buflisted")
+  return not vim.bo[buf_num].buflisted
 end
 
 function utils.DeleteAllBuffers(delete_flag)
