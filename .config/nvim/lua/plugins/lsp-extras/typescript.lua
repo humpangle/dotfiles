@@ -4,21 +4,20 @@ if not plugin_enabled.typescript_lsp() then
   return {}
 end
 
+local mason_install_path = vim.fn.stdpath("data") .. "/mason/packages"
+
 local get_vue_lang_server_path = function()
   local mason_registry = require("mason-registry")
 
-  local ok, pkg = pcall(mason_registry.get_package, "vue-language-server")
-
-  if not ok then
+  if not mason_registry.has_package("vue-language-server") then
+    vim.notify(
+      "[LSP] vue-language-server not installed in Mason",
+      vim.log.levels.WARN
+    )
     return ""
   end
 
-  local vue_language_server_path = pkg:get_install_path()
-    .. "/node_modules/@vue/language-server"
-
-  -- We expect the return value (path) like:
-  -- os.getenv("HOME") .. "/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
-  return vue_language_server_path
+  return mason_install_path .. "/node_modules/@vue/language-server"
 end
 
 local config = {
