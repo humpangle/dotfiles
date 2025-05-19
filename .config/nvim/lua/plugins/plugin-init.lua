@@ -405,6 +405,7 @@ local plugins_table = {
   require("plugins/elixir"),
   require("plugins/ai"),
   require("plugins/ai/avante-nvim"),
+  require("plugins/ai/copilot"),
   require("plugins/neotest"),
   require("plugins/neotree"),
   require("plugins/octo-nvim"),
