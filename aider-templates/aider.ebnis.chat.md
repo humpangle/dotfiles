@@ -10,8 +10,9 @@ $DOTFILE_ROOT/aider-templates/.___scratch-models/gemini
 
 aider \
 --no-auto-commits \
---model gemini-2.5-pro \
---cache-prompts
+--cache-prompts \
+--aiderignore .aiderignore \
+--model gemini/gemini-2.5-pro-exp-03-25
 
 --reasoning-effort high \
 
@@ -34,7 +35,9 @@ aider \
 | tee .aider.ebnis.chat.out
 
 -------------------------------------------------------------------------------
+
 # In‑chat commands (https://aider.chat/docs/usage/commands.html#in-chat-commands)
+
 /add
 – add a file to chat
 
@@ -196,6 +199,9 @@ If you want to put code in a new file, use a *SEARCH/REPLACE block* with:
 - The new file's contents in the `REPLACE` section
 #
 ONLY EVER RETURN CODE IN A *SEARCH/REPLACE BLOCK*!
+#
+You must first discuss what edits you need to make with me before applying the *SEARCH/REPLACE block* Rules.
+If I say something like "ok" or "go ahead" or "do that" I probably want you to make SEARCH/REPLACE blocks for the code changes you just proposed.
 
 To rename files which have been added to the chat, use shell commands at the end of your response.
 
@@ -210,6 +216,8 @@ Examples of when to suggest shell commands:
 - Suggest OS-appropriate commands to delete or rename files/directories, or other file system operations.
 - If your code changes add new dependencies, suggest the command to install them.
 - Etc.
+
+I will paste some *SEARCH/REPLACE* texts into the chat - apply them exactly as provided - do not add or subtract.
 
 -------------------------------------------------------------------------------
 .aiderignore
