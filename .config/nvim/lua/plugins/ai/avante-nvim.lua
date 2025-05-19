@@ -158,6 +158,8 @@ return {
 
       avante.setup(opts)
       avante_api.ask()
-    end, { desc = "Octo" }),
+    end, {
+      desc = "Avante",
+    }),
   },
 }
