@@ -56,7 +56,7 @@ return {
 
   {
     "zbirenbaum/copilot.lua",
-    cond = plugin_enabled.has_unofficial_copilot(),
+    cond = plugin_enabled.has_community_copilot(),
     cmd = {
       "Copilot",
     },

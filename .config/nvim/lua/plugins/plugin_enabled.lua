@@ -72,14 +72,17 @@ function M.has_official_copilot()
   return utils.get_os_env_or_nil("NVIM_ENABLE_OFFICIAL_COPILOT_PLUGIN") == "1"
 end
 
-function M.has_unofficial_copilot()
-  return not M.has_official_copilot
-    and utils.get_os_env_or_nil("NVIM_ENABLE_COMMUNITY_COPILOT_PLUGIN")
-      == "1"
+function M.has_community_copilot()
+  if M.has_official_copilot() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_COMMUNITY_COPILOT_PLUGIN")
+    == "1"
 end
 
 function M.has_copilot()
-  return M.has_official_copilot or M.has_unofficial_copilot
+  return M.has_official_copilot or M.has_community_copilot
 end
 
 function M.has_gpt()
