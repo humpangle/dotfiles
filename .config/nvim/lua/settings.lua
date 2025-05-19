@@ -762,40 +762,45 @@ utils.map_key("n", "d=", function()
   utils.EbnisClearAllBuffer()
 end, { noremap = true })
 
-utils.map_key("n", "<leader>be", function()
-  local count = vim.v.count
+utils.map_key(
+  "n",
+  "<leader>be",
+  function()
+    local count = vim.v.count
 
-  if count == 0 then
-    -- Delete all empty buffers
-    utils.DeleteAllBuffers("e")
-    return
-  end
-
-  if count == 1 then
-    utils.DeleteAllBuffers("fugitive")
-    return
-  end
-
-  if count == 2 then
-    local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
-    if answer == "Yes" then
-      utils.DeleteAllBuffers("a")
-    else
-      vim.notify("Not deleting ALL buffers - too destructive!")
+    if count == 0 then
+      -- Delete all empty buffers
+      utils.DeleteAllBuffers("e")
+      return
     end
-    return
-  end
 
-  if count == 3 then
-    utils.DeleteAllBuffers("dap")
-    return
-  end
+    if count == 1 then
+      utils.DeleteAllBuffers("fugitive")
+      return
+    end
 
-  if count == 4 then
-    utils.DeleteAllBuffers("octo")
-    return
-  end
-end, { noremap = true, desc = "0/empty 1/fugitive 2/all 3/dap 4/octo" })
+    if count == 2 then
+      local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
+      if answer == "Yes" then
+        utils.DeleteAllBuffers("a")
+      else
+        vim.notify("Not deleting ALL buffers - too destructive!")
+      end
+      return
+    end
+
+    if count == 3 then
+      utils.DeleteAllBuffers("dap")
+      return
+    end
+
+    if count == 4 then
+      utils.DeleteAllBuffers("octo")
+      return
+    end
+  end,
+  { noremap = true, desc = "0/empty 1/fugitive 2/all 3/dap 4/octo" }
+)
 
 -- Inserts the current date and time into the buffer
 utils.map_key("n", "<localleader>tm", function()
