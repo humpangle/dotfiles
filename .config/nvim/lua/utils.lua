@@ -1,5 +1,7 @@
 local utils = {}
 
+utils.lazy_doc_path = vim.fn.stdpath("state") .. "/lazy/readme/doc"
+
 function utils.ebnis_save_commit_buffer()
   local winnr = vim.api.nvim_win_get_number(0)
   if winnr ~= 1 then
@@ -181,6 +183,14 @@ function utils.is_octo_buffer(buffer_name)
   return false
 end
 
+---@param buf_name string
+function utils.is_lazy_doc_buffer(buf_name)
+  if vim.startswith(buf_name, utils.lazy_doc_path) then
+    return true
+  end
+  return false
+end
+
 local is_deleteable_unlisted_buffer = function(b_name, buf_num)
   if b_name == "Neotest Output Panel" then
     return false
@@ -205,6 +215,10 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
   end
 
   if filetype == "qf" then
+    return false
+  end
+
+  if utils.is_lazy_doc_buffer(b_name) then
     return false
   end
 
