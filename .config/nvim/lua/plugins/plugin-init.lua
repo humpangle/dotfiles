@@ -173,7 +173,11 @@ local plugins_table = {
       -- enable the Elasticsearch support flag.
       vim.g.vrc_elasticsearch_support = 1
 
-      keymap("n", "<localleader>MR", ":let b:vrc_split_request_body = <right>")
+      keymap(
+        "n",
+        "<localleader>MR",
+        ":let b:vrc_split_request_body = <right>"
+      )
 
       -- n = new request/ trigger is <C-J> by default
       vim.g.vrc_trigger = "<C-n>"
@@ -182,7 +186,11 @@ local plugins_table = {
       -- let g:vrc_debug = 1
 
       -- make new rest console buffer
-      keymap("n", "<localleader>nr", ":tabe .rest<Left><Left><Left><Left><Left>")
+      keymap(
+        "n",
+        "<localleader>nr",
+        ":tabe .rest<Left><Left><Left><Left><Left>"
+      )
 
       -- The output buffer is name `__REST_response__` and will be shared by
       -- all *.rest buffers.
