@@ -402,6 +402,14 @@ local plugins_table = {
     enabled = not plugin_enabled.has_vscode(),
   },
 
+  -- When you open a symlink file, it will open the target file instead (do I really want this?).
+  {
+    "aymericbeaumet/vim-symlink",
+    dependencies = {
+      "moll/vim-bbye",
+    },
+  },
+
   require("plugins/elixir"),
   require("plugins/ai"),
   require("plugins/ai/avante-nvim"),
