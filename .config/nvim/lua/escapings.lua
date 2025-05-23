@@ -33,3 +33,11 @@ end, {})
 vim.api.nvim_create_user_command("FilenameSanitize", function()
   sanitize_filename()
 end, {})
+
+vim.api.nvim_create_user_command("DeAnsify", function()
+  -- ANSI escape sequences
+  vim.cmd("%s/\x1b[[;0-9]*m//g")
+
+  -- Carriage returns (Windows line endings)
+  -- vim.cmd([[%s/\r//g]])
+end, { desc = "Remove ANSI color codes and Windows line endings" })
