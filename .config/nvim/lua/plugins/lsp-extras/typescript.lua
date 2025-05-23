@@ -39,7 +39,7 @@ local config = {
   -- If you want nvim-lspconfig managed tsserver:
   -- ts_ls = {}, -- see below for actual configuration
 
-  volar = { -- mason: vue-language-server
+  vue_ls = { -- mason: vue-language-server
     -- Hybrid mode setting (only manages vue's html and css). ts_ls will manage typescript/javascript.
     filetypes = {
       "vue",
