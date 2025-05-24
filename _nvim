@@ -12,6 +12,14 @@ if [ -n "$_EBNIS_NVIM_BIN" ]; then
   }
 
   export -f nvim
+
+  sv() {
+    sudo -E bash -c "$(declare -f nvim); nvim $*"
+  }
+
+  export -f sv
+else
+  alias sv="sudo -E nvim_sudo_e"
 fi
 
 export EDITOR="nvim"
@@ -35,7 +43,6 @@ v() {
 }
 
 alias v.="nvim ."
-alias sv="sudo -E nvim_sudo_e"
 alias vmin='nvim -u ~/.config/nvim/settings-min.vim'
 alias vm='nvim -u ~/.config/nvim/settings-min.vim'
 alias vc='nvim --clean'
