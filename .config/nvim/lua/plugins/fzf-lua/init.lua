@@ -37,10 +37,7 @@ local map_to_fzf_lua_or_telescope = function(
     local count = vim.v.count
     local string_count = "" .. count
 
-    -- Fork some fzf-lua commands, I get:
-    -- nvim: Failed $NVIM_LISTEN_ADDRESS: address already in use
-    -- This is the fix I found:
-    vim.env.NVIM_LISTEN_ADDRESS = "/run/user/1001/fzf-lua-" .. os.time()
+    utils.set_fzf_lua_nvim_listen_address()
 
     -- If count contains 1/2/3, we split window
     -- otherwise we exec in place.

@@ -916,4 +916,11 @@ function utils.escape_register_plus(text)
   return escaped_text
 end
 
+function utils.set_fzf_lua_nvim_listen_address()
+  -- For some fzf-lua commands, I get:
+  -- nvim: Failed $NVIM_LISTEN_ADDRESS: address already in use
+  -- This is the fix I found:
+  vim.env.NVIM_LISTEN_ADDRESS = "/run/user/1001/fzf-lua-" .. os.time()
+end
+
 return utils
