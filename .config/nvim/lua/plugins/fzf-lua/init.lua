@@ -50,7 +50,7 @@ local map_to_fzf_lua_or_telescope = function(
     -- If count matches no other string
     if string_count:match("^%d$") then
       utils.set_fzf_lua_nvim_listen_address()
-      vim.cmd("FzfLua " .. func_name)
+      require("fzf-lua")[func_name]()
       return
     end
 
@@ -68,7 +68,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      vim.cmd("FzfLua register_ui_select")
+      require("fzf-lua").register_ui_select()
 
       local actions = require("fzf-lua.actions")
       local my_fzf_utils = require("plugins/fzf-lua/utils")
@@ -111,31 +111,36 @@ return {
 
       -- Find open buffers
       map_key("n", "<Leader>ffb", function()
-        vim.cmd("FzfLua buffers")
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").buffers()
       end, {
         noremap = true,
       })
 
       -- Find file from cwd
       map_key("n", "<leader>ffW", function()
-        vim.cmd("FzfLua files")
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").files()
       end, { noremap = true })
 
       -- Find windows
       map_key("n", "<leader>ffw", function()
-        vim.cmd("FzfLua tabs")
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").tabs()
       end, { noremap = true })
 
       -- Search buffers history
       map_key("n", "<Leader>fh", function()
-        vim.cmd("FzfLua oldfiles")
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").oldfiles()
       end, {
         noremap = true,
       })
 
       -- Search for text in current buffer
       map_key("n", "<Leader>ffl", function()
-        vim.cmd("FzfLua grep_curbuf")
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").grep_curbuf()
       end, {
         noremap = true,
         desc = "",
@@ -143,18 +148,20 @@ return {
 
       -- Search in project - do not match filenames
       map_key("n", "<Leader>f/", function()
-        vim.cmd("FzfLua grep_project")
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").grep_project()
       end, { noremap = true })
 
       -- map_key("n", "<leader>cb", function()
-      --   vim.cmd("FzfLua git_branches")
+      --   require("fzf-lua").git_branches")
       -- end, {
       --   noremap = true,
       --   desc = "Git branches",
       -- })
 
       map_key("n", "<leader>czL", function()
-        vim.cmd("FzfLua git_stash")
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").git_stash()
       end, {
         noremap = true,
         desc = "Git stashes list",
