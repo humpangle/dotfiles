@@ -145,7 +145,7 @@ return {
 
       if count == 59 then
         -- local opts_as_string = table.concat(opts, ",")
-        vim.notify('opts_as_string')
+        vim.notify("opts_as_string")
         return
       end
 
@@ -159,7 +159,7 @@ return {
       avante.setup(opts)
       avante_api.ask()
     end, {
-      desc = "Avante",
+      desc = "Avante 0/ask 2/clear 22/stop 3/tabnew 5/history 51/model",
     }),
   },
 }
