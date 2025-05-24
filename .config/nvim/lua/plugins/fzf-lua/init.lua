@@ -37,8 +37,6 @@ local map_to_fzf_lua_or_telescope = function(
     local count = vim.v.count
     local string_count = "" .. count
 
-    utils.set_fzf_lua_nvim_listen_address()
-
     -- If count contains 1/2/3, we split window
     -- otherwise we exec in place.
     if string_count:match("1") then
@@ -51,6 +49,7 @@ local map_to_fzf_lua_or_telescope = function(
 
     -- If count matches no other string
     if string_count:match("^%d$") then
+      utils.set_fzf_lua_nvim_listen_address()
       vim.cmd("FzfLua " .. func_name)
       return
     end
