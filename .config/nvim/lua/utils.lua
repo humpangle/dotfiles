@@ -917,10 +917,13 @@ function utils.escape_register_plus(text)
 end
 
 function utils.set_fzf_lua_nvim_listen_address()
+  local prefix = "/run/user/1001/fzf-lua-EBNIS-"
+
   -- For some fzf-lua commands, I get:
   -- nvim: Failed $NVIM_LISTEN_ADDRESS: address already in use
   -- This is the fix I found:
-  vim.env.NVIM_LISTEN_ADDRESS = "/run/user/1001/fzf-lua-" .. os.time()
+
+  vim.env.NVIM_LISTEN_ADDRESS = prefix .. os.time()
 end
 
 return utils
