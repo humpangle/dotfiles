@@ -168,7 +168,8 @@ keymap("n", "<Leader>czz", function()
   local left_repeated_severally = left
 
   if current_file_only then
-    local file_path = vim.fn.expand("%:.")
+    local file_path = vim.fn.expand("%:p")
+    file_path = utils.relative_to_git_root(file_path)
     local how_many_times_to_repeat = string.len(file_path) + 5
 
     left_repeated_severally = ""

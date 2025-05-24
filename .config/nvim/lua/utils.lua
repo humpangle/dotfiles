@@ -468,6 +468,22 @@ utils.get_git_root = function()
   return git_root
 end
 
+---Returns the relative path to the git root.
+---@param abs_path string
+---@return nil|string
+function utils.relative_to_git_root(abs_path)
+  local git_root = utils.get_git_root()
+
+  if git_root == nil or git_root == "" then
+    return nil
+  end
+
+  local relative_path =
+    vim.fn.resolve(abs_path):gsub("^" .. vim.pesc(git_root) .. "/", "")
+
+  return relative_path
+end
+
 -- TODO: should we scope to only remote SSH seesions?
 utils.get_copy_cmd_string = function()
   if utils.get_os_env_or_nil("__COPY_PROGRAM__") == nil then
