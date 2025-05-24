@@ -45,37 +45,30 @@ local config = {
       "vue",
     },
   },
-}
 
-local typescript_ls_config = { -- mason: typescript-language-server
-  init_options = {
-    plugins = {
-      {
-        name = "@vue/typescript-plugin",
-        -- *IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `volar `are of identical versions.
-        location = get_vue_lang_server_path(),
-        languages = { -- ts_ls will manage typescript/javascript sections of vue file in volar hybrid mode
-          "vue",
-          "typescript",
-          "javascript",
+  ts_ls = { -- mason: typescript-language-server
+    init_options = {
+      plugins = {
+        {
+          name = "@vue/typescript-plugin",
+          -- *IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `volar `are of identical versions.
+          location = get_vue_lang_server_path(),
+          languages = { -- ts_ls will manage typescript/javascript sections of vue file in volar hybrid mode
+            "vue",
+            "typescript",
+            "javascript",
+          },
         },
       },
     },
-  },
-  filetypes = {
-    "typescript",
-    "javascript",
-    "javascriptreact",
-    "typescriptreact",
-    "vue", -- volar hybrid mode
+    filetypes = {
+      "typescript",
+      "javascript",
+      "javascriptreact",
+      "typescriptreact",
+      "vue", -- volar hybrid mode
+    },
   },
 }
-
--- Somehow my macbook uses tsserver while linux uses ts_ls
-if vim.fn.has("mac") == 1 then
-  config["tsserver"] = typescript_ls_config
-else
-  config["ts_ls"] = typescript_ls_config
-end
 
 return config
