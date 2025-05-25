@@ -903,9 +903,16 @@ utils.map_key(
 )
 
 utils.map_key({ "n", "x" }, "<leader>WW", function()
-  utils.write_to_out_file()
-
   local count = vim.v.count
+
+  if count == 1 then
+    vim.bo.readonly = false
+    vim.bo.buftype = ""
+    utils.write_to_command_mode("saveas " .. vim.fn.expand("%:."))
+    return
+  end
+
+  utils.write_to_out_file()
 
   if count == 0 then
     utils.RenameFile()
