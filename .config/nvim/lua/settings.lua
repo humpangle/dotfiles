@@ -842,7 +842,7 @@ utils.map_key("n", "<localleader>rd", utils.DeleteFile("d"), { noremap = true })
 require("terminal")
 
 -- Show the registers
-utils.map_key("n", "<leader>re", function()
+utils.map_key("n", "<localleader>re", function()
   local count = vim.v.count
 
   if count == 0 then
