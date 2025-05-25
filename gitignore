@@ -132,6 +132,7 @@ Session.vim
 *.___pid*
 *.pid
 *___bash*
+\[CodeCompanion\]*
 
 ## Docker compose custom file
 **/__dcy*
