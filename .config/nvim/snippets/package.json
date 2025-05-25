@@ -82,7 +82,8 @@
           "markdown",
           "gitsendemail",
           "gitcommit",
-          "AvanteInput"
+          "AvanteInput",
+          "codecompanion"
         ],
         "path": "./llm.json"
       }

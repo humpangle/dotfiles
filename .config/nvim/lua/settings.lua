@@ -281,6 +281,12 @@ local patterns = {
     },
     filetype = "sql",
   },
+  {
+    pattern = {
+      "\\[CodeCompanion\\]-*",
+    },
+    filetype = "codecompanion",
+  },
 }
 
 for _, p in ipairs(patterns) do
@@ -808,6 +814,11 @@ utils.map_key(
         utils.DeleteAllBuffers("avante")
       end)
 
+      return
+    end
+
+    if count == 6 then
+      utils.DeleteAllBuffers("codecompanion")
       return
     end
   end,

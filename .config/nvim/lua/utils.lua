@@ -183,6 +183,14 @@ function utils.is_octo_buffer(buffer_name)
   return false
 end
 
+function utils.is_codecompanion_buffer(buf_num)
+  local filetype = buf_num and vim.bo[buf_num].filetype or vim.bo.filetype
+  if vim.startswith(filetype, "codecompanion") then
+    return true
+  end
+  return false
+end
+
 ---@param buf_num? integer
 function utils.is_avante_buffer(buf_num)
   local filetype = buf_num and vim.bo[buf_num].filetype or vim.bo.filetype
@@ -251,6 +259,7 @@ function utils.DeleteAllBuffers(delete_flag)
   local dap_buffers = {}
   local octo_buffers = {} -- octo github pr/issues/review plugin
   local avante_buffers = {}
+  local codecompanion_buffers = {}
 
   for _, buf_num in ipairs(vim.api.nvim_list_bufs()) do
     local b_name = vim.fn.bufname(buf_num)
@@ -266,6 +275,8 @@ function utils.DeleteAllBuffers(delete_flag)
       table.insert(octo_buffers, buf_num)
     elseif utils.is_avante_buffer(buf_num) then
       table.insert(avante_buffers, buf_num)
+    elseif utils.is_codecompanion_buffer(buf_num) then
+      table.insert(codecompanion_buffers, buf_num)
     elseif is_deleteable_unlisted_buffer(b_name, buf_num) then
       table.insert(no_name_buffers, buf_num)
     elseif string.match(b_name, "term://") then
@@ -293,6 +304,7 @@ function utils.DeleteAllBuffers(delete_flag)
     wipeout_buffers(dap_buffers)
     wipeout_buffers(octo_buffers)
     wipeout_buffers(avante_buffers)
+    wipeout_buffers(codecompanion_buffers)
   -- empty / no-name buffers
   elseif delete_flag == "e" then
     wipeout_buffers(no_name_buffers)
@@ -310,6 +322,8 @@ function utils.DeleteAllBuffers(delete_flag)
     wipeout_buffers(octo_buffers)
   elseif delete_flag == "avante" then
     wipeout_buffers(avante_buffers)
+  elseif delete_flag == "codecompanion" then
+    wipeout_buffers(codecompanion_buffers)
   end
 
   vim.cmd.echo(

@@ -279,6 +279,7 @@ local plugins_table = {
         "markdown",
         "livebook",
         "Avante",
+        "codecompanion",
       },
     },
     dependencies = {
@@ -289,6 +290,7 @@ local plugins_table = {
       "markdown",
       "livebook",
       "Avante",
+      "codecompanion",
     },
     init = function()
       keymap("n", "<leader>mt", function()
@@ -413,6 +415,7 @@ local plugins_table = {
   require("plugins/elixir"),
   require("plugins/ai"),
   require("plugins/ai/avante-nvim"),
+  require("plugins/ai/codecompanion-nvim"),
   require("plugins/ai/copilot"),
   require("plugins/neotest"),
   require("plugins/neotree"),
