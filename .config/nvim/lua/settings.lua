@@ -846,12 +846,12 @@ utils.map_key("n", "<leader>re", function()
   local count = vim.v.count
 
   if count == 0 then
-    vim.cmd("reg")
+    vim.cmd("Wmessage reg")
     return
   end
 
   if count == 1 then
-    vim.cmd("Wmessage reg")
+    vim.cmd("reg")
     return
   end
 
