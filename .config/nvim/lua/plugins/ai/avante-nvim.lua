@@ -1,6 +1,6 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 
-if plugin_enabled.has_vscode() then
+if not plugin_enabled.avante_ai() then
   return {}
 end
 

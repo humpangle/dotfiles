@@ -306,4 +306,12 @@ M.has_web_browsers = function()
   return true
 end
 
+function M.avante_ai()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_AVANTE_AI_PLUGIN") == "1"
+end
+
 return M
