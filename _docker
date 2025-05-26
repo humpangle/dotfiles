@@ -95,8 +95,9 @@ _alias_map_docker["dvlsq"]='docker volume ls -q'
 _alias_map_docker["ds"]='sudo service docker start'
 _alias_map_docker["dn"]='docker network'
 _alias_map_docker["dnls"]='docker network ls'
-_alias_map_docker["dcps"]='docker compose ps'
-_alias_map_docker["dcpsa"]='docker compose ps -a'
+_alias_map_docker["dcps"]='_dcps'
+_alias_map_docker["dcpsa"]='_dcps -a'
+_alias_map_docker["dcpsA"]='docker compose ps'
 _alias_map_docker["dcc"]='docker compose config'
 _alias_map_docker["drmlogs__description"]='docker rm logs containers..'
 _alias_map_docker["d-dangling"]='dim -qf dangling=true | xargs docker rmi -f 2>/dev/null'
@@ -105,6 +106,12 @@ _alias_map_docker["dcrml"]='drmlogs -c'
 _alias_map_docker["dclrm"]='drmlogs -c'
 _alias_map_docker["dtruncatel"]='drmlogs'
 _alias_map_docker["dcrm"]='docker compose rm'
+
+_dcps() {
+  docker compose ps \
+    --format "table {{.Name}}\t{{.Service}}\t{{.Status}}\t{{.Ports}}" "$@" |
+    awk 'NR==1 { h=$0; print; for (i=1; i<=length(h); i++) printf "-"; print ""; next }1'
+}
 
 # docker compose up --daemon and logs --follow
 _dcudlf() {
