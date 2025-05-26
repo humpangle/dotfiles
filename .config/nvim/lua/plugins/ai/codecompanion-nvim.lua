@@ -21,7 +21,10 @@ return {
   opts = {
     adapters = {
       -- LLMs -------------------------------------------------------------------
+      anthropic = "anthropic",
       openai = "openai",
+      copilot = "copilot",
+      gemini = "gemini",
     },
     strategies = {
       -- CHAT STRATEGY ----------------------------------------------------------
