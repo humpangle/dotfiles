@@ -184,6 +184,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
   callback = function()
     vim.highlight.on_yank()
+    local register = vim.v.event.regname
+    if register == "+" then
+      utils.clip_cmd_exec(vim.fn.getreg("+"))
+    end
   end,
 })
 
