@@ -64,6 +64,12 @@ return {
         return
       end
 
+      if count == 31 then
+        vim.cmd("Octo pr browser")
+        vim.notify("PR URL: " .. vim.fn.getreg("+"))
+        return
+      end
+
       if count == 4 then
         vim.cmd("Octo pr reload")
         return
