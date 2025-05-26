@@ -279,6 +279,7 @@ local plugins_table = {
         "markdown",
         "livebook",
         "Avante",
+        "AvanteInput",
         "codecompanion",
       },
     },
@@ -290,6 +291,7 @@ local plugins_table = {
       "markdown",
       "livebook",
       "Avante",
+      "AvanteInput",
       "codecompanion",
     },
     init = function()
