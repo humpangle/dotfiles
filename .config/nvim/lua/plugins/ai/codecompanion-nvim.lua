@@ -7,6 +7,22 @@ end
 local utils = require("utils")
 local map_lazy_key = utils.map_lazy_key
 
+local default_dapaters = {
+  chat = "openai",
+  inline = "openai",
+  cmd = "openai",
+}
+
+---@param adapter_type "chat"|"inline"|"cmd"
+---@return "openai"|"anthropic"|"copilot"|"gemini"
+local function get_adapter(adapter_type)
+  local adapter = utils.get_os_env_or_nil(
+    "NVIM_CODECOMPANION_AI_ADAPTER_" .. adapter_type:upper()
+  )
+
+  return adapter or default_dapaters[adapter_type]
+end
+
 return {
   "olimorris/codecompanion.nvim",
   ft = {
@@ -29,7 +45,7 @@ return {
     strategies = {
       -- CHAT STRATEGY ----------------------------------------------------------
       chat = {
-        adapter = "copilot",
+        adapter = get_adapter("chat"),
         roles = {
           user = "Ebnis",
         },
@@ -199,7 +215,7 @@ return {
       },
       -- INLINE STRATEGY --------------------------------------------------------
       inline = {
-        adapter = "copilot",
+        adapter = get_adapter("inline"),
         keymaps = {
           accept_change = {
             modes = {
@@ -244,7 +260,7 @@ return {
       },
       -- CMD STRATEGY -----------------------------------------------------------
       cmd = {
-        adapter = "copilot",
+        adapter = get_adapter("cmd"),
       },
     },
     -- DISPLAY OPTIONS ----------------------------------------------------------
