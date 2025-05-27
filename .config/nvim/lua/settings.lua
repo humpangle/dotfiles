@@ -132,6 +132,17 @@ vim.opt.foldnestmax = 10
 vim.opt.foldenable = false
 vim.opt.foldlevel = 2
 
+utils.map_key("n", "<localleader>fm", function()
+  local count = vim.v.count
+  local methods = { [0] = "indent", "manual", "syntax", "expr" }
+  local method = methods[count] or "indent"
+  vim.wo.foldmethod = method
+  vim.notify("foldmethod set to: " .. method)
+end, {
+  noremap = true,
+  desc = "Set buffer foldmethod (0=indent,1=manual,2=syntax,3=expr)",
+})
+
 -- Reload a file if it is changed from outside vim
 vim.opt.autoread = true
 vim.opt.swapfile = false
