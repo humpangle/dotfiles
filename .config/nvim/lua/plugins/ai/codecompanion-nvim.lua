@@ -34,6 +34,11 @@ return {
     "CodeCompanionCmd",
     "CodeCompanion",
   },
+  init = function()
+    -- Expand 'cc' into 'CodeCompanion' in the command line
+    vim.cmd([[cab cc CodeCompanion]])
+    vim.cmd([[cab cca CodeCompanionChat]])
+  end,
   opts = {
     adapters = {
       -- LLMs -------------------------------------------------------------------
@@ -304,11 +309,21 @@ return {
       end
 
       if count == 1 then
+        vim.cmd("CodeCompanionChat")
+        return
+      end
+
+      if count == 10 then
         vim.cmd("CodeCompanionChat Toggle")
         return
       end
 
       if count == 11 then
+        vim.cmd("CodeCompanionChat Add")
+        return
+      end
+
+      if count == 12 then
         utils.write_to_command_mode("CodeCompanionChat ")
         return
       end
