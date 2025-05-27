@@ -68,5 +68,17 @@
     "description": [
       "Triple fence"
     ]
+  },
+  "update code in buffer": {
+    "prefix": [
+      "update_code_buffer",
+      "update_buffer_code",
+      "buffer_update_code",
+      "buffer_code_update"
+    ],
+    "body": "Update code in #buffer using the @editor tool",
+    "description": [
+      "update code in buffer llm"
+    ]
   }
 }
