@@ -81,7 +81,7 @@ return {
         return
       end
     end, {
-      desc = "Octo PR 0/create 1/checkout 2/close 3/url 4/reload 5/list",
+      desc = "Octo PR 0/create 1/checkout 2/close 3/url 31/browser 4/reload 5/list",
     }),
 
     map_lazy_key("<leader>ghr", function() -- review
