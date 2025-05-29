@@ -308,6 +308,16 @@ return {
         return
       end
 
+      if count == 31 then
+        vim.cmd("CodeCompanion /commit")
+        return
+      end
+
+      if count == 33 then
+        vim.cmd("CodeCompanion /explain")
+        return
+      end
+
       if count == 1 then
         vim.cmd("CodeCompanionChat")
         return
@@ -318,6 +328,7 @@ return {
         return
       end
 
+      -- Add visually selected chat to the current chat buffer
       if count == 11 then
         vim.cmd("CodeCompanionChat Add")
         return
@@ -328,13 +339,13 @@ return {
         return
       end
 
-      if count == 3 then
-        vim.cmd("CodeCompanionActions")
+      if count == 4 then
+        vim.cmd("CodeCompanionCmd")
         return
       end
 
-      if count == 4 then
-        vim.cmd("CodeCompanionCmd")
+      if count == 5 then
+        vim.cmd("CodeCompanionActions")
         return
       end
     end, {
