@@ -338,7 +338,7 @@ return {
         return
       end
     end, {
-      desc = "CodeCompanion 0/ 1/chat-toggle 11/chat: 3/actions 4/cmd",
+      desc = "CodeCompanion 0/ 10/chat-toggle 11/chat: 3/actions 4/cmd",
     }, { "n", "v" }),
   },
 }
