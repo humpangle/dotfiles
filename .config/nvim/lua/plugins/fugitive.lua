@@ -23,22 +23,20 @@ end, {
   desc = "0/v 1/h",
 })
 
-keymap("n", "<leader>gf", function()
-  utils.write_to_command_mode(
-    "Git push --force-with-lease origin " .. vim.fn.FugitiveHead()
-  )
-end, { noremap = true })
+keymap("n", "<leader>gp", function()
+  local count = vim.v.count
+  if count == 0 then
+    utils.write_to_command_mode("Git push origin " .. vim.fn.FugitiveHead())
+    return
+  end
 
-keymap(
-  "n",
-  "<leader>gF",
-  ":Git push --force-with-lease github HEAD<CR>",
-  { noremap = true }
-)
-
-keymap("n", "<leader>go", function()
-  utils.write_to_command_mode("Git push origin " .. vim.fn.FugitiveHead())
-end, { noremap = true })
+  if count == 1 then
+    utils.write_to_command_mode(
+      "Git push --force-with-lease origin " .. vim.fn.FugitiveHead()
+    )
+    return
+  end
+end, { noremap = true, desc = "Git push 0/ 1/force" })
 
 -- gt = git take / pull
 keymap("n", "<leader>gt", function()
