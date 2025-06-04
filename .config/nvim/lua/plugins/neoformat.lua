@@ -150,5 +150,5 @@ if lint_env_val then
     desc = "Run all linters from $EBNIS_LINT_CMDS",
   })
 
-  utils.map_key("n", "<leader>NN", ":Lint<CR>", { noremap = true })
+  utils.map_key("n", "<leader>NN", ":Wmessage Lint<CR>", { noremap = true })
 end
