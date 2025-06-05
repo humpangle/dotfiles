@@ -309,7 +309,21 @@ return {
       end
 
       if count == 31 then
+        if plugin_enabled.is_small_screen() then
+          vim.cmd("tab split")
+          vim.cmd("CodeCompanion /commit")
+          vim.cmd("only")
+          return
+        end
+
         vim.cmd("CodeCompanion /commit")
+        return
+      end
+
+      if count == 313 then
+        vim.cmd("tab split")
+        vim.cmd("CodeCompanion /commit")
+        vim.cmd("only")
         return
       end
 
