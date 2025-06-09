@@ -162,7 +162,27 @@ return {
         vim.cmd("Octo reaction thumbs_up")
         return
       end
-    end, { desc = "Octo Reaction 0/thumbs_up" }),
+
+      if count == 1 then
+        vim.cmd("Octo reaction eyes")
+        return
+      end
+
+      if count == 2 then
+        vim.cmd("Octo reaction thumbs_down")
+        return
+      end
+
+      if count == 3 then
+        vim.cmd("Octo reaction heart")
+        return
+      end
+
+      if count == 4 then
+        vim.cmd("Octo reaction laugh")
+        return
+      end
+    end, { desc = "Octo Reaction 0/up 1/eyes 2/down 3/heart 4/laugh" }),
   },
   config = function()
     require("octo").setup({
