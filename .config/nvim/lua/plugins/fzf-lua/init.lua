@@ -178,14 +178,14 @@ return {
 
       -- Fuzzy find all the symbols in your current document. Symbols are things like variables, functions, types, etc.
       map_to_fzf_lua_or_telescope(
-        "<leader>bs",
+        "gO",
         "lsp_document_symbols",
         "[D]ocument [S]ymbols"
       )
 
       -- Find references(places where identifiers are used/referenced) for the word under your cursor.
       map_to_fzf_lua_or_telescope(
-        "gr",
+        "grr",
         "lsp_references",
         "[G]oto [R]eferences"
       )
