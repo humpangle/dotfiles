@@ -123,6 +123,11 @@ return {
         require("fzf-lua").files()
       end, { noremap = true })
 
+      map_key("n", "<leader>fWW", function()
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").files()
+      end, { noremap = true })
+
       -- Find windows
       map_key("n", "<leader>ffw", function()
         utils.set_fzf_lua_nvim_listen_address()
@@ -148,6 +153,10 @@ return {
 
       -- Search in project - do not match filenames
       map_key("n", "<Leader>f/", function()
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").grep_project()
+      end, { noremap = true })
+      map_key("n", "<Leader>ff/", function()
         utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").grep_project()
       end, { noremap = true })
