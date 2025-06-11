@@ -2,6 +2,10 @@ local is_term = function(filename)
   return filename:match("^term://")
 end
 
+local function is_log_file(filename)
+  return filename:sub(-4) == ".log"
+end
+
 local function abbreviate_path(file_path)
   if is_term(file_path) then
     -- It's a terminal buffer, we return the basename
@@ -148,6 +152,9 @@ function _G.FilenameTab(tab_num)
   end
 
   local file_name_tail = vim.fn.expand("#" .. buf_num .. ":t")
+  file_name_tail = (
+    is_log_file(file_name_tail) and (file_name_tail:sub(1, -5) .. ".l")
+  ) or file_name_tail
   return file_name_tail .. tab_modified(tab_num)
 end
 
