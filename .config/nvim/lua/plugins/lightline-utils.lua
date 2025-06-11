@@ -144,9 +144,7 @@ function _G.FilenameTab(tab_num)
     return "fgit" -- fugitive git
   elseif is_term(filename) then
     return vim.fn.expand("#" .. buf_num .. ":t")
-      .. get_terminal_name_suffix(
-        vim.api.nvim_buf_get_option(buf_num, "channel")
-      )
+      .. get_terminal_name_suffix(vim.b[buf_num].terminal_job_id)
   end
 
   local file_name_tail = vim.fn.expand("#" .. buf_num .. ":t")
