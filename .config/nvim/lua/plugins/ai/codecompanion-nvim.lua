@@ -298,6 +298,26 @@ return {
         },
       },
     },
+    prompt_library = {
+      ["Generate a Commit Message"] = {
+        prompts = {
+          {
+            role = "user",
+            content = function()
+              return string.format(
+                [[Prefer descriptive, sentence case commits with additional context. Generate commit message from git diff below:
+
+```diff
+%s
+```
+]],
+                vim.fn.system("git diff --no-ext-diff --staged")
+              )
+            end,
+          },
+        },
+      },
+    },
   },
   keys = {
     map_lazy_key("<leader>aia", function()
