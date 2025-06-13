@@ -873,7 +873,7 @@ end
 
 utils.write_to_out_file = function()
   local filename = utils.create_slime_dir()
-    .. "/---out-file-"
+    .. "/O-"
     .. os.date("%FT%H-%M-%S")
 
   local readonly = vim.bo.readonly
