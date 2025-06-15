@@ -77,8 +77,10 @@ _has_wsl() {
 }
 
 if _is_darwin; then
-  # shellcheck source=/dev/null
-  source "$DOTFILE_PARENT_PATH/dotfiles/_darwin-binary-overrides.sh"
+  if [ -f "$DOTFILE_PARENT_PATH/dotfiles/_darwin-binary-overrides.sh" ]; then
+    # shellcheck source=/dev/null
+    source "$DOTFILE_PARENT_PATH/dotfiles/_darwin-binary-overrides.sh"
+  fi
 fi
 
 full_line_len=$(tput cols)
