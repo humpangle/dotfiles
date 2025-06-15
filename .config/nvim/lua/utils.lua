@@ -183,10 +183,20 @@ function utils.is_octo_buffer(buffer_name)
   return false
 end
 
-function utils.is_codecompanion_buffer(buf_num)
-  local filetype = buf_num and vim.bo[buf_num].filetype or vim.bo.filetype
+---@param buf_num number
+---@param buffer_name string
+---@return (boolean) True if the buffer is a CodeCompanion buffer, false otherwise.
+function utils.is_codecompanion_buffer(buf_num, buffer_name)
+  local filetype = vim.bo[buf_num].filetype
   if vim.startswith(filetype, "codecompanion") then
     return true
+  end
+
+  if buffer_name then
+    local fname = vim.fn.fnamemodify(buffer_name, ":t")
+    if fname:match("^%[CodeCompanion%]%s+%d+$") then
+      return true
+    end
   end
   return false
 end
@@ -275,7 +285,7 @@ function utils.DeleteAllBuffers(delete_flag)
       table.insert(octo_buffers, buf_num)
     elseif utils.is_avante_buffer(buf_num) then
       table.insert(avante_buffers, buf_num)
-    elseif utils.is_codecompanion_buffer(buf_num) then
+    elseif utils.is_codecompanion_buffer(buf_num, b_name) then
       table.insert(codecompanion_buffers, buf_num)
     elseif is_deleteable_unlisted_buffer(b_name, buf_num) then
       table.insert(no_name_buffers, buf_num)
