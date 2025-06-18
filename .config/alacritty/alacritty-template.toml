@@ -5,10 +5,12 @@
 [window]
 decorations     = "none"
 dynamic_padding = false
-dynamic_title   = true
 opacity         = 1.0
 startup_mode    = "Maximized"
-title           = "Alacritty"
+# Static title (will never change)
+# title           = "Alacritty"
+# Or, let Alacritty accept title‐setting escapes (OSC 0/2):
+dynamic_title   = true
 
 [window.dimensions]
 columns = 0
