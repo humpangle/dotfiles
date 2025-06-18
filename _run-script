@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-_run_f() {
+r() {
   # If the __EBNIS_RUN_SCRIPT_FULL_PATH__ environment variable exists, that will be our script_name_
   local script_name_="${__EBNIS_RUN_SCRIPT_FULL_PATH__:-}"
 
@@ -57,7 +57,7 @@ _run_f() {
 
   return "$exit_code_"
 }
-alias r='_run_f'
+export -f r
 
 _____run_well_known_paths_help() {
   : "___help___ _____run_well_known_paths_help"
