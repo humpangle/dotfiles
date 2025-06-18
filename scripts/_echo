@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+full_line_len=$(tput cols)
+
+_echo() {
+  local text="${*}"
+  local equal='*'
+
+  local len="${#text}"
+  len=$((full_line_len - len))
+  local half=$((len / 2 - 1))
+
+  local line=''
+
+  for _ in $(seq $half); do
+    line="${line}${equal}"
+  done
+
+  echo -e "\n${text}  ${line}${line}\n"
+}
+
+_echo "$@"
