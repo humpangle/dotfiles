@@ -80,5 +80,55 @@
     "description": [
       "update code in buffer llm"
     ]
+  },
+  "generate commit message 1 shot": {
+    "prefix": [
+      "gen_git_commit1",
+      "commit_git_gen1",
+      "commit_gen_git1",
+      "git_gen_commit1"
+    ],
+    "body": [
+      "<details>",
+      "<summary><code>⫸ Prompt: Inspect, draft, and commit</code></summary>",
+      "  I’ve already staged some changes.",
+      "  Do the following in one go:",
+      "  1. Run `git diff --no-ext-diff --staged`.",
+      "  2. Generate a descriptive, sentence‑case commit message with a brief subject line and a body explaining why the change was made.",
+      "  3. Commit the staged changes using that message (i.e. run `git commit -m \"<subject>\" -m \"<body>\"`).",
+      "  Use the style:",
+      "  - Subject max ~120 chars, sentence case (no period at end).",
+      "  - Body wraps at ~120 chars, explains rationale.",
+      "</details>"
+    ],
+    "description": [
+      "generate commit message 1 shot"
+    ]
+  },
+  "generate commit message 2 shots": {
+    "prefix": [
+      "gen_git_commit2",
+      "commit_git_gen2",
+      "commit_gen_git2",
+      "git_gen_commit2"
+    ],
+    "body": [
+      "<details>",
+      "<summary><code>⫸ Prompt #1: Draft commit message</code></summary>",
+      "  I’ve staged some changes.$0",
+      "  Run `git diff --no-ext-diff --staged` and propose a concise, sentence‑case commit message:",
+      "  - One‑line subject (~120 chars, no trailing period).",
+      "  - Multi‑line body (wrap ~120 chars) explaining why.",
+      "</details>",
+      "",
+      "<details>",
+      "<summary><code>⫸ Prompt #2: Commit with approved message</code></summary>",
+      "  Commit the staged changes with the message we just finalized.",
+      "  Run: git commit -m \"<subject>\" -m \"<body>\"",
+      "</details>"
+    ],
+    "description": [
+      "generate commit message 2 shot"
+    ]
   }
 }
