@@ -1,12 +1,12 @@
-$HOME/dotfiles/aider-templates/aider.ebnis.chat.md
-$HOME/dotfiles/aider-templates/aider.conf.yml
+$HOME/dotfiles/llm-templates/aider.ebnis.chat.md
+$HOME/dotfiles/llm-templates/aider.conf.yml
 $HOME/.aider.conf.yml
-$DOTFILE_ROOT/aider-templates/.___scratch-models/open-ai
+$DOTFILE_ROOT/llm-templates/.___scratch-models/open-ai
 
 aider \
 --list-models \
 gemini/ > \
-$DOTFILE_ROOT/aider-templates/.___scratch-models/gemini
+$DOTFILE_ROOT/llm-templates/.___scratch-models/gemini
 
 aider \
 --no-auto-commits \

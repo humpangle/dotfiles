@@ -353,8 +353,8 @@ aider_chat_start() {
   scripts_dir_="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
   dotfiles_root_="$(dirname "$scripts_dir_")"
 
-  # dotfiles/aider-templates/aider.ebnis.chat.md
-  local source_template_="$dotfiles_root_/aider-templates/aider.ebnis.chat.md"
+  # dotfiles/llm-templates/aider.ebnis.chat.md
+  local source_template_="$dotfiles_root_/llm-templates/aider.ebnis.chat.md"
 
   if [[ ! -f "$source_template_" ]]; then
     echo "Error: Source template file not found at '$source_template_'" >&2
