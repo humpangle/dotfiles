@@ -4,3 +4,4 @@ snippet_out.json
 
 !dotfiles.code-workspace
 !.config/alacritty/alacritty-template.toml
+!.claude/*

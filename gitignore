@@ -103,6 +103,8 @@ doc/*
 tags/*
 tags*
 .tags
+**/.claude/**
+**/CLAUDE.local.md
 
 # mypy:
 .mypy_cache/
