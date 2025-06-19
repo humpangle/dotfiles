@@ -1,12 +1,13 @@
 {
-  "includeCoAuthoredBy": false,
   "env": {
     "DISABLE_TELEMETRY": "true"
   },
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Agent",
       "Bash",
+      "Bash(mv:*)",
       "Edit",
       "MultiEdit",
       "Write",
