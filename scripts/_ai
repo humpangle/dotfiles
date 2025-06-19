@@ -323,15 +323,31 @@ ollama_stop() {
   echo "Ollama serving on PID/PORT $_pid/${info_[port]} stopped."
 }
 
-aidercs() {
-  : "___alias___ aider_chat_start"
-  aider_chat_start "$@"
+_get_dotfiles_root() {
+  # directory where this file (script) resides
+  # dotfiles/scripts/_ai
+  local scripts_dir_=""
+
+  # dotfiles/scripts/.. => dotfiles/
+  local dotfiles_root_=""
+
+  scripts_dir_="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+  dotfiles_root_="$(dirname "$scripts_dir_")"
+
+  echo "$dotfiles_root_"
 }
 
-aider_chat_start() {
-  : "Ensure the aider chat template file exists in the current directory."
+_copy_chat_template() {
+  : "Copy a chat template file to the current directory."
+  : "Usage: _copy_chat_template <template_name> <target_filename>"
 
-  local target_file_=".aider.ebnis.chat.md"
+  local template_name_="$1"
+  local target_file_="$2"
+
+  if [[ -z "$template_name_" || -z "$target_file_" ]]; then
+    echo "Error: Both template_name and target_file are required" >&2
+    return 1
+  fi
 
   local cwd_=""
   cwd_="$(pwd)"
@@ -343,18 +359,11 @@ aider_chat_start() {
     return 0
   fi
 
-  # directory where this file (script) resides
-  # dotfiles/scripts/_ai
-  local scripts_dir_=""
-
-  # dotfiles/scripts/.. => dotfiles/
   local dotfiles_root_=""
+  dotfiles_root_="$(_get_dotfiles_root)"
 
-  scripts_dir_="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-  dotfiles_root_="$(dirname "$scripts_dir_")"
-
-  # dotfiles/llm-templates/aider.ebnis.chat.md
-  local source_template_="$dotfiles_root_/llm-templates/aider.ebnis.chat.md"
+  # dotfiles/llm-templates/{template_name}
+  local source_template_="$dotfiles_root_/llm-templates/$template_name_"
 
   if [[ ! -f "$source_template_" ]]; then
     echo "Error: Source template file not found at '$source_template_'" >&2
@@ -369,6 +378,28 @@ aider_chat_start() {
     echo "Error: Failed to copy template '$source_template_' to '$target_path_'." >&2
     return 1
   fi
+}
+
+aidercs() {
+  : "___alias___ aider_chat_start"
+  aider_chat_start "$@"
+}
+
+aider_chat_start() {
+  : "Ensure the aider chat template file exists in the current directory."
+
+  _copy_chat_template "aider.ebnis.chat.md" ".aider.ebnis.chat.md"
+}
+
+claudecs() {
+  : "___alias___ claude_chat_start"
+  claude_chat_start "$@"
+}
+
+claude_chat_start() {
+  : "Ensure the claude chat template file exists in the current directory."
+
+  _copy_chat_template "claude.ebnis.chat.md" ".claude.ebnis.chat.md"
 }
 
 _is_local_function() {
