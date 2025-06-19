@@ -7,13 +7,20 @@
     "allow": [
       "Agent",
       "Bash",
+      "Bash($HOME/dotfiles/scripts/_ai claudecs)",
+      "Bash($HOME/dotfiles/scripts/_ai:*)",
+      "Bash(../scripts/_ai claude_chat_start)",
+      "Bash(../scripts/_ai claudecs)",
+      "Bash(./scripts/_ai:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
       "Bash(mv:*)",
       "Edit",
       "MultiEdit",
-      "Write",
       "Read",
       "WebFetch(domain:docs.anthropic.com)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Write"
     ],
     "deny": []
   }
