@@ -1,7 +1,9 @@
 $HOME/dotfiles/llm-templates/
 $HOME/dotfiles/llm-templates/CLAUDE.template.md
 
-claude
+claude \
+--add-dir ../other-project \
+--add-dir /path/to/another/directory
 
 -------------------------------------------------------------------------------
 
@@ -34,3 +36,5 @@ commit staged
   Commit the staged changes with the message we just finalized.
   Run: git commit -m "<subject>" -m "<body>"
 </details>
+
+-------------------------------------------------------------------------------
