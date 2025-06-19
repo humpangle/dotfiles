@@ -1,10 +1,18 @@
 {
+  "includeCoAuthoredBy": false,
+  "env": {
+    "DISABLE_TELEMETRY": "true"
+  },
   "permissions": {
     "allow": [
+      "Agent",
       "Bash",
       "Edit",
       "MultiEdit",
-      "Write"
+      "Write",
+      "Read",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
   }
