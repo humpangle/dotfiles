@@ -58,7 +58,7 @@ utils.map_key("n", "<localleader>tt", function()
   end
 
   vim.cmd("term")
-end, { noremap = true, desc = "terminal 0=s 1=v 2=t" })
+end, { noremap = true, desc = "terminal 0=s 1=v 2=t 4/botright 6/slime" })
 
 -- Delete all terminal buffers
 utils.map_key("n", "<leader>bT", function()
