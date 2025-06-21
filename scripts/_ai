@@ -407,17 +407,11 @@ claude_chat_start() {
   mkdir -p "$cwd_/.claude"
   local target_settings_="$cwd_/.claude/settings.local.json"
 
-  # Return early if target already exists
-  if [[ -f "$target_settings_" ]]; then
-    return 0
-  fi
-
   local dotfiles_root_=""
   dotfiles_root_="$(_get_dotfiles_root)"
   local source_settings_="$dotfiles_root_/llm-templates/claude/.claude/settings.local.json"
 
-  # Return early if source doesn't exist
-  if [[ ! -f "$source_settings_" ]]; then
+  if [[ -f "$target_settings_" ]] || [[ ! -f "$source_settings_" ]]; then
     return 0
   fi
 
