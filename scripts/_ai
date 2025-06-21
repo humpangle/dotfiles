@@ -399,7 +399,29 @@ claudecs() {
 claude_chat_start() {
   : "Ensure the claude chat template file exists in the current directory."
 
-  _copy_chat_template "claude.ebnis.chat.md" ".claude.ebnis.chat.md"
+  _copy_chat_template "claude/claude.ebnis.chat.md" ".claude.ebnis.chat.md"
+  
+  # Create .claude directory if it doesn't exist
+  if [[ ! -d ".claude" ]]; then
+    mkdir -p ".claude"
+  fi
+  
+  # Copy settings.local.json if it doesn't exist
+  local cwd_=""
+  cwd_="$(pwd)"
+  local target_settings_="$cwd_/.claude/settings.local.json"
+  
+  if [[ ! -f "$target_settings_" ]]; then
+    local dotfiles_root_=""
+    dotfiles_root_="$(_get_dotfiles_root)"
+    local source_settings_="$dotfiles_root_/llm-templates/claude/.claude/settings.local.json"
+    
+    if [[ -f "$source_settings_" ]]; then
+      echo "Copying Claude settings..."
+      cp "$source_settings_" "$target_settings_"
+      echo "Created '.claude/settings.local.json' from template."
+    fi
+  fi
 }
 
 _is_local_function() {
