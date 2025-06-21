@@ -20,7 +20,10 @@
       "Read",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:github.com)",
-      "Write"
+      "Write",
+      "mcp__consult7__consultation",
+      "mcp__context7__get-library-docs",
+      "mcp__context7__resolve-library-id"
     ],
     "deny": []
   }
