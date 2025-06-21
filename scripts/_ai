@@ -400,28 +400,30 @@ claude_chat_start() {
   : "Ensure the claude chat template file exists in the current directory."
 
   _copy_chat_template "claude/claude.ebnis.chat.md" ".claude.ebnis.chat.md"
-  
+
   # Copy settings.local.json if it doesn't exist
   local cwd_=""
   cwd_="$(pwd)"
+  mkdir -p "$cwd_/.claude"
   local target_settings_="$cwd_/.claude/settings.local.json"
-  
-  if [[ ! -f "$target_settings_" ]]; then
-    # Create .claude directory if it doesn't exist
-    if [[ ! -d "$cwd_/.claude" ]]; then
-      mkdir -p "$cwd_/.claude"
-    fi
-    
-    local dotfiles_root_=""
-    dotfiles_root_="$(_get_dotfiles_root)"
-    local source_settings_="$dotfiles_root_/llm-templates/claude/.claude/settings.local.json"
-    
-    if [[ -f "$source_settings_" ]]; then
-      echo "Copying Claude settings..."
-      cp "$source_settings_" "$target_settings_"
-      echo "Created '.claude/settings.local.json' from template."
-    fi
+
+  # Return early if target already exists
+  if [[ -f "$target_settings_" ]]; then
+    return 0
   fi
+
+  local dotfiles_root_=""
+  dotfiles_root_="$(_get_dotfiles_root)"
+  local source_settings_="$dotfiles_root_/llm-templates/claude/.claude/settings.local.json"
+
+  # Return early if source doesn't exist
+  if [[ ! -f "$source_settings_" ]]; then
+    return 0
+  fi
+
+  echo "Copying Claude settings..."
+  cp "$source_settings_" "$target_settings_"
+  echo "Created '.claude/settings.local.json' from template."
 }
 
 _is_local_function() {
