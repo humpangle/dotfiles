@@ -72,7 +72,7 @@ local vitest_adapter = function()
   local config = {
     -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
     filter_dir = function(name)
-      return name ~= "node_modules"
+      return name ~= "node_modules" and name ~= ".___scratch"
     end,
   }
   return require("neotest-vitest")(config)
