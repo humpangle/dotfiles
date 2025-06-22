@@ -1,5 +1,5 @@
 $HOME/dotfiles/llm-templates/
-$HOME/dotfiles/llm-templates/CLAUDE.template.md
+$HOME/dotfiles/llm-templates/claude/CLAUDE.template.md
 
 claude \
 --add-dir ../other-project \
