@@ -23,6 +23,18 @@ local function get_adapter(adapter_type)
   return adapter or default_dapaters[adapter_type]
 end
 
+local generate_commit_message = function()
+  return string.format(
+    [[Prefer descriptive, sentence case commits with additional context. Generate commit message from git diff below:
+
+```diff
+%s
+```
+]],
+    vim.fn.system("git diff --no-ext-diff --staged")
+  )
+end
+
 return {
   "olimorris/codecompanion.nvim",
   ft = {
@@ -304,15 +316,7 @@ return {
           {
             role = "user",
             content = function()
-              return string.format(
-                [[Prefer descriptive, sentence case commits with additional context. Generate commit message from git diff below:
-
-```diff
-%s
-```
-]],
-                vim.fn.system("git diff --no-ext-diff --staged")
-              )
+              return generate_commit_message()
             end,
           },
         },
