@@ -68,6 +68,16 @@ local jest_adapter = function()
   return require("neotest-jest")(config)
 end
 
+local vitest_adapter = function()
+  local config = {
+    -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
+    filter_dir = function(name)
+      return name ~= "node_modules"
+    end,
+  }
+  return require("neotest-vitest")(config)
+end
+
 local elixir_adapter = function()
   return require("neotest-elixir")({
     -- The Mix task to use to run the tests
@@ -140,6 +150,7 @@ return {
           },
     },
     "nvim-neotest/neotest-jest",
+    "marilari88/neotest-vitest",
     "jfpedroza/neotest-elixir",
     -- /END/ adapters
   },
@@ -267,6 +278,7 @@ return {
       adapters = {
         pytest_adapter(),
         jest_adapter(),
+        vitest_adapter(),
         elixir_adapter(),
       },
       discovery = {
