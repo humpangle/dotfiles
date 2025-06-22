@@ -13,6 +13,13 @@ local default_dapaters = {
   cmd = "openai",
 }
 
+-- https://github.com/olimorris/codecompanion.nvim/blob/dbefc41dba2f46720ecb6ecec34c0c5f80022f2b/lua/codecompanion/config.lua#L6
+local constants = {
+  LLM_ROLE = "llm",
+  USER_ROLE = "user",
+  SYSTEM_ROLE = "system",
+}
+
 ---@param adapter_type "chat"|"inline"|"cmd"
 ---@return "openai"|"anthropic"|"copilot"|"gemini"
 local function get_adapter(adapter_type)
@@ -310,6 +317,15 @@ return {
         },
       },
     },
+    tools = {
+      ["cmd_runner_no_approval"] = {
+        callback = "strategies.chat.agents.tools.cmd_runner",
+        description = "Run shell commands initiated by the LLM",
+        opts = {
+          requires_approval = false,
+        },
+      },
+    },
     prompt_library = {
       ["Generate a Commit Message"] = {
         prompts = {
@@ -318,6 +334,40 @@ return {
             content = function()
               return generate_commit_message()
             end,
+          },
+        },
+      },
+      ["Git Commit"] = {
+        strategy = "workflow",
+        description = "Use a workflow to guide an LLM in making a git commit",
+        opts = {
+          index = 12,
+          is_default = true,
+          short_name = "gc",
+        },
+        prompts = {
+          {
+            {
+              role = constants.USER_ROLE,
+              content = string.format(
+                [[Draft a commit message.
+%s
+Present the draft commit message to the user for approval]],
+                generate_commit_message()
+              ),
+              opts = {
+                auto_submit = true,
+              },
+            },
+          },
+          {
+            {
+              role = constants.USER_ROLE,
+              content = 'Use @cmd_runner tool to execute `git commit -m "<subject>" -m "<body>"` after user confirms',
+              opts = {
+                auto_submit = true,
+              },
+            },
           },
         },
       },
