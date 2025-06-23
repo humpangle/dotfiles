@@ -51,7 +51,7 @@ vim.api.nvim_create_user_command("DeAnsify", function()
 
     -- Run ansifilter command
     local cmd = string.format("ansifilter --text %s > %s", vim.fn.shellescape(tmpfile), vim.fn.shellescape(outfile))
-    local result = vim.fn.system(cmd)
+    vim.fn.system(cmd)
 
     -- Read the filtered content
     local filtered_file = io.open(outfile, "r")
