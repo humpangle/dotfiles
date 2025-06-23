@@ -352,9 +352,9 @@ return {
               content = function()
                 return string.format(
                   [[Draft a commit message from git diff:
-```diff
+===========================================================================diff
 %s
-```
+================================================================================
 
 Follow format:
 %s
