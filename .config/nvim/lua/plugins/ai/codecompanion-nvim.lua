@@ -359,7 +359,8 @@ return {
 Follow format:
 %s
 
-Present the draft commit message to the user for approval.]],
+Present the draft commit message to the user for approval.
+If I answer 'yes' or 'commit' or 'go ahead' - it means you have approval to execute the commit.]],
                   vim.fn.system(
                     "git diff --no-ext-diff --staged"
                   ),
