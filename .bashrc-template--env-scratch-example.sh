@@ -46,3 +46,8 @@ export NVIM_ENABLE_CODECOMPANION_AI_PLUGIN=1
 # -----------------------------------------------------------------------------
 # /END/ LLMs
 # -----------------------------------------------------------------------------
+
+# shellcheck disable=SC2016
+export GIT_COMMIT_MESSAGE_FORMAT='- Subject: ~120 chars, no trailing period, starts with JIRA ticket # (e.g., `SCHED-4192`).
+  Use @cmd_runner_no_approval tool to run `git branch --show-current | grep -oE "^[A-Z]+-[0-9]+"` to extract JIRA ticket #
+- Body: Multi-line explanation of why changes were made (wrap ~120 chars)'
