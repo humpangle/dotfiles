@@ -349,12 +349,27 @@ return {
           {
             {
               role = constants.USER_ROLE,
-              content = string.format(
-                [[Draft a commit message.
+              content = function()
+                return string.format(
+                  [[Draft a commit message from git diff:
+```diff
 %s
-Present the draft commit message to the user for approval]],
-                generate_commit_message()
-              ),
+```
+
+Follow format:
+%s
+
+Present the draft commit message to the user for approval.]],
+                  vim.fn.system(
+                    "git diff --no-ext-diff --staged"
+                  ),
+                  utils.get_os_env_or_nil(
+                    "GIT_COMMIT_MESSAGE_FORMAT"
+                  )
+                    or [[- Subject: ~120 chars, no trailing period
+- Body: Multi-line explanation of why changes were made (wrap ~120 chars)]]
+                )
+              end,
               opts = {
                 auto_submit = true,
               },
