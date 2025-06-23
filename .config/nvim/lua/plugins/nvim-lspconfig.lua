@@ -67,7 +67,7 @@ return {
     "williamboman/mason.nvim",
     enabled = true,
     dependencies = {
-      -- Install or upgrade all of your third-party tools with mason.
+      -- Install or upgrade all of your third-party tools (linters, formatters etc) with mason.
       "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
   },
@@ -324,6 +324,7 @@ return {
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 
         html = {},
+        nginx_language_server = {},
       }
 
       servers = vim.tbl_extend(
@@ -361,18 +362,20 @@ return {
           },
         })
       end
+
+      if plugin_enabled.stylua_lsp_formatter() then
+        -- stylua does not work on android.
+        vim.list_extend(servers, {
+          -- Used to format Lua code
+          stylua = {},
+        })
+      end
+
       -- /END/ servers variable
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
-
-      if plugin_enabled.stylua_lsp_formatter() then
-        -- stylua does not work on android.
-        vim.list_extend(ensure_installed, {
-          "stylua", -- Used to format Lua code
-        })
-      end
 
       require("mason-tool-installer").setup({
         ensure_installed = ensure_installed,
@@ -380,40 +383,10 @@ return {
 
       ---@diagnostic disable-next-line: missing-fields
       require("mason-lspconfig").setup({
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
-            server.capabilities = vim.tbl_deep_extend(
-              "force",
-              {},
-              server.capabilities or {},
-              lsp_extended_capabilities
-            )
-
-            pcall(lspconfig[server_name].setup, server)
-          end,
-        },
+        ensure_installed = {},
+        automatic_installation = false,
+        automatic_enable = false,
       })
-
-      -- Mason does not support nginx language server - so we do it ourselves:
-      --
-      -- Latest supported python version for nginx-language-server is 3.11.9
-      --
-      -- Install language server binary: https://pypi.org/project/nginx-language-server/
-      --  pip install -U nginx-language-server
-      --
-      -- Install nginx-language-server lsp:
-      --  :LspInstall nginx
-
-      if vim.fn.executable("nginx-language-server") == 1 then
-        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#nginx_language_server
-        lspconfig.nginx_language_server.setup({
-          capabilities = lsp_extended_capabilities,
-        })
-      end
 
       -- mason does not know how to setup lua_ls on termux, so we do it manually.
       ---@diagnostic disable:missing-fields
@@ -430,6 +403,33 @@ return {
           },
         })
       end
+
+      local non_lsps = {
+        debugpy = true,
+        hadolint = true,
+        black = true,
+        ["sql-formatter"] = true,
+        flake8 = true,
+        isort = true,
+      }
+
+      local to_enable = {}
+
+      for server_name, server in pairs(servers) do
+        server.capabilities = vim.tbl_deep_extend(
+          "force",
+          {},
+          server.capabilities or {},
+          lsp_extended_capabilities
+        )
+        vim.lsp.config(server_name, server)
+
+        if not non_lsps[server_name] then
+          table.insert(to_enable, server_name)
+        end
+      end
+
+      vim.lsp.enable(to_enable)
     end,
   },
 
