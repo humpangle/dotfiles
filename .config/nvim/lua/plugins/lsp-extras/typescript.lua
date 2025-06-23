@@ -6,7 +6,7 @@ end
 
 local mason_install_path = vim.fn.stdpath("data") .. "/mason/packages"
 
-local get_vue_lang_server_path = function()
+local get_vue_typescript_plugin_path = function()
   local mason_registry = require("mason-registry")
 
   if not mason_registry.has_package("vue-language-server") then
@@ -17,7 +17,19 @@ local get_vue_lang_server_path = function()
     return ""
   end
 
-  return mason_install_path .. "/node_modules/@vue/language-server"
+  local path = mason_install_path
+    .. "/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin"
+
+  if vim.fn.glob(path) == "" then
+    vim.notify(
+      "[LSP] vue typescript plugin not installed in Mason. Does not exist "
+        .. path,
+      vim.log.levels.WARN
+    )
+    return ""
+  end
+
+  return path
 end
 
 local config = {
@@ -41,9 +53,9 @@ local config = {
 
   vue_ls = { -- mason: vue-language-server
     -- Hybrid mode setting (only manages vue's html and css). ts_ls will manage typescript/javascript.
-    filetypes = {
-      "vue",
-    },
+    -- filetypes = {
+    --   "vue",
+    -- },
   },
 
   ts_ls = { -- mason: typescript-language-server
@@ -52,7 +64,7 @@ local config = {
         {
           name = "@vue/typescript-plugin",
           -- *IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `volar `are of identical versions.
-          location = get_vue_lang_server_path(),
+          location = get_vue_typescript_plugin_path(),
           languages = { -- ts_ls will manage typescript/javascript sections of vue file in volar hybrid mode
             "vue",
             "typescript",
