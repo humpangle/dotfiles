@@ -315,7 +315,8 @@ return {
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
-      local mason_dap = require("mason-nvim-dap")
+
+      require("plugins.dap.adapters-install")
 
       -- Use json5 to parse vscode-like launch.json file (with comments)
       local json5_exists, json5 = pcall(require, "json5")
@@ -323,23 +324,6 @@ return {
         -- https://github.com/mfussenegger/nvim-dap/blob/2edd6375692d9ac1053d50acfe415c1eb2ba92d0/doc/dap.txt#L338
         require("dap.ext.vscode").json_decode = json5.parse
       end
-
-      mason_dap.setup({
-        -- Debugger binaries you want mason to install for you.
-        -- Check for debug adapters - you want to use the keys:
-        --    https://github.com/jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
-        ensure_installed = {
-          "elixir",
-          "python",
-          "js",
-          -- 'chrome',
-          "bash",
-          "php",
-        },
-
-        automatic_installation = true,
-        handlers = nil,
-      })
 
       -- Dap UI setup
       -- For more information, see |:help nvim-dap-ui|
