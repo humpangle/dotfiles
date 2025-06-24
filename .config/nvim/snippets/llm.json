@@ -130,5 +130,19 @@
     "description": [
       "generate commit message 2 shot"
     ]
+  },
+  "name": {
+    "prefix": [
+      "context"
+    ],
+    "body": [
+      "",
+      "> Context:",
+      "> - <tool>cmd_runner</tool>",
+      ""
+    ],
+    "description": [
+      "context"
+    ]
   }
 }
