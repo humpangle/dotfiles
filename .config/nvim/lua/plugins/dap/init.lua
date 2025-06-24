@@ -284,7 +284,7 @@ return {
       {
         -- Easy modification of command line arguments passed to the debuggee
         -- Saving/restoring of breakpoints and watches across sessions
-        "daic0r/dap-helper.nvim",
+        "humpangle/dap-helper.nvim",
         -- dependencies = {
         --   "rcarriga/nvim-dap-ui",
         --   "mfussenegger/nvim-dap",
