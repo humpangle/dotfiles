@@ -1,0 +1,37 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch file",
+      "type": "pwa-node",
+      "request": "launch",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Attach",
+      "type": "pwa-node",
+      "request": "attach",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}",
+      "processId": "require('dap.utils').pick_process"
+    },
+    {
+      "name": "tsx current file",
+      "type": "node",
+      "request": "launch",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "tsx",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ]
+    }
+  ]
+}

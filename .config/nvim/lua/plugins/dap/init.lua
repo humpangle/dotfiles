@@ -294,6 +294,12 @@ return {
         end,
       },
 
+      -- simple plugin to find the nearest package.json and read all the scripts from package.json file
+      -- https://banjocode.com/post/nvim/debug-node
+      {
+        "banjo/package-pilot.nvim",
+      },
+
       -- Some plugins provide *NICER* developer experiences (default config for the speciic language, launching the
       -- debugger binary automatically etc) for nvim-dap. One trick is to read the source of the plugin and *steal*
       -- some of the config into the mason-nvim-dap handlers table.
@@ -402,6 +408,7 @@ return {
       -- ADAPTERS --
       -- https://github.com/mfussenegger/nvim-dap-python
       require("plugins.dap.php")
+      require("plugins.dap.pwa-node")
       -- /END ADAPTERS --
     end,
   },

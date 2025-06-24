@@ -163,7 +163,7 @@ function utils.is_dap_buffer(buffer_name)
     return true
   end
 
-  if vim.startswith(buffer_name, "[dap-repl-") then
+  if vim.startswith(buffer_name, "[dap-") then
     return true
   end
 
