@@ -159,17 +159,25 @@ if lint_env_val then
       end
       local files =
         vim.split(log_files, "::", { trimempty = true, plain = true })
+      local current_file = vim.fn.expand("%:p")
+      local should_reload = false
+
       for _, file in ipairs(files) do
         local f = io.open(file, "w")
         if f then
           f:close()
           print("Cleared: " .. file)
+          if vim.fn.expand(file) == current_file then
+            should_reload = true
+          end
         else
           print("Failed to clear: " .. file)
         end
       end
-      -- We may be on one of the files - s0 refresh the buffer
-      vim.cmd("e! %")
+
+      if should_reload then
+        vim.cmd("e! %")
+      end
     else
       vim.cmd("Wmessage Lint")
     end
