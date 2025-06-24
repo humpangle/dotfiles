@@ -168,7 +168,7 @@ if lint_env_val then
         if f then
           f:close()
           table.insert(cleared_files, file)
-          if vim.fn.expand(file) == current_file then
+          if vim.fn.fnamemodify(file, ":p") == current_file then
             should_reload = true
           end
         else
