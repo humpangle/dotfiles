@@ -964,4 +964,6 @@ function utils.set_fzf_lua_nvim_listen_address()
   vim.env.NVIM_LISTEN_ADDRESS = prefix .. os.time()
 end
 
+utils.mason_install_path = vim.fn.stdpath("data") .. "/mason/packages"
+
 return utils

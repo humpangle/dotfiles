@@ -4,7 +4,7 @@ if not plugin_enabled.typescript_lsp() then
   return {}
 end
 
-local mason_install_path = vim.fn.stdpath("data") .. "/mason/packages"
+local utils = require("utils")
 
 local get_vue_typescript_plugin_path = function()
   local mason_registry = require("mason-registry")
@@ -17,7 +17,7 @@ local get_vue_typescript_plugin_path = function()
     return ""
   end
 
-  local path = mason_install_path
+  local path = utils.mason_install_path
     .. "/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin"
 
   if vim.fn.glob(path) == "" then
