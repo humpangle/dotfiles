@@ -319,8 +319,8 @@ return {
 
       -- Use json5 to parse vscode-like launch.json file (with comments)
       local json5_exists, json5 = pcall(require, "json5")
-
       if json5_exists then
+        -- https://github.com/mfussenegger/nvim-dap/blob/2edd6375692d9ac1053d50acfe415c1eb2ba92d0/doc/dap.txt#L338
         require("dap.ext.vscode").json_decode = json5.parse
       end
 
