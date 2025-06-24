@@ -150,5 +150,30 @@ if lint_env_val then
     desc = "Run all linters from $EBNIS_LINT_CMDS",
   })
 
-  utils.map_key("n", "<leader>NN", ":Wmessage Lint<CR>", { noremap = true })
+  local clear_test_logs = function()
+    local count = vim.v.count
+    if count == 1 then
+      local log_files = utils.get_os_env_or_nil("EBNIS_TEST_LOG_FILES")
+      if not log_files then
+        return
+      end
+      local files =
+        vim.split(log_files, "::", { trimempty = true, plain = true })
+      for _, file in ipairs(files) do
+        local f = io.open(file, "w")
+        if f then
+          f:close()
+          print("Cleared: " .. file)
+        else
+          print("Failed to clear: " .. file)
+        end
+      end
+      -- We may be on one of the files - s0 refresh the buffer
+      vim.cmd("e! %")
+    else
+      vim.cmd("Wmessage Lint")
+    end
+  end
+
+  utils.map_key("n", "<leader>NN", clear_test_logs, { noremap = true })
 end
