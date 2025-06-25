@@ -86,6 +86,10 @@ end
 return {
   {
     "Joakker/lua-json5",
+    --[[ for macos, add to $CARGO_HOME/config ($HOME/.cargo by deafult)
+         https://doc.rust-lang.org/cargo/reference/environment-variables.html
+         https://github.com/Joakker/lua-json5/blob/d8e962a98b9c66bda02b20df02868a72ef4c8803/README.md?plain=1#L7
+    ]]
   },
 
   {
