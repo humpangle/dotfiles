@@ -759,6 +759,19 @@
     ],
     "description": "Log to console with some debug info"
   },
+  "Print to html vue": {
+    "prefix": [
+      "console_log_html_vue",
+      "print_to_html_vue",
+      "log_to_html_vue"
+    ],
+    "body": [
+      "",
+      "require(`@testing-library/vue`).screen.debug()",
+      ""
+    ],
+    "description": "Print to html vue"
+  },
   "describeTest": {
     "prefix": "describeTest",
     "body": [
