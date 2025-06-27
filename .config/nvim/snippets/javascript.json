@@ -767,7 +767,9 @@
     ],
     "body": [
       "",
+      "// NOTE: --START-- DEBUG HTML {",
       "require(`@testing-library/vue`).screen.debug()",
+      "// NOTE: --END-- DEBUG HTML }",
       ""
     ],
     "description": "Print to html vue"
