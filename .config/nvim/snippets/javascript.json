@@ -1399,5 +1399,18 @@
     "description": [
       "throw BOOM"
     ]
+  },
+  "await waitFor": {
+    "prefix": [
+      "wait_for"
+    ],
+    "body": [
+      "await waitFor(() => {",
+      "  $0",
+      "})"
+    ],
+    "description": [
+      "await waitFor"
+    ]
   }
 }
