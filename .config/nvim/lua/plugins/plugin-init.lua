@@ -427,6 +427,7 @@ local plugins_table = {
   require("plugins/web-browsers"),
   require("plugins/anki-nvim"),
   require("plugins/firenvim"),
+  require("plugins/refactoring"),
 }
 
 ---@diagnostic disable:missing-fields
