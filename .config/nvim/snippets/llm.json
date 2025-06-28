@@ -144,5 +144,28 @@
     "description": [
       "context"
     ]
+  },
+  "extract pr reviewier comment": {
+    "prefix": [
+      "pr_reviewer_comment",
+      "reviewer_comment_pr"
+    ],
+    "body": [
+      "Store the PR analysis at `.___scratch/pr/<pr-number>--<pr-title>.md`",
+      "",
+      "Filename format:",
+      "- Extract PR number and title (e.g., \"366\" and \"SCHED-4998 Implement Clock In/Out Component...\")",
+      "- Keep ticket ID (SCHED-4998) in uppercase",
+      "- Convert remaining title to lowercase",
+      "- Replace non-filename-safe characters with hyphens",
+      "- Truncate to ~60 chars after ticket ID",
+      "- Example: `366-SCHED-4998--implement-clock-in-out-component-use-cases-for-combination.md`",
+      "",
+      "",
+      "Summarize reviewer's comments. Write (update) to .___scratch/pr/366-SCHED-4998--implement-clock-in-out-component-use-cases-for-combination.md"
+    ],
+    "description": [
+      "extract pr reviewier comment"
+    ]
   }
 }
