@@ -131,7 +131,7 @@
       "generate commit message 2 shot"
     ]
   },
-  "name": {
+  "context cmd cmd_runner tool": {
     "prefix": [
       "context"
     ],
