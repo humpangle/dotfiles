@@ -180,7 +180,8 @@ return {
       map_to_fzf_lua_or_telescope(
         "gO",
         "lsp_document_symbols",
-        "[D]ocument [S]ymbols"
+        "[D]ocument [S]ymbols",
+        "lsp_document_symbols"
       )
 
       -- Find references(places where identifiers are used/referenced) for the word under your cursor.
