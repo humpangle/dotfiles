@@ -167,5 +167,23 @@
     "description": [
       "extract pr reviewier comment"
     ]
+  },
+  "Flashcards questions/answers learning": {
+    "prefix": [
+      "learn",
+      "questions",
+      "anki"
+    ],
+    "body": [
+      "Based on the debugging and fix we just completed, create spaced-repetition flashcards that capture the key learning points. Focus on:",
+      "- The root cause of the issue",
+      "- Why the solution works",
+      "- When this pattern applies",
+      "- Best practices to prevent similar issues",
+      "Format each as Q&A pairs suitable for Anki or similar SRS tools.\""
+    ],
+    "description": [
+      "Flashcards questions/answers learning"
+    ]
   }
 }
