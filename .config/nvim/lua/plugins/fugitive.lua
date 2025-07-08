@@ -295,6 +295,20 @@ local git_commit_mappings_fn = function()
       vim.cmd("set hlsearch")
       pcall(vim.cmd.normal, { "n", bang = true })
       return
+    elseif last == "2" then -- 52
+      local git_head = vim.fn.FugitiveHead()
+      local jira_ticket_pattern = git_head:match("^[A-Z]+%-[0-9]+")
+      if jira_ticket_pattern then
+        vim.fn.setreg("a", jira_ticket_pattern)
+        vim.fn.setreg("+", jira_ticket_pattern)
+        utils.clip_cmd_exec(jira_ticket_pattern)
+        vim.notify("(Reg a & +) ticket -> " .. jira_ticket_pattern)
+      else
+        vim.notify(
+          "No JIRA ticket pattern found in branch: " .. git_head
+        )
+      end
+      return
     end
 
     local git_head = vim.fn.FugitiveHead()
