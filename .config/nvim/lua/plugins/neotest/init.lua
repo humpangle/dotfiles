@@ -69,12 +69,29 @@ local jest_adapter = function()
 end
 
 local vitest_adapter = function()
+  local vitest_cmd = "vitest"
   local config = {
+    vitestCommand = vitest_cmd,
     -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
     filter_dir = function(name)
       return name ~= "node_modules" and name ~= ".___scratch"
     end,
+    env = function()
+      local vitest_environments = {}
+      local env_var =
+        utils.get_os_env_or_nil("EBNIS_VITEST_ENVIRONMENT_VARIABLES")
+      if env_var then
+        for line in env_var:gmatch("[^\n]+") do
+          local key, value = line:match("^([^=]+)=(.*)$")
+          if key and value then
+            vitest_environments[vim.trim(key)] = vim.trim(value)
+          end
+        end
+      end
+      return vitest_environments
+    end,
   }
+
   return require("neotest-vitest")(config)
 end
 
