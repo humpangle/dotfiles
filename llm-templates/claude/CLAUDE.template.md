@@ -19,18 +19,32 @@ This file provides guidance to Claude Code (claude.ai/code) and Codex (openai) w
 
 ### Configuration for temporary directory
 
-- **Always** use `.___scratch/tmp` for temporary file operations.
+- **Always** use `.___scratch/temp/{timestamp}/` for temporary file operations, where `{timestamp}` is the current Unix timestamp in seconds (e.g., `.___scratch/temp/1751971577/`)
 - **Never** use `/tmp` or `/temp` for temporary file operations
-- Auto-create this directory if it doesn't exist when needed
-- Clean up temporary files after operations complete
+- Auto-create the timestamped directory if it doesn't exist when needed
+- No cleanup necessary - each operation uses its own unique timestamped directory
 
 #### Directory Structure
 
 ```
 .___scratch/
-├── tmp/           # Temporary files
+├── temp/                    # Temporary files root
+    ├── 1751971577/         # Example timestamped directory for one operation
+    ├── 1751971623/         # Example timestamped directory for another operation
+    └── ...
+```
+
+#### Usage Example
+```bash
+# Generate timestamp and create directory
+TIMESTAMP=$(date +%s)
+TEMP_DIR=".___scratch/temp/${TIMESTAMP}"
+mkdir -p "${TEMP_DIR}"
+
+# Use the directory for operations
+echo "test" > "${TEMP_DIR}/file.txt"
 ```
 
 #### Testing that requires temporary file operations
-- Use `.___scratch/tmp` for creating test files and directories
-- Use subdirectories like `.___scratch/tmp/test_*` for specific test scenarios
+- Use `.___scratch/temp/{timestamp}/` for creating test files and directories
+- Each test run gets its own timestamped directory for isolation
