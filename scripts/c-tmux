@@ -619,7 +619,7 @@ _echo_session_to_copy() {
   fi
 
   echo -e "CD and tmux start command:\n$to_echo_"
-  copy "$to_echo_" &>/dev/null || :
+  copy "$to_echo_" || :
 }
 
 ___kill_tmux_help() {
