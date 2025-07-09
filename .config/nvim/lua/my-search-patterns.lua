@@ -14,7 +14,8 @@ M.patterns = {
   },
   {
     description = "FAILURES/ERRORS",
-    pattern = "=========== \\(FAILURES\\|ERRORS\\) ======================",
+    -- pytest|Vitest
+    pattern = "=========== \\(FAILURES\\|ERRORS\\) ======================\\|⎯⎯ Failed Tests \\d\\+ ⎯⎯",
     navigation = "N",
   },
   {
