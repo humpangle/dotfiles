@@ -42,6 +42,11 @@ M.patterns = {
     pattern = "\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}[^\\d]\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}",
     navigation = "N",
   },
+  {
+    description = "1 of 2 [1/2]",
+    pattern = "[\\d\\+\\/\\d\\+\\]",
+    navigation = "N",
+  }
 }
 
 local function apply_search_pattern(pattern_data)
