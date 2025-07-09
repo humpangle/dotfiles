@@ -951,3 +951,4 @@ end, { desc = "Sort Json Keys" })
 
 require("settings.diagnostics")
 require("escapings")
+require("my-search-patterns")
