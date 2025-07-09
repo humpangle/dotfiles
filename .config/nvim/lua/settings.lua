@@ -689,20 +689,31 @@ utils.map_key("n", "<leader>wd", function()
   print("Current working directory is: " .. vim.fn.getcwd())
 end)
 
--- Yank current line number
-utils.map_key("n", "<localleader>yl", function()
-  local line_number_str = tostring(vim.fn.line("."))
+-- Yank current line number or range
+utils.map_key({ "n", "x" }, "<localleader>yl", function()
+  local line_number_str
+  local mode = vim.fn.mode()
+
+  if mode == "v" or mode == "V" or mode == "\22" then
+    -- Visual mode: get current selection
+    local start_line = vim.fn.line("v")
+    local end_line = vim.fn.line(".")
+
+    -- Ensure start_line number comes first
+    if start_line > end_line then
+      start_line, end_line = end_line, start_line
+    end
+
+    line_number_str = tostring(start_line) .. "-" .. tostring(end_line)
+  else
+    -- Normal mode: get current line
+    line_number_str = tostring(vim.fn.line("."))
+  end
 
   vim.fn.setreg("+", line_number_str)
 
   vim.cmd.echo(
-    "'"
-      .. "+"
-      .. " -> "
-      .. "current line number"
-      .. " = "
-      .. line_number_str
-      .. "'"
+    "'" .. "+" .. " -> " .. "line number" .. " = " .. line_number_str .. "'"
   )
 end, { noremap = true, silent = true })
 
