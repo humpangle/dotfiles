@@ -515,24 +515,39 @@ utils.map_key(
 )
 
 -- Edit .bashrc file:
-utils.map_key("n", "<localleader>.", function()
-  local count = vim.v.count
-
-  if count == 2 then
-    vim.cmd("vsplit")
-  elseif count == 3 then
-    vim.cmd("tab split")
-  end
-
-  vim.cmd("edit ~/.bashrc")
-end, { noremap = true, desc = "Open .bashrc" })
-
--- Edit init.vim:
 utils.map_key(
   "n",
-  "<localleader>ec",
-  ":tab split<CR>:e $MYVIMRC<CR>",
-  { noremap = true }
+  "<localleader>.",
+  function()
+    local count = vim.v.count
+
+    if count == 2 then
+      vim.cmd("vsplit")
+    elseif count == 3 then
+      vim.cmd("tab split")
+    elseif count == 40 then
+      vim.cmd("edit $MYVIMRC")
+      return
+    elseif count == 41 then
+      vim.cmd("split")
+      vim.cmd("edit $MYVIMRC")
+      return
+    elseif count == 42 then
+      vim.cmd("vsplit")
+      vim.cmd("edit $MYVIMRC")
+      return
+    elseif count == 43 then
+      vim.cmd("tab split")
+      vim.cmd("edit $MYVIMRC")
+      return
+    end
+
+    vim.cmd("edit ~/.bashrc")
+  end,
+  {
+    noremap = true,
+    desc = "Open .bashrc (2=vsplit,3=tab) or $MYVIMRC (40=current,41=split,42=vsplit,43=tab)",
+  }
 )
 
 -- Source init.vim:
