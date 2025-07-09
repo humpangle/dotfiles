@@ -61,6 +61,10 @@ vim.opt.mouse = "a"
 -- vim.opt.clipboard = "unnamedplus"
 -- vim.opt.clipboard = ""
 
+if utils.in_ssh() then
+  vim.g.clipboard = "osc52"
+end
+
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
@@ -195,10 +199,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
   callback = function()
     vim.highlight.on_yank()
-    local register = vim.v.event.regname
-    if register == "+" then
-      utils.clip_cmd_exec(vim.fn.getreg("+"))
-    end
   end,
 })
 
@@ -390,7 +390,7 @@ local function do_yank_highlighted(register)
     vim.cmd({ cmd = "redraw", bang = true })
 
     -- Echo the contents of the clipboard
-    local clipboard_contents = vim.fn.getreg(register)
+    local clipboard_contents = utils.read_register_plus(register, content)
     print(string.format("Register %s = %s", register, clipboard_contents))
   end
 end
@@ -580,10 +580,6 @@ local process_file_path_yanking = function(value_getter_directive, register)
     vim.fn.setreg('"', file_path)
     vim.fn.setreg(register, file_path)
 
-    if register == "+" then
-      utils.clip_cmd_exec(file_path)
-    end
-
     vim.cmd.echo(
       "'"
         .. register
@@ -627,9 +623,6 @@ local function dynamic_process_file_path_yanking(register)
       vim.fn.setreg('"', relative_path)
       vim.fn.setreg(register, relative_path)
 
-      if register == "+" then
-        utils.clip_cmd_exec(relative_path)
-      end
       vim.notify(
         register .. " -> relative git root path = " .. relative_path
       )
@@ -649,9 +642,6 @@ local function dynamic_process_file_path_yanking(register)
       local relative_dir = vim.fn.fnamemodify(relative_path, ":h")
       vim.fn.setreg('"', relative_dir)
       vim.fn.setreg(register, relative_dir)
-      if register == "+" then
-        utils.clip_cmd_exec(relative_dir)
-      end
       vim.notify(
         register .. " -> relative git root dir = " .. relative_dir
       )

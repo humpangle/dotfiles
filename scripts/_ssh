@@ -2,7 +2,6 @@
 
 usage() {
   echo "Usage: $0 [-c] [-s] [-t] [-d] [-n]"
-  echo "  -c  Add __COPY_PROGRAM__=clip"
   echo "  -s  Add ___EBNIS_SMALL_SCREEN___=1"
   echo "  -t  Add EBNIS_VIM_UBER_THEME=darkblue"
   echo "  -d  Delete SSH block from ~/.bashrc"
@@ -14,9 +13,6 @@ append_ssh_block() {
   local block="# -----------------------------------------------------------------------------
 # SSH
 # -----------------------------------------------------------------------------"
-
-  [[ $include_copy == 1 ]] && block+="
-export __COPY_PROGRAM__=clip"
 
   [[ $include_small == 1 ]] && block+="
 export ___EBNIS_SMALL_SCREEN___=1"
@@ -57,16 +53,12 @@ delete_ssh_block() {
 }
 
 # Parse options
-include_copy=0
 include_small=0
 include_theme=0
 dry_run=0
 
-while getopts ":cstdn" opt; do
+while getopts ":stdn" opt; do
   case $opt in
-  c)
-    include_copy=1
-    ;;
   s)
     include_small=1
     ;;
@@ -86,7 +78,7 @@ while getopts ":cstdn" opt; do
   esac
 done
 
-if [[ $include_copy -eq 1 || $include_small -eq 1 || $include_theme -eq 1 ]]; then
+if [[ $include_small -eq 1 || $include_theme -eq 1 ]]; then
   append_ssh_block
   exit 0
 fi

@@ -33,8 +33,6 @@ else
   require("settings")
 end
 
-require("c-clip")
-
 -- Via: https://github.com/neoclide/coc.nvim/wiki/Using-the-configuration-file
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {

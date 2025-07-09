@@ -301,7 +301,6 @@ local git_commit_mappings_fn = function()
       if jira_ticket_pattern then
         vim.fn.setreg("a", jira_ticket_pattern)
         vim.fn.setreg("+", jira_ticket_pattern)
-        utils.clip_cmd_exec(jira_ticket_pattern)
         vim.notify("(Reg a & +) ticket -> " .. jira_ticket_pattern)
       else
         vim.notify(
@@ -314,7 +313,6 @@ local git_commit_mappings_fn = function()
     local git_head = vim.fn.FugitiveHead()
     local reg = (last == "1" and "a") or "+"
     vim.fn.setreg(reg, git_head)
-    utils.clip_cmd_exec(git_head)
     vim.notify("(Reg " .. reg .. ") current branch -> " .. git_head)
     return
   -- git show

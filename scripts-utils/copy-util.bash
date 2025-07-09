@@ -7,9 +7,8 @@ _copy_executables=(
 )
 
 _get_copy_program() {
-
-  if command -v "$__COPY_PROGRAM__" &>/dev/null; then
-    echo -n "$__COPY_PROGRAM__"
+  if [[ -n "$SSH_CONNECTION" || -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
+    echo -n "_copy-ssh"
     return
   fi
 
@@ -31,9 +30,9 @@ Usage:
   copy [OPTIONS] TEXT_TO_COPY
 
 The copy programs covered so far:
-  pbcopy - macos
-  xclip  - linux
-  clip   - custom copy program I use in ubuntu multipass - based on clipper on macos.
+  pbcopy     - macos
+  xclip      - linux
+  _copy-ssh  - custom copy program to sync remote clipboard to host in SSH
 
 Options:
   -h, --help

@@ -121,7 +121,6 @@ rm -rf "$HOME/.config/nvim"
 mkdir -p "$HOME/.config"
 mkdir -p "$HOME/.run/logs"
 ln -s "$_dotfiles_termux_dir/.config/nvim" "$HOME/.config"
-ln -s "$_dotfiles_termux_dir/clipper/configs/termux.json" "$HOME/.clipper.json"
 
 _echo "Linking git config files"
 _git_configs=(gitignore gitconfig gitattributes)
@@ -137,12 +136,5 @@ ln -s "$_dotfiles_termux_dir/.tmux.conf" "$HOME"
 mkdir -p "$HOME/.tmux/resurrect"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-
-git clone git://git.wincent.dev/clipper.git
-cd clipper
-go mod init clipper.go
-go build
-mv clipper.go "$HOME/.local/bin/clipper"
-cd -
 
 echo -e "\n\nsource $bashrc_\n\n"

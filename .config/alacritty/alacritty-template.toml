@@ -112,6 +112,11 @@ persistent_logging = false
 print_events       = false
 render_timer       = false
 
+[terminal]
+# Enable OSC52 clipboard support for copying over SSH
+osc52 = "OnlyCopy"
+# osc52 = "CopyPaste"
+
 [general]
 # alacritty.toml
 

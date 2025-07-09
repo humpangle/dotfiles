@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -gt 0 ]]; then
+  text="$*"
+else
+  text=$(cat)
+fi
+
+encoded=$(printf %s "$text" | base64 | tr -d '\n')
+printf '\033]52;c;%s\a' "$encoded"

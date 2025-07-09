@@ -508,38 +508,19 @@ function utils.relative_to_git_root(abs_path)
   return relative_path
 end
 
--- TODO: should we scope to only remote SSH seesions?
-utils.get_copy_cmd_string = function()
-  if utils.get_os_env_or_nil("__COPY_PROGRAM__") == nil then
-    return nil
-  end
-
-  -- First attempt to read from cache.
-  local cmd = vim.g.___clip_cmd_string__
-
-  if cmd ~= nil then
-    return cmd
-  end
-
-  cmd = "nc "
-    .. (utils.get_os_env_or_nil("__NETCAT_SHUTDOWN_AFTER_INPUT_EOF_FLAG__") or "")
-    .. " localhost 8378"
-
-  -- Cache the value for future read
-  vim.g.___clip_cmd_string__ = cmd
-
-  return cmd
+utils.in_ssh = function()
+  return utils.get_os_env_or_nil("SSH_CONNECTION") ~= nil
+    or utils.get_os_env_or_nil("SSH_CLIENT") ~= nil
+    or utils.get_os_env_or_nil("SSH_TTY") ~= nil
 end
 
-utils.clip_cmd_exec = function(reg_value)
-  local copy_cmd = utils.get_copy_cmd_string()
-
-  if copy_cmd == nil then
-    return
+utils.read_register_plus = function(register, content)
+  if (not utils.in_ssh()) or register ~= "+" then
+    return vim.fn.getreg(register)
+  else
+    -- In SSH, we use osc52, but allow only write and not read
+    return (content or "")
   end
-
-  vim.fn.system(copy_cmd, reg_value)
-  return copy_cmd
 end
 
 utils.ord_to_char = function(ord)
@@ -922,7 +903,6 @@ function utils.sanitize_filename(name)
 
   if use_clip then
     vim.fn.setreg("+", escaped_name)
-    utils.clip_cmd_exec(escaped_name)
   end
 
   return escaped_name
@@ -948,7 +928,6 @@ function utils.escape_register_plus(text)
 
   if use_clip then
     vim.fn.setreg("+", escaped_text)
-    utils.clip_cmd_exec(escaped_text)
   end
 
   return escaped_text

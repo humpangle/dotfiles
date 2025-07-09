@@ -144,7 +144,6 @@ ___source_scripts() {
     _deal-paths
     _run-script
     _pv.sh
-    clipper_start.sh
     "_intellij $_flag_no_termux"
     "_docker $_flag_no_termux"
     "_ggc $_flag_no_termux"
