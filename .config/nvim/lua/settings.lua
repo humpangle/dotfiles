@@ -602,103 +602,6 @@ local process_file_path_yanking = function(value_getter_directive, register)
   end
 end
 
--- Helper function to append line numbers in visual mode
-local function append_line_numbers_if_visual(path)
-  local mode = vim.fn.mode()
-
-  if mode ~= "v" and mode ~= "V" and mode ~= "\22" then
-    return path
-  end
-
-  local start_line = vim.fn.line("v")
-  local end_line = vim.fn.line(".")
-
-  if start_line > end_line then
-    start_line, end_line = end_line, start_line
-  end
-
-  if start_line == end_line then
-    return path .. ":" .. tostring(start_line)
-  end
-  return path .. ":" .. tostring(start_line) .. "-" .. tostring(end_line)
-end
-
--- Helper function to get git-relative path
-local function get_git_relative_path(include_dir_only)
-  local git_root = utils.get_git_root()
-
-  if not git_root then
-    vim.notify("Not inside a git repository", vim.log.levels.WARN)
-    return nil
-  end
-
-  local path = vim.fn.expand("%:p")
-  local relative_path =
-    vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
-
-  if include_dir_only then
-    return vim.fn.fnamemodify(relative_path, ":h")
-  end
-
-  return relative_path
-end
-
--- Helper function to yank to registers and notify
-local function yank_to_registers(path, register, description)
-  vim.fn.setreg('"', path)
-  vim.fn.setreg(register, path)
-
-  if description then
-    vim.notify(register .. " -> " .. description .. " = " .. path)
-  else
-    vim.cmd.echo("'" .. register .. " -> " .. path .. "'")
-  end
-end
-
-local function create_path_yanker(register)
-  return function()
-    local count = vim.v.count1
-
-    -- Git-relative paths
-    if count == 62 or count == 64 then
-      local path = get_git_relative_path(count == 64)
-      if not path then
-        return
-      end
-
-      path = append_line_numbers_if_visual(path)
-      local desc = count == 62 and "relative git root path"
-        or "relative git root dir"
-      yank_to_registers(path, register, desc)
-      return
-    end
-
-    -- Standard file paths
-    local path_configs = {
-      [1] = { directive = "%:t", desc = "filename" },
-      [2] = { directive = "%:.", desc = "relative" },
-      [3] = { directive = "%:p", desc = "absolute" },
-      [4] = { directive = "%:.:h", desc = "relative_dir" },
-      [5] = { directive = "%:p:h", desc = "absolute_dir" },
-    }
-
-    local config = path_configs[count]
-      or { directive = "%:p", desc = "absolute" }
-    local file_path = vim.fn.expand(config.directive)
-    file_path = append_line_numbers_if_visual(file_path)
-    yank_to_registers(file_path, register, config.desc)
-  end
-end
-
-utils.map_key({ "n", "x" }, "<localleader>yf", create_path_yanker("+"), {
-  noremap = true,
-  desc = "Yank path: 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
-})
-utils.map_key({ "n", "x" }, "<localleader>cf", create_path_yanker("a"), {
-  noremap = true,
-  desc = "Copy path to 'a': 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
-})
-
 -- Yank current working directory
 utils.map_key("n", "<localleader>yw", process_file_path_yanking("cwd", "+"))
 -- Copy current working directory to register a
@@ -716,34 +619,6 @@ end)
 utils.map_key("n", "<leader>wd", function()
   print("Current working directory is: " .. vim.fn.getcwd())
 end)
-
--- Yank current line number or range
-utils.map_key({ "n", "x" }, "<localleader>yl", function()
-  local line_number_str
-  local mode = vim.fn.mode()
-
-  if mode == "v" or mode == "V" or mode == "\22" then
-    -- Visual mode: get current selection
-    local start_line = vim.fn.line("v")
-    local end_line = vim.fn.line(".")
-
-    -- Ensure start_line number comes first
-    if start_line > end_line then
-      start_line, end_line = end_line, start_line
-    end
-
-    line_number_str = tostring(start_line) .. "-" .. tostring(end_line)
-  else
-    -- Normal mode: get current line
-    line_number_str = tostring(vim.fn.line("."))
-  end
-
-  vim.fn.setreg("+", line_number_str)
-
-  vim.cmd.echo(
-    "'" .. "+" .. " -> " .. "line number" .. " = " .. line_number_str .. "'"
-  )
-end, { noremap = true, silent = true })
 
 -- Find and replace in current buffer only
 -- press * {shift 8) to search for word under cursor and key combo below to replace in entire file
@@ -983,6 +858,7 @@ vim.api.nvim_create_user_command("SortJson", function()
   vim.cmd("%!jq --sort-keys .")
 end, { desc = "Sort Json Keys" })
 
+require("path-yanking")
 require("settings.diagnostics")
 require("escapings")
 require("my-search-patterns")
