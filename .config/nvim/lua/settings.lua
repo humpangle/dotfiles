@@ -602,161 +602,102 @@ local process_file_path_yanking = function(value_getter_directive, register)
   end
 end
 
--- Dynamic file path yanking based on count
-local function dynamic_process_file_path_yanking(register)
-  return function()
-    local count = vim.v.count1
-    local value_getter_directive = "%:p" -- Default to absolute path
-    local mode = vim.fn.mode()
+-- Helper function to append line numbers in visual mode
+local function append_line_numbers_if_visual(path)
+  local mode = vim.fn.mode()
 
-    -- Determine the file path directive based on count
-    if count == 1 then
-      value_getter_directive = "%:t"
-    elseif count == 2 then
-      value_getter_directive = "%:."
-    elseif count == 3 then
-      value_getter_directive = "%:p"
-    elseif count == 4 then
-      value_getter_directive = "%:.:h"
-    elseif count == 5 then
-      value_getter_directive = "%:p:h"
-    elseif count == 62 then
-      local git_root = utils.get_git_root()
+  if mode ~= "v" and mode ~= "V" and mode ~= "\22" then
+    return path
+  end
 
-      if not git_root then
-        vim.notify("Not inside a git repository", vim.log.levels.WARN)
-        return
-      end
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
 
-      local path = vim.fn.expand("%:p")
-      local relative_path =
-        vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
 
-      -- Check if we're in visual mode to append line numbers
-      if mode == "v" or mode == "V" or mode == "\22" then
-        local start_line = vim.fn.line("v")
-        local end_line = vim.fn.line(".")
+  if start_line == end_line then
+    return path .. ":" .. tostring(start_line)
+  end
+  return path .. ":" .. tostring(start_line) .. "-" .. tostring(end_line)
+end
 
-        if start_line > end_line then
-          start_line, end_line = end_line, start_line
-        end
+-- Helper function to get git-relative path
+local function get_git_relative_path(include_dir_only)
+  local git_root = utils.get_git_root()
 
-        if start_line == end_line then
-          relative_path = relative_path .. ":" .. tostring(start_line)
-        else
-          relative_path = relative_path
-            .. ":"
-            .. tostring(start_line)
-            .. "-"
-            .. tostring(end_line)
-        end
-      end
+  if not git_root then
+    vim.notify("Not inside a git repository", vim.log.levels.WARN)
+    return nil
+  end
 
-      vim.fn.setreg('"', relative_path)
-      vim.fn.setreg(register, relative_path)
+  local path = vim.fn.expand("%:p")
+  local relative_path =
+    vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
 
-      vim.notify(
-        register .. " -> relative git root path = " .. relative_path
-      )
-      return
-    elseif count == 64 then
-      local git_root = utils.get_git_root()
+  if include_dir_only then
+    return vim.fn.fnamemodify(relative_path, ":h")
+  end
 
-      if not git_root then
-        vim.notify("Not inside a git repository", vim.log.levels.WARN)
-        return
-      end
+  return relative_path
+end
 
-      local path = vim.fn.expand("%:p")
-      local relative_path =
-        vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
+-- Helper function to yank to registers and notify
+local function yank_to_registers(path, register, description)
+  vim.fn.setreg('"', path)
+  vim.fn.setreg(register, path)
 
-      local relative_dir = vim.fn.fnamemodify(relative_path, ":h")
-
-      -- Check if we're in visual mode to append line numbers
-      if mode == "v" or mode == "V" or mode == "\22" then
-        local start_line = vim.fn.line("v")
-        local end_line = vim.fn.line(".")
-
-        if start_line > end_line then
-          start_line, end_line = end_line, start_line
-        end
-
-        if start_line == end_line then
-          relative_dir = relative_dir .. ":" .. tostring(start_line)
-        else
-          relative_dir = relative_dir
-            .. ":"
-            .. tostring(start_line)
-            .. "-"
-            .. tostring(end_line)
-        end
-      end
-
-      vim.fn.setreg('"', relative_dir)
-      vim.fn.setreg(register, relative_dir)
-      vim.notify(
-        register .. " -> relative git root dir = " .. relative_dir
-      )
-      return
-    end
-
-    -- For standard file path yanking (counts 1-5)
-    local file_path = vim.fn.expand(value_getter_directive)
-
-    -- Check if we're in visual mode to append line numbers
-    if mode == "v" or mode == "V" or mode == "\22" then
-      local start_line = vim.fn.line("v")
-      local end_line = vim.fn.line(".")
-
-      if start_line > end_line then
-        start_line, end_line = end_line, start_line
-      end
-
-      if start_line == end_line then
-        file_path = file_path .. ":" .. tostring(start_line)
-      else
-        file_path = file_path
-          .. ":"
-          .. tostring(start_line)
-          .. "-"
-          .. tostring(end_line)
-      end
-    end
-
-    vim.fn.setreg('"', file_path)
-    vim.fn.setreg(register, file_path)
-
-    vim.cmd.echo(
-      "'"
-        .. register
-        .. " -> "
-        .. value_getter_directive
-        .. " = "
-        .. file_path
-        .. "'"
-    )
+  if description then
+    vim.notify(register .. " -> " .. description .. " = " .. path)
+  else
+    vim.cmd.echo("'" .. register .. " -> " .. path .. "'")
   end
 end
 
-utils.map_key(
-  { "n", "x" },
-  "<localleader>yf",
-  dynamic_process_file_path_yanking("+"),
-  {
-    noremap = true,
-    desc = "Yank path: 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
-  }
-)
-utils.map_key(
-  { "n", "x" },
-  "<localleader>cf",
-  dynamic_process_file_path_yanking("a"),
-  {
-    noremap = true,
-    desc = "Copy path to 'a': 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
-  }
-)
+local function create_path_yanker(register)
+  return function()
+    local count = vim.v.count1
+
+    -- Git-relative paths
+    if count == 62 or count == 64 then
+      local path = get_git_relative_path(count == 64)
+      if not path then
+        return
+      end
+
+      path = append_line_numbers_if_visual(path)
+      local desc = count == 62 and "relative git root path"
+        or "relative git root dir"
+      yank_to_registers(path, register, desc)
+      return
+    end
+
+    -- Standard file paths
+    local path_configs = {
+      [1] = { directive = "%:t", desc = "filename" },
+      [2] = { directive = "%:.", desc = "relative" },
+      [3] = { directive = "%:p", desc = "absolute" },
+      [4] = { directive = "%:.:h", desc = "relative_dir" },
+      [5] = { directive = "%:p:h", desc = "absolute_dir" },
+    }
+
+    local config = path_configs[count]
+      or { directive = "%:p", desc = "absolute" }
+    local file_path = vim.fn.expand(config.directive)
+    file_path = append_line_numbers_if_visual(file_path)
+    yank_to_registers(file_path, register, config.desc)
+  end
+end
+
+utils.map_key({ "n", "x" }, "<localleader>yf", create_path_yanker("+"), {
+  noremap = true,
+  desc = "Yank path: 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
+})
+utils.map_key({ "n", "x" }, "<localleader>cf", create_path_yanker("a"), {
+  noremap = true,
+  desc = "Copy path to 'a': 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
+})
 
 -- Yank current working directory
 utils.map_key("n", "<localleader>yw", process_file_path_yanking("cwd", "+"))
