@@ -607,7 +607,9 @@ local function dynamic_process_file_path_yanking(register)
   return function()
     local count = vim.v.count1
     local value_getter_directive = "%:p" -- Default to absolute path
+    local mode = vim.fn.mode()
 
+    -- Determine the file path directive based on count
     if count == 1 then
       value_getter_directive = "%:t"
     elseif count == 2 then
@@ -630,6 +632,26 @@ local function dynamic_process_file_path_yanking(register)
       local relative_path =
         vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
 
+      -- Check if we're in visual mode to append line numbers
+      if mode == "v" or mode == "V" or mode == "\22" then
+        local start_line = vim.fn.line("v")
+        local end_line = vim.fn.line(".")
+
+        if start_line > end_line then
+          start_line, end_line = end_line, start_line
+        end
+
+        if start_line == end_line then
+          relative_path = relative_path .. ":" .. tostring(start_line)
+        else
+          relative_path = relative_path
+            .. ":"
+            .. tostring(start_line)
+            .. "-"
+            .. tostring(end_line)
+        end
+      end
+
       vim.fn.setreg('"', relative_path)
       vim.fn.setreg(register, relative_path)
 
@@ -650,6 +672,27 @@ local function dynamic_process_file_path_yanking(register)
         vim.fn.resolve(path):gsub("^" .. vim.pesc(git_root) .. "/", "")
 
       local relative_dir = vim.fn.fnamemodify(relative_path, ":h")
+
+      -- Check if we're in visual mode to append line numbers
+      if mode == "v" or mode == "V" or mode == "\22" then
+        local start_line = vim.fn.line("v")
+        local end_line = vim.fn.line(".")
+
+        if start_line > end_line then
+          start_line, end_line = end_line, start_line
+        end
+
+        if start_line == end_line then
+          relative_dir = relative_dir .. ":" .. tostring(start_line)
+        else
+          relative_dir = relative_dir
+            .. ":"
+            .. tostring(start_line)
+            .. "-"
+            .. tostring(end_line)
+        end
+      end
+
       vim.fn.setreg('"', relative_dir)
       vim.fn.setreg(register, relative_dir)
       vim.notify(
@@ -658,18 +701,62 @@ local function dynamic_process_file_path_yanking(register)
       return
     end
 
-    process_file_path_yanking(value_getter_directive, register)()
+    -- For standard file path yanking (counts 1-5)
+    local file_path = vim.fn.expand(value_getter_directive)
+
+    -- Check if we're in visual mode to append line numbers
+    if mode == "v" or mode == "V" or mode == "\22" then
+      local start_line = vim.fn.line("v")
+      local end_line = vim.fn.line(".")
+
+      if start_line > end_line then
+        start_line, end_line = end_line, start_line
+      end
+
+      if start_line == end_line then
+        file_path = file_path .. ":" .. tostring(start_line)
+      else
+        file_path = file_path
+          .. ":"
+          .. tostring(start_line)
+          .. "-"
+          .. tostring(end_line)
+      end
+    end
+
+    vim.fn.setreg('"', file_path)
+    vim.fn.setreg(register, file_path)
+
+    vim.cmd.echo(
+      "'"
+        .. register
+        .. " -> "
+        .. value_getter_directive
+        .. " = "
+        .. file_path
+        .. "'"
+    )
   end
 end
 
-utils.map_key("n", "<localleader>yf", dynamic_process_file_path_yanking("+"), {
-  noremap = true,
-  desc = "Yank path: 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
-})
-utils.map_key("n", "<localleader>cf", dynamic_process_file_path_yanking("a"), {
-  noremap = true,
-  desc = "Copy path to 'a': 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
-})
+utils.map_key(
+  { "n", "x" },
+  "<localleader>yf",
+  dynamic_process_file_path_yanking("+"),
+  {
+    noremap = true,
+    desc = "Yank path: 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
+  }
+)
+utils.map_key(
+  { "n", "x" },
+  "<localleader>cf",
+  dynamic_process_file_path_yanking("a"),
+  {
+    noremap = true,
+    desc = "Copy path to 'a': 1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir",
+  }
+)
 
 -- Yank current working directory
 utils.map_key("n", "<localleader>yw", process_file_path_yanking("cwd", "+"))
