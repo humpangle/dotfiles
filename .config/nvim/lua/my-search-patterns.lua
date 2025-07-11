@@ -47,6 +47,11 @@ M.patterns = {
     description = "1 of 2 [1/2]",
     pattern = "[\\d\\+\\/\\d\\+\\]",
     navigation = "N",
+  },
+  {
+    description = "JSON comment",
+    pattern = "//\\s*\".*",
+    navigation = "N",
   }
 }
 
