@@ -1,0 +1,43 @@
+{
+  // "apiKeyHelper": "/path/to/script",
+  // "cleanupPeriodDays": 30,
+  "env": {
+    // "ANTHROPIC_API_KEY": "your-api-key",
+    // "ANTHROPIC_MODEL": "claude-3-5-sonnet-20241022",
+    // "CLAUDE_CODE_USE_BEDROCK": "false",
+    "DISABLE_TELEMETRY": "true"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Agent",
+      "Bash",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Edit",
+      // "Glob",
+      // "Grep",
+      // "LS",
+      "MultiEdit",
+      // "NotebookEdit",
+      // "NotebookRead",
+      "Read",
+      "TodoRead",
+      "TodoWrite",
+      // "WebFetch",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "Write",
+      "mcp__consult7__consultation",
+      "mcp__context7__get-library-docs",
+      "mcp__context7__resolve-library-id"
+    ],
+    "deny": [
+      // "Bash(command:rm)",
+      // "Bash(command:sudo)",
+      // "WebFetch(domain:malicious-site.com)"
+    ]
+  }
+}
