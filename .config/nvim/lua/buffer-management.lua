@@ -117,6 +117,19 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
   return not vim.bo[buf_num].buflisted
 end
 
+local function notify(message, opts, level)
+  opts = opts or {}
+  level = level or vim.log.levels.INFO
+
+  if opts.delay_notify then
+    vim.defer_fn(function()
+      vim.notify(message, level)
+    end, 500)
+  else
+    vim.notify(message, level)
+  end
+end
+
 function M.delete_all_buffers(delete_flag, opts)
   -- local normal_buffers = {}
   local terminal_buffers = {}
@@ -193,17 +206,7 @@ function M.delete_all_buffers(delete_flag, opts)
     wipeout_buffers(codecompanion_buffers)
   end
 
-  opts = opts or {}
-
-  if opts.delay_notify then
-    vim.defer_fn(function()
-      vim.notify(
-        index_ .. " buffers wiped with flag " .. delete_flag .. "!"
-      )
-    end, 500)
-  else
-    vim.notify(index_ .. " buffers wiped with flag " .. delete_flag .. "!")
-  end
+  notify(index_ .. " buffers wiped with flag " .. delete_flag .. "!", opts)
 end
 
 function M.delete_buffers_keymap()
