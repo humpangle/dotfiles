@@ -167,8 +167,8 @@ return {
         end
 
         if count == 44 then
-          vim.cmd("TSContextToggle")
-          vim.cmd.echo('"TSContextToggle"')
+          vim.cmd("TSContext toggle")
+          print("TSContext toggle")
           return
         end
 
@@ -192,7 +192,7 @@ return {
           return
         end
       end, {
-        desc = "0/info 1/log 2/stop 3/start 44/tsContextToggle 45/twilightToggle 4*/trsGoToContext",
+        desc = "0/info 1/log 2/stop 3/start 44/TSContextToggle 45/twilightToggle 4*/trsGoToContext",
       })
 
       --  This function gets run when an LSP attaches to a particular buffer. That is to say, every time a new file is
