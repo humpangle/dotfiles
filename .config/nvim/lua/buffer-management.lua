@@ -117,7 +117,7 @@ local is_deleteable_unlisted_buffer = function(b_name, buf_num)
   return not vim.bo[buf_num].buflisted
 end
 
-function M.DeleteAllBuffers(delete_flag, opts)
+function M.delete_all_buffers(delete_flag, opts)
   -- local normal_buffers = {}
   local terminal_buffers = {}
   local no_name_buffers = {}
@@ -212,19 +212,19 @@ function M.delete_buffers_keymap()
 
     if count == 0 then
       -- Delete all empty buffers
-      require("buffer-management").DeleteAllBuffers("e")
+      require("buffer-management").delete_all_buffers("e")
       return
     end
 
     if count == 1 then
-      require("buffer-management").DeleteAllBuffers("fugitive")
+      require("buffer-management").delete_all_buffers("fugitive")
       return
     end
 
     if count == 2 then
       local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
       if answer == "Yes" then
-        require("buffer-management").DeleteAllBuffers("a")
+        require("buffer-management").delete_all_buffers("a")
       else
         vim.notify(
           "Not deleting ALL buffers - too destructive!",
@@ -284,7 +284,7 @@ function M.delete_buffers_keymap()
                 vim.cmd.normal("gT")
               end
               pcall(function()
-                require("buffer-management").DeleteAllBuffers(
+                require("buffer-management").delete_all_buffers(
                   option.type,
                   { delay_notify = true }
                 )
@@ -292,7 +292,7 @@ function M.delete_buffers_keymap()
               return
             end
 
-            require("buffer-management").DeleteAllBuffers(
+            require("buffer-management").delete_all_buffers(
               option.type,
               { delay_notify = true }
             )

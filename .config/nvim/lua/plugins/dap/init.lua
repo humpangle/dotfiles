@@ -96,10 +96,10 @@ return {
     "mfussenegger/nvim-dap",
     init = function()
       vim.api.nvim_create_user_command("Deldap", function()
-        require('buffer-management').DeleteAllBuffers("dap")
+        require("buffer-management").delete_all_buffers("dap")
       end, {})
       vim.api.nvim_create_user_command("DapDelete", function()
-        require('buffer-management').DeleteAllBuffers("dap")
+        require("buffer-management").delete_all_buffers("dap")
       end, {})
     end,
     cmd = {

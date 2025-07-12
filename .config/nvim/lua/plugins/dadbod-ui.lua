@@ -211,11 +211,11 @@ return {
     })
 
     vim.api.nvim_create_user_command("DelDbUi", function()
-      require('buffer-management').DeleteAllBuffers("dbui")
+      require("buffer-management").delete_all_buffers("dbui")
     end, {})
 
     vim.api.nvim_create_user_command("DbUiDelete", function()
-      require('buffer-management').DeleteAllBuffers("dbui")
+      require("buffer-management").delete_all_buffers("dbui")
     end, {})
   end,
 }
