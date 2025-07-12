@@ -100,6 +100,7 @@ local function on_buf_read(filepath)
   end
 
   local resolved = vim.fn.resolve(filepath)
+  -- Not a symlink
   if resolved == filepath then
     return
   end
@@ -135,20 +136,18 @@ local function toggle_symlink()
   local current_file = vim.fn.expand("%:p")
 
   if vim.fn.filereadable(current_file) == 0 then
-    vim.cmd("echohl WarningMsg")
-    vim.cmd('echo "Current file is not readable"')
-    vim.cmd("echohl None")
+    vim.notify("Current file is not readable", vim.log.levels.WARN)
     return
   end
 
-  local target = nil
+  local target = symlink_mappings[current_file]
 
-  if symlink_mappings[current_file] then
-    target = symlink_mappings[current_file]
+  if target then
     if vim.fn.filereadable(target) == 0 then
-      vim.cmd("echohl WarningMsg")
-      vim.cmd('echo "Target file no longer exists: ' .. target .. '"')
-      vim.cmd("echohl None")
+      vim.notify(
+        "Target file no longer exists: " .. target,
+        vim.log.levels.WARN
+      )
       return
     end
   else
@@ -158,17 +157,19 @@ local function toggle_symlink()
     if symlink_mappings[current_file] then
       target = symlink_mappings[current_file]
       if vim.fn.filereadable(target) == 0 then
-        vim.cmd("echohl WarningMsg")
-        vim.cmd('echo "Target file no longer exists: ' .. target .. '"')
-        vim.cmd("echohl None")
+        vim.notify(
+          "Target file no longer exists: " .. target,
+          vim.log.levels.WARN
+        )
         return
       end
     else
       -- Fallback: scan directory for symlinks
       if not discover_symlinks_for_file(current_file) then
-        vim.cmd("echohl WarningMsg")
-        vim.cmd('echo "No symlinks found pointing to this file"')
-        vim.cmd("echohl None")
+        vim.notify(
+          "No symlinks found pointing to this file",
+          vim.log.levels.WARN
+        )
         return
       end
 
