@@ -67,6 +67,34 @@ local function load_mappings()
   end
 end
 
+local function check_directory_symlinks(filepath)
+  local cwd = vim.fn.getcwd()
+  local relative_path = vim.fn.fnamemodify(filepath, ":.")
+  local path_parts = vim.split(relative_path, "/", { plain = true })
+
+  for i = 1, #path_parts - 1 do
+    local partial_path = table.concat(vim.list_slice(path_parts, 1, i), "/")
+    local full_partial = cwd .. "/" .. partial_path
+
+    if vim.fn.getftype(full_partial) == "link" then
+      local resolved_dir = vim.fn.resolve(full_partial)
+      local remaining_path =
+        table.concat(vim.list_slice(path_parts, i + 1), "/")
+      local symlinked_path = full_partial .. "/" .. remaining_path
+      local resolved_path = resolved_dir .. "/" .. remaining_path
+
+      symlink_mappings[vim.fn.fnamemodify(symlinked_path, ":p")] =
+        vim.fn.fnamemodify(resolved_path, ":p")
+      symlink_mappings[vim.fn.fnamemodify(resolved_path, ":p")] =
+        vim.fn.fnamemodify(symlinked_path, ":p")
+      save_mappings_async()
+      return true
+    end
+  end
+
+  return false
+end
+
 local function discover_symlinks_for_file(filepath)
   local found_any = false
 
@@ -165,7 +193,13 @@ local function toggle_symlink()
       end
     else
       -- Fallback: scan directory for symlinks
-      if not discover_symlinks_for_file(current_file) then
+      -- Also check for directory symlinks
+      if
+        not (
+          discover_symlinks_for_file(current_file)
+          or check_directory_symlinks(current_file)
+        )
+      then
         vim.notify(
           "No symlinks found pointing to this file",
           vim.log.levels.WARN
