@@ -193,9 +193,109 @@ function M.DeleteAllBuffers(delete_flag)
     wipeout_buffers(codecompanion_buffers)
   end
 
-  vim.cmd.echo(
-    "'" .. index_ .. ' buffers wiped with flag "' .. delete_flag .. "\" !'"
-  )
+  print(index_ .. " buffers wiped with flag " .. delete_flag .. "!")
+end
+
+function M.delete_buffers_keymap()
+  require("utils").map_key("n", "<leader>be", function()
+    local count = vim.v.count
+
+    if count == 0 then
+      -- Delete all empty buffers
+      require("buffer-management").DeleteAllBuffers("e")
+      return
+    end
+
+    if count == 1 then
+      require("buffer-management").DeleteAllBuffers("fugitive")
+      return
+    end
+
+    if count == 2 then
+      local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
+      if answer == "Yes" then
+        require("buffer-management").DeleteAllBuffers("a")
+      else
+        vim.notify(
+          "Not deleting ALL buffers - too destructive!",
+          vim.log.levels.WARN
+        )
+      end
+      return
+    end
+
+    local fzf_lua = require("fzf-lua")
+
+    local deletion_options = {
+      {
+        description = "DAP",
+        type = "dap",
+      },
+      {
+        description = "Octo",
+        type = "octo",
+      },
+      {
+        description = "CodeCompanion",
+        type = "codecompanion",
+      },
+      {
+        description = "Avante",
+        type = "avante",
+      },
+    }
+
+    -- Format options for display
+    local items = {}
+    for i, option in ipairs(deletion_options) do
+      table.insert(items, string.format("%d. %s", i, option.description))
+    end
+
+    -- fzf picker
+    fzf_lua.fzf_exec(items, {
+      prompt = "Buffer Deletion> ",
+      actions = {
+        ["default"] = function(selected)
+          if not selected or #selected == 0 then
+            return
+          end
+
+          local selection = selected[1]
+          local index = tonumber(selection:match("^(%d+)%."))
+          if index and deletion_options[index] then
+            local option = deletion_options[index]
+            -- vim.print(option)
+
+            -- Handle special case for avante
+            if option.type == "avante" then
+              if
+                require("buffer-management").is_avante_buffer()
+              then
+                vim.cmd.normal("gT")
+              end
+              pcall(function()
+                require("buffer-management").DeleteAllBuffers(
+                  option.type
+                )
+              end)
+              return
+            end
+
+            require("buffer-management").DeleteAllBuffers(
+              option.type
+            )
+          end
+        end,
+      },
+      fzf_opts = {
+        ["--no-multi"] = "",
+        ["--header"] = "Select buffer deletion type",
+      },
+    })
+  end, {
+    noremap = true,
+    desc = "Buffer deletion selector with fzf",
+  })
 end
 
 return M

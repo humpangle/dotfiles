@@ -697,63 +697,6 @@ utils.map_key("n", "d=", function()
   utils.EbnisClearAllBuffer()
 end, { noremap = true })
 
-utils.map_key(
-  "n",
-  "<leader>be",
-  function()
-    local count = vim.v.count
-
-    if count == 0 then
-      -- Delete all empty buffers
-      require('buffer-management').DeleteAllBuffers("e")
-      return
-    end
-
-    if count == 1 then
-      require('buffer-management').DeleteAllBuffers("fugitive")
-      return
-    end
-
-    if count == 2 then
-      local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
-      if answer == "Yes" then
-        require('buffer-management').DeleteAllBuffers("a")
-      else
-        vim.notify("Not deleting ALL buffers - too destructive!")
-      end
-      return
-    end
-
-    if count == 3 then
-      require('buffer-management').DeleteAllBuffers("dap")
-      return
-    end
-
-    if count == 4 then
-      require('buffer-management').DeleteAllBuffers("octo")
-      return
-    end
-
-    if count == 5 then
-      if require('buffer-management').is_avante_buffer() then
-        vim.cmd.normal("gT")
-      end
-
-      pcall(function()
-        require('buffer-management').DeleteAllBuffers("avante")
-      end)
-
-      return
-    end
-
-    if count == 6 then
-      require('buffer-management').DeleteAllBuffers("codecompanion")
-      return
-    end
-  end,
-  { noremap = true, desc = "0/empty 1/fugitive 2/all 3/dap 4/octo 5/avante" }
-)
-
 -- Inserts the current date and time into the buffer
 utils.map_key("n", "<localleader>tm", function()
   -- Get the current date and time in the desired format
@@ -862,3 +805,4 @@ require("path-yanking")
 require("settings.diagnostics")
 require("escapings")
 require("my-search-patterns")
+require("buffer-management").delete_buffers_keymap()
