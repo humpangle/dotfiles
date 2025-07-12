@@ -50,9 +50,9 @@ M.patterns = {
   },
   {
     description = "JSON comment",
-    pattern = "//\\s*\".*",
+    pattern = '//\\s*".*',
     navigation = "N",
-  }
+  },
 }
 
 local function apply_search_pattern(pattern_data)
