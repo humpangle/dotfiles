@@ -118,7 +118,7 @@ local function discover_symlinks_for_file(filepath)
   return found_any
 end
 
-local function on_buf_read(filepath)
+local function on_buf_read_resolve_symlink(filepath)
   if toggle_in_progress then
     return
   end
@@ -260,7 +260,7 @@ return {
       group = augroup,
       nested = true,
       callback = function(args)
-        on_buf_read(args.file)
+        on_buf_read_resolve_symlink(args.file)
       end,
     })
   end,
