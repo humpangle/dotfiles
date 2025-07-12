@@ -179,16 +179,17 @@ local function do_symlink(opts)
     local status = symlink_resolution_disabled and "disabled" or "enabled"
     vim.notify("Symlink resolution is " .. status, vim.log.levels.INFO)
     return
-  elseif args ~= "" then
+  elseif args ~= "" and args ~= "copy" then
     vim.notify(
       "Unknown argument: "
         .. args
-        .. ". Use 'abort', 'enable', or 'status'",
+        .. ". Use 'abort', 'enable', 'status', or 'copy'",
       vim.log.levels.ERROR
     )
     return
   end
 
+  -- For both toggle and copy operations, we need the current file and target
   local current_file = vim.fn.expand("%:p")
 
   if vim.fn.filereadable(current_file) == 0 then
@@ -274,6 +275,7 @@ return {
       complete = function()
         return {
           "abort",
+          "copy",
           "enable",
           "status",
         }
