@@ -7,6 +7,7 @@ end
 
 local symlink_mappings = {}
 local toggle_in_progress = false
+local symlink_resolution_disabled = false
 
 local function get_cache_file()
   local cache_dir = vim.fn.stdpath("state") .. "/vim-symlink"
@@ -123,6 +124,10 @@ local function on_buf_read_resolve_symlink(filepath)
     return
   end
 
+  if symlink_resolution_disabled then
+    return
+  end
+
   if vim.fn.filereadable(filepath) == 0 then
     return
   end
@@ -160,7 +165,30 @@ local function on_buf_read_resolve_symlink(filepath)
   end
 end
 
-local function toggle_symlink()
+local function toggle_symlink(opts)
+  local args = vim.fn.trim(opts.args)
+  if args == "abort" then
+    symlink_resolution_disabled = true
+    vim.notify("Symlink resolution disabled", vim.log.levels.INFO)
+    return
+  elseif args == "enable" then
+    symlink_resolution_disabled = false
+    vim.notify("Symlink resolution enabled", vim.log.levels.INFO)
+    return
+  elseif args == "status" then
+    local status = symlink_resolution_disabled and "disabled" or "enabled"
+    vim.notify("Symlink resolution is " .. status, vim.log.levels.INFO)
+    return
+  elseif args ~= "" then
+    vim.notify(
+      "Unknown argument: "
+        .. args
+        .. ". Use 'abort', 'enable', or 'status'",
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
   local current_file = vim.fn.expand("%:p")
 
   if vim.fn.filereadable(current_file) == 0 then
@@ -241,7 +269,16 @@ return {
     -- Set default values
     vim.g.symlink_redraw___ebnis___ = vim.g.symlink_redraw___ebnis___ or 1
 
-    vim.api.nvim_create_user_command("SymlinkToggle", toggle_symlink, {})
+    vim.api.nvim_create_user_command("SymlinkToggle", toggle_symlink, {
+      nargs = "?",
+      complete = function()
+        return {
+          "abort",
+          "enable",
+          "status",
+        }
+      end,
+    })
 
     local augroup =
       vim.api.nvim_create_augroup("symlink_plugin", { clear = true })
