@@ -240,6 +240,13 @@ local function do_symlink(opts)
     end
   end
 
+  -- Handle copy command
+  if args == "copy" then
+    vim.fn.setreg("+", target)
+    vim.notify("Copied to clipboard: " .. target, vim.log.levels.INFO)
+    return
+  end
+
   if vim.fn.exists(":Bwipeout") == 2 then
     vim.cmd("silent! Bwipeout")
   else
