@@ -554,8 +554,8 @@ vim.g.fugitive_summary_format = "%d %s"
 
 -- Delete vim fugitive buffers
 vim.api.nvim_create_user_command("DelFugitive", function()
-  utils.DeleteAllBuffers("fugitive")
+  require('buffer-management').DeleteAllBuffers("fugitive")
 end, {})
 vim.api.nvim_create_user_command("FugitiveDelete", function()
-  utils.DeleteAllBuffers("fugitive")
+  require('buffer-management').DeleteAllBuffers("fugitive")
 end, {})

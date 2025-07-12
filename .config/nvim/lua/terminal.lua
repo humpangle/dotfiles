@@ -62,7 +62,7 @@ end, { noremap = true, desc = "terminal 0=s 1=v 2=t 4/botright 6/slime" })
 
 -- Delete all terminal buffers
 utils.map_key("n", "<leader>bT", function()
-  utils.DeleteAllBuffers("t")
+  require('buffer-management').DeleteAllBuffers("t")
 end, { noremap = true })
 
 utils.map_key("t", "<C-l>", utils.clear_terminal)

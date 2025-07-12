@@ -18,10 +18,10 @@ return {
   },
   init = function()
     vim.api.nvim_create_user_command("Delocto", function()
-      utils.DeleteAllBuffers("octo")
+      require('buffer-management').DeleteAllBuffers("octo")
     end, {})
     vim.api.nvim_create_user_command("OctoDelete", function()
-      utils.DeleteAllBuffers("octo")
+      require('buffer-management').DeleteAllBuffers("octo")
     end, {})
   end,
   cmd = {

@@ -705,19 +705,19 @@ utils.map_key(
 
     if count == 0 then
       -- Delete all empty buffers
-      utils.DeleteAllBuffers("e")
+      require('buffer-management').DeleteAllBuffers("e")
       return
     end
 
     if count == 1 then
-      utils.DeleteAllBuffers("fugitive")
+      require('buffer-management').DeleteAllBuffers("fugitive")
       return
     end
 
     if count == 2 then
       local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
       if answer == "Yes" then
-        utils.DeleteAllBuffers("a")
+        require('buffer-management').DeleteAllBuffers("a")
       else
         vim.notify("Not deleting ALL buffers - too destructive!")
       end
@@ -725,29 +725,29 @@ utils.map_key(
     end
 
     if count == 3 then
-      utils.DeleteAllBuffers("dap")
+      require('buffer-management').DeleteAllBuffers("dap")
       return
     end
 
     if count == 4 then
-      utils.DeleteAllBuffers("octo")
+      require('buffer-management').DeleteAllBuffers("octo")
       return
     end
 
     if count == 5 then
-      if utils.is_avante_buffer() then
+      if require('buffer-management').is_avante_buffer() then
         vim.cmd.normal("gT")
       end
 
       pcall(function()
-        utils.DeleteAllBuffers("avante")
+        require('buffer-management').DeleteAllBuffers("avante")
       end)
 
       return
     end
 
     if count == 6 then
-      utils.DeleteAllBuffers("codecompanion")
+      require('buffer-management').DeleteAllBuffers("codecompanion")
       return
     end
   end,
