@@ -130,7 +130,24 @@ local function notify(message, opts, level)
   end
 end
 
+local function delete_un_windowed_buffers(opts)
+  local count = 0
+  for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1, bufloaded = 0 })) do
+    if vim.tbl_isempty(buf.windows) then
+      vim.api.nvim_buf_delete(buf.bufnr, { force = true })
+      count = count + 1
+    end
+  end
+
+  notify(count .. " buffers wiped with flag un-windowed " .. "!", opts)
+end
+
 function M.delete_all_buffers(delete_flag, opts)
+  if delete_flag == "unwindowed" then
+    delete_un_windowed_buffers(opts)
+    return
+  end
+
   -- local normal_buffers = {}
   local terminal_buffers = {}
   local no_name_buffers = {}
@@ -268,6 +285,10 @@ function M.delete_buffers_keymap()
       {
         description = "DB DadBod UI",
         type = "dbui",
+      },
+      {
+        description = "UnWindowed",
+        type = "unwindowed",
       },
     }
 
