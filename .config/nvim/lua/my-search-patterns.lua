@@ -53,6 +53,16 @@ M.patterns = {
     pattern = '//\\s*".*',
     navigation = "N",
   },
+  {
+    description = "One Star",
+    pattern = "\\*",
+    navigation = "N",
+  },
+  {
+    description = "Two Stars",
+    pattern = "\\*\\*",
+    navigation = "N",
+  },
 }
 
 local function apply_search_pattern(pattern_data)
