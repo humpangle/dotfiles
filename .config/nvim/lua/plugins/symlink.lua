@@ -165,7 +165,7 @@ local function on_buf_read_resolve_symlink(filepath)
   end
 end
 
-local function toggle_symlink(opts)
+local function do_symlink(opts)
   local args = vim.fn.trim(opts.args)
   if args == "abort" then
     symlink_resolution_disabled = true
@@ -269,7 +269,7 @@ return {
     -- Set default values
     vim.g.symlink_redraw___ebnis___ = vim.g.symlink_redraw___ebnis___ or 1
 
-    vim.api.nvim_create_user_command("SymlinkToggle", toggle_symlink, {
+    vim.api.nvim_create_user_command("Symlink", do_symlink, {
       nargs = "?",
       complete = function()
         return {
