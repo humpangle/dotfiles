@@ -204,6 +204,13 @@ function M.delete_all_buffers(delete_flag, opts)
     wipeout_buffers(avante_buffers)
   elseif delete_flag == "codecompanion" then
     wipeout_buffers(codecompanion_buffers)
+  else
+    notify(
+      "Unknown delete FLAG " .. delete_flag,
+      opts,
+      vim.log.levels.ERROR
+    )
+    return
   end
 
   notify(index_ .. " buffers wiped with flag " .. delete_flag .. "!", opts)
