@@ -161,17 +161,15 @@ function M.delete_all_buffers(delete_flag, opts)
       table.insert(no_name_buffers, buf_num)
     elseif string.match(b_name, "term://") then
       table.insert(terminal_buffers, buf_num)
-      -- else
-      --   table.insert(normal_buffers, buf_num)
     end
   end
 
-  local index_ = 0
+  local count = 0
 
   local function wipeout_buffers(buffer_list)
     for _, buf_num in ipairs(buffer_list) do
       vim.api.nvim_buf_delete(buf_num, { force = true })
-      index_ = index_ + 1
+      count = count + 1
     end
   end
 
@@ -213,7 +211,7 @@ function M.delete_all_buffers(delete_flag, opts)
     return
   end
 
-  notify(index_ .. " buffers wiped with flag " .. delete_flag .. "!", opts)
+  notify(count .. " buffers wiped with flag " .. delete_flag .. "!", opts)
 end
 
 function M.delete_buffers_keymap()
