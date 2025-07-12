@@ -76,7 +76,7 @@ return {
 
       if count ~= 0 then
         vim.cmd({ cmd = "wa", bang = true })
-        vim.cmd("DbUiDelete")
+        require("buffer-management").delete_all_buffers("dbui")
         return
       end
 
@@ -126,7 +126,7 @@ return {
 
       if count == 2 then
         vim.cmd({ cmd = "wa", bang = true })
-        vim.cmd("DbUiDelete")
+        require("buffer-management").delete_all_buffers("dbui")
         return
       end
 
@@ -154,7 +154,7 @@ return {
       os.execute("rm -rf " .. vim.fn.shellescape(buffer_name))
       vim.cmd("bdelete! " .. buffer_name)
       vim.cmd({ cmd = "wa", bang = true })
-      vim.cmd("DbUiDelete")
+      require("buffer-management").delete_all_buffers("dbui")
 
       -- dbui file is always readonly -  make it modifiable
       vim.bo.modifiable = true
@@ -209,13 +209,5 @@ return {
       noremap = true,
       desc = "DBUI help information",
     })
-
-    vim.api.nvim_create_user_command("DelDbUi", function()
-      require("buffer-management").delete_all_buffers("dbui")
-    end, {})
-
-    vim.api.nvim_create_user_command("DbUiDelete", function()
-      require("buffer-management").delete_all_buffers("dbui")
-    end, {})
   end,
 }

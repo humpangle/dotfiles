@@ -16,14 +16,6 @@ return {
     -- OR 'folke/snacks.nvim',
     "nvim-tree/nvim-web-devicons",
   },
-  init = function()
-    vim.api.nvim_create_user_command("Delocto", function()
-      require("buffer-management").delete_all_buffers("octo")
-    end, {})
-    vim.api.nvim_create_user_command("OctoDelete", function()
-      require("buffer-management").delete_all_buffers("octo")
-    end, {})
-  end,
   cmd = {
     "Octo",
   },

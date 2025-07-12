@@ -253,6 +253,14 @@ function M.delete_buffers_keymap()
         description = "Avante",
         type = "avante",
       },
+      {
+        description = "Terminal",
+        type = "t",
+      },
+      {
+        description = "DB DadBod UI",
+        type = "dbui",
+      },
     }
 
     -- Format options for display
