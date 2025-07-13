@@ -30,7 +30,9 @@ _get_asdf_plugin_version() {
   local _plugin_name="$1"
 
   asdf current "$_plugin_name" |
-    awk '{print $2}'
+    awk \
+      -v p="$_plugin_name" \
+      'match($0, p) {print $2}'
 }
 
 get_latest_tag() {
@@ -250,8 +252,8 @@ install() {
 
     if [ -n "$has_asdf_" ]; then
       _echo "Change elixir to version \"$_elixir\" and erlang to version \"$_erlang\" "
-      asdf local erlang "$_erlang"
-      asdf local elixir "$_elixir"
+      asdf set erlang "$_erlang"
+      asdf set elixir "$_elixir"
 
       _echo "Let us confirm we are using correct elixir and erlang versions:"
       cat .tool-versions
