@@ -449,7 +449,7 @@ keymap("n", "<leader>gg", function()
   end
 
   if count == 11 then
-    vim.cmd("Wmessage !git log")
+    vim.cmd("Wmessage G log -1999999999")
     utils.write_to_out_file()
     return
   end
