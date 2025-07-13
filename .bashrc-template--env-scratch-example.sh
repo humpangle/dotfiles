@@ -51,3 +51,14 @@ export NVIM_ENABLE_CODECOMPANION_AI_PLUGIN=1
 export GIT_COMMIT_MESSAGE_FORMAT='- Subject: ~120 chars, no trailing period, starts with JIRA ticket # (e.g., `SCHED-4192`).
   Use @cmd_runner_no_approval tool to run `git branch --show-current | grep -oE "^[A-Z]+-[0-9]+"` to extract JIRA ticket #
 - Body: Multi-line explanation of why changes were made (wrap ~120 chars)'
+
+# -----------------------------------------------------------------------------
+# ELIXIR
+# -----------------------------------------------------------------------------
+export ELIXIR_LS_BIN="$HOME/.elixir_ls_ebnis/1.18.4-otp-28--28.0.1--v0.28.0/language_server.sh"
+export ELIXIR_LEXICAL_BIN="$HOME/.elixir_lexical_ebnis/1.16.3-otp-26--26.2.5--v0.6.1/bin/start_lexical.sh"
+export NVIM_ENABLE_ELIXIR_LS=1
+# export NVIM_ENABLE_ELIXIR_LEXICAL=1
+# -----------------------------------------------------------------------------
+# /END/ ELIXIR
+# -----------------------------------------------------------------------------
