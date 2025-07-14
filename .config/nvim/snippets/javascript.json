@@ -768,7 +768,7 @@
     "body": [
       "",
       "// NOTE: --START-- DEBUG HTML {",
-      "require(`@testing-library/vue`).screen.debug()",
+      "require(`@testing-library/vue`).screen.debug($0)",
       "// NOTE: --END-- DEBUG HTML }",
       ""
     ],
