@@ -91,8 +91,8 @@ vim.opt.breakindent = true
 vim.opt.undofile = true
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir/"
 
--- Keep signcolumn on by default
-vim.opt.signcolumn = "yes"
+-- Keep signcolumn on by default - with fixed space of 1 (prevents the cursor jumping around I experience from time to time)
+vim.opt.signcolumn = "yes:1"
 
 -- Decrease update time
 -- Many plugins require update time shorter than default of 4000ms
