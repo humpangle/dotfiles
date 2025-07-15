@@ -69,12 +69,22 @@ local jest_adapter = function()
 end
 
 local vitest_adapter = function()
+  local filter_names = {
+    "node_modules",
+    "___scratch",
+  }
+
   local vitest_cmd = "vitest"
   local config = {
     vitestCommand = vitest_cmd,
     -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
     filter_dir = function(name)
-      return name ~= "node_modules" and name ~= ".___scratch"
+      for _, fname in ipairs(filter_names) do
+        if name:match(fname) then
+          return false
+        end
+      end
+      return true
     end,
     env = function()
       local vitest_environments = {}
