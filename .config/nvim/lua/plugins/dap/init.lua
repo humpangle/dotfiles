@@ -286,7 +286,24 @@ return {
         --   "mfussenegger/nvim-dap",
         -- },
         config = function()
-          require("dap-helper").setup()
+          local filter_names = {
+            "node_modules",
+            ".___scratch",
+            "^fugitive:///",
+            "^term://",
+          }
+
+          require("dap-helper").setup({
+            is_invalid_filename = function(name)
+              for _, fname in ipairs(filter_names) do
+                if name:match(fname) then
+                  return true
+                end
+              end
+
+              return false
+            end,
+          })
         end,
       },
 
