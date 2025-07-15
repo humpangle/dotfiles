@@ -511,6 +511,19 @@ if has('win')
     " Yank path to current file to Windows clipboard with forward slashes
     nnoremap yf :!echo %"c:gs!\!/! %i | clip<cr>
 
+elseif $SSH_CONNECTION != '' &&  executable('_copy-ssh')
+    " Yank current directory path into the clipboard
+    nnoremap yd :!printf %d | _copy-ssh %i<cr>:echo expand('%"d') "is yanked to clipboard with _COPY-ssh"<cr>
+
+    " yank current file path into the clipboard
+    nnoremap yf :!printf %c:p | _copy-ssh %i<cr>:echo expand('%"c:p') "is yanked to clipboard with _COPY-ssh"<cr>
+
+    " yank current filename without path into the clipboard
+    nnoremap yn :!printf %c | _copy-ssh %i<cr>:echo expand('%"c') "is yanked to clipboard with _COPY-ssh"<cr>
+
+    " yank root of current file's name into the clipboard
+    nnoremap yr :!printf %c:r | _copy-ssh %i<cr>:echo expand('%"c:r') "is yanked to clipboard with _COPY-ssh"<cr>
+
 elseif executable('pbcopy')
   " Yank current directory path into the clipboard
   nnoremap yd :!printf %d | pbcopy %i<cr>:echo expand('%"d') "is yanked to clipboard PBCOPY"<cr>
@@ -558,19 +571,6 @@ elseif executable('xsel')
     " Yank current file path into into primary and selection clipboards
     nnoremap yf :!echo -n %c:p | xsel --input --primary %i &&
                 \ echo -n %c:p | xsel --clipboard --input %i<cr>
-
-elseif executable('_copy-ssh')
-    " Yank current directory path into the clipboard
-    nnoremap yd :!printf %d | _copy-ssh %i<cr>:echo expand('%"d') "is yanked to clipboard with _COPY-ssh"<cr>
-
-    " yank current file path into the clipboard
-    nnoremap yf :!printf %c:p | _copy-ssh %i<cr>:echo expand('%"c:p') "is yanked to clipboard with _COPY-ssh"<cr>
-
-    " yank current filename without path into the clipboard
-    nnoremap yn :!printf %c | _copy-ssh %i<cr>:echo expand('%"c') "is yanked to clipboard with _COPY-ssh"<cr>
-
-    " yank root of current file's name into the clipboard
-    nnoremap yr :!printf %c:r | _copy-ssh %i<cr>:echo expand('%"c:r') "is yanked to clipboard with _COPY-ssh"<cr>
 endif
 
 " View preview in Quick Look -- looks like this options makes <space> open file rather than cycle windows.
