@@ -249,11 +249,157 @@ local function open_commit_under_cursor(split_cmd)
   vim.cmd("Gedit " .. commit_ish)
 end
 
-local git_commit_mappings_fn = function()
+-- Define git commit options with descriptions
+local git_commit_options = {
+  {
+    description = "Commit",
+    action = function()
+      -- split the current buffer horizontally spanning the bottom
+      vim.cmd("botright split")
+      -- open a fugitive commit buffer
+      vim.cmd("Git commit")
+      -- move **UP** to previous window (the one splitted horizontally previously)
+      vim.cmd.wincmd("p")
+      -- close that window (this will cause the cursor to move the original window that was splitted)
+      vim.cmd("quit")
+      -- move **DOWN** to the fugitive commit buffer
+      vim.cmd.wincmd("j")
+    end,
+  },
+  {
+    description = "Commit --allow-empty",
+    action = function()
+      utils.write_to_command_mode("Git commit --allow-empty")
+    end,
+  },
+  {
+    description = "Commit --amend",
+    action = function()
+      utils.write_to_command_mode("Git commit --amend")
+    end,
+  },
+  {
+    description = "Commit --amend --no-edit",
+    action = function()
+      utils.write_to_command_mode("Git commit --amend --no-edit")
+    end,
+  },
+  {
+    description = "Verify sign <cword>",
+    action = function()
+      utils.write_to_command_mode(
+        "Git verify-commit " .. vim.fn.expand("<cword>") .. " "
+      )
+    end,
+  },
+  {
+    description = "Verify sign verbose <cword>",
+    action = function()
+      utils.write_to_command_mode(
+        "Git verify-commit -v " .. vim.fn.expand("<cword>") .. " "
+      )
+    end,
+  },
+  {
+    description = "Search pattern: [ ./)(]+",
+    action = function()
+      local search_text = "[ ./)(]\\+"
+      vim.fn.setreg("/", search_text)
+      vim.cmd("set hlsearch")
+      pcall(vim.cmd.normal, { "n", bang = true })
+    end,
+  },
+  {
+    description = "Copy JIRA ticket from branch name",
+    action = function()
+      local git_head = vim.fn.FugitiveHead()
+      local jira_ticket_pattern = git_head:match("^[A-Z]+%-[0-9]+")
+      if jira_ticket_pattern then
+        vim.fn.setreg("a", jira_ticket_pattern)
+        vim.fn.setreg("+", jira_ticket_pattern)
+        vim.notify("(Reg a & +) ticket -> " .. jira_ticket_pattern)
+      else
+        vim.notify(
+          "No JIRA ticket pattern found in branch: " .. git_head
+        )
+      end
+    end,
+  },
+  {
+    description = "Copy current branch name to register a",
+    action = function()
+      local git_head = vim.fn.FugitiveHead()
+      vim.fn.setreg("a", git_head)
+      vim.notify("(Reg a) current branch -> " .. git_head)
+    end,
+  },
+  {
+    description = "Copy current branch name to clipboard",
+    action = function()
+      local git_head = vim.fn.FugitiveHead()
+      vim.fn.setreg("+", git_head)
+      vim.notify("(Reg +) current branch -> " .. git_head)
+    end,
+  },
+  {
+    description = "Show commit under cursor (split)",
+    action = function()
+      open_commit_under_cursor("split")
+    end,
+  },
+  {
+    description = "Show commit under cursor (vsplit)",
+    action = function()
+      open_commit_under_cursor("vsplit")
+    end,
+  },
+  {
+    description = "Show commit under cursor (tab)",
+    action = function()
+      open_commit_under_cursor("tab split")
+    end,
+  },
+}
+
+local git_commit_select = function()
+  local fzf_lua = require("fzf-lua")
+
+  -- Format options for display
+  local items = {}
+  for i, option in ipairs(git_commit_options) do
+    table.insert(items, string.format("%d. %s", i, option.description))
+  end
+
+  -- fzf picker
+  fzf_lua.fzf_exec(items, {
+    prompt = "Git Commit Options> ",
+    actions = {
+      ["default"] = function(selected)
+        if not selected or #selected == 0 then
+          return
+        end
+
+        local selection = selected[1]
+        -- Extract option index from selection
+        local index = tonumber(selection:match("^(%d+)%."))
+        if index and git_commit_options[index] then
+          git_commit_options[index].action()
+        end
+      end,
+    },
+    fzf_opts = {
+      ["--no-multi"] = "",
+      ["--header"] = "Select a git commit option",
+    },
+  })
+end
+local git_commit_mappings_opts = {
+  noremap = true,
+  desc = "Git commit options (fzf)",
+}
+
+local function git_commit_mappings_fn()
   local count = vim.v.count
-  local count_string = "" .. count
-  local pattern = "^(%d)(%d?)$"
-  local first, last = count_string:match(pattern)
 
   if count == 0 then
     -- split the current buffer horizontally spanning the bottom
@@ -269,72 +415,9 @@ local git_commit_mappings_fn = function()
     return
   end
 
-  local cmd = nil
-
-  if count == 1 then
-    cmd = "--allow-empty"
-  elseif count == 2 then
-    cmd = "--amend"
-  elseif count == 3 then
-    cmd = "--amend --no-edit"
-  elseif count == 4 then
-    utils.write_to_command_mode(
-      "G verify-commit " .. vim.fn.expand("<cword>") .. " "
-    )
-    return
-  elseif count == 44 then
-    utils.write_to_command_mode(
-      "G verify-commit -v " .. vim.fn.expand("<cword>") .. " "
-    )
-    return
-  -- git branch
-  elseif first == "5" then
-    if last == "5" then -- 55
-      local search_text = "[ ./)(]\\+"
-      vim.fn.setreg("/", search_text)
-      vim.cmd("set hlsearch")
-      pcall(vim.cmd.normal, { "n", bang = true })
-      return
-    elseif last == "2" then -- 52
-      local git_head = vim.fn.FugitiveHead()
-      local jira_ticket_pattern = git_head:match("^[A-Z]+%-[0-9]+")
-      if jira_ticket_pattern then
-        vim.fn.setreg("a", jira_ticket_pattern)
-        vim.fn.setreg("+", jira_ticket_pattern)
-        vim.notify("(Reg a & +) ticket -> " .. jira_ticket_pattern)
-      else
-        vim.notify(
-          "No JIRA ticket pattern found in branch: " .. git_head
-        )
-      end
-      return
-    end
-
-    local git_head = vim.fn.FugitiveHead()
-    local reg = (last == "1" and "a") or "+"
-    vim.fn.setreg(reg, git_head)
-    vim.notify("(Reg " .. reg .. ") current branch -> " .. git_head)
-    return
-  -- git show
-  elseif count == 6 then
-    open_commit_under_cursor("split")
-    return
-  elseif count == 62 then
-    open_commit_under_cursor("vsplit")
-    return
-  elseif count == 63 then
-    open_commit_under_cursor("tab split")
-    return
-  else
-    cmd = ""
-  end
-
-  utils.write_to_command_mode("Git commit " .. cmd)
+  git_commit_select()
 end
-local git_commit_mappings_opts = {
-  noremap = true,
-  desc = "Git commit 1/empty 2/amend 3/amendNoEdit 4/verify 5/search 6/show",
-}
+
 keymap("n", "<leader>gc", git_commit_mappings_fn, git_commit_mappings_opts)
 
 -- Git config.user
@@ -539,7 +622,7 @@ vim.api.nvim_create_autocmd("FileType", {
     keymap("n", "cc", git_commit_mappings_fn, {
       buffer = true,
       noremap = true,
-      desc = "Git commit 1/empty 2/amend 3/amendNoEdit",
+      desc = "Git commit options (fzf)",
     })
 
     keymap("n", "r<space>", git_rebase_root_mappings_fn, {
