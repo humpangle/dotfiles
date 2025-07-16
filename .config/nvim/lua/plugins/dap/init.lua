@@ -12,32 +12,41 @@ local function do_echo(text)
   vim.cmd.echo('"' .. "DAP: " .. text .. '"')
 end
 
-local list_breakpoints_in_qickfix = function()
+local list_breakpoints_in_fzf_lua = function()
   local breakpoints = require("dap.breakpoints").get()
-  local quickfix_list = {}
+  local fzf_lua = require("fzf-lua")
+  local fzf_actions = require("fzf-lua.actions")
+  local items = {}
 
   for buf_nr, bp_list in pairs(breakpoints) do
     local filename = vim.api.nvim_buf_get_name(buf_nr)
+    filename = utils.strip_cwd(filename)
     for _, bp in ipairs(bp_list) do
-      table.insert(quickfix_list, {
-        filename = filename,
-        lnum = bp.line,
-        text = "Breakpoint",
-      })
+      -- fzf-lua format: filename:line:col:text
+      table.insert(items, string.format("%s:%d:1", filename, bp.line))
     end
   end
 
-  if #quickfix_list == 0 then
-    vim.cmd.echo('"' .. "DAP: No breakpoints!" .. '"')
+  if #items == 0 then
+    vim.notify("DAP: No breakpoints!", vim.log.levels.INFO)
     return
   end
 
-  vim.fn.setqflist({}, " ", {
-    title = "Breakpoints",
-    items = quickfix_list,
+  utils.set_fzf_lua_nvim_listen_address()
+  fzf_lua.fzf_exec(items, {
+    prompt = "Breakpoints> ",
+    actions = {
+      ["default"] = fzf_actions.file_edit,
+      ["ctrl-s"] = fzf_actions.file_split,
+      ["ctrl-v"] = fzf_actions.file_vsplit,
+      ["ctrl-t"] = fzf_actions.file_tabedit,
+      ["alt-q"] = fzf_actions.file_sel_to_qf,
+    },
+    fzf_opts = {
+      ["--header"] = string.format("Breakpoints (%d)", #items),
+    },
+    previewer = "builtin",
   })
-
-  vim.cmd("copen")
 end
 
 ---@param dir "next"|"prev"
@@ -203,9 +212,9 @@ return {
             end,
           },
           {
-            description = "List breakpoints in quickfix",
+            description = "List breakpoints FZF-LUA",
             handler = function()
-              list_breakpoints_in_qickfix()
+              list_breakpoints_in_fzf_lua()
             end,
           },
         }
@@ -499,7 +508,7 @@ return {
 
       vim.api.nvim_create_user_command(
         "DAPListBreakpoints",
-        list_breakpoints_in_qickfix,
+        list_breakpoints_in_fzf_lua,
         { nargs = "*" }
       )
 

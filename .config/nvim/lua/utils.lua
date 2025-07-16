@@ -746,4 +746,14 @@ end
 
 utils.mason_install_path = vim.fn.stdpath("data") .. "/mason/packages"
 
+---Strip the current working directory from a file path
+---@param filename string
+---@return string
+function utils.strip_cwd(filename)
+  local pattern = "^"
+    .. vim.pesc(vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h") .. "/")
+  local stripped = filename:gsub(pattern, "")
+  return stripped
+end
+
 return utils
