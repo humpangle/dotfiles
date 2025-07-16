@@ -41,22 +41,31 @@ local list_breakpoints_in_qickfix = function()
 end
 
 ---@param dir "next"|"prev"
-local function gotoBreakpoint(dir)
+---@param current_buffer_only? boolean
+local function goto_breakpoint(dir, current_buffer_only)
   -- https://github.com/mfussenegger/nvim-dap/issues/792#issuecomment-1980921023
+  local buf_nr = vim.api.nvim_get_current_buf()
+
   local breakpoints = require("dap.breakpoints").get()
-  -- if #breakpoints == 0 then
-  --   vim.notify("No breakpoints set", vim.log.levels.WARN)
-  --   return
-  -- end
+
+  if current_buffer_only then
+    breakpoints = {
+      [buf_nr] = breakpoints[buf_nr] or {},
+    }
+  end
+
   local points = {}
   for bufnr, buffer in pairs(breakpoints) do
     for _, point in ipairs(buffer) do
-      table.insert(points, { bufnr = bufnr, line = point.line })
+      table.insert(points, {
+        bufnr = bufnr,
+        line = point.line,
+      })
     end
   end
 
   local current = {
-    bufnr = vim.api.nvim_get_current_buf(),
+    bufnr = buf_nr,
     line = vim.api.nvim_win_get_cursor(0)[1],
   }
 
@@ -126,38 +135,114 @@ return {
 
       map_lazy_key("<leader>dab", function()
         local dap = require("dap")
-        local count = vim.v.count
+        local fzf_lua = require("fzf-lua")
 
-        if count == 0 then
-          dap.toggle_breakpoint()
-        elseif count == 1 then
-          local prompt = vim.fn.input("Breakpoint condition: ")
-          dap.set_breakpoint(prompt)
-        elseif count == 2 then
-          dap.clear_breakpoints()
-          vim.notify("All Breakpoints Cleared!")
-        elseif count == 20 then
-          dap.clear_breakpoints()
+        -- Define breakpoint actions with descriptions
+        local breakpoint_actions = {
+          {
+            description = "Toggle breakpoint",
+            handler = function()
+              dap.toggle_breakpoint()
+            end,
+          },
+          {
+            description = "Conditional breakpoint",
+            handler = function()
+              local prompt =
+                vim.fn.input("Breakpoint condition: ")
+              dap.set_breakpoint(prompt)
+            end,
+          },
+          {
+            description = "Clear all breakpoints",
+            handler = function()
+              dap.clear_breakpoints()
+              vim.notify("All Breakpoints Cleared!")
+            end,
+          },
+          {
+            description = "Clear all & set breakpoint",
+            handler = function()
+              dap.clear_breakpoints()
+              dap.toggle_breakpoint()
+              vim.notify("All Breakpoints Cleared and Set!")
+            end,
+          },
+          {
+            description = "Clear all & set conditional breakpoint",
+            handler = function()
+              dap.clear_breakpoints()
+              local prompt =
+                vim.fn.input("Breakpoint condition: ")
+              dap.set_breakpoint(prompt)
+              vim.notify("All Breakpoints Cleared and Set!")
+            end,
+          },
+          {
+            description = "Next breakpoint FILE",
+            handler = function()
+              goto_breakpoint("next", true)
+            end,
+          },
+          {
+            description = "Previous breakpoint FILE",
+            handler = function()
+              goto_breakpoint("prev", true)
+            end,
+          },
+          {
+            description = "Next breakpoint GLOBAL",
+            handler = function()
+              goto_breakpoint("next")
+            end,
+          },
+          {
+            description = "Previous breakpoint GLOBAL",
+            handler = function()
+              goto_breakpoint("prev")
+            end,
+          },
+          {
+            description = "List breakpoints in quickfix",
+            handler = function()
+              list_breakpoints_in_qickfix()
+            end,
+          },
+        }
 
-          dap.toggle_breakpoint()
-
-          vim.notify("All Breakpoints Cleared and Set!")
-        elseif count == 21 then
-          dap.clear_breakpoints()
-
-          local prompt = vim.fn.input("Breakpoint condition: ")
-          dap.set_breakpoint(prompt)
-
-          vim.notify("All Breakpoints Cleared and Set!")
-        elseif count == 3 then
-          gotoBreakpoint("next")
-        elseif count == 4 then
-          gotoBreakpoint("prev")
-        elseif count == 5 then
-          list_breakpoints_in_qickfix()
+        -- Format actions for display
+        local items = {}
+        for i, action in ipairs(breakpoint_actions) do
+          table.insert(
+            items,
+            string.format("%d. %s", i, action.description)
+          )
         end
+
+        -- fzf picker
+        fzf_lua.fzf_exec(items, {
+          prompt = "Breakpoint Actions> ",
+          actions = {
+            ["default"] = function(selected)
+              if not selected or #selected == 0 then
+                return
+              end
+
+              local selection = selected[1]
+              -- Extract action index from selection
+              local index = tonumber(selection:match("^(%d+)%."))
+              if index and breakpoint_actions[index] then
+                breakpoint_actions[index].handler()
+              end
+            end,
+          },
+          fzf_opts = {
+            ["--no-multi"] = "",
+            ["--header"] = "Select a breakpoint action",
+          },
+        })
       end, {
-        desc = "DAP: breakpoints 0/toggle 1/cond 2/clear 3/next 4/prev 5/list",
+        desc = "DAP: breakpoint actions menu",
       }),
 
       map_lazy_key("<leader>da=", function()
