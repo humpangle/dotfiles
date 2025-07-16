@@ -12,18 +12,72 @@ local function do_echo(text)
   vim.cmd.echo('"' .. "DAP: " .. text .. '"')
 end
 
+---@param breakpoints table
+---@param items table
+---@param seen_breakpoints table
+---@param relative_path? string
+local function format_breakpoints_for_fzf_lua(
+  breakpoints,
+  items,
+  seen_breakpoints,
+  relative_path
+)
+  for buf_nr, bp_list in pairs(breakpoints) do
+    relative_path = relative_path
+      or utils.strip_cwd(vim.api.nvim_buf_get_name(buf_nr))
+    for _, bp in ipairs(bp_list) do
+      local key = relative_path .. bp.line
+      if not seen_breakpoints[key] then
+        seen_breakpoints[key] = true
+        table.insert(
+          items,
+          string.format("%s:%d:1", relative_path, bp.line)
+        )
+      end
+    end
+  end
+  return items, seen_breakpoints
+end
+
 local list_breakpoints_in_fzf_lua = function()
-  local breakpoints = require("dap.breakpoints").get()
   local fzf_lua = require("fzf-lua")
   local fzf_actions = require("fzf-lua.actions")
   local items = {}
+  local seen_breakpoints = {} -- Tracking to avoid duplicates
 
-  for buf_nr, bp_list in pairs(breakpoints) do
-    local filename = vim.api.nvim_buf_get_name(buf_nr)
-    filename = utils.strip_cwd(filename)
-    for _, bp in ipairs(bp_list) do
-      -- fzf-lua format: filename:line:col:text
-      table.insert(items, string.format("%s:%d:1", filename, bp.line))
+  -- Format breakpoints for currently loaded buffers
+  local breakpoints = require("dap.breakpoints").get()
+  format_breakpoints_for_fzf_lua(breakpoints, items, seen_breakpoints)
+
+  -- Format breakpoints from dap-helper JSON file
+  local ok, dap_helper_internals = pcall(require, "dap-helper.internals")
+  if ok then
+    local json_data = dap_helper_internals.load_data_from_json_file(
+      dap_helper_internals.compute_json_filename_for_cwd()
+    )
+
+    for relative_path, file_data in pairs(json_data) do
+      breakpoints = file_data.breakpoints
+      if breakpoints and #breakpoints > 0 then
+        -- Make breakpoints consistent with require("dap.breakpoints").get() which is keyed by buffer number:
+        -- {
+        --   [2] = { {
+        --       line = 31
+        --     }, {
+        --       line = 40
+        --     } }
+        -- }
+        breakpoints = {
+          [relative_path] = file_data.breakpoints,
+        }
+
+        format_breakpoints_for_fzf_lua(
+          breakpoints,
+          items,
+          seen_breakpoints,
+          relative_path
+        )
+      end
     end
   end
 
@@ -31,6 +85,9 @@ local list_breakpoints_in_fzf_lua = function()
     vim.notify("DAP: No breakpoints!", vim.log.levels.INFO)
     return
   end
+
+  -- We sort items for consistent ordering of file names
+  table.sort(items)
 
   utils.set_fzf_lua_nvim_listen_address()
   fzf_lua.fzf_exec(items, {
