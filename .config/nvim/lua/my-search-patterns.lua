@@ -39,8 +39,14 @@ M.patterns = {
     navigation = "N",
   },
   {
-    description = "Timestamps (YYYY-MM-DD HH:MM:SS)",
-    pattern = "\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}[^\\d]\\d\\{2\\}:\\d\\{2\\}:\\d\\{2\\}",
+    description = "Datetime Timestamps (YYYY-MM-DD HH:MM:SS)",
+    -- This will now match:
+    -- - 2024-01-15 (just date)
+    -- - 2024-01-15 14 (date and hour)
+    -- - 2024-01-15 14:30 (date, hour:minute)
+    -- - 2024-01-15 14:30:45 (date, hour:minute:second)
+    -- - 2024-01-15 14:30:45.123 (with fractional seconds)
+    pattern = "\\d\\{4\\}-\\d\\{2\\}-\\d\\{2\\}\\([^\\d]\\d\\{2\\}\\(:\\d\\{2\\}\\(:\\d\\{2\\}\\(\\.\\d\\+\\)*\\)\\?\\)\\?\\)\\?",
     navigation = "N",
   },
   {
