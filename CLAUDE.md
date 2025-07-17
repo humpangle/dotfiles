@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) and Codex (openai) w
 
 ### Git Commit Rules
 
-- **Always** wait for explicit user approval before running `git stage`
-- **Always** wait for explicit user approval before running `git commit`
+- **NEVER** stage changes unless explicitly instructed by the user
+- **NEVER** commit changes unless explicitly instructed by the user
 - When asked to commit:
   - **DO NOT** stage remaining unstaged files - only commit what is already staged
   - Run `git diff --no-ext-diff --staged` to review staged changes
