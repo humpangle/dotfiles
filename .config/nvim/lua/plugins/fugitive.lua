@@ -370,7 +370,8 @@ local git_commit_select = function()
     table.insert(items, string.format("%d. %s", i, option.description))
   end
 
-  -- fzf picker
+  utils.set_fzf_lua_nvim_listen_address()
+
   fzf_lua.fzf_exec(items, {
     prompt = "Git Commit Options> ",
     actions = {

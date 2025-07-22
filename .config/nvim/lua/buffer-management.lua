@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {}
 
 M.lazy_doc_path = vim.fn.stdpath("state") .. "/lazy/readme/doc"
@@ -232,7 +234,7 @@ function M.delete_all_buffers(delete_flag, opts)
 end
 
 function M.delete_buffers_keymap()
-  require("utils").map_key("n", "<leader>be", function()
+  utils.map_key("n", "<leader>be", function()
     local count = vim.v.count
 
     if count == 0 then
@@ -298,7 +300,7 @@ function M.delete_buffers_keymap()
       table.insert(items, string.format("%d. %s", i, option.description))
     end
 
-    -- fzf picker
+    utils.set_fzf_lua_nvim_listen_address()
     fzf_lua.fzf_exec(items, {
       prompt = "Buffer Deletion> ",
       actions = {
