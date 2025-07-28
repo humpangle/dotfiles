@@ -454,48 +454,169 @@ keymap("n", "<leader>gu", function()
   vim.fn.feedkeys(vim.api.nvim_replace_termcodes(cmd, true, true, true), "t")
 end, { noremap = true, desc = "Git config user name. 1=email 2=env defaults" })
 
+-- Define git rebase/reset/merge options with descriptions
+local git_rebase_options = {
+  {
+    description = "Rebase",
+    action = function()
+      utils.write_to_command_mode("G rebase ")
+    end,
+  },
+  {
+    description = "Rebase Main",
+    action = function()
+      utils.write_to_command_mode("G rebase main")
+    end,
+  },
+  {
+    description = "Rebase Develop",
+    action = function()
+      utils.write_to_command_mode("G rebase develop")
+    end,
+  },
+  {
+    description = "Rebase -i",
+    action = function()
+      utils.write_to_command_mode("G rebase -i ")
+    end,
+  },
+  {
+    description = "Rebase -i root",
+    action = function()
+      utils.write_to_command_mode("G rebase -i --root")
+    end,
+  },
+  {
+    description = "Rebase -i HEAD~",
+    action = function()
+      utils.write_to_command_mode("G rebase -i HEAD~")
+    end,
+  },
+  {
+    description = "Rebase -i <cword> cursor",
+    action = function()
+      utils.write_to_command_mode(
+        "G rebase -i " .. vim.fn.expand("<cword>")
+      )
+    end,
+  },
+  {
+    description = "Reset soft HEAD~",
+    action = function()
+      utils.write_to_command_mode("G reset --soft HEAD~")
+    end,
+  },
+  {
+    description = "Reset soft <cword> cursor",
+    action = function()
+      utils.write_to_command_mode(
+        "G reset --soft " .. vim.fn.expand("<cword>")
+      )
+    end,
+  },
+  {
+    description = "Reset soft",
+    action = function()
+      utils.write_to_command_mode("G reset --soft ")
+    end,
+  },
+  {
+    description = "Reset hard HEAD~",
+    action = function()
+      utils.write_to_command_mode("G reset --hard HEAD~")
+    end,
+  },
+  {
+    description = "Reset hard <cword> cursor",
+    action = function()
+      utils.write_to_command_mode(
+        "G reset --hard " .. vim.fn.expand("<cword>")
+      )
+    end,
+  },
+  {
+    description = "Merge main",
+    action = function()
+      utils.write_to_command_mode("G merge main")
+    end,
+  },
+  {
+    description = "Merge master",
+    action = function()
+      utils.write_to_command_mode("G merge master")
+    end,
+  },
+  {
+    description = "Merge develop",
+    action = function()
+      utils.write_to_command_mode("G merge develop")
+    end,
+  },
+  {
+    description = "Merge",
+    action = function()
+      utils.write_to_command_mode("G merge ")
+    end,
+  },
+}
+
+local git_rebase_select = function()
+  local fzf_lua = require("fzf-lua")
+
+  -- Format options for display
+  local items = {}
+  for i, option in ipairs(git_rebase_options) do
+    table.insert(items, string.format("%d. %s", i, option.description))
+  end
+
+  utils.set_fzf_lua_nvim_listen_address()
+
+  fzf_lua.fzf_exec(items, {
+    prompt = "Git Rebase/Reset/Merge Options> ",
+    actions = {
+      ["default"] = function(selected)
+        if not selected or #selected == 0 then
+          return
+        end
+
+        local selection = selected[1]
+        -- Extract option index from selection
+        local index = tonumber(selection:match("^(%d+)%."))
+        if index and git_rebase_options[index] then
+          git_rebase_options[index].action()
+        end
+      end,
+    },
+    fzf_opts = {
+      ["--no-multi"] = "",
+      ["--header"] = "Select a git rebase/reset/merge option",
+    },
+  })
+end
+
 -- Rebase keymaps
 local git_rebase_root_mappings_fn = function()
   local count = vim.v.count
 
-  if count == 1 then
-    utils.write_to_command_mode("G rebase -i HEAD~")
-  elseif count == 11 then
-    utils.write_to_command_mode("G rebase -i " .. vim.fn.expand("<cword>"))
-  elseif count == 2 then
-    utils.write_to_command_mode("G rebase -i --root")
-  elseif count == 3 then
-    utils.write_to_command_mode("G reset --soft HEAD~")
-  elseif count == 33 then
-    utils.write_to_command_mode(
-      "G reset --soft " .. vim.fn.expand("<cword>")
-    )
-  elseif count == 34 then
-    utils.write_to_command_mode("G reset --soft ")
-  elseif count == 4 then
-    utils.write_to_command_mode("G reset --hard HEAD~")
-  elseif count == 44 then
-    utils.write_to_command_mode(
-      "G reset --hard " .. vim.fn.expand("<cword>")
-    )
-  elseif count == 9 then
-    utils.write_to_command_mode("G merge main")
-  elseif count == 91 then
-    utils.write_to_command_mode("G merge master")
-  elseif count == 92 then
-    utils.write_to_command_mode("G merge develop")
-  elseif count == 99 then
-    utils.write_to_command_mode("G rebase -i ")
-  else
+  if count == 0 then
+    -- Default action: G rebase
     utils.write_to_command_mode("G rebase ")
+    return
   end
+
+  git_rebase_select()
 end
-local git_rebase_root_mappings_desc =
-  [[G rebase 0/i 1/iH 2/iroot 3/softH 33/soft 4/hardH 44/hard]]
-keymap("n", "<Leader>r<Space>", git_rebase_root_mappings_fn, {
+local git_rebase_mappings_opts = {
   noremap = true,
-  desc = git_rebase_root_mappings_desc,
-})
+  desc = "Git rebase/reset/merge options (fzf)",
+}
+
+keymap(
+  "n",
+  "<Leader>r<Space>",
+  git_rebase_root_mappings_fn,
+  git_rebase_mappings_opts
+)
 
 keymap("n", "<Leader>rr", function()
   local count = vim.v.count
@@ -629,7 +750,7 @@ vim.api.nvim_create_autocmd("FileType", {
     keymap("n", "r<space>", git_rebase_root_mappings_fn, {
       buffer = true,
       noremap = true,
-      desc = git_rebase_root_mappings_desc,
+      desc = git_rebase_mappings_opts.desc,
     })
   end,
 })
