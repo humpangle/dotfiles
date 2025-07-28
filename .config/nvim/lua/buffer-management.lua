@@ -233,6 +233,18 @@ function M.delete_all_buffers(delete_flag, opts)
   notify(count .. " buffers wiped with flag " .. delete_flag .. "!", opts)
 end
 
+local function do_delete_all_buffers(delete_opts)
+  local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
+  if answer == "Yes" then
+    require("buffer-management").delete_all_buffers("a", delete_opts)
+  else
+    vim.notify(
+      "Not deleting ALL buffers - too destructive!",
+      vim.log.levels.WARN
+    )
+  end
+end
+
 function M.delete_buffers_keymap()
   utils.map_key("n", "<leader>be", function()
     local count = vim.v.count
@@ -249,15 +261,7 @@ function M.delete_buffers_keymap()
     end
 
     if count == 2 then
-      local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
-      if answer == "Yes" then
-        require("buffer-management").delete_all_buffers("a")
-      else
-        vim.notify(
-          "Not deleting ALL buffers - too destructive!",
-          vim.log.levels.WARN
-        )
-      end
+      do_delete_all_buffers()
       return
     end
 
@@ -292,6 +296,18 @@ function M.delete_buffers_keymap()
         description = "UnWindowed",
         type = "unwindowed",
       },
+      {
+        description = "Fugitive",
+        type = "fugitive",
+      },
+      {
+        description = "Empty",
+        type = "e",
+      },
+      {
+        description = "All",
+        type = "a",
+      },
     }
 
     -- Format options for display
@@ -313,7 +329,12 @@ function M.delete_buffers_keymap()
           local index = tonumber(selection:match("^(%d+)%."))
           if index and deletion_options[index] then
             local option = deletion_options[index]
-            -- vim.print(option)
+
+            -- Handle special case for ALL
+            if option.type == "a" then
+              do_delete_all_buffers({ delay_notify = true })
+              return
+            end
 
             -- Handle special case for avante
             if option.type == "avante" then
