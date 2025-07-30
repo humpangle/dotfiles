@@ -588,36 +588,37 @@ gsd() {
   git stash drop "stash@{$1}"
 }
 
-if _is_linux && ! _has_termux; then
-  # install with: `sudo apt-get install ssh-askpass-gnome ssh-askpass -y`
-  # shellcheck disable=2155
-  export SUDO_ASKPASS=$(command -v ssh-askpass)
+if ! _has_termux; then
+  alias scouser='sudo chown -R $USER:$(id -g -n)'
 
-  alias ug='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
+  if _is_linux; then
+    # install with: `sudo apt-get install ssh-askpass-gnome ssh-askpass -y`
+    # shellcheck disable=2155
+    export SUDO_ASKPASS=$(command -v ssh-askpass)
 
-  # rsync
-  alias rsynca='rsync -avzP --delete'
-  alias rsyncd='rsync -avzP --delete --dry-run'
+    alias ug='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 
-  alias scouser='sudo chown -R $USER:$USER'
-  alias hb='sudo systemctl hibernate'
-  alias sd='sudo shutdown now'
-  alias sb='sudo reboot now'
-  # debian package `lrzsz`
-  alias rb='sudo reboot'
+    # rsync
+    alias rsynca='rsync -avzP --delete'
+    alias rsyncd='rsync -avzP --delete --dry-run'
 
-  _purge-systemd-service() {
-    sudo systemctl stop "$1"
-    sudo systemctl disable "$1"
-    sudo rm -rf /etc/systemd/system/"$1"
-    sudo rm -rf /usr/lib/systemd/system/"$1"
-    sudo systemctl daemon-reload
-    sudo systemctl reset-failed
-  }
-  alias purge-systemd-service='_purge-systemd-service'
-fi
+    alias hb='sudo systemctl hibernate'
+    alias sd='sudo shutdown now'
+    alias sb='sudo reboot now'
+    # debian package `lrzsz`
+    alias rb='sudo reboot'
 
-if _has_termux; then
+    _purge-systemd-service() {
+      sudo systemctl stop "$1"
+      sudo systemctl disable "$1"
+      sudo rm -rf /etc/systemd/system/"$1"
+      sudo rm -rf /usr/lib/systemd/system/"$1"
+      sudo systemctl daemon-reload
+      sudo systemctl reset-failed
+    }
+    alias purge-systemd-service='_purge-systemd-service'
+  fi
+else
   alias ug='pkg update && pkg upgrade'
 fi
 
