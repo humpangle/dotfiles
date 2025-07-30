@@ -28,11 +28,13 @@
       // "WebFetch",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:github.com)",
+      "WebFetch(domain:hexdocs.pm)",
+      "WebFetch(domain:raw.githubusercontent.com)",
       "WebSearch",
       "Write",
-      "mcp__consult7__consultation",
-      "mcp__context7__get-library-docs",
-      "mcp__context7__resolve-library-id"
+      "mcp__consult7__*",
+      "mcp__context7__*",
+      "mcp__tidewave__*"
     ],
     "deny": [
       // "Bash(command:rm)",
