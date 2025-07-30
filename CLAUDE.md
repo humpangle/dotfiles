@@ -16,6 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) and Codex (openai) w
      - Body: Multi-line explanation of why changes were made (wrap ~120 chars)
   - Present the draft commit message to the user for approval
   - Only execute `git commit -m "<subject>" -m "<body>"` after user confirms
+  - User responses: commit when user responds with `Yes/yes/y`, do not commit when user responds with `No/no/n`
 
 ### Configuration for temporary directory
 
