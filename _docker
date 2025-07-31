@@ -4,7 +4,12 @@
 if ! command -v docker &>/dev/null; then
   return
 fi
+
 _DOCKER_GLOBAL_LOG_DIR_="$HOME/.docker-ebnis-logs"
+if [ -n "$_DOCKER_LOCAL_LOG_DIR_" ]; then
+  _DOCKER_GLOBAL_LOG_DIR_="$_DOCKER_LOCAL_LOG_DIR_"
+fi
+
 mkdir -p "$_DOCKER_GLOBAL_LOG_DIR_"
 alias dld='$_DOCKER_GLOBAL_LOG_DIR_'
 alias dldc='copy $_DOCKER_GLOBAL_LOG_DIR_'
