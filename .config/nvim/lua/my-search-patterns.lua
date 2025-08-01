@@ -69,6 +69,21 @@ M.patterns = {
     pattern = "\\*\\*",
     navigation = "N",
   },
+  {
+    description = "Git conflict start",
+    pattern = "<<<<<<< ",
+    navigation = "n",
+  },
+  {
+    description = "Git conflict end",
+    pattern = ">>>>>>> ",
+    navigation = "n",
+  },
+  {
+    description = "Git conflict middle",
+    pattern = "=======",
+    navigation = "n",
+  },
 }
 
 local function apply_search_pattern(pattern_data)
