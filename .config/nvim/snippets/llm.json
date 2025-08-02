@@ -183,5 +183,48 @@
     "description": [
       "Anki Debug"
     ]
+  },
+  "Anki Comprehensive": {
+    "prefix": [
+      "anki_comprehensive"
+    ],
+    "body": [
+      "I’d like to create an Anki deck that comprehensively covers all concepts discussed in",
+      "this conversation — including both my prompts and your responses.",
+      "uploaded PDF",
+      "uploaded image",
+      "uploaded video",
+      "",
+      "Please generate:",
+      "1. A CSV file (comma-separated values), UTF-8 encoded, suitable for Anki import.",
+      "    - Each row should represent **one flashcard**.",
+      "    - The first column is the **front (question)**.",
+      "    - The second column is the **back (answer)**.",
+      "    - Do not include headers.",
+      "    - Use double quotes around each field if needed to preserve formatting.",
+      "",
+      "2. Flashcard format:",
+      "    - Use clear **Q → A** format.",
+      "    - Keep questions concise and direct.",
+      "    - Write full, precise, and clear answers (even if long).",
+      "    - Include key examples, tables, and bullet points if they aid understanding.",
+      "    - Use `code blocks` for commands or code snippets.",
+      "",
+      "3. Optional enhancements:",
+      "    - If helpful, reference **image filenames** like `diagram_git_diff_submodule.png` after the answer.",
+      "        Add a short caption on a new line.",
+      "    - Add **mnemonics** where relevant at the end of the answer using the format: `Mnemonic: ...`",
+      "",
+      "4. Coverage:",
+      "    - Include all meaningful concepts from the conversation: Git commands (`git diff`, `--submodule`), submodules, index SHAs, submodule config options, etc.",
+      "    - Include comparisons, explanations, best practices, and configuration settings discussed.",
+      "",
+      "Return only the downloadable CSV file — no inline content or additional commentary.",
+      "",
+      "Return only the CSV content — no extra commentary or explanations."
+    ],
+    "description": [
+      "Anki Comprehensive"
+    ]
   }
 }
