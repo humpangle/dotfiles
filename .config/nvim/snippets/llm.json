@@ -221,7 +221,9 @@
       "",
       "Return only the downloadable CSV file — no inline content or additional commentary.",
       "",
-      "Return only the CSV content — no extra commentary or explanations."
+      "Return only the CSV content — no extra commentary or explanations.",
+      "",
+      "Return only the flashcard content without any headings or commentary, so it can be pasted directly into Anki."
     ],
     "description": [
       "Anki Comprehensive"
