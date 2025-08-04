@@ -189,7 +189,7 @@
       "anki_comprehensive"
     ],
     "body": [
-      "I’d like to create an Anki deck that comprehensively covers all concepts discussed in:",
+      "I’d like to create an Anki deck that comprehensively covers all concepts discussed (including your own knowledge of the subject) in:",
       "${1:this conversation — including both my prompts and your responses.}",
       "${2:uploaded PDF}",
       "${3:uploaded image}",
