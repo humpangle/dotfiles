@@ -189,11 +189,11 @@
       "anki_comprehensive"
     ],
     "body": [
-      "I’d like to create an Anki deck that comprehensively covers all concepts discussed in",
-      "this conversation — including both my prompts and your responses.",
-      "uploaded PDF",
-      "uploaded image",
-      "uploaded video",
+      "I’d like to create an Anki deck that comprehensively covers all concepts discussed in:",
+      "${1:this conversation — including both my prompts and your responses.}",
+      "${2:uploaded PDF}",
+      "${3:uploaded image}",
+      "${4:uploaded video}",
       "",
       "Please generate:",
       "1. A CSV file (comma-separated values), UTF-8 encoded, suitable for Anki import.",
@@ -218,12 +218,9 @@
       "4. Coverage:",
       "    - Include all meaningful concepts from the conversation: Git commands (`git diff`, `--submodule`), submodules, index SHAs, submodule config options, etc.",
       "    - Include comparisons, explanations, best practices, and configuration settings discussed.",
-      "",
-      "Return only the downloadable CSV file — no inline content or additional commentary.",
-      "",
-      "Return only the CSV content — no extra commentary or explanations.",
-      "",
-      "Return only the flashcard content without any headings or commentary, so it can be pasted directly into Anki."
+      "${5:Return only the downloadable CSV file — no inline content or additional commentary.}",
+      "${6:Return only the CSV content — no extra commentary or explanations.}",
+      "${7:Return only the flashcard content without any headings or commentary, so it can be pasted directly into Anki}."
     ],
     "description": [
       "Anki Comprehensive"
