@@ -303,7 +303,7 @@ local git_commit_options = {
   {
     description = "Search pattern: [ ./)(><]+",
     action = function()
-      local search_text = "[ ./)(><]\\+"
+      local search_text = "[ ./)(><|]\\+"
       vim.fn.setreg("/", search_text)
       vim.cmd("set hlsearch")
       pcall(vim.cmd.normal, { "n", bang = true })
