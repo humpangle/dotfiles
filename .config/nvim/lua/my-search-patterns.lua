@@ -84,6 +84,11 @@ M.patterns = {
     pattern = "=======",
     navigation = "n",
   },
+  {
+    description = "Git diff start",
+    pattern = "diff --git ",
+    navigation = "n",
+  },
 }
 
 local function apply_search_pattern(pattern_data)
