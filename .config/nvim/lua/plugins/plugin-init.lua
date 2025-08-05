@@ -421,6 +421,7 @@ local plugins_table = {
   require("plugins/firenvim"),
   require("plugins/refactoring"),
   require("plugins/symlink"),
+  require("plugins/csvview-nvim"),
 }
 
 ---@diagnostic disable:missing-fields
