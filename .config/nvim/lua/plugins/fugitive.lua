@@ -416,6 +416,7 @@ local function git_commit_mappings_fn()
     return
   end
 
+  vim.cmd("tab split")
   git_commit_select()
 end
 
@@ -604,6 +605,7 @@ local git_rebase_root_mappings_fn = function()
     return
   end
 
+  vim.cmd("tab split")
   git_rebase_select()
 end
 local git_rebase_mappings_opts = {
