@@ -734,6 +734,12 @@ function utils.escape_register_plus(text)
   return escaped_text
 end
 
+function utils.tab_split_if_multiple_windows()
+  if #vim.api.nvim_tabpage_list_wins(0) > 1 then
+    vim.cmd("tab split")
+  end
+end
+
 function utils.set_fzf_lua_nvim_listen_address()
   local prefix = "/tmp/fzf-lua-EBNIS-"
 
