@@ -261,8 +261,14 @@ return {
         require("neotest").output_panel.toggle()
         return
       end
+
+      if count == 2 then
+        do_echo("Clear output panel", "")
+        require("neotest").output_panel.clear()
+        return
+      end
     end, {
-      desc = "99/inline-output 98/Toggle-Tab-Output-Panel",
+      desc = "0/inline-output 1/Toggle-Tab-Output-Panel 2/out-panel-clear",
     })
   end,
   config = function()
@@ -376,14 +382,6 @@ return {
         require("neotest").summary.toggle()
       end,
       desc = "Toggle Summary",
-    },
-    {
-      "<leader>ntc",
-      function()
-        do_echo("Clear output panel", "")
-        require("neotest").output_panel.clear()
-      end,
-      desc = "Toggle Output Panel",
     },
     {
       "<leader>ntw",
