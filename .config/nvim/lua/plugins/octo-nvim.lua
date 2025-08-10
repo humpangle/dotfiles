@@ -21,6 +21,7 @@ return {
   },
   keys = {
     map_lazy_key("<leader>ghh", function()
+      utils.set_fzf_lua_nvim_listen_address()
       vim.cmd("Octo")
     end, { desc = "Octo" }),
 
