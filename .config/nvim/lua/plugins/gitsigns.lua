@@ -55,52 +55,41 @@ return {
         -- / Navigation
 
         utils.map_key({ "n", "v" }, "<leader>hs", function()
-          if vim.fn.mode() == "v" then
-            gitsigns.stage_hunk({
+          local count = vim.v.count
+
+          if count == 0 then
+            if vim.fn.mode() == "v" then
+              gitsigns.stage_hunk({
+                vim.fn.line("."),
+                vim.fn.line("v"),
+              })
+            else
+              gitsigns.stage_hunk()
+            end
+          elseif count == 1 then
+            vim.cmd(":Git add %")
+            vim.cmd("edit! %")
+            vim.cmd("redraw!")
+          elseif count == 2 then
+            gitsigns.reset_hunk({
               vim.fn.line("."),
               vim.fn.line("v"),
             })
-          else
-            gitsigns.stage_hunk()
+          elseif count == 22 then
+            gitsigns.reset_buffer()
           end
 
           reload_fugitive_index()
-        end, { desc = "Hunk stage" }, bufnr)
-
-        utils.map_key("n", "<leader>hr", function()
-          gitsigns.reset_hunk()
-          reload_fugitive_index()
-        end, { desc = "Hunk reset" }, bufnr)
-
-        utils.map_key("n", "<leader>hS", function()
-          vim.cmd(":Git add %")
-          vim.cmd("edit! %")
-          vim.cmd("redraw!")
-
-          reload_fugitive_index()
           vim.cmd.echo("'" .. vim.fn.expand("%:.") .. " staged! '")
-        end, { desc = "Hunk stage buffer" })
-
-        utils.map_key("v", "<leader>hr", function()
-          gitsigns.reset_hunk({
-            vim.fn.line("."),
-            vim.fn.line("v"),
-          })
-
-          reload_fugitive_index()
-        end, { desc = "Hunk reset" }, bufnr)
+        end, {
+          desc = "Stage 0/partial 1/full 2/undo",
+        }, bufnr)
 
         utils.map_key("n", "<leader>hu", function()
           gitsigns.undo_stage_hunk()
 
           reload_fugitive_index()
         end, { desc = "Hunk undo stage" }, bufnr)
-
-        utils.map_key("n", "<leader>hR", function()
-          gitsigns.reset_buffer()
-
-          reload_fugitive_index()
-        end, { desc = "Hunk reset buffer" }, bufnr)
 
         utils.map_key("n", "<leader>hb", function()
           gitsigns.blame_line({ full = true })
