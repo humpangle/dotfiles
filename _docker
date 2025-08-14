@@ -207,4 +207,6 @@ dckr() {
 }
 alias dckr__description='dck && dcud docker compose kill && docker compose up --detached'
 
+_alias_map_docker["dcr"]='docker compose restart'
+
 _alias_map_complete _alias_map_docker
