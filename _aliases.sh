@@ -617,6 +617,8 @@ if ! _has_termux; then
       sudo systemctl reset-failed
     }
     alias purge-systemd-service='_purge-systemd-service'
+
+    alias sdpi='sudo dpkg -i'
   fi
 else
   alias ug='pkg update && pkg upgrade'
