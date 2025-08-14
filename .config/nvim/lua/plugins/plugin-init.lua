@@ -422,6 +422,7 @@ local plugins_table = {
   require("plugins/refactoring"),
   require("plugins/symlink"),
   require("plugins/csvview-nvim"),
+  require("plugins/live-preview-nvim"),
 }
 
 ---@diagnostic disable:missing-fields
