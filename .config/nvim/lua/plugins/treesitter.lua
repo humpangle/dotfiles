@@ -105,7 +105,9 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     config = function()
       local tsc = require("treesitter-context")
-      tsc.setup()
+      tsc.setup({
+        max_lines = 2,
+      })
     end,
   },
 }
