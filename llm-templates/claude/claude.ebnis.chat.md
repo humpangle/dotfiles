@@ -2,8 +2,12 @@ $HOME/dotfiles/llm-templates/
 $HOME/dotfiles/llm-templates/claude/CLAUDE.template.md
 
 script \
-$PWD/.___scratch/claude-session-$(date +'%m-%dT%H-%M-%S') \
--c claude
+"$PWD/.___scratch/claude-session-$(date +'%m-%dT%H-%M-%S')" \
+-c "$HOME/.claude/local/claude"
+
+script \
+"$PWD/.___scratch/claude-session-$(date +'%m-%dT%H-%M-%S')" \
+-c "$HOME/.claude/local/claude --add-dir some-dir/ "
 
 claude
 
