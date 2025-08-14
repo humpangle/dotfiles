@@ -22,6 +22,11 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
     : "__EBNIS_COMPOSE_CONFIG_FILENAME__='file1' docker compose up"
     : "docker compose up"
 
+    if [ -n "$__EBNIS_ENABLE_DOCKER_NETWORKING__" ]; then
+      # aws vpn client disables port forwarding in docker networking - this command re-enables it
+      sudo sysctl net.ipv4.ip_forward=1
+    fi
+
     if [ "$1" = 'compose' ]; then
       local args_after_compose_=("${@:2}")
       local args_=()
