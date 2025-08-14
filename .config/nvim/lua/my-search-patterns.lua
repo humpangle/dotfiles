@@ -8,7 +8,7 @@ M.patterns = {
     navigation = "N", -- Jump to first occurrence
   },
   {
-    description = ".py with F or E",
+    description = "Failure .py with F or E",
     pattern = "\\.py[^:]*[FE]",
     navigation = "N",
   },
@@ -19,7 +19,7 @@ M.patterns = {
     navigation = "N",
   },
   {
-    description = "Test name (_ test_ _)",
+    description = "Failure Test name (_ test_ _)",
     pattern = "_ .*test_.\\+ _",
     navigation = "N",
   },
