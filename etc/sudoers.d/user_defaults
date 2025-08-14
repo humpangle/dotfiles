@@ -7,10 +7,12 @@ Defaults  editor=__NEOVIM_BIN__
 # %docker ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
 
 Cmnd_Alias TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD = /usr/bin/tee /var/lib/docker/containers/*
+Cmnd_Alias SYSCTL_RE_ENABLE_DOCKER_NETWORKING = /usr/sbin/sysctl net.ipv4.ip_forward=1
 
 __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/chown
 __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
 __USERNAME__ ALL=(ALL)  NOPASSWD: TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD
+__USERNAME__ ALL=(ALL)  NOPASSWD: SYSCTL_RE_ENABLE_DOCKER_NETWORKING
 __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/systemctl
 # Binaries with sudo -E
 __USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /usr/bin/nvim_sudo_e
