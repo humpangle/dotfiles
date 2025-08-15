@@ -157,6 +157,9 @@ if lint_env_val then
       if not log_files then
         return
       end
+
+      vim.notify("Clearing test logs...")
+
       local files =
         vim.split(log_files, "::", { trimempty = true, plain = true })
       local current_file = vim.fn.expand("%:p")
@@ -184,7 +187,9 @@ if lint_env_val then
         print("Cleared: " .. table.concat(cleared_files, ", "))
       end
     else
+      vim.notify("Linting...")
       vim.cmd("Wmessage Lint")
+      vim.notify("Linting Completed")
     end
   end
 
