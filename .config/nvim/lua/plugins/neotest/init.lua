@@ -162,19 +162,19 @@ return {
     {
       "mfussenegger/nvim-dap",
       optional = true,
-          -- stylua: ignore
-          keys = {
-            {
-              "<leader>ntd",
-              function()
-                vim.o.background = "dark"
-                do_echo("Debug")
-                ---@diagnostic disable-next-line: missing-fields
-                require("neotest").run.run({ strategy = "dap" })
-              end,
-              desc = "Neotest Debug At Cursor"
-            },
-          },
+      -- stylua: ignore
+      keys = {
+        {
+          "<leader>ntd",
+          function()
+            vim.o.background = "dark"
+            do_echo("Debug")
+            ---@diagnostic disable-next-line: missing-fields
+            require("neotest").run.run({ strategy = "dap" })
+          end,
+          desc = "Neotest Debug At Cursor"
+        },
+      },
     },
     "nvim-neotest/neotest-jest",
     "marilari88/neotest-vitest",
