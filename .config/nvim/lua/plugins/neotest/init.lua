@@ -167,10 +167,16 @@ return {
         {
           "<leader>ntd",
           function()
+            -- duplicate the tab because DAP will take over current tab and the buffer may be buried under layers of
+            -- breakpoint buffers
+            vim.cmd('tab split')
             vim.o.background = "dark"
             do_echo("Debug")
-            ---@diagnostic disable-next-line: missing-fields
-            require("neotest").run.run({ strategy = "dap" })
+
+            vim.defer_fn(function()
+              ---@diagnostic disable-next-line: missing-fields
+              require("neotest").run.run({ strategy = "dap" })
+            end, 0)
           end,
           desc = "Neotest Debug At Cursor"
         },
