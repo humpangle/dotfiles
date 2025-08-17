@@ -1,4 +1,4 @@
-**/*.ebnis.chat.md
+**/*.ebnis.chat*.md
 **/.aider*
 **/elixir_ls-releases
 *Zone.Identifier
