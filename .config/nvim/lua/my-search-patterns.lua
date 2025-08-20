@@ -90,13 +90,13 @@ M.patterns = {
     navigation = "n",
   },
   {
-    description = "Query	Insert",
-    pattern = " Query	INSERT INTO ",
+    description = "Query Insert",
+    pattern = " Query INSERT INTO ",
     navigation = "n",
   },
   {
-    description = "Query	Select",
-    pattern = " Query	SELECT ",
+    description = "Query Select",
+    pattern = " Query SELECT ",
     navigation = "n",
   },
 }
