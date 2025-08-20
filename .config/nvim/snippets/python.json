@@ -156,5 +156,26 @@
     "description": [
       "Pragma No Cover"
     ]
+  },
+  "pytest.mark.parametrize": {
+    "prefix": [
+      "pytest_parametrize",
+      "parametrize_pytest"
+    ],
+    "body": [
+      "@pytest.mark.parametrize(",
+      "    \"a, b\",",
+      "    [",
+      "        pytest.param(",
+      "            a,",
+      "            b,",
+      "            id=\"\",",
+      "        ),",
+      "    ],",
+      ")"
+    ],
+    "description": [
+      "pytest.mark.parametrize"
+    ]
   }
 }
