@@ -43,7 +43,7 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
 
       if [ "$2" = "logs" ]; then
         local log_file_=""
-        log_file_="$_DOCKER_GLOBAL_LOG_DIR_/$(date +'%FT%H-%M-%S').log"
+        log_file_="$(realpath "$_DOCKER_GLOBAL_LOG_DIR_/$(date +'%FT%H-%M-%S').log")"
         local cmd_="$_EBNIS_DOCKER_BIN compose ${args_[*]}"
 
         echo -e "$PWD\n$cmd_\n" >"$log_file_"
