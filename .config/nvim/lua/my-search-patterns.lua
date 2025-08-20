@@ -99,6 +99,11 @@ M.patterns = {
     pattern = " Query SELECT ",
     navigation = "n",
   },
+  {
+    description = "Endpoint json",
+    pattern = '"endpoint": "',
+    navigation = "n",
+  },
 }
 
 local function apply_search_pattern(pattern_data)
