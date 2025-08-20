@@ -149,49 +149,47 @@ if lint_env_val then
     nargs = 0,
     desc = "Run all linters from $EBNIS_LINT_CMDS",
   })
-
-  local clear_test_logs = function()
-    local count = vim.v.count
-    if count == 1 then
-      local log_files = utils.get_os_env_or_nil("EBNIS_TEST_LOG_FILES")
-      if not log_files then
-        return
-      end
-
-      vim.notify("Clearing test logs...")
-
-      local files =
-        vim.split(log_files, "::", { trimempty = true, plain = true })
-      local current_file = vim.fn.expand("%:p")
-      local should_reload = false
-      local cleared_files = {}
-
-      for _, file in ipairs(files) do
-        local f = io.open(file, "w")
-        if f then
-          f:close()
-          table.insert(cleared_files, file)
-          if vim.fn.fnamemodify(file, ":p") == current_file then
-            should_reload = true
-          end
-        else
-          print("Failed to clear: " .. file)
-        end
-      end
-
-      if should_reload then
-        vim.cmd("e! %")
-      end
-
-      if #cleared_files > 0 then
-        print("Cleared: " .. table.concat(cleared_files, ", "))
-      end
-    else
-      vim.notify("Linting...")
-      vim.cmd("Wmessage Lint")
-      vim.notify("Linting Completed")
-    end
-  end
-
-  utils.map_key("n", "<leader>NN", clear_test_logs, { noremap = true })
 end
+
+utils.map_key("n", "<leader>NN", function()
+  local count = vim.v.count
+  if count == 1 then
+    local log_files = utils.get_os_env_or_nil("EBNIS_TEST_LOG_FILES")
+    if not log_files then
+      return
+    end
+
+    vim.notify("Clearing test logs...")
+
+    local files =
+      vim.split(log_files, "::", { trimempty = true, plain = true })
+    local current_file = vim.fn.expand("%:p")
+    local should_reload = false
+    local cleared_files = {}
+
+    for _, file in ipairs(files) do
+      local f = io.open(file, "w")
+      if f then
+        f:close()
+        table.insert(cleared_files, file)
+        if vim.fn.fnamemodify(file, ":p") == current_file then
+          should_reload = true
+        end
+      else
+        print("Failed to clear: " .. file)
+      end
+    end
+
+    if should_reload then
+      vim.cmd("e! %")
+    end
+
+    if #cleared_files > 0 then
+      print("Cleared: " .. table.concat(cleared_files, ", "))
+    end
+  elseif lint_env_val then
+    vim.notify("Linting...")
+    vim.cmd("Wmessage Lint")
+    vim.notify("Linting Completed")
+  end
+end, { noremap = true })
