@@ -89,6 +89,16 @@ M.patterns = {
     pattern = "diff --git ",
     navigation = "n",
   },
+  {
+    description = "Query	Insert",
+    pattern = " Query	INSERT INTO ",
+    navigation = "n",
+  },
+  {
+    description = "Query	Select",
+    pattern = " Query	SELECT ",
+    navigation = "n",
+  },
 }
 
 local function apply_search_pattern(pattern_data)
