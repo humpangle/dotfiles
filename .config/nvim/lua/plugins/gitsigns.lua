@@ -19,6 +19,19 @@ end
 
 return {
   "lewis6991/gitsigns.nvim",
+  init = function()
+    vim.api.nvim_create_autocmd({
+      "User",
+      "ColorScheme",
+    }, {
+      pattern = "*",
+      callback = function()
+        vim.cmd([[
+          hi! link GitSignsCurrentLineBlame DiagnosticInfo
+      ]])
+      end,
+    })
+  end,
   config = function()
     local gitsigns = require("gitsigns")
 
