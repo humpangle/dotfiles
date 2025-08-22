@@ -48,6 +48,28 @@
     ],
     "description": "print python to console"
   },
+  "log python to console": {
+    "prefix": [
+      "log_to_console",
+      "console_log",
+      "log_inspect",
+      "inspect_log"
+    ],
+    "body": [
+      "",
+      "# NOTE: --START-- DEBUG LOG {",
+      "(",
+      "      lambda: __import__(\"logging\")",
+      "      .getLogger(__name__)",
+      "      .info(f\"\\n\\n $1 ======\\n {$1} \\n\\n\")",
+      ")()",
+      "# NOTE: --END-- DEBUG LOG }",
+      ""
+    ],
+    "description": [
+      "log python to console"
+    ]
+  },
   "helper function": {
     "prefix": "helper_function",
     "body": "############################ ${1:title} ############################## noqa",
