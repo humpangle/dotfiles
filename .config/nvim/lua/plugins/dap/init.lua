@@ -12,6 +12,24 @@ local function do_echo(text)
   vim.cmd.echo('"' .. "DAP: " .. text .. '"')
 end
 
+local function defer_notify(message)
+  vim.defer_fn(function()
+    vim.notify(message)
+  end, 5)
+end
+
+local function clear_breakpoints()
+  local dap = require("dap")
+  dap.clear_breakpoints()
+
+  vim.defer_fn(function()
+    local ok, dap_helper_internals = pcall(require, "dap-helper.internals")
+    if ok then
+      dap_helper_internals.clear_json_file_content()
+    end
+  end, 500)
+end
+
 ---@param breakpoints table
 ---@param items table
 ---@param seen_breakpoints table
@@ -82,7 +100,7 @@ local list_breakpoints_in_fzf_lua = function()
   end
 
   if #items == 0 then
-    vim.notify("DAP: No breakpoints!", vim.log.levels.INFO)
+    defer_notify("DAP: No breakpoints!")
     return
   end
 
@@ -182,7 +200,7 @@ return {
       "DapTerminate",
       "DapToggleBreakpoint",
       "DapToggleRepl",
-      "DapUiToggle",
+      "DapUIToggle",
       "DapUninstall",
       "DapVirtualTextDisable",
       "DapVirtualTextEnable",
@@ -220,26 +238,26 @@ return {
           {
             description = "Clear all breakpoints",
             handler = function()
-              dap.clear_breakpoints()
-              vim.notify("All Breakpoints Cleared!")
+              clear_breakpoints()
+              defer_notify("All Breakpoints Cleared!")
             end,
           },
           {
             description = "Clear all & set breakpoint",
             handler = function()
-              dap.clear_breakpoints()
+              clear_breakpoints()
               dap.toggle_breakpoint()
-              vim.notify("All Breakpoints Cleared and Set!")
+              defer_notify("All Breakpoints Cleared and Set!")
             end,
           },
           {
             description = "Clear all & set conditional breakpoint",
             handler = function()
-              dap.clear_breakpoints()
+              clear_breakpoints()
               local prompt =
                 vim.fn.input("Breakpoint condition: ")
               dap.set_breakpoint(prompt)
-              vim.notify("All Breakpoints Cleared and Set!")
+              defer_notify("All Breakpoints Cleared and Set!")
             end,
           },
           {
