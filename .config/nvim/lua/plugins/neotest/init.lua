@@ -194,8 +194,8 @@ return {
       pattern = "*",
       callback = function()
         vim.cmd([[
-          hi! default NeotestPassed ctermfg=4 guifg=NvimDarkCyan
-          hi! default NeotestRunning ctermfg=9 guifg=NvimDarkCyan
+          hi! default link NeotestPassed SignColumn
+          hi! default link NeotestRunning SignColumn
       ]])
       end,
     })
