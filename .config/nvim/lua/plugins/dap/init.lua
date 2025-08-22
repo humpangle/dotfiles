@@ -364,17 +364,35 @@ return {
       }),
 
       map_lazy_key("<leader>dat", function()
-        do_echo("UI Toggle")
-        require("dapui").toggle()
-      end, {
-        desc = "UI toggle",
-      }),
+        local dap = require("dap")
+        local dapui = require("dapui")
+        local session = dap.session()
+        local count = vim.v.count
 
-      map_lazy_key("<leader>daT", function()
-        do_echo("terminate")
+        if count == 0 then
+          local session_adapter_name = ""
+
+          if session then
+            session_adapter_name = ": "
+              .. session.config.type
+              .. " running"
+          end
+
+          dapui.toggle()
+          defer_notify("UI Toggle" .. session_adapter_name)
+          return
+        end
+
+        if count == 1 then
+          dap.disconnect()
+          defer_notify("DAP Disconnected")
+          return
+        end
+
         require("dap").terminate()
+        defer_notify("DAP Terminated")
       end, {
-        desc = "Terminate",
+        desc = "0/UiToggle 1/Disconnect 2/Terminate",
       }),
 
       map_lazy_key("<leader>dar", function()
