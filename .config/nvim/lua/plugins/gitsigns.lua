@@ -90,12 +90,6 @@ return {
           desc = "Stage 0/partial 1/full 2/undo",
         }, bufnr)
 
-        utils.map_key("n", "<leader>hu", function()
-          gitsigns.undo_stage_hunk()
-
-          reload_fugitive_index()
-        end, { desc = "Hunk undo stage" }, bufnr)
-
         utils.map_key("n", "<leader>hb", function()
           gitsigns.blame_line({ full = true })
         end, { desc = "Hunk blame line" }, bufnr)
