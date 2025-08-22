@@ -56,9 +56,10 @@ return {
 
         utils.map_key({ "n", "v" }, "<leader>hs", function()
           local count = vim.v.count
+          local mode = vim.fn.mode() == "v"
 
           if count == 0 then
-            if vim.fn.mode() == "v" then
+            if mode then
               gitsigns.stage_hunk({
                 vim.fn.line("."),
                 vim.fn.line("v"),
@@ -71,7 +72,14 @@ return {
             vim.cmd("edit! %")
             vim.cmd("redraw!")
           elseif count == 2 then
-            gitsigns.reset_hunk()
+            if mode == "v" then
+              gitsigns.reset_hunk({
+                vim.fn.line("."),
+                vim.fn.line("v"),
+              })
+            else
+              gitsigns.reset_hunk()
+            end
           elseif count == 22 then
             gitsigns.reset_buffer()
           end
