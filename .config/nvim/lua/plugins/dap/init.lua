@@ -170,7 +170,6 @@ return {
   {
     "mfussenegger/nvim-dap",
     cmd = {
-      "DapClearBreakpoints",
       "DapContinue",
       "DapInstall",
       "DapLoadLaunchJSON",
@@ -527,12 +526,6 @@ return {
       -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
       vim.api.nvim_create_user_command("DapUiToggle", dapui.toggle, {})
       vim.api.nvim_create_user_command("DapUIToggle", dapui.toggle, {})
-
-      vim.api.nvim_create_user_command(
-        "DapClearBreakpoints",
-        dap.clear_breakpoints,
-        {}
-      )
 
       -- You can use nvim-dap events to open and close the windows automatically when DAP starts (:help dap-extensions)
       dap.listeners.after.event_initialized.dapui_config = dapui.open
