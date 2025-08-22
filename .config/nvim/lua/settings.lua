@@ -192,6 +192,8 @@ local default_spellfile = vim.fn.stdpath("config")
 
 vim.opt.spellfile = cwd_spellfile .. "," .. default_spellfile
 
+vim.wo.spell = true -- check spelling by default
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
