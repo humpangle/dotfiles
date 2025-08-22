@@ -187,6 +187,19 @@ return {
     -- /END/ adapters
   },
   init = function()
+    vim.api.nvim_create_autocmd({
+      "User",
+      "ColorScheme",
+    }, {
+      pattern = "*",
+      callback = function()
+        vim.cmd([[
+          hi! default NeotestPassed ctermfg=4 guifg=NvimDarkCyan
+          hi! default NeotestRunning ctermfg=9 guifg=NvimDarkCyan
+      ]])
+      end,
+    })
+
     -- default pytest args
     local default_pytest_args = utils.get_os_env_or_nil("EBNIS_PYTEST_ARGS")
 
@@ -330,7 +343,6 @@ return {
     {
       "<leader>ntt",
       function()
-        vim.o.background = "dark"
         local count = vim.v.count
 
         if count == 0 then
