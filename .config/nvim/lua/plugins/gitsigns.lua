@@ -91,16 +91,15 @@ return {
         }, bufnr)
 
         utils.map_key("n", "<leader>hb", function()
-          gitsigns.blame_line({ full = true })
-        end, { desc = "Hunk blame line" }, bufnr)
+          local count = vim.v.count
 
-        utils.map_key(
-          "n",
-          "<leader>tb",
-          gitsigns.toggle_current_line_blame,
-          { desc = "Hunk toggle current line blame" },
-          bufnr
-        )
+          if count == 0 then
+            gitsigns.blame_line({ full = true })
+          else
+            -- Show blame information for the current line in virtual text.
+            gitsigns.toggle_current_line_blame()
+          end
+        end, { desc = "Hunk blame line" }, bufnr)
 
         utils.map_key("n", "<leader>hp", function()
           local count = vim.v.count
