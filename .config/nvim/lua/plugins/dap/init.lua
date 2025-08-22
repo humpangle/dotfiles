@@ -209,8 +209,24 @@ return {
     },
     keys = {
       map_lazy_key("<leader>daa", function()
-        do_echo("continue")
-        require("dap").continue()
+        local dap = require("dap")
+        local session = dap.session()
+
+        if not session then
+          dap.continue()
+          defer_notify("DAP continue")
+          return
+        end
+
+        local config = vim.tbl_extend(
+          "keep",
+          { terminateDebugee = false },
+          session.config
+        )
+
+        dap.restart(config)
+
+        defer_notify("Restarting Session for " .. config.type)
       end, {
         desc = "continue",
       }),
