@@ -8,13 +8,9 @@ end
 local utils = require("utils")
 local map_lazy_key = utils.map_lazy_key
 
-local function do_echo(text)
-  vim.cmd.echo('"' .. "DAP: " .. text .. '"')
-end
-
 local function defer_notify(message)
   vim.defer_fn(function()
-    vim.notify(message)
+    vim.notify("[DAP]: " .. message)
   end, 5)
 end
 
@@ -100,7 +96,7 @@ local list_breakpoints_in_fzf_lua = function()
   end
 
   if #items == 0 then
-    defer_notify("DAP: No breakpoints!")
+    defer_notify("No breakpoints!")
     return
   end
 
@@ -214,7 +210,7 @@ return {
 
         if not session then
           dap.continue()
-          defer_notify("DAP continue")
+          defer_notify("continue")
           return
         end
 
@@ -373,7 +369,7 @@ return {
       }, { "n", "x" }),
 
       map_lazy_key("<leader>dax", function()
-        do_echo("close")
+        defer_notify("close")
         require("dap").close()
       end, {
         desc = "close",
@@ -401,12 +397,12 @@ return {
 
         if count == 1 then
           dap.disconnect()
-          defer_notify("DAP Disconnected")
+          defer_notify("Disconnected")
           return
         end
 
         require("dap").terminate()
-        defer_notify("DAP Terminated")
+        defer_notify("Terminated")
       end, {
         desc = "0/UiToggle 1/Disconnect 2/Terminate",
       }),
@@ -418,36 +414,36 @@ return {
       }),
 
       map_lazy_key("<leader>da0", function()
-        do_echo("run to cursor")
         require("dap").run_to_cursor()
+        defer_notify("run to cursor")
       end, {
         desc = "DAP: Run to cursor",
       }),
 
       map_lazy_key("<leader>da1", function()
-        do_echo("step into")
         require("dap").step_into()
+        defer_notify("step into")
       end, {
         desc = "DAP: step_into",
       }),
 
       map_lazy_key("<leader>da2", function()
-        do_echo("step over")
         require("dap").step_over()
+        defer_notify("step over")
       end, {
         desc = "DAP: step_over",
       }),
 
       map_lazy_key("<leader>da3", function()
-        do_echo("step out")
         require("dap").step_out()
+        defer_notify("step out")
       end, {
         desc = "DAP: step_out",
       }),
 
       map_lazy_key("<leader>da4", function()
-        do_echo("step back")
         require("dap").step_back()
+        defer_notify("step back")
       end, {
         desc = "DAP: step_back",
       }),
