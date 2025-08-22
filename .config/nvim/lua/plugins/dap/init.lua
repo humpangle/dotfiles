@@ -182,7 +182,6 @@ return {
       "DapTerminate",
       "DapToggleBreakpoint",
       "DapToggleRepl",
-      "DapUIToggle",
       "DapUiToggle",
       "DapUninstall",
       "DapVirtualTextDisable",
