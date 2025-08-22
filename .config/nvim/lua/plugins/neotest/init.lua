@@ -170,8 +170,7 @@ return {
             -- duplicate the tab because DAP will take over current tab and the buffer may be buried under layers of
             -- breakpoint buffers
             vim.cmd('tab split')
-            vim.o.background = "dark"
-            do_echo("Debug")
+            do_echo("Neotest DAP Debug")
 
             vim.defer_fn(function()
               ---@diagnostic disable-next-line: missing-fields
