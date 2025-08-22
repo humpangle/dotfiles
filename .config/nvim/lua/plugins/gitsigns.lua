@@ -71,10 +71,7 @@ return {
             vim.cmd("edit! %")
             vim.cmd("redraw!")
           elseif count == 2 then
-            gitsigns.reset_hunk({
-              vim.fn.line("."),
-              vim.fn.line("v"),
-            })
+            gitsigns.reset_hunk()
           elseif count == 22 then
             gitsigns.reset_buffer()
           end
