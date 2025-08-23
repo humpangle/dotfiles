@@ -557,8 +557,8 @@ return {
         ---@diagnostic disable-next-line: missing-fields
         controls = {
           icons = {
-            pause = "P",
-            play = "-0-", -- run to cursor
+            pause = "",
+            play = "",
             step_into = "-1-",
             step_over = "-2-",
             step_out = "-3-",
