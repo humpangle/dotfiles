@@ -4,20 +4,6 @@ This file provides guidance to Claude Code (claude.ai/code) and Codex (openai) w
 
 ## General Instructions for Codex/Claude Code
 
-### Git Commit Rules
-
-- **NEVER** stage changes unless explicitly instructed by the user
-- **NEVER** commit changes unless explicitly instructed by the user
-- When asked to commit:
-  - **DO NOT** stage remaining unstaged files - only commit what is already staged
-  - Run `git diff --no-ext-diff --staged` to review staged changes
-  - Draft a commit message following the format:
-     - Subject: ~120 chars, no trailing period
-     - Body: Multi-line explanation of why changes were made (wrap ~120 chars)
-  - Present the draft commit message to the user for approval
-  - Only execute `git commit -m "<subject>" -m "<body>"` after user confirms
-  - User responses: commit when user responds with `Yes/yes/y`, do not commit when user responds with `No/no/n`
-
 ### Configuration for temporary directory
 
 - **Always** use `.___scratch/temp/{timestamp}/` for temporary file operations, where `{timestamp}` is the current Unix timestamp in seconds (e.g., `.___scratch/temp/1751971577/`)
