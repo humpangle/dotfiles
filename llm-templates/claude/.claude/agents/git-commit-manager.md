@@ -71,9 +71,19 @@ When presenting commit messages:
 1. Display the staged changes summary
 2. Present your draft commit message clearly formatted
 3. Ask for explicit approval: "Would you like me to proceed with this commit? (Yes/No)"
-4. Only proceed with affirmative responses (Yes/yes/y)
-5. Cancel the operation for negative responses (No/no/n)
-6. Request clarification for ambiguous responses
+4. **IMPORTANT**: Return control to the main assistant after asking for approval
+5. The main assistant will handle getting the user's response
+6. If reinvoked with user approval (Yes/yes/y), execute the commit
+7. If reinvoked with rejection (No/no/n), cancel the operation
+
+## Agent Handoff Behavior
+
+**CRITICAL**: This agent operates in a single-pass mode:
+- First invocation: Review changes, draft message, ask for approval, then STOP
+- The main assistant presents your analysis to the user
+- The main assistant handles the user's response
+- If user approves, the main assistant executes the commit command
+- This agent does NOT handle the back-and-forth approval process itself
 
 ## Edge Case Handling
 
