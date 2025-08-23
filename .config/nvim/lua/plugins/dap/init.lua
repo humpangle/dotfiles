@@ -207,22 +207,43 @@ return {
       map_lazy_key("<leader>daa", function()
         local dap = require("dap")
         local session = dap.session()
+        local session_adapter_name = nil
+        local count = vim.v.count
 
-        if not session then
-          dap.continue()
-          defer_notify("continue")
+        if session then
+          session_adapter_name = session.config.type
+        end
+
+        if count == 0 then
+          if not session then
+            dap.continue()
+            defer_notify("Started")
+            return
+          end
+
+          local config = vim.tbl_extend(
+            "keep",
+            { terminateDebugee = false },
+            session.config
+          )
+
+          dap.restart(config)
+
+          defer_notify(
+            "Restarting Session for " .. session_adapter_name
+          )
           return
         end
 
-        local config = vim.tbl_extend(
-          "keep",
-          { terminateDebugee = false },
-          session.config
-        )
+        -- count > 0
+        -- Check session status
+        -- TODO: What about multiple sessions
 
-        dap.restart(config)
-
-        defer_notify("Restarting Session for " .. config.type)
+        if session_adapter_name then
+          defer_notify("Session running: " .. session_adapter_name)
+        else
+          defer_notify("No session running")
+        end
       end, {
         desc = "continue",
       }),
