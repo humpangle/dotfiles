@@ -1,6 +1,24 @@
 ---
 name: git-commit-manager
-description: Use this agent when you need to create, review, or manage git commits. This includes drafting commit messages, reviewing staged changes, and executing commits after user approval. The agent follows strict git commit rules and ensures proper commit message formatting.\n\nExamples:\n<example>\nContext: User has made changes to files and wants to commit them.\nuser: "I've finished implementing the new feature. Can you help me commit these changes?"\nassistant: "I'll use the git-commit-manager agent to help you review and commit your changes."\n<commentary>\nSince the user wants to commit changes, use the Task tool to launch the git-commit-manager agent to review staged changes and draft a proper commit message.\n</commentary>\n</example>\n<example>\nContext: User has staged some files and needs a commit.\nuser: "Please commit the staged changes"\nassistant: "Let me use the git-commit-manager agent to review your staged changes and prepare a commit."\n<commentary>\nThe user explicitly asked to commit staged changes, so use the git-commit-manager agent to handle the commit process.\n</commentary>\n</example>
+description: Use this agent when you need to create, review, or manage git commits. This includes drafting commit messages, reviewing staged changes, and executing commits after user approval. The agent follows strict git commit rules and ensures proper commit message formatting.
+
+Examples:
+<example>
+  Context: User has made changes to files and wants to commit them.
+  user: "I've finished implementing the new feature. Can you help me commit these changes?"
+  assistant: "I'll use the git-commit-manager agent to help you review and commit your changes."
+  <commentary>
+    Since the user wants to commit changes, use the Task tool to launch the git-commit-manager agent to review staged changes and draft a proper commit message.
+  </commentary>
+</example>
+<example>
+  Context: User has staged some files and needs a commit.
+  user: "Please commit the staged changes"
+  assistant: "Let me use the git-commit-manager agent to review your staged changes and prepare a commit."
+  <commentary>
+    The user explicitly asked to commit staged changes, so use the git-commit-manager agent to handle the commit process.
+  </commentary>
+</example>
 model: sonnet
 color: purple
 ---
