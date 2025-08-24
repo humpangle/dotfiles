@@ -600,13 +600,12 @@ local git_rebase_root_mappings_fn = function()
   local count = vim.v.count
 
   if count == 0 then
-    -- Default action: G rebase
-    utils.write_to_command_mode("G rebase ")
+    -- utils.tab_split_if_multiple_windows()
+    git_rebase_select()
     return
   end
 
-  utils.tab_split_if_multiple_windows()
-  git_rebase_select()
+  utils.write_to_command_mode("G rebase ")
 end
 local git_rebase_mappings_opts = {
   noremap = true,
