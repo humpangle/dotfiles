@@ -656,8 +656,12 @@ keymap("n", "<leader>gg", function()
   end
 
   if count == 11 then
-    vim.cmd("Wmessage G log -1999999999")
-    utils.write_to_out_file()
+    vim.cmd("Git! log")
+    return
+  end
+
+  if count == 12 then
+    vim.cmd("Git! lgg")
     return
   end
 
