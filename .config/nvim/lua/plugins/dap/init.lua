@@ -18,12 +18,10 @@ local function clear_breakpoints()
   local dap = require("dap")
   dap.clear_breakpoints()
 
-  vim.defer_fn(function()
-    local ok, dap_helper_internals = pcall(require, "dap-helper.internals")
-    if ok then
-      dap_helper_internals.clear_json_file_content()
-    end
-  end, 500)
+  local ok, dap_helper_internals = pcall(require, "dap-helper.internals")
+  if ok then
+    dap_helper_internals.clear_json_file_content()
+  end
 end
 
 ---@param breakpoints table
@@ -172,6 +170,95 @@ local function goto_breakpoint(dir, current_buffer_only)
   vim.cmd(("buffer +%s %s"):format(nextPoint.line, nextPoint.bufnr))
 end
 
+-- Define breakpoint actions with descriptions
+local function make_breakpoint_actions(dap)
+  return {
+    {
+      description = "Toggle breakpoint",
+      handler = function()
+        dap.toggle_breakpoint()
+        defer_notify("Breakpoint Toggled")
+      end,
+      count = 1,
+    },
+    {
+      description = "Conditional breakpoint",
+      handler = function()
+        local prompt = vim.fn.input("Breakpoint condition: ")
+        dap.set_breakpoint(prompt)
+      end,
+      count = 11,
+    },
+    {
+      description = "Clear all breakpoints",
+      handler = function()
+        clear_breakpoints()
+        defer_notify("All Breakpoints Cleared!")
+      end,
+      count = 2,
+    },
+    {
+      description = "Clear all & set breakpoint",
+      handler = function()
+        clear_breakpoints()
+        vim.defer_fn(function()
+          dap.toggle_breakpoint()
+        end, 100)
+        defer_notify("All Breakpoints Cleared and Set!")
+      end,
+      count = 21,
+    },
+    {
+      description = "Clear all & set conditional breakpoint",
+      handler = function()
+        clear_breakpoints()
+
+        vim.defer_fn(function()
+          local prompt = vim.fn.input("Breakpoint condition: ")
+          dap.set_breakpoint(prompt)
+        end, 500)
+        defer_notify("All Breakpoints Cleared and Set!")
+      end,
+      count = 22,
+    },
+    {
+      description = "Next breakpoint FILE",
+      handler = function()
+        goto_breakpoint("next", true)
+      end,
+      count = 3,
+    },
+    {
+      description = "Previous breakpoint FILE",
+      handler = function()
+        goto_breakpoint("prev", true)
+      end,
+      count = 31,
+    },
+    {
+      description = "Next breakpoint GLOBAL",
+      handler = function()
+        goto_breakpoint("next")
+      end,
+      count = 4,
+    },
+    {
+      description = "Previous breakpoint GLOBAL",
+      handler = function()
+        goto_breakpoint("prev")
+      end,
+      count = 41,
+    },
+    {
+      description = "List breakpoints FZF-LUA",
+      handler = function()
+        list_breakpoints_in_fzf_lua()
+      end,
+      count = 5,
+    },
+  }
+end
+
 return {
   {
     "Joakker/lua-json5",
@@ -251,83 +338,17 @@ return {
       map_lazy_key("<leader>dab", function()
         local dap = require("dap")
         local fzf_lua = require("fzf-lua")
-
-        -- Define breakpoint actions with descriptions
-        local breakpoint_actions = {
-          {
-            description = "Toggle breakpoint",
-            handler = function()
-              dap.toggle_breakpoint()
-            end,
-          },
-          {
-            description = "Conditional breakpoint",
-            handler = function()
-              local prompt =
-                vim.fn.input("Breakpoint condition: ")
-              dap.set_breakpoint(prompt)
-            end,
-          },
-          {
-            description = "Clear all breakpoints",
-            handler = function()
-              clear_breakpoints()
-              defer_notify("All Breakpoints Cleared!")
-            end,
-          },
-          {
-            description = "Clear all & set breakpoint",
-            handler = function()
-              clear_breakpoints()
-              dap.toggle_breakpoint()
-              defer_notify("All Breakpoints Cleared and Set!")
-            end,
-          },
-          {
-            description = "Clear all & set conditional breakpoint",
-            handler = function()
-              clear_breakpoints()
-              local prompt =
-                vim.fn.input("Breakpoint condition: ")
-              dap.set_breakpoint(prompt)
-              defer_notify("All Breakpoints Cleared and Set!")
-            end,
-          },
-          {
-            description = "Next breakpoint FILE",
-            handler = function()
-              goto_breakpoint("next", true)
-            end,
-          },
-          {
-            description = "Previous breakpoint FILE",
-            handler = function()
-              goto_breakpoint("prev", true)
-            end,
-          },
-          {
-            description = "Next breakpoint GLOBAL",
-            handler = function()
-              goto_breakpoint("next")
-            end,
-          },
-          {
-            description = "Previous breakpoint GLOBAL",
-            handler = function()
-              goto_breakpoint("prev")
-            end,
-          },
-          {
-            description = "List breakpoints FZF-LUA",
-            handler = function()
-              list_breakpoints_in_fzf_lua()
-            end,
-          },
-        }
+        local breakpoint_actions = make_breakpoint_actions(dap)
+        local keymap_count = vim.v.count
 
         -- Format actions for display
         local items = {}
         for i, action in ipairs(breakpoint_actions) do
+          if keymap_count == action.count then
+            action.handler()
+            return
+          end
+
           table.insert(
             items,
             string.format("%d. %s", i, action.description)
