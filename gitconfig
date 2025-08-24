@@ -18,6 +18,8 @@
   wkrm = worktree remove
   wkls = worktree list
   wkrp = worktree repair
+  # From https://dpwright.com/posts/2018/04/06/graphical-log-with-vimfugitive/
+  lg = log --graph --pretty=format:'%Cred%h%Creset - %Cgreen(%ad)%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=local
 [credential]
   helper = cache --timeout 604800
 [core]
