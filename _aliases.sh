@@ -197,6 +197,10 @@ fi
 # END OLLAMA
 # -----------------------------------------------------------------------------
 
+if command -v lazydocker &>/dev/null; then
+  alias_map[lzd]=lazydocker
+fi
+
 _alias_map_complete() {
   #------------------------------------------------------------------------------
   # Complete all bash aliases
