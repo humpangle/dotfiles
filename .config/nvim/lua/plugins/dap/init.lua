@@ -326,10 +326,19 @@ return {
         -- Check session status
         -- TODO: What about multiple sessions
 
-        if session_adapter_name then
-          defer_notify("Session running: " .. session_adapter_name)
+        if session then
+          local disconnected_str = ""
+
+          if not session.parent then
+            disconnected_str = " [DISCONNECTED]"
+          end
+          vim.notify(
+            "Session running: "
+              .. session_adapter_name
+              .. disconnected_str
+          )
         else
-          defer_notify("No session running")
+          vim.notify("No session running")
         end
       end, {
         desc = "continue",
