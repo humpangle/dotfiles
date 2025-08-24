@@ -1,25 +1,26 @@
 [alias]
   br = branch
   brsc = branch --show-current
-  st = status
-  ps = push
-  psf = push --force-with-lease
-  pl = pull
-  tk = pull
-  co = checkout
-  cm = commit
   cam = commit -am
+  cm = commit
+  co = checkout
   cz = commit --allow-empty -m
-  pgm = push github master
-  pgd = push github dev
-  lone = log --oneline
-  wk = worktree
-  wkadd = worktree add
-  wkrm = worktree remove
-  wkls = worktree list
-  wkrp = worktree repair
   # From https://dpwright.com/posts/2018/04/06/graphical-log-with-vimfugitive/
   lg = log --graph --pretty=format:'%Cred%h%Creset - %Cgreen(%ad)%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=local
+  lgg = !git --no-pager log --graph --pretty=format:'%Cred%h%Creset - %Cgreen(%ad)%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=local
+  lone = log --oneline
+  pgd = push github dev
+  pgm = push github master
+  pl = pull
+  ps = push
+  psf = push --force-with-lease
+  st = status
+  tk = pull
+  wk = worktree
+  wkadd = worktree add
+  wkls = worktree list
+  wkrm = worktree remove
+  wkrp = worktree repair
 [credential]
   helper = cache --timeout 604800
 [core]
