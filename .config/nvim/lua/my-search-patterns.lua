@@ -105,6 +105,11 @@ M.patterns = {
     navigation = "n",
   },
   {
+    description = "Request ID json",
+    pattern = '"request_id": "',
+    navigation = "n",
+  },
+  {
     description = "sql As table column sql",
     pattern = " AS [a-z_]\\+_[^,]\\+",
     navigation = "n",
