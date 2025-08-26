@@ -640,60 +640,128 @@ end, { noremap = true, desc = [[Git rebase 0/continue 1/edit 2/abort]] })
 -- /END Rebase keymaps
 
 -- Git mappings
+local function make_git_log_options()
+  return {
+    {
+      description = "Git refresh (status)              0",
+      action = function()
+        vim.cmd("Git")
+        print("Git refreshed!")
+      end,
+      count = 0,
+    },
+    {
+      description = "Log oneline                       1",
+      action = function()
+        vim.cmd("Git log --oneline")
+      end,
+      count = 1,
+    },
+    {
+      description = "Log full                          11",
+      action = function()
+        vim.cmd("Git! log")
+      end,
+      count = 11,
+    },
+    {
+      description = "Log graphical (lgg)               12",
+      action = function()
+        vim.cmd("Git! lgg")
+      end,
+      count = 12,
+    },
+    {
+      description = "Log oneline current file          2",
+      action = function()
+        vim.cmd("Git log --oneline -- %")
+      end,
+      count = 2,
+    },
+    {
+      description = "Log full current file             21",
+      action = function()
+        vim.cmd("Git log -- %")
+      end,
+      count = 21,
+    },
+    {
+      description = "File history with diff split      123/223",
+      action = function()
+        vim.cmd("only")
+        vim.cmd("0GcLog!")
+        vim.cmd("vsplit")
+        vim.cmd("diffthis")
+        vim.cmd("wincmd h")
+        vim.cmd("normal ]q") -- move to next item in quickfix window
+        vim.cmd("diffthis") -- show diff
+      end,
+      count = 23,
+    },
+    {
+      description = "File history quickfix (GcLog)     23",
+      action = function()
+        vim.cmd("0GcLog!")
+      end,
+      count = 123,
+      count_match_fn = function(count)
+        local str_count = "" .. count
+        return (str_count:match("^%d23") or str_count:match("23%d$"))
+      end,
+    },
+    {
+      description = "Write log oneline but provide count           3",
+      action = function()
+        utils.write_to_command_mode("Git log --oneline -")
+      end,
+      count = 3,
+    },
+  }
+end
+
 keymap("n", "<leader>gg", function()
-  local count = vim.v.count
+  local fzf_lua = require("fzf-lua")
+  local git_log_options = make_git_log_options()
+  local keymap_count = vim.v.count
 
-  if count == 0 then
-    vim.cmd("Git")
-    print("Git refreshed!")
-    return
-  end
-
-  if count == 1 then
-    vim.cmd("Git log --oneline")
-    return
-  end
-
-  if count == 11 then
-    vim.cmd("Git! log")
-    return
-  end
-
-  if count == 12 then
-    vim.cmd("Git! lgg")
-    return
-  end
-
-  if count == 2 then
-    vim.cmd("Git log --oneline -- %")
-    return
-  end
-
-  if count == 21 then
-    vim.cmd("Git log -- %")
-    return
-  end
-
-  local str_count = "" .. count
-  if str_count:match("23") then
-    if str_count:match("^%d23") or str_count:match("23%d$") then
-      vim.cmd("0GcLog!")
+  local items = {}
+  for i, option in ipairs(git_log_options) do
+    -- Check if count matches any action
+    if
+      (keymap_count == option.count)
+      or (option.count_match_fn and option.count_match_fn(keymap_count))
+    then
+      option.action()
       return
     end
 
-    vim.cmd("only")
-    vim.cmd("0GcLog!")
-    vim.cmd("vsplit")
-    vim.cmd("diffthis")
-    vim.cmd("wincmd h")
-    vim.cmd("normal ]q") -- move to next item in quickfix window
-    vim.cmd("diffthis") -- show diff
-    return
+    -- If no count match, show FZF menu
+    table.insert(items, string.format("%d. %s", i, option.description))
   end
 
-  if count == 3 then
-    utils.write_to_command_mode("Git log --oneline -")
-  end
+  utils.set_fzf_lua_nvim_listen_address()
+
+  fzf_lua.fzf_exec(items, {
+    prompt = "Git Log Options> ",
+    actions = {
+      ["default"] = function(selected)
+        if not selected or #selected == 0 then
+          return
+        end
+
+        local selection = selected[1]
+        -- Extract option index from selection
+        local index = tonumber(selection:match("^(%d+)%."))
+        if index and git_log_options[index] then
+          git_log_options[index].action()
+        end
+      end,
+    },
+    fzf_opts = {
+      ["--no-multi"] = "",
+      ["--header"] = "Select a git log option",
+    },
+  })
 end, {
   noremap = true,
   desc = "Git commit 1/all 2/file% 3/all-",
