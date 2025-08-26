@@ -782,7 +782,12 @@ utils.map_key({ "n", "x" }, "<leader>WW", function()
   if count == 1 then
     vim.bo.readonly = false
     vim.bo.buftype = ""
-    utils.write_to_command_mode("saveas " .. vim.fn.expand("%:."))
+    utils.write_to_command_mode(
+      "saveas "
+        .. vim.fn.expand("%:r")
+        .. "---scratch."
+        .. vim.fn.expand("%:e")
+    )
     return
   end
 
