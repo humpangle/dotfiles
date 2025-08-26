@@ -26,15 +26,34 @@ __drmlogs__() {
   done
   shift $((OPTIND - 1))
 
-  for container_ in "$@"; do
-    if [ -n "$is_compose_" ]; then
-      container_="$(docker compose ps --quiet --all "$container_")"
+  local containers_or_services_=("$@")
+
+  if [[ "${#containers_or_services_[@]}" == 0 ]]; then
+    if [ -z "$is_compose_" ]; then
+      echo "You must provide container name(s)"
+      exit 1
     fi
 
-    log_path_=$(docker inspect --format='{{.LogPath}}' "$container_")
+    mapfile -t containers_or_services_ < <(
+      docker compose ps --all --format "{{.Service}}"
+    )
+  fi
+
+  for item_ in "${containers_or_services_[@]}"; do
+    local container_=""
+
+    if [ -n "$is_compose_" ]; then
+      container_="$(docker compose ps --quiet --all "$item_")"
+    else
+      container_="$item_"
+    fi
+
+    log_path_=$(
+      docker inspect --format='{{.LogPath}}' "$container_"
+    )
 
     echo "" | sudo tee "$log_path_"
-    echo -e "truncated\n$log_path_"
+    echo -e "truncated:\n$item_\n$container_\n$log_path_"
   done
 }
 
