@@ -31,6 +31,21 @@ return {
       ]])
       end,
     })
+
+    local utils = require("utils")
+
+    -- For new files, gitsigns is not attached, so we provide leader/hs here.
+    -- When gitsigns is attached, the buffer option will override this keymap
+    utils.map_key({ "n", "v" }, "<leader>hs", function()
+      local count = vim.v.count
+      if count == 1 then
+        vim.cmd(":Git add %")
+        vim.cmd("edit! %")
+        vim.cmd("redraw!")
+      end
+
+      vim.notify(vim.fn.expand("%:.") .. " staged!!!")
+    end)
   end,
   config = function()
     local gitsigns = require("gitsigns")
