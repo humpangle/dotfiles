@@ -104,6 +104,11 @@ M.patterns = {
     pattern = '"endpoint": "',
     navigation = "n",
   },
+  {
+    description = "sql As table column sql",
+    pattern = " AS [a-z_]\\+_[^,]\\+",
+    navigation = "n",
+  },
 }
 
 local function apply_search_pattern(pattern_data)
