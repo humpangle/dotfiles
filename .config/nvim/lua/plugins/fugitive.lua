@@ -243,8 +243,15 @@ keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
 
 -- Git commit mappings
 
+local function highlight_text_under_cursor()
+  local text_under_cursor = vim.fn.expand("<cword>")
+  vim.fn.setreg("/", text_under_cursor)
+  vim.cmd("set hlsearch")
+  return text_under_cursor
+end
+
 local function open_commit_under_cursor(split_cmd)
-  local commit_ish = vim.fn.expand("<cword>")
+  local commit_ish = highlight_text_under_cursor()
   vim.cmd(split_cmd)
   vim.cmd("Gedit " .. commit_ish)
 end
@@ -288,7 +295,9 @@ local git_commit_options = {
     description = "Verify sign <cword>",
     action = function()
       utils.write_to_command_mode(
-        "Git verify-commit " .. vim.fn.expand("<cword>") .. " "
+        "Git verify-commit "
+          .. vim.fn.expand(highlight_text_under_cursor())
+          .. " "
       )
     end,
   },
@@ -296,7 +305,9 @@ local git_commit_options = {
     description = "Verify sign verbose <cword>",
     action = function()
       utils.write_to_command_mode(
-        "Git verify-commit -v " .. vim.fn.expand("<cword>") .. " "
+        "Git verify-commit -v "
+          .. vim.fn.expand(highlight_text_under_cursor())
+          .. " "
       )
     end,
   },
