@@ -106,7 +106,7 @@ return {
           end
 
           reload_fugitive_index()
-          vim.cmd.echo("'" .. vim.fn.expand("%:.") .. " staged! '")
+          vim.notify(vim.fn.expand("%:.") .. " staged!")
         end, {
           desc = "Stage 0/partial 1/full 2/undo",
         }, bufnr)
