@@ -615,7 +615,7 @@ utils.go_to_file = function()
     return
   end
 
-  if cfile then
+  if cfile and ( vim.fn.isdirectory(cfile) ~= 0 ) then
     line_number = line_number or extract_line_number(cfile)
   end
 
