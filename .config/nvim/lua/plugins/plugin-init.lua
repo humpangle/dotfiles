@@ -296,15 +296,7 @@ local plugins_table = {
     },
     init = function()
       keymap("n", "<leader>mt", function()
-        local count = vim.v.count
-
-        local arg = "toggle"
-
-        if count == 1 then
-          arg = "toggle"
-        end
-
-        vim.cmd("RenderMarkdown " .. arg)
+        vim.cmd("RenderMarkdown toggle")
       end, { noremap = true })
     end,
   },
