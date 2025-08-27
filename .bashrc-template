@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 # shellcheck disable=
 
-# Set vi-mode in the shell
-set -o vi
+# Set vi-mode in the shell if not in neovim's emulator
+if [ -z "$NVIM_LISTEN_ADDRESS" ]; then
+  set -o vi
+else
+  set +o vi
+fi
 
 # -----------------------------------------------------------------------------
 # WSL
