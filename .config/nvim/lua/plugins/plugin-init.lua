@@ -274,7 +274,11 @@ local plugins_table = {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     enabled = plugin_enabled.render_markdown_nvim(),
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
     opts = {
+      -- Whether markdown should be rendered by default.
+      enabled = false,
       file_types = {
         "markdown",
         "livebook",
