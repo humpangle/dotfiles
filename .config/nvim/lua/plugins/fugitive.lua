@@ -591,15 +591,12 @@ local git_rebase_select = function()
   local git_rebase_options = make_git_rebase_options()
   local keymap_count = vim.v.count
 
-  for _, option in ipairs(git_rebase_options) do
+  local items = {}
+  for i, option in ipairs(git_rebase_options) do
     if keymap_count == option.count then
       option.action()
       return
     end
-  end
-
-  local items = {}
-  for i, option in ipairs(git_rebase_options) do
     table.insert(items, string.format("%d. %s", i, option.description))
   end
 
