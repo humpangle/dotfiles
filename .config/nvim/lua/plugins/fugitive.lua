@@ -413,7 +413,7 @@ local git_commit_mappings_opts = {
 local function git_commit_mappings_fn()
   local count = vim.v.count
 
-  if count == 0 then
+  if count == 1 then
     -- split the current buffer horizontally spanning the bottom
     vim.cmd("botright split")
     -- open a fugitive commit buffer
