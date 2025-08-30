@@ -296,16 +296,6 @@ M.firenvim = function()
   return utils.get_os_env_or_nil("NVIM_ENABLE_FIRE_NVIM") == "1"
 end
 
-M.has_web_browsers = function()
-  if M.has_termux() then
-    return false
-  end
-  if M.has_vscode() then
-    return false
-  end
-  return true
-end
-
 function M.avante_ai()
   if M.has_vscode() then
     return false

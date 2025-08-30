@@ -172,4 +172,3 @@ ___logs/
 
 # Some weird file probably created by neovim lsp
 **/server\ exited\ unexpectedly
-ghosttext.*

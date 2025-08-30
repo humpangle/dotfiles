@@ -412,7 +412,6 @@ local plugins_table = {
   require("plugins/octo-nvim"),
   require("plugins/mini-align"),
   require("plugins/indent-blankline"),
-  require("plugins/web-browsers"),
   require("plugins/anki-nvim"),
   require("plugins/firenvim"),
   require("plugins/refactoring"),
