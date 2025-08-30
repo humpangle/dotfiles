@@ -372,7 +372,30 @@ local git_commit_options = {
   },
 }
 
-local git_commit_select = function()
+local git_commit_mappings_opts = {
+  noremap = true,
+  desc = "Git commit options (fzf)",
+}
+
+local function git_commit_mappings_fn()
+  local count = vim.v.count
+
+  if count == 1 then
+    -- split the current buffer horizontally spanning the bottom
+    vim.cmd("botright split")
+    -- open a fugitive commit buffer
+    vim.cmd("Git commit")
+    -- move **UP** to previous window (the one splitted horizontally previously)
+    vim.cmd.wincmd("p")
+    -- close that window (this will cause the cursor to move the original window that was splitted)
+    vim.cmd("quit")
+    -- move **DOWN** to the fugitive commit buffer
+    vim.cmd.wincmd("j")
+    return
+  end
+
+  utils.tab_split_if_multiple_windows()
+
   local fzf_lua = require("fzf-lua")
 
   -- Format options for display
@@ -404,31 +427,6 @@ local git_commit_select = function()
       ["--header"] = "Select a git commit option",
     },
   })
-end
-local git_commit_mappings_opts = {
-  noremap = true,
-  desc = "Git commit options (fzf)",
-}
-
-local function git_commit_mappings_fn()
-  local count = vim.v.count
-
-  if count == 1 then
-    -- split the current buffer horizontally spanning the bottom
-    vim.cmd("botright split")
-    -- open a fugitive commit buffer
-    vim.cmd("Git commit")
-    -- move **UP** to previous window (the one splitted horizontally previously)
-    vim.cmd.wincmd("p")
-    -- close that window (this will cause the cursor to move the original window that was splitted)
-    vim.cmd("quit")
-    -- move **DOWN** to the fugitive commit buffer
-    vim.cmd.wincmd("j")
-    return
-  end
-
-  utils.tab_split_if_multiple_windows()
-  git_commit_select()
 end
 
 keymap("n", "<leader>gc", git_commit_mappings_fn, git_commit_mappings_opts)
