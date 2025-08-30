@@ -583,7 +583,7 @@ git_rebase_options = {
   },
 }
 
-local git_rebase_select = function()
+local git_rebase_root_mappings_fn = function()
   local fzf_lua = require("fzf-lua")
   local keymap_count = vim.v.count
 
@@ -621,18 +621,6 @@ local git_rebase_select = function()
   })
 end
 
--- Rebase keymaps
-local git_rebase_root_mappings_fn = function()
-  local count = vim.v.count
-
-  if count == 0 then
-    -- utils.tab_split_if_multiple_windows()
-    git_rebase_select()
-    return
-  end
-
-  utils.write_to_command_mode("G rebase ")
-end
 local git_rebase_mappings_opts = {
   noremap = true,
   desc = "Git rebase/reset/merge options (fzf)",
