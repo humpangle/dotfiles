@@ -684,33 +684,33 @@ end, { noremap = true, desc = [[Git rebase 0/continue 1/edit 2/abort]] })
 local function make_git_log_options()
   return {
     {
-      description = "Git refresh (status)              0",
+      description = "Git refresh (status)              1",
       action = function()
         vim.cmd("Git")
         print("Git refreshed!")
       end,
-      count = 0,
-    },
-    {
-      description = "Log oneline                       1",
-      action = function()
-        vim.cmd("Git log --oneline")
-      end,
       count = 1,
     },
     {
-      description = "Log full                          11",
+      description = "Log oneline                       11",
       action = function()
-        vim.cmd("Git! log")
+        vim.cmd("Git log --oneline")
       end,
       count = 11,
     },
     {
-      description = "Log graphical (lgg)               12",
+      description = "Log full                          12",
+      action = function()
+        vim.cmd("Git! log")
+      end,
+      count = 12,
+    },
+    {
+      description = "Log graphical (lgg)               13",
       action = function()
         vim.cmd("Git! lgg")
       end,
-      count = 12,
+      count = 13,
     },
     {
       description = "Log oneline current file          2",
