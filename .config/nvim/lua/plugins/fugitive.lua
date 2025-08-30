@@ -259,7 +259,7 @@ end
 -- Define git commit options with descriptions
 local git_commit_options = {
   {
-    description = "Commit",
+    description = "Commit                                               1",
     action = function()
       -- split the current buffer horizontally spanning the bottom
       vim.cmd("botright split")
@@ -272,24 +272,28 @@ local git_commit_options = {
       -- move **DOWN** to the fugitive commit buffer
       vim.cmd.wincmd("j")
     end,
+    count = 1,
   },
   {
-    description = "Commit --allow-empty",
-    action = function()
-      utils.write_to_command_mode("Git commit --allow-empty")
-    end,
-  },
-  {
-    description = "Commit --amend",
+    description = "Commit --amend                                       11",
     action = function()
       utils.write_to_command_mode("Git commit --amend")
     end,
+    count = 11,
   },
   {
-    description = "Commit --amend --no-edit",
+    description = "Commit --amend --no-edit                             12",
     action = function()
       utils.write_to_command_mode("Git commit --amend --no-edit")
     end,
+    count = 12,
+  },
+  {
+    description = "Commit --allow-empty                                 13",
+    action = function()
+      utils.write_to_command_mode("Git commit --allow-empty")
+    end,
+    count = 13,
   },
   {
     description = "Verify sign <cword>",
@@ -374,33 +378,23 @@ local git_commit_options = {
 
 local git_commit_mappings_opts = {
   noremap = true,
-  desc = "Git commit options (fzf)",
+  desc = "Git commit 0/fzf 1/cm 11/cm-amend 12/cm-amend-no-edit 13/cm-empty",
 }
 
 local function git_commit_mappings_fn()
-  local count = vim.v.count
+  local keymap_count = vim.v.count
 
-  if count == 1 then
-    -- split the current buffer horizontally spanning the bottom
-    vim.cmd("botright split")
-    -- open a fugitive commit buffer
-    vim.cmd("Git commit")
-    -- move **UP** to previous window (the one splitted horizontally previously)
-    vim.cmd.wincmd("p")
-    -- close that window (this will cause the cursor to move the original window that was splitted)
-    vim.cmd("quit")
-    -- move **DOWN** to the fugitive commit buffer
-    vim.cmd.wincmd("j")
-    return
-  end
-
-  utils.tab_split_if_multiple_windows()
+  -- utils.tab_split_if_multiple_windows()
 
   local fzf_lua = require("fzf-lua")
 
   -- Format options for display
   local items = {}
   for i, option in ipairs(git_commit_options) do
+    if keymap_count == option.count then
+      option.action()
+      return
+    end
     table.insert(items, string.format("%d. %s", i, option.description))
   end
 
