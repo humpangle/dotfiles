@@ -460,7 +460,7 @@ end, { noremap = true, desc = "Git config user name. 1=email 2=env defaults" })
 
 -- Define git rebase/reset/merge options with descriptions
 
-git_rebase_options = {
+local git_rebase_options = {
   {
     description = "Rebase                         1",
     action = function()
