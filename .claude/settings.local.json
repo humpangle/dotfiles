@@ -7,10 +7,6 @@
     "allow": [
       "Agent",
       "Bash",
-      "Bash($HOME/dotfiles/scripts/_ai claudecs)",
-      "Bash($HOME/dotfiles/scripts/_ai:*)",
-      "Bash(../scripts/_ai claude_chat_start)",
-      "Bash(../scripts/_ai claudecs)",
       "Bash(./scripts/_ai:*)",
       "Bash(ls:*)",
       "Bash(mkdir:*)",
@@ -18,13 +14,15 @@
       "Edit",
       "MultiEdit",
       "Read",
+      "TodoRead",
+      "TodoWrite",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:github.com)",
+      "WebFetch(domain:chatgpt.com)",
       "Write",
       "mcp__consult7__consultation",
       "mcp__context7__get-library-docs",
-      "mcp__context7__resolve-library-id",
-      "WebFetch(domain:chatgpt.com)"
+      "mcp__context7__resolve-library-id"
     ],
     "deny": []
   }
