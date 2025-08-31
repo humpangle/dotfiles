@@ -5,16 +5,81 @@ return {
   "folke/noice.nvim",
   event = "VeryLazy",
   keys = {
-
     map_lazy_key("<leader>noi", function()
-      -- local noice = require("noice")
+      local noice_options = {
+        {
+          description = "Show Noice menu                  1",
+          action = function()
+            vim.cmd("Noice")
+          end,
+          count = 1,
+        },
+        {
+          description = "Dismiss notifications            2",
+          action = function()
+            vim.cmd("Noice dismiss")
+          end,
+          count = 2,
+        },
+        {
+          description = "Search messages with fzf         5",
+          action = function()
+            vim.cmd("Noice fzf")
+          end,
+          count = 5,
+        },
+        {
+          description = "Show all messages                55",
+          action = function()
+            vim.cmd("Noice all")
+          end,
+          count = 55,
+        },
+      }
+
+      local fzf_lua = require("fzf-lua")
       local keymap_count = vim.v.count
 
-      if keymap_count == 2  then
-        vim.cmd("Noice dismiss")
+      local items = {}
+      for i, option in ipairs(noice_options) do
+        -- Check if count matches any action
+        if keymap_count == option.count then
+          option.action()
+          return
+        end
+
+        -- If no count match, show FZF menu
+        table.insert(
+          items,
+          string.format("%d. %s", i, option.description)
+        )
       end
+
+      utils.set_fzf_lua_nvim_listen_address()
+
+      fzf_lua.fzf_exec(items, {
+        prompt = "Noice Options> ",
+        actions = {
+          ["default"] = function(selected)
+            if not selected or #selected == 0 then
+              return
+            end
+
+            local selection = selected[1]
+            -- Extract option index from selection
+            local index = tonumber(selection:match("^(%d+)%."))
+            if index and noice_options[index] then
+              noice_options[index].action()
+            end
+          end,
+        },
+        fzf_opts = {
+          ["--no-multi"] = "",
+          ["--header"] = "Select a noice option",
+        },
+      })
     end, {
-      desc = "",
+      desc = "Noice 1/menu 2/dismiss 5/fzf 55/all",
     }),
   },
   config = function()
