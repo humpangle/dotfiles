@@ -654,88 +654,85 @@ end, { noremap = true, desc = [[Git rebase 0/continue 1/edit 2/abort]] })
 -- /END Rebase keymaps
 
 -- Git mappings
-local function make_git_log_options()
-  return {
-    {
-      description = "Git refresh (status)              1",
-      action = function()
-        vim.cmd("Git")
-        print("Git refreshed!")
-      end,
-      count = 1,
-    },
-    {
-      description = "Log oneline                       11",
-      action = function()
-        vim.cmd("Git log --oneline")
-      end,
-      count = 11,
-    },
-    {
-      description = "Log full                          12",
-      action = function()
-        vim.cmd("Git! log")
-      end,
-      count = 12,
-    },
-    {
-      description = "Log graphical (lgg)               13",
-      action = function()
-        vim.cmd("Git! lgg")
-      end,
-      count = 13,
-    },
-    {
-      description = "Log oneline current file          2",
-      action = function()
-        vim.cmd("Git log --oneline -- %")
-      end,
-      count = 2,
-    },
-    {
-      description = "Log full current file             21",
-      action = function()
-        vim.cmd("Git log -- %")
-      end,
-      count = 21,
-    },
-    {
-      description = "File history with diff split      123/223",
-      action = function()
-        vim.cmd("only")
-        vim.cmd("0GcLog!")
-        vim.cmd("vsplit")
-        vim.cmd("diffthis")
-        vim.cmd("wincmd h")
-        vim.cmd("normal ]q") -- move to next item in quickfix window
-        vim.cmd("diffthis") -- show diff
-      end,
-      count = 23,
-    },
-    {
-      description = "File history quickfix (GcLog)     23",
-      action = function()
-        vim.cmd("0GcLog!")
-      end,
-      count = 123,
-      count_match_fn = function(count)
-        local str_count = "" .. count
-        return (str_count:match("^%d23") or str_count:match("23%d$"))
-      end,
-    },
-    {
-      description = "Write log oneline but provide count           3",
-      action = function()
-        utils.write_to_command_mode("Git log --oneline -")
-      end,
-      count = 3,
-    },
-  }
-end
+local git_log_options = {
+  {
+    description = "Git refresh (status)              1",
+    action = function()
+      vim.cmd("Git")
+      print("Git refreshed!")
+    end,
+    count = 1,
+  },
+  {
+    description = "Log oneline                       11",
+    action = function()
+      vim.cmd("Git log --oneline")
+    end,
+    count = 11,
+  },
+  {
+    description = "Log full                          12",
+    action = function()
+      vim.cmd("Git! log")
+    end,
+    count = 12,
+  },
+  {
+    description = "Log graphical (lgg)               13",
+    action = function()
+      vim.cmd("Git! lgg")
+    end,
+    count = 13,
+  },
+  {
+    description = "Log oneline current file          2",
+    action = function()
+      vim.cmd("Git log --oneline -- %")
+    end,
+    count = 2,
+  },
+  {
+    description = "Log full current file             21",
+    action = function()
+      vim.cmd("Git log -- %")
+    end,
+    count = 21,
+  },
+  {
+    description = "File history with diff split      123/223",
+    action = function()
+      vim.cmd("only")
+      vim.cmd("0GcLog!")
+      vim.cmd("vsplit")
+      vim.cmd("diffthis")
+      vim.cmd("wincmd h")
+      vim.cmd("normal ]q") -- move to next item in quickfix window
+      vim.cmd("diffthis") -- show diff
+    end,
+    count = 23,
+  },
+  {
+    description = "File history quickfix (GcLog)     23",
+    action = function()
+      vim.cmd("0GcLog!")
+    end,
+    count = 123,
+    count_match_fn = function(count)
+      local str_count = "" .. count
+      return (str_count:match("^%d23") or str_count:match("23%d$"))
+    end,
+  },
+  {
+    description = "Write log oneline but provide count           3",
+    action = function()
+      utils.write_to_command_mode("Git log --oneline -")
+    end,
+    count = 3,
+  },
+}
 
 keymap("n", "<leader>gg", function()
   local fzf_lua = require("fzf-lua")
-  local git_log_options = make_git_log_options()
   local keymap_count = vim.v.count
 
   local items = {}
