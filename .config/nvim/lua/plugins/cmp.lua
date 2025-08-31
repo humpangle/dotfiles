@@ -19,19 +19,19 @@ local is_buffer_source = function(bufnr)
   return true
 end
 
+local check_backspace = function()
+  local col = vim.fn.col(".") - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
+end
+
 return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
   config = function()
-    local cmp = require("cmp")
     local luasnip = require("luasnip")
-
     luasnip.config.setup({})
 
-    local check_backspace = function()
-      local col = vim.fn.col(".") - 1
-      return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
-    end
+    local cmp = require("cmp")
 
     cmp.setup({
       -- REQUIRED - you must specify a snippet engine
