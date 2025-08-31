@@ -33,6 +33,36 @@ return {
 
     local cmp = require("cmp")
 
+    -- `/` cmdline setup.
+    cmp.setup.cmdline("/", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = "buffer" },
+      },
+    })
+
+    -- Currently buggy. See https://github.com/folke/noice.nvim/issues/1142
+    -- The workaround is to make selection (with tab), unselect or select next item and then select again.
+    -- `:` cmdline setup.
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        {
+          name = "path",
+        },
+      }, {
+        {
+          name = "cmdline",
+          option = {
+            ignore_cmds = {
+              "Man",
+              "!",
+            },
+          },
+        },
+      }),
+    })
+
     cmp.setup({
       -- REQUIRED - you must specify a snippet engine
       snippet = {
@@ -192,6 +222,8 @@ return {
     "hrsh7th/cmp-path",
     -- lSP completions
     "hrsh7th/cmp-nvim-lsp",
+    -- command line completions
+    "hrsh7th/cmp-cmdline",
     -- / COMPLETION SOURCES
   },
 }
