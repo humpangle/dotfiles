@@ -7,7 +7,7 @@ local plugin_enabled = require("plugins/plugin_enabled")
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping or just use <C-\><C-n> to exit
 -- terminal mode
 
-utils.map_key("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+-- utils.map_key("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 local function send_to_term_with_slime(split_direction)
   local current_buf = vim.api.nvim_get_current_buf()
