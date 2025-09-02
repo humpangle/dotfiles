@@ -388,6 +388,12 @@ local git_commit_options = {
       utils.write_to_command_mode("Git remote prune ")
     end,
   },
+  {
+    description = "Git submodule update force recursive",
+    action = function()
+      utils.write_to_command_mode("Git submodule update --force --recursive")
+    end,
+  },
 }
 
 local git_commit_mappings_opts = {
@@ -605,6 +611,12 @@ local git_rebase_options = {
     description = "Git prune ",
     action = function()
       utils.write_to_command_mode("Git remote prune ")
+    end,
+  },
+  {
+    description = "Git submodule update force recursive",
+    action = function()
+      utils.write_to_command_mode("Git submodule update --force --recursive")
     end,
   },
 }
