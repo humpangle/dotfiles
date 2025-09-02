@@ -376,6 +376,18 @@ local git_commit_options = {
       open_commit_under_cursor("tab split")
     end,
   },
+  {
+    description = "Git prune origin",
+    action = function()
+      utils.write_to_command_mode("Git remote prune origin")
+    end,
+  },
+  {
+    description = "Git prune ",
+    action = function()
+      utils.write_to_command_mode("Git remote prune ")
+    end,
+  },
 }
 
 local git_commit_mappings_opts = {
@@ -582,6 +594,18 @@ local git_rebase_options = {
       utils.write_to_command_mode("G merge ")
     end,
     count = 53,
+  },
+  {
+    description = "Git prune origin",
+    action = function()
+      utils.write_to_command_mode("Git remote prune origin")
+    end,
+  },
+  {
+    description = "Git prune ",
+    action = function()
+      utils.write_to_command_mode("Git remote prune ")
+    end,
   },
 }
 
