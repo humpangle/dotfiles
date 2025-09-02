@@ -1,3 +1,9 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
+if not plugin_enabled.noice() then
+  return {}
+end
+
 local utils = require("utils")
 local map_lazy_key = utils.map_lazy_key
 
