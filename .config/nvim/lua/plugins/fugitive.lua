@@ -259,7 +259,7 @@ end
 -- Define git commit options with descriptions
 local git_commit_options = {
   {
-    description = "Commit                                               1",
+    description = "Commit                                                              1",
     action = function()
       -- split the current buffer horizontally spanning the bottom
       vim.cmd("botright split")
@@ -275,21 +275,21 @@ local git_commit_options = {
     count = 1,
   },
   {
-    description = "Commit --amend                                       11",
+    description = "Commit --amend                                                     11",
     action = function()
       utils.write_to_command_mode("Git commit --amend")
     end,
     count = 11,
   },
   {
-    description = "Commit --amend --no-edit                             12",
+    description = "Commit --amend --no-edit                                           12",
     action = function()
       utils.write_to_command_mode("Git commit --amend --no-edit")
     end,
     count = 12,
   },
   {
-    description = "Commit --allow-empty                                 13",
+    description = "Commit --allow-empty                                               13",
     action = function()
       utils.write_to_command_mode("Git commit --allow-empty")
     end,
@@ -341,20 +341,22 @@ local git_commit_options = {
     end,
   },
   {
-    description = "Copy current branch name to register a",
-    action = function()
-      local git_head = vim.fn.FugitiveHead()
-      vim.fn.setreg("a", git_head)
-      vim.notify("(Reg a) current branch -> " .. git_head)
-    end,
-  },
-  {
-    description = "Copy current branch name to clipboard",
+    description = "Copy current branch name to clipboard                               5",
     action = function()
       local git_head = vim.fn.FugitiveHead()
       vim.fn.setreg("+", git_head)
       vim.notify("(Reg +) current branch -> " .. git_head)
     end,
+    count = 5,
+  },
+  {
+    description = "Copy current branch name to register a                             55",
+    action = function()
+      local git_head = vim.fn.FugitiveHead()
+      vim.fn.setreg("a", git_head)
+      vim.notify("(Reg a) current branch -> " .. git_head)
+    end,
+    count = 55,
   },
   {
     description = "Show commit under cursor (split)",
