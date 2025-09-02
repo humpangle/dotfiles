@@ -414,7 +414,6 @@ local plugins_table = {
   require("plugins/mini-align"),
   require("plugins/indent-blankline"),
   require("plugins/anki-nvim"),
-  require("plugins/firenvim"),
   require("plugins/refactoring"),
   require("plugins/symlink"),
   require("plugins/csvview-nvim"),

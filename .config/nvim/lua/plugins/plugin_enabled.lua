@@ -286,16 +286,6 @@ function M.vim_lsp()
   return utils.get_os_env_or_nil("NVIM_ENABLE_VIM_LSP") == "1"
 end
 
-M.firenvim = function()
-  if M.has_termux() then
-    return false
-  end
-  if M.has_vscode() then
-    return false
-  end
-  return utils.get_os_env_or_nil("NVIM_ENABLE_FIRE_NVIM") == "1"
-end
-
 function M.avante_ai()
   if M.has_vscode() then
     return false
@@ -311,6 +301,5 @@ function M.codecompanion_ai()
 
   return utils.get_os_env_or_nil("NVIM_ENABLE_CODECOMPANION_AI_PLUGIN") == "1"
 end
-
 
 return M
