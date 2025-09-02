@@ -58,13 +58,13 @@ return {
         end,
         count = 1,
       },
-      {
-        description = "Filesystem current               11",
-        action = function()
-          vim.cmd("Neotree source=filesystem position=current reveal")
-        end,
-        count = 11,
-      },
+      -- {
+      --   description = "Filesystem current               11",
+      --   action = function()
+      --     vim.cmd("Neotree source=filesystem position=current reveal")
+      --   end,
+      --   count = 11,
+      -- },
       {
         description = "Filesystem left                  2",
         action = function()
