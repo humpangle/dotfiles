@@ -94,6 +94,10 @@ function _G.FilenameRight()
   return compute_file_path("right")
 end
 
+function _G.LightlineShowCmd()
+  return "%S"
+end
+
 function _G.LightlineObsession()
   if vim.fn.exists(":Obsession") ~= 2 then
     return ""

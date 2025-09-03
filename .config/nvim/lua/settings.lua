@@ -179,6 +179,15 @@ utils.map_key("n", "yoB", function()
   vim.cmd.echo('"vim.bo.backupcopy=' .. vim.bo.backupcopy .. '"')
 end, { noremap = true, silent = false })
 
+--[[
+showcmd is true by default. It tells vim to show user's keystrokes as they type. showcmdloc Configures where
+to show these keystrokes. It is `last` by the default and will display just below the statusline.
+`showcmdloc=statusline` will display the keystrokes on the statusline and the directly `%S` will display it. See
+lightline.lua (our statusline plugin) to see how/where we display.
+]]
+vim.o.showcmd = true
+vim.o.showcmdloc = "statusline"
+
 local cwd_spellfile = vim.fn.getcwd()
   .. "/"
   .. ".---scratch"
