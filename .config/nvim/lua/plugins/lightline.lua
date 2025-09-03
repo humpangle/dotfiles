@@ -43,7 +43,10 @@ return {
 
       active = {
         left = {
-          { "mode", "paste" },
+          {
+            "mode",
+            "paste",
+          },
           {
             "readonly",
             "FilenameLeft",
@@ -51,18 +54,33 @@ return {
         },
 
         right = {
-          { "lineinfo" },
-          { "percent" },
-          { "fileformat", "filetype" },
+          {
+            "lineinfo",
+          },
+          {
+            "percent",
+          },
+          {
+            "fileformat",
+            "filetype",
+          },
         },
       },
 
       inactive = {
-        left = { { "FilenameRight" } },
+        left = {
+          {
+            "FilenameRight",
+          },
+        },
 
         right = {
-          { "lineinfo" },
-          { "percent" },
+          {
+            "lineinfo",
+          },
+          {
+            "percent",
+          },
         },
       },
 
@@ -80,11 +98,17 @@ return {
 
       tabline = {
         left = {
-          { "tabs" },
+          {
+            "tabs",
+          },
         },
         right = {
-          { "close" },
-          { "LightlineObsession" },
+          {
+            "close",
+          },
+          {
+            "LightlineObsession",
+          },
         },
       },
     }
