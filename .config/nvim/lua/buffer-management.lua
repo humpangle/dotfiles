@@ -234,15 +234,6 @@ function M.delete_all_buffers(delete_flag, opts)
 end
 
 local function do_delete_all_buffers(delete_opts)
-  local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
-  if answer == "Yes" then
-    require("buffer-management").delete_all_buffers("a", delete_opts)
-  else
-    vim.notify(
-      "Not deleting ALL buffers - too destructive!",
-      vim.log.levels.WARN
-    )
-  end
 end
 
 function M.delete_buffers_keymap()
