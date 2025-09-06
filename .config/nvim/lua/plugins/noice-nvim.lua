@@ -1,6 +1,6 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 
-if not plugin_enabled.noice() then
+if plugin_enabled.is_small_screen() or (not plugin_enabled.noice()) then
   return {}
 end
 
