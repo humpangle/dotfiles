@@ -40,5 +40,25 @@
       "}>()"
     ],
     "description": "A list/hash of attributes that are exposed to accept data from the parent component. "
+  },
+  "v-for-without-key": {
+    "prefix": [
+      "vForWithoutKey",
+      "v-for-without-key"
+    ],
+    "body": [
+      "v-for=\"${1:item} in ${2:items}\""
+    ],
+    "description": "Expects: Array | Object | number | string"
+  },
+  "v-for": {
+    "prefix": [
+      "vFor",
+      "v-for"
+    ],
+    "body": [
+      "v-for=\"(${1:item}, ${2:index}) in ${3:items}\" :key=\"${4:index}\""
+    ],
+    "description": "Expects: Array | Object | number | string"
   }
 }
