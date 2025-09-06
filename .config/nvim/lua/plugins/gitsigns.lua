@@ -5,9 +5,11 @@ local function reload_fugitive_index()
     local bufname = vim.api.nvim_buf_get_name(buf)
     if
       vim.startswith(bufname, "fugitive://")
+      -- fugitive git status buffer ***OR***
+      -- fugitive diff buffer for current file e.g. /.git//0/some-file-path.ext
       and (
         vim.endswith(bufname, ".git//")
-        or vim.endswith(bufname, vim.fn.expand("%:r"))
+        or vim.endswith(bufname, "/.git//0/" .. vim.fn.expand("%"))
       )
     then
       vim.api.nvim_buf_call(buf, function()
