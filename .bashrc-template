@@ -2,11 +2,11 @@
 # shellcheck disable=
 
 # Set vi-mode in the shell if not in neovim's emulator
-if [ -z "$NVIM_LISTEN_ADDRESS" ]; then
-  set -o vi
-else
-  set +o vi
-fi
+# if [ -z "$NVIM_LISTEN_ADDRESS" ]; then
+set -o vi
+# else
+# set +o vi
+# fi
 
 # -----------------------------------------------------------------------------
 # WSL
