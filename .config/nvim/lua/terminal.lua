@@ -74,6 +74,8 @@ vim.api.nvim_create_autocmd("TermOpen", {
     vim.opt.relativenumber = true
     -- https://stackoverflow.com/a/45317514
     vim.cmd("setlocal scrollback=-1")
+
+    vim.wo.spell = false
   end,
 })
 
