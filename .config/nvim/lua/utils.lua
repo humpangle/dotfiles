@@ -762,4 +762,49 @@ function utils.strip_cwd(filename)
   return stripped
 end
 
+---Create fzf key mapping
+---@param fzf_key_map_options table
+---@param config table
+function utils.create_fzf_key_maps(fzf_key_map_options, config)
+  local keymap_count = vim.v.count
+  local fzf_lua = require("fzf-lua")
+
+  -- Format options for display
+  local items = {}
+  for i, option in ipairs(fzf_key_map_options) do
+    if keymap_count == option.count then
+      option.action()
+      return
+    end
+    table.insert(items, string.format("%d. %s", i, option.description))
+  end
+
+  local prompt = config.prompt or "Select"
+  local header = config.header or prompt
+
+  utils.set_fzf_lua_nvim_listen_address()
+
+  fzf_lua.fzf_exec(items, {
+    prompt = prompt .. " Options> ",
+    actions = {
+      ["default"] = function(selected)
+        if not selected or #selected == 0 then
+          return
+        end
+
+        local selection = selected[1]
+        -- Extract option index from selection
+        local index = tonumber(selection:match("^(%d+)%."))
+        if index and fzf_key_map_options[index] then
+          fzf_key_map_options[index].action()
+        end
+      end,
+    },
+    fzf_opts = {
+      ["--no-multi"] = "",
+      ["--header"] = header,
+    },
+  })
+end
+
 return utils
