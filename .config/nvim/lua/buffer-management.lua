@@ -4,8 +4,21 @@ local M = {}
 
 M.lazy_doc_path = vim.fn.stdpath("state") .. "/lazy/readme/doc"
 
-function M.is_fugitive_buffer(buffer_name)
-  if vim.startswith(buffer_name, "fugitive://") then
+function M.is_fugitive_buffer(buffer_name, current)
+  local is_fugitive_buffer = vim.startswith(buffer_name, "fugitive://")
+
+  if current then
+    if
+      is_fugitive_buffer
+      and vim.endswith(buffer_name, vim.fn.expand("%"))
+    then
+      return true
+    end
+
+    return false
+  end
+
+  if is_fugitive_buffer then
     return true
   end
 
@@ -155,6 +168,7 @@ function M.delete_all_buffers(delete_flag, opts)
   local no_name_buffers = {}
   local dbui_buffers = {}
   local fugitive_buffers = {}
+  local fugitive_current_buffers = {}
   local dap_buffers = {}
   local octo_buffers = {} -- octo github pr/issues/review plugin
   local avante_buffers = {}
@@ -166,6 +180,8 @@ function M.delete_all_buffers(delete_flag, opts)
     if string.match(b_name, ".dbout") then
       -- or string.match(b_name, "share/db_ui/")
       table.insert(dbui_buffers, buf_num)
+    elseif M.is_fugitive_buffer(b_name, "current") then
+      table.insert(fugitive_current_buffers, buf_num)
     elseif M.is_fugitive_buffer(b_name) then
       table.insert(fugitive_buffers, buf_num)
     elseif M.is_dap_buffer(b_name) then
@@ -198,6 +214,7 @@ function M.delete_all_buffers(delete_flag, opts)
     -- wipeout_buffers(terminal_buffers)
     -- wipeout_buffers(normal_buffers)
     wipeout_buffers(fugitive_buffers)
+    wipeout_buffers(fugitive_current_buffers)
     wipeout_buffers(dap_buffers)
     wipeout_buffers(octo_buffers)
     wipeout_buffers(avante_buffers)
@@ -213,6 +230,8 @@ function M.delete_all_buffers(delete_flag, opts)
     wipeout_buffers(dbui_buffers)
   elseif delete_flag == "fugitive" then
     wipeout_buffers(fugitive_buffers)
+  elseif delete_flag == "fugitive-current" then
+    wipeout_buffers(fugitive_current_buffers)
   elseif delete_flag == "dap" then
     wipeout_buffers(dap_buffers)
   elseif delete_flag == "octo" then
@@ -233,127 +252,92 @@ function M.delete_all_buffers(delete_flag, opts)
   notify(count .. " buffers wiped with flag " .. delete_flag .. "!", opts)
 end
 
-local function do_delete_all_buffers(delete_opts)
-end
-
+local deletion_options = {
+  {
+    description = "Empty                                                     1",
+    action = function()
+      M.delete_all_buffers("e")
+    end,
+    count = 1,
+  },
+  {
+    description = "Fugitive Current Buffer                                  11",
+    action = function()
+      M.delete_all_buffers("fugitive-current")
+    end,
+    count = 11,
+  },
+  {
+    description = "Fugitive All                                             12",
+    action = function()
+      M.delete_all_buffers("fugitive")
+    end,
+    count = 12,
+  },
+  {
+    description = "All Buffers                                               2",
+    action = function()
+      local answer = vim.fn.input("Delete all buffers? (Yes/No): ")
+      if answer == "Yes" then
+        M.delete_all_buffers("a", {
+          delay_notify = true,
+        })
+      else
+        vim.notify(
+          "Not deleting ALL buffers - too destructive!",
+          vim.log.levels.WARN
+        )
+      end
+    end,
+    count = 2,
+  },
+  {
+    description = "DAP",
+    action = function()
+      M.delete_all_buffers("dap")
+    end,
+  },
+  {
+    description = "Octo",
+    action = function()
+      M.delete_all_buffers("octo")
+    end,
+  },
+  {
+    description = "CodeCompanion",
+    action = function()
+      M.delete_all_buffers("codecompanion")
+    end,
+  },
+  {
+    description = "Avante",
+    action = function()
+      M.delete_all_buffers("avante")
+    end,
+  },
+  {
+    description = "Terminal",
+    action = function()
+      M.delete_all_buffers("t")
+    end,
+  },
+  {
+    description = "DB DadBod UI",
+    action = function()
+      M.delete_all_buffers("dbui")
+    end,
+  },
+  {
+    description = "UnWindowed",
+    action = function()
+      M.delete_all_buffers("unwindowed")
+    end,
+  },
+}
 function M.delete_buffers_keymap()
   utils.map_key("n", "<leader>be", function()
-    local count = vim.v.count
-
-    if count == 0 then
-      -- Delete all empty buffers
-      require("buffer-management").delete_all_buffers("e")
-      return
-    end
-
-    if count == 1 then
-      require("buffer-management").delete_all_buffers("fugitive")
-      return
-    end
-
-    if count == 2 then
-      do_delete_all_buffers()
-      return
-    end
-
-    local fzf_lua = require("fzf-lua")
-
-    local deletion_options = {
-      {
-        description = "DAP",
-        type = "dap",
-      },
-      {
-        description = "Octo",
-        type = "octo",
-      },
-      {
-        description = "CodeCompanion",
-        type = "codecompanion",
-      },
-      {
-        description = "Avante",
-        type = "avante",
-      },
-      {
-        description = "Terminal",
-        type = "t",
-      },
-      {
-        description = "DB DadBod UI",
-        type = "dbui",
-      },
-      {
-        description = "UnWindowed",
-        type = "unwindowed",
-      },
-      {
-        description = "Fugitive",
-        type = "fugitive",
-      },
-      {
-        description = "Empty",
-        type = "e",
-      },
-      {
-        description = "All",
-        type = "a",
-      },
-    }
-
-    -- Format options for display
-    local items = {}
-    for i, option in ipairs(deletion_options) do
-      table.insert(items, string.format("%d. %s", i, option.description))
-    end
-
-    utils.set_fzf_lua_nvim_listen_address()
-    fzf_lua.fzf_exec(items, {
-      prompt = "Buffer Deletion> ",
-      actions = {
-        ["default"] = function(selected)
-          if not selected or #selected == 0 then
-            return
-          end
-
-          local selection = selected[1]
-          local index = tonumber(selection:match("^(%d+)%."))
-          if index and deletion_options[index] then
-            local option = deletion_options[index]
-
-            -- Handle special case for ALL
-            if option.type == "a" then
-              do_delete_all_buffers({ delay_notify = true })
-              return
-            end
-
-            -- Handle special case for avante
-            if option.type == "avante" then
-              if
-                require("buffer-management").is_avante_buffer()
-              then
-                vim.cmd.normal("gT")
-              end
-              pcall(function()
-                require("buffer-management").delete_all_buffers(
-                  option.type,
-                  { delay_notify = true }
-                )
-              end)
-              return
-            end
-
-            require("buffer-management").delete_all_buffers(
-              option.type,
-              { delay_notify = true }
-            )
-          end
-        end,
-      },
-      fzf_opts = {
-        ["--no-multi"] = "",
-        ["--header"] = "Select buffer deletion type",
-      },
+    utils.create_fzf_key_maps(deletion_options, {
+      prompt = "Buffer Delete",
     })
   end, {
     noremap = true,
