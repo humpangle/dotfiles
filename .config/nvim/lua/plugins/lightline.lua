@@ -35,7 +35,10 @@ return {
 
       component_expand = {
         LightlineObsession = "v:lua.LightlineObsession",
-        showCmd = "v:lua.LightlineShowCmd",
+      },
+
+      component = {
+        showCmd = "%S",
       },
 
       tab_component_function = {
@@ -56,10 +59,10 @@ return {
 
         right = {
           {
-            "showCmd",
+            "lineinfo",
           },
           {
-            "lineinfo",
+            "showCmd",
           },
           {
             "percent",
