@@ -65,3 +65,5 @@
   required = true
 [safe]
   directory = *
+[protocol "file"]
+	allow = always
