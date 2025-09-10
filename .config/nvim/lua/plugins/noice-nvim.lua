@@ -11,6 +11,11 @@ return {
   "folke/noice.nvim",
   event = "VeryLazy",
   keys = {
+    map_lazy_key("<leader><esc>", function()
+      vim.cmd("Noice dismiss")
+    end, {
+      desc = "Noice dismiss",
+    }),
     map_lazy_key("<leader>noi", function()
       local noice_options = {
         {
