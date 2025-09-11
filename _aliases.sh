@@ -623,6 +623,9 @@ if ! _has_termux; then
     alias purge-systemd-service='_purge-systemd-service'
 
     alias sdpi='sudo dpkg -i'
+    alias dpis='sdpi'
+    alias apt_kept_back='sudo apt-get --with-new-pkgs upgrade'
+    alias kept_back_apt='apt_kept_back'
   fi
 else
   alias ug='pkg update && pkg upgrade'
