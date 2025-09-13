@@ -7,7 +7,7 @@ end
 
 local map_key = require("utils").map_key
 
-local function select_markdown_region()
+local function select_markdown_region(send_to_slime)
   -- Only work in markdown files
   -- if vim.bo.filetype ~= "markdown" then
   --   return
@@ -119,6 +119,22 @@ local function select_markdown_region()
   vim.cmd("normal! " .. start_line .. "G")
   vim.cmd("normal! V")
   vim.cmd("normal! " .. end_line .. "G")
+
+  -- If send_to_slime is true, trigger vim-slime to send the selection
+  if send_to_slime and vim.fn.exists(":SlimeSend") == 2 then
+    local term_keys = vim.api.nvim_replace_termcodes(
+      "<Plug>SlimeRegionSend",
+      true,
+      true,
+      true
+    )
+    vim.api.nvim_feedkeys(
+      term_keys,
+      "m", -- "m" => allow remapping so <Plug> expands
+      true -- third arg (true) => do not escape CSI
+    )
+    vim.notify(#lines .. "lines sent to slime")
+  end
 end
 
 return {
@@ -137,12 +153,13 @@ return {
 
     build = ":TSUpdate",
     init = function()
-      map_key(
-        "n",
-        "<localleader><localleader>",
-        select_markdown_region,
-        { desc = "Select markdown region based on #=== delimiters" }
-      )
+      map_key("n", "<localleader><localleader>", function()
+        local count = vim.v.count
+        -- If count == 0, send to slime; otherwise just select and yank
+        select_markdown_region(count == 0)
+      end, {
+        desc = "Select markdown region based on #=== delimiters (with count: send to slime)",
+      })
     end,
     config = function()
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
