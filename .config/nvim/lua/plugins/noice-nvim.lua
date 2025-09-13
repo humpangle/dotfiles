@@ -13,6 +13,7 @@ return {
   keys = {
     map_lazy_key("<leader><esc>", function()
       vim.cmd("Noice dismiss")
+      vim.cmd("messages clear")
     end, {
       desc = "Noice dismiss",
     }),
