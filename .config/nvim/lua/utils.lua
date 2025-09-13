@@ -786,6 +786,12 @@ function utils.create_fzf_key_maps(fzf_key_map_options, config)
 
   fzf_lua.fzf_exec(items, {
     prompt = prompt .. " Options> ",
+    keymap = {
+      fzf = {
+        ["tab"] = "down",
+        ["shift-tab"] = "up",
+      }
+    },
     actions = {
       ["default"] = function(selected)
         if not selected or #selected == 0 then
