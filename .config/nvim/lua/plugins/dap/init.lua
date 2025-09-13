@@ -308,17 +308,16 @@ return {
             return
           end
 
-          local config = vim.tbl_extend(
-            "keep",
-            { terminateDebugee = false },
-            session.config
-          )
+          -- We must first disconnect otherwise the session will terminate (is this some kind of bug?)
+          dap.disconnect()
 
-          dap.restart(config)
-
-          defer_notify(
-            "Restarting Session for " .. session_adapter_name
-          )
+          vim.defer_fn(function()
+            session.config.terminateDebugee = false
+            dap.restart(session.config)
+            defer_notify(
+              "Restarting Session for " .. session_adapter_name
+            )
+          end, 100)
           return
         end
 
