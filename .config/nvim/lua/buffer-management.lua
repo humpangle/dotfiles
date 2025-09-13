@@ -5,28 +5,13 @@ local M = {}
 M.lazy_doc_path = vim.fn.stdpath("state") .. "/lazy/readme/doc"
 
 function M.is_fugitive_buffer(buffer_name, current)
-  local is_fugitive_buffer = vim.startswith(buffer_name, "fugitive://")
+  local fugitive_buf = vim.startswith(buffer_name, "fugitive://")
 
   if current then
-    if
-      is_fugitive_buffer
-      and vim.endswith(buffer_name, vim.fn.expand("%"))
-    then
-      return true
-    end
-
-    return false
+    return fugitive_buf and vim.endswith(buffer_name, vim.fn.expand("%"))
   end
 
-  if is_fugitive_buffer then
-    return true
-  end
-
-  if vim.endswith(buffer_name, ".fugitiveblame") then
-    return true
-  end
-
-  return false
+  return fugitive_buf or vim.endswith(buffer_name, ".fugitiveblame")
 end
 
 ---@param buffer_name string
