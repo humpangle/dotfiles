@@ -243,6 +243,42 @@ keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
 
 -- Git commit mappings
 
+local tab_split = function()
+  vim.cmd("tab split")
+end
+
+local get_git_commit = function(tree_ish)
+  local git_tree_ish_head_list = vim.fn.systemlist(
+    "( cd "
+      .. vim.fn.getcwd(0)
+      .. " &&  git rev-parse "
+      .. tree_ish
+      .. " --short )"
+  )
+
+  if #git_tree_ish_head_list == 1 then
+    return git_tree_ish_head_list[1]
+  elseif #git_tree_ish_head_list == 2 then
+    return git_tree_ish_head_list[2]
+  end
+
+  return "ERROR"
+end
+
+local get_git_current_branch = function()
+  local git_tree_ish_head_list = vim.fn.systemlist(
+    "( cd " .. vim.fn.getcwd(0) .. " &&  git branch --show-current)"
+  )
+
+  if #git_tree_ish_head_list == 1 then
+    return git_tree_ish_head_list[1]
+  elseif #git_tree_ish_head_list == 2 then
+    return git_tree_ish_head_list[2]
+  end
+
+  return "ERROR"
+end
+
 local function highlight_text_under_cursor()
   local text_under_cursor = vim.fn.expand("<cword>")
   vim.fn.setreg("/", text_under_cursor)
@@ -343,7 +379,7 @@ local git_commit_options = {
   {
     description = "Copy current branch name to clipboard                               5",
     action = function()
-      local git_head = vim.fn.FugitiveHead()
+      local git_head = get_git_current_branch()
       vim.fn.setreg("+", git_head)
       vim.notify("(Reg +) current branch -> " .. git_head)
     end,
@@ -352,7 +388,7 @@ local git_commit_options = {
   {
     description = "Copy current branch name to register a                             55",
     action = function()
-      local git_head = vim.fn.FugitiveHead()
+      local git_head = get_git_current_branch()
       vim.fn.setreg("a", git_head)
       vim.notify("(Reg a) current branch -> " .. git_head)
     end,
@@ -373,6 +409,7 @@ local git_commit_options = {
   {
     description = "Show commit under cursor (tab)",
     action = function()
+      tab_split()
       open_commit_under_cursor("tab split")
     end,
   },
@@ -391,7 +428,47 @@ local git_commit_options = {
   {
     description = "Git submodule update force recursive",
     action = function()
-      utils.write_to_command_mode("Git submodule update --force --recursive")
+      utils.write_to_command_mode(
+        "Git submodule update --force --recursive"
+      )
+    end,
+  },
+  {
+    description = "Git submodule update force recursive",
+    action = function()
+      utils.write_to_command_mode(
+        "Git submodule update --force --recursive"
+      )
+    end,
+  },
+  {
+    description = "Git get commit",
+    action = function()
+      utils.write_to_command_mode("Git rev-parse ")
+    end,
+  },
+  {
+    description = "Git copy/get commit main register plus +",
+    action = function()
+      local git_main_head = get_git_commit("main")
+      vim.fn.setreg("+", git_main_head)
+      vim.notify("(Reg +) main branch -> " .. git_main_head)
+    end,
+  },
+  {
+    description = "Git copy/get commit master register plus +",
+    action = function()
+      local git_master_head = get_git_commit("master")
+      vim.fn.setreg("+", git_master_head)
+      vim.notify("(Reg +) master branch -> " .. git_master_head)
+    end,
+  },
+  {
+    description = "Git get commit cursor <cWORD>",
+    action = function()
+      utils.write_to_command_mode(
+        "Git rev-parse " .. vim.fn.expand("<cWORD>")
+      )
     end,
   },
 }
@@ -616,7 +693,21 @@ local git_rebase_options = {
   {
     description = "Git submodule update force recursive",
     action = function()
-      utils.write_to_command_mode("Git submodule update --force --recursive")
+      utils.write_to_command_mode(
+        "Git submodule update --force --recursive"
+      )
+    end,
+  },
+  {
+    description = "Rebase master                                         ",
+    action = function()
+      utils.write_to_command_mode("G rebase master")
+    end,
+  },
+  {
+    description = "Merge abort",
+    action = function()
+      utils.write_to_command_mode("G merge --abort")
     end,
   },
 }
