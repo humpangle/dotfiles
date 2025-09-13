@@ -227,5 +227,18 @@
     "description": [
       "Anki Comprehensive"
     ]
+  },
+  "Summarize jira issue": {
+    "prefix": [
+      "summarize-jira-issue"
+    ],
+    "body": [
+      "Summarize the issue in the attached in a format I can use to provide context to an AI coding agent such as openAI codex, anthropic claude code etc.",
+      "Summarize the issue pasted above in a format I can use to provide context to an AI coding agent such as openAI codex, anthropic claude code etc.",
+      "Also provide a downloadable output."
+    ],
+    "description": [
+      "Summarize jira issue"
+    ]
   }
 }
