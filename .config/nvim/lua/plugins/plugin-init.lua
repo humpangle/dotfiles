@@ -257,17 +257,7 @@ local plugins_table = {
   },
 
   -- Send text from vim to tmux/NeoVim :terminal etc
-  {
-    "jpalardy/vim-slime",
-    enabled = not plugin_enabled.has_vscode(),
-    init = function()
-      -- https://github.com/jpalardy/vim-slime/blob/main/assets/doc/targets/neovim.md
-      vim.g.slime_target = "neovim"
-    end,
-    config = function()
-      require("plugins/slime")
-    end,
-  },
+  require("plugins/slime"),
 
   -- MARKDOWN
   -- Courtesy : https://elixirforum.com/t/preview-livebook-in-neovim/65080
