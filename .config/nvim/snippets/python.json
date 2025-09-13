@@ -202,5 +202,28 @@
     "description": [
       "pytest.mark.parametrize"
     ]
+  },
+  "type_alias": {
+    "prefix": [
+      "type_alias",
+      "alias_type"
+    ],
+    "body": [
+      "# <3.11",
+      "# from typing import TypeAlias",
+      "${1:type_name_var}: TypeAlias = ${2:list[float]}",
+      "${1:type_name_var}: TypeAlias = \"${2:list[float, SomeClass]}\" # You need to surround with\"",
+      "",
+      "# >=3.11",
+      "# from typing import TypeAlias",
+      "# from typing_extensions import Self",
+      "${1:type_name_var}: TypeAlias = ${2:list[float, Self]}",
+      "",
+      "# >=3.12",
+      "type ${1:type_name_var} = ${2:tuple[float, Self]}"
+    ],
+    "description": [
+      "type alias"
+    ]
   }
 }
