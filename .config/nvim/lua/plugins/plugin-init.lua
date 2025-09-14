@@ -406,7 +406,7 @@ local plugins_table = {
   require("plugins/anki-nvim"),
   require("plugins/refactoring"),
   require("plugins/symlink"),
-  require("plugins/csvview-nvim"),
+  -- require("plugins/csvview-nvim"), -- disable until there is need for it
   require("plugins/live-preview-nvim"),
 }
 
