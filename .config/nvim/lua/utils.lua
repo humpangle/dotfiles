@@ -550,7 +550,7 @@ local extract_line_number = function(cfile)
   }
 
   for _, pattern in pairs(patterns) do
-    line_number = line_text:match(last_path_index .. ".*" .. pattern)
+    line_number = line_text:match(last_path_index .. ".-" .. pattern)
 
     if line_number ~= nil then
       return line_number
@@ -615,7 +615,7 @@ utils.go_to_file = function()
     return
   end
 
-  if cfile and (vim.fn.isdirectory(cfile) ~= 0) then
+  if cfile and (vim.fn.isdirectory(cfile) == 0) then
     line_number = line_number or extract_line_number(cfile)
   end
 
@@ -790,7 +790,7 @@ function utils.create_fzf_key_maps(fzf_key_map_options, config)
       fzf = {
         ["tab"] = "down",
         ["shift-tab"] = "up",
-      }
+      },
     },
     actions = {
       ["default"] = function(selected)
