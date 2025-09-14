@@ -1,6 +1,67 @@
 local utils = require("utils")
 local map_key = utils.map_key
 
+local function format_diagnostic(diagnostic)
+  local bufname =
+    vim.fn.fnamemodify(vim.api.nvim_buf_get_name(diagnostic.bufnr), ":~:.")
+
+  local line = diagnostic.lnum + 1 -- Convert to 1-based
+  local end_line = diagnostic.end_lnum and (diagnostic.end_lnum + 1) or line
+  local col = diagnostic.col + 1
+  local end_col = diagnostic.end_col and (diagnostic.end_col + 1) or col
+  local severity = vim.diagnostic.severity[diagnostic.severity]
+
+  local message = diagnostic.message:gsub("\n", " <>")
+
+  -- Format line range
+  local line_str = line == end_line and tostring(line)
+    or string.format("%d-%d", line, end_line)
+
+  return string.format(
+    "%s:%s col %d:%d [%s] %s",
+    bufname,
+    line_str,
+    col,
+    end_col,
+    severity,
+    message
+  )
+end
+
+-- Get formatted diagnostics from specified buffer(s)
+-- @param bufnr number|nil Buffer number (0 for current, nil for all)
+-- @return table Array of formatted diagnostic messages
+local function get_formatted_diagnostics(bufnr)
+  local diagnostics = vim.diagnostic.get(bufnr)
+  local messages = {}
+
+  for _, diagnostic in ipairs(diagnostics) do
+    table.insert(messages, format_diagnostic(diagnostic))
+  end
+
+  return messages
+end
+
+-- Copy diagnostics to a register
+-- @param bufnr number|nil Buffer number (0 for current, nil for all)
+-- @param register string Register to copy to ('a', '+', etc.)
+local function copy_diagnostics_to_register(bufnr, register)
+  local messages = get_formatted_diagnostics(bufnr)
+  local all_messages = table.concat(messages, "\n\n")
+  vim.fn.setreg(register, all_messages)
+  vim.fn.setreg('"', all_messages)
+
+  local scope = bufnr == 0 and "current buffer" or "all buffers"
+  vim.notify(
+    string.format(
+      "%d diagnostics from %s to %s",
+      #messages,
+      scope,
+      "register '" .. register .. "'"
+    )
+  )
+end
+
 local diagnostic_modes = {
   {
     config = {
@@ -54,19 +115,47 @@ local fzf_lua_diagnostic_options = {
     count = 11,
   },
   {
-    description = "Set Location List                                                                                5",
+    description = "Open Buffer Float (focusable)                                                                    5",
     action = function()
-      vim.diagnostic.setloclist()
+      vim.diagnostic.open_float({ focusable = true, scope = "buffer" })
+      vim.diagnostic.open_float({ focusable = true, scope = "buffer" })
     end,
     count = 5,
   },
   {
-    description = "Open Buffer Float (focusable)                                                                   55",
+    description = "Set Location List                                                                               51",
     action = function()
-      vim.diagnostic.open_float({ focusable = true, scope = "buffer" })
-      vim.diagnostic.open_float({ focusable = true, scope = "buffer" })
+      vim.diagnostic.setloclist()
     end,
-    count = 55,
+    count = 51,
+  },
+  {
+    description = "Current Copy Current Buffer Diagnostics to Clipboard register +                                 52",
+    action = function()
+      copy_diagnostics_to_register(0, "+")
+    end,
+    count = 52,
+  },
+  {
+    description = "Current Copy Current Buffer Diagnostics to Register 'a'                                        522",
+    action = function()
+      copy_diagnostics_to_register(0, "a")
+    end,
+    count = 522,
+  },
+  {
+    description = "Copy All Buffers Diagnostics to Clipboard register +                                            53",
+    action = function()
+      copy_diagnostics_to_register(nil, "+")
+    end,
+    count = 53,
+  },
+  {
+    description = "All Copy All Buffers Diagnostics to Register 'a'                                               533",
+    action = function()
+      copy_diagnostics_to_register(nil, "a")
+    end,
+    count = 533,
   },
   {
     description = "Debug: Print Current Config                                                                     99",
@@ -95,5 +184,5 @@ map_key("n", "<leader>lsd", function()
   })
 end, {
   noremap = true,
-  desc = "diagnostic 0/ 1/toggleVirtuals 11/linePopUp 5/listLoc 55/listFloat 99/debug",
+  desc = "diagnostic 0/ 1/toggleVirtuals 11/linePopUp 5/listLoc 6/copyCurrentA 61/copyCurrentClip 50/bufFloat 52/copyAllA 53/copyAllClip 99/debug",
 })
