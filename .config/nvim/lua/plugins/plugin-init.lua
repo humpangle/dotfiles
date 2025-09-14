@@ -408,7 +408,6 @@ local plugins_table = {
   require("plugins/symlink"),
   require("plugins/csvview-nvim"),
   require("plugins/live-preview-nvim"),
-  require("plugins/nvim-lsp-file-operations"),
 }
 
 ---@diagnostic disable:missing-fields

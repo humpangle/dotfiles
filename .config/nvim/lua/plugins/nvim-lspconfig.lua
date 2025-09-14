@@ -418,9 +418,10 @@ return {
       for server_name, server in pairs(servers) do
         server.capabilities = vim.tbl_deep_extend(
           "force",
-          {},
           server.capabilities or {},
-          lsp_extended_capabilities
+          lsp_extended_capabilities,
+          -- we should fail loudly if nvim-lsp-file-operations plugin removed
+          require'lsp-file-operations'.default_capabilities()
         )
         vim.lsp.config(server_name, server)
 
