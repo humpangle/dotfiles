@@ -53,20 +53,52 @@
       "Apply suggested changes"
     ]
   },
-  "Triple fence": {
+  "Triple quote": {
     "prefix": [
-      "triple_fence",
-      "fence_triple",
+      "triple_quote",
+      "quote_triple",
       "quote_triple",
       "triple_quote"
     ],
     "body": [
-      "\"\"\"",
+      "\"\"\"$1",
       "$0",
       "\"\"\""
     ],
     "description": [
-      "Triple fence"
+      "Triple quote"
+    ]
+  },
+  "Four quote": {
+    "prefix": [
+      "four_quote",
+      "quote_four",
+      "quote_four",
+      "four_quote"
+    ],
+    "body": [
+      "\"\"\"\"$1",
+      "$0",
+      "\"\"\"\""
+    ],
+    "description": [
+      "four quote"
+    ]
+  },
+  "Tilde triple": {
+    "prefix": [
+      "tilde_triple",
+      "triple_tilde",
+      "triple_tilde",
+      "tilde_triple"
+    ],
+    "body": [
+      "```$1",
+      "$0",
+      "```"
+    ],
+    "description": [
+      "tilde triple"
     ]
   },
   "update code in buffer": {
