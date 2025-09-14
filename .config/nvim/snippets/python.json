@@ -212,7 +212,7 @@
       "# <3.11",
       "# from typing import TypeAlias",
       "${1:type_name_var}: TypeAlias = ${2:list[float]}",
-      "${1:type_name_var}: TypeAlias = \"${2:list[float, SomeClass]}\" # You need to surround with\"",
+      "${1:type_name_var}: TypeAlias = \"${2:list[float, SomeClass]}\" # You need to surround with \"",
       "",
       "# >=3.11",
       "# from typing import TypeAlias",
@@ -225,5 +225,21 @@
     "description": [
       "type alias"
     ]
-  }
+  },
+  "Triple quote": {
+    "prefix": [
+      "triple_quote",
+      "quote_triple",
+      "quote_triple",
+      "triple_quote"
+    ],
+    "body": [
+      "\"\"\"$1",
+      "$0",
+      "\"\"\""
+    ],
+    "description": [
+      "Triple quote"
+    ]
+  },
 }
