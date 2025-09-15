@@ -421,7 +421,12 @@ utils.map_key(
 )
 
 -- Move between windows in a tab
-utils.map_key("n", "<Tab>", "<C-w>w", { noremap = false })
+utils.map_key("n", "<Tab>", function()
+  vim.cmd("Noice dismiss")
+  vim.defer_fn(function()
+    vim.cmd("wincmd w")
+  end, 0)
+end, { noremap = false })
 
 -- Tab operations
 utils.map_key("n", "<Leader>ts", "<cmd>tab split<cr>", { noremap = true })
