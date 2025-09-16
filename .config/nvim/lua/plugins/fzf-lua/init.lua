@@ -77,7 +77,6 @@ return {
         winopts = {
           fullscreen = true,
         },
-
         git = {
           branches = {
             actions = {
@@ -105,6 +104,11 @@ return {
               "checkout",
               "-b",
             },
+          },
+        },
+        keymap = {
+          fzf = {
+            ["ctrl-q"] = "select-all+accept",
           },
         },
       })
@@ -151,12 +155,25 @@ return {
         desc = "",
       })
 
-      -- Search in project - do not match filenames
-      map_key("n", "<Leader>f/", function()
+      map_key("n", "<Leader>/", function()
         utils.set_fzf_lua_nvim_listen_address()
-        require("fzf-lua").grep_project()
+
+        local count = vim.v.count
+
+        if count == 0 then
+          require("fzf-lua").live_grep()
+          return
+        end
+
+        if count == 1 then
+          -- Start grep, then ctrl-g to filter over (fuzzy=search) the search results
+          -- https://www.reddit.com/r/neovim/comments/1hhiidm/comment/m2rxfhl/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+          require("fzf-lua").grep_project()
+          return
+        end
       end, { noremap = true })
-      map_key("n", "<Leader>ff/", function()
+
+      map_key("n", "<Leader>f/", function()
         utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").grep_project()
       end, { noremap = true })
