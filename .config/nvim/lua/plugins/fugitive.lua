@@ -785,7 +785,7 @@ end, { noremap = true, desc = [[Git rebase 0/continue 1/edit 2/abort]] })
 -- Git mappings
 local git_log_options = {
   {
-    description = "Git refresh (status)              1",
+    description = "Git refresh (status) THIS CWD                            1",
     action = function()
       vim.cmd("Git")
       print("Git refreshed!")
@@ -793,42 +793,42 @@ local git_log_options = {
     count = 1,
   },
   {
-    description = "Log oneline                       11",
+    description = "Log oneline THIS CWD                                    11",
     action = function()
       vim.cmd("Git log --oneline")
     end,
     count = 11,
   },
   {
-    description = "Log full                          12",
+    description = "Log full THIS CWD                                       12",
     action = function()
       vim.cmd("Git! log")
     end,
     count = 12,
   },
   {
-    description = "Log graphical (lgg)               13",
+    description = "Log graphical (lgg) THIS CWD                            13",
     action = function()
       vim.cmd("Git! lgg")
     end,
     count = 13,
   },
   {
-    description = "Log oneline current file          2",
+    description = "Log oneline current file                                 2",
     action = function()
       vim.cmd("Git log --oneline -- %")
     end,
     count = 2,
   },
   {
-    description = "Log full current file             21",
+    description = "Log full current file                                   21",
     action = function()
       vim.cmd("Git log -- %")
     end,
     count = 21,
   },
   {
-    description = "File history with diff split      123/223",
+    description = "File history with diff split                       123/223",
     action = function()
       vim.cmd("only")
       vim.cmd("0GcLog!")
@@ -841,7 +841,7 @@ local git_log_options = {
     count = 23,
   },
   {
-    description = "File history quickfix (GcLog)     23",
+    description = "File history quickfix (GcLog)                           23",
     action = function()
       vim.cmd("0GcLog!")
     end,
@@ -852,7 +852,7 @@ local git_log_options = {
     end,
   },
   {
-    description = "Write log oneline but provide count           3",
+    description = "Write log oneline but provide count                      3",
     action = function()
       utils.write_to_command_mode("Git log --oneline -")
     end,
