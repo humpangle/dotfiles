@@ -787,29 +787,49 @@ local git_log_options = {
   {
     description = "Git refresh (status) THIS CWD                            1",
     action = function()
-      vim.cmd("Git")
-      print("Git refreshed!")
+      utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+        vim.cmd("Git")
+        print("Git refreshed!")
+      end, {
+        force = true,
+        wipe = true,
+      })
     end,
     count = 1,
   },
   {
     description = "Log oneline THIS CWD                                    11",
     action = function()
-      vim.cmd("Git log --oneline")
+      utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+        vim.cmd("Git log --oneline")
+      end, {
+        force = true,
+        wipe = true,
+      })
     end,
     count = 11,
   },
   {
     description = "Log full THIS CWD                                       12",
     action = function()
-      vim.cmd("Git! log")
+      utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+        vim.cmd("Git! log")
+      end, {
+        force = true,
+        wipe = true,
+      })
     end,
     count = 12,
   },
   {
     description = "Log graphical (lgg) THIS CWD                            13",
     action = function()
-      vim.cmd("Git! lgg")
+      utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+        vim.cmd("Git! lgg")
+      end, {
+        force = true,
+        wipe = true,
+      })
     end,
     count = 13,
   },
@@ -857,6 +877,19 @@ local git_log_options = {
       utils.write_to_command_mode("Git log --oneline -")
     end,
     count = 3,
+  },
+  {
+    description = "Git refresh (status) OTHER CWD",
+    action = function()
+      vim.cmd("Git")
+      print("Git refreshed!")
+    end,
+  },
+  {
+    description = "Log oneline OTHER CWD",
+    action = function()
+      vim.cmd("Git log --oneline")
+    end,
   },
 }
 
