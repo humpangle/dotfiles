@@ -172,12 +172,6 @@ return {
           return
         end
       end, { noremap = true })
-
-      map_key("n", "<Leader>f/", function()
-        utils.set_fzf_lua_nvim_listen_address()
-        require("fzf-lua").grep_project()
-      end, { noremap = true })
-
       -- map_key("n", "<leader>cb", function()
       --   require("fzf-lua").git_branches")
       -- end, {

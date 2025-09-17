@@ -54,7 +54,7 @@ map_key("n", "<Leader>C", ":Commands!<CR>", { noremap = true })
 map_key("n", "<Leader>M", ":Maps!<CR>", { noremap = true })
 
 -- Search in project - do not match filenames
-map_key("n", "<Leader>/", ":RgNf!<CR>", { noremap = true })
+map_key("n", "<Leader>f/", ":RgNf!<CR>", { noremap = true })
 
 --  GIT
 -- Files managed by git
