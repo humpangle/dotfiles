@@ -37,6 +37,7 @@ return {
       local count = vim.v.count
 
       if count == 0 then
+        vim.cmd("tab split")
         vim.cmd("Octo pr create")
         return
       end
