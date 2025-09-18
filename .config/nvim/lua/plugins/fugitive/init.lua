@@ -3,6 +3,8 @@ if not utils_status_ok then
   return
 end
 
+local fugitive_utils = require("plugins.fugitive.utils")
+
 local keymap = utils.map_key
 
 keymap("n", "<leader>g.", ":Git add .<CR>", { noremap = true })
@@ -279,19 +281,6 @@ local get_git_current_branch = function()
   return "ERROR"
 end
 
-local function highlight_text_under_cursor()
-  local text_under_cursor = vim.fn.expand("<cword>")
-  vim.fn.setreg("/", text_under_cursor)
-  vim.cmd("set hlsearch")
-  return text_under_cursor
-end
-
-local function open_commit_under_cursor(split_cmd)
-  local commit_ish = highlight_text_under_cursor()
-  vim.cmd(split_cmd)
-  vim.cmd("Gedit " .. commit_ish)
-end
-
 -- Define git commit options with descriptions
 local git_commit_options = {
   {
@@ -336,7 +325,7 @@ local git_commit_options = {
     action = function()
       utils.write_to_command_mode(
         "Git verify-commit "
-          .. vim.fn.expand(highlight_text_under_cursor())
+          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
           .. " "
       )
     end,
@@ -346,7 +335,7 @@ local git_commit_options = {
     action = function()
       utils.write_to_command_mode(
         "Git verify-commit -v "
-          .. vim.fn.expand(highlight_text_under_cursor())
+          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
           .. " "
       )
     end,
@@ -397,20 +386,20 @@ local git_commit_options = {
   {
     description = "Show commit under cursor (split)",
     action = function()
-      open_commit_under_cursor("split")
+      fugitive_utils.open_commit_under_cursor("split")
     end,
   },
   {
     description = "Show commit under cursor (vsplit)",
     action = function()
-      open_commit_under_cursor("vsplit")
+      fugitive_utils.open_commit_under_cursor("vsplit")
     end,
   },
   {
     description = "Show commit under cursor (tab)",
     action = function()
       tab_split()
-      open_commit_under_cursor("tab split")
+      fugitive_utils.open_commit_under_cursor("tab split")
     end,
   },
   {
@@ -604,7 +593,8 @@ local git_rebase_options = {
     description = "Rebase -i <cword> cursor                              23",
     action = function()
       utils.write_to_command_mode(
-        "G rebase -i " .. vim.fn.expand(highlight_text_under_cursor())
+        "G rebase -i "
+          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
       )
     end,
     count = 23,
@@ -621,7 +611,7 @@ local git_rebase_options = {
     action = function()
       utils.write_to_command_mode(
         "G reset --soft "
-          .. vim.fn.expand(highlight_text_under_cursor())
+          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
       )
     end,
     count = 31,
@@ -645,7 +635,7 @@ local git_rebase_options = {
     action = function()
       utils.write_to_command_mode(
         "G reset --hard "
-          .. vim.fn.expand(highlight_text_under_cursor())
+          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
       )
     end,
     count = 41,
