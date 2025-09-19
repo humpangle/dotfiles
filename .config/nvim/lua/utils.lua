@@ -420,31 +420,31 @@ utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
   callback,
   opts
 )
+  opts = opts or {}
   local buf_path = vim.fn.expand("%:f")
+  local can_do = opts.force
+    or buf_path:match("^term://")
+    or buf_path:match("^fugitive://.+/%.git//")
 
   -- If no terminal buffer is currently focused this **hack** is not necessary.
-  if
-    not (
-      buf_path:match("^term://")
-      or buf_path:match("^fugitive://.+/%.git//")
-    )
-  then
+  if not can_do then
     callback()
     return
   end
 
-  opts = opts or {}
-
-  local wipe_temp_buffer_before_exec_cb = opts.wipe or false
+  local wipe_temp_buffer_after_exec_cb = opts.wipe or false
 
   local split_direction = opts.split or "new"
 
   vim.cmd(split_direction)
+  -- if 1 == 1 then
+  --   return
+  -- end
   local b_num = vim.fn.bufnr()
 
   callback()
 
-  if wipe_temp_buffer_before_exec_cb and b_num ~= nil then
+  if wipe_temp_buffer_after_exec_cb and b_num ~= nil then
     vim.cmd("bwipeout! " .. b_num)
   end
 end
