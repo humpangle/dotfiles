@@ -4,6 +4,8 @@ if not utils_status_ok then
 end
 
 local fugitive_utils = require("plugins.fugitive.utils")
+local fzf_lua_shared_options =
+  require("plugins.fugitive.fzf-lua-shared-options")
 
 local keymap = utils.map_key
 
@@ -249,24 +251,6 @@ local tab_split = function()
   vim.cmd("tab split")
 end
 
-local get_git_commit = function(tree_ish)
-  local git_tree_ish_head_list = vim.fn.systemlist(
-    "( cd "
-      .. vim.fn.getcwd(0)
-      .. " &&  git rev-parse "
-      .. tree_ish
-      .. " --short )"
-  )
-
-  if #git_tree_ish_head_list == 1 then
-    return git_tree_ish_head_list[1]
-  elseif #git_tree_ish_head_list == 2 then
-    return git_tree_ish_head_list[2]
-  end
-
-  return "ERROR"
-end
-
 local get_git_current_branch = function()
   local git_tree_ish_head_list = vim.fn.systemlist(
     "( cd " .. vim.fn.getcwd(0) .. " &&  git branch --show-current)"
@@ -319,26 +303,6 @@ local git_commit_options = {
       utils.write_to_command_mode("Git commit --allow-empty")
     end,
     count = 13,
-  },
-  {
-    description = "Verify sign <cword>",
-    action = function()
-      utils.write_to_command_mode(
-        "Git verify-commit "
-          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
-          .. " "
-      )
-    end,
-  },
-  {
-    description = "Verify sign verbose <cword>",
-    action = function()
-      utils.write_to_command_mode(
-        "Git verify-commit -v "
-          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
-          .. " "
-      )
-    end,
   },
   {
     description = "Search pattern: [ ./)(><]+",
@@ -414,22 +378,7 @@ local git_commit_options = {
       utils.write_to_command_mode("Git remote prune ")
     end,
   },
-  {
-    description = "Git submodule update force recursive",
-    action = function()
-      utils.write_to_command_mode(
-        "Git submodule update --force --recursive"
-      )
-    end,
-  },
-  {
-    description = "Git submodule update force recursive",
-    action = function()
-      utils.write_to_command_mode(
-        "Git submodule update --force --recursive"
-      )
-    end,
-  },
+  fzf_lua_shared_options.submodule_update_force_recursive(),
   {
     description = "Git get commit",
     action = function()
@@ -439,15 +388,16 @@ local git_commit_options = {
   {
     description = "Git copy/get commit main register plus +",
     action = function()
-      local git_main_head = get_git_commit("main")
+      local git_main_head = fugitive_utils.get_git_commit("main")
       vim.fn.setreg("+", git_main_head)
       vim.notify("(Reg +) main branch -> " .. git_main_head)
     end,
   },
+  fzf_lua_shared_options.check_out_head_of_main_branch(),
   {
     description = "Git copy/get commit master register plus +",
     action = function()
-      local git_master_head = get_git_commit("master")
+      local git_master_head = fugitive_utils.get_git_commit("master")
       vim.fn.setreg("+", git_master_head)
       vim.notify("(Reg +) master branch -> " .. git_master_head)
     end,
@@ -460,7 +410,14 @@ local git_commit_options = {
       )
     end,
   },
+  fzf_lua_shared_options.check_out_tree_ish_under_cursor(),
+  fzf_lua_shared_options.git_add_all(),
+  fzf_lua_shared_options.copy_git_root_to_system_clipboard(),
 }
+
+for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
+  table.insert(git_commit_options, value)
+end
 
 local git_commit_mappings_opts = {
   noremap = true,
@@ -593,8 +550,7 @@ local git_rebase_options = {
     description = "Rebase -i <cword> cursor                              23",
     action = function()
       utils.write_to_command_mode(
-        "G rebase -i "
-          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
+        "G rebase -i " .. fugitive_utils.highlight_text_under_cursor()
       )
     end,
     count = 23,
@@ -611,7 +567,7 @@ local git_rebase_options = {
     action = function()
       utils.write_to_command_mode(
         "G reset --soft "
-          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
+          .. fugitive_utils.highlight_text_under_cursor()
       )
     end,
     count = 31,
@@ -635,7 +591,7 @@ local git_rebase_options = {
     action = function()
       utils.write_to_command_mode(
         "G reset --hard "
-          .. vim.fn.expand(fugitive_utils.highlight_text_under_cursor())
+          .. fugitive_utils.highlight_text_under_cursor()
       )
     end,
     count = 41,
@@ -680,14 +636,7 @@ local git_rebase_options = {
       utils.write_to_command_mode("Git remote prune ")
     end,
   },
-  {
-    description = "Git submodule update force recursive",
-    action = function()
-      utils.write_to_command_mode(
-        "Git submodule update --force --recursive"
-      )
-    end,
-  },
+  fzf_lua_shared_options.submodule_update_force_recursive(),
   {
     description = "Rebase master                                         ",
     action = function()
@@ -700,7 +649,14 @@ local git_rebase_options = {
       utils.write_to_command_mode("G merge --abort")
     end,
   },
+  fzf_lua_shared_options.check_out_tree_ish_under_cursor(),
+  fzf_lua_shared_options.git_add_all(),
+  fzf_lua_shared_options.copy_git_root_to_system_clipboard(),
 }
+
+for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
+  table.insert(git_rebase_options, value)
+end
 
 local git_rebase_root_mappings_fn = function()
   local fzf_lua = require("fzf-lua")

@@ -13,4 +13,22 @@ function M.open_commit_under_cursor(split_cmd)
   vim.cmd("Gedit " .. commit_ish)
 end
 
+function M.get_git_commit(tree_ish)
+  local git_tree_ish_head_list = vim.fn.systemlist(
+    "( cd "
+      .. vim.fn.getcwd(0)
+      .. " &&  git rev-parse "
+      .. tree_ish
+      .. " --short )"
+  )
+
+  if #git_tree_ish_head_list == 1 then
+    return git_tree_ish_head_list[1]
+  elseif #git_tree_ish_head_list == 2 then
+    return git_tree_ish_head_list[2]
+  end
+
+  return "ERROR"
+end
+
 return M
