@@ -1,7 +1,8 @@
+local utils = require("utils")
 local M = {}
 
 -- Define search patterns with descriptions
-M.patterns = {
+M.patterns_options = {
   {
     description = "Test session start",
     pattern = "========= test session starts ========",
@@ -114,6 +115,18 @@ M.patterns = {
     pattern = " AS [a-z_]\\+_[^,]\\+",
     navigation = "n",
   },
+  {
+    description = "Copy pytest node for DAP break point",
+    action = function()
+      local text = utils.get_visual_selection()
+      local content = "(node := __import__('os').environ.get('PYTEST_CURRENT_TEST', ''))"
+        .. " and '["
+        .. text
+        .. "]' in node and ' (call)' in node"
+      vim.fn.setreg("*", content)
+      vim.notify(content .. " copied!")
+    end,
+  },
 }
 
 local function apply_search_pattern(pattern_data)
@@ -131,21 +144,19 @@ local function apply_search_pattern(pattern_data)
 end
 
 local function setup()
-  local utils = require("utils")
-
   utils.map_key("n", "<leader>se", function()
     local fzf_lua = require("fzf-lua")
 
     -- Format patterns for display
     local items = {}
-    for i, pattern in ipairs(M.patterns) do
+    for i, pattern in ipairs(M.patterns_options) do
       table.insert(
         items,
         string.format(
           "%d. %s :: %s",
           i,
           pattern.description,
-          pattern.pattern
+          pattern.pattern or ""
         )
       )
     end
@@ -163,8 +174,23 @@ local function setup()
           local selection = selected[1]
           -- Extract pattern index from selection
           local index = tonumber(selection:match("^(%d+)%."))
-          if index and M.patterns[index] then
-            apply_search_pattern(M.patterns[index])
+          if not index then
+            return
+          end
+
+          local data = M.patterns_options[index]
+
+          if not data then
+            return
+          end
+
+          if data.pattern then
+            apply_search_pattern(data)
+            return
+          end
+
+          if data.action then
+            data.action()
           end
         end,
       },
