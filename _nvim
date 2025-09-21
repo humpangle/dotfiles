@@ -41,6 +41,7 @@ v() {
     nvim "$@"
   fi
 }
+export -f v
 
 alias v.="nvim ."
 alias vmin='nvim -u ~/.config/nvim/settings-min.vim'
