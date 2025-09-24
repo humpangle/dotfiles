@@ -386,15 +386,6 @@ local git_commit_options = {
     end,
   },
   {
-    description = "Git copy/get commit main register plus +",
-    action = function()
-      local git_main_head = fugitive_utils.get_git_commit("main")
-      vim.fn.setreg("+", git_main_head)
-      vim.notify("(Reg +) main branch -> " .. git_main_head)
-    end,
-  },
-  fzf_lua_shared_options.check_out_head_of_main_branch(),
-  {
     description = "Git copy/get commit master register plus +",
     action = function()
       local git_master_head = fugitive_utils.get_git_commit("master")
@@ -413,6 +404,9 @@ local git_commit_options = {
   fzf_lua_shared_options.check_out_tree_ish_under_cursor(),
   fzf_lua_shared_options.git_add_all(),
   fzf_lua_shared_options.copy_git_root_to_system_clipboard(),
+  fzf_lua_shared_options.copy_main_head_commit_to_register_plus(),
+  fzf_lua_shared_options.check_out_main_head_commit(),
+  fzf_lua_shared_options.submodule_deinit_all(),
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -652,6 +646,9 @@ local git_rebase_options = {
   fzf_lua_shared_options.check_out_tree_ish_under_cursor(),
   fzf_lua_shared_options.git_add_all(),
   fzf_lua_shared_options.copy_git_root_to_system_clipboard(),
+  fzf_lua_shared_options.copy_main_head_commit_to_register_plus(),
+  fzf_lua_shared_options.check_out_main_head_commit(),
+  fzf_lua_shared_options.submodule_deinit_all(),
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do

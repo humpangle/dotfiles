@@ -24,17 +24,6 @@ function M.submodule_update_force_recursive()
   }
 end
 
-function M.check_out_head_of_main_branch()
-  return {
-    description = "Git checkout main HEAD",
-    action = function()
-      local git_main_head = fugitive_utils.get_git_commit("main")
-      vim.cmd("! git checkout " .. git_main_head)
-      vim.notify("Main HEAD checked out: " .. git_main_head)
-    end,
-  }
-end
-
 function M.git_add_all()
   return {
     description = "Git Add all git root",
@@ -88,6 +77,61 @@ function M.verify_commit_sign()
         )
       end,
     },
+  }
+end
+
+function M.copy_main_head_commit_to_register_plus()
+  return {
+    description = "Git copy/get commit main HEAD commit to system clipboard - register plus +",
+    action = function()
+      local git_main_head = fugitive_utils.get_git_commit("main")
+      vim.fn.setreg("+", git_main_head)
+      vim.notify("(Reg +) main branch -> " .. git_main_head)
+    end,
+  }
+end
+
+function M.check_out_main_head_commit()
+  return {
+    description = "Check out commit main HEAD commit",
+    action = function()
+      local git_main_head = fugitive_utils.get_git_commit("main")
+      vim.fn.setreg("+", git_main_head)
+
+      local checkout_result = vim.fn.systemlist(
+        "( cd "
+          .. vim.fn.getcwd(0)
+          .. " &&  git checkout "
+          .. git_main_head
+          .. " )"
+      )
+
+      if checkout_result[#checkout_result] == "Aborting" then
+        vim.notify(
+          "Could not checkout main HEAD commit: " .. git_main_head,
+          vim.log.levels.ERROR
+        )
+        return
+      end
+
+      vim.notify("Checked out branch from main HEAD -> " .. git_main_head)
+    end,
+  }
+end
+
+function M.submodule_deinit_all()
+  return {
+    description = "Submodule deinit all",
+    action = function()
+      local result = vim.fn.systemlist(
+        "( cd "
+          .. vim.fn.getcwd(0)
+          .. " &&  git submodule deinit -f --all"
+          .. " )"
+      )
+
+      vim.print(table.concat(result, "\n\n"))
+    end,
   }
 end
 
