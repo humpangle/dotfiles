@@ -408,6 +408,7 @@ local plugins_table = {
   require("plugins/symlink"),
   -- require("plugins/csvview-nvim"), -- disable until there is need for it
   require("plugins/live-preview-nvim"),
+  require("plugins/nvim-dbee"),
 }
 
 ---@diagnostic disable:missing-fields

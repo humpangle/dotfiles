@@ -4,6 +4,13 @@ local M = {}
 
 M.lazy_doc_path = vim.fn.stdpath("state") .. "/lazy/readme/doc"
 
+function M.is_dbee_buffer(buffer_name)
+  return vim.endswith(buffer_name, "dbee-drawer")
+    or vim.endswith(buffer_name, "dbee-call-log")
+    or vim.endswith(buffer_name, "dbee-result")
+    or string.match(buffer_name, "dbee/notes/[^/]+/[^/]+%.sql")
+end
+
 function M.is_fugitive_buffer(buffer_name, current)
   local fugitive_buf = vim.startswith(buffer_name, "fugitive://")
 
@@ -158,6 +165,7 @@ function M.delete_all_buffers(delete_flag, opts)
   local octo_buffers = {} -- octo github pr/issues/review plugin
   local avante_buffers = {}
   local codecompanion_buffers = {}
+  local dbee_buffers = {}
 
   for _, buf_num in ipairs(vim.api.nvim_list_bufs()) do
     local b_name = vim.fn.bufname(buf_num)
@@ -165,6 +173,8 @@ function M.delete_all_buffers(delete_flag, opts)
     if string.match(b_name, ".dbout") then
       -- or string.match(b_name, "share/db_ui/")
       table.insert(dbui_buffers, buf_num)
+    elseif M.is_dbee_buffer(b_name) then
+      table.insert(dbee_buffers, buf_num)
     elseif M.is_fugitive_buffer(b_name, "current") then
       table.insert(fugitive_current_buffers, buf_num)
     elseif M.is_fugitive_buffer(b_name) then
@@ -198,6 +208,7 @@ function M.delete_all_buffers(delete_flag, opts)
     wipeout_buffers(no_name_buffers)
     -- wipeout_buffers(terminal_buffers)
     -- wipeout_buffers(normal_buffers)
+    -- wipeout_buffers(dbee_buffers)
     wipeout_buffers(fugitive_buffers)
     wipeout_buffers(fugitive_current_buffers)
     wipeout_buffers(dap_buffers)
