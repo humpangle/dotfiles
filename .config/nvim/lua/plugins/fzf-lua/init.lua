@@ -61,6 +61,23 @@ local map_to_fzf_lua_or_telescope = function(
   })
 end
 
+local highlight_content_of_register_plus = function()
+  local con = vim.fn.getreg("+")
+
+  if not con or (con == "") then
+    return
+  end
+
+  vim.fn.setreg("/", con)
+  vim.cmd("set hlsearch")
+
+  -- Attempt to navigate to and back from highlighted text
+  pcall(function()
+    vim.cmd.normal({ "n", bang = true })
+    vim.cmd.normal({ "N", bang = true })
+  end)
+end
+
 return {
   {
     "ibhagwan/fzf-lua",
@@ -157,6 +174,7 @@ return {
 
       map_key("n", "<Leader>/", function()
         utils.set_fzf_lua_nvim_listen_address()
+        highlight_content_of_register_plus()
 
         local count = vim.v.count
 
