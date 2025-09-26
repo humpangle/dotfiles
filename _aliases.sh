@@ -641,4 +641,6 @@ if [ -e "$HOME/.claude/local/claude" ]; then
   alias claude="$HOME/.claude/local/claude"
   alias cl="$HOME/.claude/local/claude"
   alias cld="$HOME/.claude/local/claude"
+  alias cll="$HOME/.claude/local/claude --resume"
+  alias cll__description="__claude list --resume"
 fi
