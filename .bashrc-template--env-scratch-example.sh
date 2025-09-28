@@ -75,3 +75,5 @@ export GIT_SUBMODULE_RESET_ALL='git submodule deinit -f --all
 && rm -rf api.common/*
 && git submodule init
 && git submodule update --force --recursive'
+
+export CLAUDE_CLI_EXTERNAL_TERMINAL_CMD="tmux send-keys -t 4.1 '_pv -d && _pv && claude' C-m"
