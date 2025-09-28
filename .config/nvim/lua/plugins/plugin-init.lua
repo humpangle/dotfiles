@@ -398,6 +398,7 @@ local plugins_table = {
   require("plugins/ai/avante-nvim"),
   require("plugins/ai/codecompanion-nvim"),
   require("plugins/ai/copilot"),
+  require("plugins/ai/claude-code-nvim"),
   require("plugins/neotest"),
   require("plugins/neotree"),
   require("plugins/octo-nvim"),
