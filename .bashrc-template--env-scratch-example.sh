@@ -70,3 +70,8 @@ export _DOCKER_LOCAL_LOG_DIR_=.___scratch/docker-logs
 # -----------------------------------------------------------------------------
 # /END/ DOCKER
 # -----------------------------------------------------------------------------
+
+export GIT_SUBMODULE_RESET_ALL='git submodule deinit -f --all
+&& rm -rf api.common/*
+&& git submodule init
+&& git submodule update --force --recursive'

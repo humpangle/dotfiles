@@ -121,16 +121,38 @@ end
 
 function M.submodule_deinit_all()
   return {
-    description = "Submodule deinit all",
+    description = "Submodule deinit reset all",
     action = function()
-      local result = vim.fn.systemlist(
-        "( cd "
+      local result = "ERROR"
+      local reset_all_env_val =
+        utils.get_os_env_or_nil("GIT_SUBMODULE_RESET_ALL")
+
+      if reset_all_env_val then
+        local cmd_from_env = (
+          "( cd "
+          .. vim.fn.getcwd(0)
+          .. " &&  "
+          .. reset_all_env_val
+          .. " )"
+        ):gsub("\n", " ")
+
+        vim.print("Invoking CMD from env: " .. cmd_from_env)
+
+        result = vim.fn.systemlist(cmd_from_env)
+      else
+        local cmd = "( cd "
           .. vim.fn.getcwd(0)
           .. " &&  git submodule deinit -f --all"
           .. " )"
-      )
 
-      vim.print(table.concat(result, "\n\n"))
+        result = vim.fn.systemlist(cmd)
+        vim.print("Invoking default CMD: " .. cmd)
+      end
+
+      vim.print(
+        "Result git submodule deinit all: "
+          .. table.concat(result, "\n\n")
+      )
     end,
   }
 end
