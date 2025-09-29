@@ -14,12 +14,15 @@ export EBNIS_LINT_CMDS="eslint --fix __f_::stylelint --fix __f_"
 export NVIM_GO_TO_FILE_GF_STRIP_PREFIX=backend/api.scheduler/::/opt/app/
 export NVIM_GO_TO_FILE_GF_PREPEND_PREFIX=db/changelog/::a/b
 
-# Source python virtualenv helper script
-# shellcheck disable=1091
-source "$DOTFILE_ROOT/_pv.sh"
-# For python projects - invoke virtualenv
-_pv -d
-_pv
+if [ -n "$DO_ACTIVATE_PYTHON_VIRTUAL_ENV" ]; then
+  # For python projects - invoke virtualenv
+
+  # shellcheck disable=1091
+  source "$DOTFILE_ROOT/_pv.sh"
+
+  _pv -d
+  _pv
+fi
 
 # Use tmux for such things as running tests and one-off commands.
 export TMUX_POPUP_SESSION_NAME_AND_PATH="some-session-name:/some-path"
