@@ -3,7 +3,7 @@ local map_lazy_key = utils.map_lazy_key
 
 local dbee_fzf_options = {
   {
-    description = "Open",
+    description = "Open                                                                                             1",
     action = function()
       vim.cmd("tab split")
       require("dbee").open()
@@ -11,21 +11,21 @@ local dbee_fzf_options = {
     count = 1,
   },
   {
-    description = "Query Cancel/Stop Query",
+    description = "Query Cancel/Stop Query                                                                          2",
     action = function()
       require('dbee').api.ui.call_log_do_action("cancel_call")
     end,
     count = 2,
   },
   {
-    description = "Close",
+    description = "Close                                                                                           22",
     action = function()
       require("dbee").close()
     end,
     count = 22,
   },
   {
-    description = "Execute Selection Execute",
+    description = "Execute Selection Execute                                                                        3",
     action = function()
       vim.cmd.normal({ "vip" })
       require('dbee').api.ui.editor_do_action("run_selection")
