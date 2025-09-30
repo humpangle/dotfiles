@@ -729,15 +729,7 @@ end, { noremap = true, desc = [[Git rebase 0/continue 1/edit 2/abort]] })
 local git_log_options = {
   {
     description = "Git refresh (status) THIS CWD                            1",
-    action = function()
-      utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
-        vim.cmd("Git")
-        print("Git refreshed!")
-      end, {
-        force = true,
-        wipe = true,
-      })
-    end,
+    action = fugitive_utils.git_refresh_cwd,
     count = 1,
   },
   {

@@ -107,14 +107,15 @@ function M.check_out_main_head_commit()
       )
 
       if checkout_result[#checkout_result] == "Aborting" then
-        vim.notify(
-          "Could not checkout main HEAD commit: " .. git_main_head,
-          vim.log.levels.ERROR
+        vim.print(
+          "Could not checkout main HEAD commit: " .. git_main_head
         )
         return
       end
 
-      vim.notify("Checked out branch from main HEAD -> " .. git_main_head)
+      vim.print("Checked out branch from main HEAD -> " .. git_main_head)
+
+      vim.defer_fn(fugitive_utils.git_refresh_cwd, 10)
     end,
   }
 end
