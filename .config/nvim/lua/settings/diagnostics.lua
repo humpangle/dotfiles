@@ -169,15 +169,6 @@ local fzf_lua_diagnostic_options = {
 }
 
 map_key("n", "<leader>lsd", function()
-  local keymap_count = vim.v.count
-
-  for _, option in ipairs(fzf_lua_diagnostic_options) do
-    if keymap_count == option.count then
-      option.action()
-      return
-    end
-  end
-
   utils.create_fzf_key_maps(fzf_lua_diagnostic_options, {
     prompt = "LSP Diagnostics",
     header = "Select a LSP diagnostic option",
