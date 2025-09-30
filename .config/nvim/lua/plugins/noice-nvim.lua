@@ -12,8 +12,11 @@ return {
   event = "VeryLazy",
   keys = {
     map_lazy_key("<leader><esc>", function()
+      local count = vim.v.count
       vim.cmd("Noice dismiss")
-      vim.cmd("messages clear")
+      if count == 1 then
+        vim.cmd("messages clear")
+      end
     end, {
       desc = "Noice dismiss",
     }),
