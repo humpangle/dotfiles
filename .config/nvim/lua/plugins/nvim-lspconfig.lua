@@ -7,6 +7,7 @@ if plugin_enabled.has_vscode() then
 end
 
 local utils = require("utils")
+local fzf_lua_lsp_options = require("plugins.lsp.fzf_lua_lsp_options")
 local yamlls_config = require("plugins.lsp-extras.yaml_lsp")
 
 ---@param conditon string
@@ -142,55 +143,10 @@ return {
       local lspconfig = require("lspconfig")
 
       utils.map_key("n", "<leader>ls0", function()
-        local count = vim.v.count
-
-        if count == 0 then
-          vim.cmd("LspInfo")
-          return
-        end
-
-        if count == 1 then
-          vim.cmd("LspLog")
-          return
-        end
-
-        if count == 2 then
-          vim.cmd("LspStop")
-          vim.cmd.echo('"LspStopped 3<leader>ls0 to start"')
-          return
-        end
-
-        if count == 3 then
-          vim.cmd("LspStart")
-          vim.cmd.echo('"LspStart"')
-          return
-        end
-
-        if count == 44 then
-          vim.cmd("TSContext toggle")
-          print("TSContext toggle")
-          return
-        end
-
-        if count == 4 then
-          -- TODO: implement dynamic level up
-          -- 40 == 1, 41 == 1, 42 == 2
-          local level_up = 1
-          require("treesitter-context").go_to_context(level_up)
-          return
-        end
-
-        if count == 45 then
-          local twilight_view = require("twilight.view")
-          if twilight_view.enabled then
-            twilight_view.disable()
-            vim.notify("Twilight disabled")
-          else
-            twilight_view.enable()
-            vim.notify("Twilight enabled")
-          end
-          return
-        end
+        utils.create_fzf_key_maps(fzf_lua_lsp_options, {
+          prompt = "LSP/Context",
+          header = "Select a LSP or Context option",
+        })
       end, {
         desc = "0/info 1/log 2/stop 3/start 44/TSContextToggle 45/twilightToggle 4*/trsGoToContext",
       })
@@ -421,7 +377,7 @@ return {
           server.capabilities or {},
           lsp_extended_capabilities,
           -- we should fail loudly if nvim-lsp-file-operations plugin removed
-          require'lsp-file-operations'.default_capabilities()
+          require("lsp-file-operations").default_capabilities()
         )
         vim.lsp.config(server_name, server)
 
