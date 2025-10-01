@@ -42,13 +42,6 @@ keymap("n", "<leader>gp", function()
   end
 end, { noremap = true, desc = "Git push 0/ 1/force" })
 
--- gt = git take / pull
-keymap("n", "<leader>gt", function()
-  vim.cmd("Git fetch")
-
-  utils.write_to_command_mode("Git pull origin " .. vim.fn.FugitiveHead())
-end, { noremap = true })
-
 -- Git stash related mappings
 
 -- Git stash list inspired by
@@ -407,6 +400,7 @@ local git_commit_options = {
   fzf_lua_shared_options.copy_main_head_commit_to_register_plus(),
   fzf_lua_shared_options.check_out_main_head_commit(),
   fzf_lua_shared_options.submodule_deinit_all(),
+  fzf_lua_shared_options.git_pull(),
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -649,6 +643,7 @@ local git_rebase_options = {
   fzf_lua_shared_options.copy_main_head_commit_to_register_plus(),
   fzf_lua_shared_options.check_out_main_head_commit(),
   fzf_lua_shared_options.submodule_deinit_all(),
+  fzf_lua_shared_options.git_pull(),
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -826,6 +821,7 @@ local git_log_options = {
       vim.cmd("Git log --oneline")
     end,
   },
+  fzf_lua_shared_options.git_pull(),
 }
 
 keymap("n", "<leader>gg", function()

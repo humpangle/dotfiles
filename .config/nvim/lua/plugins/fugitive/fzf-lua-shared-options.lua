@@ -161,4 +161,19 @@ function M.submodule_deinit_all()
   }
 end
 
+function M.git_pull()
+  return {
+    description = "Git Pull Fetch",
+    action = function()
+      fugitive_utils.git_refresh_cwd()
+      vim.cmd("Git fetch")
+
+      utils.write_to_command_mode(
+        "Git pull origin " .. vim.fn.FugitiveHead()
+      )
+    end,
+    count = 6,
+  }
+end
+
 return M
