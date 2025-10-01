@@ -13,7 +13,7 @@ local dbee_fzf_options = {
   {
     description = "Query Cancel/Stop Query                                                                          2",
     action = function()
-      require('dbee').api.ui.call_log_do_action("cancel_call")
+      require("dbee").api.ui.call_log_do_action("cancel_call")
     end,
     count = 2,
   },
@@ -28,7 +28,7 @@ local dbee_fzf_options = {
     description = "Execute Selection Execute                                                                        3",
     action = function()
       vim.cmd.normal({ "vip" })
-      require('dbee').api.ui.editor_do_action("run_selection")
+      require("dbee").api.ui.editor_do_action("run_selection")
     end,
     count = 3,
   },
@@ -59,6 +59,6 @@ return {
       })
     end, {
       desc = "Dbee 1/OPen 2/CancelQuery 22/CloseDbee 3/Execute",
-    }),
+    }, { "n", "x" }),
   },
 }
