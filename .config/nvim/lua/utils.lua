@@ -766,6 +766,9 @@ end
 ---@param fzf_key_map_options table
 ---@param config table
 function utils.create_fzf_key_maps(fzf_key_map_options, config)
+  local prompt = config.prompt or "Select"
+  local header = config.header or prompt
+
   local keymap_count = vim.v.count
   local fzf_lua = require("fzf-lua")
 
@@ -778,9 +781,6 @@ function utils.create_fzf_key_maps(fzf_key_map_options, config)
     end
     table.insert(items, string.format("%d. %s", i, option.description))
   end
-
-  local prompt = config.prompt or "Select"
-  local header = config.header or prompt
 
   utils.set_fzf_lua_nvim_listen_address()
 
