@@ -829,46 +829,9 @@ local git_log_options = {
 }
 
 keymap("n", "<leader>gg", function()
-  local fzf_lua = require("fzf-lua")
-  local keymap_count = vim.v.count
-
-  local items = {}
-  for i, option in ipairs(git_log_options) do
-    -- Check if count matches any action
-    if
-      (keymap_count == option.count)
-      or (option.count_match_fn and option.count_match_fn(keymap_count))
-    then
-      option.action()
-      return
-    end
-
-    -- If no count match, show FZF menu
-    table.insert(items, string.format("%d. %s", i, option.description))
-  end
-
-  utils.set_fzf_lua_nvim_listen_address()
-
-  fzf_lua.fzf_exec(items, {
-    prompt = "Git Log Options> ",
-    actions = {
-      ["default"] = function(selected)
-        if not selected or #selected == 0 then
-          return
-        end
-
-        local selection = selected[1]
-        -- Extract option index from selection
-        local index = tonumber(selection:match("^(%d+)%."))
-        if index and git_log_options[index] then
-          git_log_options[index].action()
-        end
-      end,
-    },
-    fzf_opts = {
-      ["--no-multi"] = "",
-      ["--header"] = "Select a git log option",
-    },
+  utils.create_fzf_key_maps(git_log_options, {
+    prompt = "Git Log Options>  ",
+    header = "Select a git log option",
   })
 end, {
   noremap = true,
