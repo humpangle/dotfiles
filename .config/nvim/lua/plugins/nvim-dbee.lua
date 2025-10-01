@@ -32,6 +32,13 @@ local dbee_fzf_options = {
     end,
     count = 3,
   },
+  {
+    description = "Format SQL",
+    action = function()
+      vim.cmd.normal({ "vip" })
+      utils.write_to_command_mode("'<,'>Neoformat! sql<CR>")
+    end,
+  },
 }
 
 return {
