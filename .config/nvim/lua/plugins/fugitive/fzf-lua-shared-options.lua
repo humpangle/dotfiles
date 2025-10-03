@@ -176,4 +176,6 @@ function M.git_pull()
   }
 end
 
+-- TODO: replace “, ” and ’
+
 return M
