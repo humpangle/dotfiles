@@ -19,11 +19,6 @@
       "It can be useful if you aren't aware of the absolute path or don't want to search for it.\n"
     ]
   },
-  "echo": {
-    "prefix": "echo",
-    "body": "echo \"${0:message}\"",
-    "description": "Echo a message."
-  },
   "read": {
     "prefix": "read",
     "body": "read -r ${0:VAR}",
@@ -305,6 +300,60 @@
     ],
     "description": [
       "define helper function"
+    ]
+  },
+  "read-help": {
+    "prefix": [
+      "echoHelp",
+      "helpEcho",
+      "readHelp",
+      "helpRead"
+    ],
+    "body": [
+      "read -r -d '' help_ <<'EOF' || :",
+      "Help text",
+      "",
+      "Usage:",
+      "  _pv -h",
+      "",
+      "Options:",
+      "  -h",
+      "          Print help information and exit.",
+      "  -s",
+      "          Create a Virtualenv environment.",
+      "",
+      "Examples:",
+      "  # Get help",
+      "  _pv -h",
+      "EOF",
+      "",
+      "  if ! arg_=\"\\$(getopt \\",
+      "      -o h,s,d,l: \\",
+      "      -n \"\\$0\" \\",
+      "      -- \"\\$@\")\"; then",
+      "      _echo \"\\$help_\"",
+      "      return",
+      "  fi",
+      "",
+      "  eval set -- \"\\$arg_\"",
+      "",
+      "  while true; do",
+      "      case \"\\$1\" in",
+      "      -h)",
+      "          _echo \"\\$help_\"",
+      "          return",
+      "          ;;",
+      "",
+      "      *)",
+      "          echo \"Unknown argument \\$1\"",
+      "          _echo \"\\$help_\"",
+      "          return",
+      "          ;;",
+      "      esac",
+      "  done"
+    ],
+    "description": [
+      "Read echo help"
     ]
   },
   "define alias function": {
