@@ -176,6 +176,15 @@ function M.git_pull()
   }
 end
 
+function M.merge_main()
+  return {
+    description = "Merge main",
+    action = function()
+      utils.write_to_command_mode("G merge main")
+    end,
+  }
+end
+
 -- TODO: replace “, ” and ’
 
 return M

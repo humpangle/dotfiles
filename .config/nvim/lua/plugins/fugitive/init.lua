@@ -401,6 +401,7 @@ local git_commit_options = {
   fzf_lua_shared_options.check_out_main_head_commit(),
   fzf_lua_shared_options.submodule_deinit_all(),
   fzf_lua_shared_options.git_pull(),
+  fzf_lua_shared_options.merge_main(),
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -585,13 +586,6 @@ local git_rebase_options = {
     count = 41,
   },
   {
-    description = "Merge main                                           5",
-    action = function()
-      utils.write_to_command_mode("G merge main")
-    end,
-    count = 5,
-  },
-  {
     description = "Merge master                                         51",
     action = function()
       utils.write_to_command_mode("G merge master")
@@ -644,6 +638,7 @@ local git_rebase_options = {
   fzf_lua_shared_options.check_out_main_head_commit(),
   fzf_lua_shared_options.submodule_deinit_all(),
   fzf_lua_shared_options.git_pull(),
+  fzf_lua_shared_options.merge_main(),
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -822,6 +817,7 @@ local git_log_options = {
     end,
   },
   fzf_lua_shared_options.git_pull(),
+  fzf_lua_shared_options.merge_main(),
 }
 
 keymap("n", "<leader>gg", function()
