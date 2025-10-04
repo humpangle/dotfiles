@@ -644,3 +644,7 @@ if [ -e "$HOME/.claude/local/claude" ]; then
   alias cll="$HOME/.claude/local/claude --resume"
   alias cll__description="__claude list --resume"
 fi
+
+if command -v cursor-agent >/dev/null 2>&1; then
+  alias ca="cursor-agent"
+fi
