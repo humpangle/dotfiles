@@ -116,8 +116,12 @@ _alias_map_docker["dtruncatel"]='drmlogs'
 _alias_map_docker["dcrm"]='docker compose rm'
 
 _dcps() {
-  docker compose ps \
-    --format "table {{.Name}}\t{{.Service}}\t{{.Status}}\t{{.Ports}}" "$@" |
+  local cmd_="docker compose ps \
+    --format 'table {{.Name}}\t{{.Service}}\t{{.Status}}\t{{.Ports}}' $*"
+
+  __log_docker_cmd "$cmd_"
+
+  eval "$cmd_" |
     awk 'NR==1 { h=$0; print; for (i=1; i<=length(h); i++) printf "-"; print ""; next }1'
 }
 
@@ -210,3 +214,14 @@ alias dckr__description='dck && dcud docker compose kill && docker compose up --
 _alias_map_docker["dcr"]='docker compose restart'
 
 _alias_map_complete _alias_map_docker
+
+__log_docker_cmd() {
+  if [ -n "$EBNIS_COMPOSE_CONFIG_FILENAME__DEBUG" ] || [ -n "$EBNIS_COMPOSE_CONFIG_FILENAME__DEBUG_ONLY" ]; then
+    echo -e "\n\nEXECUTING COMMAND:\n$*\n\n"
+
+    if [ -n "$EBNIS_COMPOSE_CONFIG_FILENAME__DEBUG_ONLY" ]; then
+      exit 0
+    fi
+  fi
+}
+export -f __log_docker_cmd
