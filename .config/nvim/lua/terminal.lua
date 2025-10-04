@@ -116,7 +116,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
     vim.opt.number = true
     vim.opt.relativenumber = true
-    -- https://stackoverflow.com/a/45317514
+
+    -- Unlimited scrollback
+    -- https://stackoverflow.com/questions/34009064/how-do-i-set-the-terminal-buffer-scrollback-size/45317514#comment79614759_45317514
     vim.cmd("setlocal scrollback=-1")
 
     vim.wo.spell = false
