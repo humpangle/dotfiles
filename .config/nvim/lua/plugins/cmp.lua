@@ -187,18 +187,7 @@ return {
     -- Snippet Engine & its associated nvim-cmp source
     {
       "L3MON4D3/LuaSnip",
-      build = (function()
-        -- Build Step is needed for regex support in snippets.
-        -- This step is not supported in many windows environments.
-        -- Remove the below condition to re-enable on windows.
-        if
-          vim.fn.has("win32") == 1
-          or vim.fn.executable("make") == 0
-        then
-          return
-        end
-        return "make install_jsregexp"
-      end)(),
+      build = "make install_jsregexp",
       config = function()
         -- load snippets from path/of/your/nvim/config/my-cool-snippets
         -- lazy_load seems to be problematic (sometimes shows and then does not show other times)
