@@ -10,6 +10,19 @@ export PATH="$PWD/node_modules/.bin/:$PATH"
 # When present, invoke with NVIM user command :Lint and keymap <leader>NN
 export EBNIS_LINT_CMDS="eslint --fix __f_::stylelint --fix __f_"
 
+# -----------------------------------------------------------------------------
+# DOCKER
+# -----------------------------------------------------------------------------
+export _DOCKER_LOCAL_LOG_DIR_=.___scratch/docker-logs
+# COMPOSE_PROJECT_NAME takes preceedence over __EBNIS_COMPOSE_CONFIG_FILENAME__
+export COMPOSE_PROJECT_NAME=some-value
+export __EBNIS_COMPOSE_CONFIG_FILENAME__='file1 file2'
+export EBNIS_COMPOSE_CONFIG_FILENAME__DEBUG_ONLY=
+export EBNIS_COMPOSE_CONFIG_FILENAME__DEBUG=
+# -----------------------------------------------------------------------------
+# /END/ DOCKER
+# -----------------------------------------------------------------------------
+
 # Allows nvim gf keymap to work properly, especially, in git diff views where the root of the project is not git root
 export NVIM_GO_TO_FILE_GF_STRIP_PREFIX=backend/api.scheduler/::/opt/app/
 export NVIM_GO_TO_FILE_GF_PREPEND_PREFIX=db/changelog/::a/b
@@ -66,14 +79,6 @@ export NVIM_ENABLE_ELIXIR_LS=1
 # export NVIM_ENABLE_ELIXIR_LEXICAL=1
 # -----------------------------------------------------------------------------
 # /END/ ELIXIR
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-# DOCKER
-# -----------------------------------------------------------------------------
-export _DOCKER_LOCAL_LOG_DIR_=.___scratch/docker-logs
-# -----------------------------------------------------------------------------
-# /END/ DOCKER
 # -----------------------------------------------------------------------------
 
 export GIT_SUBMODULE_RESET_ALL='git submodule deinit -f --all
