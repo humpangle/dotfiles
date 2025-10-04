@@ -11,6 +11,7 @@ __drmlogs__() {
     h)
       echo "Usage: drmlogs container_name_or_ID [..container_name_or_ID]"
       echo "Usage: drmlogs -c compose_servicename [..compose_servicename]"
+      echo "Usage: drmlogs -c"
       exit
       ;;
 
