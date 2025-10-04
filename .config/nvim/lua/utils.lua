@@ -9,7 +9,7 @@ function utils.ebnis_save_commit_buffer()
   end
 
   local max_tab_number =
-    vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
+      vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
   local current_tab_number = vim.fn.tabpagenr("$")
 
   if max_tab_number == current_tab_number then
@@ -72,12 +72,12 @@ function utils.get_file_name(num)
       local next_path_segment = path_segments_list[i]
 
       local first_letter_of_next_path_segment =
-        string.sub(next_path_segment, 1, 1)
+          string.sub(next_path_segment, 1, 1)
 
       -- for dot file, we take the dot and next char
       if first_letter_of_next_path_segment == "." then
         first_letter_of_next_path_segment =
-          string.sub(next_path_segment, 1, 2)
+            string.sub(next_path_segment, 1, 2)
       end
 
       table.insert(
@@ -87,8 +87,8 @@ function utils.get_file_name(num)
     end
 
     return table.concat(first_letters_of_path_segments_list, "/")
-      .. "/"
-      .. tail
+        .. "/"
+        .. tail
   end
 
   return file_name
@@ -98,10 +98,10 @@ function utils.DeleteOrCloseBuffer(flag)
   if vim.fn.expand("%") == "Neotest Output Panel" then
     vim.cmd.echo(
       '"'
-        .. "You may not delete Neotest Output Panel."
-        .. "\\n"
-        .. "Use <leader>nto to close."
-        .. '"'
+      .. "You may not delete Neotest Output Panel."
+      .. "\\n"
+      .. "Use <leader>nto to close."
+      .. '"'
     )
     return
   end
@@ -211,7 +211,7 @@ function utils.DeleteFile(which)
       delete_prompt = "y"
     else
       delete_prompt =
-        vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
+          vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
     end
 
     if delete_prompt:lower() == "y" then
@@ -239,10 +239,10 @@ function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
   -- We prepend the keymap (left) and mode to the description so when we search with description as search term, the
   -- keymap also shows up.
   opts.desc = mapping_str
-    .. " "
-    .. vim.inspect(mode)
-    .. " "
-    .. (opts.desc or "")
+      .. " "
+      .. vim.inspect(mode)
+      .. " "
+      .. (opts.desc or "")
 
   vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
@@ -254,10 +254,10 @@ function utils.map_lazy_key(mapping_str, command_to_map_to, opts, mode)
   -- We prepend the keymap (left) and mode to the description so when we search with description as search term, the
   -- keymap also shows up.
   opts.desc = mapping_str
-    .. " "
-    .. vim.inspect(mode)
-    .. " "
-    .. (opts.desc or "")
+      .. " "
+      .. vim.inspect(mode)
+      .. " "
+      .. (opts.desc or "")
 
   -- https://lazy.folke.io/spec/lazy_loading#%EF%B8%8F-lazy-key-mappings
   local entry = {
@@ -304,15 +304,15 @@ function utils.relative_to_git_root(abs_path)
   end
 
   local relative_path =
-    vim.fn.resolve(abs_path):gsub("^" .. vim.pesc(git_root) .. "/", "")
+      vim.fn.resolve(abs_path):gsub("^" .. vim.pesc(git_root) .. "/", "")
 
   return relative_path
 end
 
 utils.in_ssh = function()
   return utils.get_os_env_or_nil("SSH_CONNECTION") ~= nil
-    or utils.get_os_env_or_nil("SSH_CLIENT") ~= nil
-    or utils.get_os_env_or_nil("SSH_TTY") ~= nil
+      or utils.get_os_env_or_nil("SSH_CLIENT") ~= nil
+      or utils.get_os_env_or_nil("SSH_TTY") ~= nil
 end
 
 utils.read_register_plus = function(register, content)
@@ -355,30 +355,6 @@ utils.get_os_env_or_nil = function(env_var_string)
   return val
 end
 
-utils.clear_terminal = function()
-  local current_mode = vim.fn.mode()
-
-  if current_mode == "n" then
-    -- Enter terminal-insert mode with control-L
-    vim.fn.feedkeys("a", "n") -- a-control-L
-  else
-    vim.fn.feedkeys("", "n") -- control-L
-  end
-
-  local sb = vim.bo.scrollback
-  vim.bo.scrollback = 1
-  vim.bo.scrollback = sb
-
-  if current_mode == "n" and vim.v.count == 0 then
-    -- Return to terminal-normal mode
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true),
-      "t",
-      true
-    )
-  end
-end
-
 utils.file_exists_and_not_empty = function(file_path)
   local file = io.open(file_path, "r")
   if file then
@@ -417,14 +393,14 @@ end, true)
 
 --]]
 utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
-  callback,
-  opts
+    callback,
+    opts
 )
   opts = opts or {}
   local buf_path = vim.fn.expand("%:f")
   local can_do = opts.force
-    or buf_path:match("^term://")
-    or buf_path:match("^fugitive://.+/%.git//")
+      or buf_path:match("^term://")
+      or buf_path:match("^fugitive://.+/%.git//")
 
   -- If no terminal buffer is currently focused this **hack** is not necessary.
   if not can_do then
@@ -485,9 +461,9 @@ local go_to_file_strip_prefix_in_env = function(file_path)
   local prefixes = utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_STRIP_PREFIX")
 
   prefixes = (prefixes and (prefixes .. "::") or "")
-    .. "fugitive://.+/.git//[%a%d]+/"
-    .. "::"
-    .. "octo://.+/RIGHT/"
+      .. "fugitive://.+/.git//[%a%d]+/"
+      .. "::"
+      .. "octo://.+/RIGHT/"
 
   for _, prefix in pairs(vim.split(prefixes, "::")) do
     if prefix ~= "" then
@@ -498,8 +474,8 @@ local go_to_file_strip_prefix_in_env = function(file_path)
       local candidate = file_path:gsub(prefix, "")
 
       if
-        vim.fn.filereadable(candidate) == 1
-        or vim.fn.isdirectory(candidate) == 1
+          vim.fn.filereadable(candidate) == 1
+          or vim.fn.isdirectory(candidate) == 1
       then
         return candidate
       end
@@ -512,7 +488,7 @@ end
 local go_to_file_prepend_prefix_in_env = function(file_path)
   -- export NVIM_GO_TO_FILE_GF_PREPEND_PREFIX=/some/path1/::other/part2
   local prefixes =
-    utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_PREPEND_PREFIX")
+      utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_PREPEND_PREFIX")
 
   if not prefixes then
     return file_path
@@ -526,8 +502,8 @@ local go_to_file_prepend_prefix_in_env = function(file_path)
 
       -- check file exists
       if
-        vim.fn.filereadable(candidate) == 1
-        or vim.fn.isdirectory(candidate) == 1
+          vim.fn.filereadable(candidate) == 1
+          or vim.fn.isdirectory(candidate) == 1
       then
         return candidate
       end
@@ -543,10 +519,10 @@ local extract_line_number = function(cfile)
   local last_path_index = cfile:match("([^/]+)$")
 
   local patterns = {
-    "line%s*(%d+)", -- file_path whatever text line 168
+    "line%s*(%d+)",  -- file_path whatever text line 168
     "%d+%%%s+(%d+)", -- file_path 80% 12
-    ":(%d+):%d+", -- file_path:67:45
-    "[:|](%d+)", -- file_path:67 / file_path|478 (used in vim loclist)
+    ":(%d+):%d+",    -- file_path:67:45
+    "[:|](%d+)",     -- file_path:67 / file_path|478 (used in vim loclist)
   }
 
   for _, pattern in pairs(patterns) do
@@ -648,7 +624,7 @@ utils.get_visual_selection = function()
   end
 
   local text = visually_selected_text:match("^\\<(.-)\\>$")
-    or visually_selected_text
+      or visually_selected_text
 
   return text:gsub("\\%.", "."):gsub("\\/", "/")
 end
@@ -757,7 +733,7 @@ utils.mason_install_path = vim.fn.stdpath("data") .. "/mason/packages"
 ---@return string
 function utils.strip_cwd(filename)
   local pattern = "^"
-    .. vim.pesc(vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h") .. "/")
+      .. vim.pesc(vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h") .. "/")
   local stripped = filename:gsub(pattern, "")
   return stripped
 end

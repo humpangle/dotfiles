@@ -60,12 +60,56 @@ utils.map_key("n", "<localleader>tt", function()
   vim.cmd("term")
 end, { noremap = true, desc = "terminal 0=s 1=v 2=t 4/botright 6/slime" })
 
-utils.map_key("t", "<C-l>", utils.clear_terminal)
+local clear_terminal = function()
+  local current_mode = vim.fn.mode()
+
+  -- Step 1: Enter terminal mode if in normal mode
+  if current_mode == "n" then
+    vim.fn.feedkeys("a", "n")
+    -- Add small delay to ensure mode switch completes
+    vim.cmd("sleep 5m")
+  end
+
+  -- Step 2: Send Ctrl-C to stop whatever is running
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes("<C-c><C-c><C-c><C-c><C-c><C-c><C-c><C-c><C-c><C-c>", true, false, true),
+    "t",
+    false
+  )
+
+  -- Step 3: Send 'C' and Enter to clear the screen
+  vim.api.nvim_feedkeys("C", "t", true)
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes("<CR>", true, false, true),
+    "t",
+    false
+  )
+
+  -- Step 4: Scroll to the top
+  local sb = vim.bo.scrollback
+  vim.bo.scrollback = 1
+  vim.bo.scrollback = sb
+
+  if vim.v.count == 1 then
+    -- Return to terminal-normal mode
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true),
+      "t",
+      true
+    )
+    vim.schedule(function()
+      vim.cmd.normal({ "gg" })
+    end)
+  end
+end
+
+utils.map_key("t", "<C-l>", clear_terminal)
+-- while :; do ll; ll ~; sleep 1; done
 
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
   callback = function()
-    utils.map_key("n", "d=", utils.clear_terminal, {
+    utils.map_key("n", "d=", clear_terminal, {
       silent = true,
       desc = "Clear terminal. Supply count > 0 to enter insert mode.",
     }, 0)
