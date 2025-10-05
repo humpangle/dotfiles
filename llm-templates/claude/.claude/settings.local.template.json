@@ -12,9 +12,28 @@
     "allow": [
       "Agent",
       "Bash",
+      "Bash(awk:*)",
+      "Bash(echo $JIRA_TICKET_NUMBER)",
+      "Bash(find:*)",
+      "Bash(gh api:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(git merge-base:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(grep:*)",
       "Bash(ls:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
+      "Bash(poetry run pytest:*)",
+      "Bash(poetry run python:*)",
+      "Bash(pytest:*)",
+      "Bash(python3:*)",
+      "Bash(rm:*)",
+      "Bash(sed:*)",
+      "Bash(tree:*)",
       "Edit",
       // "Glob",
       // "Grep",
@@ -40,6 +59,11 @@
       // "Bash(command:rm)",
       // "Bash(command:sudo)",
       // "WebFetch(domain:malicious-site.com)"
-    ]
-  }
+    ],
+    "additionalDirectories": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "mysql"
+  ]
 }
