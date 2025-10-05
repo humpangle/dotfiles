@@ -401,21 +401,23 @@ claude_chat_start() {
 
   _copy_chat_template "claude/claude.ebnis.chat.md" ".claude.ebnis.chat.md"
 
+  local dotfiles_root_=""
+  dotfiles_root_="$(_get_dotfiles_root)"
+
   # Copy settings.local.json if it doesn't exist
   local cwd_=""
   cwd_="$(pwd)"
   mkdir -p "$cwd_/.claude"
-  local target_settings_="$cwd_/.claude/settings.local.json"
+  mkdir -p "$cwd_/.cursor"
 
-  local dotfiles_root_=""
-  dotfiles_root_="$(_get_dotfiles_root)"
-  local source_settings_="$dotfiles_root_/llm-templates/claude/.claude/settings.local.template.json"
+  #### Copy from dotfiles .claude/settings.local.json to project .claude/settings.local.json
+  local claude_target_settings_="$cwd_/.claude/settings.local.json"
+  local claude_source_settings_="$dotfiles_root_/llm-templates/claude/.claude/settings.local.template.json"
 
-  #### Create soft link from dotfiles .claude/settings.local.json to project .claude/settings.local.json
-  if [[ -f "$source_settings_" ]] && [[ ! -e "$target_settings_" ]]; then
+  if [[ -f "$claude_source_settings_" ]] && [[ ! -e "$claude_target_settings_" ]]; then
     echo "Copying Claude settings..."
-    cp "$source_settings_" "$target_settings_"
-    json-purify "$target_settings_" --inline
+    cp "$claude_source_settings_" "$claude_target_settings_"
+    json-purify "$claude_target_settings_" --inline
     echo "Created '.claude/settings.local.json' from template."
   fi
 
