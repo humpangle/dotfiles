@@ -59,6 +59,7 @@ export EBNIS_VIM_THEME_BG=d
 # -----------------------------------------------------------------------------
 # export NVIM_ENABLE_AVANTE_AI_PLUGIN=1
 export NVIM_ENABLE_CODECOMPANION_AI_PLUGIN=1
+export NVIM_ENABLE_CLAUDE_CODE_AI_PLUGIN=1
 # -----------------------------------------------------------------------------
 # /END/ LLMs
 # -----------------------------------------------------------------------------

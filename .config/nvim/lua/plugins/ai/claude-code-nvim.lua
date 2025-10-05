@@ -1,3 +1,9 @@
+local plugin_enabled = require("plugins/plugin_enabled")
+
+if not plugin_enabled.claude_code_ai() then
+  return {}
+end
+
 local utils = require("utils")
 local map_lazy_key = utils.map_lazy_key
 
@@ -94,7 +100,7 @@ return {
   cmd = {
     "ClaudeCode",
     "ClaudeCodeStart", -- Start Claude Code integration
-    "ClaudeCodeStop", -- Stop Claude Code integration
+    "ClaudeCodeStop",  -- Stop Claude Code integration
     "ClaudeCodeStatus",
     "ClaudeCodeFocus",
     "ClaudeCodeSelectModel",
@@ -148,14 +154,14 @@ return {
     stu.terminal.provider = "external"
     stu.terminal.provider_opts = {}
     stu.terminal.provider_opts.external_terminal_cmd1 =
-      "alacritty --working-directory %s -e %s"
+    "alacritty --working-directory %s -e %s"
     stu.terminal.provider_opts.external_terminal_cmd = function(cmd, envs)
       envs["DO_ACTIVATE_PYTHON_VIRTUAL_ENV"] = 1
       local env_exports = ""
 
       for key, value in pairs(envs) do
         env_exports = env_exports
-          .. ("export %s=%s; "):format(key, value)
+            .. ("export %s=%s; "):format(key, value)
       end
 
       -- "tmux kill-pane -t al:4.1 2>/dev/null || true; " ..
