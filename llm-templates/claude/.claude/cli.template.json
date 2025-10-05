@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "editor": {
+    "vimMode": true
+  },
+  "permissions": {
+    "allow": [
+      "Agent",
+      "Bash",
+      "Bash(awk:*)",
+      "Bash(find:*)",
+      "Bash(gh api:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(git merge-base:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(poetry run pytest:*)",
+      "Bash(poetry run python:*)",
+      "Bash(pytest:*)",
+      "Bash(python3:*)",
+      "Bash(rm:*)",
+      "Bash(sed:*)",
+      "Bash(tree:*)",
+      "Edit",
+      "Glob",
+      "Grep",
+      "LS",
+      "MultiEdit",
+      "Read",
+      "TodoRead",
+      "TodoWrite",
+      "WebFetch(domain:github.com)",
+      "WebFetch(*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "Write",
+      "mcp__consult7__*",
+      "mcp__context7__*",
+      "mcp__tidewave__*"
+    ],
+    "deny": [
+      // "Bash(command:rm)",
+      // "Bash(command:sudo)",
+      // "WebFetch(domain:malicious-site.com)"
+    ]
+  }
+}
