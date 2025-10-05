@@ -421,24 +421,32 @@ claude_chat_start() {
     echo "Created '.claude/settings.local.json' from template."
   fi
 
-  #### Create soft link from dotfiles .claude/commands to project .claude/commands
-  local source_commands_="$dotfiles_root_/.claude/commands"
-  local target_commands_="$cwd_/.claude/commands"
+  #### Copy from dotfiles .cursor/cli.json to project .cursor/cli.json
+  local cursor_target_settings_="$cwd_/.cursor/cli.json"
+  local cursor_source_settings_="$dotfiles_root_/llm-templates/claude/.claude/cli.template.json"
 
-  if [[ -d "$source_commands_" ]] && [[ ! -e "$target_commands_" ]]; then
-    echo "Creating symlink: .claude/commands -> dotfiles/.claude/commands"
-    ln -s "$source_commands_" "$target_commands_"
-    echo "Created symlink '.claude/commands' pointing to dotfiles commands."
+  if [[ -f "$cursor_source_settings_" ]] && [[ ! -e "$cursor_target_settings_" ]]; then
+    echo "Copying Claude settings..."
+    cp "$cursor_source_settings_" "$cursor_target_settings_"
+    json-purify "$cursor_target_settings_" --inline
+    echo "Created '.cursor/cli.json' from template."
   fi
 
-  #### Create soft link from project .claude to project .cursor
-  local source_claude_="$cwd_/.claude"
-  local target_cursor_="$cwd_/.cursor"
+  #### Create soft link from dotfiles commands to project .xxx/commands
+  local source_commands_="$dotfiles_root_/.claude/commands"
 
-  if [[ -d "$source_claude_" ]] && [[ ! -e "$target_cursor_" ]]; then
-    echo "Creating symlink: .cursor -> .claude"
-    ln -s "$source_claude_" "$target_cursor_"
-    echo "Created symlink '.cursor' pointing to '.claude'."
+  if [[ -d "$source_commands_" ]]; then
+
+    for item in claude cursor; do
+      item=".$item"
+      local target_commands_="$cwd_/$item/commands"
+
+      if [[ ! -e "$target_commands_" ]]; then
+        echo "Creating symlink: $item/commands -> dotfiles/$item/commands"
+        ln -s "$source_commands_" "$target_commands_"
+        echo "Created symlink '$item/commands' pointing to dotfiles commands."
+      fi
+    done
   fi
 }
 
