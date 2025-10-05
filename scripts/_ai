@@ -411,14 +411,13 @@ claude_chat_start() {
   dotfiles_root_="$(_get_dotfiles_root)"
   local source_settings_="$dotfiles_root_/llm-templates/claude/.claude/settings.local.template.json"
 
-  if [[ -f "$target_settings_" ]] || [[ ! -f "$source_settings_" ]]; then
-    return 0
+  #### Create soft link from dotfiles .claude/settings.local.json to project .claude/settings.local.json
+  if [[ -f "$source_settings_" ]] && [[ ! -e "$target_settings_" ]]; then
+    echo "Copying Claude settings..."
+    cp "$source_settings_" "$target_settings_"
+    json-purify "$target_settings_" --inline
+    echo "Created '.claude/settings.local.json' from template."
   fi
-
-  echo "Copying Claude settings..."
-  cp "$source_settings_" "$target_settings_"
-  json-purify "$target_settings_" --inline
-  echo "Created '.claude/settings.local.json' from template."
 
   #### Create soft link from dotfiles .claude/commands to project .claude/commands
   local source_commands_="$dotfiles_root_/.claude/commands"
