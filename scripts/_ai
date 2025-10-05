@@ -417,6 +417,7 @@ claude_chat_start() {
 
   echo "Copying Claude settings..."
   cp "$source_settings_" "$target_settings_"
+  json-purify "$target_settings_" --inline
   echo "Created '.claude/settings.local.json' from template."
 }
 
