@@ -7,25 +7,49 @@
     "allow": [
       "Agent",
       "Bash",
-      "Bash(./scripts/_ai:*)",
+      "Bash(awk:*)",
+      "Bash(find:*)",
+      "Bash(gh api:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(git merge-base:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(grep:*)",
       "Bash(ls:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
+      "Bash(poetry run pytest:*)",
+      "Bash(poetry run python:*)",
+      "Bash(pytest:*)",
+      "Bash(python3:*)",
+      "Bash(rm:*)",
+      "Bash(sed:*)",
+      "Bash(tree:*)",
       "Edit",
+      "Glob",
+      "Grep",
+      "LS",
       "MultiEdit",
       "Read",
       "TodoRead",
       "TodoWrite",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:chatgpt.com)",
-      "Write",
-      "mcp__consult7__consultation",
-      "mcp__context7__get-library-docs",
-      "mcp__context7__resolve-library-id",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebSearch"
+      "WebSearch",
+      "Write",
+      "mcp__consult7__*",
+      "mcp__context7__*",
+      "mcp__tidewave__*"
     ],
-    "deny": []
-  }
+    "deny": [],
+    "additionalDirectories": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    ""
+  ]
 }
