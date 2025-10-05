@@ -380,23 +380,12 @@ _copy_chat_template() {
   fi
 }
 
-aidercs() {
-  : "___alias___ aider_chat_start"
-  aider_chat_start "$@"
+llprojs() {
+  : "___alias___ llm_project_start"
+  llm_project_start "$@"
 }
 
-aider_chat_start() {
-  : "Ensure the aider chat template file exists in the current directory."
-
-  _copy_chat_template "aider.ebnis.chat.md" ".aider.ebnis.chat.md"
-}
-
-claudecs() {
-  : "___alias___ claude_chat_start"
-  claude_chat_start "$@"
-}
-
-claude_chat_start() {
+llm_project_start() {
   : "Ensure the claude chat template file exists in the current directory."
 
   _copy_chat_template "claude/claude.ebnis.chat.md" ".claude.ebnis.chat.md"
