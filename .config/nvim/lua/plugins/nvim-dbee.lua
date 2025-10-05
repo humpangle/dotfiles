@@ -1,6 +1,19 @@
 local utils = require("utils")
 local map_lazy_key = utils.map_lazy_key
 
+local make_json = function(scope)
+  if scope == "Current" then
+    require("dbee").api.ui.result_do_action("yank_current_json")
+  else
+    require("dbee").api.ui.result_do_action("yank_all_json")
+  end
+
+  vim.cmd("tabnew")
+  utils.write_to_out_file({ prefix = "nvim-dbee-result", ext = "json" })
+  vim.cmd('normal! "0p')
+  vim.cmd({ "w" })
+end
+
 local dbee_fzf_options = {
   {
     description = "Open                                                                                             1",
@@ -37,6 +50,30 @@ local dbee_fzf_options = {
     action = function()
       vim.cmd.normal({ "vip" })
       utils.write_to_command_mode("'<,'>Neoformat! sql<CR>")
+    end,
+  },
+  {
+    description = "Make Current JSON make current",
+    action = function()
+      make_json('Current')
+    end,
+  },
+  {
+    description = "Make ALL JSON make all",
+    action = function()
+      make_json('Current')
+    end,
+  },
+  {
+    description = "Yank/Copy Current JSON current",
+    action = function()
+      require("dbee").api.ui.result_do_action("yank_current_json")
+    end,
+  },
+  {
+    description = "Yank/Copy All JSON all",
+    action = function()
+      require("dbee").api.ui.result_do_action("yank_all_json")
     end,
   },
 }

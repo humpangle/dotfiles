@@ -639,8 +639,19 @@ utils.split_direction = function(text)
   return SPLIT_DIRECTIONS[text] or "split"
 end
 
-utils.write_to_out_file = function()
-  local filename = utils.create_slime_dir() .. "/O-" .. os.date("%FT%H-%M-%S")
+utils.write_to_out_file = function(opts)
+  opts = vim.tbl_extend('keep', (opts or {}), {
+    datetime = true,
+    prefix = "O",
+    ext = nil,
+  })
+
+  local filename = utils.create_slime_dir()
+      .. "/"
+      .. opts.prefix
+      .. "-"
+      .. (opts.datetime and os.date("%FT%H-%M-%S") or "")
+      .. (opts.ext and ("." .. opts.ext) or "")
 
   local readonly = vim.bo.readonly
   -- local buftype = vim.bo.buftype
@@ -654,6 +665,8 @@ utils.write_to_out_file = function()
 
   vim.bo.readonly = readonly
   -- vim.bo.buftype = buftype
+
+  return filename
 end
 
 utils.get_session_file = function()
