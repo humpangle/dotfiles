@@ -13,7 +13,6 @@
       "Agent",
       "Bash",
       "Bash(awk:*)",
-      "Bash(echo $JIRA_TICKET_NUMBER)",
       "Bash(find:*)",
       "Bash(gh api:*)",
       "Bash(gh pr diff:*)",
@@ -35,9 +34,9 @@
       "Bash(sed:*)",
       "Bash(tree:*)",
       "Edit",
-      // "Glob",
-      // "Grep",
-      // "LS",
+      "Glob",
+      "Grep",
+      "LS",
       "MultiEdit",
       // "NotebookEdit",
       // "NotebookRead",
@@ -47,7 +46,6 @@
       // "WebFetch",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:hexdocs.pm)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebSearch",
       "Write",
@@ -64,6 +62,6 @@
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
-    "mysql"
+    ""
   ]
 }
