@@ -102,7 +102,7 @@ M.patterns_options = {
   },
   {
     description = "Endpoint json",
-    pattern = '"endpoint": "',
+    pattern = '"[^"]*endpoint": "',
     navigation = "n",
   },
   {
