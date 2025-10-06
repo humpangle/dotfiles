@@ -76,6 +76,18 @@ local dbee_fzf_options = {
       require("dbee").api.ui.result_do_action("yank_all_json")
     end,
   },
+  {
+    description = "Result Go To Last/End Page E",
+    action = function()
+      require("dbee").api.ui.result_page_last()
+    end,
+  },
+  {
+    description = "Result Go To First Page F",
+    action = function()
+      require("dbee").api.ui.result_page_first()
+    end,
+  },
 }
 
 return {
