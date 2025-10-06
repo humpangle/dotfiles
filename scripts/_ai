@@ -380,7 +380,7 @@ _copy_chat_template() {
   fi
 }
 
-llprojs() {
+llmprojs() {
   : "___alias___ llm_project_start"
   llm_project_start "$@"
 }
