@@ -114,6 +114,7 @@ _alias_map_docker["dcrml"]='drmlogs -c'
 _alias_map_docker["dclrm"]='drmlogs -c'
 _alias_map_docker["dtruncatel"]='drmlogs'
 _alias_map_docker["dcrm"]='docker compose rm'
+_alias_map_docker["dcrmall"]='docker ps -aq | xargs docker rm -f'
 
 _dcps() {
   local cmd_="docker compose ps \
