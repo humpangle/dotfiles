@@ -626,6 +626,8 @@ if ! _has_termux; then
     alias dpis='sdpi'
     alias apt_kept_back='sudo apt-get --with-new-pkgs upgrade'
     alias kept_back_apt='apt_kept_back'
+  else # darwin
+    alias ug="brew upgrade"
   fi
 else
   alias ug='pkg update && pkg upgrade'
