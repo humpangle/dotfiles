@@ -5,8 +5,8 @@ Create a git commit with staged.
 ## Usage
 
 ```
-/commit SCHED-1234    # Provide JIRA ticket directly
-/commit               # Auto-detect JIRA ticket
+/commitj SCHED-1234    # Provide JIRA ticket directly
+/commitj               # Auto-detect JIRA ticket
 ```
 
 ## Process
