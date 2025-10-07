@@ -30,13 +30,16 @@ end
 
 -- Get formatted diagnostics from specified buffer(s)
 -- @param bufnr number|nil Buffer number (0 for current, nil for all)
+-- @param severity number|nil Severity level to filter by (nil for all)
 -- @return table Array of formatted diagnostic messages
-local function get_formatted_diagnostics(bufnr)
+local function get_formatted_diagnostics(bufnr, severity)
   local diagnostics = vim.diagnostic.get(bufnr)
   local messages = {}
 
   for _, diagnostic in ipairs(diagnostics) do
-    table.insert(messages, format_diagnostic(diagnostic))
+    if severity == nil or diagnostic.severity == severity then
+      table.insert(messages, format_diagnostic(diagnostic))
+    end
   end
 
   return messages
@@ -45,17 +48,20 @@ end
 -- Copy diagnostics to a register
 -- @param bufnr number|nil Buffer number (0 for current, nil for all)
 -- @param register string Register to copy to ('a', '+', etc.)
-local function copy_diagnostics_to_register(bufnr, register)
-  local messages = get_formatted_diagnostics(bufnr)
+-- @param severity number|nil Severity level to filter by (nil for all)
+local function copy_diagnostics_to_register(bufnr, register, severity)
+  local messages = get_formatted_diagnostics(bufnr, severity)
   local all_messages = table.concat(messages, "\n\n")
   vim.fn.setreg(register, all_messages)
   vim.fn.setreg('"', all_messages)
 
   local scope = bufnr == 0 and "current buffer" or "all buffers"
+  local severity_str = severity and (" [" .. vim.diagnostic.severity[severity] .. "]") or ""
   vim.notify(
     string.format(
-      "%d diagnostics from %s to %s",
+      "%d%s diagnostics from %s to %s",
       #messages,
+      severity_str,
       scope,
       "register '" .. register .. "'"
     )
@@ -132,36 +138,60 @@ local fzf_lua_diagnostic_options = {
   {
     description = "Current Copy Current Buffer Diagnostics to Clipboard register +                                 52",
     action = function()
-      copy_diagnostics_to_register(0, "+")
+      copy_diagnostics_to_register(0, "+", nil)
     end,
     count = 52,
   },
   {
     description = "Current Copy Current Buffer Diagnostics to Register 'a'                                        522",
     action = function()
-      copy_diagnostics_to_register(0, "a")
+      copy_diagnostics_to_register(0, "a", nil)
     end,
     count = 522,
   },
   {
     description = "Copy All Buffers Diagnostics to Clipboard register +                                            53",
     action = function()
-      copy_diagnostics_to_register(nil, "+")
+      copy_diagnostics_to_register(nil, "+", nil)
     end,
     count = 53,
   },
   {
     description = "All Copy All Buffers Diagnostics to Register 'a'                                               533",
     action = function()
-      copy_diagnostics_to_register(nil, "a")
+      copy_diagnostics_to_register(nil, "a", nil)
     end,
     count = 533,
+  },
+  {
+    description = "Current Copy Current Buffer HINT Current Diagnostics to Clipboard register +",
+    action = function()
+      copy_diagnostics_to_register(0, "+", vim.diagnostic.severity.HINT)
+    end,
+  },
+  {
+    description = "Current Copy Current Buffer HINT Current Diagnostics to Register 'a'",
+    action = function()
+      copy_diagnostics_to_register(0, "a", vim.diagnostic.severity.HINT)
+    end,
+  },
+  {
+    description = "Copy All Buffers HINT All Diagnostics to Clipboard register +",
+    action = function()
+      copy_diagnostics_to_register(nil, "+", vim.diagnostic.severity.HINT)
+    end,
+  },
+  {
+    description = "All Copy All Buffers HINT All Diagnostics to Register 'a'",
+    action = function()
+      copy_diagnostics_to_register(nil, "a", vim.diagnostic.severity.HINT)
+    end,
   },
   {
     description = "Debug: Print Current Config                                                                     99",
     action = function()
       local config_opts_as_str =
-        vim.inspect(diagnostic_modes[current_mode_index].config)
+          vim.inspect(diagnostic_modes[current_mode_index].config)
       print(config_opts_as_str)
     end,
     count = 99,
@@ -175,5 +205,6 @@ map_key("n", "<leader>lsd", function()
   })
 end, {
   noremap = true,
-  desc = "diagnostic 0/ 1/toggleVirtuals 11/linePopUp 5/listLoc 6/copyCurrentA 61/copyCurrentClip 50/bufFloat 52/copyAllA 53/copyAllClip 99/debug",
+  desc =
+  "diagnostic 0/ 1/toggleVirtuals 11/linePopUp 5/listLoc 51/copyCurrentA 522/copyCurrentClip 52/copyAllA 533/copyAllClip 53/copyHintCurrentClip 62/copyHintCurrentA 622/copyHintAllClip 63/copyHintAllA 633/99/debug",
 })
