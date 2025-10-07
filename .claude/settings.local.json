@@ -40,10 +40,7 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebSearch",
-      "Write",
-      "mcp__consult7__*",
-      "mcp__context7__*",
-      "mcp__tidewave__*"
+      "Write"
     ],
     "deny": [],
     "additionalDirectories": []

@@ -337,49 +337,6 @@ _get_dotfiles_root() {
   echo "$dotfiles_root_"
 }
 
-_copy_chat_template() {
-  : "Copy a chat template file to the current directory."
-  : "Usage: _copy_chat_template <template_name> <target_filename>"
-
-  local template_name_="$1"
-  local target_file_="$2"
-
-  if [[ -z "$template_name_" || -z "$target_file_" ]]; then
-    echo "Error: Both template_name and target_file are required" >&2
-    return 1
-  fi
-
-  local cwd_=""
-  cwd_="$(pwd)"
-
-  local target_path_="$cwd_/$target_file_"
-
-  if [[ -f "$target_path_" ]]; then
-    echo "File '$target_path_' found. Exiting..."
-    return 0
-  fi
-
-  local dotfiles_root_=""
-  dotfiles_root_="$(_get_dotfiles_root)"
-
-  # dotfiles/llm-templates/{template_name}
-  local source_template_="$dotfiles_root_/llm-templates/$template_name_"
-
-  if [[ ! -f "$source_template_" ]]; then
-    echo "Error: Source template file not found at '$source_template_'" >&2
-    return 1
-  fi
-
-  echo "File '$target_file_' not found. Copying template..."
-  if cp "$source_template_" "$target_path_"; then
-    echo "Created '$target_file_' from template."
-    return 0
-  else
-    echo "Error: Failed to copy template '$source_template_' to '$target_path_'." >&2
-    return 1
-  fi
-}
-
 llmprojs() {
   : "___alias___ llm_project_start"
   llm_project_start "$@"
@@ -388,20 +345,26 @@ llmprojs() {
 llm_project_start() {
   : "Ensure the claude chat template file exists in the current directory."
 
-  _copy_chat_template "claude/claude.ebnis.chat.md" ".claude.ebnis.chat.md"
-
   local dotfiles_root_=""
   dotfiles_root_="$(_get_dotfiles_root)"
-
-  # Copy settings.local.json if it doesn't exist
+  local llm_templates_root_="$dotfiles_root_/llm-templates/claude/.claude"
   local cwd_=""
   cwd_="$(pwd)"
+
+  # Copy chat template
+  if [ ! -e "$cwd_/.claude.ebnis.chat.md" ]; then
+    cp \
+      "$llm_templates_root_/claude.ebnis.chat.md" \
+      "$cwd_/.claude.ebnis.chat.md"
+  fi
+
+  # Copy settings.local.json if it doesn't exist
   mkdir -p "$cwd_/.claude"
   mkdir -p "$cwd_/.cursor"
 
   #### Copy from dotfiles .claude/settings.local.json to project .claude/settings.local.json
   local claude_target_settings_="$cwd_/.claude/settings.local.json"
-  local claude_source_settings_="$dotfiles_root_/llm-templates/claude/.claude/settings.local.template.json"
+  local claude_source_settings_="$llm_templates_root_/settings.local.template.json"
 
   if [[ -f "$claude_source_settings_" ]] && [[ ! -e "$claude_target_settings_" ]]; then
     echo "Copying Claude settings..."
@@ -412,7 +375,7 @@ llm_project_start() {
 
   #### Copy from dotfiles .cursor/cli.json to project .cursor/cli.json
   local cursor_target_settings_="$cwd_/.cursor/cli.json"
-  local cursor_source_settings_="$dotfiles_root_/llm-templates/claude/.claude/cli.template.json"
+  local cursor_source_settings_="$llm_templates_root_/cli.template.json"
 
   if [[ -f "$cursor_source_settings_" ]] && [[ ! -e "$cursor_target_settings_" ]]; then
     echo "Copying Claude settings..."
@@ -421,20 +384,37 @@ llm_project_start() {
     echo "Created '.cursor/cli.json' from template."
   fi
 
-  #### Create soft link from dotfiles commands to project .xxx/commands
-  local source_commands_="$dotfiles_root_/.claude/commands"
+  #### Link dotfiles commands to project .llm_name/commands
+  local source_commands_="$llm_templates_root_/commands"
 
   if [[ -d "$source_commands_" ]]; then
+    for llm_name_ in claude cursor; do
+      llm_name_=".$llm_name_"
+      local target_commands_="$cwd_/$llm_name_/commands"
 
-    for item in claude cursor; do
-      item=".$item"
-      local target_commands_="$cwd_/$item/commands"
+      mkdir -p "$target_commands_"
 
-      if [[ ! -e "$target_commands_" ]]; then
-        echo "Creating symlink: $item/commands -> dotfiles/$item/commands"
-        ln -s "$source_commands_" "$target_commands_"
-        echo "Created symlink '$item/commands' pointing to dotfiles commands."
-      fi
+      for file in "$source_commands_"/*; do
+        local target_file=""
+        target_file="$target_commands_/$(basename "$file")"
+
+        if [ -e "$target_file" ]; then
+          echo "Removing: $target_file"
+        fi
+        rm -f "$target_file"
+
+        echo "Linking $file -> $target_file"
+        ln -s "$file" "$target_file"
+
+        if [ -f "$target_file" ]; then
+          echo "Linked $file -> $target_file"
+        fi
+
+        echo
+      done
+
+      echo
+
     done
   fi
 }
