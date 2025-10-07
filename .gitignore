@@ -4,8 +4,6 @@ snippet_out.json
 
 !dotfiles.code-workspace
 !.config/alacritty/alacritty-template.toml
-!**/.claude/**
-!**/.claude
 !llm-templates/*
 !llm-templates/claude/claude.ebnis.chat.md
 llm-templates/.___scratch*
