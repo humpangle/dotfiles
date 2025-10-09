@@ -398,7 +398,8 @@ local git_commit_options = {
   fzf_lua_shared_options.git_add_all(),
   fzf_lua_shared_options.copy_git_root_to_system_clipboard(),
   fzf_lua_shared_options.copy_main_head_commit_to_register_plus(),
-  fzf_lua_shared_options.check_out_main_head_commit(),
+  fzf_lua_shared_options.check_out_some_head_commit("main"),
+  fzf_lua_shared_options.check_out_some_head_commit("develop"),
   fzf_lua_shared_options.submodule_deinit_all(),
   fzf_lua_shared_options.git_pull(),
   fzf_lua_shared_options.merge_main(),
@@ -818,6 +819,8 @@ local git_log_options = {
   },
   fzf_lua_shared_options.git_pull(),
   fzf_lua_shared_options.merge_main(),
+  fzf_lua_shared_options.check_out_some_head_commit("main"),
+  fzf_lua_shared_options.check_out_some_head_commit("develop"),
 }
 
 keymap("n", "<leader>gg", function()
