@@ -88,6 +88,7 @@ _alias_map_docker["de"]='docker exec -it'
 _alias_map_docker["dcu"]='docker compose up'
 _alias_map_docker["dcub"]='docker compose up --build'
 _alias_map_docker["dcud"]='docker compose up -d'
+_alias_map_docker["dcudf"]='docker compose up -d --force-recreate'
 _alias_map_docker["dcb"]='docker compose build'
 _alias_map_docker["db"]='docker build -t'
 _alias_map_docker["dcl"]='docker compose logs'
@@ -131,12 +132,21 @@ _dcudlf() {
   docker compose up -d "$@"
   docker compose logs -f "$@"
 }
-
 _alias_map_docker["dcudlf"]='_dcudlf'
 _alias_map_docker["dcudfl"]='_dcudlf'
 _alias_map_docker["dcufl"]='_dcudlf'
 _alias_map_docker["dculf"]='_dcudlf'
 _alias_map_docker["dcudlf__description"]='docker up daemon and logs'
+
+_dcudlff() {
+  docker compose up --force-recreate -d "$@"
+  docker compose logs -f "$@"
+}
+_alias_map_docker["dcudlff"]='_dcudlff'
+_alias_map_docker["dcudflf"]='_dcudlff'
+_alias_map_docker["dcuflf"]='_dcudlff'
+_alias_map_docker["dculff"]='_dcudlff'
+_alias_map_docker["dcudlff__description"]='docker up daemon --force-recreate and logs'
 
 # docker compose restart and logs --follow
 dcrsf() {
