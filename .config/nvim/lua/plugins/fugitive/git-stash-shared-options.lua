@@ -46,30 +46,6 @@ local function description_with_count(mapping_str)
   )
 end
 
--- Helper function for git stash apply or pop operations
-local function git_stash_apply_or_pop(apply_or_pop, maybe_include_index)
-  return git_stash_list_fn(function(list_stash_cmd)
-    local count = vim.v.count
-
-    local cmd = ":Git stash "
-      .. apply_or_pop
-      .. " --quiet "
-      .. (maybe_include_index and "--index " or "")
-      .. "stash@{"
-      .. (count == 99 and 0 or (count > 0 and count or "")) -- Count 99 simulates count 0 (See czd -->> git stash drop).
-      .. "}<Left>"
-
-    if count < 1 then -- No count given.
-      vim.cmd(list_stash_cmd)
-    end
-
-    vim.fn.feedkeys(
-      vim.api.nvim_replace_termcodes(cmd, true, true, true),
-      "n"
-    )
-  end)
-end
-
 -- Git stash list option
 function M.git_stash_list_paginate()
   return {
@@ -86,34 +62,6 @@ function M.git_stash_list_plain()
     action = function()
       vim.cmd("G stash list")
     end,
-  }
-end
-
--- Git stash drop option
-function M.git_stash_drop()
-  return {
-    description = "Git stash drop" .. description_with_count("drop"),
-    action = git_stash_list_fn(function(list_stash_cmd)
-      local cmd = ":G stash drop stash@{}<left>"
-
-      local count = vim.v.count
-
-      -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we cannot
-      -- have git stash index 99).
-      if count == 99 then -- simulate count 0
-        cmd = ":G stash drop stash@{0}<Left>"
-      elseif count > 0 then -- count given (not 0)
-        cmd = ":G stash drop stash@{" .. count .. "}<Left>"
-      else -- no count
-        -- List stashes so we can select count
-        vim.cmd(list_stash_cmd)
-      end
-
-      vim.fn.feedkeys(
-        vim.api.nvim_replace_termcodes(cmd, true, true, true),
-        "t"
-      )
-    end),
   }
 end
 
@@ -182,38 +130,47 @@ function M.git_stash_push_all()
   }
 end
 
--- Git stash pop option
-function M.git_stash_pop()
-  return {
-    description = "Git stash pop 0",
-    action = git_stash_apply_or_pop("pop"),
-  }
-end
+-- pop/apply
+for _, stash_action in pairs({
+  "drop",
+  "pop",
+  "apply",
+}) do
+  for _, position in pairs({ 0, "" }) do
+    for _, include_index in pairs({ "--index", "" }) do
+      local action = git_stash_list_fn(function(list_stash_cmd)
+        local cmd = ":Git stash "
+          .. stash_action
+          .. " --quiet "
+          .. include_index
+          .. "stash@{"
+          .. position
+          .. "}<Left>"
 
--- Git stash pop --index option
-function M.git_stash_pop_index()
-  return {
-    description = "Git stash pop --index"
-      .. description_with_count("pop-index"),
-    action = git_stash_apply_or_pop("pop", "index"),
-  }
-end
+        vim.cmd(list_stash_cmd)
 
--- Git stash apply option
-function M.git_stash_apply()
-  return {
-    description = "Git stash apply" .. description_with_count("apply"),
-    action = git_stash_apply_or_pop("apply"),
-  }
-end
+        vim.fn.feedkeys(
+          vim.api.nvim_replace_termcodes(cmd, true, true, true),
+          "n"
+        )
+      end)
 
--- Git stash apply --index option
-function M.git_stash_apply_index()
-  return {
-    description = "Git stash apply --index"
-      .. description_with_count("apply-index"),
-    action = git_stash_apply_or_pop("apply", "index"),
-  }
+      local prop = "git_stash_"
+        .. stash_action
+        .. (include_index == "" and "" or "_index")
+        .. (position == 0 and "_zero" or "")
+      -- if stash_action == "drop" then
+      --   vim.print("git_stash_shared_options." .. prop .. ",")
+      -- end
+      M[prop] = {
+        description = "Git stash "
+          .. stash_action
+          .. (include_index == "" and "" or (" " .. include_index))
+          .. (position == 0 and " 0" or ""),
+        action = action,
+      }
+    end
+  end
 end
 
 return M
