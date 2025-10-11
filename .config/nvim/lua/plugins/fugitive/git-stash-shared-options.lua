@@ -37,15 +37,6 @@ local function git_stash_list_fn(callback)
   end
 end
 
--- Helper function to create description with count information
-local function description_with_count(mapping_str)
-  return string.format(
-    " - count=index. 0=99 E.g. SPACE%s, [count]SPACE%s.",
-    mapping_str,
-    mapping_str
-  )
-end
-
 -- Git stash list option
 function M.git_stash_list_paginate()
   return {
