@@ -1,0 +1,448 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+_pr-base_verbose() {
+  if [[ "$1" != "--pr-base--verbose" ]]; then
+    return
+  fi
+
+  for item in "${@:2}"; do
+    echo -e "$item"
+  done
+}
+
+pr-base() {
+  read -r -d '' help_ <<'EOF' || :
+  Get the commit before the oldest unique commit in a pull request
+
+  Usage:
+    _git pr-base --help
+    _git pr-base <pr-number> \
+       [-b/--branch branch-name] \
+       [-a/--hash-only] \
+       [-c/--copy]
+
+  Options:
+    -h/--help
+        Print help information and exit.
+    -b/--branch
+        Optional: Branch name to use
+    -a/--hash-only
+        Optional: Branch name to use (-a = h(a)sh)
+    -c/--copy
+        Optional: Copy result to system clipboard
+    -v/--verbose
+        Optional: Do not suppress stdout
+
+  Examples:
+    # Get help
+    _git pr-base -h
+    _git pr-base --help
+
+    # Get base commit of PR number 1234
+    _git pr-base 1234
+
+    # Get base commit of PR number 1234 and branch custom-branch
+    _git pr-base 1234 -b custom-branch
+    _git pr-base 1234 --branch custom-branch
+
+    # Get base commit of PR number 1234, be verbose
+    _git pr-base 1234 --verbose
+    _git pr-base 1234 -v
+
+    # Get base commit of PR number 1234, be verbose, commit has only
+    _git pr-base 1234 --verbose --hash-only
+    _git pr-base 1234 -av
+
+    # Get base commit of PR number 1234, be verbose, commit has only, copy result
+    _git pr-base 1234 --verbose --hash-only --copy
+    _git pr-base 1234 -avc
+EOF
+
+  if ! arg_="$(getopt \
+    --options=h,b:,a,v,c \
+    --longoptions=help,branch:,hash-only,verbose,copy \
+    --name "$0" \
+    -- "$@")"; then
+    _echo "$help_"
+    exit 1
+  fi
+  eval set -- "$arg_"
+
+  local user_provided_base_branch_name_=""
+  local verbose_=""
+  local hash_only_=""
+  local copy_=""
+
+  while true; do
+    case "$1" in
+    -h | --help)
+      _echo "$help_"
+      return
+      ;;
+
+    -b | --branch)
+      user_provided_base_branch_name_=$2
+      shift 2
+      ;;
+
+    -a | --hash-only)
+      hash_only_="1"
+      shift
+      ;;
+
+    -c | --copy)
+      copy_="1"
+      shift
+      ;;
+
+    -v | --verbose)
+      verbose_="--pr-base--verbose"
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown argument $1"
+      _echo "$help_"
+      exit 1
+      ;;
+    esac
+  done
+
+  if [[ $# -ne 1 ]]; then
+    echo "Non optional argument PR-NUMBER is required!"
+    _echo "$help_"
+    exit 1
+  fi
+
+  local pr_number=$1
+
+  _pr-base_verbose "$verbose_" "Getting PR details"
+  local pr_detail_as_json=""
+  pr_detail_as_json=$(gh pr view "$pr_number" --json headRefName,baseRefName)
+  _pr-base_verbose "$verbose_" "PR details: $pr_detail_as_json\n"
+
+  local pr_head_branch_=""
+  pr_head_branch_=$(
+    echo "$pr_detail_as_json" | jq -r '.headRefName'
+  )
+
+  local base_branch_from_pr_detail_=""
+  base_branch_from_pr_detail_=$(
+    echo "$pr_detail_as_json" | jq -r '.baseRefName'
+  )
+
+  local pr_base_branch_=${user_provided_base_branch_name_:-$base_branch_from_pr_detail_}
+
+  local oldest_commit_unique_to_pr_=""
+  oldest_commit_unique_to_pr_=$(
+    git log --oneline "$pr_base_branch_..$pr_head_branch_" --reverse | head -1 | cut -d' ' -f1
+  )
+
+  local parent_of_first_commit_=""
+  parent_of_first_commit_=$(
+    git rev-parse "$oldest_commit_unique_to_pr_"^
+  )
+
+  _pr-base_verbose "$verbose_" \
+    "PR branch from PR detail:   $base_branch_from_pr_detail_" \
+    "Branch to use:              $pr_base_branch_" \
+    "Oldest commit unique to PR: $oldest_commit_unique_to_pr_" \
+    "Commit before PR start:     $parent_of_first_commit_" \
+    "Result:"
+
+  local result_="$parent_of_first_commit_"
+
+  if [[ -z "$hash_only_" ]]; then
+    result_="$(
+      git show --no-patch --format=fuller "$parent_of_first_commit_"
+    )"
+  fi
+
+  if [ -n "$copy_" ] && command -v copy &>/dev/null; then
+    echo -e "$result_" | copy
+  fi
+
+  echo -e "$result_"
+}
+
+_is_local_function() {
+  local _function_name="$1"
+  local _this_file_content="$2"
+
+  # Function name is not a local function - but perhaps inherited from the shell.
+  if ! grep -qP "^$_function_name\(\)\s+\{" <<<"$_this_file_content" &&
+    ! grep -qP "function\s+${_function_name}\s+{" <<<"$_this_file_content"; then
+    return 1
+  fi
+
+  return 0
+}
+
+_command_exists() {
+  local command_to_test_="$1"
+  local this_file_content_=""
+  this_file_content_="$(cat "$0")"
+
+  local all_function_names_=()
+  mapfile -t all_function_names_ < <(
+    compgen -A function
+  )
+
+  local func_name_=""
+  for func_name_ in "${all_function_names_[@]}"; do
+    if ! _is_local_function "$func_name_" "$this_file_content_"; then
+      continue
+    fi
+
+    if [[ "$func_name_" == "$command_to_test_" ]]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+___help_help() {
+  local _usage
+
+  read -r -d '' _usage <<'eom' || :
+Get documentation about available commands/functions. Usage:
+  script_or_executable help [OPTIONS]
+
+By default, we return only external functions unless option `i` is passed in which case we return only internal
+(helper) functions or option `a` is given which causes us to print both internal and external functions.
+
+Options:
+  -h
+    Print this helper information and exit.
+  -i
+    Return only internal (helper) functions.
+  -a
+    Return all functions - both internal and external.
+  -p
+    Prepend prefix i.e. _func_name ----------- to every line so developer can grep the functon name and get all
+    documentation strings for that function name. Without this option, caller may only get examples where the functon
+    name is referenced.
+
+Examples:
+  # Get help
+  script_or_executable help -h
+
+  # Grep for command/function documentation
+  script_or_executable help -p | grep ^func_or_command_name
+eom
+
+  echo -e "$_usage"
+}
+
+help() {
+  : "___help___ ___help_help"
+  local function_type_="external"
+  local include_prefix_=""
+
+  local opt_=""
+  while getopts ':aip' opt_; do
+    case "$opt_" in
+    a)
+      function_type_='all'
+      ;;
+
+    i)
+      function_type_='internal'
+      ;;
+
+    p)
+      include_prefix_=1
+      ;;
+
+    *)
+      ___help_help
+      exit 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  # Matching pattern examples:
+  # `: "___help___ ___some_func_help"`
+  # `: "___help___ ____some-func-help"`
+  # read -r -d '' help_ <<'EOF' || :
+  local _help_func_pattern="[_]*___[a-zA-Z][a-zA-Z0-9_-]*[_-]help"
+
+  local function_names_=()
+
+  if [ "$function_type_" = external ]; then
+    # External functions do not start with _.
+    mapfile -t function_names_ < <(
+      compgen -A function |
+        grep -v '^_'
+    )
+  elif [ "$function_type_" = internal ]; then
+    # Internal helper functions start with _, but not __
+    mapfile -t function_names_ < <(
+      compgen -A function |
+        grep '^_' |
+        grep -v '^__' |
+        grep -v -E "$_help_func_pattern"
+    )
+  elif [ "$function_type_" = all ]; then
+    mapfile -t function_names_ < <(
+      compgen -A function |
+        grep -v '^__' |
+        grep -v -E "$_help_func_pattern"
+    )
+  fi
+
+  local this_file_content_=""
+  this_file_content_="$(cat "$0")"
+
+  local longest_func_name_len_=0
+  local func_name_len_=0
+  declare -A name_to_len_map_=()
+
+  local func_name_=""
+  for func_name_ in "${function_names_[@]}"; do
+    func_name_len_="${#func_name_}"
+    name_to_len_map_["$func_name_"]="${func_name_len_}"
+    if [[ "${func_name_len_}" -gt "${longest_func_name_len_}" ]]; then
+      longest_func_name_len_=${func_name_len_}
+    fi
+  done
+
+  declare -A all_output_=()
+  declare -A _aliases=()
+  declare -A name_spaces_map_=()
+
+  longest_func_name_len_=$((longest_func_name_len_ + 10))
+
+  local output_prefix_=""
+
+  for func_name_ in "${function_names_[@]}"; do
+    if ! _is_local_function "$func_name_" "$this_file_content_"; then
+      continue
+    fi
+
+    local spaces_=""
+    func_name_len_="${name_to_len_map_[$func_name_]}"
+    func_name_len_=$((longest_func_name_len_ - func_name_len_))
+
+    for _ in $(seq "${func_name_len_}"); do
+      spaces_+="-"
+    done
+
+    local function_def_text_=""
+    function_def_text_="$(type "${func_name_}")"
+
+    local alias_name_=""
+
+    # Matching pattern example:
+    # `: "___alias___ install-elixir"`
+    alias_name_="$(
+      sed -n \
+        's/^ *: *"___alias___ *\([a-zA-Z_-][a-zA-Z0-9_-]*\).*/\1/p' \
+        <<<"${function_def_text_}"
+    )"
+
+    if [[ -n "${alias_name_}" ]]; then
+      _aliases["${alias_name_}"]="${_aliases["${alias_name_}"]} ${func_name_}"
+      continue
+    fi
+
+    local help_func_=""
+    help_func_="$(
+      # Given:
+      # `: "___help___ ___some_func_help"`
+      # Then we extract "___some_func_help" into variable help_func_
+      sed -nE \
+        "s/^[[:space:]]+:[[:space:]]*\"___help___[[:space:]]+([a-zA-Z0-9_-]*).*/\1/p" \
+        <<<"${function_def_text_}"
+    )"
+
+    # Get the whole function definition text and extract only the documentation
+    # part.
+    local doc_lines_=()
+    if [[ -n "$help_func_" ]]; then
+      # So we have a helper function - we just eval the helper function and split by new lines.
+      mapfile -t doc_lines_ < <(
+        eval "$help_func_" 2>/dev/null
+      )
+    else
+      # Check if function uses here document pattern: read -r -d '' help_ <<'EOF'
+      local heredoc_content_=""
+      heredoc_content_="$(sed -n '/^[[:space:]]*read -r -d '\'''\'' help_ <<'\''EOF'\''/,/^[[:space:]]*EOF$/{/^[[:space:]]*read -r -d '\'''\'' help_ <<'\''EOF'\''/d; /^[[:space:]]*EOF$/d; p;}' <<<"$function_def_text_")"
+
+      if [[ -n "$heredoc_content_" ]]; then
+        # Function uses here document for documentation
+        mapfile -t doc_lines_ <<<"$heredoc_content_"
+      else
+        # Function is not using a helper function but documentation texts - so we extract the documentation texts and
+        # split by new lines.
+        mapfile -t doc_lines_ < <(
+          # ^              Assert position at the start of the line
+          # [[:space:]]*   Match any whitespace (spaces, tabs) zero or more times
+          # :              Match a literal colon
+          # [[:space:]]?   Match an optional whitespace
+          # \"(.*)\"       Match a quoted string and capture the content within the quotes (documentation text)
+          # ;              Match a semicolon (shell line termination placed there by command: type _func_name)
+          #
+          # Examples:
+          # : "This is a documentation line";
+          # :"This is a documentation line";
+          sed -nEe "s/^[[:space:]]*: ?\"(.*)\";/\1/p" <<<"$function_def_text_"
+        )
+      fi
+    fi
+
+    local output_=""
+    output_prefix_="$func_name_ $spaces_ "
+
+    if [[ -n "${doc_lines_[*]}" ]]; then
+      if [ -z "$include_prefix_" ]; then
+        output_+="${output_prefix_}\n"
+        output_prefix_=""
+      fi
+
+      for _doc in "${doc_lines_[@]}"; do
+        # _func_name -------------------- List tmux sessions and clients. Usage:
+        output_+="${output_prefix_}$_doc\n"
+      done
+    else
+      # _func_name -------------------- *************
+      output_="${output_prefix_}*************\n"
+    fi
+
+    all_output_["$func_name_"]="$output_"
+    name_spaces_map_["$func_name_"]="$output_prefix_"
+  done
+
+  for func_name_ in "${!all_output_[@]}"; do
+    output_="${all_output_["$func_name_"]}"
+    echo -e "$output_"
+
+    local alias_names_="${_aliases["$func_name_"]}"
+
+    if [[ -n "${alias_names_}" ]]; then
+      echo -e "${name_spaces_map_["$func_name_"]} ALIASES: ${alias_names_}\n\n"
+    fi
+  done
+}
+
+if [ -z "$1" ]; then
+  # default_command "$@"
+  help "$@"
+elif [[ "$1" == "help" ]]; then
+  help "${@:2}"
+elif [[ "$1" == -h* || "$1" == -i* || "$1" == -a* || "$1" == -p* ]]; then
+  help "$@"
+elif _command_exists "$1"; then
+  "$@"
+else
+  echo "Command not found \"$1\". Type \"help -a\" for available commands." >&2
+  exit 127
+fi
