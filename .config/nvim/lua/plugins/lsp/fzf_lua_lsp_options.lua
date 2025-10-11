@@ -1,4 +1,4 @@
-return {
+local m = {
   {
     description = "LSP Stop                                                                                         2",
     action = function()
@@ -60,3 +60,5 @@ return {
     count = 45,
   },
 }
+
+return m
