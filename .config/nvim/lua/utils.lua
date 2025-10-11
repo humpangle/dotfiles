@@ -669,16 +669,6 @@ utils.write_to_out_file = function(opts)
   return filename
 end
 
-utils.get_session_file = function()
-  local suffix = utils.get_os_env_or_nil("NVIM_SESSION_NAME_SUFFIX")
-
-  if suffix then
-    return "session-" .. suffix
-  end
-
-  return "session"
-end
-
 -- Replaces /, \, :, and other problematic characters with '-'
 function utils.sanitize_filename(name)
   local use_clip = false
