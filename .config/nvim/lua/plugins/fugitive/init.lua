@@ -6,6 +6,8 @@ end
 local fugitive_utils = require("plugins.fugitive.utils")
 local fzf_lua_shared_options =
   require("plugins.fugitive.fzf-lua-shared-options")
+local git_stash_shared_options =
+  require("plugins.fugitive.git-stash-shared-options")
 
 local keymap = utils.map_key
 
@@ -41,202 +43,6 @@ keymap("n", "<leader>gp", function()
     return
   end
 end, { noremap = true, desc = "Git push 0/ 1/force" })
-
--- Git stash related mappings
-
--- Git stash list inspired by
---   https://github.com/tpope/vim-fugitive/issues/236#issuecomment-1737935479
-local has_git_stash = function()
-  local handle = io.popen("git stash list")
-  local result = nil
-
-  if handle ~= nil then
-    result = handle:read("*a")
-    handle:close()
-  end
-
-  if not (result and result ~= "") then
-    vim.cmd.echo('"No stashes found"')
-    return false
-  end
-
-  return true
-end
-
-local git_stash_list_fn = function(callback)
-  return function()
-    if not has_git_stash() then
-      return
-    end
-
-    local cmd =
-      ":G --paginate stash list '--pretty=format:%h %as %<(10)%gd %<(76,trunc)%s'"
-
-    if callback then
-      callback(cmd)
-    else
-      vim.cmd(cmd)
-    end
-  end
-end
-
-keymap("n", "<Leader>czl", function()
-  local count = vim.v.count
-
-  if count == 0 then
-    git_stash_list_fn()()
-    return
-  end
-
-  if has_git_stash() then
-    vim.cmd("G stash list")
-  end
-end, { noremap = true, silent = true, desc = "Git stash list" })
-
-local description_with_count = function(mapping_str)
-  return string.format(
-    " - count=index. 0=99 E.g. SPACE%s, [count]SPACE%s.",
-    mapping_str,
-    mapping_str
-  )
-end
-
-keymap(
-  "n",
-  "<Leader>czd",
-  git_stash_list_fn(function(list_stash_cmd)
-    local cmd = ":G stash drop stash@{}<left>"
-
-    local count = vim.v.count
-
-    -- Unfortunately, vim.v.count will return '0' if no count given. We simulate count 0 using 99 (we assume we cannot
-    -- have git stash index 99).
-    if count == 99 then -- simulate count 0
-      cmd = ":G stash drop stash@{0}<Left>"
-    elseif count > 0 then -- count given (not 0)
-      cmd = ":G stash drop stash@{" .. count .. "}<Left>"
-    else -- no count
-      -- List stashes so we can select count
-      vim.cmd(list_stash_cmd)
-    end
-
-    vim.fn.feedkeys(
-      vim.api.nvim_replace_termcodes(cmd, true, true, true),
-      "t"
-    )
-  end),
-  { noremap = true, desc = "Git stash drop" .. description_with_count("czd") }
-)
-
-keymap("n", "<Leader>czz", function()
-  -- Get the latest Git commit hash
-  local latest_commit = vim.fn.systemlist("git rev-parse --short HEAD")[1]
-
-  local count = vim.v.count
-  local cmd = "Git stash push"
-  local current_file_only = false
-
-  if count == 1 then
-    cmd = cmd
-  elseif count == 2 then
-    cmd = cmd .. " --include-untracked"
-  elseif count == 3 then
-    cmd = cmd .. " --all"
-  elseif count == 4 then
-    current_file_only = true
-  else
-    vim.cmd.echo(
-      '"count should be 1/plain 2/--include-untracked 3/--all 4/pathspec"'
-    )
-    return
-  end
-
-  -- Append text for custom message with the latest commit hash and place cursor between quotes
-  cmd = cmd
-    .. " -m '"
-    .. latest_commit
-    .. " "
-    .. vim.fn.FugitiveHead()
-    .. ": '"
-
-  local left = "<left>"
-  local left_repeated_severally = left
-
-  if current_file_only then
-    local file_path = vim.fn.expand("%:p")
-    file_path = utils.relative_to_git_root(file_path)
-    local how_many_times_to_repeat = string.len(file_path) + 5
-
-    left_repeated_severally = ""
-
-    ---@diagnostic disable-next-line: unused-local
-    for i = 1, how_many_times_to_repeat do
-      left_repeated_severally = left_repeated_severally .. left
-    end
-
-    cmd = cmd .. " -- " .. file_path
-  end
-
-  -- Move the cursor back by one position to place it after the commit hash and before the end quote
-  vim.fn.feedkeys(
-    ":"
-      .. cmd
-      .. vim.api.nvim_replace_termcodes(
-        left_repeated_severally,
-        true,
-        true,
-        true
-      ),
-    "t"
-  )
-end, {
-  noremap = true,
-  desc = "G stash push --include-untracked/--all -m 'GITHEAD: '",
-})
-
-local git_stash_apply_or_pop = function(apply_or_pop, maybe_include_index)
-  return git_stash_list_fn(function(list_stash_cmd)
-    local count = vim.v.count
-
-    local cmd = ":Git stash "
-      .. apply_or_pop
-      .. " --quiet "
-      .. (maybe_include_index and "--index " or "")
-      .. "stash@{"
-      .. (count == 99 and 0 or (count > 0 and count or "")) -- Count 99 simulates count 0 (See czd -->> git stash drop).
-      .. "}<Left>"
-
-    if count < 1 then -- No count given.
-      vim.cmd(list_stash_cmd)
-    end
-
-    vim.fn.feedkeys(
-      vim.api.nvim_replace_termcodes(cmd, true, true, true),
-      "t"
-    )
-  end)
-end
-
-keymap("n", "<Leader>czP", git_stash_apply_or_pop("pop"), {
-  noremap = true,
-  desc = "Git stash pop" .. description_with_count("czP"),
-})
-
-keymap("n", "<Leader>czp", git_stash_apply_or_pop("pop", "index"), {
-  noremap = true,
-  desc = "Git stash pop --index" .. description_with_count("czp"),
-})
-
-keymap("n", "<Leader>czA", git_stash_apply_or_pop("apply"), {
-  noremap = true,
-  desc = "Git stash apply" .. description_with_count("czA"),
-})
-
-keymap("n", "<Leader>cza", git_stash_apply_or_pop("apply", "index"), {
-  noremap = true,
-  desc = "Git stash apply --index" .. description_with_count("cza"),
-})
--- END Git stash related mappings
 
 -- Git commit mappings
 
@@ -403,6 +209,16 @@ local git_commit_options = {
   fzf_lua_shared_options.submodule_deinit_all(),
   fzf_lua_shared_options.git_pull(),
   fzf_lua_shared_options.merge_main(),
+  git_stash_shared_options.git_stash_list_plain(),
+  git_stash_shared_options.git_stash_list_paginate(),
+  git_stash_shared_options.git_stash_drop(),
+  git_stash_shared_options.git_stash_push_include_untracked(),
+  git_stash_shared_options.git_stash_push_all(),
+  git_stash_shared_options.git_stash_push_current_file(),
+  git_stash_shared_options.git_stash_pop(),
+  git_stash_shared_options.git_stash_pop_index(),
+  git_stash_shared_options.git_stash_apply(),
+  git_stash_shared_options.git_stash_apply_index(),
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -636,10 +452,21 @@ local git_rebase_options = {
   fzf_lua_shared_options.git_add_all(),
   fzf_lua_shared_options.copy_git_root_to_system_clipboard(),
   fzf_lua_shared_options.copy_main_head_commit_to_register_plus(),
-  fzf_lua_shared_options.check_out_main_head_commit(),
+  fzf_lua_shared_options.check_out_some_head_commit("main"),
+  fzf_lua_shared_options.check_out_some_head_commit("develop"),
   fzf_lua_shared_options.submodule_deinit_all(),
   fzf_lua_shared_options.git_pull(),
   fzf_lua_shared_options.merge_main(),
+  git_stash_shared_options.git_stash_list_plain(),
+  git_stash_shared_options.git_stash_list_paginate(),
+  git_stash_shared_options.git_stash_drop(),
+  git_stash_shared_options.git_stash_push_include_untracked(),
+  git_stash_shared_options.git_stash_push_all(),
+  git_stash_shared_options.git_stash_push_current_file(),
+  git_stash_shared_options.git_stash_pop(),
+  git_stash_shared_options.git_stash_pop_index(),
+  git_stash_shared_options.git_stash_apply(),
+  git_stash_shared_options.git_stash_apply_index(),
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -819,6 +646,16 @@ local git_log_options = {
   },
   fzf_lua_shared_options.git_pull(),
   fzf_lua_shared_options.merge_main(),
+  git_stash_shared_options.git_stash_list_plain(),
+  git_stash_shared_options.git_stash_list_paginate(),
+  git_stash_shared_options.git_stash_drop(),
+  git_stash_shared_options.git_stash_push_include_untracked(),
+  git_stash_shared_options.git_stash_push_all(),
+  git_stash_shared_options.git_stash_push_current_file(),
+  git_stash_shared_options.git_stash_pop(),
+  git_stash_shared_options.git_stash_pop_index(),
+  git_stash_shared_options.git_stash_apply(),
+  git_stash_shared_options.git_stash_apply_index(),
   fzf_lua_shared_options.check_out_some_head_commit("main"),
   fzf_lua_shared_options.check_out_some_head_commit("develop"),
 }
