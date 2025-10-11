@@ -259,6 +259,107 @@ EOF
   echo "$primary_worktree_"
 }
 
+function wkpathbr {
+  : "___alias___ get-worktree-path-for-branch"
+  get-worktree-path-for-branch "${@}"
+}
+
+get-worktree-path-for-branch() {
+
+  read -r -d '' help_ <<'EOF' || :
+    Prints the worktree path where <branch-name> is currently checked out.
+  Prints nothing if the branch isn't checked out anywhere.
+
+  Usage:
+    get-worktree-path-for-branch [-h/--help]
+    get-worktree-path-for-branch <branch-name> [-c/--copy]
+
+  Options:
+    -h/--help
+         Print help information and exit.
+    -c/--copy
+         Optional: Copy result to system clipboard.
+
+  Examples:
+    # Get help
+    get-worktree-path-for-branch --help
+    get-worktree-path-for-branch -h
+
+    # Copy result to system clipboard
+    get-worktree-path-for-branch main -c
+    get-worktree-path-for-branch fix/sev00 --copy
+EOF
+
+  if ! arg_="$(getopt \
+    --longoptions=help,cpy \
+    --options=h,v,c \
+    --name "$0" \
+    -- "$@")"; then
+    _echo "$help_"
+    exit 1
+  fi
+  eval set -- "$arg_"
+
+  local copy_""
+
+  while true; do
+    case "$1" in
+    -h | --help)
+      _echo "$help_"
+      exit
+      ;;
+
+    -c | --copy)
+      copy_="1"
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown argument $1"
+      _echo "$help_"
+      exit 1
+      ;;
+    esac
+  done
+
+  if [[ $# -ne 1 ]]; then
+    echo "$0: Non optional argument \"branch-name\" is required."
+    echo -e "$help_"
+    exit 1
+  fi
+
+  local user_input_branch_="$1"
+  local ref=""
+
+  # Resolve to a local branch ref (refs/heads/*); if not a local branch, bail.
+  ref="$(
+    git rev-parse -q --verify --symbolic-full-name "refs/heads/$user_input_branch_" 2>/dev/null ||
+      git rev-parse -q --verify --symbolic-full-name "$user_input_branch_" 2>/dev/null
+  )" || return 0
+
+  case "$ref" in refs/heads/*) ;; *) return 0 ;; esac
+
+  # Scan all worktrees and print the one with this branch checked out.
+  local result_=""
+  result_="$(
+    git worktree list --porcelain 2>/dev/null | awk -v want="$ref" '
+    /^worktree / { path = substr($0, 10) }
+    /^branch /   { if ($2 == want) { print path; exit 0 } }
+    '
+  )"
+
+  if [ -n "$copy_" ] && command -v copy &>/dev/null; then
+    copy "$result_"
+  fi
+
+  echo "$result_"
+}
+
 _is_local_function() {
   local _function_name="$1"
   local _this_file_content="$2"
