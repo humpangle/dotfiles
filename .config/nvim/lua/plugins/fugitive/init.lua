@@ -8,6 +8,7 @@ local fzf_lua_shared_options =
   require("plugins.fugitive.fzf-lua-shared-options")
 local git_stash_shared_options =
   require("plugins.fugitive.git-stash-shared-options")
+local pull_options = require('plugins.fugitive.pull-options')
 
 local keymap = utils.map_key
 
@@ -227,6 +228,9 @@ local git_commit_options = {
   git_stash_shared_options.git_stash_drop_zero,
   git_stash_shared_options.git_stash_drop_index,
   git_stash_shared_options.git_stash_drop,
+  pull_options.pull_branch_main,
+  pull_options.pull_branch_master,
+  pull_options.pull_branch_develop,
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -482,6 +486,9 @@ local git_rebase_options = {
   git_stash_shared_options.git_stash_drop_zero,
   git_stash_shared_options.git_stash_drop_index,
   git_stash_shared_options.git_stash_drop,
+  pull_options.pull_branch_main,
+  pull_options.pull_branch_master,
+  pull_options.pull_branch_develop,
 }
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
@@ -680,6 +687,9 @@ local git_log_options = {
   git_stash_shared_options.git_stash_drop_zero,
   git_stash_shared_options.git_stash_drop_index,
   git_stash_shared_options.git_stash_drop,
+  pull_options.pull_branch_main,
+  pull_options.pull_branch_master,
+  pull_options.pull_branch_develop,
 }
 
 keymap("n", "<leader>gg", function()
