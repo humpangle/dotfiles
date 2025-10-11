@@ -95,25 +95,34 @@ function M.check_out_some_head_commit(branch_name)
   return {
     description = "Check out commit " .. branch_name .. " HEAD commit",
     action = function()
-      local git_branch_name_head = fugitive_utils.get_git_commit(branch_name)
+      local git_branch_name_head =
+        fugitive_utils.get_git_commit(branch_name)
       vim.fn.setreg("+", git_branch_name_head)
 
       local checkout_result = vim.fn.systemlist(
         "( cd "
-        .. vim.fn.getcwd(0)
-        .. " &&  git checkout "
-        .. git_branch_name_head
-        .. " )"
+          .. vim.fn.getcwd(0)
+          .. " &&  git checkout "
+          .. git_branch_name_head
+          .. " )"
       )
 
       if checkout_result[#checkout_result] == "Aborting" then
         vim.print(
-          "Could not checkout " .. branch_name .. " HEAD commit: " .. git_branch_name_head
+          "Could not checkout "
+            .. branch_name
+            .. " HEAD commit: "
+            .. git_branch_name_head
         )
         return
       end
 
-      vim.print("Checked out branch from " .. branch_name .. " HEAD -> " .. git_branch_name_head)
+      vim.print(
+        "Checked out branch from "
+          .. branch_name
+          .. " HEAD -> "
+          .. git_branch_name_head
+      )
 
       vim.defer_fn(fugitive_utils.git_refresh_cwd, 10)
     end,

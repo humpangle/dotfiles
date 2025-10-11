@@ -94,8 +94,6 @@ for _, suffix in pairs({ "current_file", "all", "include_untracked" }) do
 
   local props = "git_stash_push_" .. suffix
 
-  vim.print(props)
-
   local desc = ""
   if suffix == "include_untracked" then
     desc = "include untracked"
