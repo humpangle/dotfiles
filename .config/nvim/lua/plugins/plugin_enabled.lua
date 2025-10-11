@@ -209,10 +209,6 @@ function M.terraform_lsp()
   return utils.get_os_env_or_nil("NVIM_ENABLE_TERRAFORM_LSP") == "1"
 end
 
-function M.stylua_lsp_formatter()
-  return utils.get_os_env_or_nil("NVIM_ENABLE_STYLUA_LSP_FORMATTER") == "1"
-end
-
 function M.tailwindcss_lsp()
   return utils.get_os_env_or_nil("NVIM_ENABLE_TAILWINDCSS_LSP") == "1"
 end

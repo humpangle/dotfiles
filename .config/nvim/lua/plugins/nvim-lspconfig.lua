@@ -283,36 +283,9 @@ return {
         require("plugins.lsp-extras.emmet"),
         require("plugins.lsp-extras.typescript"),
         require("plugins.lsp-extras.php"),
-        require("plugins.lsp-extras.sql")
+        require("plugins.lsp-extras.sql"),
+        require("plugins.lsp.lua_ls")
       )
-
-      if not plugin_enabled.has_termux() then
-        servers = vim.tbl_extend("error", servers, {
-          lua_ls = {
-            -- cmd = {...},
-            -- filetypes = { ...},
-            -- capabilities = {},
-            settings = {
-              Lua = {
-                completion = {
-                  callSnippet = "Replace",
-                },
-                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                -- diagnostics = { disable = { 'missing-fields' } },
-              },
-            },
-          },
-        })
-      end
-
-      if plugin_enabled.stylua_lsp_formatter() then
-        -- stylua does not work on android.
-        vim.list_extend(servers, {
-          -- Used to format Lua code
-          stylua = {},
-        })
-      end
-
       -- /END/ servers variable
 
       -- You can add other tools here that you want Mason to install
