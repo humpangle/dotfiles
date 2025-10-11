@@ -65,22 +65,21 @@ function M.git_stash_list_plain()
   }
 end
 
-local stash_push = function(opts)
-  return function()
-    opts = opts or {}
+for _, suffix in pairs({ "current_file", "all", "include_untracked" }) do
+  local action = function()
     local left = "<left>"
     local left_repeated = left
 
     local cmd = "Git stash push "
-    if opts.include_untracked then
+    if suffix == "include_untracked" then
       cmd = cmd .. "--include-untracked"
-    elseif opts.all then
+    elseif suffix == "all" then
       cmd = cmd .. "--all"
     end
 
-    cmd = cmd .. " -m ''" -- We will place cursor just before '
+    cmd = cmd .. " -m ''" -- We will place cursor just between ''
 
-    if opts.current_file then
+    if suffix == "current_file" then
       local file_path = vim.fn.expand("%:p")
       file_path = utils.relative_to_git_root(file_path)
 
@@ -94,39 +93,30 @@ local stash_push = function(opts)
       cmd = cmd .. " -- " .. file_path
     end
 
-    -- Move the cursor back by one position to place it after the commit hash and before the end quote
-    vim.fn.feedkeys(
-      ":"
-        .. cmd
-        .. vim.api.nvim_replace_termcodes(
-          left_repeated,
-          true,
-          true,
-          true
-        ),
-      "n"
-    )
+    vim.fn.feedkeys(":" .. cmd .. vim.api.nvim_replace_termcodes(
+      left_repeated, -- Move the cursor back to place it between ''
+      true,
+      true,
+      true
+    ), "n")
   end
-end
 
-function M.git_stash_push_current_file()
-  return {
-    description = "Git stash create/push current file",
-    action = stash_push({ current_file = true }),
-  }
-end
+  local props = "git_stash_push_" .. suffix
 
-function M.git_stash_push_include_untracked()
-  return {
-    description = "Git stash create/push include untracked",
-    action = stash_push({ include_untracked = true }),
-  }
-end
+  vim.print(props)
 
-function M.git_stash_push_all()
-  return {
-    description = "Git stash create/push ALL",
-    action = stash_push({ all = true }),
+  local desc = ""
+  if suffix == "include_untracked" then
+    desc = "include untracked"
+  elseif suffix == "current_file" then
+    desc = "current_file"
+  else
+    desc = suffix
+  end
+
+  M[props] = {
+    description = "Git stash create/push " .. desc,
+    action = action,
   }
 end
 
