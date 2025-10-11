@@ -1169,5 +1169,26 @@
     "description": [
       "Snippet: one equal one"
     ]
+  },
+  "verbose-echo-help-function": {
+    "prefix": [
+      "verboseEchoHelp",
+      "verboseFunctionHelp",
+      "echoHelpVerbose"
+    ],
+    "body": [
+      "${1:function_name}_verbose() {",
+      "  if [[ \"\\$1\" != \"--${1}--verbose\" ]]; then",
+      "      return",
+      "  fi",
+      "",
+      "  for line in \"\\${@:2}\"; do",
+      "      echo -e \"\\$line\"",
+      "  done",
+      "}"
+    ],
+    "description": [
+      "Verbose echo helper function"
+    ]
   }
 }
