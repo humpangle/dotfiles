@@ -177,6 +177,66 @@ function prywk {
 }
 
 primary-worktree() {
+  read -r -d '' help_ <<'EOF' || :
+  Help text
+
+  Usage:
+    primary-worktree [-h/--help]
+    primary-worktree [-c/--copy]
+
+  Options:
+    -h/--help
+         Print help information and exit.
+    -c/--copy
+         Optional: Copy result to system clipboard
+
+  Examples:
+    # Get help
+    primary-worktree --help
+    primary-worktree -h
+
+    # Copy result to system clipboard
+    primary-worktree -c
+    primary-worktree --copy
+EOF
+
+  if ! arg_="$(getopt \
+    --longoptions=help,copy \
+    --options=h,c \
+    --name "$0" \
+    -- "$@")"; then
+    _echo "$help_"
+    exit 1
+  fi
+  eval set -- "$arg_"
+
+  local copy_""
+
+  while true; do
+    case "$1" in
+    -h | --help)
+      _echo "$help_"
+      exit
+      ;;
+
+    -c | --copy)
+      copy_="--funcname--verbose"
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown argument $1"
+      _echo "$help_"
+      exit 1
+      ;;
+    esac
+  done
+
   # From ANY linked worktree, print the path of the primary worktree
   local primary_git_dir_=""
   primary_git_dir_="$(
@@ -191,8 +251,12 @@ primary-worktree() {
 
   # The primary worktree is the parent of the common .git directory
   local primary_worktree_="${primary_git_dir_%/\.git}"
-  printf '%s\n' "$primary_worktree_"
 
+  if [ -n "$copy_" ] && command -v copy &>/dev/null; then
+    copy "$primary_worktree_"
+  fi
+
+  echo "$primary_worktree_"
 }
 
 _is_local_function() {
