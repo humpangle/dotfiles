@@ -748,27 +748,7 @@ require("terminal")
 
 -- Show the registers
 utils.map_key("n", "<localleader>re", function()
-  local count = vim.v.count
-
-  if count == 0 then
-    vim.cmd("Wmessage reg")
-    return
-  end
-
-  if count == 1 then
-    vim.cmd("reg")
-    return
-  end
-
-  if count == 2 then
-    vim.cmd("Vmessage reg")
-    return
-  end
-
-  if count == 3 then
-    vim.cmd("Tmessage reg")
-    return
-  end
+  vim.cmd("Tmessage reg")
 end, { noremap = true, desc = "Registers" })
 
 local function insert_current_datetime()
