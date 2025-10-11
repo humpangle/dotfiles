@@ -67,8 +67,14 @@ end
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-
--- I guess some plugins are changing tabstop/shiftwidth settings for markdown.
+-- I guess some plugins are changing tabstop/shiftwidth settings for some files.
+vim.api.nvim_create_autocmd({"FileType", "BufReadPost"}, {
+  pattern = {"*.py", "python"},
+  callback = function()
+    vim.bo.tabstop = 4
+    vim.bo.shiftwidth = 4
+  end,
+})
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
