@@ -180,6 +180,7 @@ return {
           },
         },
         { name = "path" },
+        { name = "emoji" },
       },
     })
   end,
