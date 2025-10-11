@@ -1190,5 +1190,20 @@
     "description": [
       "Verbose echo helper function"
     ]
+  },
+  "if-copy-executable-exists": {
+    "prefix": [
+      "ifCopy",
+      "copyIf"
+    ],
+    "body": [
+      "if [ -n \"\\$copy_\" ] && command -v copy &>/dev/null; then",
+      "  copy \"${1:some_var_}\"",
+      "  echo -e \"${1}\" | copy",
+      "fi"
+    ],
+    "description": [
+      "If should copy and copy executable exists"
+    ]
   }
 }
