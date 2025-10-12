@@ -86,8 +86,6 @@ table.insert(m, {
       "",
       "==Git Branch==",
       git_branch,
-      "",
-      "==HEAD Commit==",
       fugitive_utils.get_git_commit("HEAD"),
       "",
       "==Session File==",
