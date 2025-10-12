@@ -4,12 +4,6 @@ if not utils_status_ok then
 end
 
 local fugitive_utils = require("plugins.fugitive.utils")
-local fzf_lua_shared_options =
-  require("plugins.fugitive.fzf-lua-shared-options")
-local git_stash_shared_options =
-  require("plugins.fugitive.git-stash-shared-options")
-local pull_options = require("plugins.fugitive.pull-options")
-local miscellaneous_options = require("plugins.fugitive.miscellaneous-options")
 
 local keymap = utils.map_key
 
@@ -94,7 +88,7 @@ end, { noremap = true, desc = "Git config user name. 1=email 2=env defaults" })
 
 -- Define git rebase/reset/merge options with descriptions
 
-local git_rebase_options = {
+local rebase_options = {
   {
     description = "Rebase                                                1",
     action = function()
@@ -220,7 +214,6 @@ local git_rebase_options = {
       utils.write_to_command_mode("Git remote prune ")
     end,
   },
-  fzf_lua_shared_options.submodule_update_force_recursive(),
   {
     description = "Rebase master                                         ",
     action = function()
@@ -233,48 +226,21 @@ local git_rebase_options = {
       utils.write_to_command_mode("G merge --abort")
     end,
   },
-  fzf_lua_shared_options.check_out_tree_ish_under_cursor(),
-  fzf_lua_shared_options.git_add_all(),
-  fzf_lua_shared_options.copy_git_root_to_system_clipboard(),
-  fzf_lua_shared_options.copy_main_head_commit_to_register_plus(),
-  fzf_lua_shared_options.check_out_some_head_commit("main"),
-  fzf_lua_shared_options.check_out_some_head_commit("develop"),
-  fzf_lua_shared_options.submodule_deinit_all(),
-  fzf_lua_shared_options.git_pull(),
-  fzf_lua_shared_options.merge_main(),
-  git_stash_shared_options.git_stash_list_plain(),
-  git_stash_shared_options.git_stash_list_paginate(),
-  git_stash_shared_options.git_stash_push_include_untracked,
-  git_stash_shared_options.git_stash_push_all,
-  git_stash_shared_options.git_stash_push_current_file,
-  git_stash_shared_options.git_stash_pop_index_zero,
-  git_stash_shared_options.git_stash_pop_zero,
-  git_stash_shared_options.git_stash_pop_index,
-  git_stash_shared_options.git_stash_pop,
-  git_stash_shared_options.git_stash_apply_index_zero,
-  git_stash_shared_options.git_stash_apply_zero,
-  git_stash_shared_options.git_stash_apply_index,
-  git_stash_shared_options.git_stash_apply,
-  git_stash_shared_options.git_stash_drop_index_zero,
-  git_stash_shared_options.git_stash_drop_zero,
-  git_stash_shared_options.git_stash_drop_index,
-  git_stash_shared_options.git_stash_drop,
-  pull_options.pull_branch_main,
-  pull_options.pull_branch_master,
-  pull_options.pull_branch_develop,
 }
-utils.add_options(git_rebase_options, miscellaneous_options)
-
-for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
-  table.insert(git_rebase_options, value)
-end
+utils.add_options(
+  rebase_options,
+  require("plugins.fugitive.miscellaneous-options"),
+  require("plugins.fugitive.git-stash-shared-options"),
+  require("plugins.fugitive.fzf-lua-shared-options"),
+  require("plugins.fugitive.pull-options")
+)
 
 local git_rebase_root_mappings_fn = function()
   local fzf_lua = require("fzf-lua")
   local keymap_count = vim.v.count
 
   local items = {}
-  for i, option in ipairs(git_rebase_options) do
+  for i, option in ipairs(rebase_options) do
     if keymap_count == option.count then
       option.action()
       return
@@ -295,8 +261,8 @@ local git_rebase_root_mappings_fn = function()
         local selection = selected[1]
         -- Extract option index from selection
         local index = tonumber(selection:match("^(%d+)%."))
-        if index and git_rebase_options[index] then
-          git_rebase_options[index].action()
+        if index and rebase_options[index] then
+          rebase_options[index].action()
         end
       end,
     },
@@ -340,7 +306,7 @@ end, { noremap = true, desc = [[Git rebase 0/continue 1/edit 2/abort]] })
 -- /END Rebase keymaps
 
 -- Git mappings
-local git_log_options = {
+local log_options = {
   {
     description = "Git refresh (status) THIS CWD                            1",
     action = fugitive_utils.git_refresh_cwd,
@@ -440,35 +406,17 @@ local git_log_options = {
       vim.cmd("Git log --oneline")
     end,
   },
-  fzf_lua_shared_options.git_pull(),
-  fzf_lua_shared_options.merge_main(),
-  git_stash_shared_options.git_stash_list_plain(),
-  git_stash_shared_options.git_stash_list_paginate(),
-  git_stash_shared_options.git_stash_push_include_untracked,
-  git_stash_shared_options.git_stash_push_all,
-  git_stash_shared_options.git_stash_push_current_file,
-  fzf_lua_shared_options.check_out_some_head_commit("main"),
-  fzf_lua_shared_options.check_out_some_head_commit("develop"),
-  git_stash_shared_options.git_stash_pop_index_zero,
-  git_stash_shared_options.git_stash_pop_zero,
-  git_stash_shared_options.git_stash_pop_index,
-  git_stash_shared_options.git_stash_pop,
-  git_stash_shared_options.git_stash_apply_index_zero,
-  git_stash_shared_options.git_stash_apply_zero,
-  git_stash_shared_options.git_stash_apply_index,
-  git_stash_shared_options.git_stash_apply,
-  git_stash_shared_options.git_stash_drop_index_zero,
-  git_stash_shared_options.git_stash_drop_zero,
-  git_stash_shared_options.git_stash_drop_index,
-  git_stash_shared_options.git_stash_drop,
-  pull_options.pull_branch_main,
-  pull_options.pull_branch_master,
-  pull_options.pull_branch_develop,
 }
-utils.add_options(git_log_options, miscellaneous_options)
+utils.add_options(
+  log_options,
+  require("plugins.fugitive.miscellaneous-options"),
+  require("plugins.fugitive.git-stash-shared-options"),
+  require("plugins.fugitive.fzf-lua-shared-options"),
+  require("plugins.fugitive.pull-options")
+)
 
 keymap("n", "<leader>gg", function()
-  utils.create_fzf_key_maps(git_log_options, {
+  utils.create_fzf_key_maps(log_options, {
     prompt = "Git Log Options>  ",
     header = "Select a git log option",
   })

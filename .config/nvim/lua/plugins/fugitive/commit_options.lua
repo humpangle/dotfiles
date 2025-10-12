@@ -1,10 +1,5 @@
 local utils = require("utils")
 local fugitive_utils = require("plugins.fugitive.utils")
-local fzf_lua_shared_options =
-  require("plugins.fugitive.fzf-lua-shared-options")
-local git_stash_shared_options =
-  require("plugins.fugitive.git-stash-shared-options")
-local pull_options = require("plugins.fugitive.pull-options")
 
 local tab_split = function()
   vim.cmd("tab split")
@@ -158,37 +153,14 @@ local m = {
       )
     end,
   },
-  fzf_lua_shared_options.check_out_some_head_commit("develop"),
-  fzf_lua_shared_options.check_out_some_head_commit("main"),
-  fzf_lua_shared_options.check_out_tree_ish_under_cursor(),
-  fzf_lua_shared_options.copy_git_root_to_system_clipboard(),
-  fzf_lua_shared_options.copy_main_head_commit_to_register_plus(),
-  fzf_lua_shared_options.git_add_all(),
-  fzf_lua_shared_options.git_pull(),
-  fzf_lua_shared_options.merge_main(),
-  fzf_lua_shared_options.submodule_deinit_all(),
-  fzf_lua_shared_options.submodule_update_force_recursive(),
-  git_stash_shared_options.git_stash_apply,
-  git_stash_shared_options.git_stash_apply_index,
-  git_stash_shared_options.git_stash_apply_index_zero,
-  git_stash_shared_options.git_stash_apply_zero,
-  git_stash_shared_options.git_stash_drop,
-  git_stash_shared_options.git_stash_drop_index,
-  git_stash_shared_options.git_stash_drop_index_zero,
-  git_stash_shared_options.git_stash_drop_zero,
-  git_stash_shared_options.git_stash_list_paginate(),
-  git_stash_shared_options.git_stash_list_plain(),
-  git_stash_shared_options.git_stash_pop,
-  git_stash_shared_options.git_stash_pop_index,
-  git_stash_shared_options.git_stash_pop_index_zero,
-  git_stash_shared_options.git_stash_pop_zero,
-  git_stash_shared_options.git_stash_push_all,
-  git_stash_shared_options.git_stash_push_current_file,
-  git_stash_shared_options.git_stash_push_include_untracked,
-  pull_options.pull_branch_develop,
-  pull_options.pull_branch_main,
-  pull_options.pull_branch_master,
 }
-utils.add_options(m, require("plugins.fugitive.miscellaneous-options"))
+
+utils.add_options(
+  m,
+  require("plugins.fugitive.miscellaneous-options"),
+  require("plugins.fugitive.pull-options"),
+  require("plugins.fugitive.git-stash-shared-options"),
+  require("plugins.fugitive.fzf-lua-shared-options")
+)
 
 return m

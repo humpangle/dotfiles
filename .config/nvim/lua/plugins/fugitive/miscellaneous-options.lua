@@ -1,13 +1,15 @@
+local utils = require("utils")
 local fugitive_utils = require("plugins.fugitive.utils")
 
 local m = {}
 
 m.add = {
-  description = "Git add . current working directory",
+  description = "Git add . current working directory git root",
   action = function()
+    local git_root = utils.get_git_root()
     local cmd = {
       "(",
-      "cd " .. vim.fn.getcwd(),
+      "cd " .. git_root,
       "&&",
       "git add .",
       ")",
@@ -18,7 +20,7 @@ m.add = {
     if #result > 0 then
       vim.print(table.concat(result, "\n"))
     else
-      vim.print("Git added .")
+      vim.print("Git added " .. git_root)
       fugitive_utils.git_refresh_cwd()
     end
   end,

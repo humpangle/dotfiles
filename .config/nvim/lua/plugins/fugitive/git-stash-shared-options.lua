@@ -37,24 +37,19 @@ local function git_stash_list_fn(callback)
   end
 end
 
--- Git stash list option
-function M.git_stash_list_paginate()
-  return {
-    description = "Git stash list",
-    action = function()
-      git_stash_list_fn()()
-    end,
-  }
-end
+M.git_stash_list_paginate = {
+  description = "Git stash list",
+  action = function()
+    git_stash_list_fn()()
+  end,
+}
 
-function M.git_stash_list_plain()
-  return {
-    description = "Git stash list plain",
-    action = function()
-      vim.cmd("G stash list")
-    end,
-  }
-end
+M.git_stash_list_plain = {
+  description = "Git stash list plain",
+  action = function()
+    vim.cmd("G stash list")
+  end,
+}
 
 for _, suffix in pairs({ "current_file", "all", "include_untracked" }) do
   local action = function()
