@@ -157,10 +157,9 @@ local m = {
 
 utils.add_options(
   m,
-  require("plugins.fugitive.miscellaneous-options"),
+  require("plugins.fugitive.shared-miscellaneous-options"),
   require("plugins.fugitive.pull-options"),
-  require("plugins.fugitive.git-stash-shared-options"),
-  require("plugins.fugitive.fzf-lua-shared-options")
+  require("plugins.fugitive.shared-stash-options")
 )
 
 return m

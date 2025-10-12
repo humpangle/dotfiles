@@ -1,6 +1,48 @@
-local m = {}
 local utils = require("utils")
 local fugitive_utils = require("plugins.fugitive.utils")
+
+local m = {}
+
+m.add = {
+  description = "Git add . current working directory git root",
+  action = function()
+    local git_root = utils.get_git_root()
+    local cmd = {
+      "(",
+      "cd " .. git_root,
+      "&&",
+      "git add .",
+      ")",
+    }
+    local cmd_str = table.concat(cmd, " ")
+    local result = vim.fn.systemlist(cmd_str)
+
+    if #result > 0 then
+      vim.print(table.concat(result, "\n"))
+    else
+      vim.print("Git added " .. git_root)
+      fugitive_utils.git_refresh_cwd()
+    end
+  end,
+}
+
+m.init = {
+  description = "Git init . current working directory",
+  action = function()
+    local cmd = {
+      "(",
+      "cd " .. vim.fn.getcwd(),
+      "&&",
+      "git init",
+      ")",
+    }
+    local cmd_str = table.concat(cmd, " ")
+    local result = vim.fn.systemlist(cmd_str)
+    vim.print(table.concat(result, "\n"))
+
+    fugitive_utils.git_refresh_cwd()
+  end,
+}
 
 m.check_out_tree_ish_under_cursor = {
   description = "Git checkout under cursor <cword>",
@@ -63,43 +105,43 @@ m.copy_main_head_commit_to_register_plus = {
 }
 
 m.submodule_deinit_all = {
-    description = "Submodule deinit reset all",
-    action = function()
-      local result_list = {}
-      local reset_all_env_val =
-        utils.get_os_env_or_nil("GIT_SUBMODULE_RESET_ALL")
+  description = "Submodule deinit reset all",
+  action = function()
+    local result_list = {}
+    local reset_all_env_val =
+      utils.get_os_env_or_nil("GIT_SUBMODULE_RESET_ALL")
 
-      if reset_all_env_val then
-        local cmd_from_env = (
-          "( cd "
-          .. vim.fn.getcwd(0)
-          .. " &&  "
-          .. reset_all_env_val
-          .. " )"
-        ):gsub("\n", " ")
+    if reset_all_env_val then
+      local cmd_from_env = (
+        "( cd "
+        .. vim.fn.getcwd(0)
+        .. " &&  "
+        .. reset_all_env_val
+        .. " )"
+      ):gsub("\n", " ")
 
-        vim.print("Invoking CMD from env: " .. cmd_from_env)
+      vim.print("Invoking CMD from env: " .. cmd_from_env)
 
-        result_list = vim.fn.systemlist(cmd_from_env)
-      else
-        local cmd = "( cd "
-          .. vim.fn.getcwd(0)
-          .. " &&  git submodule deinit -f --all"
-          .. " )"
+      result_list = vim.fn.systemlist(cmd_from_env)
+    else
+      local cmd = "( cd "
+        .. vim.fn.getcwd(0)
+        .. " &&  git submodule deinit -f --all"
+        .. " )"
 
-        result_list = vim.fn.systemlist(cmd)
-        vim.print("Invoking default CMD: " .. cmd)
-      end
+      result_list = vim.fn.systemlist(cmd)
+      vim.print("Invoking default CMD: " .. cmd)
+    end
 
-      local result_str = "ERROR"
+    local result_str = "ERROR"
 
-      if #result_list > 0 then
-        result_str = table.concat(result_list, "\n\n")
-      end
+    if #result_list > 0 then
+      result_str = table.concat(result_list, "\n\n")
+    end
 
-      vim.print("Result git submodule deinit all: " .. result_str)
-    end,
-  }
+    vim.print("Result git submodule deinit all: " .. result_str)
+  end,
+}
 
 m.git_pull = {
   description = "Git Pull Fetch",
@@ -158,5 +200,4 @@ for _, branch_name in ipairs({ "main", "master", "develop" }) do
 end
 
 -- TODO: replace “, ” and ’
-
 return m
