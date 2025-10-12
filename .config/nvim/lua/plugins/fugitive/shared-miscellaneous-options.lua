@@ -199,5 +199,30 @@ for _, branch_name in ipairs({ "main", "master", "develop" }) do
   })
 end
 
+for _, branch_name in ipairs({ "main", "master", "develop" }) do
+  table.insert(m, {
+    description = "Compare current file " .. branch_name .. " HEAD commit",
+    action = function()
+      vim.cmd("tab split")
+      vim.cmd("split")
+
+      vim.cmd("Gedit " .. branch_name .. ":%")
+      vim.cmd("diffoff")
+      vim.cmd("diffthis")
+
+      vim.cmd.wincmd("p")
+      vim.cmd("diffoff")
+      vim.cmd("diffthis")
+
+      -- Our file is up, move it down
+      vim.schedule(function()
+        vim.cmd("wincmd j")
+        vim.cmd("wincmd x")
+        -- vim.cmd("wincmd p")
+      end)
+    end,
+  })
+end
+
 -- TODO: replace “, ” and ’
 return m
