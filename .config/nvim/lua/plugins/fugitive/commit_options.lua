@@ -159,7 +159,8 @@ utils.add_options(
   m,
   require("plugins.fugitive.shared-miscellaneous-options"),
   require("plugins.fugitive.pull-options"),
-  require("plugins.fugitive.shared-stash-options")
+  require("plugins.fugitive.shared-stash-options"),
+  require("plugins.fugitive.shared-rebase-options")
 )
 
 return m

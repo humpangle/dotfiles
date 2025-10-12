@@ -80,25 +80,6 @@ keymap("n", "<leader>gu", function()
   vim.fn.feedkeys(vim.api.nvim_replace_termcodes(cmd, true, true, true), "t")
 end, { noremap = true, desc = "Git config user name. 1=email 2=env defaults" })
 
-local git_rebase_root_mappings_fn = function()
-  utils.create_fzf_key_maps(require("plugins.fugitive.rebase-options"), {
-    prompt = "Git Rebase/Reset/Merge Options> ",
-    header = "Select a git rebase/reset/merge option",
-  })
-end
-
-local git_rebase_mappings_opts = {
-  noremap = true,
-  desc = "Git rebase/reset/merge options (fzf)",
-}
-
-keymap(
-  "n",
-  "<Leader>r<Space>",
-  git_rebase_root_mappings_fn,
-  git_rebase_mappings_opts
-)
-
 keymap("n", "<Leader>rr", function()
   local count = vim.v.count
 
@@ -180,12 +161,6 @@ vim.api.nvim_create_autocmd("FileType", {
       buffer = true,
       noremap = true,
       desc = "Git commit options (fzf)",
-    })
-
-    keymap("n", "r<space>", git_rebase_root_mappings_fn, {
-      buffer = true,
-      noremap = true,
-      desc = git_rebase_mappings_opts.desc,
     })
   end,
 })
