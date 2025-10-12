@@ -206,7 +206,14 @@ function M.delete_all_buffers(delete_flag, opts)
   -- all buffers
   if delete_flag == "a" then
     wipeout_buffers(no_name_buffers)
-    -- wipeout_buffers(terminal_buffers)
+    wipeout_buffers(fugitive_buffers)
+    wipeout_buffers(fugitive_current_buffers)
+    wipeout_buffers(avante_buffers)
+    wipeout_buffers(codecompanion_buffers)
+  -- NUKE All buffers Nuke
+  elseif delete_flag == "A" then
+    wipeout_buffers(no_name_buffers)
+    wipeout_buffers(terminal_buffers)
     -- wipeout_buffers(normal_buffers)
     -- wipeout_buffers(dbee_buffers)
     wipeout_buffers(fugitive_buffers)
@@ -327,6 +334,22 @@ local deletion_options = {
     description = "UnWindowed",
     action = function()
       M.delete_all_buffers("unwindowed")
+    end,
+  },
+  {
+    description = "**NUKE** All **NUKE** Buffers",
+    action = function()
+      local answer = vim.fn.input("**NUKE** all buffers? (YES/No): ")
+      if string.upper(answer) == "YES" then
+        M.delete_all_buffers("A", {
+          delay_notify = true,
+        })
+      else
+        vim.notify(
+          "Not deleting ALL buffers - too destructive!",
+          vim.log.levels.WARN
+        )
+      end
     end,
   },
 }
