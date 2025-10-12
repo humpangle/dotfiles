@@ -3,12 +3,12 @@ local fugitive_utils = require("plugins.fugitive.utils")
 
 local log_options = {
   {
-    description = "Git refresh (status) THIS CWD                            1",
+    description = "Git refresh (status) THIS CWD                                                                    1",
     action = fugitive_utils.git_refresh_cwd,
     count = 1,
   },
   {
-    description = "Log oneline THIS CWD                                    11",
+    description = "Log oneline THIS CWD                                                                            11",
     action = function()
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
         vim.cmd("Git log --oneline")
@@ -20,7 +20,7 @@ local log_options = {
     count = 11,
   },
   {
-    description = "Log full THIS CWD                                       12",
+    description = "Log full THIS CWD                                                                               12",
     action = function()
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
         vim.cmd("Git! log")
@@ -32,7 +32,7 @@ local log_options = {
     count = 12,
   },
   {
-    description = "Log graphical (lgg) THIS CWD                            13",
+    description = "Log graphical (lgg) THIS CWD                                                                    13",
     action = function()
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
         vim.cmd("Git! lgg")
@@ -44,21 +44,21 @@ local log_options = {
     count = 13,
   },
   {
-    description = "Log oneline current file                                 2",
+    description = "Log oneline current file                                                                         2",
     action = function()
       vim.cmd("Git log --oneline -- %")
     end,
     count = 2,
   },
   {
-    description = "Log full current file                                   21",
+    description = "Log full current file                                                                           21",
     action = function()
       vim.cmd("Git log -- %")
     end,
     count = 21,
   },
   {
-    description = "File history with diff split                       123/223",
+    description = "File history with diff split                                                               123/223",
     action = function()
       vim.cmd("only")
       vim.cmd("0GcLog!")
@@ -71,7 +71,7 @@ local log_options = {
     count = 23,
   },
   {
-    description = "File history quickfix (GcLog)                           23",
+    description = "File history quickfix (GcLog)                                                                   23",
     action = function()
       vim.cmd("0GcLog!")
     end,
@@ -82,7 +82,7 @@ local log_options = {
     end,
   },
   {
-    description = "Write log oneline but provide count                      3",
+    description = "Write log oneline but provide count                                                              3",
     action = function()
       utils.write_to_command_mode("Git log --oneline -")
     end,

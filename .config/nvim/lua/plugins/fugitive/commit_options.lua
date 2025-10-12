@@ -21,7 +21,7 @@ end
 
 local m = {
   {
-    description = "Commit                                                              1",
+    description = "Commit                                                                                           1",
     action = function()
       -- split the current buffer horizontally spanning the bottom
       vim.cmd("botright split")
@@ -37,21 +37,21 @@ local m = {
     count = 1,
   },
   {
-    description = "Commit --amend                                                     11",
+    description = "Commit --amend                                                                                  11",
     action = function()
       utils.write_to_command_mode("Git commit --amend")
     end,
     count = 11,
   },
   {
-    description = "Commit --amend --no-edit                                           12",
+    description = "Commit --amend --no-edit                                                                        12",
     action = function()
       utils.write_to_command_mode("Git commit --amend --no-edit")
     end,
     count = 12,
   },
   {
-    description = "Commit --allow-empty                                               13",
+    description = "Commit --allow-empty                                                                            13",
     action = function()
       utils.write_to_command_mode("Git commit --allow-empty")
     end,
@@ -83,7 +83,7 @@ local m = {
     end,
   },
   {
-    description = "Copy current branch name to clipboard                               5",
+    description = "Copy current branch name to clipboard                                                            5",
     action = function()
       local git_head = get_git_current_branch()
       vim.fn.setreg("+", git_head)
@@ -92,7 +92,7 @@ local m = {
     count = 5,
   },
   {
-    description = "Copy current branch name to register a                             55",
+    description = "Copy current branch name to register a                                                          55",
     action = function()
       local git_head = get_git_current_branch()
       vim.fn.setreg("a", git_head)
