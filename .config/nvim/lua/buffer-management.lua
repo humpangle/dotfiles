@@ -312,7 +312,7 @@ local deletion_options = {
     end,
   },
   {
-    description = "Terminal",
+    description = "Terminal Bash Shell",
     action = function()
       M.delete_all_buffers("t")
     end,
