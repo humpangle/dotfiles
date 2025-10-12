@@ -9,18 +9,6 @@ local m = {
     end,
   },
   {
-    description = "Rebase Main",
-    action = function()
-      utils.write_to_command_mode("G rebase main")
-    end,
-  },
-  {
-    description = "Rebase Develop",
-    action = function()
-      utils.write_to_command_mode("G rebase develop")
-    end,
-  },
-  {
     description = "Rebase -i",
     action = function()
       utils.write_to_command_mode("G rebase -i ")
@@ -83,18 +71,6 @@ local m = {
     end,
   },
   {
-    description = "Merge master",
-    action = function()
-      utils.write_to_command_mode("G merge master")
-    end,
-  },
-  {
-    description = "Merge develop",
-    action = function()
-      utils.write_to_command_mode("G merge develop")
-    end,
-  },
-  {
     description = "Merge",
     action = function()
       utils.write_to_command_mode("G merge ")
@@ -113,17 +89,27 @@ local m = {
     end,
   },
   {
-    description = "Rebase master                                         ",
-    action = function()
-      utils.write_to_command_mode("G rebase master")
-    end,
-  },
-  {
     description = "Merge abort",
     action = function()
       utils.write_to_command_mode("G merge --abort")
     end,
   },
 }
+
+for _, branch_name in ipairs({ "main", "master", "develop" }) do
+  table.insert(m, {
+    description = "Merge " .. branch_name,
+    action = function()
+      utils.write_to_command_mode("G merge " .. branch_name)
+    end,
+  })
+
+  table.insert(m, {
+    description = "Rebase " .. branch_name,
+    action = function()
+      utils.write_to_command_mode("G rebase " .. branch_name)
+    end,
+  })
+end
 
 return m
