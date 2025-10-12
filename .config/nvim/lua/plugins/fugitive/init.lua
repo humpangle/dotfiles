@@ -9,10 +9,10 @@ local fzf_lua_shared_options =
 local git_stash_shared_options =
   require("plugins.fugitive.git-stash-shared-options")
 local pull_options = require("plugins.fugitive.pull-options")
+local miscellaneous_options = require("plugins.fugitive.miscellaneous-options")
 
 local keymap = utils.map_key
 
-keymap("n", "<leader>g.", ":Git add .<CR>", { noremap = true })
 keymap("n", "<leader>gd", function()
   local count = vim.v.count
 
@@ -263,6 +263,7 @@ local git_rebase_options = {
   pull_options.pull_branch_master,
   pull_options.pull_branch_develop,
 }
+utils.add_options(git_rebase_options, miscellaneous_options)
 
 for _, value in pairs(fzf_lua_shared_options.verify_commit_sign()) do
   table.insert(git_rebase_options, value)
@@ -464,6 +465,7 @@ local git_log_options = {
   pull_options.pull_branch_master,
   pull_options.pull_branch_develop,
 }
+utils.add_options(git_log_options, miscellaneous_options)
 
 keymap("n", "<leader>gg", function()
   utils.create_fzf_key_maps(git_log_options, {

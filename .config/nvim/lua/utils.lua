@@ -792,4 +792,13 @@ function utils.create_fzf_key_maps(fzf_key_map_options, config)
   })
 end
 
+utils.add_options = function(into, ...)
+  local options = { ... }
+  for _, opt in pairs(options) do
+    for _, v in pairs(opt) do
+      table.insert(into, v)
+    end
+  end
+end
+
 return utils

@@ -24,7 +24,7 @@ local get_git_current_branch = function()
   return "ERROR"
 end
 
-return {
+local m = {
   {
     description = "Commit                                                              1",
     action = function()
@@ -189,3 +189,6 @@ return {
   pull_options.pull_branch_main,
   pull_options.pull_branch_master,
 }
+utils.add_options(m, require("plugins.fugitive.miscellaneous-options"))
+
+return m
