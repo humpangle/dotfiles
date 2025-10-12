@@ -2841,6 +2841,11 @@ install_inotify_info() {
   cd "$here_"
 }
 
+install_superfile_script_="$(dirname "${BASH_SOURCE[0]}")/install-superfile.sh"
+install-superfile() {
+  "$install_superfile_script_" "$@"
+}
+
 # -----------------------------------------------------------------------------
 # GLOBAL HELP FUNCTION
 # -----------------------------------------------------------------------------
