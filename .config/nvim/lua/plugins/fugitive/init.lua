@@ -18,6 +18,7 @@ end, {
   desc = "0/v 1/h",
 })
 
+-- TODO: use git push: detect if push fails and then force-with-lease
 keymap("n", "<leader>gp", function()
   local count = vim.v.count
   if count == 0 then
