@@ -15,8 +15,10 @@ Create a git commit with staged.
    - Note: Will NOT stage any unstaged files - only commits what is already staged
 
 2. **Draft commit message**:
+   - Check recent commit history (`git log --oneline -10`) to understand user's commit message patterns
    - **Subject**: ~120 chars, no trailing period
    - **Body**: Multi-line explanation of why changes were made (wrap ~120 chars)
+   - Match user's established style from recent commits
 
 3. **Get user approval**:
    - Present the draft commit message to the user

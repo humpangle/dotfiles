@@ -22,8 +22,10 @@ Create a git commit with staged.
      - Git branch name prefix (e.g., `feature/SCHED-1234-description` → `SCHED-1234`)
 
 3. **Draft commit message**:
+   - Check recent commit history (`git log --oneline -10`) to understand user's commit message patterns
    - **Subject**: ~120 chars, no trailing period, starts with JIRA ticket # if available
    - **Body**: Multi-line explanation of why changes were made (wrap ~120 chars)
+   - Match user's established style from recent commits
    - If no JIRA ticket found, omit the prefix
 
 4. **Get user approval**:
