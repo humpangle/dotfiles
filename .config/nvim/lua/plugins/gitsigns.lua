@@ -44,6 +44,10 @@ return {
         vim.cmd(":Git add %")
         vim.cmd("edit! %")
         vim.cmd("redraw!")
+      elseif count == 11 then
+        vim.cmd(":Git add -f %")
+        vim.cmd("edit! %")
+        vim.cmd("redraw!")
       end
 
       vim.notify(vim.fn.expand("%:.") .. " staged!!!")
