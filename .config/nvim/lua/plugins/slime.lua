@@ -171,6 +171,12 @@ return {
           count_as_string:match(two_digits_count_pattern)
 
         if window_index and pane_index then
+          -- 99 is a special count which stands for pane index 0
+          -- You must use 991, 992 etc
+          -- If you use 99, it will be interpreted as window 9 pane 9
+          if window_index == "99" then
+            window_index = "0"
+          end
           target_pane = ":" .. window_index .. "." .. pane_index
         end
 
