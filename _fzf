@@ -22,6 +22,7 @@ export FZF_DEFAULT_OPTS="--layout=reverse --border"
 export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_TRIGGER=',,'
+export FZF_ALIAS_OPTS="--height=40% --border-label='Aliases' --border-label-pos=2 --prompt='Alias> '"
 
 _fzf_compgen_dir() {
   rg --files "$RG_OPTIONS"
@@ -36,5 +37,29 @@ FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a b
 # shellcheck disable=2139
 alias ff="fzf $FZF_PREVIEW_APP"
 alias eff='env | fzf'
-alias aff='alias | fzf'
 alias fff='compgen -A function | fzf'
+
+__fzf_alias__() {
+  local output
+  output=$(
+    alias |
+      command awk -F'=' '{
+        alias_name = $1
+        sub(/^alias /, "", alias_name)
+        alias_value = substr($0, index($0, "=") + 1)
+        # Remove quotes around the value
+        gsub(/^'"'"'|'"'"'$/, "", alias_value)
+        printf "%-20s %s\n", alias_name, alias_value
+      }' |
+      FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse" "${FZF_ALIAS_OPTS-} +m") \
+      FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd)
+  ) || return
+  local result=""
+  result="$(
+    # Extract just the alias name (first field) from the output
+    echo "$output" | command awk '{print $1}'
+  )"
+  echo "$result" | copy
+  echo "$result"
+}
+alias aff='__fzf_alias__'
