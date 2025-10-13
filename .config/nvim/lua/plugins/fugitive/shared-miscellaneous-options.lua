@@ -56,7 +56,7 @@ m.check_out_tree_ish_under_cursor = {
 m.submodule_update_force_recursive = {
   description = "Git submodule update force recursive",
   action = function()
-    utils.write_to_command_mode("Git submodule update --force --recursive")
+    utils.write_to_command_mode("Git submodule update --init --force --recursive")
   end,
 }
 
@@ -148,6 +148,21 @@ m.git_pull = {
   action = function()
     fugitive_utils.git_refresh_cwd()
     vim.cmd("Git fetch")
+
+    local git_root = utils.get_git_root()
+    local cmd = {
+      "(",
+      "cd " .. git_root,
+      "&&",
+      "git submodule init || :",
+      ")",
+    }
+    local cmd_str = table.concat(cmd, " ")
+    local result = vim.fn.systemlist(cmd_str)
+
+    if #result > 0 then
+      vim.print(table.concat(result, "\n"))
+    end
 
     utils.write_to_command_mode("Git pull origin " .. vim.fn.FugitiveHead())
   end,
