@@ -323,20 +323,6 @@ ollama_stop() {
   echo "Ollama serving on PID/PORT $_pid/${info_[port]} stopped."
 }
 
-_get_dotfiles_root() {
-  # directory where this file (script) resides
-  # dotfiles/scripts/_ai
-  local scripts_dir_=""
-
-  # dotfiles/scripts/.. => dotfiles/
-  local dotfiles_root_=""
-
-  scripts_dir_="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-  dotfiles_root_="$(dirname "$scripts_dir_")"
-
-  echo "$dotfiles_root_"
-}
-
 llmprojs() {
   : "___alias___ llm_project_start"
   llm_project_start "$@"
@@ -346,7 +332,7 @@ llm_project_start() {
   : "Ensure the claude chat template file exists in the current directory."
 
   local dotfiles_root_=""
-  dotfiles_root_="$(_get_dotfiles_root)"
+  dotfiles_root_="$(_dot rt)"
   local llm_templates_root_="$dotfiles_root_/llm-templates/claude/.claude"
   local cwd_=""
   cwd_="$(pwd)"
