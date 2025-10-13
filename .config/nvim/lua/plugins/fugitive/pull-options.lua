@@ -21,6 +21,8 @@ for _, branch_name in pairs({ "main", "master", "develop" }) do
       "git fetch",
       "&&",
       "git pull origin " .. branch_name,
+      "&&",
+      "git submodule update --init --recursive",
       ")",
     }
 
@@ -38,7 +40,7 @@ for _, branch_name in pairs({ "main", "master", "develop" }) do
 
   local prop = "pull_branch_" .. branch_name
   m[prop] = {
-    description = "Git pull branch " .. branch_name,
+    description = "Git pull/fetch branch " .. branch_name,
     action = action,
   }
 end
