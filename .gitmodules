@@ -7,3 +7,6 @@
 [submodule ".config/alacritty/themes"]
 	path = .config/alacritty/themes
 	url = git@github.humpangle:humpangle/alacritty-theme.git
+[submodule ".config/kitty/kitty-save-session"]
+	path = .config/kitty/kitty-save-session
+	url = https://github.com/dflock/kitty-save-session.git

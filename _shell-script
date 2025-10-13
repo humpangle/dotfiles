@@ -150,6 +150,7 @@ ___source_scripts() {
     "_asdf $_flag_no_termux"
     "_macos $_flag_mac_only"
     "_wsl.sh $_flag_wsl"
+    .config/kitty/_kitty.sh
   )
 
   local _elm

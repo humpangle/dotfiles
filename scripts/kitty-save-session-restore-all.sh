@@ -1,0 +1,1 @@
+../.config/kitty/kitty-save-session/kitty-save-session-restore-all.sh
