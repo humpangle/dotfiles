@@ -2846,6 +2846,11 @@ install-superfile() {
   "$install_superfile_script_" "$@"
 }
 
+install_yazi_script_="$(dirname "${BASH_SOURCE[0]}")/install-yazi.sh"
+install-yazi() {
+  "$install_yazi_script_" "$@"
+}
+
 # -----------------------------------------------------------------------------
 # GLOBAL HELP FUNCTION
 # -----------------------------------------------------------------------------

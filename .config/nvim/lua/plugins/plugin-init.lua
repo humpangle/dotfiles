@@ -406,6 +406,11 @@ local plugins_table = {
     enabled = not plugin_enabled.has_vscode(),
   },
 
+  {
+    "fladson/vim-kitty",
+    ft = "kitty",
+  },
+
   require("plugins/noice-nvim"),
   require("plugins/elixir"),
   require("plugins/ai"),
@@ -425,6 +430,7 @@ local plugins_table = {
   require("plugins/live-preview-nvim"),
   require("plugins/nvim-dbee"),
   require("plugins/emoji-nvim"),
+  require("plugins.yazi-nvim"),
 }
 
 ---@diagnostic disable:missing-fields

@@ -215,6 +215,8 @@ _alias_map_complete() {
   done
 }
 
+alias_map[yz]=yazi
+
 _alias_map_complete alias_map
 
 # -----------------------------------------------------------------------------

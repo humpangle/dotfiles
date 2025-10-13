@@ -1,0 +1,15 @@
+# https://yazi-rs.github.io/docs/tips/
+
+# open files or enter directories all in one key
+# Default open directory was letter l.
+[[mgr.prepend_keymap]]
+on   = "<Enter>"
+run  = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
+
+# Dropping to the shell
+[[mgr.prepend_keymap]]
+on   = "!"
+for  = "unix"
+run  = 'shell "$SHELL" --block'
+desc = "Open $SHELL here"
