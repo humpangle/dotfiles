@@ -104,6 +104,16 @@ table.insert(m, {
         table.insert(lines, session_file)
       end
     end
+
+    local llm = {
+      "",
+      "==LLM INFO==",
+      vim.fn.systemlist("_dot rt")[1] .. "/llm-templates/claude/.claude",
+    }
+    for _, line in pairs(llm) do
+      table.insert(lines, line)
+    end
+
     vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
   end,
   count = 9,
