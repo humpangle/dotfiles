@@ -23,6 +23,7 @@ export FZF_DEFAULT_COMMAND="rg --files $RG_OPTIONS"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_TRIGGER=',,'
 export FZF_ALIAS_OPTS="--height=40% --border-label='Aliases' --border-label-pos=2 --prompt='Alias> '"
+export FZF_PATH_ENV_OPTS="--height=40% --border-label='PATH Directories' --border-label-pos=2 --prompt='Path> '"
 
 _fzf_compgen_dir() {
   rg --files "$RG_OPTIONS"
@@ -63,3 +64,16 @@ __fzf_alias__() {
   echo "$result"
 }
 alias aff='__fzf_alias__'
+
+__fzf_paths__() {
+  local output
+  output=$(
+    echo "$PATH" |
+      command tr ':' '\n' |
+      FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse" "${FZF_PATH_ENV_OPTS-} +m") \
+      FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd)
+  ) || return
+  echo "$output" | copy
+  echo "$output"
+}
+alias pff='__fzf_paths__'
