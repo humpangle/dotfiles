@@ -425,9 +425,16 @@ utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
   end
 end
 
-utils.create_slime_dir = function()
+---@param additional_directory_path string
+---@return string
+utils.create_slime_dir = function(additional_directory_path)
   local PlenaryPath = require("plenary.path")
   local slime_dir = vim.fn.getcwd() .. "/.___scratch"
+  if additional_directory_path then
+    slime_dir = slime_dir
+      .. "/"
+      .. (additional_directory_path:gsub("^/", ""))
+  end
   local slime_dir_obj = PlenaryPath:new(slime_dir)
 
   local timestamp = os.date("%FT%H-%M-%S")
@@ -644,9 +651,10 @@ utils.write_to_out_file = function(opts)
     datetime = true,
     prefix = "O",
     ext = nil,
+    additional_directory_path = nil,
   })
 
-  local filename = utils.create_slime_dir()
+  local filename = utils.create_slime_dir(opts.additional_directory_path)
     .. "/"
     .. opts.prefix
     .. "-"

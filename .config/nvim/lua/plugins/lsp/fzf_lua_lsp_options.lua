@@ -66,7 +66,7 @@ local m = {
 }
 
 table.insert(m, {
-  description = "My Status                                                                                          9",
+  description = "My Neovim Status                                                                                          9",
   action = function()
     local git_branch = vim.fn.systemlist(
       "(cd " .. vim.fn.getcwd() .. " && git branch --show-current)"
@@ -77,7 +77,11 @@ table.insert(m, {
     vim.cmd("setlocal buftype=nofile")
     vim.cmd("setlocal bufhidden=hide")
     vim.cmd("setlocal noswapfile")
-    utils.write_to_out_file({ prefix = "my-neovim-sesion", ext = "log" })
+    utils.write_to_out_file({
+      additional_directory_path = "my-neovim-status",
+      prefix = "my-neovim-status",
+      ext = "log",
+    })
 
     -- Write status information
     local lines = {
