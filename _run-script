@@ -116,7 +116,7 @@ __run_well_known_paths() {
   local _shared_0_prefix='/c/0000-shared'
 
   # The apps we are interested in
-  local _dot='dot'
+  local dot_='dot'
   local _wiki='wiki'
   local _py='py'
   local _web='web'
@@ -124,7 +124,7 @@ __run_well_known_paths() {
   # A mapping of apps to directory where they are located
   declare -A _app_to_path_mapping=()
 
-  _app_to_path_mapping["$_dot"]="$DOTFILE_PARENT_PATH/dotfiles"
+  _app_to_path_mapping["$dot_"]="$DOTFILE_PARENT_PATH/dotfiles"
   _app_to_path_mapping["$_wiki"]="$_shared_0_prefix/wiki"
   _app_to_path_mapping["$_py"]="$_shared_0_prefix/py"
   _app_to_path_mapping["$_web"]="$_shared_0_prefix/web-pages"
@@ -133,7 +133,7 @@ __run_well_known_paths() {
   # appended to the app's path
   declare -A _app_to_code_workspace_file_mapping=()
 
-  _app_to_code_workspace_file_mapping["$_dot"]='dotfiles.code-workspace'
+  _app_to_code_workspace_file_mapping["$dot_"]='dotfiles.code-workspace'
   _app_to_code_workspace_file_mapping["$_wiki"]='wiki.code-workspace'
   _app_to_code_workspace_file_mapping["$_py"]='py.code-workspace'
   _app_to_code_workspace_file_mapping["$_web"]='web-pages.code-workspace'
