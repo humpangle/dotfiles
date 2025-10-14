@@ -24,6 +24,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_TRIGGER=',,'
 export FZF_ALIAS_OPTS="--height=40% --border-label='Aliases' --border-label-pos=2 --prompt='Alias> '"
 export FZF_PATH_ENV_OPTS="--height=40% --border-label='PATH Directories' --border-label-pos=2 --prompt='Path> '"
+export FZF_PATH_ALL_OPTS="--height=80% --border-label='PATH Files' --border-label-pos=2 --prompt='File> ' --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
 
 _fzf_compgen_dir() {
   rg --files "$RG_OPTIONS"
@@ -77,3 +78,21 @@ __fzf_paths__() {
   echo "$output"
 }
 alias pff='__fzf_paths__'
+
+__fzf_paths_all__() {
+  local output
+  output=$(
+    echo "$PATH" |
+      command tr ':' '\n' |
+      while IFS= read -r dir; do
+        if [[ -d "$dir" ]]; then
+          command find "$dir" -maxdepth 1 \( -type f -o -type l \) 2>/dev/null
+        fi
+      done |
+      FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse" "${FZF_PATH_ALL_OPTS-} +m") \
+      FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd)
+  ) || return
+  echo "$output" | copy
+  echo "$output"
+}
+alias pffa='__fzf_paths_all__'
