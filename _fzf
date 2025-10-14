@@ -71,6 +71,7 @@ __fzf_paths__() {
   output=$(
     echo "$PATH" |
       command tr ':' '\n' |
+      awk '!seen[$0]++' |
       FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse" "${FZF_PATH_ENV_OPTS-} +m") \
       FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd)
   ) || return
@@ -89,6 +90,7 @@ __fzf_paths_all__() {
           command find "$dir" -maxdepth 1 \( -type f -o -type l \) 2>/dev/null
         fi
       done |
+      awk -F/ '!seen[$NF]++ {print}' |
       FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse" "${FZF_PATH_ALL_OPTS-} +m") \
       FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd)
   ) || return
