@@ -306,18 +306,26 @@ alias smysql='mysql-startf'
 # -----------------------------------------------------------------------------
 
 function __pm {
-  local _script="${DOTFILE_PARENT_PATH}/dotfiles/provision-machine/ubuntu-server.sh"
+  local dir_=""
+  dir_="$(_dot rt)/provision-machine"
 
+  if [[ ! -d "${dir_}" ]]; then
+    echo "Directory \"${dir_}\" does not exist. Exiting!"
+    return
+  fi
+
+  local _script="${dir_}/ubuntu-server.sh"
   if [[ ! -e "${_script}" ]]; then
     echo "Script \"${_script}\" does not exist. Exiting!"
     return
   fi
 
-  chmod 755 "${_script}"
+  for path_ in "$dir_"/*; do
+    chmod 755 "$path_"
+  done
 
   "${_script}" "${@}"
 }
-
 alias _pm='__pm'
 alias _pm----help='provison machine'
 
