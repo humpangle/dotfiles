@@ -26,6 +26,58 @@ local function append_line_numbers(path)
   return path .. ":" .. line_num
 end
 
+local function get_current_line_number()
+  return tostring(vim.fn.line("."))
+end
+
+local function get_paragraph_line_range()
+  -- Save current position
+  local current_pos = vim.fn.getpos(".")
+
+  -- Find paragraph start (search backwards for blank line or buffer start)
+  vim.cmd("normal! {")
+  local para_start = vim.fn.line(".")
+  -- If we're on a blank line, move down to first non-blank
+  if vim.fn.getline(para_start):match("^%s*$") then
+    para_start = para_start + 1
+  end
+
+  -- Restore position and find paragraph end
+  vim.fn.setpos(".", current_pos)
+  vim.cmd("normal! }")
+  local para_end = vim.fn.line(".")
+  -- If we're on a blank line, move up to last non-blank
+  if vim.fn.getline(para_end):match("^%s*$") then
+    para_end = para_end - 1
+  end
+
+  -- Restore original position
+  vim.fn.setpos(".", current_pos)
+
+  if para_start == para_end then
+    return tostring(para_start)
+  end
+  return tostring(para_start) .. "-" .. tostring(para_end)
+end
+
+local function append_line_numbers_by_mode(path, mode)
+  local line_num
+
+  if mode == "current" then
+    line_num = get_current_line_number()
+  elseif mode == "paragraph" then
+    line_num = get_paragraph_line_range()
+  else
+    -- Default to existing visual mode logic
+    line_num = get_line_numbers_if_visual_mode()
+  end
+
+  if not line_num then
+    return path
+  end
+  return path .. ":" .. line_num
+end
+
 local function get_git_relative_path(include_dir_only)
   local git_root = utils.get_git_root()
 
@@ -89,6 +141,40 @@ local function create_path_yanker(register)
       return
     end
 
+    -- Handle counts ending in 1 or 2 (21, 31, 41, 51, 22, 32, 42, 52)
+    if count >= 21 and count <= 59 then
+      local ones_digit = count % 10
+      local tens_digit = math.floor(count / 10)
+
+      -- Check if this matches our pattern: tens digit 2-5, ones digit 1-2
+      if
+        tens_digit >= 2
+        and tens_digit <= 5
+        and (ones_digit == 1 or ones_digit == 2)
+      then
+        local line_mode = ones_digit == 1 and "current" or "paragraph"
+        local base_count = tens_digit -- Use tens digit as base path type
+
+        local path_configs = {
+          [2] = { directive = "%:.", desc = "relative" },
+          [3] = { directive = "%:p", desc = "absolute" },
+          [4] = { directive = "%:.:h", desc = "relative_dir" },
+          [5] = { directive = "%:p:h", desc = "absolute_dir" },
+        }
+
+        local config = path_configs[base_count]
+        if config then
+          local file_path = vim.fn.expand(config.directive)
+          file_path =
+            append_line_numbers_by_mode(file_path, line_mode)
+          local full_desc = config.desc
+            .. (ones_digit == 1 and "_line" or "_para")
+          yank_to_registers(file_path, register, full_desc)
+          return
+        end
+      end
+    end
+
     -- Standard file paths
     local path_configs = {
       [1] = { directive = "%:t", desc = "filename" },
@@ -107,7 +193,7 @@ local function create_path_yanker(register)
 end
 
 local doc =
-  "1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 62=git_rel_path 64=git_rel_dir 9/line-number-only"
+  "1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 21=rel+line 31=abs+line 41=rel_dir+line 51=abs_dir+line 22=rel+para 32=abs+para 42=rel_dir+para 52=abs_dir+para 62=git_rel_path 64=git_rel_dir 9=line-number-only"
 utils.map_key({ "n", "x" }, "<localleader>yf", create_path_yanker("+"), {
   noremap = true,
   desc = "Yank path: " .. doc,
