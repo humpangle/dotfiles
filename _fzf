@@ -43,6 +43,7 @@ alias fff='compgen -A function | fzf'
 
 __fzf_alias__() {
   local output
+  # shellcheck disable=SC2091
   output=$(
     alias |
       command awk -F'=' '{
@@ -68,6 +69,7 @@ alias aff='__fzf_alias__'
 
 __fzf_paths__() {
   local output
+  # shellcheck disable=SC2091
   output=$(
     echo "$PATH" |
       command tr ':' '\n' |
@@ -82,6 +84,7 @@ alias pff='__fzf_paths__'
 
 __fzf_paths_all__() {
   local output
+  # shellcheck disable=SC2091
   output=$(
     echo "$PATH" |
       command tr ':' '\n' |

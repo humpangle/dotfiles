@@ -10,6 +10,7 @@ alias lskd='kitty --session $EBNIS_KITTY_SESSION_DIR/dot.kitty-session'
 
 __fzf_kitty_sessions__() {
   local output
+  # shellcheck disable=SC2091
   output=$(
     if [[ -d "$EBNIS_KITTY_SESSION_DIR" ]]; then
       command find "$EBNIS_KITTY_SESSION_DIR" -maxdepth 1 -type f -name "*.kitty-session" 2>/dev/null
