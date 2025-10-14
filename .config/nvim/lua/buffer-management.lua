@@ -166,11 +166,13 @@ function M.delete_all_buffers(delete_flag, opts)
   local avante_buffers = {}
   local codecompanion_buffers = {}
   local dbee_buffers = {}
+  local my_session_buffers = {}
 
   for _, buf_num in ipairs(vim.api.nvim_list_bufs()) do
     local b_name = vim.fn.bufname(buf_num)
+    vim.print(b_name)
 
-    if string.match(b_name, ".dbout") then
+    if string.find(b_name, ".dbout", 1, true) then
       -- or string.match(b_name, "share/db_ui/")
       table.insert(dbui_buffers, buf_num)
     elseif M.is_dbee_buffer(b_name) then
@@ -189,8 +191,10 @@ function M.delete_all_buffers(delete_flag, opts)
       table.insert(codecompanion_buffers, buf_num)
     elseif is_deleteable_unlisted_buffer(b_name, buf_num) then
       table.insert(no_name_buffers, buf_num)
-    elseif string.match(b_name, "term://") then
+    elseif string.find(b_name, "term://", 1, true) then
       table.insert(terminal_buffers, buf_num)
+    elseif string.find(b_name, "my-neovim-sesion-", 1, true) then
+      table.insert(my_session_buffers, buf_num)
     end
   end
 
@@ -210,6 +214,7 @@ function M.delete_all_buffers(delete_flag, opts)
     wipeout_buffers(fugitive_current_buffers)
     wipeout_buffers(avante_buffers)
     wipeout_buffers(codecompanion_buffers)
+    wipeout_buffers(my_session_buffers)
   -- NUKE All buffers Nuke
   elseif delete_flag == "A" then
     wipeout_buffers(no_name_buffers)
@@ -222,6 +227,7 @@ function M.delete_all_buffers(delete_flag, opts)
     wipeout_buffers(octo_buffers)
     wipeout_buffers(avante_buffers)
     wipeout_buffers(codecompanion_buffers)
+    wipeout_buffers(my_session_buffers)
   -- empty / no-name buffers
   elseif delete_flag == "e" then
     wipeout_buffers(no_name_buffers)
@@ -243,6 +249,8 @@ function M.delete_all_buffers(delete_flag, opts)
     wipeout_buffers(avante_buffers)
   elseif delete_flag == "codecompanion" then
     wipeout_buffers(codecompanion_buffers)
+  elseif delete_flag == "my-session" then
+    wipeout_buffers(my_session_buffers)
   else
     notify(
       "Unknown delete FLAG " .. delete_flag,
@@ -350,6 +358,12 @@ local deletion_options = {
           vim.log.levels.WARN
         )
       end
+    end,
+  },
+  {
+    description = "My sessions",
+    action = function()
+      M.delete_all_buffers("my-session")
     end,
   },
 }
