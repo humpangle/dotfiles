@@ -252,5 +252,17 @@
     "description": [
       "single divider"
     ]
+  },
+  "pytest conditional breakpoint text": {
+    "prefix": [
+      "pytestCondBreakPoint",
+      "breakPoinCondPytest"
+    ],
+    "body": [
+      "(node := __import__('os').environ.get('PYTEST_CURRENT_TEST', '')) and '[${1}]' in node and ' (call)' in node"
+    ],
+    "description": [
+      "pytest conditional breakpoint"
+    ]
   }
 }
