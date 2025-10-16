@@ -182,7 +182,7 @@ local function make_breakpoint_actions(dap)
       count = 1,
     },
     {
-      description = "Conditional breakpoint 11",
+      description = "Set Conditional breakpoint 11",
       handler = function()
         local prompt = vim.fn.input("Breakpoint condition: ")
         dap.set_breakpoint(prompt)
@@ -190,7 +190,7 @@ local function make_breakpoint_actions(dap)
       count = 11,
     },
     {
-      description = "Clear all breakpoints 2",
+      description = "Clear/Delete all breakpoints 2",
       handler = function()
         clear_breakpoints()
         defer_notify("All Breakpoints Cleared!")
@@ -198,7 +198,7 @@ local function make_breakpoint_actions(dap)
       count = 2,
     },
     {
-      description = "Clear all & set breakpoint 21",
+      description = "Clear/Delete all & set breakpoint 21",
       handler = function()
         clear_breakpoints()
         vim.defer_fn(function()
@@ -209,7 +209,7 @@ local function make_breakpoint_actions(dap)
       count = 21,
     },
     {
-      description = "Clear all & set conditional breakpoint 22",
+      description = "Clear/Delete all & set conditional breakpoint 22",
       handler = function()
         clear_breakpoints()
 
@@ -222,21 +222,21 @@ local function make_breakpoint_actions(dap)
       count = 22,
     },
     {
-      description = "Next breakpoint FILE 3",
+      description = "Go to Next breakpoint FILE 3",
       handler = function()
         goto_breakpoint("next", true)
       end,
       count = 3,
     },
     {
-      description = "Previous breakpoint FILE 31",
+      description = "Go to Previous breakpoint FILE 31",
       handler = function()
         goto_breakpoint("prev", true)
       end,
       count = 31,
     },
     {
-      description = "Next breakpoint GLOBAL 4",
+      description = "Go to Next breakpoint GLOBAL 4",
       handler = function()
         goto_breakpoint("next")
       end,
