@@ -54,7 +54,10 @@ map_key("n", "<Leader>C", ":Commands!<CR>", { noremap = true })
 map_key("n", "<Leader>M", ":Maps!<CR>", { noremap = true })
 
 -- Search in project - do not match filenames
-map_key("n", "<Leader>f/", ":RgNf!<CR>", { noremap = true })
+map_key("n", "<Leader>f/", function()
+  vim.o.background = "dark"
+  vim.cmd("RgNf!")
+end, { noremap = true })
 
 --  GIT
 -- Files managed by git
@@ -94,17 +97,32 @@ map_key("n", "<leader>fq", ":FzfQF!<CR>", { noremap = true })
 -- Fzf location list
 map_key("n", "<leader>FL", ":LocList!<CR>", { noremap = true })
 
--- Translation to lua does not work.
-vim.cmd([[
-  command! -bang -nargs=* RgNf
-    \ call fzf#vim#grep(
-    \   'rg --hidden --column --line-number --no-heading --color=always --smart-case --glob !{.git} --glob !{yarn.lock} -- '.shellescape(<q-args>), 1,
-    \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
-    \   <bang>0
-    \ )
-]])
+vim.api.nvim_create_user_command("RgNf", function(opts)
+  local rg =
+    "rg --hidden --column --line-number --no-heading --color=always --smart-case --glob !{.git} --glob !{yarn.lock} -- "
+  local query = vim.fn.shellescape(opts.args or "")
+  local cmd = rg .. query
 
-vim.g.fzf_preview_window = { "right:50%:hidden", "ctrl-/" }
+  -- fzf options: delimiter matches rg's "file:line:col:…" format
+  local spec = vim.fn["fzf#vim#with_preview"]({
+    options = table.concat({
+      "--delimiter :",
+      "--nth 4..",
+      -- Show a live preview of the file; highlight the matched line with bat; fallback to sed
+      [[--preview 'bash -lc "bat --style=numbers --color=always --plain --highlight-line {2} --line-range :500 {1} 2>/dev/null || sed -n \"1,500p\" {1}"']],
+      -- Layout + bindings
+      "--preview-window=right,60%,border-left,wrap,follow",
+      "--bind=?:toggle-preview,alt-j:preview-down,alt-k:preview-up,alt-h:half-page-up,alt-l:half-page-down",
+    }, " "),
+  }, "right:60%") -- start hidden; press ? to toggle
+  -- }, 'right:60%:hidden')  -- start hidden; press ? to toggle
+
+  vim.fn["fzf#vim#grep"](cmd, 1, spec, opts.bang and 1 or 0)
+end, { bang = true, nargs = "*" })
+
+vim.g.fzf_preview_window = { "right,50%", "?" }
+vim.g.fzf_vim = vim.g.fzf_vim or {}
+vim.g.fzf_vim.preview_window = { "right,50%", "?" }
 
 local function format_qf_line(line)
   local parts = vim.split(line, ":")
