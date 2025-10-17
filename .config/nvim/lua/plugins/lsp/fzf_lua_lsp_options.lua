@@ -4,20 +4,23 @@ local session_utils = require("session-utils")
 
 local m = {
   {
+    description = "LSP Restart Start/Stop                                                                           1",
+    action = function()
+      vim.cmd("LspStop")
+      vim.defer_fn(function()
+        vim.cmd("LspStart")
+        vim.print("LSP restarted/attached")
+      end, 10)
+    end,
+    count = 1,
+  },
+  {
     description = "LSP Stop                                                                                         2",
     action = function()
       vim.cmd("LspStop")
-      vim.cmd.echo('"LspStopped 3<leader>ls0 to start"')
+      vim.print("LspStopped 1<leader>ls0 to re-start/attach")
     end,
     count = 2,
-  },
-  {
-    description = "LSP Start Attach                                                                                22",
-    action = function()
-      vim.cmd("LspStart")
-      vim.cmd.echo('"LspStart"')
-    end,
-    count = 22,
   },
   {
     description = "LSP Info",
