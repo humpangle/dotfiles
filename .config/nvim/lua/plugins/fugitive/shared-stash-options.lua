@@ -113,20 +113,22 @@ for _, stash_action in pairs({
   for _, position in pairs({ 0, "" }) do
     for _, include_index in pairs({ "--index", "" }) do
       local action = git_stash_list_fn(function(list_stash_cmd)
-        local cmd = ":Git stash "
-          .. stash_action
-          .. " --quiet "
-          .. include_index
-          .. "stash@{"
-          .. position
-          .. "}<Left>"
-
         vim.cmd(list_stash_cmd)
 
-        vim.fn.feedkeys(
-          vim.api.nvim_replace_termcodes(cmd, true, true, true),
-          "n"
-        )
+        vim.schedule(function()
+          local cmd = "Git stash "
+            .. stash_action
+            .. " "
+            .. include_index
+            .. "stash@{"
+            .. position
+            .. "}<Left>"
+
+          vim.fn.feedkeys(
+            vim.api.nvim_replace_termcodes(cmd, true, true, true),
+            "n"
+          )
+        end)
       end)
 
       local prop = "git_stash_"
