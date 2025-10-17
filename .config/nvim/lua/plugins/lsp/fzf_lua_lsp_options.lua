@@ -130,6 +130,7 @@ table.insert(m, {
     add_runtimepath(lines)
 
     vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+    vim.cmd("w!")
   end,
   count = 9,
 })
