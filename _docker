@@ -64,12 +64,6 @@ if [ -n "$_EBNIS_DOCKER_BIN" ]; then
   export -f docker
 fi
 
-function docker-compose {
-  docker compose "${@}"
-}
-
-export -f docker-compose
-
 _alias_map_docker["d"]='docker'
 # docker remove all containers
 # shellcheck disable=2016
