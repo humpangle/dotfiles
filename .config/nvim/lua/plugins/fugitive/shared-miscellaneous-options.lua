@@ -169,13 +169,6 @@ m.git_pull = {
   count = 6,
 }
 
-m.merge_main = {
-  description = "Merge main",
-  action = function()
-    utils.write_to_command_mode("G merge main")
-  end,
-}
-
 for _, branch_name in ipairs({ "main", "master", "develop" }) do
   table.insert(m, {
     description = "Check out commit " .. branch_name .. " HEAD commit",
