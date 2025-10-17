@@ -20,10 +20,14 @@ local log_options = {
     count = 11,
   },
   {
-    description = "Log full THIS CWD                                                                               12",
+    description = "Git Log full THIS CWD                                                                           12",
     action = function()
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+        vim.cmd("tab split")
         vim.cmd("Git! log")
+        vim.defer_fn(function()
+          vim.cmd("only")
+        end, 5)
       end, {
         force = true,
         wipe = true,
