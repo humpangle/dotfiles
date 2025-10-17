@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 return {
   "mikavilpas/yazi.nvim",
   version = "*", -- use the latest stable version
@@ -6,24 +8,20 @@ return {
     { "nvim-lua/plenary.nvim", lazy = true },
   },
   keys = {
-    -- 👇 in this section, choose your own keymappings!
-    {
-      "<leader>-",
-      mode = { "n", "v" },
-      "<cmd>Yazi<cr>",
-      desc = "Open yazi at the current file",
-    },
-    {
-      -- Open in the current working directory
-      "<leader>cw",
-      "<cmd>Yazi cwd<cr>",
-      desc = "Open the file manager in nvim's working directory",
-    },
-    {
-      "<c-up>",
-      "<cmd>Yazi toggle<cr>",
-      desc = "Resume the last yazi session",
-    },
+    utils.map_lazy_key("<Leader>vi", function()
+      local count = vim.v.count
+      utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+        if count == 0 then
+          vim.cmd("Yazi")
+        elseif count == 1 then
+          vim.cmd("Yazi cwd")
+        else
+          vim.cmd("Yazi toggle")
+        end
+      end, {
+        wipe = true,
+      })
+    end, { desc = "Open Yazi" }, { "n", "v" }),
   },
   opts = {
     -- if you want to open yazi instead of netrw, see below for more info
