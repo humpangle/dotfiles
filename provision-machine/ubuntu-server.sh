@@ -327,20 +327,6 @@ _is_darwin() {
   fi
 }
 
-_is_arm_hardware() {
-  local _hardware_platform
-  _hardware_platform="$(
-    uname -m
-  )"
-
-  if [[ "$_hardware_platform" == "arm64" ]] ||
-    [[ "$_hardware_platform" == "aarch64" ]]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
 _install_erlang_os_deps() {
   if _is_darwin; then
     brew install \

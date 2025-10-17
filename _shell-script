@@ -59,6 +59,7 @@ _is_linux() {
     return 1
   fi
 }
+export -f _is_linux
 
 _is_darwin() {
   if [[ "$(uname -s)" == "Darwin" ]]; then
@@ -67,6 +68,22 @@ _is_darwin() {
     return 1
   fi
 }
+export -f _is_darwin
+
+_is_arm_hardware() {
+  local _hardware_platform
+  _hardware_platform="$(
+    uname -m
+  )"
+
+  if [[ "$_hardware_platform" == "arm64" ]] ||
+    [[ "$_hardware_platform" == "aarch64" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+export -f _is_arm_hardware
 
 _has_wsl() {
   if [[ "$(uname -r)" == *WSL2 ]]; then
