@@ -51,7 +51,7 @@ M.git_stash_list_plain = {
   end,
 }
 
-for _, suffix in pairs({ "current_file", "all", "include_untracked" }) do
+for _, suffix in pairs({ "_", "current_file", "all", "include_untracked" }) do
   local action = function()
     local left = "<left>"
     local left_repeated = left
