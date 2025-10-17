@@ -79,12 +79,7 @@ for _, suffix in pairs({ "_", "current_file", "all", "include_untracked" }) do
       cmd = cmd .. " -- " .. file_path
     end
 
-    vim.fn.feedkeys(":" .. cmd .. vim.api.nvim_replace_termcodes(
-      left_repeated, -- Move the cursor back to place it between ''
-      true,
-      true,
-      true
-    ), "n")
+    utils.write_to_command_mode(cmd .. left_repeated) -- Move the cursor back to place it between ''
   end
 
   local props = "git_stash_push_" .. suffix
@@ -124,10 +119,7 @@ for _, stash_action in pairs({
             .. position
             .. "}<Left>"
 
-          vim.fn.feedkeys(
-            vim.api.nvim_replace_termcodes(cmd, true, true, true),
-            "n"
-          )
+          utils.write_to_command_mode(cmd)
         end)
       end)
 
