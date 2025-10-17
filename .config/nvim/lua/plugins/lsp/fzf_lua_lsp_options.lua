@@ -65,6 +65,15 @@ local m = {
   },
 }
 
+local function add_runtimepath(lines)
+  table.insert(lines, "")
+  table.insert(lines, "==Runtime Path==")
+
+  for path in string.gmatch(vim.o.runtimepath, "[^,]+") do
+    table.insert(lines, path)
+  end
+end
+
 table.insert(m, {
   description = "My Neovim Status                                                                                          9",
   action = function()
@@ -117,6 +126,8 @@ table.insert(m, {
     for _, line in pairs(llm) do
       table.insert(lines, line)
     end
+
+    add_runtimepath(lines)
 
     vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
   end,
