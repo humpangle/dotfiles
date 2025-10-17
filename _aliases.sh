@@ -216,6 +216,9 @@ _alias_map_complete() {
 }
 
 alias_map[yz]=yazi
+alias_map[fm]=yazi
+# alias fm=vifm
+# alias sfm="sudo -E vifm_sudo_e --server-name vifm_root_1716773602"
 
 _alias_map_complete alias_map
 
@@ -502,9 +505,6 @@ fi
 alias el='echo -e "\n# -----------------------------------------------------------------------------\n"'
 alias elp='echo -e "\n# -----------------------------------------------------------------------------\n" >> p'
 alias epl=elp
-
-alias fm=vifm
-alias sfm="sudo -E vifm_sudo_e --server-name vifm_root_1716773602"
 
 alias up="sudo $DOTFILE_PARENT_PATH/dotfiles/_updd.sh"
 
