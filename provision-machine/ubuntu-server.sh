@@ -191,7 +191,7 @@ install_asdf() {
     gawk
 
   local version_=""
-  version_="$(get_latest_github_release asdf-vm/asdf)"
+  version_="$(_git get_latest_github_release asdf-vm/asdf)"
 
   local archi_="linux-amd64"
 
@@ -644,7 +644,7 @@ install_tmux() {
     local tmux_version
 
     tmux_version="$(
-      get_latest_github_release tmux/tmux
+      _git get_latest_github_release tmux/tmux
     )"
 
     _echo "Installing tmux version ${tmux_version}"
@@ -779,7 +779,7 @@ install_bat() {
   else
     local _version
     _version="$(
-      get_latest_github_release sharkdp/bat
+      _git get_latest_github_release sharkdp/bat
     )"
 
     _version="${_version/v/''}"
@@ -850,7 +850,7 @@ install_vifm() {
 
   local version
   version="$(
-    get_latest_github_release vifm/vifm
+    _git get_latest_github_release vifm/vifm
   )"
 
   local _version_no_prefix="${version/v/''}"
@@ -2078,7 +2078,7 @@ function install-kind {
 
   local _latest_version
   _latest_version="$(
-    get_latest_github_release kubernetes-sigs/kind
+    _git get_latest_github_release kubernetes-sigs/kind
   )"
 
   curl -Lfo ./kind \
@@ -2121,7 +2121,7 @@ function install-helm {
 
   local _latest_version
   _latest_version="$(
-    get_latest_github_release helm/helm
+    _git get_latest_github_release helm/helm
   )"
 
   _echo "Installing helm version \"$_latest_version\""
@@ -2155,7 +2155,7 @@ function install_shfmt {
   local shfmt_version
 
   shfmt_version="$(
-    get_latest_github_release mvdan/sh
+    _git get_latest_github_release mvdan/sh
   )"
 
   _echo "Installing shfmt version \"$shfmt_version\""

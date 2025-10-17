@@ -360,6 +360,105 @@ EOF
   echo "$result_"
 }
 
+___get_latest_github_release-help() {
+  read -r -d '' var <<'eof'
+Get the latest release from github. Usage:
+  _git get_latest_github_release user/repo [OPTIONS]
+
+Options:
+  --help/-h
+    Print this help text and quit.
+
+Available user/repo (the indented identifiers are the repos):
+  kubernetes-sigs
+    kind
+  helm
+    helm
+  kubernetes
+    kubernetes
+  neovim
+    neovim
+  mvdan
+    sh               -> shfmt
+  tmux
+    tmux
+  vifm
+    vifm
+  sharkdp
+    bat             -> bat syntax highlighting
+
+Examples:
+  # Get help.
+  _git get_latest_github_release --help
+
+  # Get latest for user/repo.
+  _git get_latest_github_release kubernetes-sigs/kind
+eof
+
+  echo -e "${var}\n"
+}
+
+get_latest_github_release() {
+  : "___help___ ___get_latest_github_release-help"
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help \
+      --options=h \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ___get_latest_github_release-help
+    return
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ___get_latest_github_release-help
+      return
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      Echo "Unknown option ${1}."
+      ___get_latest_github_release-help
+      return
+      ;;
+    esac
+  done
+
+  # handle non-option arguments
+  if [[ $# -ne 1 ]]; then
+    echo "$0: Non optional user/repo is required."
+    return
+  fi
+
+  local _user_repo=$1
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  curl --silent "https://api.github.com/repos/$_user_repo/releases/latest" | # Get latest release from GitHub api
+    grep '"tag_name":' |                                                     # Get tag line
+    sed -E 's/.*"([^"]+)".*/\1/'                                             # Pluck JSON value
+}
+
+# -----------------------------------------------------------------------------
+# HELP HELP HELP HELP
+# -----------------------------------------------------------------------------
 _is_local_function() {
   local _function_name="$1"
   local _this_file_content="$2"
