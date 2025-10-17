@@ -6,13 +6,13 @@ if plugin_enabled.has_vscode() then
 end
 
 local map_key = utils.map_key
-local obsession_utils = require("plugins.vim-obsession.obsession-utils")
+local session_utils = require("session-utils")
 
 local file_session_vim_exists = function()
   return vim.fn.glob("session*.vim") ~= ""
 end
 
-local session_name = obsession_utils.get_session_file()
+local session_name = session_utils.get_session_file()
 
 local start_session_file = function()
   utils.write_to_command_mode(
@@ -22,7 +22,7 @@ end
 
 local pick_session_with_fzf = function()
   local fzf_lua = require("fzf-lua")
-  local session_files, pattern = obsession_utils.get_all_session_files()
+  local session_files, pattern = session_utils.get_all_session_files()
 
   if not session_files then
     vim.notify(
@@ -71,7 +71,7 @@ return {
   init = function()
     vim.api.nvim_create_user_command(
       "SessionEbnis",
-      obsession_utils.get_session_path_relative,
+      session_utils.get_session_path_relative,
       {}
     )
 
@@ -90,12 +90,12 @@ return {
         return
       elseif count == 5 then
         vim.notify(
-          "CURRENT SESSION: " .. utils.get_session_path_relative()
+          "CURRENT SESSION: " .. session_utils.get_session_path_relative()
         )
         return
       elseif count == 55 then
         local reg = "+"
-        local session_path_relative = utils.get_session_path_relative()
+        local session_path_relative = session_utils.get_session_path_relative()
         vim.fn.setreg(reg, session_path_relative)
         utils.clip_cmd_exec(session_path_relative)
         vim.notify(

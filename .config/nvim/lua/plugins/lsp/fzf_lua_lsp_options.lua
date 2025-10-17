@@ -1,6 +1,6 @@
 local utils = require("utils")
 local fugitive_utils = require("plugins.fugitive.utils")
-local obsession_utils = require("plugins.vim-obsession.obsession-utils")
+local session_utils = require("session-utils")
 
 local m = {
   {
@@ -93,13 +93,13 @@ table.insert(m, {
       fugitive_utils.get_git_commit("HEAD"),
       "",
       "==Session File==",
-      obsession_utils.get_session_path_relative(),
+      session_utils.get_session_path_relative(),
       "",
       "==Working Directory==",
       vim.fn.getcwd(),
     }
 
-    local session_files = obsession_utils.get_all_session_files()
+    local session_files = session_utils.get_all_session_files()
     if session_files then
       table.insert(lines, "")
       table.insert(lines, "")
