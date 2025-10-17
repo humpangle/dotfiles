@@ -68,7 +68,47 @@ local m = {
   },
 }
 
-local function add_runtimepath(lines)
+local function my_status_add_git_info(lines)
+  local git_branch = vim.fn.systemlist(
+    "(cd " .. vim.fn.getcwd() .. " && git branch --show-current)"
+  )[1] or "Not in git repo"
+
+  table.insert(lines, "==Git Branch==")
+  table.insert(lines, git_branch)
+  table.insert(lines, fugitive_utils.get_git_commit("HEAD"))
+end
+
+local function my_status_add_session_info(lines)
+  table.insert(lines, "")
+  table.insert(lines, "==Session File==")
+  table.insert(lines, session_utils.get_session_path_relative())
+  table.insert(lines, "")
+  table.insert(lines, "==Working Directory==")
+  table.insert(lines, vim.fn.getcwd())
+end
+
+local function my_status_add_all_session_files(lines)
+  local session_files = session_utils.get_all_session_files()
+  if session_files then
+    table.insert(lines, "")
+    table.insert(lines, "")
+    table.insert(lines, "==All Session Files==")
+    for _, session_file in ipairs(session_files) do
+      table.insert(lines, session_file)
+    end
+  end
+end
+
+local function my_status_add_llm_info(lines)
+  table.insert(lines, "")
+  table.insert(lines, "==LLM INFO==")
+  table.insert(
+    lines,
+    vim.fn.systemlist("_dot rt")[1] .. "/llm-templates/claude/.claude"
+  )
+end
+
+local function my_status_add_runtimepath(lines)
   table.insert(lines, "")
   table.insert(lines, "==Runtime Path==")
 
@@ -80,10 +120,6 @@ end
 table.insert(m, {
   description = "My Neovim Status                                                                                          9",
   action = function()
-    local git_branch = vim.fn.systemlist(
-      "(cd " .. vim.fn.getcwd() .. " && git branch --show-current)"
-    )[1] or "Not in git repo"
-
     -- Create new buffer
     vim.cmd("tabnew")
     vim.cmd("setlocal buftype=nofile")
@@ -100,37 +136,13 @@ table.insert(m, {
       "My Status",
       "==============================================================================================================",
       "",
-      "==Git Branch==",
-      git_branch,
-      fugitive_utils.get_git_commit("HEAD"),
-      "",
-      "==Session File==",
-      session_utils.get_session_path_relative(),
-      "",
-      "==Working Directory==",
-      vim.fn.getcwd(),
     }
 
-    local session_files = session_utils.get_all_session_files()
-    if session_files then
-      table.insert(lines, "")
-      table.insert(lines, "")
-      table.insert(lines, "==All Session Files==")
-      for _, session_file in ipairs(session_files) do
-        table.insert(lines, session_file)
-      end
-    end
-
-    local llm = {
-      "",
-      "==LLM INFO==",
-      vim.fn.systemlist("_dot rt")[1] .. "/llm-templates/claude/.claude",
-    }
-    for _, line in pairs(llm) do
-      table.insert(lines, line)
-    end
-
-    add_runtimepath(lines)
+    my_status_add_git_info(lines)
+    my_status_add_session_info(lines)
+    my_status_add_all_session_files(lines)
+    my_status_add_llm_info(lines)
+    my_status_add_runtimepath(lines)
 
     vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
     vim.cmd("w!")
