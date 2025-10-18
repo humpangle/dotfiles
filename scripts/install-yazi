@@ -6,6 +6,10 @@ __external--install-yazi() {
 
   _echo "INSTALLING SUPERFILE"
 
+  # fzf
+
+  install-ripgrep
+
   if _is_darwin; then
     brew update
 
@@ -15,14 +19,30 @@ __external--install-yazi() {
       sevenzip \
       poppler \
       fd \
-      ripgrep \
-      fzf \
       zoxide \
       resvg \
       imagemagick \
       font-symbols-only-nerd-font
   else
-    sudo apt install -y ffmpeg 7zip poppler-utils fd-find ripgrep fzf zoxide imagemagick
+    sudo apt install -y \
+      ffmpeg \
+      7zip \
+      poppler-utils \
+      fd-find \
+      ripgrep \
+      zoxide \
+      imagemagick
+
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    rustup update
+    cargo install --force yazi-build
+
+    local config_dir_=""
+    config_dir_="$(_dot rt)/.config/yazi"
+    if [ -d "$config_dir_" ]; then
+      rm -rf "$HOME/.config/yazi"
+      ln -s "$config_dir_" "$HOME/.config"
+    fi
   fi
 
   _echo "Superfile installed successfully"

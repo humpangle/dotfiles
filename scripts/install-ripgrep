@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+__external--install-ripgrep() {
+  _echo "Attempting to install ripgrep"
+
+  if _is_darwin; then
+    brew install ripgrep
+    return
+  fi
+
+  local _version
+  _version="$(
+    _git get_latest_github_release BurntSushi/ripgrep
+  )"
+
+  if _is_arm_hardware; then
+    local _folder_name="ripgrep-${_version}-aarch64-unknown-linux-gnu"
+    local _filename="${_folder_name}.tar.gz"
+
+    rm -rf "$_filename" "$_folder_name"
+
+    curl -LO "https://github.com/BurntSushi/ripgrep/releases/download/${_version}/$_filename"
+
+    tar xzvf "$_filename"
+
+    local _bin="${_folder_name}/rg"
+
+    sudo chown root:root "$_bin"
+    sudo chmod +x "$_bin"
+    sudo mv "$_bin" /usr/bin
+
+    rm -rf "$_filename" "$_folder_name"
+  else
+    local filename_="ripgrep_${_version}-1_amd64.deb"
+    rm -rf "$filename_"
+
+    local url_="https://github.com/BurntSushi/ripgrep/releases/download/${_version}/$filename_"
+    _echo "Downloading from\n$url_"
+    curl -LO "$url_"
+
+    sudo dpkg -i "$filename_"
+    rm -rf "$filename_"
+  fi
+}
+__external--install-ripgrep "$@"

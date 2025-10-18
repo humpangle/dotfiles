@@ -707,7 +707,7 @@ install_neovim() {
   fi
 
   install_bat
-  install_ripgrep
+  install-ripgrep
 }
 
 install_fzf() {
@@ -726,49 +726,6 @@ install_neovim_from_source() {
   sudo make install
   cd -
   sudo rm -rf neovim
-}
-
-install_ripgrep() {
-  _echo "Attempting to install ripgrep"
-
-  if _is_darwin; then
-    brew install ripgrep
-    return
-  fi
-
-  local _version
-  _version="$(
-    get_latest_github_release BurntSushi/ripgrep
-  )"
-
-  if _is_arm_hardware; then
-    local _folder_name="ripgrep-${_version}-aarch64-unknown-linux-gnu"
-    local _filename="${_folder_name}.tar.gz"
-
-    rm -rf "$_filename" "$_folder_name"
-
-    curl -LO "https://github.com/BurntSushi/ripgrep/releases/download/${_version}/$_filename"
-
-    tar xzvf "$_filename"
-
-    local _bin="${_folder_name}/rg"
-
-    sudo chown root:root "$_bin"
-    sudo chmod +x "$_bin"
-    sudo mv "$_bin" /usr/bin
-
-    rm -rf "$_filename" "$_folder_name"
-  else
-    local filename_="ripgrep_${_version}-1_amd64.deb"
-    rm -rf "$filename_"
-
-    local url_="https://github.com/BurntSushi/ripgrep/releases/download/${_version}/$filename_"
-    _echo "Downloading from\n$url_"
-    curl -LO "$url_"
-
-    sudo dpkg -i "$filename_"
-    rm -rf "$filename_"
-  fi
 }
 
 install_bat() {
@@ -2186,102 +2143,6 @@ function install_shfmt {
   chmod u+x "$HOME/.local/bin/shfmt"
 }
 
-function ___get_latest_github_release-help {
-  read -r -d '' var <<'eof'
-Get the latest release from github. Usage:
-  _pm get_latest_github_release user/repo [OPTIONS]
-
-Options:
-  --help/-h
-    Print this help text and quit.
-
-Available user/repo (the indented identifiers are the repos):
-  kubernetes-sigs
-    kind
-  helm
-    helm
-  kubernetes
-    kubernetes
-  neovim
-    neovim
-  mvdan
-    sh               -> shfmt
-  tmux
-    tmux
-  vifm
-    vifm
-  sharkdp
-    bat             -> bat syntax highlighting
-
-Examples:
-  # Get help.
-  _pm get_latest_github_release --help
-
-  # Get latest for user/repo.
-  _pm get_latest_github_release kubernetes-sigs/kind
-eof
-
-  echo -e "${var}\n"
-}
-
-function get_latest_github_release {
-  : "___help___ ___get_latest_github_release-help"
-
-  # --------------------------------------------------------------------------
-  # PARSE ARGUMENTS
-  # --------------------------------------------------------------------------
-  local parsed
-
-  if ! parsed="$(
-    getopt \
-      --longoptions=help \
-      --options=h \
-      --name "$0" \
-      -- "$@"
-  )"; then
-    ___get_latest_github_release-help
-    return
-  fi
-
-  # Provides proper quoting
-  eval set -- "$parsed"
-
-  while true; do
-    case "$1" in
-    --help | -h)
-      ___get_latest_github_release-help
-      return
-      ;;
-
-    --)
-      shift
-      break
-      ;;
-
-    *)
-      Echo "Unknown option ${1}."
-      ___get_latest_github_release-help
-      return
-      ;;
-    esac
-  done
-
-  # handle non-option arguments
-  if [[ $# -ne 1 ]]; then
-    echo "$0: Non optional user/repo is required."
-    return
-  fi
-
-  local _user_repo=$1
-  # --------------------------------------------------------------------------
-  # END PARSE ARGUMENTS
-  # --------------------------------------------------------------------------
-
-  curl --silent "https://api.github.com/repos/$_user_repo/releases/latest" | # Get latest release from GitHub api
-    grep '"tag_name":' |                                                     # Get tag line
-    sed -E 's/.*"([^"]+)".*/\1/'                                             # Pluck JSON value
-}
-
 function ___update_latest_global_version-help {
   read -r -d '' var <<'eof'
 Update a binary's global version. Usage:
@@ -2825,16 +2686,6 @@ install_inotify_info() {
   cd - &>/dev/null
   run_as_root rm -rf inotify-info
   cd "$here_"
-}
-
-install_superfile_script_="$(dirname "${BASH_SOURCE[0]}")/install-superfile.sh"
-install-superfile() {
-  "$install_superfile_script_" "$@"
-}
-
-install_yazi_script_="$(dirname "${BASH_SOURCE[0]}")/install-yazi.sh"
-install-yazi() {
-  "$install_yazi_script_" "$@"
 }
 
 # -----------------------------------------------------------------------------
