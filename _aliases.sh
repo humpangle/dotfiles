@@ -215,8 +215,8 @@ _alias_map_complete() {
   done
 }
 
-alias_map[yz]=yazi
-alias_map[fm]=yazi
+alias_map[yz]='yazi'
+alias_map[fm]='yazi'
 # alias fm=vifm
 # alias sfm="sudo -E vifm_sudo_e --server-name vifm_root_1716773602"
 
