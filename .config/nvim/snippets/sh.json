@@ -1205,5 +1205,18 @@
     "description": [
       "If should copy and copy executable exists"
     ]
+  },
+  "bash source": {
+    "prefix": [
+      "bashSource",
+      "bashScriptSource",
+      "sourceBashScript"
+    ],
+    "body": [
+      "\"\\$(dirname \"\\${BASH_SOURCE[0]}\")\""
+    ],
+    "description": [
+      "bash script source"
+    ]
   }
 }
