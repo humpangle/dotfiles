@@ -11,7 +11,11 @@ local log_options = {
     description = "Log oneline THIS CWD                                                                            11",
     action = function()
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
+        vim.cmd("tab split")
         vim.cmd("Git log --oneline")
+        vim.defer_fn(function()
+          vim.cmd("only")
+        end, 5)
       end, {
         force = true,
         wipe = true,
