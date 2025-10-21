@@ -171,7 +171,7 @@ m.git_pull = {
 
 for _, branch_name in ipairs({ "main", "master", "develop" }) do
   table.insert(m, {
-    description = "Check out commit " .. branch_name .. " HEAD commit",
+    description = "Check out / change branch to commit " .. branch_name .. " HEAD commit",
     action = function()
       local git_branch_name_head =
         fugitive_utils.get_git_commit(branch_name)
