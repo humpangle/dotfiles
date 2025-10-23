@@ -1,3 +1,9 @@
+-- Yazi globals
+Status = Status
+cx = cx
+ya = ya
+ui = ui
+
 require("smart-enter"):setup({
   open_multi = true,
 })
@@ -16,3 +22,9 @@ Status:children_add(function()
     " ",
   })
 end, 500, Status.RIGHT)
+
+require("relative-motions"):setup({
+  show_numbers = "relative",
+  show_motion = true,
+  enter_mode = "first",
+})
