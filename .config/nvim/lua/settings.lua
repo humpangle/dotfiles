@@ -68,8 +68,8 @@ end
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 -- I guess some plugins are changing tabstop/shiftwidth settings for some files.
-vim.api.nvim_create_autocmd({"FileType", "BufReadPost"}, {
-  pattern = {"*.py", "python"},
+vim.api.nvim_create_autocmd({ "FileType", "BufReadPost" }, {
+  pattern = { "*.py", "python" },
   callback = function()
     vim.bo.tabstop = 4
     vim.bo.shiftwidth = 4
@@ -732,14 +732,6 @@ utils.map_key("n", "<localleader>tm", function()
   vim.api.nvim_buf_set_lines(0, line_num, line_num, false, { date_str })
 end, { noremap = true })
 
--- Rename File
-utils.map_key(
-  "n",
-  "<leader>bn",
-  utils.RenameFile,
-  { noremap = true, desc = "Buffer name = rename file <leader>bn" }
-)
-
 -- Delete file and folder
 utils.map_key("n", "<localleader>rm", utils.DeleteFile(), { noremap = true })
 utils.map_key("n", "<localleader>rd", utils.DeleteFile("d"), { noremap = true })
@@ -813,3 +805,4 @@ require("settings.diagnostics")
 require("escapings")
 require("my-search-patterns")
 require("buffer-management").delete_buffers_keymap()
+require("load-in-float")
