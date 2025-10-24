@@ -6,4 +6,7 @@ snippet_out.json
 !.config/alacritty/alacritty-template.toml
 !llm-templates/*
 !llm-templates/claude/claude.ebnis.chat.md
+!llm-templates/claude/.claude
+!llm-templates/claude/.claude/**
+!llm-templates/claude/.claude/commands/*
 llm-templates/.___scratch*
