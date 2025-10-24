@@ -108,13 +108,32 @@ local function yank_to_registers(path, register, description)
   end
 end
 
-local function yank_line_number_only(register)
-  local line_numb = get_line_numbers_if_visual_mode() or ""
+local function yank_line_number_only(register, mode)
+  local line_numb
+
+  if mode == "current" then
+    line_numb = get_current_line_number()
+  elseif mode == "paragraph" then
+    line_numb = get_paragraph_line_range()
+  else
+    -- Default to visual mode or current line
+    line_numb = get_line_numbers_if_visual_mode()
+      or get_current_line_number()
+  end
+
   vim.fn.setreg('"', line_numb)
   vim.fn.setreg(register, line_numb)
-  vim.cmd.echo(
-    "'" .. "+" .. " -> " .. "line number" .. " = " .. line_numb .. "'"
-  )
+
+  local desc
+  if mode == "current" then
+    desc = "line number"
+  elseif mode == "paragraph" then
+    desc = "paragraph line range"
+  else
+    desc = "line number"
+  end
+
+  vim.cmd.echo("'" .. "+" .. " -> " .. desc .. " = " .. line_numb .. "'")
 end
 
 -- Create a path yanking function based on count
@@ -122,8 +141,15 @@ local function create_path_yanker(register)
   return function()
     local count = vim.v.count1
 
-    if count == 9 then
-      yank_line_number_only(register)
+    -- Count 20: Yank current line number (normal) or visual range (visual)
+    if count == 20 then
+      yank_line_number_only(register, "current")
+      return
+    end
+
+    -- Count 30: Yank paragraph line range
+    if count == 30 then
+      yank_line_number_only(register, "paragraph")
       return
     end
 
@@ -192,11 +218,29 @@ local function create_path_yanker(register)
   end
 end
 
-local doc =
-  "1=name 2=rel 3=abs 4=rel_dir 5=abs_dir 21=rel+line 31=abs+line 41=rel_dir+line 51=abs_dir+line 22=rel+para 32=abs+para 42=rel_dir+para 52=abs_dir+para 62=git_rel_path 64=git_rel_dir 9=line-number-only"
+local doc = table.concat({
+  "1=name",
+  "2=rel",
+  "3=abs",
+  "4=rel_dir",
+  "5=abs_dir",
+  "21=rel+line",
+  "31=abs+line",
+  "41=rel_dir+line",
+  "51=abs_dir+line",
+  "22=rel+para",
+  "32=abs+para",
+  "42=rel_dir+para",
+  "52=abs_dir+para",
+  "62=git_rel_path",
+  "64=git_rel_dir",
+  "20=line-num(current/visual)",
+  "30=para-line-range",
+}, " ")
+
 utils.map_key({ "n", "x" }, "<localleader>yf", create_path_yanker("+"), {
   noremap = true,
-  desc = "Yank path: " .. doc,
+  desc = "Yank file path: " .. doc,
 })
 utils.map_key({ "n", "x" }, "<localleader>cf", create_path_yanker("a"), {
   noremap = true,
