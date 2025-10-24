@@ -47,9 +47,6 @@ map_key("n", "<leader>fw", ":Windows!<CR>", { noremap = true })
 -- Search commands: user defined, plugin defined, or native commands
 map_key("n", "<Leader>C", ":Commands!<CR>", { noremap = true })
 
--- Search key mappings - find already mapped before defining new mappings
-map_key("n", "<Leader>M", ":Maps!<CR>", { noremap = true })
-
 -- Search in project - do not match filenames
 map_key("n", "<Leader>f/", function()
   vim.o.background = "dark"

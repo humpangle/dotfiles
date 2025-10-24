@@ -136,6 +136,12 @@ return {
         require("fzf-lua").colorschemes()
       end, { noremap = true })
 
+      -- Search key mappings - find already mapped before defining new mappings
+      map_key("n", "<leader>M", function()
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").keymaps()
+      end, { noremap = true, desc = "Find keymaps" })
+
       -- Find open buffers
       map_key("n", "<Leader>ffb", function()
         utils.set_fzf_lua_nvim_listen_address()
