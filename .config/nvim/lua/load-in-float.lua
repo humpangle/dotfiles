@@ -39,6 +39,10 @@ local files_fzf_options = {
     description = "sz",
     path = ".___scratch/z/sz.md",
   },
+  {
+    description = "Slack",
+    path = ".___scratch/z/todos-global/slack.md",
+  },
 }
 
 for _, file in ipairs(files_fzf_options) do
