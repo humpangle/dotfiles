@@ -44,9 +44,6 @@ map_key("n", "<leader>ft", ":Filetypes!<CR>", { noremap = true })
 -- Find windows
 map_key("n", "<leader>fw", ":Windows!<CR>", { noremap = true })
 
--- Find color schemes
-map_key("n", "<leader>fs", ":Colors!<CR>", { noremap = true })
-
 -- Search commands: user defined, plugin defined, or native commands
 map_key("n", "<Leader>C", ":Commands!<CR>", { noremap = true })
 
