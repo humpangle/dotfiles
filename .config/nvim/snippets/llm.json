@@ -272,5 +272,18 @@
     "description": [
       "Summarize jira issue"
     ]
+  },
+  "write llm-outs": {
+    "prefix": [
+      "write_out_llm",
+      "llm_write_out",
+      "output_llm"
+    ],
+    "body": [
+      "Write output to ./.___scratch/llm-outs/"
+    ],
+    "description": [
+      "Write LLM outputs"
+    ]
   }
 }
