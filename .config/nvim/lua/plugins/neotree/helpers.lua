@@ -601,7 +601,7 @@ M.config = {
     -- "never"  means directory scans are never async.
     scan_mode = "shallow", -- "shallow": Don't scan into directories to detect possible empty directory a priori
     -- "deep": Scan into directories to detect empty or grouped empty directories a priori.
-    bind_to_cwd = true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
+    bind_to_cwd = false, -- true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
     cwd_target = {
       sidebar = "tab", -- sidebar is when position = left or right
       current = "window", -- current is when position = current
