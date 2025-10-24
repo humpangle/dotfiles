@@ -405,6 +405,59 @@ llm_project_start() {
   fi
 }
 
+to-dot-cmds() {
+  : "Copy a file to llm-templates/claude/.claude/commands/ and delete the source file, then run llm_project_start."
+
+  local file_path="$1"
+
+  if [ -z "$file_path" ]; then
+    echo "Error: File path is required" >&2
+    echo "Usage: to-dot-cmds <absolute_file_path>" >&2
+    return 1
+  fi
+
+  if [ ! -f "$file_path" ]; then
+    echo "Error: File '$file_path' does not exist" >&2
+    return 1
+  fi
+
+  # Check if path is absolute
+  if [[ "$file_path" != /* ]]; then
+    echo "Error: File path must be absolute (start with /)" >&2
+    return 1
+  fi
+
+  local dotfiles_root_=""
+  dotfiles_root_="$(_dot rt)"
+  local target_dir="$dotfiles_root_/llm-templates/claude/.claude/commands"
+  local filename=""
+  filename="$(basename "$file_path")"
+  local target_path="$target_dir/$filename"
+
+  # Ensure target directory exists
+  mkdir -p "$target_dir"
+
+  # Copy the file
+  if cp "$file_path" "$target_path"; then
+    echo "Copied '$file_path' to '$target_path'"
+  else
+    echo "Error: Failed to copy file" >&2
+    return 1
+  fi
+
+  # Delete the source file
+  if rm "$file_path"; then
+    echo "Deleted source file '$file_path'"
+  else
+    echo "Error: Failed to delete source file" >&2
+    return 1
+  fi
+
+  # Execute llm_project_start
+  echo "Running llm_project_start..."
+  llm_project_start
+}
+
 _is_local_function() {
   local _function_name="$1"
   local _this_file_content="$2"
