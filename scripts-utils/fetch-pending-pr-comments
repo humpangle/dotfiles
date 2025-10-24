@@ -1,0 +1,336 @@
+#!/bin/bash
+# Script to fetch draft/pending review comments from a GitHub PR
+# Usage: ./fetch-pr-pending-comments.sh <PR_NUMBER> [output_format]
+#   PR_NUMBER: Required - The pull request number
+#   output_format: Optional - 'json' (default) or 'readable'
+
+_fetch-pending-pr-comments() {
+  set -e
+
+  # Colors for output
+  local RED='\033[0;31m'
+  local GREEN='\033[0;32m'
+  local YELLOW='\033[1;33m'
+  local BLUE='\033[0;34m'
+  local NC='\033[0m' # No Color
+
+  # Check if PR number is provided
+  if [ -z "$1" ]; then
+    echo -e "${RED}Error: PR number is required${NC}"
+    echo "Usage: $0 <PR_NUMBER> [output_format]"
+    echo "  output_format: 'json' (default) or 'readable'"
+    exit 1
+  fi
+
+  local pr_number=$1
+  local output_format=${2:-json}
+
+  # Get git root directory
+  # GIT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
+
+  # Only show status message for readable format
+  if [ "$output_format" != "json" ]; then
+    echo -e "${BLUE}Fetching pending review comments for PR #${pr_number}...${NC}"
+  fi
+
+  # GraphQL query to fetch pending reviews
+  local query=""
+  query=$(
+    cat <<'EOF'
+query($prNumber: Int!) {
+  repository(owner: "AlayaCare", name: "api.scheduler") {
+    pullRequest(number: $prNumber) {
+      title
+      author {
+        login
+      }
+      reviews(first: 10, states: PENDING) {
+        nodes {
+          author {
+            login
+          }
+          state
+          body
+          comments(first: 50) {
+            nodes {
+              path
+              position
+              body
+              diffHunk
+              originalPosition
+              line
+            }
+          }
+        }
+      }
+    }
+  }
+}
+EOF
+  )
+
+  # Fetch the data
+  local response=""
+  response="$(
+    gh api graphql -f query="$query" -F prNumber="$pr_number"
+  )"
+
+  # Check if there are any pending reviews
+  PENDING_COUNT=$(echo "$response" | jq '.data.repository.pullRequest.reviews.nodes | length')
+
+  if [ "$PENDING_COUNT" -eq 0 ]; then
+    echo -e "${GREEN}No pending review comments found for PR #${pr_number}${NC}"
+    exit 0
+  fi
+
+  # Output based on format
+  if [ "$output_format" = "json" ]; then
+    # Output raw JSON
+    echo "$response" | jq '.'
+  else
+    # Output in readable format
+    PR_TITLE=$(echo "$response" | jq -r '.data.repository.pullRequest.title')
+    PR_AUTHOR=$(echo "$response" | jq -r '.data.repository.pullRequest.author.login')
+
+    echo ""
+    echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
+    echo -e "${GREEN}PR #${pr_number}: ${PR_TITLE}${NC}"
+    echo -e "${GREEN}Author: ${PR_AUTHOR}${NC}"
+    echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
+    echo ""
+
+    # Process each pending review
+    echo "$response" | jq -r '.data.repository.pullRequest.reviews.nodes[] |
+        "REVIEWER: \(.author.login)\nSTATUS: \(.state)\nREVIEW_BODY: \(.body // "No overall comment")\n---COMMENTS---\n" +
+        (.comments.nodes | map(
+            "FILE: \(.path)\nLINE: \(.line // "N/A")\nCOMMENT: \(.body)\nDIFF:\n\(.diffHunk)\n---"
+        ) | join("\n"))' | while IFS= read -r line; do
+
+      if [[ $line == REVIEWER:* ]]; then
+        REVIEWER=$(echo "$line" | cut -d' ' -f2-)
+        echo -e "${YELLOW}┌─ Reviewer: ${REVIEWER}${NC}"
+      elif [[ $line == STATUS:* ]]; then
+        STATUS=$(echo "$line" | cut -d' ' -f2-)
+        echo -e "${YELLOW}│  Status: ${STATUS}${NC}"
+      elif [[ $line == REVIEW_BODY:* ]]; then
+        BODY=$(echo "$line" | cut -d' ' -f2-)
+        if [ "$BODY" != "No overall comment" ]; then
+          echo -e "${YELLOW}│  Overall: ${BODY}${NC}"
+        fi
+      elif [[ $line == ---COMMENTS--- ]]; then
+        echo -e "${YELLOW}│${NC}"
+        echo -e "${YELLOW}│  Comments:${NC}"
+        COMMENT_NUM=1
+      elif [[ $line == FILE:* ]]; then
+        FILE=$(echo "$line" | cut -d' ' -f2-)
+        echo -e "${YELLOW}│${NC}"
+        echo -e "${BLUE}│  [$COMMENT_NUM] File: ${FILE}${NC}"
+        ((COMMENT_NUM++))
+      elif [[ $line == LINE:* ]]; then
+        LINE_NUM=$(echo "$line" | cut -d' ' -f2-)
+        echo -e "${BLUE}│      Line: ${LINE_NUM}${NC}"
+      elif [[ $line == COMMENT:* ]]; then
+        COMMENT=$(echo "$line" | cut -d' ' -f2-)
+        echo -e "${GREEN}│      Comment: ${COMMENT}${NC}"
+      elif [[ $line == DIFF: ]]; then
+        echo -e "${YELLOW}│      Diff context:${NC}"
+      elif [[ $line == --- ]]; then
+        : # Skip separator
+      else
+        # Diff hunk lines
+        if [ ! -z "$line" ]; then
+          echo -e "${YELLOW}│      ${NC}${line}"
+        fi
+      fi
+    done
+
+    echo -e "${YELLOW}└─────────────────────────────────────────────────────────────${NC}"
+    echo ""
+
+    # Summary
+    TOTAL_COMMENTS=$(echo "$response" | jq '[.data.repository.pullRequest.reviews.nodes[].comments.nodes[]] | length')
+    echo -e "${GREEN}Summary:${NC}"
+    echo -e "  • Pending reviews: ${PENDING_COUNT}"
+    echo -e "  • Total pending comments: ${TOTAL_COMMENTS}"
+    echo ""
+    echo -e "${YELLOW}Note: These are DRAFT comments that haven't been submitted yet.${NC}"
+    echo -e "${YELLOW}They will become visible to the PR author once the reviewer submits their review.${NC}"
+  fi
+}
+
+___fetch-pending-pr-comments_help() {
+  read -r -d '' var <<'eof' || true
+# Fetch PR Pending Comments
+
+This script fetches draft/pending review comments from a GitHub pull request that reviewers have written but not
+officially submitted yet.
+
+## Usage
+
+```bash
+fetch-pending-pr-comments <PR_NUMBER> [output_format]
+```
+
+### Arguments
+
+- `PR_NUMBER` (required): The pull request number to fetch pending comments from
+- `output_format` (optional): Output format - either `json` (default) or `readable`
+
+## Examples
+
+### Readable Format (Human-friendly)
+
+```bash
+# From the script directory
+./.___scratch/fetch-pr-pending-comments.sh 6692 readable
+
+# Or with full path
+/home/adekanmiademiiju/alaya/accloud-lde/services/api.scheduler--worktrees/0/backend/api.scheduler/.___scratch/fetch-pr-pending-comments.sh 6692 readable
+```
+
+Output includes:
+- PR title and author
+- Reviewer name and status
+- Each comment with:
+  - File path
+  - Line number
+  - Comment text
+  - Diff context
+- Summary statistics
+
+### JSON Format (Machine-parseable)
+
+```bash
+./.___scratch/fetch-pr-pending-comments.sh 6692 json
+
+# Pipe to jq for processing
+./.___scratch/fetch-pr-pending-comments.sh 6692 json | jq '.data.repository.pullRequest.reviews.nodes[0].comments.nodes | length'
+```
+
+## What Are Pending Comments?
+
+**Pending comments** are draft review comments that:
+- Reviewers write during their review process
+- Are NOT visible to the PR author yet
+- Only become visible after the reviewer clicks "Submit review"
+- Can still be edited or deleted by the reviewer before submission
+
+## Requirements
+
+- `gh` (GitHub CLI) must be installed and authenticated
+- `jq` must be installed (for JSON processing)
+- Appropriate repository permissions to view reviews
+
+## Output Examples
+
+### Readable Format
+
+```
+═══════════════════════════════════════════════════════════════
+PR #6692: SCHED-5456: Clean up unicorns-SCHED-4661-improve-visit-update-performance flag
+Author: callmiy
+═══════════════════════════════════════════════════════════════
+
+┌─ Reviewer: callmiy
+│  Status: PENDING
+│
+│  Comments:
+│
+│  [1] File: backend/api.scheduler/tests/api/external/test_visit_create.py
+│      Line: 29
+│      Comment: Remove unused parameter `external_client`
+│      Diff context:
+│      @@ -41,7 +26,7 @@ def test_create_dates_required(client, argument):
+│           assert argument not in resp.json
+│
+│
+│      -def test_create_client_id_required(client, external_client):
+│      +def test_create_client_id_required(client):
+...
+
+Summary:
+  • Pending reviews: 1
+  • Total pending comments: 20
+
+Note: These are DRAFT comments that haven't been submitted yet.
+They will become visible to the PR author once the reviewer submits their review.
+```
+
+### JSON Format
+
+Returns the full GraphQL response with structure:
+```json
+{
+  "data": {
+    "repository": {
+      "pullRequest": {
+        "title": "PR Title",
+        "author": {"login": "username"},
+        "reviews": {
+          "nodes": [
+            {
+              "author": {"login": "reviewer"},
+              "state": "PENDING",
+              "body": "",
+              "comments": {
+                "nodes": [
+                  {
+                    "path": "file/path.py",
+                    "line": 29,
+                    "body": "Comment text",
+                    "diffHunk": "diff context",
+                    "position": 34,
+                    "originalPosition": 34
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+## Technical Details
+
+The script uses the GitHub GraphQL API with the following query:
+
+```graphql
+query($prNumber: Int!) {
+  repository(owner: "AlayaCare", name: "api.scheduler") {
+    pullRequest(number: $prNumber) {
+      title
+      author { login }
+      reviews(first: 10, states: PENDING) {
+        nodes {
+          author { login }
+          state
+          body
+          comments(first: 50) {
+            nodes {
+              path
+              position
+              body
+              diffHunk
+              originalPosition
+              line
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+The key part is `reviews(first: 10, states: PENDING)` which filters for draft reviews that haven't been submitted yet.
+
+## Related Documentation
+
+See `.cursor/commands/pr-comments-pending.md` for the Cursor command documentation.
+eof
+
+  echo -e "${var}"
+}
