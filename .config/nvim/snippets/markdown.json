@@ -259,7 +259,7 @@
       "breakPoinCondPytest"
     ],
     "body": [
-      "(node := __import__('os').environ.get('PYTEST_CURRENT_TEST', '')) and '[${1}]' in node and ' (call)' in node"
+      "(node := __import__('os').environ.get('PYTEST_CURRENT_TEST', '')) and '[${1}] (call)' in node"
     ],
     "description": [
       "pytest conditional breakpoint"
