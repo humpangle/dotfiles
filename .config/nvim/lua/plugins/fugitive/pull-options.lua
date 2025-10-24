@@ -27,6 +27,7 @@ for _, branch_name in pairs({ "main", "master", "develop" }) do
     }
 
     local cmd_str = table.concat(cmd, " ")
+    vim.print("\nExecuting command:\n" .. cmd_str)
 
     local result = vim.fn.systemlist(cmd_str)
     vim.print(
