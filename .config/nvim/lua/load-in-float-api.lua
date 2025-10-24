@@ -113,8 +113,8 @@ function m.load_in_float(filepath, opts)
     })
   end
 
-  -- Defaults: qq in normal mode, and <C-q> in any mode
-  local close_keys = opts.close_keys or { normal = "qq", any = "<C-q>" }
+  -- Defaults: <C-q> in any mode
+  local close_keys = opts.close_keys or { any = "<C-q>" }
   if close_keys.normal then
     vim.keymap.set(
       "n",
