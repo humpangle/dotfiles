@@ -15,15 +15,15 @@ for _, branch_name in pairs({ "main", "master", "develop" }) do
     end
 
     local cmd = {
-      "(",
+      "(\n",
       "cd " .. path,
-      "&&",
+      "&& \n",
       "git fetch",
-      "&&",
+      "&& \n",
       "git pull origin " .. branch_name,
-      "&&",
+      "&& \n",
       "git submodule update --init --recursive",
-      ")",
+      "\n)",
     }
 
     local cmd_str = table.concat(cmd, " ")
