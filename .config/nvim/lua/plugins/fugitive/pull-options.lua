@@ -29,14 +29,17 @@ for _, branch_name in pairs({ "main", "master", "develop" }) do
     local cmd_str = table.concat(cmd, " ")
     vim.print("\nExecuting command:\n" .. cmd_str)
 
-    local result = vim.fn.systemlist(cmd_str)
-    vim.print(
-      "\nPulling branch "
-        .. branch_name
-        .. ":\n"
-        .. table.concat(result, "\n")
-        .. "\n"
-    )
+    vim.system({ "bash", "-c", cmd_str }, { text = true }, function(obj)
+      vim.schedule(function()
+        vim.print(
+          "\nPulling branch "
+            .. branch_name
+            .. ":\n"
+            .. obj.stdout
+            .. "\n"
+        )
+      end)
+    end)
   end
 
   local prop = "pull_branch_" .. branch_name
