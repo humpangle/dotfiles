@@ -89,6 +89,12 @@ function m.load_in_float(filepath, opts)
   -- Close helpers (no <Esc> binding)
   local function close_win()
     if vim.api.nvim_win_is_valid(win) then
+      -- Save before close if buffer is modified
+      if vim.bo[buf].modified then
+        vim.api.nvim_buf_call(buf, function()
+          vim.cmd("silent! write")
+        end)
+      end
       vim.api.nvim_win_close(win, false)
     end
   end
