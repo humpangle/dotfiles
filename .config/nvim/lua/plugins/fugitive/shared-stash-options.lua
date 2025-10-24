@@ -141,4 +141,11 @@ for _, stash_action in pairs({
   end
 end
 
+M.stash_clear = {
+  description = "Git Stash Clear Delete All Clear",
+  action = function()
+    utils.write_to_command_mode("Git stash clear")
+  end,
+}
+
 return M
