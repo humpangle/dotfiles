@@ -1,0 +1,1026 @@
+#!/usr/bin/env bash
+
+resurrect_file_="$HOME/.tmux/resurrect/last"
+
+___start_tmux_help() {
+  read -r -d '' var <<'eof' || true
+Start tmux. Usage:
+  c-tmux start_tmux -h|--help
+  c-tmux start_tmux [OPTIONS] <SESSION>
+
+If no options and session are given, we will change to dotfiles directory and start/enter $DEFAULT_TMUX_SESSION if it exists.
+
+Options:
+  -h,--help
+    Print this help text and quit.
+  -c,--cd <dir>
+    Change directory to <dir> before entering tmux.
+  -p,--pwd
+    Change directory to current working directory before entering tmux.
+  -b.--base
+    Must be used in addition to --cd or --pwd. Use the basename of the directory to change to as session name. If
+    [session] is specified, this option is ignored.
+  -d,--detach
+    Detach from all clients before attaching to a client.
+  -D,--debug
+    Do not take any action - just print command to run to stdout.
+  -n.--new
+    Create a new tmux session named <session>
+  -f,--no-flush
+    Do not flush current session into resurrect file. Flushing takes a few seconds to complete, but sometimes we just
+    flushed and do not wish to flush again.
+  -s,--state
+    Set session name as the current state in resurrect file. Is ignored is -n,--new is set.
+
+Examples:
+  # Get help.
+  c-tmux start_tmux --help
+
+  # Start default session (must set DEFAULT_TMUX_SESSION environment variable).
+  c-tmux start_tmux
+
+  # Change directory to <dir> and start tmux session <session>.
+  c-tmux start_tmux --cd <dir> <session>
+  c-tmux start_tmux -c <dir> <session>
+
+  # Change directory to $PWD and start tmux session <session>.
+  c-tmux start_tmux --pwd <session>
+  c-tmux start_tmux -p <session>
+
+  # Change directory to $PWD and start tmux whose session name is the basename of $PWD.
+  c-tmux start_tmux --pwd --base
+  c-tmux start_tmux -pb
+
+  # Detach <session> from all clients before attaching to <session>.
+  c-tmux start_tmux --detach
+  c-tmux start_tmux -d
+  c-tmux start_tmux -d <session>
+
+  # Print command to run only.
+  c-tmux start_tmux --debug --pwd --base
+  c-tmux start_tmux -Dpb
+
+  # Create new session
+  c-tmux start_tmux --new session_name
+  c-tmux start_tmux -n session_name
+
+  # Change the default state to the named session.
+  c-tmux start_tmux -s session_name
+  c-tmux start_tmux --state session_name
+eof
+
+  echo -e "$var"
+}
+
+start_tmux() {
+  : "___help___ ___start_tmux_help"
+
+  set -o errexit
+
+  local _session
+  local _cd
+  local _use_basename_as_session
+  local _detach
+  local _debug
+  local _new
+  # By default, we flush, unless user passes --no-flush option.
+  local flush_=1
+  # Set the default state in the resurrect file to the named session.
+  local set_state_=
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local _parsed
+
+  if ! _parsed="$(
+    getopt \
+      --longoptions=help,pwd,cd:,base,detach,debug,new,no-flush,state \
+      --options=h,p,c:,b,d,D,n,f,s \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ___start_tmux_help
+    exit 129
+  fi
+
+  # Provides proper quoting
+  eval set -- "$_parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ___start_tmux_help
+      return
+      ;;
+
+    --cd | -c)
+      _cd=$2
+      shift 2
+      ;;
+
+    --pwd | -p)
+      _cd=$PWD
+      shift
+      ;;
+
+    --base | -b)
+      _use_basename_as_session=1
+      shift
+      ;;
+
+    --detach | -d)
+      _detach=1
+      shift
+      ;;
+
+    --debug | -D)
+      _debug=1
+      shift
+      ;;
+
+    --new | -n)
+      _new=1
+      shift
+      ;;
+
+    --no-flush | -f)
+      flush_=
+      shift
+      ;;
+
+    --state | -s)
+      set_state_=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown option ${1}." >&2
+      ___start_tmux_help
+      exit 129
+      ;;
+    esac
+  done
+
+  if [[ "$#" -eq 1 ]]; then
+    _session="$1"
+  fi
+
+  # A new session will not already exist in resurrect file. So we ignore setting new session as state.
+  if [[ -n "$_new" ]]; then
+    set_state_=
+  fi
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  if [[ -n "$_cd" ]]; then
+    _cd="$(
+      realpath "$_cd"
+    )"
+
+    if [[ -z "$_session" && -n "$_use_basename_as_session" ]]; then
+      _session="$(
+        basename "$_cd"
+      )"
+    fi
+  fi
+
+  local _session_exists
+
+  # If session specified/computed is not in list of available sessions and we are not creating new session, we must
+  # error.
+  if [[ -n "$_session" && -z "$_new" ]]; then
+    local list_existing_sessions_
+
+    local list_cmd_="list --names"
+
+    if [ -z "$flush_" ]; then
+      list_cmd_+=" --no-flush"
+    fi
+
+    mapfile -t list_existing_sessions_ < <(eval "$list_cmd_")
+
+    for _elm in "${list_existing_sessions_[@]}"; do
+      if [[ "$_elm" == "$_session" ]]; then
+        _session_exists=1
+        break
+      fi
+    done
+
+    if [[ -z "$_session_exists" ]]; then
+      echo -e \
+        "\nSession \"$_session\" does not exist. Are you trying to create a new session? Then use -n,--new flag.\n" \
+        >&2
+
+      exit 1
+    else
+      # Session exists and we are setting state
+      if [ -n "$set_state_" ]; then
+        __set-state "$_session" &>/dev/null || :
+      fi
+    fi
+  fi
+
+  if [[ -z "$_session" ]]; then
+    _session="${1:-$DEFAULT_TMUX_SESSION}"
+
+    if [[ -z "$_cd" ]]; then
+      _cd="$HOME/dotfiles"
+    fi
+  fi
+
+  if [[ -z "$_session" ]]; then
+    echo "Provide target session or set DEFAULT_TMUX_SESSION environment variable." >&2
+    exit 1
+  fi
+
+  local _cmd="tmux new-session -s $_session"
+
+  if tmux ls &>/dev/null &&
+    [[ -z "$_new" ]]; then
+    _cmd="tmux attach-session"
+
+    if [[ -n "$_detach" ]]; then
+      _cmd+=" -d"
+    fi
+
+    _cmd+=" -t $_session"
+  fi
+
+  if [[ -n "$_cd" ]]; then
+    _cmd+=" -c $_cd"
+  fi
+
+  if [[ -n "$_debug" ]]; then
+    echo -e "\nCD:  $_cd\nCMD: $_cmd\n"
+    return
+  fi
+
+  if [[ -n "$TMUX" ]]; then
+    echo -e "\nPlease disconnect from tmux session \"$(tmux display-message -p '#S')\".\n" >&2
+    exit 1
+  fi
+
+  if [[ -n "$_cd" ]]; then
+    cd "$_cd" || exit 1
+  fi
+
+  bash -c "$_cmd"
+
+  if [ -n "$flush_" ]; then
+    ebnis-save-tmux.sh quiet &>/dev/null || true
+  fi
+}
+
+__set-state() {
+  if [ ! -s "$resurrect_file_" ]; then
+    return
+  fi
+
+  local session_="$1"
+  sed -Ei "s/^(state\s)[^\s]+.*/state\t${session_}/" "$resurrect_file_"
+}
+
+___list_help() {
+  read -r -d '' var <<'eof' || true
+List tmux sessions and clients. Usage:
+  list [OPTIONS]
+
+List sessions or clients if tmux is started otherwise list sessions from inside resurrect file (if that file exists).
+
+Options:
+  -h,--help
+    Print this help text and quit.
+  -c,--client
+    List clients (and not sessions).
+  -r,--resurrect
+    Fetch session list from resurrect file instead of querying tmux even if tmux session is active.
+  -v,--verbose
+    Include the command for starting each listed session.
+  -n,--names
+    Return session names only
+  -x,--copy
+    Copy the command for starting referenced session to system clipboard.
+  --no-flush,-f
+    Do not flush current session into resurrect file. Flushing takes a few seconds to complete, but sometimes we just
+    flushed and do not wish to flush again.
+
+Examples:
+  # Get help.
+  c-tmux list --help
+
+  # List sessions including information about their present working directories, the default session and tmux states
+  # as seen in tmux resurrect file.
+  c-tmux list
+
+  # List sessions including commands needed to start each listed session.
+  c-tmux list --verbose
+  c-tmux list -v
+
+  # List clients.
+  c-tmux list --client
+  c-tmux list -c
+
+  # List session names only (no additional information)
+  c-tmux list --names
+  c-tmux list -n
+
+  # Copy session start command to system clipboard
+  c-tmux list -x session_name
+  c-tmux list --copy session_name
+eof
+
+  echo -e "$var"
+}
+
+list() {
+  set -eup
+
+  : "___help___ ___list_help"
+
+  local _clients=
+  local _from_resurrect_file=
+  local _verbose=
+  local _names_only=
+  local _session_to_copy=
+  # By default, we flush, unless user passes --no-flush option.
+  local flush_=1
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local _parsed
+
+  if ! _parsed="$(
+    getopt \
+      --longoptions=help,client,resurrect,verbose,names,copy:,no-flush \
+      --options=h,c,r,v,n,x:,f \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    ___list_help
+    exit 129
+  fi
+
+  # Provides proper quoting
+  eval set -- "$_parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ___list_help
+      return
+      ;;
+
+    --client | -c)
+      _clients=1
+      shift
+      ;;
+
+    --resurrect | -r)
+      _from_resurrect_file=1
+      shift
+      ;;
+
+    --verbose | -v)
+      _verbose=1
+      shift
+      ;;
+
+    --names | -n)
+      _names_only=1
+      shift
+      ;;
+
+    --copy | -x)
+      _session_to_copy="$2"
+      shift 2
+      ;;
+
+    --no-flush | -f)
+      flush_=
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown option ${1}." >&2
+      ___list_help
+      exit 129
+      ;;
+    esac
+  done
+
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  # Where we gather session information read from resurrect file into.
+  local _sessions_info_from_resurrect_file=
+
+  # The current working directory of each session - as read from resurrect file.
+  local _sessions_pwds_from_resurrect_file=
+
+  # Gather information from resurrect file
+  if [[ -s "$resurrect_file_" ]]; then
+    # User has not instructed us not to flush.
+    if [ -n "$flush_" ]; then
+      # If tmux running, flush sessions info into resurrect file.
+      ebnis-save-tmux.sh quiet &>/dev/null || true
+    fi
+
+    local _session_resurrect_list
+    _session_resurrect_list="$(
+      awk '/^window[[:space:]]+/ {print $2}' "$resurrect_file_" |
+        sort -u
+    )"
+
+    local session_resurrect_list_as_string_="${_session_resurrect_list[*]}"
+
+    if [[ -n "$_names_only" ]]; then
+      echo "$session_resurrect_list_as_string_"
+      return
+    fi
+
+    if [ -n "$_session_to_copy" ]; then
+      _compute_session_to_copy \
+        "$_session_to_copy" \
+        "$session_resurrect_list_as_string_" \
+        _session_to_copy
+    fi
+
+    local should_copy_session_=""
+
+    for _elm in $_session_resurrect_list; do
+      local _windows_count
+      _windows_count="$(
+        awk \
+          -v _awk_elm="$_elm" \
+          'match($0, "^window\\s+" _awk_elm) {print $0}' "$resurrect_file_" |
+          wc -l |
+          xargs
+      )"
+
+      _sessions_info_from_resurrect_file+="$_elm: $_windows_count windows\n"
+
+      local _session_pwd_from_resurrect_file
+      # Matching pattern:
+      # pane      session_name window_index    active_win?    :[AnyChar]*      pane_index     hostname      :directory
+      #       active_pane? program  :program?/empty
+      # ^pane \s+ $_elm        0           \s+  [0-1]     \s+ :.*         \s+   1        \s+   .+      \s+  :/directory
+      # \s+   [0-1] ...rest
+      # active = 1  inactive = 0
+      # pane_index 1 is guaranteed to be available
+      _session_pwd_from_resurrect_file="$(
+        sed -nE \
+          "s|(^pane\s+${_elm}\s+0\s+[0-1]\s+:.*\s+1\s+.+\s+:)(/.+)\s+[0-1].+|\2|p" \
+          "$resurrect_file_"
+      )"
+
+      if [[ -n "$_session_pwd_from_resurrect_file" ]]; then
+        _sessions_pwds_from_resurrect_file+="$_elm:\n$_session_pwd_from_resurrect_file\n"
+
+        local _cd1719741431="cd $_session_pwd_from_resurrect_file"
+        local _start1719741519="c-tmux start_tmux -c $_session_pwd_from_resurrect_file $_elm"
+        local _cd_and_start_cmd="$_cd1719741431 && $_start1719741519 -fs"
+
+        if [[ "$_session_to_copy" == "$_elm" ]]; then
+          should_copy_session_="$_cd_and_start_cmd"
+        fi
+
+        if [[ -n "$_verbose" ]]; then
+          _sessions_pwds_from_resurrect_file+="$_cd1719741431\n"
+          _sessions_pwds_from_resurrect_file+="$_start1719741519\n"
+          _sessions_pwds_from_resurrect_file+="${_cd_and_start_cmd}\n"
+        fi
+
+        _sessions_pwds_from_resurrect_file+="\n"
+      fi
+    done
+
+    _sessions_info_from_resurrect_file+="\n$(tail -n1 "$resurrect_file_")"
+
+    if [[ -n "$_sessions_pwds_from_resurrect_file" ]]; then
+      _sessions_pwds_from_resurrect_file="\nPWDs:\n$_sessions_pwds_from_resurrect_file"
+    fi
+  fi
+  # /END/ Gather information from resurrect file.
+
+  # User asked that we only query resurrect file - we query and exit.
+  if [[ -n "$_from_resurrect_file" ]]; then
+    if [[ -n "$_sessions_info_from_resurrect_file" ]]; then
+      echo -e "Sessions from $resurrect_file_:\n$_sessions_info_from_resurrect_file\n$_sessions_pwds_from_resurrect_file"
+      _echo_session_to_copy "$should_copy_session_"
+      return
+    fi
+
+    echo "No sessions are available." >&2
+    exit 1
+  fi
+
+  local _sessions
+
+  # User asked for clients information only - we return clients's information and exit.
+  if [[ -n "$_clients" ]]; then
+    if _clients="$(tmux list-clients 2>&1)"; then
+      if [[ -n "$_clients" ]]; then
+        echo -e "$_clients\n$_sessions_pwds_from_resurrect_file"
+        _echo_session_to_copy "$should_copy_session_"
+        return
+      fi
+    fi
+
+    echo -e "\nWe can not retrieve clients or no clients are attached - we will try to serve you sessions:\n"
+  fi
+
+  # Is tmux server started? - Get sessions data from live tmux server and enrich with information from resurrect file.
+  if _sessions="$(tmux ls 2>&1)"; then
+    if [[ -n "$_names_only" ]]; then
+      awk -F ':' '{print $1}' <<<"$_sessions"
+      _echo_session_to_copy "$should_copy_session_"
+      return
+    fi
+
+    echo -e "$_sessions\n$_sessions_pwds_from_resurrect_file"
+    _echo_session_to_copy "$should_copy_session_"
+    return
+  fi
+
+  # tmux server is not live - return only information from resurrect file.
+  if [[ -n "$_sessions_info_from_resurrect_file" ]]; then
+    echo -e "tmux has not been started. Available sessions:\n$_sessions_info_from_resurrect_file"
+
+    if [[ -n "$DEFAULT_TMUX_SESSION" ]]; then
+      echo -e "\nDefault session: $DEFAULT_TMUX_SESSION"
+    fi
+
+    echo -e "\n$_sessions_pwds_from_resurrect_file"
+    _echo_session_to_copy "$should_copy_session_"
+    return
+  fi
+
+  echo "tmux has not been started and no sessions are available." >&2
+  exit 1
+}
+
+_compute_session_to_copy() {
+  local session_to_copy_="$1"
+  local session_resurrect_list_as_string_="$2"
+  local -n _return=$3
+
+  local matched_sessions_=
+
+  mapfile -t matched_sessions_ <<<"$(
+    grep -iP "$session_to_copy_" < <(
+      echo -e "${session_resurrect_list_as_string_// /\\n}"
+    )
+  )"
+
+  local num_matches_="${#matched_sessions_[@]}"
+
+  if [[ "$num_matches_" -gt 1 ]]; then
+    echo -e "\nThere are $num_matches_ matches for \"$session_to_copy_\". Please refine your search."
+    echo -e "\nMatched sessions:"
+
+    local matched_session_
+    for matched_session_ in "${matched_sessions_[@]}"; do
+      echo "$matched_session_"
+    done
+
+    local available_session=
+    echo -e "\nAvailable sessions:"
+
+    for available_session in "${_session_resurrect_list[@]}"; do
+      echo "$available_session"
+    done
+
+    exit 1
+  fi
+
+  _return="${matched_sessions_[0]}"
+}
+
+_echo_session_to_copy() {
+  local to_echo_="$1"
+
+  if [ -z "$to_echo_" ]; then
+    return
+  fi
+
+  echo -e "CD and tmux start command:\n$to_echo_"
+  copy "$to_echo_" || :
+}
+
+___kill_tmux_help() {
+  read -r -d '' var <<'eof'
+Helper for killing tmux session(s). Usage:
+  c-tmux kill_tmux [OPTIONS]
+
+Options:
+  -h,--help
+    Print this help text and quit.
+  -a,--all-but
+    Kill all but session from which command was invoked.
+  -c,--current
+    Kill session from which command was invoked (current session).
+  -n,--numbered
+    Kill sessions with only numerical names.
+
+Examples:
+  # Get help.
+  c-tmux kill_tmux --help
+  c-tmux kill_tmux # Call with no argument.
+
+  # Kill all sessions except session from which this command is called.
+  c-tmux kill_tmux --all-but
+  c-tmux kill_tmux -a
+
+  # Kill session from which this command is called (current session).
+  c-tmux kill_tmux --current
+  c-tmux kill_tmux -c
+
+  # Kill sessions with only numerical names. (Will kill sessions named 1, 2, 3, .. 10, 11, ..)
+  c-tmux kill_tmux --numbered
+  c-tmux kill_tmux -n
+
+  # Kill one or more specified sessions
+  c-tmux kill_tmux session-1 session2 ... session-n
+eof
+
+  echo -e "$var"
+}
+
+# :TODO:persist session information ala tmux-resurrect
+kill_tmux() {
+  : "___help___ ___kill_tmux_help"
+
+  local _all_but
+  local _current
+  local _numbered
+
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local parsed
+
+  if ! parsed="$(
+    getopt \
+      --longoptions=help,all-but,current,numbered \
+      --options=h,a,c,n \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    exit 1
+  fi
+
+  # Provides proper quoting
+  eval set -- "$parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      ___kill_tmux_help
+      return
+      ;;
+
+    --all-but | -a)
+      _all_but=1
+      shift
+      ;;
+
+    --current | -c)
+      _current=1
+      shift
+      ;;
+
+    --numbered | -n)
+      _numbered=1
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "Unknown option ${1}." >&2
+      return
+      ;;
+    esac
+  done
+
+  local _other_args=()
+  _other_args=("$@")
+  # --------------------------------------------------------------------------
+  # END PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+
+  if [[ -n "${_other_args[*]}" ]]; then
+    for _session in "${_other_args[@]}"; do
+      echo "Killing session \"$_session\""
+
+      tmux kill-session -t "$_session"
+    done
+
+    return
+  fi
+
+  local _this_session
+
+  _this_session="$(
+    tmux list-panes -t "$TMUX_PANE" -F '#S' |
+      head -n1
+  )"
+
+  if [[ -n "$_current" ]]; then
+    echo "Killing current session \"$_this_session\""
+    tmux kill-session -t "$_this_session"
+    return
+  fi
+
+  local _all_sessions
+
+  _all_sessions="$(
+    tmux list-sessions -F '#S'
+  )"
+
+  if [[ -n "$_numbered" ]]; then
+    while IFS= read -r _session; do
+      if [[ "$_session" == "$_this_session" ]]; then continue; fi
+
+      echo "Killing session \"$_session\""
+      tmux kill-session -t "$_session"
+    done < <(grep -P "\d+" <<<"$_all_sessions")
+
+    return
+  fi
+
+  if [[ -n "$_all_but" ]]; then
+    while IFS= read -r _session; do
+      if [[ "$_session" == "$_this_session" ]]; then continue; fi
+
+      echo "Killing session \"$_session\""
+      tmux kill-session -t "$_session"
+    done <<<"$_all_sessions"
+
+    return
+  fi
+
+  ___kill_tmux_help
+}
+
+_is_local_function() {
+  local _function_name="$1"
+  local _this_file_content="$2"
+
+  # Function name is not a local function - but perhaps inherited from the shell.
+  if ! grep -qP "^$_function_name\(\)\s+\{" <<<"$_this_file_content" &&
+    ! grep -qP "function\s+${_function_name}\s+{" <<<"$_this_file_content"; then
+    return 1
+  fi
+
+  return 0
+}
+
+_command_exists() {
+  local _command_to_test="$1"
+  local _this_file_content
+  _this_file_content="$(cat "$0")"
+
+  mapfile -t _all_function_names < <(compgen -A function | grep -v '^_')
+
+  for _func_name in "${_all_function_names[@]}"; do
+    if ! _is_local_function "$_func_name" "$_this_file_content"; then
+      continue
+    fi
+
+    if [[ "$_func_name" == "$_command_to_test" ]]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+___help_help() {
+  local _usage
+
+  read -r -d '' _usage <<'eom' || :
+List available commands. Usage:
+  c-tmux help [OPTIONS]
+
+By default, we return only external functions unless option `i` is passed in which case we return only internal
+(helper) functions or option `a` is given which causes us to print both internal and external functions.
+
+Options:
+  -h
+    Print this helper information and exit.
+  -i
+    Return only internal (helper) functions.
+  -a
+    Return all functions - both internal and external.
+  -p
+    Prepend prefix i.e. _func_name ----------- to every line so developer can grep the functon name and get all
+    documentation strings for that function name. Without this option, caller may only get examples where the functon
+    name is referenced.
+
+Examples:
+  # Get help
+  c-tmux help -h
+
+  # Grep for function documentation
+  c-tmux help -p | grep ^func_name
+eom
+
+  echo -e "$_usage"
+}
+
+help() {
+  : "___help___ ___help_help"
+
+  local _opt
+  local _function_type="external"
+  local _include_prefix
+
+  while getopts 'aip' _opt; do
+    case "$_opt" in
+    a)
+      _function_type='all'
+      shift
+      ;;
+
+    i)
+      _function_type='internal'
+      shift
+      ;;
+
+    p)
+      _include_prefix=1
+      shift
+      ;;
+
+    *)
+      ___help_help
+      exit 1
+      ;;
+    esac
+  done
+
+  # Matching pattern examples:
+  # `: "___help___ ___some_func_help"`
+  # `: "___help___ ____some-func-help"`
+  local _help_func_pattern="[_]*___[a-zA-Z][a-zA-Z0-9_-]*[_-]help"
+
+  if [ "$_function_type" = external ]; then
+    # External functions do not start with _.
+    mapfile -t _function_names < <(
+      compgen -A function |
+        grep -v '^_'
+    )
+  elif [ "$_function_type" = internal ]; then
+    # Internal helper functions start with _.
+    mapfile -t _function_names < <(
+      compgen -A function |
+        grep '^_' |
+        grep -v -E "$_help_func_pattern"
+    )
+  elif [ "$_function_type" = all ]; then
+    mapfile -t _function_names < <(compgen -A function)
+  fi
+
+  local _this_file_content
+  _this_file_content="$(cat "$0")"
+
+  local _longest_func_name_len=0
+  local _func_name_len
+  declare -A name_to_len_map=()
+
+  for _func_name in "${_function_names[@]}"; do
+    _func_name_len="${#_func_name}"
+    name_to_len_map["$_func_name"]="${_func_name_len}"
+    if [[ "${_func_name_len}" -gt "${_longest_func_name_len}" ]]; then
+      _longest_func_name_len=${_func_name_len}
+    fi
+  done
+
+  declare -A _all_output=()
+  declare -A _aliases=()
+  declare -A _name_spaces_map=()
+
+  _longest_func_name_len=$((_longest_func_name_len + 10))
+
+  local _output_prefix=
+
+  for _func_name in "${_function_names[@]}"; do
+    if ! _is_local_function "$_func_name" "$_this_file_content"; then
+      continue
+    fi
+
+    local spaces=""
+    _func_name_len="${name_to_len_map[$_func_name]}"
+    _func_name_len=$((_longest_func_name_len - _func_name_len))
+
+    for _ in $(seq "${_func_name_len}"); do
+      spaces+="-"
+    done
+
+    local _function_def_text
+    _function_def_text="$(type "${_func_name}")"
+
+    local _alias_name
+
+    # Matching pattern example:
+    # `: "___alias___ install-elixir"`
+    # Extracts install-elixir
+    _alias_name="$(awk \
+      'match($0, /^ +: *"___alias___ +([a-zA-Z_-][a-zA-Z0-9_-]*)/, a) {print a[1]}' \
+      <<<"${_function_def_text}")"
+
+    if [[ -n "${_alias_name}" ]]; then
+      _aliases["${_alias_name}"]="${_aliases["${_alias_name}"]} ${_func_name}"
+      continue
+    fi
+
+    local _help_func
+
+    _help_func="$(
+      # `: "___help___ ___some_func_help"`
+      # Extracts ___some_func_help into variable a[1]
+      awk \
+        -v _awk_help_func_pattern="$_help_func_pattern" \
+        'match($0, "^[[:space:]]+:[[:space:]]*\"___help___[[:space:]]+(" _awk_help_func_pattern ")", a) {print a[1]}' \
+        <<<"$_function_def_text"
+    )"
+
+    # Get the whole function definition text and extract only the documentation
+    # part.
+    if [[ -n "$_help_func" ]]; then
+      # So we have a helper function - we just eval the helper function and split by new lines.
+      mapfile -t _doc_lines < <(
+        eval "$_help_func" 2>/dev/null
+      )
+    else
+      # Function is not using a helper function but documentation texts - so we extract the documentation texts and
+      # split by new lines.
+      mapfile -t _doc_lines < <(
+        # ^              Assert position at the start of the line
+        # [[:space:]]*   Match any whitespace (spaces, tabs) zero or more times
+        # :              Match a literal colon
+        # [[:space:]]?   Match an optional whitespace
+        # \"(.*)\"       Match a quoted string and capture the content within the quotes (documentation text)
+        # ;              Match a semicolon (shell line termination placed there by command: type _func_name)
+        #
+        # Examples:
+        # : "This is a documentation line";
+        # :"This is a documentation line";
+        sed -nEe "s/^[[:space:]]*:[[:space:]]?\"(.*)\";/\1/p" <<<"$_function_def_text"
+      )
+    fi
+
+    local _output=""
+    _output_prefix="$_func_name $spaces "
+
+    if [[ -n "${_doc_lines[*]}" ]]; then
+      if [ -z "$_include_prefix" ]; then
+        _output+="${_output_prefix}\n"
+        _output_prefix=""
+      fi
+
+      for _doc in "${_doc_lines[@]}"; do
+        # _func_name -------------------- List tmux sessions and clients. Usage:
+        _output+="${_output_prefix}$_doc\n"
+      done
+    else
+      # _func_name -------------------- *************
+      _output="${_output_prefix}*************\n"
+    fi
+
+    _all_output["$_func_name"]="$_output"
+    _name_spaces_map["$_func_name"]="$_output_prefix"
+  done
+
+  for _func_name in "${!_all_output[@]}"; do
+    _output="${_all_output["$_func_name"]}"
+    echo -e "$_output"
+
+    local _alias_names="${_aliases["$_func_name"]}"
+
+    if [[ -n "${_alias_names}" ]]; then
+      echo -e "${_name_spaces_map["$_func_name"]} ALIASES: ${_alias_names}\n\n"
+    fi
+  done
+}
+
+"${@:-help}"

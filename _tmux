@@ -20,3 +20,13 @@ if [ -d "$tmux_session_wizard" ]; then
   fi
   pathmunge "$tmux_session_wizard"
 fi
+
+_c_tmux_script="$(_dot rt)/scripts/c-tmux"
+if [[ -e "$_c_tmux_script" ]]; then
+  chmod 755 "$_c_tmux_script"
+
+  alias st='c-tmux start_tmux'
+  alias lstd='c-tmux list -fx ^dot'
+  alias tk='c-tmux kill_tmux'
+fi
+unset _c_tmux_script
