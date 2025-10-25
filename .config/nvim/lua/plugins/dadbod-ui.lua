@@ -8,8 +8,8 @@ end
 -- https://alpha2phi.medium.com/vim-neovim-managing-databases-d253faf4a0cd
 
 local utils = require("utils")
-local s_utils = require("settings-utils")
 local map_key = utils.map_key
+local load_in_float_api = require("load-in-float-api")
 
 local match_vim_dadbod_ui_temp_query_file = function(str)
   local pattern = "^/tmp/nvim%..+/%d+%.dbout$"
@@ -167,44 +167,41 @@ return {
     })
 
     map_key("n", "<leader>dbH", function()
-      local help_string = "* Help for Vim DadBod UI *"
-        .. "\\n\\n"
-        .. "** Data Source Name (dns) syntax **"
-        .. "\\n"
-        .. "postgresql://user1:userpwd@localhost:5432/testdb"
-        .. "\\n"
-        .. "mysql://user1:userpwd@127.0.0.1:3306/testdb"
-        .. "\\n"
-        .. "sqlite:path-to-sqlite-database"
-        .. "\\n\\n"
-        .. "** Settings file **"
-        .. "\\n"
-        .. "~/.local/share/db_ui/connections.json"
-        .. "\\n"
-        .. "```json"
-        .. "\\n"
-        .. "["
-        .. "\\n"
-        .. "  {"
-        .. "\\n"
-        .. '    \\"url\\": \\"postgresql://username:password@127.0.0.1:5432/db_name\\",'
-        .. "\\n"
-        .. '    \\"name\\": \\"folder_name\\"'
-        .. "\\n"
-        .. "  }"
-        .. "\\n"
-        .. "]"
-        .. "\\n"
-        .. "```"
-        .. "\\n\\n"
-        .. "** folder_name is the `name` key in the Settings object **"
-        .. "\\n\\n"
-        .. "~/.local/share/db_ui/folder_name/*.sql"
-        .. "\\n"
-        .. "~/.local/share/db_ui"
-
-      -- vim.cmd('echo "' .. help_string .. '"')
-      s_utils.RedirMessages('echo "' .. help_string .. '"', "vnew")
+      local lines = {
+        "* Help for Vim DadBod UI *",
+        "",
+        "** Data Source Name (dns) syntax **",
+        "postgresql://user1:userpwd@localhost:5432/testdb",
+        "mysql://user1:userpwd@127.0.0.1:3306/testdb",
+        "sqlite:path-to-sqlite-database",
+        "",
+        "** Settings file **",
+        "~/.local/share/db_ui/connections.json",
+        "```json",
+        "[",
+        "  {",
+        '    "url": "postgresql://username:password@127.0.0.1:5432/db_name",',
+        '    "name": "folder_name"',
+        "  }",
+        "]",
+        "```",
+        "** folder_name is the `name` key in the Settings object **",
+        "",
+        "~/.local/share/db_ui/folder_name/*.sql",
+        "~/.local/share/db_ui",
+      }
+      local filepath = utils.write_to_out_file({
+        additional_directory_path = "my-neovim-status",
+        prefix = "vim-dadbod-ui-help",
+        ext = "log",
+        just_create = true,
+      })
+      vim.fn.writefile(lines, filepath)
+      load_in_float_api.load_in_float(filepath, {
+        width = 0.75,
+        height = 0.75,
+        border = "rounded",
+      })
     end, {
       noremap = true,
       desc = "DBUI help information",
