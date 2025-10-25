@@ -652,6 +652,7 @@ utils.write_to_out_file = function(opts)
     prefix = "O",
     ext = nil,
     additional_directory_path = nil,
+    just_create = false, -- If true, just create the file and return path without saving current buffer
   })
 
   local filename = utils.create_slime_dir(opts.additional_directory_path)
@@ -660,6 +661,12 @@ utils.write_to_out_file = function(opts)
     .. "-"
     .. (opts.datetime and os.date("%FT%H-%M-%S") or "")
     .. (opts.ext and ("." .. opts.ext) or "")
+
+  if opts.just_create then
+    -- Just create an empty file and return the path
+    vim.fn.writefile({}, filename)
+    return filename
+  end
 
   local readonly = vim.bo.readonly
   -- local buftype = vim.bo.buftype
