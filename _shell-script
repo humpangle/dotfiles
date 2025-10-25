@@ -169,6 +169,7 @@ ___source_scripts() {
     "_wsl.sh $_flag_wsl"
     .config/kitty/_kitty.sh
     _tmux
+    _tailscale
   )
 
   local _elm

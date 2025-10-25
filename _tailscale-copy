@@ -1,0 +1,75 @@
+
+# =============================================================================
+# Tailscale File Transfer Utilities
+# =============================================================================
+#
+# tscp - Interactive file sender with fzf peer selection
+#   Usage: tscp
+#
+#   Workflow:
+#     1. Opens fzf to select an active Tailscale peer
+#     2. Prompts for files to send (supports globs like *.jpg)
+#     3. Sends files to selected peer using tailscale file cp
+#
+#   Examples:
+#     $ tscp
+#     # Select peer from fzf, then enter files:
+#     Enter files to send to alayadev: document.pdf
+#
+#     $ tscp
+#     # Select peer, then send multiple files:
+#     Enter files to send to alayadev: file1.txt file2.txt *.jpg
+#
+#     $ tscp
+#     # Select peer, then send file with spaces (use quotes):
+#     Enter files to send to alayadev: "my document.pdf" photo.jpg
+#
+# tsl - List active Tailscale peers
+#   Usage: tsl
+#
+#   Displays a formatted list of active peers with their IP, name, and user.
+#   Excludes the current machine.
+#
+# =============================================================================
+
+# Send files to Tailscale peer with fzf selection
+__fzf_tailscale_send__() {
+  local peer_name files
+
+  # Get active peers (excluding current machine which has trailing -)
+  # Parse output to extract peer names
+  # shellcheck disable=SC2091
+  peer_name=$(
+    tailscale status --active 2>/dev/null |
+      grep -v ' \-$' |               # Exclude current machine (has trailing -)
+      grep 'active;' |               # Only active peers
+      awk '{print $2, "(" $1 ")"}' | # Show peer name and IP
+      FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse --prompt='Select Tailscale peer: '" "${FZF_TAILSCALE_OPTS-} +m") \
+      FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd) |
+      awk '{print $1}' # Extract just the peer name
+  ) || return
+
+  if [[ -n "$peer_name" ]]; then
+    # Prompt for files
+    read -r -p "Enter files to send to ${peer_name}: " files
+
+    if [[ -z "$files" ]]; then
+      echo "No files specified. Cancelled."
+      return 1
+    fi
+
+    echo "Sending files to ${peer_name}..."
+    # Use eval to properly expand the files string (handles spaces, globs, etc.)
+    eval "tailscale file cp ${files} ${peer_name}:"
+  fi
+}
+alias tscp='__fzf_tailscale_send__'
+
+# List active Tailscale peers
+__list_tailscale_peers__() {
+  tailscale status --active 2>/dev/null |
+    grep -v ' \-$' |
+    grep 'active;' |
+    awk '{printf "%-15s %-20s %s\n", $1, $2, $3}'
+}
+alias tsl='__list_tailscale_peers__'

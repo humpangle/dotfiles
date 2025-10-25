@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+# For macos
+if [ -e '/Applications/Tailscale.app/Contents/MacOS/Tailscale' ]; then
+  alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
+fi
+
+source "$(_dot rt)/_tailscale-copy"
