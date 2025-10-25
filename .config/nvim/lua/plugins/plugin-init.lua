@@ -137,29 +137,16 @@ local plugins_table = {
     end,
   },
 
-  -- "easymotion/vim-easymotion",
-  -- Easy motion alternative
   {
     "ggandor/leap.nvim",
     config = function()
-      -- https://github.com/kohane27/nvim-config/blob/main/lua/plugins/leap.lua
-      local status_ok, leap = pcall(require, "leap")
-
-      if status_ok then
-        leap.set_default_keymaps()
-
-        map_key({ "n", "o" }, "s", "<Plug>(leap-forward-to)")
-
-        map_key({ "n", "o" }, "S", "<Plug>(leap-backward-to)")
-
-        -- mark cursor location before jumping
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "LeapEnter",
-          callback = function()
-            vim.cmd("normal m'")
-          end,
-        })
-      end
+      local leap = require("leap")
+      map_key({ "n", "o" }, "s", function()
+        leap.leap({})
+      end)
+      map_key({ "n", "o" }, "S", function()
+        leap.leap({ backward = true })
+      end)
     end,
   },
 
