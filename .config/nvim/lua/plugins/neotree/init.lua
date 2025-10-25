@@ -1,41 +1,3 @@
----@diagnostic disable: missing-fields
----
-local plugin_enabled = require("plugins/plugin_enabled")
-
-if plugin_enabled.has_vscode() then
-  return {}
-end
-
-local image_nvim = function()
-  if not plugin_enabled.image_nvim() then
-    return {}
-  end
-
-  return {
-    "3rd/image.nvim",
-    -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
-    -- Instead use::
-    --
-    -- sudo apt install luajit luarocks libmagickwand-dev libgraphicsmagick1-dev
-    -- brew install luajit
-    -- asdf install lua 5.1
-    -- asdf global lua 5.1
-    -- luarocks install magick
-    --
-    build = false,
-    config = function()
-      require("image").setup({
-        backend = "kitty",
-        processor = "magick_rock", -- or "magick_cli"
-      })
-    end,
-
-    dependencies = {
-      "leafo/magick",
-    },
-  }
-end
-
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -45,7 +7,7 @@ return {
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       -- Optional image support in preview window: See `# Preview Mode` for more information
-      image_nvim(),
+      -- "3rd/image.nvim"
     },
     init = function()
       local map_key = require("utils").map_key
@@ -55,7 +17,9 @@ return {
         {
           description = "Filesystem float                 1",
           action = function()
-            vim.cmd("Neotree source=filesystem position=float reveal")
+            vim.cmd(
+              "Neotree source=filesystem position=float reveal"
+            )
           end,
           count = 1,
         },
@@ -69,7 +33,9 @@ return {
         {
           description = "Filesystem left                  2",
           action = function()
-            vim.cmd("Neotree source=filesystem position=left reveal")
+            vim.cmd(
+              "Neotree source=filesystem position=left reveal"
+            )
           end,
           count = 2,
         },
@@ -77,7 +43,9 @@ return {
           description = "Filesystem tab                   3",
           action = function()
             vim.cmd("tab split")
-            vim.cmd("Neotree source=filesystem position=current reveal")
+            vim.cmd(
+              "Neotree source=filesystem position=current reveal"
+            )
             vim.cmd("-tabmove")
           end,
           count = 3,
@@ -86,7 +54,9 @@ return {
           description = "Filesystem first tab             4",
           action = function()
             vim.cmd("tab split")
-            vim.cmd("Neotree source=filesystem position=current reveal")
+            vim.cmd(
+              "Neotree source=filesystem position=current reveal"
+            )
             vim.cmd("0tabmove")
           end,
           count = 4,

@@ -27,7 +27,7 @@ local plugins_table = {
     priority = 10000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
     opts = {
       rocks = {
-        -- "lua-toml"
+        "magick"
       }, -- specifies a list of rocks to install
       -- luarocks_build_args = { "--with-lua=/my/path" }, -- extra options to pass to luarocks's configuration script
     },
@@ -418,6 +418,7 @@ local plugins_table = {
   require("plugins/ai/claude-code-nvim"),
   require("plugins/neotest"),
   require("plugins/neotree"),
+  require("plugins.image-nvim"),
   require("plugins/octo-nvim"),
   require("plugins/mini-align"),
   require("plugins/indent-blankline"),

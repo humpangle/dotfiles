@@ -266,14 +266,6 @@ function M.elixir_lsp()
   return M.elixir_ls() or M.lexical()
 end
 
-function M.image_nvim()
-  if M.has_vscode() or M.has_termux() then
-    return false
-  end
-
-  return utils.get_os_env_or_nil("NVIM_ENABLE_IMAGE_NVIM") == "1"
-end
-
 function M.anki()
   return utils.get_os_env_or_nil("NVIM_ENABLE_ANKI") == "1"
 end
