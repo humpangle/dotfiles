@@ -19,6 +19,13 @@ local is_buffer_source = function(bufnr)
   return true
 end
 
+local source_priority = {
+  snippets = 4,
+  lsp = 3,
+  path = 2,
+  buffer = 1,
+}
+
 return {
   "saghen/blink.cmp",
   -- use a release tag to download pre-built binaries
@@ -34,7 +41,7 @@ return {
   opts = {
     -- 'default' for mappings preset only when no mapping is set
     keymap = {
-      preset = "none",
+      preset = "default",
       -- Accept currently selected item
       ["<CR>"] = { "select_and_accept", "fallback" },
       ["<C-y>"] = { "select_and_accept", "fallback" },
@@ -50,60 +57,29 @@ return {
       -- Arrow keys for navigation
       ["<Up>"] = { "select_prev", "fallback" },
       ["<Down>"] = { "select_next", "fallback" },
-      ["<C-p>"] = { "select_prev", "fallback" },
-      ["<C-n>"] = { "select_next", "fallback" },
+      -- ["<C-p>"] = { "select_prev", "fallback" },
+      -- ["<C-n>"] = { "select_next", "fallback" },
       -- Navigate completion menu
       ["<Tab>"] = {
         function(cmp)
+          -- Handle LuaSnip expansion/jumping
+          local luasnip = require("luasnip")
+          if luasnip.expand_or_jumpable() then
+            return cmp.snippet_forward()
+          end
+
           if cmp.is_visible() then
             return cmp.select_next()
           end
 
-          -- Handle LuaSnip expansion/jumping
-          local luasnip = require("luasnip")
-          if luasnip.expandable() then
-            return luasnip.expand()
-          elseif luasnip.expand_or_jumpable() then
-            return luasnip.expand_or_jump()
-          end
-
-          return cmp.fallback()
+          return false
         end,
         "fallback",
       },
-      ["<S-Tab>"] = {
-        function(cmp)
-          if cmp.is_visible() then
-            return cmp.select_prev()
-          end
-
-          -- Handle LuaSnip backward jumping
-          local luasnip = require("luasnip")
-          if luasnip.jumpable(-1) then
-            return luasnip.jump(-1)
-          end
-
-          return cmp.fallback()
-        end,
-        "fallback",
-      },
+      ["<S-Tab>"] = { "snippet_backward", "fallback" },
       -- LuaSnip-specific navigation
-      ["<C-l>"] = {
-        function()
-          local luasnip = require("luasnip")
-          if luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          end
-        end,
-      },
-      ["<C-h>"] = {
-        function()
-          local luasnip = require("luasnip")
-          if luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          end
-        end,
-      },
+      ["<C-l>"] = { "snippet_forward", "fallback" },
+      ["<C-h>"] = { "snippet_backward", "fallback" },
     },
     appearance = {
       -- Sets the fallback highlight groups to nvim-cmp's highlight groups
@@ -133,13 +109,29 @@ return {
       },
       documentation = {
         auto_show = true,
-        auto_show_delay_ms = 200,
+        auto_show_delay_ms = 250,
       },
       list = {
         selection = {
           preselect = false,
           auto_insert = false,
         },
+      },
+    },
+    fuzzy = {
+      -- implementation = "lua",
+      -- https://github.com/Saghen/blink.cmp/issues/1098#issuecomment-2679295335
+      sorts = {
+        function(a, b)
+          local a_priority = source_priority[a.source_id]
+          local b_priority = source_priority[b.source_id]
+          if a_priority ~= b_priority then
+            return a_priority > b_priority
+          end
+        end,
+        -- defaults
+        "score",
+        "sort_text",
       },
     },
     -- default list of enabled providers defined so that you can extend it
@@ -170,18 +162,16 @@ return {
               return bufnrs
             end,
           },
-          min_keyword_length = 3,
+          -- min_keyword_length = 3,
         },
       },
     },
     snippets = {
-      -- Use the luasnip preset
       preset = "luasnip",
     },
     signature = {
       enabled = true,
     },
-    -- Cmdline completion configuration
     cmdline = {
       enabled = true,
       sources = function()
