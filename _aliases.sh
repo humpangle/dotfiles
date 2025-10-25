@@ -153,28 +153,6 @@ fi
 # END PYTHON POETRY
 # -----------------------------------------------------------------------------
 
-if command -v tmux &>/dev/null; then
-  export TP="${TMUX_PANE}"
-
-  alias kts='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
-  alias tks='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
-  alias ts='ebnis-save-tmux.sh'
-  alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
-
-  _c_tmux_script="${DOTFILE_PARENT_PATH}/dotfiles/scripts/c-tmux"
-
-  if [[ -e "$_c_tmux_script" ]]; then
-    chmod 755 "$_c_tmux_script"
-
-    alias st='c-tmux start_tmux'
-    alias lst='c-tmux list'
-    alias lstd='c-tmux list -fx ^dot'
-    alias tk='c-tmux kill_tmux'
-  fi
-
-  unset _c_tmux_script
-fi
-
 # -----------------------------------------------------------------------------
 # START multipass
 # -----------------------------------------------------------------------------

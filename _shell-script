@@ -168,6 +168,7 @@ ___source_scripts() {
     "_macos $_flag_mac_only"
     "_wsl.sh $_flag_wsl"
     .config/kitty/_kitty.sh
+    _tmux
   )
 
   local _elm

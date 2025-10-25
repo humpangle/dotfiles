@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+if ! command -v tmux &>/dev/null; then
+  return
+fi
+
+export TP="${TMUX_PANE}"
+
+alias kts='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
+alias tks='{ ebnis-save-tmux.sh || true; } && tmux kill-server'
+alias ts='ebnis-save-tmux.sh'
+alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+
+tmux_session_wizard="$TMUX_PLUGIN_MANAGER_PATH/tmux-session-wizard/bin"
+if [ -d "$tmux_session_wizard" ]; then
+  if [ -f "$tmux_session_wizard/t" ]; then
+    rm -rf "$tmux_session_wizard/lst"
+    mv "$tmux_session_wizard/t" "$tmux_session_wizard/lst"
+  fi
+  pathmunge "$tmux_session_wizard"
+fi
