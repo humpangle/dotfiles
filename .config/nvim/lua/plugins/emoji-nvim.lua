@@ -7,13 +7,13 @@ return {
   -- ft = "markdown",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "hrsh7th/nvim-cmp",
     "ibhagwan/fzf-lua",
   },
   config = function()
     local st = {}
-    -- Enable nvim-cmp integration for emoji completion
-    st.enable_cmp_integration = true
+    -- Disable cmp integration since we're using blink.cmp now
+    -- Emoji can still be inserted via keymaps
+    st.enable_cmp_integration = false
     local em = require("emoji")
     em.setup(st)
   end,

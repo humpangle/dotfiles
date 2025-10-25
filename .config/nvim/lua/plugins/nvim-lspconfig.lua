@@ -226,20 +226,16 @@ return {
 
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
+      --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
+      --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
       local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 
       local lsp_extended_capabilities = lsp_capabilities
 
-      -- Augment neovim LSP capabilities with those from nvim cmp.
-      local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-      if cmp_nvim_lsp_ok then
-        lsp_extended_capabilities = vim.tbl_deep_extend(
-          "force",
-          lsp_capabilities,
-          cmp_nvim_lsp.default_capabilities()
-        )
+      -- Augment neovim LSP capabilities with those from blink.cmp.
+      local blink_cmp_ok, blink_cmp = pcall(require, "blink.cmp")
+      if blink_cmp_ok then
+        lsp_extended_capabilities = blink_cmp.get_lsp_capabilities(lsp_capabilities)
       end
 
       -- Ensure the servers and tools below are installed

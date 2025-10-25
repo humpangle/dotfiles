@@ -60,7 +60,7 @@ local plugins_table = {
 
   "bronson/vim-visual-star-search",
 
-  require("plugins/cmp"),
+  require("plugins/blink-cmp"),
 
   -- Highlight, edit, and navigate code
   require("plugins/treesitter"),

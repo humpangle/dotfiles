@@ -1,4 +1,4 @@
--- Snippet Engine & its associated nvim-cmp source
+-- Snippet Engine for blink.cmp
 
 return {
   "L3MON4D3/LuaSnip",
