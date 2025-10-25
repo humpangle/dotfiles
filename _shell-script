@@ -214,3 +214,7 @@ if _has_termux; then
   export -f tcg
 # /END/ Clipboard
 fi
+
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init bash)"
+fi
