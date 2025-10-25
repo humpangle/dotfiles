@@ -28,5 +28,21 @@ if [[ -e "$_c_tmux_script" ]]; then
   alias st='c-tmux start_tmux'
   alias lstd='c-tmux list -fx ^dot'
   alias tk='c-tmux kill_tmux'
+
+  __fzf_tmux_sessions__() {
+    local session_name
+    # Get list of session names from c-tmux and fuzzy search
+    # shellcheck disable=SC2091
+    session_name=$(
+      c-tmux list --names --no-flush |
+        FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse" "${FZF_TMUX_SESSION_OPTS-} +m") \
+        FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd)
+    ) || return
+    # If a session was selected, copy its start command to clipboard
+    if [[ -n "$session_name" ]]; then
+      c-tmux list -fx "$session_name"
+    fi
+  }
+  alias lstf='__fzf_tmux_sessions__'
 fi
 unset _c_tmux_script
