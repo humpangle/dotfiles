@@ -17,7 +17,7 @@ local files_fzf_options = {
     description = "chat ebnis chat",
     path = ".claude.ebnis.chat.md",
     count = 11,
-    count2 = 1,
+    count2 = 0,
   },
   {
     description = "s1.md",
@@ -89,7 +89,7 @@ table.insert(fzf_options, {
   end,
 })
 
-utils.map_key("n", "<leader>bn", function()
+utils.map_key("n", "<leader>bb", function()
   utils.create_fzf_key_maps(fzf_options, {
     prompt = "Edit In Float",
     header = "Select an Edit In Float Option",
