@@ -145,6 +145,7 @@ table.insert(m, {
     vim.fn.writefile(lines, filepath)
     vim.schedule(function()
       load_in_float_api.load_in_float(filepath, {
+        check_autocmd = true,
         width = 0.75,
         height = 0.75,
         border = "rounded",

@@ -38,14 +38,19 @@ function m.load_in_float(filepath, opts)
   -- File-backed buffer so :w writes to disk
   local buf = vim.fn.bufadd(filepath)
 
-  -- Load buffer with noautocmd to avoid ReadPre autocommand issues
-  local ok, _ = pcall(function()
-    vim.cmd("noautocmd call bufload(" .. buf .. ")")
-  end)
+  -- Pass `check_autocmd` for situations where the float complains about autocommand
+  if opts.check_autocmd then
+    -- Load buffer with noautocmd to avoid ReadPre autocommand issues
+    local ok, _ = pcall(function()
+      vim.cmd("noautocmd call bufload(" .. buf .. ")")
+    end)
 
-  if not ok then
-    -- Fallback: try without noautocmd
-    vim.fn.bufload(buf)
+    if not ok then
+      -- Fallback: try without noautocmd
+      vim.fn.bufload(buf)
+    end
+  else
+      vim.fn.bufload(buf)
   end
 
   -- Geometry
