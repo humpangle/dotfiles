@@ -1,6 +1,6 @@
 local plugin_enabled = require("plugins/plugin_enabled")
 local utils = require("utils")
-local keymap = utils.map_key
+local map_key = utils.map_key
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -148,9 +148,9 @@ local plugins_table = {
       if status_ok then
         leap.set_default_keymaps()
 
-        vim.keymap.set({ "n", "o" }, "s", "<Plug>(leap-forward-to)")
+        map_key({ "n", "o" }, "s", "<Plug>(leap-forward-to)")
 
-        vim.keymap.set({ "n", "o" }, "S", "<Plug>(leap-backward-to)")
+        map_key({ "n", "o" }, "S", "<Plug>(leap-backward-to)")
 
         -- mark cursor location before jumping
         vim.api.nvim_create_autocmd("User", {
@@ -171,7 +171,7 @@ local plugins_table = {
       -- mbbill/undotree
       -- nnoremap <A-u> :UndotreeToggle<CR>
       -- simnalamburt/vim-mundo
-      keymap("n", "<A-u>", ":MundoToggle", { noremap = true })
+      map_key("n", "<A-u>", ":MundoToggle", { noremap = true })
     end,
   },
 
@@ -187,7 +187,7 @@ local plugins_table = {
       -- enable the Elasticsearch support flag.
       vim.g.vrc_elasticsearch_support = 1
 
-      keymap(
+      map_key(
         "n",
         "<localleader>MR",
         ":let b:vrc_split_request_body = <right>"
@@ -200,7 +200,7 @@ local plugins_table = {
       -- let g:vrc_debug = 1
 
       -- make new rest console buffer
-      keymap(
+      map_key(
         "n",
         "<localleader>nr",
         ":tabe .rest<Left><Left><Left><Left><Left>"
@@ -210,7 +210,7 @@ local plugins_table = {
       -- all *.rest buffers.
       -- Rename the output buffer if you don't want your output to write to
       -- the `__REST_response__` buffer
-      keymap(
+      map_key(
         "n",
         "<localleader>rr",
         ":let b:vrc_output_buffer_name = '-Rest'<Left><Left><Left><Left><left><left>"
@@ -226,7 +226,7 @@ local plugins_table = {
     enabled = not plugin_enabled.has_vscode(),
     init = function()
       -- invoke with '-'
-      keymap("n", "<leader>-", function()
+      map_key("n", "<leader>-", function()
         local winpick = require("winpick")
         local winid = winpick.select()
 
@@ -303,7 +303,7 @@ local plugins_table = {
       "codecompanion",
     },
     init = function()
-      keymap("n", "<leader>mt", function()
+      map_key("n", "<leader>mt", function()
         vim.cmd("RenderMarkdown toggle")
       end, { noremap = true })
     end,
@@ -324,7 +324,7 @@ local plugins_table = {
       vim.g.mkdp_refresh_slow = 1
       vim.g.mkdp_open_to_the_world = 1
 
-      keymap(
+      map_key(
         "n",
         "<leader>mt",
         ":MarkdownPreviewToggle<CR>",
@@ -345,8 +345,8 @@ local plugins_table = {
     enabled = not plugin_enabled.has_vscode(),
     init = function()
       vim.maximizer_set_default_mapping = 0
-      keymap({ "n", "x" }, "mm", ":MaximizerToggle!<CR>")
-      keymap({ "n", "x" }, "<leader>mm", ":MaximizerToggle!<CR>")
+      map_key({ "n", "x" }, "mm", ":MaximizerToggle!<CR>")
+      map_key({ "n", "x" }, "<leader>mm", ":MaximizerToggle!<CR>")
     end,
   },
 
