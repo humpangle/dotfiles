@@ -119,6 +119,13 @@ return {
       lsp_doc_border = false, -- add a border to hover docs and signature help
     }
 
+    opt.views = {
+      notify = {
+        -- any big number > whatever your float uses
+        zindex = 2000,
+      },
+    }
+
     noice.setup(opt)
   end,
   dependencies = {
