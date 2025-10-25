@@ -93,6 +93,9 @@ return {
       require("fzf-lua").setup({
         winopts = {
           fullscreen = true,
+          preview = {
+            hidden = "hidden", -- Start with preview hidden, toggle with Ctrl-p
+          },
         },
         git = {
           branches = {
@@ -124,6 +127,9 @@ return {
           },
         },
         keymap = {
+          builtin = {
+            ["?"] = "toggle-preview", -- Toggle preview on/off
+          },
           fzf = {
             ["ctrl-q"] = "select-all+accept",
           },
