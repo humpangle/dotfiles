@@ -71,7 +71,7 @@ function m.load_in_float(filepath, opts)
   -- • Delete buffer: bufhidden = "delete" - buffer is deleted when window closes
   -- • Unload buffer: bufhidden = "unload" - buffer is unloaded when window closes
   -- • No special behavior: bufhidden = "" - standard buffer behavior
-  vim.bo[buf].bufhidden = opts.buf_hidden or ""
+  vim.bo[buf].bufhidden = opts.buf_hidden or "hide"
 
   vim.bo[buf].modifiable = true
   vim.bo[buf].readonly = false
