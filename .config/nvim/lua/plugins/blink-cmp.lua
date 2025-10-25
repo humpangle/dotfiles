@@ -37,7 +37,7 @@ return {
       preset = "none",
       -- Accept currently selected item
       ["<CR>"] = { "accept", "fallback" },
-      ["<C-y>"] = { "accept", "fallback" },
+      ["<C-y>"] = { "select_and_accept", "fallback" },
       -- Manually trigger completion
       ["<C-Space>"] = {
         "show",
@@ -89,7 +89,7 @@ return {
       },
       -- LuaSnip-specific navigation
       ["<C-l>"] = {
-        function(cmp)
+        function()
           local luasnip = require("luasnip")
           if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
@@ -97,7 +97,7 @@ return {
         end,
       },
       ["<C-h>"] = {
-        function(cmp)
+        function()
           local luasnip = require("luasnip")
           if luasnip.locally_jumpable(-1) then
             luasnip.jump(-1)
@@ -170,6 +170,7 @@ return {
               return bufnrs
             end,
           },
+          min_keyword_length = 3,
         },
       },
     },
