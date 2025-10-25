@@ -36,7 +36,7 @@ return {
     keymap = {
       preset = "none",
       -- Accept currently selected item
-      ["<CR>"] = { "accept", "fallback" },
+      ["<CR>"] = { "select_and_accept", "fallback" },
       ["<C-y>"] = { "select_and_accept", "fallback" },
       -- Manually trigger completion
       ["<C-Space>"] = {
