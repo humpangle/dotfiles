@@ -1,6 +1,7 @@
 local utils = require("utils")
 local fugitive_utils = require("plugins.fugitive.utils")
 local session_utils = require("session-utils")
+local load_in_float_api = require("load-in-float-api")
 
 local m = {
   {
@@ -118,17 +119,14 @@ local function my_status_add_runtimepath(lines)
 end
 
 table.insert(m, {
-  description = "My Neovim Status                                                                                          9",
+  description = "My Neovim Status                                                                                   9",
   action = function()
-    -- Create new buffer
-    vim.cmd("tabnew")
-    vim.cmd("setlocal buftype=nofile")
-    vim.cmd("setlocal bufhidden=hide")
-    vim.cmd("setlocal noswapfile")
-    utils.write_to_out_file({
+    -- Get the output file path (just create, don't save current buffer)
+    local filepath = utils.write_to_out_file({
       additional_directory_path = "my-neovim-status",
       prefix = "my-neovim-status",
       ext = "log",
+      just_create = true,
     })
 
     -- Write status information
@@ -144,8 +142,14 @@ table.insert(m, {
     my_status_add_llm_info(lines)
     my_status_add_runtimepath(lines)
 
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
-    vim.cmd("w!")
+    vim.fn.writefile(lines, filepath)
+    vim.schedule(function()
+      load_in_float_api.load_in_float(filepath, {
+        width = 0.75,
+        height = 0.75,
+        border = "rounded",
+      })
+    end)
   end,
   count = 9,
 })
