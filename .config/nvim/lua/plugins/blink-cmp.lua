@@ -25,15 +25,12 @@ return {
   version = "*",
   -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
   -- build = 'cargo build --release',
-  
   event = "InsertEnter",
-  
   dependencies = {
     -- Snippet Engine
     require("plugins.luasnip"),
     "rafamadriz/friendly-snippets",
   },
-
   opts = {
     -- 'default' for mappings preset only when no mapping is set
     keymap = {
@@ -41,27 +38,27 @@ return {
       -- Accept currently selected item
       ["<CR>"] = { "accept", "fallback" },
       ["<C-y>"] = { "accept", "fallback" },
-      
       -- Manually trigger completion
-      ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-      
+      ["<C-Space>"] = {
+        "show",
+        "show_documentation",
+        "hide_documentation",
+      },
       -- Scroll documentation
       ["<C-b>"] = { "scroll_documentation_up", "fallback" },
       ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-      
       -- Arrow keys for navigation
       ["<Up>"] = { "select_prev", "fallback" },
       ["<Down>"] = { "select_next", "fallback" },
       ["<C-p>"] = { "select_prev", "fallback" },
       ["<C-n>"] = { "select_next", "fallback" },
-      
       -- Navigate completion menu
-      ["<Tab>"] = { 
+      ["<Tab>"] = {
         function(cmp)
           if cmp.is_visible() then
             return cmp.select_next()
           end
-          
+
           -- Handle LuaSnip expansion/jumping
           local luasnip = require("luasnip")
           if luasnip.expandable() then
@@ -69,29 +66,27 @@ return {
           elseif luasnip.expand_or_jumpable() then
             return luasnip.expand_or_jump()
           end
-          
+
           return cmp.fallback()
         end,
-        "fallback"
+        "fallback",
       },
-      
       ["<S-Tab>"] = {
         function(cmp)
           if cmp.is_visible() then
             return cmp.select_prev()
           end
-          
+
           -- Handle LuaSnip backward jumping
           local luasnip = require("luasnip")
           if luasnip.jumpable(-1) then
             return luasnip.jump(-1)
           end
-          
+
           return cmp.fallback()
         end,
-        "fallback"
+        "fallback",
       },
-      
       -- LuaSnip-specific navigation
       ["<C-l>"] = {
         function(cmp)
@@ -101,7 +96,6 @@ return {
           end
         end,
       },
-      
       ["<C-h>"] = {
         function(cmp)
           local luasnip = require("luasnip")
@@ -111,7 +105,6 @@ return {
         end,
       },
     },
-
     appearance = {
       -- Sets the fallback highlight groups to nvim-cmp's highlight groups
       -- Useful for when your theme doesn't support blink.cmp
@@ -121,7 +114,6 @@ return {
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = "mono",
     },
-
     completion = {
       accept = {
         -- experimental auto-brackets support
@@ -129,7 +121,6 @@ return {
           enabled = true,
         },
       },
-      
       menu = {
         -- Auto show the completion menu
         auto_show = true,
@@ -140,12 +131,10 @@ return {
           },
         },
       },
-      
       documentation = {
         auto_show = true,
         auto_show_delay_ms = 200,
       },
-      
       list = {
         selection = {
           preselect = false,
@@ -153,12 +142,15 @@ return {
         },
       },
     },
-
     -- default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, via `opts_extend`
     sources = {
-      default = { "lsp", "path", "snippets", "buffer" },
-      
+      default = {
+        "lsp",
+        "snippets",
+        "path",
+        "buffer",
+      },
       providers = {
         buffer = {
           -- Custom buffer filtering
@@ -166,31 +158,28 @@ return {
             -- Only complete from visible buffers
             get_bufnrs = function()
               local bufnrs = {}
-              
+
               for _, win in ipairs(vim.api.nvim_list_wins()) do
                 local buf_no = vim.api.nvim_win_get_buf(win)
-                
+
                 if is_buffer_source(buf_no) then
                   table.insert(bufnrs, buf_no)
                 end
               end
-              
+
               return bufnrs
             end,
           },
         },
       },
     },
-
     snippets = {
       -- Use the luasnip preset
       preset = "luasnip",
     },
-
     signature = {
       enabled = true,
     },
-
     -- Cmdline completion configuration
     cmdline = {
       enabled = true,
@@ -208,7 +197,6 @@ return {
       end,
     },
   },
-
   -- allows extending the providers array elsewhere in your config
   -- without having to redefine it
   opts_extend = { "sources.default" },
