@@ -14,9 +14,8 @@ alias trs='$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 
 tmux_session_wizard="$TMUX_PLUGIN_MANAGER_PATH/tmux-session-wizard/bin"
 if [ -d "$tmux_session_wizard" ]; then
-  if [ -f "$tmux_session_wizard/t" ]; then
-    rm -rf "$tmux_session_wizard/lst"
-    mv "$tmux_session_wizard/t" "$tmux_session_wizard/lst"
+  if [ ! -e "$tmux_session_wizard/lst" ]; then
+    ln -s "$tmux_session_wizard/t" "$tmux_session_wizard/lst"
   fi
   pathmunge "$tmux_session_wizard"
 fi
