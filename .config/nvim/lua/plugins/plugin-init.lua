@@ -418,6 +418,7 @@ local plugins_table = {
   require("plugins/ai/claude-code-nvim"),
   require("plugins/neotest"),
   require("plugins/neotree"),
+  require("plugins/mini-files"),
   require("plugins.image-nvim"),
   require("plugins/octo-nvim"),
   require("plugins/mini-align"),
