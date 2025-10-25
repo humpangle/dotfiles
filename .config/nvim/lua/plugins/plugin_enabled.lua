@@ -282,6 +282,14 @@ function M.vim_lsp()
   return utils.get_os_env_or_nil("NVIM_ENABLE_VIM_LSP") == "1"
 end
 
+function M.harper_lsp()
+  if M.has_vscode() then
+    return false
+  end
+
+  return utils.get_os_env_or_nil("NVIM_ENABLE_HARPER_LSP") == "1"
+end
+
 M.noice = function()
   if M.has_termux() then
     return false

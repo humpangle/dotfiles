@@ -280,7 +280,8 @@ return {
         require("plugins.lsp-extras.typescript"),
         require("plugins.lsp-extras.php"),
         require("plugins.lsp-extras.sql"),
-        require("plugins.lsp.lua_ls")
+        require("plugins.lsp.lua_ls"),
+        require("plugins.lsp-extras.harper")
       )
       -- /END/ servers variable
 
