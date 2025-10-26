@@ -48,7 +48,7 @@ return {
         https://github.com/fannheyward/coc-pyright
         https://raw.githubusercontent.com/microsoft/pyright/master/packages/vscode-pyright/package.json
 
-        create at the root of project .neoconf.json (invoke :Neoconf local) and put (for example):
+        Create at the root of project .neoconf.json (invoke :Neoconf local) and put (for example):
         {
           "lspconfig": {
             "pyright": {
