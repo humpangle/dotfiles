@@ -367,14 +367,7 @@ local plugins_table = {
   "tpope/vim-characterize",
 
   -- FORMATTERS
-  -- Works for many files as far as binary that can format the file exists
-  {
-    "sbdchd/neoformat",
-    enabled = not plugin_enabled.has_vscode(),
-    init = function()
-      require("plugins/neoformat")
-    end,
-  },
+  require("plugins/neoformat"),
 
   {
     "windwp/nvim-autopairs",

@@ -28,7 +28,7 @@ local do_format = function()
   vim.cmd("Neoformat")
   -- Neoformat converts spaces to tabs - we retab to force spaces
   vim.cmd({ cmd = "retab", bang = true })
-  -- Neoformat marks the buffer as dirty - save the biffer
+  -- Neoformat marks the buffer as dirty - save the buffer
   -- vim.cmd("silent w")
 end
 
@@ -193,3 +193,8 @@ utils.map_key("n", "<leader>NN", function()
     vim.notify("Linting Completed")
   end
 end, { noremap = true })
+
+-- Works for many files as far as binary that can format the file exists
+return {
+  "sbdchd/neoformat",
+}
