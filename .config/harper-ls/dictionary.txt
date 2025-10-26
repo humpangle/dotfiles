@@ -12,4 +12,5 @@ pyright
 reportUnusedVariable
 retab
 svelte
+tmux
 typescript
