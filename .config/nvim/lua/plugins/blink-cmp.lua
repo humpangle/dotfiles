@@ -76,7 +76,22 @@ return {
         end,
         "fallback",
       },
-      ["<S-Tab>"] = { "snippet_backward", "fallback" },
+      ["<S-Tab>"] = {
+        function(cmp)
+          -- Handle LuaSnip expansion/jumping
+          local luasnip = require("luasnip")
+          if luasnip.jumpable(-1) then
+            return cmp.snippet_backward()
+          end
+
+          if cmp.is_visible() then
+            return cmp.select_prev()
+          end
+
+          return true
+        end,
+        "fallback",
+      },
       -- LuaSnip-specific navigation
       ["<C-l>"] = { "snippet_forward", "fallback" },
       ["<C-h>"] = { "snippet_backward", "fallback" },
