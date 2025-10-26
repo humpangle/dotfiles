@@ -28,4 +28,15 @@ m.do_format = function()
   -- vim.cmd("silent w")
 end
 
+local file_patterns_extensions_map = {
+  python = "py",
+  lua = "lua",
+}
+m.extensions = {}
+m.file_patterns = {}
+for file_pattern, extension in pairs(file_patterns_extensions_map) do
+  table.insert(m.file_patterns, file_pattern)
+  m.extensions[extension] = 1
+end
+
 return m

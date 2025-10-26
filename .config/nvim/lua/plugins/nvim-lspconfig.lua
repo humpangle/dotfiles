@@ -9,6 +9,8 @@ end
 local utils = require("utils")
 local fzf_lua_lsp_options = require("plugins.lsp.fzf_lua_lsp_options")
 local yamlls_config = require("plugins.lsp-extras.yaml_lsp")
+local neoformat_extensions =
+  require("plugins.neoformat.neoformat-api").extensions
 
 ---@param conditon string
 ---@param lsp string
@@ -176,8 +178,13 @@ return {
 
           -- Servers like pyright do not support formatting.
           if
-            client ~= nil
+            client
             and client:supports_method("textDocument/formatting")
+            and neoformat_extensions[vim.fn.fnamemodify(
+                event.file,
+                ":e"
+              )]
+              ~= 1
           then
             -- Format the code using builtin LSP code formatter
             map("<leader>fc", function()
@@ -235,7 +242,8 @@ return {
       -- Augment neovim LSP capabilities with those from blink.cmp.
       local blink_cmp_ok, blink_cmp = pcall(require, "blink.cmp")
       if blink_cmp_ok then
-        lsp_extended_capabilities = blink_cmp.get_lsp_capabilities(lsp_capabilities)
+        lsp_extended_capabilities =
+          blink_cmp.get_lsp_capabilities(lsp_capabilities)
       end
 
       -- Ensure the servers and tools below are installed

@@ -5,21 +5,7 @@ local api = require("plugins.neoformat.neoformat-api")
 -- -- Global debugging variables
 -- vim.g.neoformat_verbose = 1
 -- vim.g.neoformat_only_msg_on_error = 1
-
-map_key(
-  "n",
-  "<leader>Nn",
-  api.do_format,
-  { noremap = true, desc = "Neoformat 1/visual-select-choose-formatter" }
-)
-
-map_key(
-  "v",
-  "<leader>Nn",
-  api.do_format,
-  { noremap = true, desc = "Neoformat 1/visual-select-choose-formatter" }
-)
-
+--
 -- [[ Install binaries for formatting ]]
 --
 -- javascript, typescript, svelte, graphql, Vue, html, YAML, SCSS, Less, JSON,
@@ -37,138 +23,153 @@ map_key(
 --   make && sudo make install && \
 --   pg_format --version
 
--- SETTINGS
--- Shell
-vim.g.shfmt_opt = "-ci"
-
--- jsonc
-vim.g.neoformat_jsonc_prettier = {
-  ["exe"] = "prettier",
-
-  ["args"] = {
-    "--stdin-filepath",
-    '"%:p"',
-    "--parser",
-    "json",
-  },
-
-  ["stdin"] = 1,
-}
-
-vim.g.neoformat_enabled_jsonc = {
-  "prettier",
-}
-
-vim.g.neoformat_enabled_python = {
-  "black",
-  "autopep8",
-}
-
-vim.g.neoformat_heex_mixformatheex = {
-  exe = "mix",
-
-  args = {
-    "format",
-    '--stdin-filename="%:t"',
-    "-",
-  },
-
-  stdin = 1,
-}
-
-vim.g.neoformat_enabled_heex = {
-  "mixformatheex",
-}
-
--- vim.g.neoformat_enabled_php = {
---  "php-cs-fixer",
--- }
-
--- format on save
--- vim.cmd([[
---   augroup fmt
---     autocmd!
---     " if file not changed and saved (e.g. to trigger test run), error is thrown: use try/catch to suppress
---     au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
---   a
--- ]])
-
-local lint_env_val = utils.get_os_env_or_nil("EBNIS_LINT_CMDS")
-if lint_env_val then
-  vim.api.nvim_create_user_command("Lint", function()
-    local cmds =
-      vim.split(lint_env_val, "::", { trimempty = true, plain = true })
-
-    local file = vim.fn.expand("%:p")
-    local outputs = {}
-    vim.cmd("w")
-
-    for _, cmd in pairs(cmds) do
-      cmd = cmd:gsub("__f_", file)
-      local output = vim.fn.systemlist(cmd)
-
-      for _, v in pairs(output) do
-        if v then
-          table.insert(outputs, v)
-        end
-      end
-
-      vim.cmd({ cmd = "edit", bang = true })
-    end
-
-    if #outputs > 0 then
-      print(table.concat(outputs, "\n"))
-    end
-  end, {
-    nargs = 0,
-    desc = "Run all linters from $EBNIS_LINT_CMDS",
-  })
-end
-
-utils.map_key("n", "<leader>NN", function()
-  local count = vim.v.count
-  if count == 1 then
-    local log_files = utils.get_os_env_or_nil("EBNIS_TEST_LOG_FILES")
-    if not log_files then
-      return
-    end
-
-    vim.notify("Clearing test logs...")
-
-    local files =
-      vim.split(log_files, "::", { trimempty = true, plain = true })
-    local current_file = vim.fn.expand("%:p")
-    local should_reload = false
-    local cleared_files = {}
-
-    for _, file in ipairs(files) do
-      local f = io.open(file, "w")
-      if f then
-        f:close()
-        table.insert(cleared_files, file)
-        if vim.fn.fnamemodify(file, ":p") == current_file then
-          should_reload = true
-        end
-      else
-        print("Failed to clear: " .. file)
-      end
-    end
-
-    if should_reload then
-      vim.cmd("e! %")
-    end
-
-    if #cleared_files > 0 then
-      print("Cleared: " .. table.concat(cleared_files, ", "))
-    end
-  elseif lint_env_val then
-    vim.notify("Linting...")
-    vim.cmd("Wmessage Lint")
-    vim.notify("Linting Completed")
-  end
-end, { noremap = true })
-
 -- Works for many files as far as binary that can format the file exists
 return {
   "sbdchd/neoformat",
+  init = function()
+    map_key({ "n", "x", "v" }, "<leader>Nn", api.do_format, {
+      noremap = true,
+      desc = "Neoformat 1/visual-select-choose-formatter",
+    })
+
+    -- SETTINGS
+    -- Shell
+    vim.g.shfmt_opt = "-ci"
+
+    -- jsonc
+    vim.g.neoformat_jsonc_prettier = {
+      ["exe"] = "prettier",
+
+      ["args"] = {
+        "--stdin-filepath",
+        '"%:p"',
+        "--parser",
+        "json",
+      },
+
+      ["stdin"] = 1,
+    }
+
+    vim.g.neoformat_enabled_jsonc = {
+      "prettier",
+    }
+
+    vim.g.neoformat_enabled_python = {
+      "black",
+      "autopep8",
+    }
+
+    vim.g.neoformat_heex_mixformatheex = {
+      exe = "mix",
+
+      args = {
+        "format",
+        '--stdin-filename="%:t"',
+        "-",
+      },
+
+      stdin = 1,
+    }
+
+    vim.g.neoformat_enabled_heex = {
+      "mixformatheex",
+    }
+
+    -- vim.g.neoformat_enabled_php = {
+    --  "php-cs-fixer",
+    -- }
+
+    -- format on save
+    -- vim.cmd([[
+    --   augroup fmt
+    --     autocmd!
+    --     " if file not changed and saved (e.g. to trigger test run), error is thrown: use try/catch to suppress
+    --     au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+    --   a
+    -- ]])
+
+    local lint_env_val = utils.get_os_env_or_nil("EBNIS_LINT_CMDS")
+    if lint_env_val then
+      vim.api.nvim_create_user_command("Lint", function()
+        local cmds = vim.split(
+          lint_env_val,
+          "::",
+          { trimempty = true, plain = true }
+        )
+
+        local file = vim.fn.expand("%:p")
+        local outputs = {}
+        vim.cmd("w")
+
+        for _, cmd in pairs(cmds) do
+          cmd = cmd:gsub("__f_", file)
+          local output = vim.fn.systemlist(cmd)
+
+          for _, v in pairs(output) do
+            if v then
+              table.insert(outputs, v)
+            end
+          end
+
+          vim.cmd({ cmd = "edit", bang = true })
+        end
+
+        if #outputs > 0 then
+          print(table.concat(outputs, "\n"))
+        end
+      end, {
+        nargs = 0,
+        desc = "Run all linters from $EBNIS_LINT_CMDS",
+      })
+    end
+
+    utils.map_key("n", "<leader>NN", function()
+      local count = vim.v.count
+      if count == 1 then
+        local log_files =
+          utils.get_os_env_or_nil("EBNIS_TEST_LOG_FILES")
+        if not log_files then
+          return
+        end
+
+        vim.notify("Clearing test logs...")
+
+        local files = vim.split(
+          log_files,
+          "::",
+          { trimempty = true, plain = true }
+        )
+        local current_file = vim.fn.expand("%:p")
+        local should_reload = false
+        local cleared_files = {}
+
+        for _, file in ipairs(files) do
+          local f = io.open(file, "w")
+          if f then
+            f:close()
+            table.insert(cleared_files, file)
+            if vim.fn.fnamemodify(file, ":p") == current_file then
+              should_reload = true
+            end
+          else
+            print("Failed to clear: " .. file)
+          end
+        end
+
+        if should_reload then
+          vim.cmd("e! %")
+        end
+
+        if #cleared_files > 0 then
+          print("Cleared: " .. table.concat(cleared_files, ", "))
+        end
+      elseif lint_env_val then
+        vim.notify("Linting...")
+        vim.cmd("Wmessage Lint")
+        vim.notify("Linting Completed")
+      end
+    end, { noremap = true })
+
+    require("plugins.neoformat.neoformat-auto-commands")
+  end,
 }

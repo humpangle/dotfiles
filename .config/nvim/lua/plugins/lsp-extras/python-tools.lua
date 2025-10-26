@@ -1,6 +1,5 @@
 -- Python formatter
 
-local utils = require("utils")
 local plugin_enabled = require("plugins/plugin_enabled")
 
 if not plugin_enabled.python() then
@@ -18,21 +17,5 @@ return {
     --  You must `pip install -U pynvim` into the python executable
     "psf/black",
     ft = "python",
-    config = function()
-      -- Force keymap `leader fc` to use Neoformat for certain file types
-      vim.api.nvim_create_autocmd({ "FileType" }, {
-        pattern = {
-          "python",
-        },
-        callback = function()
-          utils.map_key("n", "<leader>fc", function()
-            vim.cmd("Black")
-          end, {
-            noremap = true,
-            buffer = true,
-          })
-        end,
-      })
-    end,
   },
 }
