@@ -3,10 +3,11 @@
 
 export EBNIS_KITTY_CONFIG_DIR="${HOME}/.config/kitty"
 export EBNIS_KITTY_SESSION_DIR="$EBNIS_KITTY_CONFIG_DIR/.___scratch-sessions"
+export EBNIS_KITTY_SOCKET_PATH='unix:/tmp/kitty-ebnis.sock'
 export FZF_KITTY_SESSION_OPTS="--height=80% --border-label='Kitty Sessions' --border-label-pos=2 --prompt='Session> ' --preview='cat {} 2>/dev/null'"
 
 alias kt=kitty
-alias lskd='kitty --session $EBNIS_KITTY_SESSION_DIR/dot.kitty-session --start-as=maximized &>/dev/null &'
+alias lskd='kitty --session $EBNIS_KITTY_SESSION_DIR/dot.kitty-session --start-as=maximized --detach &>/dev/null'
 
 __fzf_kitty_sessions__() {
   local output

@@ -13,7 +13,7 @@ hs.alert.show("Hammerspoon Config   Reloaded")
 local kitty = require("kitty")
 -- Toggle kitty quick-access-terminal
 with_leader_key:bind("", "space", function()
-  kitty.ensure_kitty_launched(kitty.toggle_quick_access)
+  kitty.toggle_quick_access()
 end)
 
 -- Show the time

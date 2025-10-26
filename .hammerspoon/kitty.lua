@@ -1,85 +1,66 @@
-local m = {}
+local M = {}
 
-local KITTY_BUNDLE = "net.kovidgoyal.kitty"
+-- Adjust if installed elsewhere
+local KITTY = "/Applications/kitty.app/Contents/MacOS/kitty"
+local KITTEN = "/Applications/kitty.app/Contents/MacOS/kitten"
 
--- Minimize all current Kitty windows; returns true if any were minimized
-local function minimizeKittyWindows()
-  local app = hs.application.get(KITTY_BUNDLE)
-    or hs.appfinder.appFromBundleID(KITTY_BUNDLE)
-  if not app then
+-- Must match your quick-access-terminal.conf
+local SOCKET = "unix:/tmp/kitty-ebnis.sock"
+
+-- Run `kitty @` against the quick-access instance; return stdout on success, or nil on failure
+local function kitty_at(args)
+  local parts = { string.format("%q", KITTY), "@", "--to", SOCKET }
+  for _, a in ipairs(args) do
+    table.insert(parts, a)
+  end
+  local cmd = table.concat(parts, " ")
+  local out, success = hs.execute(cmd, true) -- blocking; capture stdout/stderr
+  if not success or not out or out == "" then
+    return nil
+  end
+  return out
+end
+
+function M.launch_quick_access()
+  hs.task
+    .new(KITTEN, function() end, {
+      "quick-access-terminal",
+      "--instance-group",
+      "quick-access",
+      "--detach",
+    })
+    :start()
+end
+
+-- Is the quick-access instance up? (socket responds and has at least one window)
+local function instance_is_up()
+  local out = kitty_at({ "ls" })
+  if not out then
     return false
   end
-  local any = false
-  for _, w in ipairs(app:allWindows()) do
-    if w:isStandard() and not w:isMinimized() then
-      w:minimize()
-      any = true
-    end
+  local ok, data = pcall(hs.json.decode, out)
+  if not ok or type(data) ~= "table" or not data.os_windows then
+    return false
   end
-  return any
+  return #data.os_windows > 0
 end
 
-local function isKittyRunning(mm)
-  if hs.application.find(KITTY_BUNDLE) then
-    if mm then
-      minimizeKittyWindows()
-    end
-
-    return true
+-- Bring quick-access to the foreground (or launch if not running)
+function M.raise_quick_access()
+  if instance_is_up() then
+    kitty_at({ "focus-window", "--match", "recent:0" })
+  else
+    M.launch_quick_access()
   end
-
-  return false
 end
 
--- Launch Kitty in the background (no focus change)
-local function launchKittyInBackground()
-  -- -g = do not bring to front;
-  -- -b = launch by bundle id
-  hs.task
-    .new("/usr/bin/open", nil, {
-      "-g",
-      "-b",
-      KITTY_BUNDLE,
-    })
-    :start()
-end
-
--- Ensure Kitty is running;
--- if not, launch in background then proceed
-function m.ensure_kitty_launched(thenDo)
-  if isKittyRunning() then
-    thenDo()
-    return
+-- Toggle: if running -> hide (close all windows in that instance); else -> launch
+function M.toggle_quick_access()
+  if instance_is_up() then
+    kitty_at({ "close-window", "--match", "all" })
+  else
+    M.launch_quick_access()
   end
-
-  launchKittyInBackground()
-
-  -- Wait for the app to be alive (up to ~3s)
-  local waited = 0
-  hs.timer.doUntil(function()
-    waited = waited + 0.05
-    return isKittyRunning("minimize") or waited > 3.0
-  end, function()
-    if isKittyRunning("minimize") then
-      thenDo()
-    else
-      hs.alert.show("Kitty did not start (timeout).")
-    end
-  end, 0.05)
 end
 
--- Toggle a named quick-access terminal; add --keep-focus if you like
-function m.toggle_quick_access()
-  local kitten_bin = "/Applications/kitty.app/Contents/MacOS/kitten"
-  -- local kitty = "/Applications/kitty.app/Contents/MacOS/kitten"
-  hs.task
-    .new(kitten_bin, function() end, {
-      "quick-access-terminal",
-      "--instance-group", -- name of quick-access-terminal is `quick-access`.
-      "quick-access",
-      "--detach", -- detach from parent and kill parent
-    })
-    :start()
-end
-
-return m
+return M
