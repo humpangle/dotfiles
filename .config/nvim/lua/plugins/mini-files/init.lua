@@ -1,3 +1,6 @@
+-- TODO:implement trash file
+-- https://github.com/nvim-neo-tree/neo-tree.nvim/issues/202#issuecomment-2996740957
+
 local utils = require("utils")
 
 local function open_buffer_dir()
