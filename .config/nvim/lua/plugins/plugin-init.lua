@@ -367,7 +367,7 @@ local plugins_table = {
   "tpope/vim-characterize",
 
   -- FORMATTERS
-  require("plugins/neoformat"),
+  require("plugins.neoformat"),
 
   {
     "windwp/nvim-autopairs",
