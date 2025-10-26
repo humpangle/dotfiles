@@ -1,0 +1,15 @@
+NEOVIM
+Neoformat
+SCSS
+graphql
+html
+javascript
+json
+jsonc
+lspconfig
+o
+pyright
+reportUnusedVariable
+retab
+svelte
+typescript
