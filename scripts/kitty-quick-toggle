@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# shellcheck disable=
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+KITTY_BIN="${KITTY_BIN:-kitty}"
+KITTEN_BIN="${KITTEN_BIN:-kitten}"
+
+SOCKET="/tmp/kitty-quick-access.sock"
+
+# Helper: remote-control quick-access instance
+kitty_at() {
+  $KITTY_BIN @ --to "unix:$SOCKET" "$@" 2>/dev/null
+}
+
+# Check if quick-access instance exists and has windows
+instance_up() {
+  local out
+  out=$(kitty_at ls) || return 1
+  [[ -n "$out" && "$out" != "null" ]]
+}
+
+# Check number of windows in that instance
+window_count() {
+  kitty_at ls | jq '[.os_windows[].tabs[].windows[]] | length'
+}
+
+launch_quick() {
+  $KITTEN_BIN quick-access-terminal \
+    --instance-group quick-access \
+    --detach \
+    >/dev/null 2>&1
+}
+
+toggle_quick() {
+  if instance_up; then
+    # If exists: close all windows in that instance
+    kitty_at close-window --match all
+  else
+    launch_quick
+  fi
+}
+
+toggle_quick
+
+# ✅ 3️⃣ Keyboard Binding (Ubuntu GNOME)
+# 1️⃣ Open Settings → Keyboard
+# 2️⃣ Scroll → Click + → Add Custom Shortcut
+# Name: Kitty Quick Toggle
+# Command: /home/<you>/bin/kitty-quick-toggle
+# Shortcut: Shift+Down (if free) or another combo
