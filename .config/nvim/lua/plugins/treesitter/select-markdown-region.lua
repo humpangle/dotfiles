@@ -4,26 +4,21 @@ local function select_markdown_region(send_to_slime)
   --   return
   -- end
 
-  local query_string =
-    '((inline) @delimiter (#match? @delimiter "^[ ]*#=[=]{79,}[ ]*$"))'
-  local parser = require("nvim-treesitter.parsers").get_parser()
-  local ok, query =
-    pcall(vim.treesitter.query.parse, parser:lang(), query_string)
-  if not ok then
-    return
-  end
-
-  local tree = parser:parse()[1]
+  -- Get all lines in the buffer and scan for delimiters
+  local all_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
   local delimiter_lines = {}
 
-  -- Collect all delimiter line numbers
-  for _, node in query:iter_captures(tree:root(), 0) do
-    local start_row, _, _, _ = node:range()
-    table.insert(delimiter_lines, start_row + 1) -- Convert to 1-based line number
+  -- Scan for delimiter lines using direct pattern matching
+  -- Pattern: optional spaces, #, one or more =, optional spaces
+  -- Must have at least 70 equals signs to be considered a delimiter
+  for line_num, line_content in ipairs(all_lines) do
+    local trimmed = line_content:match("^[ ]*(.-)[ ]*$")
+    if trimmed and trimmed:match("^#=+$") and #trimmed >= 71 then
+      table.insert(delimiter_lines, line_num)
+    end
   end
 
-  -- Sort delimiter lines
-  table.sort(delimiter_lines)
+  -- Delimiter_lines is already in order since we iterate sequentially
 
   -- Get current cursor line
   local cursor_line = vim.fn.line(".")
@@ -104,7 +99,7 @@ local function select_markdown_region(send_to_slime)
   local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
   local text = table.concat(lines, "\n")
   vim.fn.setreg("+", text)
-  vim.notify(#lines .. " lines yanked to system clipboard")
+  vim.notify(#lines .. " line(s) yanked to system clipboard")
 
   -- Select the region visually
   vim.cmd("normal! " .. start_line .. "G")
@@ -122,9 +117,9 @@ local function select_markdown_region(send_to_slime)
     vim.api.nvim_feedkeys(
       term_keys,
       "m", -- "m" => allow remapping so <Plug> expands
-      true -- third arg (true) => do not escape CSI
+      true -- Third argument (true) => do not escape CSI
     )
-    vim.notify(#lines .. "lines sent to slime")
+    vim.notify(#lines .. " line(s) sent to slime")
   end
 end
 
