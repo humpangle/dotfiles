@@ -1,6 +1,8 @@
 NEOVIM
 Neoformat
 SCSS
+api
+etc
 graphql
 html
 javascript
