@@ -16,8 +16,11 @@ with_leader_key:bind("", "space", function()
   kitty.toggle_quick_access()
 end)
 
--- Show the time
 hs.loadSpoon("AClock")
+spoon.AClock.format = "%Y-%m-%d\n%H:%M"
+spoon.AClock.textSize = 72
+spoon.AClock.width = 520
+spoon.AClock.height = 200
 with_leader_key:bind("alt", "t", function()
-  spoon.AClock:toggleShow()
+  spoon.AClock:toggleShowPersistent()
 end)
