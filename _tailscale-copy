@@ -83,6 +83,7 @@ __fzf_tailscale_send__() {
   fi
 }
 alias tscp='__fzf_tailscale_send__'
+alias tscp__description='tailscale file copy send tscp'
 
 # List active Tailscale peers
 __list_tailscale_peers__() {
