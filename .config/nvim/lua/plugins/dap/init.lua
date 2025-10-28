@@ -590,6 +590,8 @@ return {
       if json5_exists then
         -- https://github.com/mfussenegger/nvim-dap/blob/2edd6375692d9ac1053d50acfe415c1eb2ba92d0/doc/dap.txt#L338
         require("dap.ext.vscode").json_decode = json5.parse
+      else
+        vim.print("json5 does not exist for DAP vscode parsing")
       end
 
       -- Dap UI setup
