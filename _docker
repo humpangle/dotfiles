@@ -220,6 +220,70 @@ alias dckr__description='dck && dcud docker compose kill && docker compose up --
 
 _alias_map_docker["dcr"]='docker compose restart'
 
+_dcudlf_profile() {
+  # --------------------------------------------------------------------------
+  # PARSE ARGUMENTS
+  # --------------------------------------------------------------------------
+  local profiles=()
+
+  if ! _parsed="$(
+    getopt \
+      --longoptions=help,profile: \
+      --options=h,p: \
+      --name "$0" \
+      -- "$@"
+  )"; then
+    echo "docker compose --profile <profile, ...> up [service, ...]"
+    return 129
+  fi
+
+  # provides proper quoting.
+  eval set -- "$_parsed"
+
+  while true; do
+    case "$1" in
+    --help | -h)
+      echo "docker compose --profile <profile, ...> up [service, ...]"
+      return
+      ;;
+
+    --profile | -p)
+      profiles+=("$2")
+      shift 2
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      echo "unknown option ${1}."
+      echo "docker compose --profile <profile, ...> up [service, ...]"
+      return
+      ;;
+    esac
+  done
+
+  local services=("$@")
+
+  # --------------------------------------------------------------------------
+  # end parse arguments
+  # --------------------------------------------------------------------------
+
+  echo -e \
+    "\n\nCommand:\n" docker compose --profile "${profiles[@]}" up "${services[@]}" \
+    "\n\n"
+
+  docker compose --profile "${profiles[@]}" up "${services[@]}"
+
+  echo -e "\n\nReturn value: $? \n\n"
+
+  docker compose logs -f "${services[@]}"
+}
+_alias_map_docker["dcudlfp"]='_dcudlf_profile'
+_alias_map_docker["dcudlfp__description"]='docker compose --profile <profile, ...> up [service, ...] dcudlfp'
+
 _alias_map_complete _alias_map_docker
 
 __log_docker_cmd() {
