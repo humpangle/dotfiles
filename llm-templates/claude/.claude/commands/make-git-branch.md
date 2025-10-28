@@ -7,6 +7,13 @@ tags: [git, jira, branch, checkout]
 
 Given a Jira ticket number (e.g., SCHED-5559) or a Jira issue URL (e.g., https://alayacare.atlassian.net/browse/SCHED-5559), generate a properly formatted git branch name, create the branch, and check it out.
 
+## Usage
+
+```
+make-git-branch <JIRA_TICKET_NUMBER>
+make-git-branch <JIRA_TICKET_NUMBER> <DESCRIPTION>
+```
+
 ## Input Formats
 
 This command supports two input formats:
