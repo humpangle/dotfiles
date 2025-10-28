@@ -24,6 +24,25 @@
 #     # Select peer, then send file with spaces (use quotes):
 #     Enter files to send to alayadev: "my document.pdf" photo.jpg
 #
+# tsget - Get files from Tailscale with custom target directory
+#   Usage: tsget [target_directory]
+#
+#   Downloads files sent via Tailscale to a specified directory.
+#   If no directory is provided, prompts for input.
+#   Defaults to ~/Downloads if no input given.
+#
+#   Examples:
+#     $ tsget ~/Documents
+#     Getting files to: /home/user/Documents
+#
+#     $ tsget
+#     Enter target directory: ~/Projects
+#     Getting files to: /home/user/Projects
+#
+#     $ tsget
+#     Enter target directory:
+#     Using default directory: /home/user/Downloads
+#
 # tsl - List active Tailscale peers
 #   Usage: tsl
 #
@@ -73,3 +92,44 @@ __list_tailscale_peers__() {
     awk '{printf "%-15s %-20s %s\n", $1, $2, $3}'
 }
 alias tsl='__list_tailscale_peers__'
+
+# Get files from Tailscale with custom target directory
+__tailscale_file_get__() {
+  local target_dir
+
+  # Check if argument provided, otherwise read from stdin
+  if [[ -n "$1" ]]; then
+    target_dir="$1"
+  else
+    read -r -p "Enter target directory: " target_dir
+  fi
+
+  # Use default if empty
+  if [[ -z "$target_dir" ]]; then
+    target_dir="$HOME/Downloads"
+    echo "Using default directory: ${target_dir}"
+  fi
+
+  # Expand tilde and resolve path
+  target_dir="${target_dir/#\~/$HOME}"
+
+  # Create directory if it doesn't exist
+  if [[ ! -d "$target_dir" ]]; then
+    echo "Directory does not exist: ${target_dir}"
+    read -r -p "Create it? (y/n): " create_dir
+    if [[ "$create_dir" == "y" ]]; then
+      mkdir -p "$target_dir" || {
+        echo "Failed to create directory"
+        return 1
+      }
+    else
+      echo "Cancelled."
+      return 1
+    fi
+  fi
+
+  echo "Getting files to: ${target_dir}"
+  tailscale file get --conflict=rename "$target_dir"
+}
+alias tsget='__tailscale_file_get__'
+alias tsget__description='tailscale file get receive'
