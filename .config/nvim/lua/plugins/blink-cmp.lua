@@ -20,8 +20,8 @@ local is_buffer_source = function(bufnr)
 end
 
 local source_priority = {
-  snippets = 4,
-  lsp = 3,
+  lsp = 4,
+  snippets = 3,
   path = 2,
   buffer = 1,
 }
