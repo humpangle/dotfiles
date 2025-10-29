@@ -146,6 +146,7 @@ local dadbod_ui_options = {
         width = 0.75,
         height = 0.75,
         border = "rounded",
+        check_autocmd = true,
       })
     end,
     count = 7,
