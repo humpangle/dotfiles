@@ -31,6 +31,7 @@ end
 local file_patterns_extensions_map = {
   python = "py",
   lua = "lua",
+  vue = "vue",
 }
 m.extensions = {}
 m.file_patterns = {}
