@@ -45,18 +45,19 @@ m.init = {
 }
 
 m.check_out_tree_ish_under_cursor = {
-  description = "Git checkout under cursor <cword>",
+  description = "Git checkout commit treeish under cursor <cword>",
   action = function()
-    utils.write_to_command_mode(
-      "G checkout " .. fugitive_utils.highlight_text_under_cursor()
-    )
+    local commit = fugitive_utils.highlight_text_under_cursor()
+    vim.cmd("G checkout " .. commit)
   end,
 }
 
 m.submodule_update_force_recursive = {
   description = "Git submodule update force recursive",
   action = function()
-    utils.write_to_command_mode("Git submodule update --init --force --recursive")
+    utils.write_to_command_mode(
+      "Git submodule update --init --force --recursive"
+    )
   end,
 }
 
@@ -171,7 +172,9 @@ m.git_pull = {
 
 for _, branch_name in ipairs({ "main", "master", "develop" }) do
   table.insert(m, {
-    description = "Check out / change branch to commit " .. branch_name .. " HEAD commit",
+    description = "Check out / change branch to commit "
+      .. branch_name
+      .. " HEAD commit",
     action = function()
       local git_branch_name_head =
         fugitive_utils.get_git_commit(branch_name)
