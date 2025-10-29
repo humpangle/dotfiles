@@ -368,6 +368,35 @@ _link_llm_commands() {
   done
 }
 
+_link_mcp_config() {
+  : "Link $HOME/.cursor/mcp.json to project .cursor/ directory if it exists."
+
+  local cwd_="$1"
+  local home_mcp_config_="$HOME/.cursor/mcp.json"
+  local project_mcp_config_="$cwd_/.cursor/mcp.json"
+
+  # Check if home mcp.json exists
+  if [[ ! -f "$home_mcp_config_" ]]; then
+    return 0
+  fi
+
+  # Create backup if project mcp.json already exists
+  if [[ -e "$project_mcp_config_" ]]; then
+    local backup_file_=""
+    backup_file_="${project_mcp_config_}.backup.$(date +%Y%m%d_%H%M%S)"
+    echo "Backing up existing mcp.json to: $backup_file_"
+    mv "$project_mcp_config_" "$backup_file_"
+  fi
+
+  # Create the symlink
+  echo "Linking $home_mcp_config_ -> $project_mcp_config_"
+  ln -s "$home_mcp_config_" "$project_mcp_config_"
+
+  if [[ -L "$project_mcp_config_" ]]; then
+    echo "Successfully linked mcp.json"
+  fi
+}
+
 llm_project_start() {
   : "Ensure the claude chat template file exists in the current directory."
 
@@ -414,6 +443,8 @@ llm_project_start() {
   local source_commands_="$llm_templates_root_/commands"
   _link_llm_commands "$cwd_" "$source_commands_"
 
+  #### Link mcp.json from home directory to project
+  _link_mcp_config "$cwd_"
 }
 
 to-dot-cmds() {
