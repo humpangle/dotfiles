@@ -1,5 +1,26 @@
 local m = {}
 
+--- Opens a file in a floating window with customizable options
+--- @param filepath string|nil Path to the file to open (defaults to current file if nil or empty)
+--- @param opts table|nil Optional configuration table with the following fields:
+---   • width: number (default: 0.9) - Width of floating window as fraction of screen width (0.0-1.0)
+---   • height: number (default: 0.9) - Height of floating window as fraction of screen height (0.0-1.0)
+---   • border: string (default: "rounded") - Border style: "none", "single", "double", "rounded", "solid", "shadow"
+---   • show_title: boolean (default: true) - Whether to show the filename as window title
+---   • buf_hidden: string (default: "hide") - Buffer behavior when window closes:
+---       - "hide": buffer stays around when window closes
+---       - "wipe": buffer is completely removed when window closes
+---       - "delete": buffer is deleted when window closes
+---       - "unload": buffer is unloaded when window closes
+---       - "": standard buffer behavior
+---   • cursor_at_end: boolean (default: false) - Position cursor at the last line of the file
+---   • close_on_save: boolean (default: false) - Automatically close the float after saving (BufWritePost)
+---   • close_keys: table (default: { any = "<C-q>" }) - Key mappings to close the float:
+---       - normal: string - Key mapping for normal mode only
+---       - any: string - Key mapping for all modes (normal, insert, visual, select)
+---   • check_autocmd: boolean (default: false) - Use noautocmd when loading buffer to avoid ReadPre autocommand issues
+--- @return number|nil win Window handle of the floating window, or nil on error
+--- @return number|nil buf Buffer handle of the file buffer, or nil on error
 function m.load_in_float(filepath, opts)
   opts = opts or {}
   if not filepath or filepath == "" then
@@ -50,7 +71,7 @@ function m.load_in_float(filepath, opts)
       vim.fn.bufload(buf)
     end
   else
-      vim.fn.bufload(buf)
+    vim.fn.bufload(buf)
   end
 
   -- Geometry
