@@ -42,4 +42,14 @@ function M.git_refresh_cwd()
   })
 end
 
+--- Checks if a buffer is a fugitive status buffer
+--- @param bufnr number|nil Buffer number to check (defaults to current buffer)
+--- @return boolean true if the buffer is a fugitive status buffer, false otherwise
+function M.is_fugitive_status_buffer(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  -- Fugitive status buffers have the pattern: fugitive://<path>/.git//
+  return bufname:match("^fugitive://.*%.git//$") ~= nil
+end
+
 return M
