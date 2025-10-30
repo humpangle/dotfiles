@@ -33,10 +33,10 @@ return {
     -- Nothing before `.` means use current window.
     -- All that is left is a number after `.` for the required pane number.
 
-    local default_target_pane = ":."
+    local default_tmux_target_pane = ":."
     local slime_config = {
       socket_name = "default",
-      target_pane = default_target_pane, -- This means: current session and current window. All that is left to fill is pane number.
+      target_pane = default_tmux_target_pane, -- This means: current session and current window. All that is left to fill is pane number.
     }
 
     -- Some REPLs can interfere with your text pasting. The
@@ -68,7 +68,7 @@ return {
       else
         vim.b.slime_target = "tmux"
 
-        local target_pane = default_target_pane .. count
+        local target_pane = default_tmux_target_pane .. count
 
         local count_as_string = "" .. count
         local two_digits_count_pattern = "^(%d+)(%d)$"
