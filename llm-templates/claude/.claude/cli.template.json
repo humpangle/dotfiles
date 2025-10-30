@@ -16,6 +16,7 @@
       "Bash(cat)",
       "Bash(cd)",
       "Bash(curl)",
+      "Bash(date)",
       "Bash(docker)",
       "Bash(echo)",
       "Bash(env)",
