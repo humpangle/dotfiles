@@ -1,3 +1,5 @@
+local map_key = require("utils").map_key
+
 local function select_markdown_region(send_to_slime)
   -- Only work in markdown files
   -- if vim.bo.filetype ~= "markdown" then
@@ -123,4 +125,10 @@ local function select_markdown_region(send_to_slime)
   end
 end
 
-return select_markdown_region
+map_key("n", "<localleader><localleader>", function()
+  local count = vim.v.count
+  -- If count == 0, send to slime; otherwise just select and yank
+  select_markdown_region(count == 0)
+end, {
+  desc = "Select markdown region based on #=== delimiters (with count: send to slime)",
+})

@@ -5,10 +5,6 @@ if not plugin_enabled.treesitter() then
   return {}
 end
 
-local map_key = require("utils").map_key
-local select_markdown_region =
-  require("plugins/treesitter/select-markdown-region")
-
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -24,15 +20,6 @@ return {
     },
 
     build = ":TSUpdate",
-    init = function()
-      map_key("n", "<localleader><localleader>", function()
-        local count = vim.v.count
-        -- If count == 0, send to slime; otherwise just select and yank
-        select_markdown_region(count == 0)
-      end, {
-        desc = "Select markdown region based on #=== delimiters (with count: send to slime)",
-      })
-    end,
     config = function()
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 

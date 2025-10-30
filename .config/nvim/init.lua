@@ -31,6 +31,7 @@ if plugin_enabled.has_vscode() then
 else
   require("theme_and_bg")
   require("settings")
+  require("select-markdown-region")
 end
 
 -- Via: https://github.com/neoclide/coc.nvim/wiki/Using-the-configuration-file
