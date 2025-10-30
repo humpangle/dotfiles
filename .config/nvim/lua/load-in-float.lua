@@ -26,6 +26,9 @@ local files_fzf_options = {
   {
     description = "t.log",
     path = ".___scratch/t.log",
+    opts = {
+      check_autocmd = true,
+    },
   },
   {
     description = "todos global",
@@ -60,7 +63,10 @@ for _, file in ipairs(files_fzf_options) do
   table.insert(fzf_options, {
     description = file.description .. " 50%" .. description_count_50,
     action = function()
-      load_in_float(file_path, { height = 0.5 })
+      load_in_float(
+        file_path,
+        vim.tbl_extend("keep", file.opts or {}, { height = 0.5 })
+      )
     end,
     count = file.count2,
   })
@@ -74,7 +80,14 @@ for _, file in ipairs(files_fzf_options) do
     -- ' z ' to make 50% version come up first in search
     description = file.description .. " z " .. description_count,
     action = function()
-      load_in_float(file_path, { cursor_at_end = false })
+      load_in_float(
+        file_path,
+        vim.tbl_extend(
+          "keep",
+          file.opts or {},
+          { cursor_at_end = false }
+        )
+      )
     end,
     count = file.count,
   })
