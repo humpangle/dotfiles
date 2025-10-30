@@ -4,11 +4,29 @@ local fugitive_utils = require("plugins.fugitive.utils")
 local log_options = {
   {
     description = "Git refresh (status) THIS CWD                                                                    1",
-    action = fugitive_utils.git_refresh_cwd,
+    action = function()
+      -- If fugitive status buffer is already the only window in tab, just refresh it
+      if fugitive_utils.is_fugitive_status_buffer() then
+        local windows_in_tab = vim.api.nvim_tabpage_list_wins(0)
+        if #windows_in_tab == 1 then
+          fugitive_utils.git_refresh_cwd()
+          return
+        end
+      end
+
+      -- Otherwise, refresh (which opens in bottom split) and promote to new tab
+      fugitive_utils.git_refresh_cwd()
+      vim.cmd("wincmd T") -- Promote current window to new tab (equivalent to <C-w>T)
+    end,
     count = 1,
   },
   {
-    description = "Log oneline THIS CWD                                                                            11",
+    description = "Git refresh (status) THIS CWD                                                                   11",
+    action = fugitive_utils.git_refresh_cwd,
+    count = 11,
+  },
+  {
+    description = "Log oneline THIS CWD                                                                            12",
     action = function()
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
         vim.cmd("tab split")
@@ -21,10 +39,10 @@ local log_options = {
         wipe = true,
       })
     end,
-    count = 11,
+    count = 12,
   },
   {
-    description = "Git Log full THIS CWD                                                                           12",
+    description = "Git Log full THIS CWD                                                                           13",
     action = function()
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
         vim.cmd("tab split")
@@ -37,10 +55,10 @@ local log_options = {
         wipe = true,
       })
     end,
-    count = 12,
+    count = 13,
   },
   {
-    description = "Log graphical (lgg) THIS CWD                                                                    13",
+    description = "Log graphical (lgg) THIS CWD                                                                    14",
     action = function()
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
         vim.cmd("Git! lgg")
@@ -49,7 +67,7 @@ local log_options = {
         wipe = true,
       })
     end,
-    count = 13,
+    count = 14,
   },
   {
     description = "Log oneline current file                                                                         2",
