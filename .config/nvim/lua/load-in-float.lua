@@ -102,7 +102,7 @@ table.insert(fzf_options, {
   end,
 })
 
-utils.map_key("n", "<leader>bb", function()
+utils.map_key({"n", "x"}, "<leader>bb", function()
   utils.create_fzf_key_maps(fzf_options, {
     prompt = "Edit In Float",
     header = "Select an Edit In Float Option",
