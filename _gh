@@ -1,0 +1,2 @@
+# gh grant create/update project items or views
+alias ghauthzcreateproject='gh auth refresh -s project'

@@ -170,6 +170,7 @@ ___source_scripts() {
     .config/kitty/_kitty.sh
     _tmux
     _tailscale
+    _gh
   )
 
   local _elm
