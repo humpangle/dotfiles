@@ -19,13 +19,6 @@ map_key(
   { noremap = true }
 )
 
--- Find open buffers
-map_key("n", "<Leader>fb", function()
-  utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
-    vim.cmd("Buffers!")
-  end)
-end, { noremap = true })
-
 -- Search buffers history
 map_key("n", "<Leader>fh", ":History!<CR>", { noremap = true })
 

@@ -149,7 +149,7 @@ return {
       end, { noremap = true, desc = "Find keymaps" })
 
       -- Find open buffers
-      map_key("n", "<Leader>ffb", function()
+      map_key("n", "<Leader>fb", function()
         utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").buffers()
       end, {
