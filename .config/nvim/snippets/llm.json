@@ -280,7 +280,7 @@
       "output_llm"
     ],
     "body": [
-      "Write output to ./.___scratch/llm-outs/"
+      "Write output to ./.___scratch/llm-outs/, prefix file names with date/time format yyyymmdd-HHMMSS."
     ],
     "description": [
       "Write LLM outputs"
