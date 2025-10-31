@@ -659,7 +659,7 @@ utils.write_to_out_file = function(opts)
     .. "/"
     .. opts.prefix
     .. "-"
-    .. (opts.datetime and os.date("%FT%H-%M-%S") or "")
+    .. (opts.datetime and os.date("%Y%m%d-%H%M%S") or "")
     .. (opts.ext and ("." .. opts.ext) or "")
 
   if opts.just_create then
