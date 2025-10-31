@@ -127,6 +127,13 @@ local log_options = {
       vim.cmd("Git log --oneline")
     end,
   },
+  {
+    description = "Git branches list branch",
+    action = function()
+      utils.set_fzf_lua_nvim_listen_address()
+      require('fzf-lua').git_branches()
+    end,
+  },
 }
 utils.add_options(
   log_options,

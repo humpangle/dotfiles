@@ -96,7 +96,6 @@ local plugins_table = {
         "junegunn/fzf",
         build = nil, -- "./install --all",
       },
-      "stsewd/fzf-checkout.vim",
     },
   },
 

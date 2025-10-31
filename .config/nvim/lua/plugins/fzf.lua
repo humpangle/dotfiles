@@ -61,14 +61,6 @@ end, { noremap = true })
 -- Git commits for the current buffer
 map_key("n", "<leader>%c", ":BCommits!<CR>", { noremap = true })
 
--- fzf-checkout find git branch:
---   checkout = <CR>
---   rebase = <C-r>
---   delete = <C-d>
---   merge = <C-e>
---   track remote = <a-cr>
-map_key("n", "<leader>cb", ":GBranches!<CR>", { noremap = true })
-
 -- Search in project - match file names first
 map_key("n", ",/", ":Rg!<CR>", { noremap = true })
 
