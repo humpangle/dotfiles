@@ -17,7 +17,7 @@ with_leader_key:bind("", "space", function()
 end)
 
 hs.loadSpoon("AClock")
-spoon.AClock.format = "%Y-%m-%d\n%H:%M"
+spoon.AClock.format = "%Y-%m-%d\n%H:%M %a"
 spoon.AClock.textSize = 72
 spoon.AClock.width = 520
 spoon.AClock.height = 200
