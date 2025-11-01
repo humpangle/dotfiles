@@ -157,18 +157,13 @@ return {
       })
 
       -- Find file from cwd
-      map_key("n", "<leader>ffW", function()
-        utils.set_fzf_lua_nvim_listen_address()
-        require("fzf-lua").files()
-      end, { noremap = true })
-
-      map_key("n", "<leader>fWW", function()
+      map_key("n", "<leader>fW", function()
         utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").files()
       end, { noremap = true })
 
       -- Find windows
-      map_key("n", "<leader>ffw", function()
+      map_key("n", "<leader>fw", function()
         utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").tabs()
       end, { noremap = true })

@@ -8,9 +8,6 @@ local utils = require("utils")
 
 local map_key = utils.map_key
 
--- Search file from root directory
-map_key("n", "<leader>fW", ":Files!<CR>", { noremap = true })
-
 -- Search file from current directory
 map_key(
   "n",
@@ -33,9 +30,6 @@ map_key("n", "<Leader>fm", ":Marks!<CR>", { noremap = true })
 
 -- Find filetypes
 map_key("n", "<leader>ft", ":Filetypes!<CR>", { noremap = true })
-
--- Find windows
-map_key("n", "<leader>fw", ":Windows!<CR>", { noremap = true })
 
 -- Search commands: user defined, plugin defined, or native commands
 map_key("n", "<Leader>C", ":Commands!<CR>", { noremap = true })
