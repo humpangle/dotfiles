@@ -22,5 +22,6 @@ spoon.AClock.textSize = 72
 spoon.AClock.width = 520
 spoon.AClock.height = 200
 with_leader_key:bind("alt", "t", function()
-  spoon.AClock:toggleShowPersistent()
+  spoon.AClock:toggleShow()
+  -- spoon.AClock:toggleShowPersistent()
 end)
