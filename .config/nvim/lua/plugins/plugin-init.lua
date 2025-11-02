@@ -415,7 +415,7 @@ local plugins_table = {
   require("plugins/octo-nvim"),
   require("plugins/mini-align"),
   require("plugins/indent-blankline"),
-  require("plugins/anki-nvim"),
+  require("plugins.anki-nvim"),
   require("plugins/refactoring"),
   require("plugins/symlink"),
   -- require("plugins/csvview-nvim"), -- disable until there is need for it

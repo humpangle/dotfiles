@@ -1,9 +1,5 @@
-local plugin_enabled = require("plugins/plugin_enabled")
-
-if not plugin_enabled.anki() then
-  return {}
-end
-
+local note_type_word_pic = "word pic"
+local default_deck = "z-nvim-anki-edit"
 return {
   "rareitems/anki.nvim",
   -- lazy -- don't lazy it, it tries to be as lazy possible and it needs to add a filetype association
@@ -13,8 +9,62 @@ return {
       tex_support = false,
       models = {
         -- Here you specify which notetype should be associated with which deck
-        ["word pic"] = "!0::2024-12-25T21-14-44---list",
+        -- NoteType = "PathToDeck",
+        [note_type_word_pic] = default_deck,
       },
     },
   },
+  init = function()
+    local utils = require("utils")
+    utils.map_key({ "n", "x" }, "<leader>ank", function()
+      local anki = require("anki")
+
+      local fzf_lua_opts = {
+        {
+          description = "Anki New",
+          action = function()
+            vim.cmd("tab new")
+            vim.bo.filetype = "anki"
+            utils.write_to_out_file({
+              prefix = "anki",
+              ext = "anki",
+            })
+            anki.ankiWithDeck(
+              "z-nvim-anki-edit",
+              note_type_word_pic
+            )
+          end,
+          count = 1,
+        },
+        {
+          description = "Anki Send Save",
+          action = function()
+            vim.cmd({ cmd = "w", bang = true })
+            vim.schedule(function()
+              vim.cmd("AnkiSend")
+            end)
+          end,
+          count = 2,
+        },
+        {
+          description = "Anki Send Save GUI",
+          action = function()
+            vim.cmd({ cmd = "w", bang = true })
+            vim.schedule(function()
+              vim.cmd("AnkiSendGui")
+            end)
+          end,
+          count = 3,
+        },
+      }
+
+      utils.create_fzf_key_maps(fzf_lua_opts, {
+        prompt = "Anki Options>  ",
+        header = "Select Anki Option",
+      })
+    end, {
+      noremap = true,
+      desc = "Anki 0/fzf 1/Send 2/SendGUI",
+    })
+  end,
 }
