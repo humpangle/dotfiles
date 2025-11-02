@@ -127,20 +127,14 @@ local log_options = {
       vim.cmd("Git log --oneline")
     end,
   },
-  {
-    description = "Git branches list branch",
-    action = function()
-      utils.set_fzf_lua_nvim_listen_address()
-      require('fzf-lua').git_branches()
-    end,
-  },
 }
 utils.add_options(
   log_options,
   require("plugins.fugitive.shared-miscellaneous-options"),
   require("plugins.fugitive.shared-stash-options"),
   require("plugins.fugitive.pull-options"),
-  require("plugins.fugitive.shared-rebase-options")
+  require("plugins.fugitive.shared-rebase-options"),
+  require("plugins.fzf-lua.fzf-lua-fzf-lua-options")
 )
 
 return log_options
