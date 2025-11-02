@@ -1,11 +1,6 @@
-Defaults  editor=__NEOVIM_BIN__
+Defaults editor=__NEOVIM_BIN__
+Defaults env_keep += "PATH _EBNIS_NVIM_BIN"
 Defaults:__USERNAME__ timestamp_timeout=2000
 
 __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/chown
 __USERNAME__ ALL = (ALL)  NOPASSWD: /Users/__USERNAME__/dotfiles/_updd.sh
-__USERNAME__ ALL = (ALL)  NOPASSWD:SETENV: /Users/__USERNAME__/dotfiles/scripts/sv
-__USERNAME__ ALL = (ALL)  NOPASSWD:SETENV: /Users/__USERNAME__/dotfiles/scripts/svfm
-# Binaries with sudo -E
-__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /opt/homebrew/bin/nvim_sudo_e
-__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /opt/homebrew/bin/vifm_sudo_e
-__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /Users/kanmii/.local/bin/find_sudo_e

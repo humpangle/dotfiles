@@ -1,7 +1,9 @@
 # Allow normal user to start cron job in .bashrc
 # %sudo ALL=NOPASSWD: /etc/init.d/cron start
 
-Defaults  editor=__NEOVIM_BIN__
+Defaults editor=__NEOVIM_BIN__
+Defaults env_keep += "_EBNIS_NVIM_BIN"
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/__USERNAME__/.local/bin"
 
 # Grant passwordless access to dockerd for group docker users
 # %docker ALL=(ALL)  NOPASSWD: /usr/bin/dockerd
@@ -14,9 +16,6 @@ __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/local/bin/mkcert
 __USERNAME__ ALL=(ALL)  NOPASSWD: TRUNCATE_DOCKER_CONTAINER_VISUDO_CMD
 __USERNAME__ ALL=(ALL)  NOPASSWD: SYSCTL_RE_ENABLE_DOCKER_NETWORKING
 __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/bin/systemctl
-# Binaries with sudo -E
-__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /usr/bin/nvim_sudo_e
-__USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /usr/local/bin/vifm_sudo_e
 # WSL reset clock
 __USERNAME__ ALL=(ALL)  NOPASSWD: /usr/sbin/ntpdate
 __USERNAME__ ALL=(ALL)  NOPASSWD:SETENV: /home/__USERNAME__/dotfiles/etc/wsl-dns-resolver.sh, /home/__USERNAME__/dotfiles/etc/wsl-drop-caches.sh
