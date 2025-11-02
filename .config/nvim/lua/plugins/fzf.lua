@@ -31,9 +31,6 @@ map_key("n", "<Leader>fm", ":Marks!<CR>", { noremap = true })
 -- Find filetypes
 map_key("n", "<leader>ft", ":Filetypes!<CR>", { noremap = true })
 
--- Search commands: user defined, plugin defined, or native commands
-map_key("n", "<Leader>C", ":Commands!<CR>", { noremap = true })
-
 -- Search in project - do not match filenames
 map_key("n", "<Leader>f/", function()
   vim.o.background = "dark"

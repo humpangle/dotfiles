@@ -185,6 +185,15 @@ return {
         desc = "",
       })
 
+      -- Search for text in current buffer
+      map_key("n", "<Leader>C", function()
+        utils.set_fzf_lua_nvim_listen_address()
+        require("fzf-lua").commands()
+      end, {
+        noremap = true,
+        desc = "",
+      })
+
       map_key("n", "<Leader>/", function()
         utils.set_fzf_lua_nvim_listen_address()
         highlight_content_of_register_plus()
