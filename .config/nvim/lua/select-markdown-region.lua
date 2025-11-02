@@ -1,6 +1,52 @@
+vim = vim
 local map_key = require("utils").map_key
 
-local function select_markdown_region(send_to_slime)
+local function configure_slime_for_tmux(count)
+  -- Check if we're in a tmux session
+  local tmux_env = vim.fn.system("echo $TMUX"):gsub("%s+", "")
+  if tmux_env == "" then
+    vim.notify("Not in a tmux session", vim.log.levels.WARN)
+    return nil
+  end
+
+  -- Get current tmux window index
+  local current_window =
+    vim.fn.system("tmux display-message -p '#I'"):gsub("%s+", "")
+  local current_window_num = tonumber(current_window)
+  if not current_window_num then
+    vim.notify("Failed to get current tmux window", vim.log.levels.ERROR)
+    return nil
+  end
+
+  -- Get tmux session name
+  local session_name =
+    vim.fn.system("tmux display-message -p '#S'"):gsub("%s+", "")
+
+  -- Calculate target window (next window) and pane
+  local target_window = current_window_num + 1
+  local target_pane = count
+
+  -- Configure slime for tmux
+  vim.b.slime_target = "tmux"
+  vim.b.slime_config = {
+    socket_name = "default",
+    target_pane = string.format(
+      "%s:%d.%d",
+      session_name,
+      target_window,
+      target_pane
+    ),
+  }
+
+  -- Return target info for notification
+  return {
+    session = session_name,
+    window = target_window,
+    pane = target_pane,
+  }
+end
+
+local function select_markdown_region()
   -- Only work in markdown files
   -- if vim.bo.filetype ~= "markdown" then
   --   return
@@ -94,11 +140,30 @@ local function select_markdown_region(send_to_slime)
 
   -- Only process if we have valid content
   if start_line > end_line then
+    return nil
+  end
+
+  -- Get lines from buffer
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+
+  return {
+    lines = lines,
+    start_line = start_line,
+    end_line = end_line,
+  }
+end
+
+local function process_region(send_to_slime, tmux_target)
+  local region = select_markdown_region()
+  if not region then
     return
   end
 
+  local lines = region.lines
+  local start_line = region.start_line
+  local end_line = region.end_line
+
   -- Yank to system clipboard
-  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
   local text = table.concat(lines, "\n")
   vim.fn.setreg("+", text)
   vim.notify(#lines .. " line(s) yanked to system clipboard")
@@ -121,14 +186,43 @@ local function select_markdown_region(send_to_slime)
       "m", -- "m" => allow remapping so <Plug> expands
       true -- Third argument (true) => do not escape CSI
     )
-    vim.notify(#lines .. " line(s) sent to slime")
+    if tmux_target then
+      vim.notify(
+        string.format(
+          "%d line(s) sent to tmux %s:%d.%d",
+          #lines,
+          tmux_target.session,
+          tmux_target.window,
+          tmux_target.pane
+        )
+      )
+    else
+      vim.notify(#lines .. " line(s) sent to slime")
+    end
   end
 end
 
 map_key("n", "<localleader><localleader>", function()
-  local count = vim.v.count
-  -- If count == 0, send to slime; otherwise just select and yank
-  select_markdown_region(count == 0)
+  local count = vim.v.count1
+
+  if count == 9 then
+    -- Count 9: Just select and yank to clipboard
+    process_region(false, nil)
+    return
+  end
+
+  if count <= 8 then
+    -- Count 0-8: Send to tmux via slime
+    local tmux_target = configure_slime_for_tmux(count)
+    if tmux_target then
+      process_region(true, tmux_target)
+      return
+    end
+  end
+
+  -- Invalid count: Just yank
+  vim.notify("Count must be between 0 and 9", vim.log.levels.WARN)
+  process_region(false, nil)
 end, {
-  desc = "Select markdown region based on #=== delimiters (with count: send to slime)",
+  desc = "Select markdown region (count 0-8: send to tmux pane, count 9: clipboard only)",
 })
