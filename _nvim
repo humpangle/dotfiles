@@ -4,26 +4,13 @@ if ! command -v nvim &>/dev/null; then
   return
 fi
 
-MYVIMRC="$(_dot rt)/.config/nvim/init.lua"
-export MYVIMRC
-
-if [ -n "$_EBNIS_NVIM_BIN" ]; then
-  nvim() {
-    "$_EBNIS_NVIM_BIN" -u "$MYVIMRC" "$@"
-  }
-
-  export -f nvim
-
-  sv() {
-    sudo -E bash -c "$(declare -f nvim); nvim $*"
-  }
-
-  export -f sv
-else
-  alias sv="sudo -E nvim_sudo_e"
+nvim_home_config="$HOME/.config/nvim"
+if [ ! -L "$nvim_home_config" ]; then
+  rm -rf "$nvim_home_config"
+  ln -s "$(_dot rt)/.config/nvim" "$nvim_home_config"
 fi
 
-export EDITOR="${_EBNIS_NVIM_BIN:-nvim} -u $MYVIMRC"
+export EDITOR="nvim"
 # https://bsky.app/profile/bobbby.online/post/3llwpqtwwf22r
 # in an iex shell and press ESCAPE+o
 export VISUAL="$EDITOR"
