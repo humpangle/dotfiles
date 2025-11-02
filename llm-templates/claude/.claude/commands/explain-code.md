@@ -28,7 +28,7 @@ Provide a deep, intuitive explanation of a code section that helps you understan
 
 ## Output Format
 
-The explanation will be written to `.___scratch/llm-outs/YYYYMMDD-HHMMSS-<description>.txt` and include:
+The explanation will be written to `.___scratch/llm-outs/YYYYMMDD-HHMMSS-<description>.md (use emojis for visual scanning)` and include:
 
 ### 1. **The Big Picture**
 - What problem does this code solve?
@@ -222,7 +222,7 @@ Before explaining, gather:
 
 1. **Why [approach]?**
    - [Reasoning]
-   
+
 2. **Trade-offs:**
    - Pros: [benefits]
    - Cons: [drawbacks]
