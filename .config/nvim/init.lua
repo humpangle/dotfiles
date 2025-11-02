@@ -1,13 +1,27 @@
+-- Resolve the directory of *this* init.lua robustly
+local function get_config_dir()
+  local src = debug.getinfo(1, "S").source
+  if src:sub(1, 1) == "@" then
+    return vim.fn.fnamemodify(src:sub(2), ":p:h")
+  end
+  -- Fallbacks if debug info is unavailable
+  local env = vim.env.MYVIMRC or vim.fn.expand("$MYVIMRC")
+  if env and env ~= "" then
+    return vim.fn.fnamemodify(env, ":p:h")
+  end
+  return vim.fn.stdpath("config")
+end
+local config_path = get_config_dir()
 -- Automatically add the directory containing this init.lua to runtimepath
-local config_path = vim.fn.fnamemodify(vim.env.MYVIMRC or "", ":p:h")
+-- Make this config discoverable by Neovim & Lua
 vim.opt.runtimepath:prepend(config_path)
 
 -- Also update Lua's package.path so require() works properly
-package.path = config_path
-  .. "/lua/?.lua;"
-  .. config_path
-  .. "/lua/?/init.lua;"
-  .. package.path
+package.path = table.concat({
+  config_path .. "/lua/?.lua",
+  config_path .. "/lua/?/init.lua",
+  package.path,
+}, ";")
 
 -- make Joakker/lua-json5 work on macos.
 -- https://github.com/neovim/neovim/issues/21749#issuecomment-1378720864
