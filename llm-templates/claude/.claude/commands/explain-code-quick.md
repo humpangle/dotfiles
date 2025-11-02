@@ -17,7 +17,7 @@ Quick, concise explanation of a code section. Less detailed than `/explain-code`
 
 ## Output Format
 
-Provides a brief explanation in chat (not saved to file) including:
+The explanation will be written to `.___scratch/llm-outs/YYYYMMDD-HHMMSS-<description>-quick.md (use emojis for visual scanning)` and include:
 
 1. **One-sentence summary** - What does this code do?
 2. **Core intuition** - The key mental model
