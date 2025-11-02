@@ -128,8 +128,6 @@ return {
         -- override any of the default settings here
       })
 
-      local lspconfig = require("lspconfig")
-
       utils.map_key("n", "<leader>ls0", function()
         utils.create_fzf_key_maps(fzf_lua_lsp_options, {
           prompt = "LSP/Context",
@@ -311,7 +309,7 @@ return {
       -- mason does not know how to setup lua_ls on termux, so we do it manually.
       ---@diagnostic disable:missing-fields
       if plugin_enabled.has_termux() then
-        lspconfig.lua_ls.setup({
+        vim.lsp.config.lua_ls = {
           settings = {
             Lua = {
               completion = {
@@ -321,7 +319,8 @@ return {
               -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
-        })
+        }
+        vim.lsp.enable("lua_ls")
       end
 
       local non_lsps = {
