@@ -330,6 +330,7 @@ return {
         ["sql-formatter"] = true,
         flake8 = true,
         isort = true,
+        stylua = true,
       }
 
       local to_enable = {}

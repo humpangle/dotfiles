@@ -20,5 +20,6 @@ return {
     },
   },
   -- stylua does not work on android.
+  -- Note: stylua is a formatter, not an LSP server.
   stylua = {},
 }
