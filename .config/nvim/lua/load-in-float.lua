@@ -51,7 +51,6 @@ local files_fzf_options = {
 for _, file in ipairs(files_fzf_options) do
   local file_path = find_file_path(file.path)
   if not file_path then
-    vim.print("File not found: " .. file.path)
     goto continue
   end
 
