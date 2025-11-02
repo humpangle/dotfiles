@@ -1,3 +1,4 @@
+vim = vim
 local note_type_word_pic = "word pic"
 local default_deck = "z-nvim-anki-edit"
 return {
@@ -21,7 +22,7 @@ return {
 
       local fzf_lua_opts = {
         {
-          description = "Anki New",
+          description = "Anki New word-pic",
           action = function()
             vim.cmd("tab new")
             vim.bo.filetype = "anki"
@@ -35,6 +36,18 @@ return {
             )
           end,
           count = 1,
+        },
+        {
+          description = "Anki New Blank",
+          action = function()
+            vim.cmd("tab new")
+            vim.bo.filetype = "anki"
+            utils.write_to_out_file({
+              prefix = "anki",
+              ext = "anki",
+            })
+          end,
+          count = 11,
         },
         {
           description = "Anki Send Save",
