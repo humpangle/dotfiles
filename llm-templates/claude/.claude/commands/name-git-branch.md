@@ -37,9 +37,15 @@ This command supports two input formats:
 3. **Get the description**:
    - **If a custom description was provided (Format 2)**: Use the supplied description directly
    - **If no description was provided (Format 1)**:
-     - Use the **Atlassian-getAccessibleAtlassianResources** tool to get the cloud ID
-     - Use the **Atlassian-getJiraIssue** tool with the cloud ID and ticket number to fetch the Jira ticket details
-     - Extract the ticket title from the `fields.summary` field in the response
+     - **Try MCP tools first** (if available):
+       - Use the **Atlassian-getAccessibleAtlassianResources** tool to get the cloud ID
+       - Use the **Atlassian-getJiraIssue** tool with the cloud ID and ticket number to fetch the Jira ticket details
+       - Extract the ticket title from the `fields.summary` field in the response
+     - **Fallback to jira CLI** (if MCP tools are not available):
+       - Check if the `jira` executable exists using `which jira`
+       - If it exists, run `jira issue view {TICKET-NUMBER}` to fetch the ticket details
+       - Parse the output to extract the title (it appears after the "#" on the first content line)
+       - The title is typically on a line starting with "# " after the header information
 
 4. **Convert the description/title to a git-friendly branch name**:
    - Convert to lowercase
@@ -60,10 +66,23 @@ This command supports two input formats:
 
 9. Output the generated branch name and indicate whether it was copied to clipboard
 
-## MCP Tools to Use
+## Tools to Use
 
+### Primary: MCP Tools (if available)
 - `Atlassian-getAccessibleAtlassianResources`: Get the Atlassian cloud ID
 - `Atlassian-getJiraIssue`: Fetch the Jira issue details using cloudId and issueIdOrKey parameters
+
+### Fallback: Jira CLI
+- Command: `jira issue view {TICKET-NUMBER}`
+- Parse the output to extract the title from the line starting with "# "
+- Example output format:
+  ```
+  ? Task  ?? To Do  ...
+  
+  # Fix flaky test test_clock_into_timeless_visit
+  
+  ??  Fri, 31 Oct 25  ...
+  ```
 
 ## Examples
 
