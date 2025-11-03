@@ -256,7 +256,7 @@
       "      - submodules, index SHAs, submodule config options",
       "      - programming language / frameworks",
       "      - configuration settings",
-      "    - Include **INTUITIVE EXPLANATIONS/EXAMPLES**, comparisons, best practices",
+      "    - Include **INTUITIVE EXPLANATIONS/EXAMPLES** (feel it in your bones), comparisons, best practices",
       "${8:Return only the downloadable CSV file — no inline content or additional commentary.}",
       "${9:Return only the CSV content — no extra commentary or explanations.}",
       "${10:Return only the flashcard content without any headings or commentary in the conversation.}",
