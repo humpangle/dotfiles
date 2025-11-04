@@ -1,6 +1,6 @@
 # /explain-code
 
-Provide a deep, intuitive explanation of a code section that helps you understand not just *what* the code does, but *why* it works that way and *how* to think about it.
+Provide a deep, intuitive explanation (feel it in your bones) of a code section that helps you understand not just *what* the code does, but *why* it works that way and *how* to think about it.
 
 ## Usage
 
