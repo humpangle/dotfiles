@@ -135,7 +135,7 @@ return {
           ["?"] = "toggle-preview", -- Toggle preview on/off
         },
         fzf = {
-          ["ctrl-q"] = "select-all+accept",
+          ["ctrl-q"] = "select-all+accept", -- Open all without first selecting anything
         },
       }
 
