@@ -85,56 +85,61 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      require("fzf-lua").register_ui_select()
+      local fzf_lua = require("fzf-lua")
+      fzf_lua.register_ui_select()
 
       local actions = require("fzf-lua.actions")
       local my_fzf_utils = require("plugins/fzf-lua/utils")
 
-      require("fzf-lua").setup({
-        winopts = {
-          fullscreen = true,
-          preview = {
-            hidden = "hidden", -- Start with preview hidden, toggle with Ctrl-p
-          },
+      local opts = {}
+
+      opts.winopts = {
+        fullscreen = true,
+        preview = {
+          hidden = "hidden", -- Start with preview hidden, toggle with Ctrl-p
         },
-        git = {
-          branches = {
-            actions = {
-              ["enter"] = actions.git_switch,
+      }
 
-              ["ctrl-d"] = {
-                fn = actions.git_branch_del,
-                reload = true,
-              },
+      opts.git = {
+        branches = {
+          actions = {
+            ["enter"] = actions.git_switch,
 
-              ["ctrl-b"] = {
-                fn = actions.git_branch_add,
-                field_index = "{q}",
-                reload = true,
-              },
-
-              ["ctrl-e"] = {
-                fn = my_fzf_utils.git_branch_merge,
-                -- reload = true,
-              },
+            ["ctrl-d"] = {
+              fn = actions.git_branch_del,
+              reload = true,
             },
-            -- Add branch and switch immediately
-            cmd_add = {
-              "git",
-              "checkout",
-              "-b",
+
+            ["ctrl-b"] = {
+              fn = actions.git_branch_add,
+              field_index = "{q}",
+              reload = true,
+            },
+
+            ["ctrl-e"] = {
+              fn = my_fzf_utils.git_branch_merge,
+              -- reload = true,
             },
           },
-        },
-        keymap = {
-          builtin = {
-            ["?"] = "toggle-preview", -- Toggle preview on/off
-          },
-          fzf = {
-            ["ctrl-q"] = "select-all+accept",
+          -- Add branch and switch immediately
+          cmd_add = {
+            "git",
+            "checkout",
+            "-b",
           },
         },
-      })
+      }
+
+      opts.keymap = {
+        builtin = {
+          ["?"] = "toggle-preview", -- Toggle preview on/off
+        },
+        fzf = {
+          ["ctrl-q"] = "select-all+accept",
+        },
+      }
+
+      fzf_lua.setup(opts)
 
       -- Find color schemes
       map_key("n", "<leader>fs", function()
