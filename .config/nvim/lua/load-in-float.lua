@@ -1,3 +1,4 @@
+vim = vim
 local utils = require("utils")
 local plenary_path = require("plenary.path")
 local load_in_float = require("load-in-float-api").load_in_float
@@ -16,8 +17,8 @@ local files_fzf_options = {
   {
     description = "chat ebnis chat",
     path = ".claude.ebnis.chat.md",
-    count = 11,
-    count2 = 0,
+    count = 99,
+    count2 = 9,
   },
   {
     description = "s1.md",
@@ -105,6 +106,32 @@ utils.map_key({"n", "x"}, "<leader>bb", function()
   utils.create_fzf_key_maps(fzf_options, {
     prompt = "Edit In Float",
     header = "Select an Edit In Float Option",
+    no_fzf_lua_counts = {
+      [11] = function ()
+        local file = find_file_path(".claude.ebnis.chat.md")
+        if vim.fn.filereadable(file) == 1 then
+          vim.cmd("botright split " .. file)
+          return true
+        end
+        return false
+      end,
+      [12] = function ()
+        local file = find_file_path(".claude.ebnis.chat.md")
+        if vim.fn.filereadable(file) == 1 then
+          vim.cmd("vsplit " .. file)
+          return true
+        end
+        return false
+      end,
+      [13] = function ()
+        local file = find_file_path(".claude.ebnis.chat.md")
+        if vim.fn.filereadable(file) == 1 then
+          vim.cmd("tabnew " .. file)
+          return true
+        end
+        return false
+      end
+    }
   })
 end, { noremap = true, desc = "EditFloat quick actions <leader>bn" })
 

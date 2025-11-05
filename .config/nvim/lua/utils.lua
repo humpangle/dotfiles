@@ -762,9 +762,18 @@ end
 function utils.create_fzf_key_maps(fzf_key_map_options, config)
   local prompt = config.prompt or "Select"
   local header = config.header or prompt
-
   local keymap_count = vim.v.count
   local fzf_lua = require("fzf-lua")
+
+  -- Check for no_fzf_lua_counts custom handlers
+  if config.no_fzf_lua_counts and keymap_count > 0 then
+    local handler = config.no_fzf_lua_counts[keymap_count]
+    if type(handler) == "function" then
+      if handler() then
+        return
+      end
+    end
+  end
 
   -- Format options for display
   local items = {}
