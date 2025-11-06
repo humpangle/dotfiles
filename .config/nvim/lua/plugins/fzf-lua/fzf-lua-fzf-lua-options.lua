@@ -16,4 +16,11 @@ return {
       fzf_lua.registers()
     end,
   },
+  {
+    description = "Git list Git Worktrees list",
+    action = function()
+      -- utils.set_fzf_lua_nvim_listen_address()
+      fzf_lua.git_worktrees() -- use ctr-e to add because ctr-a is used by tmux
+    end,
+  },
 }
