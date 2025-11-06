@@ -1412,5 +1412,15 @@
     "description": [
       "await waitFor"
     ]
+  },
+  "Pre-condition-assertion:": {
+    "prefix": [
+      "preCondiitonAssertion",
+      "assertionPreCondition"
+    ],
+    "body": "Pre-condition-assertion: ",
+    "description": [
+      "Pre-condition-assertion"
+    ]
   }
 }
