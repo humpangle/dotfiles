@@ -89,7 +89,7 @@ return {
           )
         end
 
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
 
         fzf_lua.fzf_exec(items, {
           prompt = "Neotree Options> ",

@@ -32,7 +32,7 @@ local pick_session_with_fzf = function()
     return
   end
 
-  utils.set_fzf_lua_nvim_listen_address()
+  -- utils.set_fzf_lua_nvim_listen_address()
 
   fzf_lua.fzf_exec(session_files, {
     prompt = "Select session to load> ",

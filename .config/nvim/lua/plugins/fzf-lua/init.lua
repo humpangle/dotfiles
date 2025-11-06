@@ -49,7 +49,7 @@ local map_to_fzf_lua_or_telescope = function(
 
     -- If count matches no other string
     if string_count:match("^%d$") then
-      utils.set_fzf_lua_nvim_listen_address()
+      -- utils.set_fzf_lua_nvim_listen_address()
       require("fzf-lua")[func_name]()
       return
     end
@@ -143,19 +143,19 @@ return {
 
       -- Find color schemes
       map_key("n", "<leader>fs", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").colorschemes()
       end, { noremap = true })
 
       -- Search key mappings - find already mapped before defining new mappings
       map_key("n", "<leader>M", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").keymaps()
       end, { noremap = true, desc = "Find keymaps" })
 
       -- Find open buffers
       map_key("n", "<Leader>fb", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").buffers()
       end, {
         noremap = true,
@@ -163,19 +163,19 @@ return {
 
       -- Find file from cwd
       map_key("n", "<leader>fW", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").files()
       end, { noremap = true })
 
       -- Find windows
       map_key("n", "<leader>fw", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").tabs()
       end, { noremap = true })
 
       -- Search buffers history
       map_key("n", "<Leader>fh", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").oldfiles()
       end, {
         noremap = true,
@@ -183,7 +183,7 @@ return {
 
       -- Search for text in current buffer
       map_key("n", "<Leader>ffl", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").grep_curbuf()
       end, {
         noremap = true,
@@ -192,7 +192,7 @@ return {
 
       -- Search for text in current buffer
       map_key("n", "<Leader>C", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").commands()
       end, {
         noremap = true,
@@ -200,7 +200,7 @@ return {
       })
 
       map_key("n", "<Leader>/", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         highlight_content_of_register_plus()
 
         local count = vim.v.count
@@ -225,7 +225,7 @@ return {
       -- })
 
       map_key("n", "<leader>czL", function()
-        utils.set_fzf_lua_nvim_listen_address()
+        -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").git_stash()
       end, {
         noremap = true,

@@ -785,7 +785,7 @@ function utils.create_fzf_key_maps(fzf_key_map_options, config)
     table.insert(items, string.format("%d. %s", i, option.description))
   end
 
-  utils.set_fzf_lua_nvim_listen_address()
+  -- utils.set_fzf_lua_nvim_listen_address()
 
   fzf_lua.fzf_exec(items, {
     prompt = prompt .. " Options> ",
