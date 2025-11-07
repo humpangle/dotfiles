@@ -89,7 +89,6 @@ return {
       fzf_lua.register_ui_select()
 
       local actions = require("fzf-lua.actions")
-      local my_fzf_utils = require("plugins/fzf-lua/utils")
 
       local opts = {}
 
@@ -114,11 +113,6 @@ return {
               fn = actions.git_branch_add,
               field_index = "{q}",
               reload = true,
-            },
-
-            ["ctrl-e"] = {
-              fn = my_fzf_utils.git_branch_merge,
-              -- reload = true,
             },
           },
           -- Add branch and switch immediately
