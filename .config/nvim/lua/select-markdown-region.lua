@@ -46,6 +46,54 @@ local function configure_slime_for_tmux(count)
   }
 end
 
+local function create_tmux_window_with_cwd()
+  local tmux_env = vim.fn.system("echo $TMUX"):gsub("%s+", "")
+  if tmux_env == "" then
+    vim.notify("Not in a tmux session", vim.log.levels.WARN)
+    return false
+  end
+
+  local nvim_cwd = vim.fn.getcwd()
+
+  local current_window =
+    vim.fn.system("tmux display-message -p '#I'"):gsub("%s+", "")
+
+  local create_tmux_window_cmd = string.format(
+    "tmux new-window -a -c '%s' -P -F '#{window_id}'",
+    nvim_cwd
+  )
+  local new_window_id = vim.fn.system(create_tmux_window_cmd):gsub("%s+", "")
+
+  if vim.v.shell_error ~= 0 then
+    vim.notify(
+      "Failed to create tmux window: " .. new_window_id,
+      vim.log.levels.ERROR
+    )
+    return false
+  end
+
+  local config_cmd =
+    string.format("tmux rename-window -t '%s' ''", new_window_id)
+  local result = vim.fn.system(config_cmd)
+
+  if vim.v.shell_error == 0 then
+    vim.print(
+      string.format(
+        "Created tmux window next to #%s in %s",
+        current_window,
+        nvim_cwd
+      )
+    )
+    return true
+  else
+    vim.notify(
+      "Failed to configure tmux pane: " .. result,
+      vim.log.levels.ERROR
+    )
+    return false
+  end
+end
+
 local function select_markdown_region()
   -- Only work in markdown files
   -- if vim.bo.filetype ~= "markdown" then
@@ -205,6 +253,12 @@ end
 map_key("n", "<localleader><localleader>", function()
   local count = vim.v.count1
 
+  if count == 11 then
+    -- Count 11: Create tmux window next to current and cd to neovim's CWD
+    create_tmux_window_with_cwd()
+    return
+  end
+
   if count == 9 then
     -- Count 9: Just select and yank to clipboard
     process_region(false, nil)
@@ -221,8 +275,13 @@ map_key("n", "<localleader><localleader>", function()
   end
 
   -- Invalid count: Just yank
-  vim.notify("Count must be between 0 and 9", vim.log.levels.WARN)
+  vim.notify("Count must be between 0 and 11", vim.log.levels.WARN)
   process_region(false, nil)
 end, {
-  desc = "Select markdown region (count 0-8: send to tmux pane, count 9: clipboard only)",
+  desc = table.concat({
+    "Select markdown region",
+    "count 0-8: send to tmux pane",
+    "count 9: clipboard only",
+    "count 11: create tmux window",
+  }, "/"),
 })
