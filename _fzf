@@ -34,10 +34,13 @@ _fzf_compgen_path() {
   rg --files --hidden --follow --glob "$RG_IGNORES"
 }
 
-FZF_PREVIEW_APP="--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
-
-# shellcheck disable=2139
-alias ff="fzf $FZF_PREVIEW_APP"
+__fzf_files__() {
+  local output
+  output=$(fzf --preview="[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300" --preview-window=hidden --bind '?:toggle-preview') || return
+  copy "$output"
+  echo "$output"
+}
+alias ff=__fzf_files__
 alias eff='env | fzf'
 alias fff='compgen -A function | fzf'
 
