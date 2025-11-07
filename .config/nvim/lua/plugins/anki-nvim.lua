@@ -40,12 +40,20 @@ return {
         {
           description = "Anki New Blank",
           action = function()
+            -- Get content from current buffer before creating new tab
+            local original_buf = vim.api.nvim_get_current_buf()
+            local lines = vim.api.nvim_buf_get_lines(original_buf, 0, -1, false)
+
             vim.cmd("tab new")
             vim.bo.filetype = "anki"
             utils.write_to_out_file({
               prefix = "anki",
               ext = "anki",
             })
+
+            -- Write the copied content to the new buffer
+            local new_buf = vim.api.nvim_get_current_buf()
+            vim.api.nvim_buf_set_lines(new_buf, 0, -1, false, lines)
           end,
           count = 11,
         },
