@@ -1,5 +1,6 @@
 vim = vim
-local map_key = require("utils").map_key
+local utils = require("utils")
+local map_key = utils.map_key
 
 local function configure_slime_for_tmux(count)
   -- Check if we're in a tmux session
@@ -271,6 +272,9 @@ local function select_markdown_region()
 
   -- Get lines from buffer
   local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+
+  -- Trim empty lines from the extracted lines array (additional safety)
+  lines = utils.trim_empty_lines(lines)
 
   return {
     lines = lines,

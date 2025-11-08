@@ -825,4 +825,55 @@ utils.add_options = function(into, ...)
   end
 end
 
+-- Select current paragraph (text surrounded by empty lines)
+function utils.select_current_paragraph()
+  local cursor_line = vim.fn.line(".")
+  local start_line = cursor_line
+  local end_line = cursor_line
+
+  -- Search backward for empty line or beginning of file
+  while start_line > 1 do
+    if vim.fn.getline(start_line - 1):match("^%s*$") then
+      break
+    end
+    start_line = start_line - 1
+  end
+
+  -- Search forward for empty line or end of file
+  local last_line = vim.fn.line("$")
+  while end_line < last_line do
+    if vim.fn.getline(end_line + 1):match("^%s*$") then
+      break
+    end
+    end_line = end_line + 1
+  end
+
+  -- Trim leading empty lines
+  while start_line <= end_line and vim.fn.getline(start_line):match("^%s*$") do
+    start_line = start_line + 1
+  end
+
+  -- Trim trailing empty lines
+  while end_line >= start_line and vim.fn.getline(end_line):match("^%s*$") do
+    end_line = end_line - 1
+  end
+
+  return start_line, end_line
+end
+
+-- Trim empty lines from a lines array
+function utils.trim_empty_lines(lines)
+  -- Remove leading empty lines
+  while #lines > 0 and lines[1]:match("^%s*$") do
+    table.remove(lines, 1)
+  end
+
+  -- Remove trailing empty lines
+  while #lines > 0 and lines[#lines]:match("^%s*$") do
+    table.remove(lines, #lines)
+  end
+
+  return lines
+end
+
 return utils

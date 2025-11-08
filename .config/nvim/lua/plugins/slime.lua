@@ -87,29 +87,43 @@ return {
         end
 
         slime_config.target_pane = target_pane
-
         vim.b.slime_config = slime_config
 
-        -- :lua vim.b.slime_config = { socket_name='default', target_pane=':.2' }
-        -- cursor will be at 2 (pane number)
-        local args = "lua vim.b.slime_config = { "
-          .. "socket_name="
-          .. "'"
-          .. slime_config.socket_name
-          .. "'"
-          .. ", "
-          .. "target_pane="
-          .. "'"
-          .. slime_config.target_pane
-          .. "'"
-          .. " }"
-          .. "<left><left><left>"
+        -- Select current paragraph
+        local start_line, end_line = utils.select_current_paragraph()
 
-        utils.write_to_command_mode(args)
+        if start_line > end_line then
+          vim.notify("No paragraph found", vim.log.levels.WARN)
+          return
+        end
+
+        -- Select the region visually
+        vim.cmd("normal! " .. start_line .. "G")
+        vim.cmd("normal! V")
+        vim.cmd("normal! " .. end_line .. "G")
+
+        -- Send via slime
+        if vim.fn.exists(":SlimeSend") == 2 then
+          local term_keys = vim.api.nvim_replace_termcodes("<Plug>SlimeRegionSend", true, true, true)
+          vim.api.nvim_feedkeys(
+            term_keys,
+            "m", -- "m" => allow remapping so <Plug> expands
+            true -- Third argument (true) => do not escape CSI
+          )
+
+          local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+          vim.notify(
+            string.format(
+              "%d line(s) sent to tmux %s",
+              #lines,
+              target_pane
+            )
+          )
+        end
       end
     end, {
       noremap = true,
-      desc = "Slime config 0/nvim 1/tmux 114/tmux 11=win 4=pane",
+      desc = "Slime: 0=nvim-config, N=send-para-tmux (1=pane1, 31=win3-pane1)",
     })
   end,
 }
