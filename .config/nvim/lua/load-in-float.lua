@@ -56,38 +56,24 @@ for _, file in ipairs(files_fzf_options) do
   end
 
   -- 50% height option
-  local description_count_50 = file.count2
-      and string.rep(" ", 95 - #file.description) .. file.count2
-    or ""
+  local description_count_50 = file.count2 and string.rep(" ", 95 - #file.description) .. file.count2 or ""
 
   table.insert(fzf_options, {
     description = file.description .. " 50%" .. description_count_50,
     action = function()
-      load_in_float(
-        file_path,
-        vim.tbl_extend("keep", file.opts or {}, { height = 0.5 })
-      )
+      load_in_float(file_path, vim.tbl_extend("keep", file.opts or {}, { height = 0.5 }))
     end,
     count = file.count2,
   })
 
   -- Full height option
-  local description_count = file.count
-      and string.rep(" ", 95 - #file.description) .. file.count
-    or ""
+  local description_count = file.count and string.rep(" ", 95 - #file.description) .. file.count or ""
 
   table.insert(fzf_options, {
     -- ' z ' to make 50% version come up first in search
     description = file.description .. " z " .. description_count,
     action = function()
-      load_in_float(
-        file_path,
-        vim.tbl_extend(
-          "keep",
-          file.opts or {},
-          { cursor_at_end = false }
-        )
-      )
+      load_in_float(file_path, vim.tbl_extend("keep", file.opts or {}, { cursor_at_end = false }))
     end,
     count = file.count,
   })
@@ -102,12 +88,12 @@ table.insert(fzf_options, {
   end,
 })
 
-utils.map_key({"n", "x"}, "<leader>bb", function()
+utils.map_key({ "n", "x" }, "<leader>bb", function()
   utils.create_fzf_key_maps(fzf_options, {
     prompt = "Edit In Float",
     header = "Select an Edit In Float Option",
     no_fzf_lua_counts = {
-      [11] = function ()
+      [11] = function()
         local file = find_file_path(".claude.ebnis.chat.md")
         if vim.fn.filereadable(file) == 1 then
           vim.cmd("botright split " .. file)
@@ -115,7 +101,7 @@ utils.map_key({"n", "x"}, "<leader>bb", function()
         end
         return false
       end,
-      [12] = function ()
+      [12] = function()
         local file = find_file_path(".claude.ebnis.chat.md")
         if vim.fn.filereadable(file) == 1 then
           vim.cmd("vsplit " .. file)
@@ -123,15 +109,15 @@ utils.map_key({"n", "x"}, "<leader>bb", function()
         end
         return false
       end,
-      [13] = function ()
+      [13] = function()
         local file = find_file_path(".claude.ebnis.chat.md")
         if vim.fn.filereadable(file) == 1 then
           vim.cmd("tabnew " .. file)
           return true
         end
         return false
-      end
-    }
+      end,
+    },
   })
 end, { noremap = true, desc = "EditFloat quick actions <leader>bn" })
 
