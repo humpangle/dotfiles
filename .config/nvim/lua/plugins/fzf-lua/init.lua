@@ -105,27 +105,26 @@ return {
         },
       }
 
-      opts.git = {
-        branches = {
-          actions = {
-            ["ctrl-a"] = false, -- Disable default ctrl-a binding
-            ["ctrl-d"] = {
-              fn = fzf_lua_utils.git_branch_force_del,
-              reload = true,
-            },
-            ["ctrl-b"] = {
-              fn = fzf_lua_actions.git_branch_add,
-              field_index = "{q}",
-              reload = true,
-            },
-          },
-          -- Add branch and switch immediately
-          cmd_add = {
-            "git",
-            "checkout",
-            "-b",
-          },
+      opts.git = {}
+
+      opts.git.branches = {}
+      opts.git.branches.actions = {
+        ["ctrl-a"] = false, -- Disable default ctrl-a binding
+        ["ctrl-d"] = {
+          fn = fzf_lua_utils.git_branch_force_del,
+          reload = true,
         },
+        ["ctrl-b"] = {
+          fn = fzf_lua_actions.git_branch_add,
+          field_index = "{q}",
+          reload = true,
+        },
+      }
+      -- Add branch and switch immediately
+      opts.git.branches.cmd_add = {
+        "git",
+        "checkout",
+        "-b",
       }
 
       opts.keymap = {
