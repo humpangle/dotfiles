@@ -103,12 +103,10 @@ return {
         branches = {
           actions = {
             ["enter"] = actions.git_switch,
-
             ["ctrl-d"] = {
               fn = actions.git_branch_del,
               reload = true,
             },
-
             ["ctrl-b"] = {
               fn = actions.git_branch_add,
               field_index = "{q}",
