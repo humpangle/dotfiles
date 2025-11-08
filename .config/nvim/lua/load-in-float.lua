@@ -93,10 +93,18 @@ utils.map_key({ "n", "x" }, "<leader>bb", function()
     prompt = "Edit In Float",
     header = "Select an Edit In Float Option",
     no_fzf_lua_counts = {
-      [11] = function()
+      [1] = function()
         local file = find_file_path(".claude.ebnis.chat.md")
         if vim.fn.filereadable(file) == 1 then
           vim.cmd("botright split " .. file)
+          return true
+        end
+        return false
+      end,
+      [11] = function()
+        local file = find_file_path(".claude.ebnis.chat.md")
+        if vim.fn.filereadable(file) == 1 then
+          vim.cmd("e!" .. file)
           return true
         end
         return false
