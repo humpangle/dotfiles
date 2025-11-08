@@ -27,12 +27,7 @@ end
       vertical split:    2gd      42gd
       tab split:         3gd      37gd
 ]]
-local map_to_fzf_lua_or_telescope = function(
-  key,
-  func_name,
-  desc,
-  may_be_telescope_func_name
-)
+local map_to_fzf_lua_or_telescope = function(key, func_name, desc, may_be_telescope_func_name)
   map_key("n", key, function()
     local count = vim.v.count
     local string_count = "" .. count
@@ -93,8 +88,8 @@ return {
       local fzf_lua_utils = require("plugins.fzf-lua.fzf-lua-utils")
 
       -- Register custom action label
-      fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_utils.git_branch_force_del] =
-        { "force delete branch" }
+      fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_utils.git_branch_force_del] = { "Force Del" }
+      fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_actions.git_branch_add] = { "Add" }
 
       local opts = {}
 
@@ -230,36 +225,19 @@ return {
       })
 
       -- Fuzzy find all the symbols in your current document. Symbols are things like variables, functions, types, etc.
-      map_to_fzf_lua_or_telescope(
-        "gO",
-        "lsp_document_symbols",
-        "[D]ocument [S]ymbols",
-        "lsp_document_symbols"
-      )
+      map_to_fzf_lua_or_telescope("gO", "lsp_document_symbols", "[D]ocument [S]ymbols", "lsp_document_symbols")
 
       -- Find references(places where identifiers are used/referenced) for the word under your cursor.
-      map_to_fzf_lua_or_telescope(
-        "grr",
-        "lsp_references",
-        "[G]oto [R]eferences"
-      )
+      map_to_fzf_lua_or_telescope("grr", "lsp_references", "[G]oto [R]eferences")
 
       -- Jump to the definition of the word under your cursor.
       --  This is where a variable was first declared, or where a function is defined, etc.
       --  To jump back, press <C-t>.
-      map_to_fzf_lua_or_telescope(
-        "gd",
-        "lsp_definitions",
-        "[G]oto [D]efinition"
-      )
+      map_to_fzf_lua_or_telescope("gd", "lsp_definitions", "[G]oto [D]efinition")
 
       -- Jump to the implementation of the word under your cursor.
       --  Useful when your language has ways of declaring types without an actual implementation.
-      map_to_fzf_lua_or_telescope(
-        "gi",
-        "lsp_implementations",
-        "[G]oto [I]mplementation"
-      )
+      map_to_fzf_lua_or_telescope("gi", "lsp_implementations", "[G]oto [I]mplementation")
 
       -- Fuzzy find all the symbols in your current workspace/project. Similar to document symbols, except searches over your entire project.
       map_to_fzf_lua_or_telescope(
