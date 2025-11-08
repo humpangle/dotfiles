@@ -10,8 +10,7 @@ local function configure_slime_for_tmux(count)
   end
 
   -- Get current tmux window index
-  local current_window =
-    vim.fn.system("tmux display-message -p '#I'"):gsub("%s+", "")
+  local current_window = vim.fn.system("tmux display-message -p '#I'"):gsub("%s+", "")
   local current_window_num = tonumber(current_window)
   if not current_window_num then
     vim.notify("Failed to get current tmux window", vim.log.levels.ERROR)
@@ -19,8 +18,7 @@ local function configure_slime_for_tmux(count)
   end
 
   -- Get tmux session name
-  local session_name =
-    vim.fn.system("tmux display-message -p '#S'"):gsub("%s+", "")
+  local session_name = vim.fn.system("tmux display-message -p '#S'"):gsub("%s+", "")
 
   -- Calculate target window (next window) and pane
   local target_window = current_window_num + 1
@@ -30,12 +28,7 @@ local function configure_slime_for_tmux(count)
   vim.b.slime_target = "tmux"
   vim.b.slime_config = {
     socket_name = "default",
-    target_pane = string.format(
-      "%s:%d.%d",
-      session_name,
-      target_window,
-      target_pane
-    ),
+    target_pane = string.format("%s:%d.%d", session_name, target_window, target_pane),
   }
 
   -- Return target info for notification
@@ -46,52 +39,58 @@ local function configure_slime_for_tmux(count)
   }
 end
 
-local function create_tmux_window_with_cwd()
-  local tmux_env = vim.fn.system("echo $TMUX"):gsub("%s+", "")
-  if tmux_env == "" then
-    vim.notify("Not in a tmux session", vim.log.levels.WARN)
-    return false
-  end
-
+local function create_kitty_tab_with_cwd()
   local nvim_cwd = vim.fn.getcwd()
 
-  local current_window =
-    vim.fn.system("tmux display-message -p '#I'"):gsub("%s+", "")
+  local create_kitty_tab_cmd =
+    string.format("kitty @ launch --type=tab --cwd='%s' --tab-title='.' --location=neighbor", nvim_cwd)
+  local result = vim.fn.system(create_kitty_tab_cmd):gsub("%s+", "")
 
-  local create_tmux_window_cmd = string.format(
-    "tmux new-window -a -c '%s' -P -F '#{window_id}'",
-    nvim_cwd
-  )
+  if vim.v.shell_error == 0 then
+    vim.print(string.format("Created Kitty tab next to current in %s", nvim_cwd))
+    return true
+  else
+    vim.notify("Failed to create Kitty tab: " .. result, vim.log.levels.ERROR)
+    return false
+  end
+end
+
+local function create_tmux_window_with_cwd()
+  local nvim_cwd = vim.fn.getcwd()
+  local current_window = vim.fn.system("tmux display-message -p '#I'"):gsub("%s+", "")
+  local create_tmux_window_cmd = string.format("tmux new-window -a -c '%s' -P -F '#{window_id}'", nvim_cwd)
   local new_window_id = vim.fn.system(create_tmux_window_cmd):gsub("%s+", "")
 
   if vim.v.shell_error ~= 0 then
-    vim.notify(
-      "Failed to create tmux window: " .. new_window_id,
-      vim.log.levels.ERROR
-    )
+    vim.notify("Failed to create tmux window: " .. new_window_id, vim.log.levels.ERROR)
     return false
   end
 
-  local config_cmd =
-    string.format("tmux rename-window -t '%s' ''", new_window_id)
+  local config_cmd = string.format("tmux rename-window -t '%s' ''", new_window_id)
   local result = vim.fn.system(config_cmd)
 
   if vim.v.shell_error == 0 then
-    vim.print(
-      string.format(
-        "Created tmux window next to #%s in %s",
-        current_window,
-        nvim_cwd
-      )
-    )
+    vim.print(string.format("Created tmux window next to #%s in %s", current_window, nvim_cwd))
     return true
   else
-    vim.notify(
-      "Failed to configure tmux pane: " .. result,
-      vim.log.levels.ERROR
-    )
+    vim.notify("Failed to configure tmux pane: " .. result, vim.log.levels.ERROR)
     return false
   end
+end
+
+local function create_terminal_window_with_cwd()
+  local kitty_pid = vim.fn.system("echo $KITTY_PID"):gsub("%s+", "")
+  if kitty_pid ~= "" then
+    return create_kitty_tab_with_cwd()
+  end
+
+  local tmux_env = vim.fn.system("echo $TMUX"):gsub("%s+", "")
+  if tmux_env ~= "" then
+    return create_tmux_window_with_cwd()
+  end
+
+  vim.notify("Not in a tmux session or Kitty terminal", vim.log.levels.WARN)
+  return false
 end
 
 local function select_markdown_region()
@@ -175,9 +174,7 @@ local function select_markdown_region()
   end
 
   -- Trim leading empty lines
-  while
-    start_line <= end_line and vim.fn.getline(start_line):match("^%s*$")
-  do
+  while start_line <= end_line and vim.fn.getline(start_line):match("^%s*$") do
     start_line = start_line + 1
   end
 
@@ -223,12 +220,7 @@ local function process_region(send_to_slime, tmux_target)
 
   -- If send_to_slime is true, trigger vim-slime to send the selection
   if send_to_slime and vim.fn.exists(":SlimeSend") == 2 then
-    local term_keys = vim.api.nvim_replace_termcodes(
-      "<Plug>SlimeRegionSend",
-      true,
-      true,
-      true
-    )
+    local term_keys = vim.api.nvim_replace_termcodes("<Plug>SlimeRegionSend", true, true, true)
     vim.api.nvim_feedkeys(
       term_keys,
       "m", -- "m" => allow remapping so <Plug> expands
@@ -254,8 +246,8 @@ map_key("n", "<localleader><localleader>", function()
   local count = vim.v.count1
 
   if count == 11 then
-    -- Count 11: Create tmux window next to current and cd to neovim's CWD
-    create_tmux_window_with_cwd()
+    -- Count 11: Create terminal window/tab next to current and cd to neovim's CWD (Kitty/tmux)
+    create_terminal_window_with_cwd()
     return
   end
 
@@ -282,6 +274,6 @@ end, {
     "Select markdown region",
     "count 0-8: send to tmux pane",
     "count 9: clipboard only",
-    "count 11: create tmux window",
+    "count 11: create window/tab (Kitty/tmux)",
   }, "/"),
 })
