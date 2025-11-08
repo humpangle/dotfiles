@@ -102,7 +102,6 @@ return {
       opts.git = {
         branches = {
           actions = {
-            ["enter"] = fzf_lua_actions.git_switch,
             ["ctrl-d"] = {
               fn = fzf_lua_actions.git_branch_del,
               reload = true,
