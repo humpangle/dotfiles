@@ -72,7 +72,9 @@ local function send_to_kitty_tab(text, count)
         break
       end
     end
-    if current_tab_idx then break end
+    if current_tab_idx then
+      break
+    end
   end
 
   if not current_tab_idx then
@@ -103,9 +105,8 @@ local function send_to_kitty_tab(text, count)
   -- Send text to the target window
   -- Add newline to execute the text
   local text_with_newline = text .. "\n"
-  local send_cmd = string.format("kitty @ send-text --match id:%d %s",
-    target_window_id,
-    vim.fn.shellescape(text_with_newline))
+  local send_cmd =
+    string.format("kitty @ send-text --match id:%d %s", target_window_id, vim.fn.shellescape(text_with_newline))
 
   local result = vim.fn.system(send_cmd)
   if vim.v.shell_error ~= 0 then
