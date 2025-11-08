@@ -661,6 +661,12 @@ eof
   echo -e "$var"
 }
 
+re-number-windows() {
+  while read -r s; do
+    tmux move-window -r -t "$s"
+  done < <(tmux list-sessions -F '#S')
+}
+
 # :TODO:persist session information ala tmux-resurrect
 kill_tmux() {
   : "___help___ ___kill_tmux_help"
