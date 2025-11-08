@@ -89,6 +89,12 @@ return {
       fzf_lua.register_ui_select()
 
       local fzf_lua_actions = require("fzf-lua.actions")
+      local fzf_lua_core = require("fzf-lua.core")
+      local fzf_lua_utils = require("plugins.fzf-lua.fzf-lua-utils")
+
+      -- Register custom action label
+      fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_utils.git_branch_force_del] =
+        { "force delete branch" }
 
       local opts = {}
 
@@ -104,7 +110,7 @@ return {
           actions = {
             ["ctrl-a"] = false, -- Disable default ctrl-a binding
             ["ctrl-d"] = {
-              fn = fzf_lua_actions.git_branch_del,
+              fn = fzf_lua_utils.git_branch_force_del,
               reload = true,
             },
             ["ctrl-b"] = {
