@@ -39,6 +39,87 @@ local function configure_slime_for_tmux(count)
   }
 end
 
+local function send_to_kitty_tab(text, count)
+  local kitty_pid = vim.fn.system("echo $KITTY_PID"):gsub("%s+", "")
+  if kitty_pid == "" then
+    vim.notify("Not in a Kitty terminal", vim.log.levels.WARN)
+    return nil
+  end
+
+  -- Get current tab and window info using kitty @ ls
+  local ls_output = vim.fn.system("kitty @ ls")
+  if vim.v.shell_error ~= 0 then
+    vim.notify("Failed to query Kitty state", vim.log.levels.ERROR)
+    return nil
+  end
+
+  -- Parse JSON to find current tab and calculate next tab
+  local ok, data = pcall(vim.fn.json_decode, ls_output)
+  if not ok or not data or #data == 0 then
+    vim.notify("Failed to parse Kitty state", vim.log.levels.ERROR)
+    return nil
+  end
+
+  -- Find the current tab (the one with is_focused=true window)
+  local current_tab_idx = nil
+  local os_window = data[1] -- Usually there's one OS window
+
+  for idx, tab in ipairs(os_window.tabs or {}) do
+    for _, window in ipairs(tab.windows or {}) do
+      if window.is_focused then
+        current_tab_idx = idx
+        break
+      end
+    end
+    if current_tab_idx then break end
+  end
+
+  if not current_tab_idx then
+    vim.notify("Could not find current Kitty tab", vim.log.levels.ERROR)
+    return nil
+  end
+
+  -- Calculate target tab (next tab)
+  local target_tab_idx = current_tab_idx + 1
+  if target_tab_idx > #os_window.tabs then
+    vim.notify("No next tab found. Create a tab first.", vim.log.levels.WARN)
+    return nil
+  end
+
+  local target_tab = os_window.tabs[target_tab_idx]
+  local target_windows = target_tab.windows or {}
+
+  -- Target window within the tab (using count, 1-indexed)
+  local target_window_idx = math.min(count, #target_windows)
+  if target_window_idx < 1 or #target_windows == 0 then
+    vim.notify("No windows in target tab", vim.log.levels.WARN)
+    return nil
+  end
+
+  local target_window = target_windows[target_window_idx]
+  local target_window_id = target_window.id
+
+  -- Send text to the target window
+  -- Add newline to execute the text
+  local text_with_newline = text .. "\n"
+  local send_cmd = string.format("kitty @ send-text --match id:%d %s",
+    target_window_id,
+    vim.fn.shellescape(text_with_newline))
+
+  local result = vim.fn.system(send_cmd)
+  if vim.v.shell_error ~= 0 then
+    vim.notify("Failed to send text to Kitty: " .. result, vim.log.levels.ERROR)
+    return nil
+  end
+
+  -- Return target info for notification
+  return {
+    tab = target_tab_idx,
+    window = target_window_idx,
+    window_id = target_window_id,
+  }
+end
+
 local function create_kitty_tab_with_cwd()
   local nvim_cwd = vim.fn.getcwd()
 
@@ -198,7 +279,7 @@ local function select_markdown_region()
   }
 end
 
-local function process_region(send_to_slime, tmux_target)
+local function process_region(send_to_slime, tmux_target, kitty_count)
   local region = select_markdown_region()
   if not region then
     return
@@ -218,7 +299,23 @@ local function process_region(send_to_slime, tmux_target)
   vim.cmd("normal! V")
   vim.cmd("normal! " .. end_line .. "G")
 
-  -- If send_to_slime is true, trigger vim-slime to send the selection
+  -- Handle kitty target (send directly, not via slime)
+  if kitty_count then
+    local kitty_target = send_to_kitty_tab(text, kitty_count)
+    if kitty_target then
+      vim.notify(
+        string.format(
+          "%d line(s) sent to Kitty tab %d, window %d",
+          #lines,
+          kitty_target.tab,
+          kitty_target.window
+        )
+      )
+    end
+    return
+  end
+
+  -- If send_to_slime is true, trigger vim-slime to send the selection (for tmux)
   if send_to_slime and vim.fn.exists(":SlimeSend") == 2 then
     local term_keys = vim.api.nvim_replace_termcodes("<Plug>SlimeRegionSend", true, true, true)
     vim.api.nvim_feedkeys(
@@ -253,26 +350,33 @@ map_key("n", "<localleader><localleader>", function()
 
   if count == 9 then
     -- Count 9: Just select and yank to clipboard
-    process_region(false, nil)
+    process_region(false, nil, nil)
     return
   end
 
   if count <= 8 then
-    -- Count 0-8: Send to tmux via slime
+    -- Count 0-8: Send to terminal window/tab (Kitty/tmux)
+    local kitty_pid = vim.fn.system("echo $KITTY_PID"):gsub("%s+", "")
+    if kitty_pid ~= "" then
+      process_region(false, nil, count)
+      return
+    end
+
+    -- Send to tmux via slime
     local tmux_target = configure_slime_for_tmux(count)
     if tmux_target then
-      process_region(true, tmux_target)
+      process_region(true, tmux_target, nil)
       return
     end
   end
 
   -- Invalid count: Just yank
   vim.notify("Count must be between 0 and 11", vim.log.levels.WARN)
-  process_region(false, nil)
+  process_region(false, nil, nil)
 end, {
   desc = table.concat({
     "Select markdown region",
-    "count 0-8: send to tmux pane",
+    "count 0-8: send to terminal window (Kitty/tmux)",
     "count 9: clipboard only",
     "count 11: create window/tab (Kitty/tmux)",
   }, "/"),
