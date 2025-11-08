@@ -1,4 +1,3 @@
-local utils = require("utils")
 local fzf_lua = require("fzf-lua")
 
 return {
