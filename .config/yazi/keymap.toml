@@ -13,3 +13,9 @@ on   = "!"
 for  = "unix"
 run  = 'shell "$SHELL" --block'
 desc = "Open $SHELL here"
+
+[[mgr.prepend_keymap]]
+on   = "<S-a>"
+for  = "unix"
+run  = "toggle_all --state=on"
+desc = "Select all files"
