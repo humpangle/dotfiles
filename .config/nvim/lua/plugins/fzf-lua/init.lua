@@ -102,6 +102,7 @@ return {
       opts.git = {
         branches = {
           actions = {
+            ["ctrl-a"] = false, -- Disable default ctrl-a binding
             ["ctrl-d"] = {
               fn = fzf_lua_actions.git_branch_del,
               reload = true,
