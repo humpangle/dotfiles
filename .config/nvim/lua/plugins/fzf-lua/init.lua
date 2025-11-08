@@ -95,7 +95,7 @@ return {
       opts.winopts = {
         fullscreen = true,
         preview = {
-          hidden = "hidden", -- Start with preview hidden, toggle with Ctrl-p
+          hidden = "hidden", -- Start with preview hidden, toggle with ?
         },
       }
 
