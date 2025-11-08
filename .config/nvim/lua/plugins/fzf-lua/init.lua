@@ -123,6 +123,16 @@ return {
         "-b",
       }
 
+      opts.git.worktrees = {}
+      opts.git.worktrees.actions = {
+        ["ctrl-a"] = false,
+        ["ctrl-b"] = {
+          fn = fzf_lua_actions.git_worktree_add,
+          field_index = "{q}",
+          reload = true,
+        },
+      }
+
       opts.keymap = {
         builtin = {
           ["?"] = "toggle-preview", -- Toggle preview on/off
