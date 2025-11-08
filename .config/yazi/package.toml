@@ -8,5 +8,7 @@ use = "dedukun/relative-motions"
 rev = "a603d9e"
 hash = "e02a788e5b8ae0fb47fd0193dda589cc"
 
-[flavor]
-deps = []
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "f6b425a"
+hash = "14b111562c00eb1917fe3ca3ae9bb771"
