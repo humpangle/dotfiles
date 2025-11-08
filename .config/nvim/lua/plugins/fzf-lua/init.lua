@@ -176,7 +176,7 @@ return {
       })
 
       -- Search for text in current buffer
-      map_key("n", "<Leader>ffl", function()
+      map_key("n", "<Leader>fl", function()
         -- utils.set_fzf_lua_nvim_listen_address()
         require("fzf-lua").grep_curbuf()
       end, {

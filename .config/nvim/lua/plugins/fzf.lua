@@ -19,9 +19,6 @@ map_key(
 -- Search buffers history
 map_key("n", "<Leader>fh", ":History!<CR>", { noremap = true })
 
--- Search for text in current buffer
-map_key("n", "<Leader>fl", ":BLines!<CR>", { noremap = true })
-
 -- Search for text in loaded buffers
 map_key("n", "<Leader>L", ":Lines!<CR>", { noremap = true })
 
