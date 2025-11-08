@@ -88,7 +88,7 @@ return {
       local fzf_lua = require("fzf-lua")
       fzf_lua.register_ui_select()
 
-      local actions = require("fzf-lua.actions")
+      local fzf_lua_actions = require("fzf-lua.actions")
 
       local opts = {}
 
@@ -102,13 +102,13 @@ return {
       opts.git = {
         branches = {
           actions = {
-            ["enter"] = actions.git_switch,
+            ["enter"] = fzf_lua_actions.git_switch,
             ["ctrl-d"] = {
-              fn = actions.git_branch_del,
+              fn = fzf_lua_actions.git_branch_del,
               reload = true,
             },
             ["ctrl-b"] = {
-              fn = actions.git_branch_add,
+              fn = fzf_lua_actions.git_branch_add,
               field_index = "{q}",
               reload = true,
             },
