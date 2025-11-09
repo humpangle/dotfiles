@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+# shellcheck disable=
 
 # =============================================================================
 # Tailscale File Transfer Utilities
@@ -79,7 +81,19 @@ __fzf_tailscale_send__() {
 
     echo "Sending files to ${peer_name}..."
     # Use eval to properly expand the files string (handles spaces, globs, etc.)
-    eval "tailscale file cp ${files} ${peer_name}:"
+    # Try without sudo first, retry with sudo if permission error occurs
+    local output
+    if output=$(eval "tailscale file cp ${files} ${peer_name}:" 2>&1); then
+      echo "$output"
+    else
+      echo "$output"
+      if echo "$output" | grep -qi "permission\|sudo"; then
+        echo "Retrying with sudo..."
+        eval "sudo tailscale file cp ${files} ${peer_name}:"
+      else
+        return 1
+      fi
+    fi
   fi
 }
 alias tscp='__fzf_tailscale_send__'
