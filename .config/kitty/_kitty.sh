@@ -7,13 +7,16 @@ export EBNIS_KITTY_SOCKET_PATH='unix:/tmp/kitty-ebnis.sock'
 export FZF_KITTY_SESSION_OPTS="--height=80% --border-label='Kitty Sessions' --border-label-pos=2 --prompt='Session> ' --preview='cat {} 2>/dev/null'"
 
 if _is_darwin; then
-  alias kt='open -a kitty.app -n'
+  kt() {
+    open -na kitty.app --args "$@"
+  }
 else
   alias kt=kitty
 fi
 
-alias lskd='kitty --session $EBNIS_KITTY_SESSION_DIR/dot.kitty-session --start-as=maximized --detach &>/dev/null'
+alias lskd='kt --session $EBNIS_KITTY_SESSION_DIR/dot.kitty-session --start-as=maximized --detach &>/dev/null'
 alias ks="kitty +kitten ssh"
+alias kt-debug='kt --debug-input'
 
 __fzf_kitty_sessions__() {
   local output
