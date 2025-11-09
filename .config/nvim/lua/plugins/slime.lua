@@ -73,8 +73,7 @@ return {
         local count_as_string = "" .. count
         local two_digits_count_pattern = "^(%d+)(%d)$"
 
-        local window_index, pane_index =
-          count_as_string:match(two_digits_count_pattern)
+        local window_index, pane_index = count_as_string:match(two_digits_count_pattern)
 
         if window_index and pane_index then
           -- 99 is a special count which stands for pane index 0
