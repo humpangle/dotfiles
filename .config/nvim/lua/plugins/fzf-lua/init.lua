@@ -91,6 +91,8 @@ return {
       fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_utils.git_branch_force_del] = { "Force Del" }
       fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_actions.git_branch_add] = { "Add" }
       fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_actions.git_branch_del] = { "Del" }
+      fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_actions.git_worktree_add] = { "Add" }
+      fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_actions.git_worktree_del] = { "Del" }
 
       local opts = {}
 
