@@ -8,8 +8,7 @@ function utils.ebnis_save_commit_buffer()
     return
   end
 
-  local max_tab_number =
-    vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
+  local max_tab_number = vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
   local current_tab_number = vim.fn.tabpagenr("$")
 
   if max_tab_number == current_tab_number then
@@ -71,24 +70,17 @@ function utils.get_file_name(num)
     for i = 1, last_but_one_index, 1 do
       local next_path_segment = path_segments_list[i]
 
-      local first_letter_of_next_path_segment =
-        string.sub(next_path_segment, 1, 1)
+      local first_letter_of_next_path_segment = string.sub(next_path_segment, 1, 1)
 
       -- for dot file, we take the dot and next char
       if first_letter_of_next_path_segment == "." then
-        first_letter_of_next_path_segment =
-          string.sub(next_path_segment, 1, 2)
+        first_letter_of_next_path_segment = string.sub(next_path_segment, 1, 2)
       end
 
-      table.insert(
-        first_letters_of_path_segments_list,
-        first_letter_of_next_path_segment
-      )
+      table.insert(first_letters_of_path_segments_list, first_letter_of_next_path_segment)
     end
 
-    return table.concat(first_letters_of_path_segments_list, "/")
-      .. "/"
-      .. tail
+    return table.concat(first_letters_of_path_segments_list, "/") .. "/" .. tail
   end
 
   return file_name
@@ -96,13 +88,7 @@ end
 
 function utils.DeleteOrCloseBuffer(flag)
   if vim.fn.expand("%") == "Neotest Output Panel" then
-    vim.cmd.echo(
-      '"'
-        .. "You may not delete Neotest Output Panel."
-        .. "\\n"
-        .. "Use <leader>nto to close."
-        .. '"'
-    )
+    vim.cmd.echo('"' .. "You may not delete Neotest Output Panel." .. "\\n" .. "Use <leader>nto to close." .. '"')
     return
   end
 
@@ -210,8 +196,7 @@ function utils.DeleteFile(which)
     if vim.v.count == 1 then
       delete_prompt = "y"
     else
-      delete_prompt =
-        vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
+      delete_prompt = vim.fn.input('Sure to delete: "' .. to_delete .. '"? (y/N) ')
     end
 
     if delete_prompt:lower() == "y" then
@@ -238,11 +223,7 @@ function utils.map_key(mode, mapping_str, command_to_map_to, opts, bufnr)
 
   -- We prepend the keymap (left) and mode to the description so when we search with description as search term, the
   -- keymap also shows up.
-  opts.desc = mapping_str
-    .. " "
-    .. vim.inspect(mode)
-    .. " "
-    .. (opts.desc or "")
+  opts.desc = mapping_str .. " " .. vim.inspect(mode) .. " " .. (opts.desc or "")
 
   vim.keymap.set(mode, mapping_str, command_to_map_to, opts)
 end
@@ -253,11 +234,7 @@ function utils.map_lazy_key(mapping_str, command_to_map_to, opts, mode)
 
   -- We prepend the keymap (left) and mode to the description so when we search with description as search term, the
   -- keymap also shows up.
-  opts.desc = mapping_str
-    .. " "
-    .. vim.inspect(mode)
-    .. " "
-    .. (opts.desc or "")
+  opts.desc = mapping_str .. " " .. vim.inspect(mode) .. " " .. (opts.desc or "")
 
   -- https://lazy.folke.io/spec/lazy_loading#%EF%B8%8F-lazy-key-mappings
   local entry = {
@@ -277,10 +254,7 @@ end
 function utils.write_to_command_mode(string)
   -- Prepend ':' to enter command mode, don't append '<CR>' to avoid executing
   -- Use 't' flag in feedkeys to interpret keys as if typed by the user
-  vim.fn.feedkeys(
-    vim.api.nvim_replace_termcodes(":" .. string, true, false, true),
-    "t"
-  )
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes(":" .. string, true, false, true), "t")
 end
 
 utils.get_git_root = function()
@@ -303,8 +277,7 @@ function utils.relative_to_git_root(abs_path)
     return nil
   end
 
-  local relative_path =
-    vim.fn.resolve(abs_path):gsub("^" .. vim.pesc(git_root) .. "/", "")
+  local relative_path = vim.fn.resolve(abs_path):gsub("^" .. vim.pesc(git_root) .. "/", "")
 
   return relative_path
 end
@@ -392,15 +365,10 @@ end, true)
 ```
 
 --]]
-utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(
-  callback,
-  opts
-)
+utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(callback, opts)
   opts = opts or {}
   local buf_path = vim.fn.expand("%:f")
-  local can_do = opts.force
-    or buf_path:match("^term://")
-    or buf_path:match("^fugitive://.+/%.git//")
+  local can_do = opts.force or buf_path:match("^term://") or buf_path:match("^fugitive://.+/%.git//")
 
   -- If no terminal buffer is currently focused this **hack** is not necessary.
   if not can_do then
@@ -431,9 +399,7 @@ utils.create_slime_dir = function(additional_directory_path)
   local PlenaryPath = require("plenary.path")
   local slime_dir = vim.fn.getcwd() .. "/.___scratch"
   if additional_directory_path then
-    slime_dir = slime_dir
-      .. "/"
-      .. (additional_directory_path:gsub("^/", ""))
+    slime_dir = slime_dir .. "/" .. (additional_directory_path:gsub("^/", ""))
   end
   local slime_dir_obj = PlenaryPath:new(slime_dir)
 
@@ -467,10 +433,7 @@ local go_to_file_strip_prefix_in_env = function(file_path)
   -- export NVIM_GO_TO_FILE_GF_STRIP_PREFIX=/some/path1/::other/part2
   local prefixes = utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_STRIP_PREFIX")
 
-  prefixes = (prefixes and (prefixes .. "::") or "")
-    .. "fugitive://.+/.git//[%a%d]+/"
-    .. "::"
-    .. "octo://.+/RIGHT/"
+  prefixes = (prefixes and (prefixes .. "::") or "") .. "fugitive://.+/.git//[%a%d]+/" .. "::" .. "octo://.+/RIGHT/"
 
   for _, prefix in pairs(vim.split(prefixes, "::")) do
     if prefix ~= "" then
@@ -480,10 +443,7 @@ local go_to_file_strip_prefix_in_env = function(file_path)
 
       local candidate = file_path:gsub(prefix, "")
 
-      if
-        vim.fn.filereadable(candidate) == 1
-        or vim.fn.isdirectory(candidate) == 1
-      then
+      if vim.fn.filereadable(candidate) == 1 or vim.fn.isdirectory(candidate) == 1 then
         return candidate
       end
     end
@@ -494,8 +454,7 @@ end
 
 local go_to_file_prepend_prefix_in_env = function(file_path)
   -- export NVIM_GO_TO_FILE_GF_PREPEND_PREFIX=/some/path1/::other/part2
-  local prefixes =
-    utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_PREPEND_PREFIX")
+  local prefixes = utils.get_os_env_or_nil("NVIM_GO_TO_FILE_GF_PREPEND_PREFIX")
 
   if not prefixes then
     return file_path
@@ -508,10 +467,7 @@ local go_to_file_prepend_prefix_in_env = function(file_path)
       local candidate = prefix .. sep .. file_path
 
       -- check file exists
-      if
-        vim.fn.filereadable(candidate) == 1
-        or vim.fn.isdirectory(candidate) == 1
-      then
+      if vim.fn.filereadable(candidate) == 1 or vim.fn.isdirectory(candidate) == 1 then
         return candidate
       end
     end
@@ -630,8 +586,7 @@ utils.get_visual_selection = function()
     return ""
   end
 
-  local text = visually_selected_text:match("^\\<(.-)\\>$")
-    or visually_selected_text
+  local text = visually_selected_text:match("^\\<(.-)\\>$") or visually_selected_text
 
   return text:gsub("\\%.", "."):gsub("\\/", "/")
 end
@@ -750,8 +705,7 @@ utils.mason_install_path = vim.fn.stdpath("data") .. "/mason/packages"
 ---@param filename string
 ---@return string
 function utils.strip_cwd(filename)
-  local pattern = "^"
-    .. vim.pesc(vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h") .. "/")
+  local pattern = "^" .. vim.pesc(vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h") .. "/")
   local stripped = filename:gsub(pattern, "")
   return stripped
 end
@@ -825,43 +779,6 @@ utils.add_options = function(into, ...)
   end
 end
 
--- Select current paragraph (text surrounded by empty lines)
-function utils.select_current_paragraph()
-  local cursor_line = vim.fn.line(".")
-  local start_line = cursor_line
-  local end_line = cursor_line
-
-  -- Search backward for empty line or beginning of file
-  while start_line > 1 do
-    if vim.fn.getline(start_line - 1):match("^%s*$") then
-      break
-    end
-    start_line = start_line - 1
-  end
-
-  -- Search forward for empty line or end of file
-  local last_line = vim.fn.line("$")
-  while end_line < last_line do
-    if vim.fn.getline(end_line + 1):match("^%s*$") then
-      break
-    end
-    end_line = end_line + 1
-  end
-
-  -- Trim leading empty lines
-  while start_line <= end_line and vim.fn.getline(start_line):match("^%s*$") do
-    start_line = start_line + 1
-  end
-
-  -- Trim trailing empty lines
-  while end_line >= start_line and vim.fn.getline(end_line):match("^%s*$") do
-    end_line = end_line - 1
-  end
-
-  return start_line, end_line
-end
-
--- Trim empty lines from a lines array
 function utils.trim_empty_lines(lines)
   -- Remove leading empty lines
   while #lines > 0 and lines[1]:match("^%s*$") do
