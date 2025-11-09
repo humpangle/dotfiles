@@ -235,5 +235,21 @@ for _, branch_name in ipairs({ "main", "master", "develop" }) do
   })
 end
 
+for _, register in ipairs({ "a", "+" }) do
+  table.insert(m, {
+    description = "Copy JIRA ticket from branch name to " .. register,
+    action = function()
+      local git_head = vim.fn.FugitiveHead()
+      local jira_ticket_pattern = git_head:match("^[A-Z]+%-[0-9]+")
+      if jira_ticket_pattern then
+        vim.fn.setreg(register, jira_ticket_pattern)
+        vim.notify("(Reg " .. register .. " ) ticket -> " .. jira_ticket_pattern)
+      else
+        vim.notify("No JIRA ticket pattern found in branch: " .. git_head)
+      end
+    end,
+  })
+end
+
 -- TODO: replace “, ” and ’
 return m

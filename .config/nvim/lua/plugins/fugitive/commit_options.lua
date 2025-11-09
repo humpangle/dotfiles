@@ -67,22 +67,6 @@ local m = {
     end,
   },
   {
-    description = "Copy JIRA ticket from branch name",
-    action = function()
-      local git_head = vim.fn.FugitiveHead()
-      local jira_ticket_pattern = git_head:match("^[A-Z]+%-[0-9]+")
-      if jira_ticket_pattern then
-        vim.fn.setreg("a", jira_ticket_pattern)
-        vim.fn.setreg("+", jira_ticket_pattern)
-        vim.notify("(Reg a & +) ticket -> " .. jira_ticket_pattern)
-      else
-        vim.notify(
-          "No JIRA ticket pattern found in branch: " .. git_head
-        )
-      end
-    end,
-  },
-  {
     description = "Copy current branch name to clipboard                                                            5",
     action = function()
       local git_head = get_git_current_branch()
