@@ -36,7 +36,9 @@ local file_patterns_extensions_map = {
   javascript = "js",
 }
 m.extensions = {}
-m.file_patterns = {}
+m.file_patterns = {
+  "sh",
+}
 for file_pattern, extension in pairs(file_patterns_extensions_map) do
   table.insert(m.file_patterns, file_pattern)
   m.extensions[extension] = 1
