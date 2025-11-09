@@ -111,18 +111,16 @@ return {
           )
 
           local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
-          vim.notify(
-            string.format(
-              "%d line(s) sent to tmux %s",
-              #lines,
-              target_pane
-            )
-          )
+          vim.notify(string.format("%d line(s) sent to tmux %s", #lines, target_pane))
         end
       end
     end, {
       noremap = true,
-      desc = "Slime: 0=nvim-config, N=send-para-tmux (1=pane1, 31=win3-pane1)",
+      desc = table.concat({
+        "Slime:",
+        "0=nvim-config",
+        "N=send-para-tmux (1=pane1, 31=win3-pane1)",
+      }, " | "),
     })
   end,
 }
