@@ -55,9 +55,7 @@ m.check_out_tree_ish_under_cursor = {
 m.submodule_update_force_recursive = {
   description = "Git submodule update force recursive",
   action = function()
-    utils.write_to_command_mode(
-      "Git submodule update --init --force --recursive"
-    )
+    utils.write_to_command_mode("Git submodule update --init --force --recursive")
   end,
 }
 
@@ -77,21 +75,13 @@ m.verify_commit_sign = {
   {
     description = "Verify sign <cword>",
     action = function()
-      utils.write_to_command_mode(
-        "Git verify-commit "
-          .. fugitive_utils.highlight_text_under_cursor()
-          .. " "
-      )
+      utils.write_to_command_mode("Git verify-commit " .. fugitive_utils.highlight_text_under_cursor() .. " ")
     end,
   },
   {
     description = "Verify sign verbose <cword>",
     action = function()
-      utils.write_to_command_mode(
-        "Git verify-commit -v "
-          .. fugitive_utils.highlight_text_under_cursor()
-          .. " "
-      )
+      utils.write_to_command_mode("Git verify-commit -v " .. fugitive_utils.highlight_text_under_cursor() .. " ")
     end,
   },
 }
@@ -109,26 +99,16 @@ m.submodule_deinit_all = {
   description = "Submodule deinit reset all",
   action = function()
     local result_list = {}
-    local reset_all_env_val =
-      utils.get_os_env_or_nil("GIT_SUBMODULE_RESET_ALL")
+    local reset_all_env_val = utils.get_os_env_or_nil("GIT_SUBMODULE_RESET_ALL")
 
     if reset_all_env_val then
-      local cmd_from_env = (
-        "( cd "
-        .. vim.fn.getcwd(0)
-        .. " &&  "
-        .. reset_all_env_val
-        .. " )"
-      ):gsub("\n", " ")
+      local cmd_from_env = ("( cd " .. vim.fn.getcwd(0) .. " &&  " .. reset_all_env_val .. " )"):gsub("\n", " ")
 
       vim.print("Invoking CMD from env: " .. cmd_from_env)
 
       result_list = vim.fn.systemlist(cmd_from_env)
     else
-      local cmd = "( cd "
-        .. vim.fn.getcwd(0)
-        .. " &&  git submodule deinit -f --all"
-        .. " )"
+      local cmd = "( cd " .. vim.fn.getcwd(0) .. " &&  git submodule deinit -f --all" .. " )"
 
       result_list = vim.fn.systemlist(cmd)
       vim.print("Invoking default CMD: " .. cmd)
@@ -172,38 +152,20 @@ m.git_pull = {
 
 for _, branch_name in ipairs({ "main", "master", "develop" }) do
   table.insert(m, {
-    description = "Check out / change branch to commit "
-      .. branch_name
-      .. " HEAD commit",
+    description = "Check out / change branch to commit " .. branch_name .. " HEAD commit",
     action = function()
-      local git_branch_name_head =
-        fugitive_utils.get_git_commit(branch_name)
+      local git_branch_name_head = fugitive_utils.get_git_commit(branch_name)
       vim.fn.setreg("+", git_branch_name_head)
 
-      local checkout_result = vim.fn.systemlist(
-        "( cd "
-          .. vim.fn.getcwd(0)
-          .. " &&  git checkout "
-          .. git_branch_name_head
-          .. " )"
-      )
+      local checkout_result =
+        vim.fn.systemlist("( cd " .. vim.fn.getcwd(0) .. " &&  git checkout " .. git_branch_name_head .. " )")
 
       if checkout_result[#checkout_result] == "Aborting" then
-        vim.print(
-          "Could not checkout "
-            .. branch_name
-            .. " HEAD commit: "
-            .. git_branch_name_head
-        )
+        vim.print("Could not checkout " .. branch_name .. " HEAD commit: " .. git_branch_name_head)
         return
       end
 
-      vim.print(
-        "Checked out branch from "
-          .. branch_name
-          .. " HEAD -> "
-          .. git_branch_name_head
-      )
+      vim.print("Checked out branch from " .. branch_name .. " HEAD -> " .. git_branch_name_head)
 
       vim.defer_fn(fugitive_utils.git_refresh_cwd, 10)
     end,
