@@ -76,41 +76,41 @@ EOF
 
   while true; do
     case "$1" in
-      -h | --help)
-        _echo "$help_"
-        return
-        ;;
+    -h | --help)
+      _echo "$help_"
+      return
+      ;;
 
-      -b | --branch)
-        user_provided_base_branch_name_=$2
-        shift 2
-        ;;
+    -b | --branch)
+      user_provided_base_branch_name_=$2
+      shift 2
+      ;;
 
-      -a | --hash-only)
-        hash_only_="1"
-        shift
-        ;;
+    -a | --hash-only)
+      hash_only_="1"
+      shift
+      ;;
 
-      -c | --copy)
-        copy_="1"
-        shift
-        ;;
+    -c | --copy)
+      copy_="1"
+      shift
+      ;;
 
-      -v | --verbose)
-        verbose_="--pr-base--verbose"
-        shift
-        ;;
+    -v | --verbose)
+      verbose_="--pr-base--verbose"
+      shift
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        echo "Unknown argument $1"
-        _echo "$help_"
-        exit 1
-        ;;
+    *)
+      echo "Unknown argument $1"
+      _echo "$help_"
+      exit 1
+      ;;
     esac
   done
 
@@ -214,26 +214,26 @@ EOF
 
   while true; do
     case "$1" in
-      -h | --help)
-        _echo "$help_"
-        exit
-        ;;
+    -h | --help)
+      _echo "$help_"
+      exit
+      ;;
 
-      -c | --copy)
-        copy_="--funcname--verbose"
-        shift
-        ;;
+    -c | --copy)
+      copy_="--funcname--verbose"
+      shift
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        echo "Unknown argument $1"
-        _echo "$help_"
-        exit 1
-        ;;
+    *)
+      echo "Unknown argument $1"
+      _echo "$help_"
+      exit 1
+      ;;
     esac
   done
 
@@ -304,26 +304,26 @@ EOF
 
   while true; do
     case "$1" in
-      -h | --help)
-        _echo "$help_"
-        exit
-        ;;
+    -h | --help)
+      _echo "$help_"
+      exit
+      ;;
 
-      -c | --copy)
-        copy_="1"
-        shift
-        ;;
+    -c | --copy)
+      copy_="1"
+      shift
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        echo "Unknown argument $1"
-        _echo "$help_"
-        exit 1
-        ;;
+    *)
+      echo "Unknown argument $1"
+      _echo "$help_"
+      exit 1
+      ;;
     esac
   done
 
@@ -422,21 +422,21 @@ get_latest_github_release() {
 
   while true; do
     case "$1" in
-      --help | -h)
-        ___get_latest_github_release-help
-        return
-        ;;
+    --help | -h)
+      ___get_latest_github_release-help
+      return
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        Echo "Unknown option ${1}."
-        ___get_latest_github_release-help
-        return
-        ;;
+    *)
+      Echo "Unknown option ${1}."
+      ___get_latest_github_release-help
+      return
+      ;;
     esac
   done
 
@@ -544,22 +544,22 @@ help() {
   local opt_=""
   while getopts ':aip' opt_; do
     case "$opt_" in
-      a)
-        function_type_='all'
-        ;;
+    a)
+      function_type_='all'
+      ;;
 
-      i)
-        function_type_='internal'
-        ;;
+    i)
+      function_type_='internal'
+      ;;
 
-      p)
-        include_prefix_=1
-        ;;
+    p)
+      include_prefix_=1
+      ;;
 
-      *)
-        ___help_help
-        exit 1
-        ;;
+    *)
+      ___help_help
+      exit 1
+      ;;
     esac
   done
   shift $((OPTIND - 1))
