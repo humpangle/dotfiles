@@ -1,3 +1,4 @@
+vim = vim
 local utils = require("utils")
 local fugitive_utils = require("plugins.fugitive.utils")
 
