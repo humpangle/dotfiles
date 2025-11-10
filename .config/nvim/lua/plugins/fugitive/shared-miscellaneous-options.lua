@@ -198,15 +198,24 @@ for _, branch_name in ipairs({ "main", "master", "develop" }) do
   })
 end
 
-for _, register in ipairs({ "a", "+" }) do
+for _, register in ipairs({ "a", "+", "paste" }) do
   table.insert(m, {
     description = "Copy JIRA ticket from branch name to " .. register,
     action = function()
       local git_head = vim.fn.FugitiveHead()
       local jira_ticket_pattern = git_head:match("^[A-Z]+%-[0-9]+")
       if jira_ticket_pattern then
-        vim.fn.setreg(register, jira_ticket_pattern)
-        vim.notify("(Reg " .. register .. " ) ticket -> " .. jira_ticket_pattern)
+        if register == "paste" then
+          vim.api.nvim_put({ jira_ticket_pattern .. " " }, "c", true, true)
+          vim.notify("Pasted ticket -> " .. jira_ticket_pattern)
+          vim.schedule(function()
+            -- Enter insert mode
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("A", true, true, true), "n", true)
+          end)
+        else
+          vim.fn.setreg(register, jira_ticket_pattern)
+          vim.notify("(Reg " .. register .. " ) ticket -> " .. jira_ticket_pattern)
+        end
       else
         vim.notify("No JIRA ticket pattern found in branch: " .. git_head)
       end
