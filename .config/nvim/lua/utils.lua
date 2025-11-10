@@ -601,6 +601,18 @@ utils.split_direction = function(text)
   return SPLIT_DIRECTIONS[text] or "split"
 end
 
+utils.split_buffer_by_number = function(arg)
+  arg = tostring(arg)
+
+  if arg:match("1") then
+    vim.cmd("split")
+  elseif arg:match("2") then
+    vim.cmd("vsplit")
+  elseif arg:match("3") then
+    vim.cmd("tab split")
+  end
+end
+
 utils.write_to_out_file = function(opts)
   opts = vim.tbl_extend("keep", (opts or {}), {
     datetime = true,
