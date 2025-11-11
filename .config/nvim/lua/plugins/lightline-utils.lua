@@ -141,20 +141,14 @@ function _G.FilenameTab(tab_num)
 
   if filename == "" then
     return "[No Name]"
-  elseif
-    string.match(filename, "^fugitive:/")
-    and string.match(filename, "%.git.*//$")
-  then
+  elseif string.match(filename, "^fugitive:/") and string.match(filename, "%.git.*//$") then
     return "fgit" -- fugitive git
   elseif is_term(filename) then
-    return vim.fn.expand("#" .. buf_num .. ":t")
-      .. get_terminal_name_suffix(vim.b[buf_num].terminal_job_id)
+    return vim.fn.expand("#" .. buf_num .. ":t") .. get_terminal_name_suffix(vim.b[buf_num].terminal_job_id)
   end
 
   local file_name_tail = vim.fn.expand("#" .. buf_num .. ":t")
-  file_name_tail = (
-    is_log_file(file_name_tail) and (file_name_tail:sub(1, -5) .. ".l")
-  ) or file_name_tail
+  file_name_tail = (is_log_file(file_name_tail) and (file_name_tail:sub(1, -5) .. ".l")) or file_name_tail
   return file_name_tail .. tab_modified(tab_num)
 end
 
