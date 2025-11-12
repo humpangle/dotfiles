@@ -1,0 +1,317 @@
+#!/usr/bin/env bash
+# Rename a Git *linked* worktree and update its metadata.
+# Supports both in-place renames and moves across directories.
+
+set -Eeuo pipefail
+shopt -s nullglob
+
+_rename-git_worktree() {
+  set -e
+
+  # Check if help is requested
+  if [[ "${1:-}" == "-h" ]] || [[ "${1:-}" == "--help" ]]; then
+    ___rename-git_worktree_help
+    exit 0
+  fi
+
+  # Check if required arguments are provided
+  if [[ $# -lt 4 ]]; then
+    echo "Error: Missing required arguments." >&2
+    echo "Usage: rename-git-worktree -w <worktree_path> -n <new_name_or_path> [--dry-run]" >&2
+    echo "Use --help for more information." >&2
+    exit 1
+  fi
+
+  local dry_run=0
+  local worktree=
+  local new_id=
+
+  while (("$#")); do
+    case "$1" in
+    -w | --worktree)
+      worktree="${2:-}"
+      shift 2
+      ;;
+    -n | --new-name)
+      new_id="${2:-}"
+      shift 2
+      ;;
+    --dry-run)
+      dry_run=1
+      shift
+      ;;
+    -h | --help)
+      ___rename-git_worktree_help
+      exit 0
+      ;;
+    *)
+      echo "Unknown arg: $1" >&2
+      exit 1
+      ;;
+    esac
+  done
+
+  if [[ -z "${worktree}" || -z "${new_id}" ]]; then
+    echo "Missing required arguments." >&2
+    exit 1
+  fi
+
+  if ! worktree="$(realpath -- "${worktree}")"; then
+    echo "Failed to resolve worktree path" >&2
+    exit 1
+  fi
+
+  # Basic checks
+  [[ -d "${worktree}" ]] || {
+    echo "Worktree path does not exist: ${worktree}" >&2
+    exit 1
+  }
+  local worktree_dot_git="${worktree}/.git"
+  if [[ ! -f "${worktree_dot_git}" ]]; then
+    echo "Refusing: ${worktree_dot_git} is not a *file* (this looks like a main/non-linked worktree)." >&2
+    exit 1
+  fi
+
+  # Discover the actual metadata ID by parsing the worktree_dot_git (.git) file
+  # Format: "gitdir: /path/to/parent/.git/worktrees/<actual-id>"
+  local git_dir_line=""
+  git_dir_line="$(<"${worktree_dot_git}")"
+  if [[ ! "${git_dir_line}" =~ ^gitdir:[[:space:]]*(.*) ]]; then
+    echo "Failed to parse gitdir from ${worktree_dot_git}" >&2
+    exit 1
+  fi
+  local metadata_path="${BASH_REMATCH[1]}"
+  local old_id=""
+  old_id="$(basename -- "${metadata_path}")"
+
+  # Determine new worktree path: if new_id is absolute or contains '/', use as-is; otherwise same parent dir
+  local new_worktree=""
+  if [[ "${new_id}" == /* ]] || [[ "${new_id}" == */* ]]; then
+    # new_id is a path (absolute or relative with slashes)
+    if ! new_worktree="$(realpath -- "${new_id}")"; then
+      echo "Failed to resolve new worktree path" >&2
+      exit 1
+    fi
+  else
+    # new_id is just a basename - keep in same parent directory
+    local worktree_parent_dir=""
+    worktree_parent_dir="$(dirname -- "${worktree}")"
+    new_worktree="${worktree_parent_dir}/${new_id}"
+  fi
+
+  # Extract the new ID from the new worktree path
+  new_id="$(basename -- "${new_worktree}")"
+
+  if [[ -e "${new_worktree}" ]]; then
+    echo "Target filesystem path already exists: ${new_worktree}" >&2
+    exit 1
+  fi
+
+  # Discover parent repo from git common dir (works for linked worktrees)
+  local git_common_dir=""
+  git_common_dir="$(git -C "${worktree}" rev-parse --git-common-dir)"
+  # Normalize to absolute
+  if ! git_common_dir="$(realpath -- "${git_common_dir}")"; then
+    echo "Failed to resolve git common dir" >&2
+    exit 1
+  fi
+  local parent_repo=""
+  parent_repo="$(dirname -- "${git_common_dir}")"
+
+  local old_meta_dir="${parent_repo}/.git/worktrees/${old_id}"
+  local new_meta_dir="${parent_repo}/.git/worktrees/${new_id}"
+  local old_meta_git_dir_file="${old_meta_dir}/gitdir"
+
+  [[ -d "${old_meta_dir}" ]] || {
+    echo "Missing metadata dir: ${old_meta_dir}" >&2
+    exit 1
+  }
+  [[ -f "${old_meta_git_dir_file}" ]] || {
+    echo "Missing metadata gitdir file: ${old_meta_git_dir_file}" >&2
+    exit 1
+  }
+  if [[ -e "${new_meta_dir}" ]]; then
+    echo "Target metadata dir already exists: ${new_meta_dir}" >&2
+    exit 1
+  fi
+
+  # Read existing pointers (reuse git_dir_line from earlier)
+  local current_wt_git_dir_line="${git_dir_line}"
+  local current_meta_git_dir_target=""
+  current_meta_git_dir_target="$(<"${old_meta_git_dir_file}")"
+
+  local new_wt_git_dir_line="gitdir: ${new_meta_dir}"
+  local new_meta_git_dir_target="${new_worktree}/.git"
+
+  say() { printf '• %s\n' "$*"; }
+  doit() {
+    if ((dry_run)); then
+      printf '[dry-run] %s\n' "$*"
+    else
+      eval "$*"
+    fi
+  }
+
+  echo
+  say "Detected parent repo: ${parent_repo} (common dir: ${git_common_dir})"
+  say "Renaming worktree:"
+  say "  Filesystem: ${worktree} -> ${new_worktree}"
+  say "  Metadata:   ${old_meta_dir} -> ${new_meta_dir}"
+  echo
+
+  # 1) Deinit submodules in the old worktree (safe if none)
+  say "Deinitializing submodules in ${worktree} ..."
+  doit "git -C \"${worktree}\" submodule deinit -f --all || true"
+  echo
+
+  # 2) Update .git file inside the worktree to new metadata path
+  say "Updating ${worktree_dot_git} pointer:"
+  say "  '${current_wt_git_dir_line}' -> '${new_wt_git_dir_line}'"
+  if ((!dry_run)); then
+    printf '%s\n' "${new_wt_git_dir_line}" >"${worktree_dot_git}.tmp"
+    mv -f "${worktree_dot_git}.tmp" "${worktree_dot_git}"
+  else
+    printf '[dry-run] write to %s\n' "${worktree_dot_git}"
+  fi
+  echo
+
+  # 3) Move the filesystem directory (rename last segment only)
+  say "Renaming filesystem directory:"
+  doit "mv \"${worktree}\" \"${new_worktree}\""
+  echo
+
+  # 4) Update parent repo metadata gitdir pointer to the new worktree .git path
+  say "Updating ${old_meta_git_dir_file} pointer:"
+  say "  '${current_meta_git_dir_target}' -> '${new_meta_git_dir_target}'"
+  if ((!dry_run)); then
+    printf '%s\n' "${new_meta_git_dir_target}" >"${old_meta_git_dir_file}.tmp"
+    mv -f "${old_meta_git_dir_file}.tmp" "${old_meta_git_dir_file}"
+  else
+    printf '[dry-run] write to %s\n' "${old_meta_git_dir_file}"
+  fi
+  echo
+
+  # 5) Rename the metadata directory
+  say "Renaming metadata dir:"
+  doit "mv \"${old_meta_dir}\" \"${new_meta_dir}\""
+  echo
+
+  # 6) Reinitialize submodules in the new worktree
+  say "Reinitializing submodules in ${new_worktree} ..."
+  doit "git -C \"${new_worktree}\" submodule update --force --recursive || true"
+  echo
+
+  say "Done. Worktree '${old_id}' has been renamed to '${new_id}'."
+}
+
+___rename-git_worktree_help() {
+  read -r -d '' var <<'eof' || true
+# Rename Git Worktree
+
+Rename a Git *linked* worktree and update its metadata. Supports both in-place
+renames and moves across directories.
+
+## Usage
+
+```bash
+rename-git-worktree -w <full_worktree_path> -n <new_name_or_path> [--dry-run]
+```
+
+### Arguments
+
+- `-w, --worktree` (required): The full path to the worktree to rename
+- `-n, --new-name` (required): New name (for in-place rename) or full path (for move)
+- `--dry-run` (optional): Preview actions without making changes
+- `-h, --help`: Show this help message
+
+## Behavior
+
+- Discovers the parent repo via: `git -C <worktree> rev-parse --git-common-dir`
+- Discovers actual metadata ID by parsing `<worktree>/.git` file (does NOT assume it matches path basename)
+- If `-n` contains `/` or is absolute: treats as full target path (enables cross-directory moves)
+- If `-n` is simple name: renames in place (same parent directory), changing only last segment
+- Updates pointers:
+  - `<worktree>/.git` -> `gitdir: <parent>/.git/worktrees/<new_id>`
+  - `<parent>/.git/worktrees/<old_id>/gitdir` -> `<new_worktree>/.git`
+  - Renames metadata dir: `<old_id>` -> `<new_id>`
+
+## Examples
+
+### Rename in Same Directory (In-Place)
+
+```bash
+# Change last segment only
+rename-git-worktree \
+  -w /home/user/repos/project--worktrees/1-c \
+  -n 1
+```
+
+### Move to Different Directory (Absolute Path)
+
+```bash
+rename-git-worktree \
+  -w /home/user/repos/project--worktrees/feature-branch \
+  -n /home/user/other-location/my-feature
+```
+
+### Move to Different Directory (Relative Path)
+
+```bash
+rename-git-worktree \
+  -w /home/user/repos/project--worktrees/feature \
+  -n ../other-dir/feature
+```
+
+### Dry Run (Preview Changes)
+
+```bash
+rename-git-worktree \
+  -w /home/user/repos/worktrees/old-name \
+  -n new-name \
+  --dry-run
+```
+
+## What is a Linked Worktree?
+
+A **linked worktree** is a secondary working directory created with `git worktree add`.
+It has:
+- A `.git` file (not directory) containing a pointer to the metadata
+- Metadata stored in `<parent-repo>/.git/worktrees/<id>/`
+- Ability to work on different branches simultaneously
+
+This script only works with linked worktrees, not the main worktree.
+
+## Requirements
+
+- `bash` (with `realpath` command)
+- Git repository with linked worktrees
+- Appropriate filesystem permissions
+
+## Notes
+
+- This script targets *linked* worktrees where `<worktree>/.git` is a file
+- It refuses to operate on main worktrees (where `.git` is a directory)
+- Handles submodules by deinitializing before move and reinitializing after
+- Safely updates all Git metadata pointers to maintain repository integrity
+
+## Technical Details
+
+The script performs these steps in order:
+
+1. Deinitialize submodules in the old worktree location
+2. Update `.git` file inside the worktree to point to new metadata path
+3. Move the filesystem directory to new location
+4. Update parent repo metadata `gitdir` pointer to new worktree location
+5. Rename the metadata directory in parent repo
+6. Reinitialize submodules in the new worktree location
+
+This ensures all pointers remain consistent throughout the rename/move operation.
+eof
+
+  echo -e "${var}"
+}
+
+# Only execute if script is run directly (not sourced)
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  _rename-git_worktree "$@"
+fi

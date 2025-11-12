@@ -463,6 +463,13 @@ fetch-pending-pr-comments() {
   _fetch-pending-pr-comments "$@"
 }
 
+rename-worktree() {
+  # shellcheck source=/dev/null
+  source "$(dirname "$0")/../scripts-utils/rename-git-worktree"
+  : "___help___ ___rename-git_worktree_help"
+  _rename-git_worktree "$@"
+}
+
 # -----------------------------------------------------------------------------
 # HELP HELP HELP HELP
 # -----------------------------------------------------------------------------
