@@ -243,10 +243,7 @@ return {
       -- Find references(places where identifiers are used/referenced) for the word under your cursor.
       map_to_fzf_lua_or_telescope("grr", "lsp_references", "[G]oto [R]eferences")
 
-      -- Jump to the definition of the word under your cursor.
-      --  This is where a variable was first declared, or where a function is defined, etc.
-      --  To jump back, press <C-t>.
-      map_to_fzf_lua_or_telescope("gd", "lsp_definitions", "[G]oto [D]efinition")
+      map_key("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 
       -- Jump to the implementation of the word under your cursor.
       --  Useful when your language has ways of declaring types without an actual implementation.

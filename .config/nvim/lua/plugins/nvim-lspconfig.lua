@@ -9,8 +9,7 @@ end
 local utils = require("utils")
 local fzf_lua_lsp_options = require("plugins.lsp.fzf_lua_lsp_options")
 local yamlls_config = require("plugins.lsp-extras.yaml_lsp")
-local neoformat_extensions =
-  require("plugins.neoformat.neoformat-api").extensions
+local neoformat_extensions = require("plugins.neoformat.neoformat-api").extensions
 
 ---@param conditon string
 ---@param lsp string
@@ -141,10 +140,7 @@ return {
       --  opened that is associated with an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --  function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup(
-          "ebnis-lsp-attach",
-          { clear = true }
-        ),
+        group = vim.api.nvim_create_augroup("ebnis-lsp-attach", { clear = true }),
         callback = function(event)
           -- TODO:keymaps not working
           local map = function(keys, func, desc)
@@ -157,32 +153,26 @@ return {
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          map(
-            "<leader>D",
-            require("telescope.builtin").lsp_type_definitions,
-            "Type [D]efinition"
-          )
+          map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map(
-            "<leader>ca",
-            vim.lsp.buf.code_action,
-            "[C]ode [A]ction"
-          )
+          map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-          local client =
-            vim.lsp.get_client_by_id(event.data.client_id)
+          -- Jump to the definition of the word under your cursor.
+          --  To jump back, press <C-t>.
+          map("gd", function()
+            utils.split_buffer_by_number(vim.v.count)
+            vim.lsp.buf.definition()
+          end, "[d]efinition")
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
 
           -- Servers like pyright do not support formatting.
           if
             client
             and client:supports_method("textDocument/formatting")
-            and neoformat_extensions[vim.fn.fnamemodify(
-                event.file,
-                ":e"
-              )]
-              ~= 1
+            and neoformat_extensions[vim.fn.fnamemodify(event.file, ":e")] ~= 1
           then
             -- Format the code using builtin LSP code formatter
             map("<leader>fc", function()
@@ -206,17 +196,11 @@ return {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
 
-          if
-            client
-            and client.server_capabilities.documentHighlightProvider
-          then
-            vim.api.nvim_create_autocmd(
-              { "CursorHold", "CursorHoldI" },
-              {
-                buffer = event.buf,
-                callback = vim.lsp.buf.document_highlight,
-              }
-            )
+          if client and client.server_capabilities.documentHighlightProvider then
+            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+              buffer = event.buf,
+              callback = vim.lsp.buf.document_highlight,
+            })
 
             vim.api.nvim_create_autocmd({
               "CursorMoved",
@@ -240,8 +224,7 @@ return {
       -- Augment neovim LSP capabilities with those from blink.cmp.
       local blink_cmp_ok, blink_cmp = pcall(require, "blink.cmp")
       if blink_cmp_ok then
-        lsp_extended_capabilities =
-          blink_cmp.get_lsp_capabilities(lsp_capabilities)
+        lsp_extended_capabilities = blink_cmp.get_lsp_capabilities(lsp_capabilities)
       end
 
       -- Ensure the servers and tools below are installed
