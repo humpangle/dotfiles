@@ -10,8 +10,7 @@ end
 
 local plugin_enabled = require("plugins/plugin_enabled")
 
-local python_interpreter =
-  require("plugins/lsp-extras/lsp_utils").get_python_path()
+local python_interpreter = require("plugins/lsp-extras/lsp_utils").get_python_path()
 vim.g.python3_host_prog = python_interpreter
 
 -- Disable Python2 support
@@ -195,16 +194,8 @@ lightline.lua (our statusline plugin) to see how/where we display.
 vim.o.showcmd = true
 vim.o.showcmdloc = "statusline"
 
-local cwd_spellfile = vim.fn.getcwd()
-  .. "/"
-  .. ".---scratch"
-  .. "."
-  .. vim.o.spelllang
-  .. ".utf-8.add"
-local default_spellfile = vim.fn.stdpath("config")
-  .. "/spell/"
-  .. vim.o.spelllang
-  .. ".utf-8.add"
+local cwd_spellfile = vim.fn.getcwd() .. "/" .. ".---scratch" .. "." .. vim.o.spelllang .. ".utf-8.add"
+local default_spellfile = vim.fn.stdpath("config") .. "/spell/" .. vim.o.spelllang .. ".utf-8.add"
 
 vim.opt.spellfile = cwd_spellfile .. "," .. default_spellfile
 
@@ -231,8 +222,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
-local filetypes_group =
-  vim.api.nvim_create_augroup("filetypes", { clear = true })
+local filetypes_group = vim.api.nvim_create_augroup("filetypes", { clear = true })
 -- Change filetype based on patterns
 local patterns = {
   {
@@ -414,18 +404,8 @@ local function do_yank_highlighted(register)
 end
 
 -- Yank highlighted to system clipboard / register a
-utils.map_key(
-  "n",
-  "<localleader>yy",
-  do_yank_highlighted("+"),
-  { noremap = true }
-)
-utils.map_key(
-  "n",
-  "<localleader>cc",
-  do_yank_highlighted("a"),
-  { noremap = true }
-)
+utils.map_key("n", "<localleader>yy", do_yank_highlighted("+"), { noremap = true })
+utils.map_key("n", "<localleader>cc", do_yank_highlighted("a"), { noremap = true })
 
 -- Move between windows in a tab
 utils.map_key("n", "<Tab>", function()
@@ -438,12 +418,7 @@ end, { noremap = false })
 -- Tab operations
 utils.map_key("n", "<Leader>ts", "<cmd>tab split<cr>", { noremap = true })
 utils.map_key("n", "<localleader>tc", ":tabclose<CR>", { noremap = true })
-utils.map_key(
-  "n",
-  "<localleader>td",
-  ":execute 'bwipeout! '.join(tabpagebuflist())<CR>",
-  { noremap = true }
-)
+utils.map_key("n", "<localleader>td", ":execute 'bwipeout! '.join(tabpagebuflist())<CR>", { noremap = true })
 
 -- New buffer operations
 utils.map_key("n", "<localleader>bn", function()
@@ -508,19 +483,9 @@ utils.map_key(
   { noremap = true, desc = "Window vertical resize to opposite side." }
 )
 
-utils.map_key(
-  "n",
-  "<C-j>",
-  ":resize -2<CR>",
-  { noremap = true, desc = "Window resize to same side." }
-)
+utils.map_key("n", "<C-j>", ":resize -2<CR>", { noremap = true, desc = "Window resize to same side." })
 
-utils.map_key(
-  "n",
-  "<C-k>",
-  ":resize +2<CR>",
-  { noremap = true, desc = "Window resize to opposite side." }
-)
+utils.map_key("n", "<C-k>", ":resize +2<CR>", { noremap = true, desc = "Window resize to opposite side." })
 
 -- QuickFix and Location list:
 utils.map_key("n", "yol", ":lclose<CR>", { noremap = true })
@@ -530,12 +495,7 @@ utils.map_key("n", "yoq", ":cclose<CR>", { noremap = true })
 utils.map_key("n", "ff", ":e! %<CR>", { noremap = true })
 
 -- Create the new directory you're already working in:
-utils.map_key(
-  "n",
-  "<localleader>md",
-  ":!mkdir -p %:h<cr>:w %<CR>",
-  { noremap = true }
-)
+utils.map_key("n", "<localleader>md", ":!mkdir -p %:h<cr>:w %<CR>", { noremap = true })
 
 -- Edit .bashrc file:
 utils.map_key("n", "<localleader>.", function()
@@ -572,12 +532,7 @@ end, {
 utils.map_key("n", "<localleader>sc", ":so $MYVIMRC<CR>", { noremap = true })
 
 -- Source Lua file and then source init.vim:
-utils.map_key(
-  "n",
-  "<localleader>ss",
-  ":source %<CR>:so $MYVIMRC<CR>",
-  { noremap = true }
-)
+utils.map_key("n", "<localleader>ss", ":source %<CR>:so $MYVIMRC<CR>", { noremap = true })
 
 -- Check file in ShellCheck:
 utils.map_key("n", "<Leader>sc,", function()
@@ -613,15 +568,7 @@ local process_file_path_yanking = function(value_getter_directive, register)
     vim.fn.setreg('"', file_path)
     vim.fn.setreg(register, file_path)
 
-    vim.cmd.echo(
-      "'"
-        .. register
-        .. " -> "
-        .. value_getter_directive
-        .. " = "
-        .. file_path
-        .. "'"
-    )
+    vim.cmd.echo("'" .. register .. " -> " .. value_getter_directive .. " = " .. file_path .. "'")
   end
 end
 
@@ -762,12 +709,7 @@ utils.map_key("n", "<localleader>D", insert_current_datetime, {
   desc = "Insert datetime. Count 1 for timestamp.",
 })
 
-utils.map_key(
-  "i",
-  "<C-r><C-d>",
-  insert_current_datetime,
-  { noremap = true, silent = true, desc = "Insert datetime" }
-)
+utils.map_key("i", "<C-r><C-d>", insert_current_datetime, { noremap = true, silent = true, desc = "Insert datetime" })
 
 utils.map_key({ "n", "x" }, "<leader>WW", function()
   local count = vim.v.count
@@ -775,12 +717,7 @@ utils.map_key({ "n", "x" }, "<leader>WW", function()
   if count == 1 then
     vim.bo.readonly = false
     vim.bo.buftype = ""
-    utils.write_to_command_mode(
-      "saveas "
-        .. vim.fn.expand("%:r")
-        .. "---scratch."
-        .. vim.fn.expand("%:e")
-    )
+    utils.write_to_command_mode("saveas " .. vim.fn.expand("%:r") .. "---scratch." .. vim.fn.expand("%:e"))
     return
   end
 
