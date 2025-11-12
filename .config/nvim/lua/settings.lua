@@ -351,14 +351,14 @@ utils.map_key("n", "<Leader>ww", function()
   local count = vim.v.count
 
   if count == 0 then
-    vim.cmd("w")
+    vim.cmd("silent w")
   elseif count == 1 then
-    vim.cmd("w!")
+    vim.cmd("silent w!")
   else
-    vim.cmd("DeAnsify")
-    vim.cmd("w!")
+    vim.cmd("silent DeAnsify")
+    vim.cmd("silent w!")
   end
-end, { noremap = true })
+end, { noremap = true, silent = true })
 utils.map_key("n", "<Leader>wa", ":wa<CR>", { noremap = true })
 utils.map_key("n", "<Leader>wq", ":wq<CR>", { noremap = true })
 utils.map_key("n", "<Leader>w!", ":w!<CR>", { noremap = true })
