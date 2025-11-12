@@ -29,18 +29,8 @@ end
 ]]
 local map_to_fzf_lua_or_telescope = function(key, func_name, desc, may_be_telescope_func_name)
   map_key("n", key, function()
-    local count = vim.v.count
-    local string_count = "" .. count
-
-    -- If count contains 1/2/3, we split window
-    -- otherwise we exec in place.
-    if string_count:match("1") then
-      vim.cmd("split")
-    elseif string_count:match("2") then
-      vim.cmd("vsplit")
-    elseif string_count:match("3") then
-      vim.cmd("tab split")
-    end
+    local string_count = tostring(vim.v.count)
+    utils.split_buffer_by_number(string_count)
 
     -- If count matches no other string
     if string_count:match("^%d$") then
