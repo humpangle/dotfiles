@@ -347,7 +347,18 @@ utils.map_key("n", "<Leader>pp", "gqap", { noremap = true })
 utils.map_key("x", "<Leader>pp", "gq", { noremap = true })
 
 -- Save file
-utils.map_key("n", "<Leader>ww", ":w<CR>", { noremap = true })
+utils.map_key("n", "<Leader>ww", function()
+  local count = vim.v.count
+
+  if count == 0 then
+    vim.cmd("w")
+  elseif count == 1 then
+    vim.cmd("w!")
+  else
+    vim.cmd("DeAnsify")
+    vim.cmd("w!")
+  end
+end, { noremap = true })
 utils.map_key("n", "<Leader>wa", ":wa<CR>", { noremap = true })
 utils.map_key("n", "<Leader>wq", ":wq<CR>", { noremap = true })
 utils.map_key("n", "<Leader>w!", ":w!<CR>", { noremap = true })
