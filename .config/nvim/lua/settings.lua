@@ -420,7 +420,7 @@ utils.map_key("n", "<localleader>cc", do_yank_highlighted("a"), { noremap = true
 
 -- Move between windows in a tab
 utils.map_key("n", "<Tab>", function()
-  vim.cmd("Noice dismiss")
+  -- vim.cmd("Noice dismiss")
   vim.defer_fn(function()
     vim.cmd("wincmd w")
   end, 0)
