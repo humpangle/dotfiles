@@ -170,8 +170,6 @@ function M.delete_all_buffers(delete_flag, opts)
 
   for _, buf_num in ipairs(vim.api.nvim_list_bufs()) do
     local b_name = vim.fn.bufname(buf_num)
-    vim.print(b_name)
-
     if string.find(b_name, ".dbout", 1, true) then
       -- or string.match(b_name, "share/db_ui/")
       table.insert(dbui_buffers, buf_num)
