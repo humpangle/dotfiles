@@ -171,6 +171,7 @@ ___source_scripts() {
     _tmux
     _tailscale
     _gh
+    _record-screen.sh
   )
 
   local _elm
