@@ -252,11 +252,7 @@ function M.delete_all_buffers(delete_flag, opts)
   elseif delete_flag == "my-status" then
     wipeout_buffers(my_status_buffers)
   else
-    notify(
-      "Unknown delete FLAG " .. delete_flag,
-      opts,
-      vim.log.levels.ERROR
-    )
+    notify("Unknown delete FLAG " .. delete_flag, opts, vim.log.levels.ERROR)
     return
   end
 
@@ -294,10 +290,7 @@ local deletion_options = {
           delay_notify = true,
         })
       else
-        vim.notify(
-          "Not deleting ALL buffers - too destructive!",
-          vim.log.levels.WARN
-        )
+        vim.notify("Not deleting ALL buffers - too destructive!", vim.log.levels.WARN)
       end
     end,
     count = 2,
@@ -353,10 +346,7 @@ local deletion_options = {
           delay_notify = true,
         })
       else
-        vim.notify(
-          "Not deleting ALL buffers - too destructive!",
-          vim.log.levels.WARN
-        )
+        vim.notify("Not deleting ALL buffers - too destructive!", vim.log.levels.WARN)
       end
     end,
   },
