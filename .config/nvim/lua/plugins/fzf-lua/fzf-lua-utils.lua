@@ -81,4 +81,20 @@ M.git_worktree_rename = function(selected)
   end
 end
 
+-- Custom action to copy git worktree path to clipboard
+M.git_worktree_copy = function(selected)
+  local utils = require("fzf-lua.utils")
+
+  if #selected == 0 then
+    return
+  end
+
+  local worktree_path = selected[1]:match("^[^%s]+")
+
+  -- Copy path to system clipboard
+  vim.fn.setreg("+", worktree_path)
+  vim.print(worktree_path)
+  utils.info("Copied worktree path to clipboard: %s", worktree_path)
+end
+
 return M

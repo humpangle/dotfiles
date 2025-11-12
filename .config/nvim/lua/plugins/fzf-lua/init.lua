@@ -94,7 +94,7 @@ return {
       fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_actions.git_worktree_add] = { "Add" }
       fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_actions.git_worktree_del] = { "Del" }
       fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_utils.git_worktree_rename] = { "Rename" }
-
+      fzf_lua_core.ACTION_DEFINITIONS[fzf_lua_utils.git_worktree_copy] = { "Copy" }
 
       local opts = {}
 
@@ -137,6 +137,10 @@ return {
         },
         ["ctrl-r"] = {
           fn = fzf_lua_utils.git_worktree_rename,
+          reload = true,
+        },
+        ["ctrl-y"] = {
+          fn = fzf_lua_utils.git_worktree_copy,
           reload = true,
         },
       }
