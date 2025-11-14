@@ -750,7 +750,7 @@ vim.api.nvim_create_user_command("SortJson", function()
 end, { desc = "Sort Json Keys" })
 
 require("path-yanking")
-require("settings.diagnostics")
+require("settings.my-diagnostics")
 require("escapings")
 require("my-search-patterns")
 require("buffer-management").delete_buffers_keymap()
