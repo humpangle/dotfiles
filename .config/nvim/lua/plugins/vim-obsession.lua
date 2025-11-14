@@ -37,7 +37,11 @@ local pick_session_with_fzf = function()
           return
         end
         local session_file = selected[1]
-        vim.cmd("source " .. session_file)
+        -- We must use defer_fn otherwise we will get fzf-lua shell error and
+        -- error can not re-enter normal mode from terminal mode if the first buffer to enter is a terminal
+        vim.defer_fn(function()
+          vim.cmd("source " .. session_file)
+        end, 5)
       end,
     },
     fzf_opts = {
