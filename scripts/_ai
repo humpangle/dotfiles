@@ -340,7 +340,7 @@ _link_llm_commands() {
 
   for llm_name_ in claude cursor; do
     llm_name_=".$llm_name_"
-    local target_commands_="$cwd_/$llm_name_/commands"
+    local target_commands_="$cwd_/$llm_name_/commandsx"
 
     mkdir -p "$target_commands_"
 
@@ -439,7 +439,7 @@ llm_project_start() {
     echo "Created '.cursor/cli.json' from template."
   fi
 
-  #### Link dotfiles commands to project .llm_name/commands
+  #### Link dotfiles commands to project .llm_name/commandsx
   local source_commands_="$llm_templates_root_/commands"
   _link_llm_commands "$cwd_" "$source_commands_"
 
