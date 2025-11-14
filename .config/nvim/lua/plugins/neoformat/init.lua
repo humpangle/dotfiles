@@ -91,11 +91,7 @@ return {
     local lint_env_val = utils.get_os_env_or_nil("EBNIS_LINT_CMDS")
     if lint_env_val then
       vim.api.nvim_create_user_command("Lint", function()
-        local cmds = vim.split(
-          lint_env_val,
-          "::",
-          { trimempty = true, plain = true }
-        )
+        local cmds = vim.split(lint_env_val, "::", { trimempty = true, plain = true })
 
         local file = vim.fn.expand("%:p")
         local outputs = {}
@@ -126,19 +122,14 @@ return {
     utils.map_key("n", "<leader>NN", function()
       local count = vim.v.count
       if count == 1 then
-        local log_files =
-          utils.get_os_env_or_nil("EBNIS_TEST_LOG_FILES")
+        local log_files = utils.get_os_env_or_nil("EBNIS_TEST_LOG_FILES")
         if not log_files then
           return
         end
 
         vim.notify("Clearing test logs...")
 
-        local files = vim.split(
-          log_files,
-          "::",
-          { trimempty = true, plain = true }
-        )
+        local files = vim.split(log_files, "::", { trimempty = true, plain = true })
         local current_file = vim.fn.expand("%:p")
         local should_reload = false
         local cleared_files = {}
