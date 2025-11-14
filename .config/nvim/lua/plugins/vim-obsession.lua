@@ -15,9 +15,7 @@ end
 local session_name = session_utils.get_session_file()
 
 local start_session_file = function()
-  utils.write_to_command_mode(
-    "Obsession " .. session_name .. "-.vim" .. "<left><left><left><left>"
-  )
+  utils.write_to_command_mode("Obsession " .. session_name .. "-.vim" .. "<left><left><left><left>")
 end
 
 local pick_session_with_fzf = function()
@@ -25,10 +23,7 @@ local pick_session_with_fzf = function()
   local session_files, pattern = session_utils.get_all_session_files()
 
   if not session_files then
-    vim.notify(
-      "No session files found matching: " .. pattern,
-      vim.log.levels.WARN
-    )
+    vim.notify("No session files found matching: " .. pattern, vim.log.levels.WARN)
     return
   end
 
@@ -61,11 +56,7 @@ end
 return {
   "tpope/vim-obsession",
   init = function()
-    vim.api.nvim_create_user_command(
-      "SessionEbnis",
-      session_utils.get_session_path_relative,
-      {}
-    )
+    vim.api.nvim_create_user_command("SessionEbnis", session_utils.get_session_path_relative, {})
 
     map_key("n", "<leader>ob", function()
       if not file_session_vim_exists() then
@@ -81,18 +72,14 @@ return {
         start_session_file()
         return
       elseif count == 5 then
-        vim.notify(
-          "CURRENT SESSION: " .. session_utils.get_session_path_relative()
-        )
+        vim.notify("CURRENT SESSION: " .. session_utils.get_session_path_relative())
         return
       elseif count == 55 then
         local reg = "+"
         local session_path_relative = session_utils.get_session_path_relative()
         vim.fn.setreg(reg, session_path_relative)
         utils.clip_cmd_exec(session_path_relative)
-        vim.notify(
-          "CURRENT SESSION COPIED TO +: " .. session_path_relative
-        )
+        vim.notify("CURRENT SESSION COPIED TO +: " .. session_path_relative)
       end
     end, {
       desc = "Obsession */startFile 0/continue 1/startFile 5/list 55/copy",
