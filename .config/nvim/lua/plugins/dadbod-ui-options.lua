@@ -46,10 +46,7 @@ local dadbod_ui_options = {
         return
       end
 
-      local filename = utils.create_slime_dir()
-        .. "/q-"
-        .. os.date("%FT%H-%M-%S")
-        .. ".md"
+      local filename = utils.create_slime_dir() .. "/q-" .. os.date(utils.TIMESTAMP) .. ".md"
 
       pcall(function()
         vim.cmd("saveas! " .. vim.fn.fnameescape(filename))

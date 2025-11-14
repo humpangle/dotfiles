@@ -1,5 +1,7 @@
 local utils = {}
 
+utils.TIMESTAMP = "%Y%m%d-%H%M%S"
+
 function utils.ebnis_save_commit_buffer()
   local winnr = vim.api.nvim_win_get_number(0)
   if winnr ~= 1 then
@@ -403,11 +405,9 @@ utils.create_slime_dir = function(additional_directory_path)
   end
   local slime_dir_obj = PlenaryPath:new(slime_dir)
 
-  local timestamp = os.date("%FT%H-%M-%S")
-
   -- if there is a file (not directory) at this path, rename it so we can create a directory with same name below.
   if slime_dir_obj:is_file() then
-    os.rename(slime_dir, slime_dir .. "--" .. timestamp)
+    os.rename(slime_dir, slime_dir .. "--" .. os.date(utils.TIMESTAMP))
   end
 
   vim.fn.mkdir(slime_dir, "p")
@@ -626,7 +626,7 @@ utils.write_to_out_file = function(opts)
     .. "/"
     .. opts.prefix
     .. "-"
-    .. (opts.datetime and os.date("%Y%m%d-%H%M%S") or "")
+    .. (opts.datetime and os.date(utils.TIMESTAMP) or "")
     .. (opts.ext and ("." .. opts.ext) or "")
 
   if opts.just_create then
