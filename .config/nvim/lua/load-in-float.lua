@@ -78,6 +78,20 @@ for _, file in ipairs(files_fzf_options) do
     count = file.count,
   })
 
+  for split_direction, split_number in pairs({
+    ["SPLIT"] = 1,
+    ["VERTICAL SPLIT"] = 2,
+    ["TAB"] = 3,
+  }) do
+    table.insert(fzf_options, {
+      description = file.description .. " " .. split_direction,
+      action = function()
+        utils.split_buffer_by_number(split_number)
+        vim.cmd("e " .. file_path)
+      end,
+    })
+  end
+
   ::continue::
 end
 
