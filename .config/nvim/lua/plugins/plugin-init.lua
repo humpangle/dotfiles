@@ -401,7 +401,7 @@ local plugins_table = {
     ft = "kitty",
   },
 
-  -- require("plugins/noice-nvim"),
+  require("plugins/noice-nvim"),
   require("plugins/elixir"),
   require("plugins/ai"),
   require("plugins/ai/avante-nvim"),
