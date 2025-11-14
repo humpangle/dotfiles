@@ -2,8 +2,7 @@ local utils = require("utils")
 local map_key = utils.map_key
 
 local function format_diagnostic(diagnostic)
-  local bufname =
-    vim.fn.fnamemodify(vim.api.nvim_buf_get_name(diagnostic.bufnr), ":~:.")
+  local bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(diagnostic.bufnr), ":~:.")
 
   local line = diagnostic.lnum + 1 -- Convert to 1-based
   local end_line = diagnostic.end_lnum and (diagnostic.end_lnum + 1) or line
@@ -14,18 +13,9 @@ local function format_diagnostic(diagnostic)
   local message = diagnostic.message:gsub("\n", " <>")
 
   -- Format line range
-  local line_str = line == end_line and tostring(line)
-    or string.format("%d-%d", line, end_line)
+  local line_str = line == end_line and tostring(line) or string.format("%d-%d", line, end_line)
 
-  return string.format(
-    "%s:%s col %d:%d [%s] %s",
-    bufname,
-    line_str,
-    col,
-    end_col,
-    severity,
-    message
-  )
+  return string.format("%s:%s col %d:%d [%s] %s", bufname, line_str, col, end_col, severity, message)
 end
 
 -- Get formatted diagnostics from specified buffer(s)
@@ -58,13 +48,7 @@ local function copy_diagnostics_to_register(bufnr, register, severity)
   local scope = bufnr == 0 and "current buffer" or "all buffers"
   local severity_str = severity and (" [" .. vim.diagnostic.severity[severity] .. "]") or ""
   vim.notify(
-    string.format(
-      "%d%s diagnostics from %s to %s",
-      #messages,
-      severity_str,
-      scope,
-      "register '" .. register .. "'"
-    )
+    string.format("%d%s diagnostics from %s to %s", #messages, severity_str, scope, "register '" .. register .. "'")
   )
 end
 
@@ -190,8 +174,7 @@ local fzf_lua_diagnostic_options = {
   {
     description = "Debug: Print Current Config                                                                     99",
     action = function()
-      local config_opts_as_str =
-          vim.inspect(diagnostic_modes[current_mode_index].config)
+      local config_opts_as_str = vim.inspect(diagnostic_modes[current_mode_index].config)
       print(config_opts_as_str)
     end,
     count = 99,
@@ -205,6 +188,5 @@ map_key("n", "<leader>lsd", function()
   })
 end, {
   noremap = true,
-  desc =
-  "diagnostic 0/ 1/toggleVirtuals 11/linePopUp 5/listLoc 51/copyCurrentA 522/copyCurrentClip 52/copyAllA 533/copyAllClip 53/copyHintCurrentClip 62/copyHintCurrentA 622/copyHintAllClip 63/copyHintAllA 633/99/debug",
+  desc = "diagnostic 0/ 1/toggleVirtuals 11/linePopUp 5/listLoc 51/copyCurrentA 522/copyCurrentClip 52/copyAllA 533/copyAllClip 53/copyHintCurrentClip 62/copyHintCurrentA 622/copyHintAllClip 63/copyHintAllA 633/99/debug",
 })
