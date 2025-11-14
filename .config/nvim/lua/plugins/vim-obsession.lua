@@ -14,7 +14,7 @@ end
 
 local session_name = session_utils.get_session_file()
 
-local start_session_file = function()
+local make_session_file = function()
   utils.write_to_command_mode("Obsession " .. session_name .. "-.vim" .. "<left><left><left><left>")
 end
 
@@ -60,7 +60,7 @@ return {
 
     map_key("n", "<leader>ob", function()
       if not file_session_vim_exists() then
-        start_session_file()
+        make_session_file()
         return
       end
 
@@ -69,7 +69,7 @@ return {
       if count == 0 then
         pick_session_with_fzf()
       elseif count == 1 then
-        start_session_file()
+        make_session_file()
         return
       elseif count == 5 then
         vim.notify("CURRENT SESSION: " .. session_utils.get_session_path_relative())
