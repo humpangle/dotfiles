@@ -41,16 +41,8 @@ local pick_session_with_fzf = function()
         if not selected or #selected == 0 then
           return
         end
-
         local session_file = selected[1]
-
-        vim.defer_fn(function()
-          vim.cmd("source " .. session_file)
-          vim.notify(
-            "Loaded session: " .. session_file,
-            vim.log.levels.INFO
-          )
-        end, 5)
+        vim.cmd("source " .. session_file)
       end,
     },
     fzf_opts = {
