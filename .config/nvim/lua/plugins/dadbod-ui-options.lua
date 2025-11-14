@@ -33,12 +33,7 @@ local dadbod_ui_options = {
         vim.cmd.normal({ "vip" })
       end
 
-      local keys = vim.api.nvim_replace_termcodes(
-        "<Plug>(DBUI_ExecuteQuery)",
-        true,
-        true,
-        true
-      )
+      local keys = vim.api.nvim_replace_termcodes("<Plug>(DBUI_ExecuteQuery)", true, true, true)
       vim.api.nvim_feedkeys(keys, "x", false)
     end,
     count = 3,
