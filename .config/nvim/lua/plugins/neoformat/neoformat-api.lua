@@ -21,7 +21,7 @@ m.do_format = function()
     vim.g.neoformat_verbose = 1
   end
 
-  vim.cmd("Neoformat")
+  vim.cmd("silent Neoformat")
   -- Neoformat converts spaces to tabs - we retab to force spaces
   vim.cmd({ cmd = "retab", bang = true })
   -- Neoformat marks the buffer as dirty - save the buffer
