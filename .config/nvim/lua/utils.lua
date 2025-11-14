@@ -395,7 +395,7 @@ utils.handle_cant_re_enter_normal_mode_from_terminal_mode = function(callback, o
   end
 end
 
----@param additional_directory_path string
+---@param additional_directory_path string|nil
 ---@return string
 utils.create_slime_dir = function(additional_directory_path)
   local PlenaryPath = require("plenary.path")
