@@ -109,6 +109,7 @@ tags*
 **/.cursor
 **/CLAUDE.local.md
 **/AGENTS.md
+**/GEMINI.md
 
 # mypy:
 .mypy_cache/
