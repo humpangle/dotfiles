@@ -105,7 +105,9 @@ if _is_linux; then
     __shell_path='/data/data/com.termux/files/usr/bin/bash'
   else
     __shell_path='/usr/bin/bash'
+    google_chrome_bin=""
     google_chrome_bin="$(which google-chrome)"
+    export google_chrome_bin
   fi
 elif _is_darwin; then
   # Cnfigure shell prompt
