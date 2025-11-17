@@ -62,7 +62,9 @@ local dadbod_ui_options = {
       os.execute("rm -rf " .. vim.fn.shellescape(buffer_name))
       vim.cmd("bdelete! " .. buffer_name)
       vim.cmd({ cmd = "wa", bang = true })
-      require("buffer-management").delete_all_buffers("dbui")
+      require("buffer-management").delete_all_buffers("dbui", {
+        silent = true,
+      })
 
       -- dbui file is always readonly -  make it modifiable
       vim.bo.modifiable = true
@@ -85,7 +87,9 @@ local dadbod_ui_options = {
     description = "Write all and delete all DBUI buffers                                                             2",
     action = function()
       vim.cmd({ cmd = "wa", bang = true })
-      require("buffer-management").delete_all_buffers("dbui")
+      require("buffer-management").delete_all_buffers("dbui", {
+        silent = true,
+      })
     end,
     count = 2,
   },

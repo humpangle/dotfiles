@@ -126,6 +126,11 @@ end
 
 local function notify(message, opts, level)
   opts = opts or {}
+
+  if opts.silent then
+    return
+  end
+
   level = level or vim.log.levels.INFO
 
   if opts.delay_notify then
