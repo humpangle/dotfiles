@@ -159,6 +159,13 @@ return {
           -- or a suggestion from your LSP for this to activate.
           map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
+          -- Jump to the definition of the word under your cursor.
+          --  To jump back, press <C-t>.
+          map("gd", function()
+            utils.split_buffer_by_number(vim.v.count)
+            vim.lsp.buf.definition() -- TODO: open in fzf_lua
+          end, "[d]efinition")
+
           local client = vim.lsp.get_client_by_id(event.data.client_id)
 
           -- Servers like pyright do not support formatting.
