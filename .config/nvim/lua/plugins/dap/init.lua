@@ -28,23 +28,14 @@ end
 ---@param items table
 ---@param seen_breakpoints table
 ---@param relative_path? string
-local function format_breakpoints_for_fzf_lua(
-  breakpoints,
-  items,
-  seen_breakpoints,
-  relative_path
-)
+local function format_breakpoints_for_fzf_lua(breakpoints, items, seen_breakpoints, relative_path)
   for buf_nr, bp_list in pairs(breakpoints) do
-    relative_path = relative_path
-      or utils.strip_cwd(vim.api.nvim_buf_get_name(buf_nr))
+    relative_path = relative_path or utils.strip_cwd(vim.api.nvim_buf_get_name(buf_nr))
     for _, bp in ipairs(bp_list) do
       local key = relative_path .. bp.line
       if not seen_breakpoints[key] then
         seen_breakpoints[key] = true
-        table.insert(
-          items,
-          string.format("%s:%d:1", relative_path, bp.line)
-        )
+        table.insert(items, string.format("%s:%d:1", relative_path, bp.line))
       end
     end
   end
@@ -64,9 +55,8 @@ local list_breakpoints_in_fzf_lua = function()
   -- Format breakpoints from dap-helper JSON file
   local ok, dap_helper_internals = pcall(require, "dap-helper.internals")
   if ok then
-    local json_data = dap_helper_internals.load_data_from_json_file(
-      dap_helper_internals.compute_json_filename_for_cwd()
-    )
+    local json_data =
+      dap_helper_internals.load_data_from_json_file(dap_helper_internals.compute_json_filename_for_cwd())
 
     for relative_path, file_data in pairs(json_data) do
       breakpoints = file_data.breakpoints
@@ -83,12 +73,7 @@ local list_breakpoints_in_fzf_lua = function()
           [relative_path] = file_data.breakpoints,
         }
 
-        format_breakpoints_for_fzf_lua(
-          breakpoints,
-          items,
-          seen_breakpoints,
-          relative_path
-        )
+        format_breakpoints_for_fzf_lua(breakpoints, items, seen_breakpoints, relative_path)
       end
     end
   end
@@ -149,8 +134,7 @@ local function goto_breakpoint(dir, current_buffer_only)
 
   local nextPoint
   for i = 1, #points do
-    local isAtBreakpointI = points[i].bufnr == current.bufnr
-      and points[i].line == current.line
+    local isAtBreakpointI = points[i].bufnr == current.bufnr and points[i].line == current.line
     if isAtBreakpointI then
       local nextIdx = dir == "next" and i + 1 or i - 1
       if nextIdx > #points then
@@ -314,9 +298,7 @@ return {
           vim.defer_fn(function()
             session.config.terminateDebugee = false
             dap.restart(session.config)
-            defer_notify(
-              "Restarting Session for " .. session_adapter_name
-            )
+            defer_notify("Restarting Session for " .. session_adapter_name)
           end, 100)
           return
         end
@@ -331,11 +313,7 @@ return {
           if not session.parent then
             disconnected_str = " [DISCONNECTED]"
           end
-          vim.notify(
-            "Session running: "
-              .. session_adapter_name
-              .. disconnected_str
-          )
+          vim.notify("Session running: " .. session_adapter_name .. disconnected_str)
         else
           vim.notify("No session running")
         end
@@ -357,10 +335,7 @@ return {
             return
           end
 
-          table.insert(
-            items,
-            string.format("%d. %s", i, action.description)
-          )
+          table.insert(items, string.format("%d. %s", i, action.description))
         end
 
         -- utils.set_fzf_lua_nvim_listen_address()
@@ -407,8 +382,7 @@ return {
           vim.cmd("normal! vgny")
           lines = vim.fn.getreg('"')
         else
-          local lines_table =
-            vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
+          local lines_table = vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
           lines = table.concat(lines_table, "\n")
         end
 
@@ -435,9 +409,7 @@ return {
           local session_adapter_name = ""
 
           if session then
-            session_adapter_name = ": "
-              .. session.config.type
-              .. " running"
+            session_adapter_name = ": " .. session.config.type .. " running"
           end
 
           dapui.toggle()
@@ -572,8 +544,7 @@ return {
         "mfussenegger/nvim-dap-python",
         ft = "python",
         config = function()
-          local python_bin =
-            require("plugins/lsp-extras/lsp_utils").get_python_path()
+          local python_bin = require("plugins/lsp-extras/lsp_utils").get_python_path()
 
           require("dap-python").setup(python_bin)
         end,
@@ -656,11 +627,7 @@ return {
         end,
       })
 
-      vim.api.nvim_create_user_command(
-        "DAPListBreakpoints",
-        list_breakpoints_in_fzf_lua,
-        { nargs = "*" }
-      )
+      vim.api.nvim_create_user_command("DAPListBreakpoints", list_breakpoints_in_fzf_lua, { nargs = "*" })
 
       -- ADAPTERS --
       -- https://github.com/mfussenegger/nvim-dap-python
