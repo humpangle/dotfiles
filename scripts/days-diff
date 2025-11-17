@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Usage: ./days_diff.sh "2026-03-10" "2025-11-16"
+# Output: 479
+
+set -euo pipefail
+
+if [[ $# -ne 2 ]]; then
+  echo "Usage: $0 <date1> <date2>"
+  echo "Example:"
+  echo "  $0 \"2026-03-10\" \"2025-11-16\""
+  exit 1
+fi
+
+d1="$1"
+d2="$2"
+
+# Convert to Unix timestamps (seconds since epoch)
+ts1=$(date -d "$d1" +%s)
+ts2=$(date -d "$d2" +%s)
+
+# Compute absolute diff in seconds
+diff_seconds=$(( ts1 - ts2 ))
+# abs()
+if (( diff_seconds < 0 )); then
+  diff_seconds=$(( -diff_seconds ))
+fi
+
+# Convert seconds to days
+days=$(( diff_seconds / 86400 ))
+
+echo "$days"
