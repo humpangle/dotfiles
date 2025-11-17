@@ -7,6 +7,7 @@ end
 
 local utils = require("utils")
 local map_lazy_key = utils.map_lazy_key
+local load_in_float_api = require("load-in-float-api")
 
 local function defer_notify(message)
   vim.defer_fn(function()
@@ -239,6 +240,30 @@ local function make_breakpoint_actions(dap)
         list_breakpoints_in_fzf_lua()
       end,
       count = 5,
+    },
+    {
+      description = "Google Chrome Debug Copy",
+      handler = function()
+        local lines = {
+          (utils.get_os_env_or_nil("google_chrome_bin") or "google-chrome") .. " \\",
+          "--remote-debugging-port=9222 \\",
+          "--user-data-dir=/tmp/chrome-nvim-dap-debug \\",
+          "&>/dev/null \\",
+          "&",
+        }
+        local filepath = utils.write_to_out_file({
+          prefix = "nvim-dap-chrome-debug",
+          ext = "log",
+          just_create = true,
+        })
+        vim.fn.writefile(lines, filepath)
+        load_in_float_api.load_in_float(filepath, {
+          check_autocmd = true,
+          width = 0.4,
+          height = 0.2,
+          border = "rounded",
+        })
+      end,
     },
   }
 end
