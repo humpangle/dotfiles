@@ -423,8 +423,16 @@ return {
           return
         end
 
-        require("dap").terminate()
-        defer_notify("Terminated")
+        if count == 2 then
+          local answer = vim.fn.input("THIS MAY BRING DOWN THE PROCESS SERVING YOUR CODE (YES/No): ")
+          if string.upper(answer) == "YES" then
+            require("dap").terminate()
+            defer_notify("Terminated")
+          else
+            defer_notify("Good Choice - You don't want to bring down the process serving your code!")
+          end
+          return
+        end
       end, {
         desc = "0/UiToggle 1/Disconnect 2/Terminate",
       }),
