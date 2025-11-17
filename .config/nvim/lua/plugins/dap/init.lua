@@ -10,7 +10,7 @@ local map_lazy_key = utils.map_lazy_key
 
 local function defer_notify(message)
   vim.defer_fn(function()
-    vim.notify("[DAP]: " .. message)
+    vim.notify("[DEBUG]: " .. message)
   end, 5)
 end
 
