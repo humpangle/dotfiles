@@ -469,6 +469,13 @@ return {
       end, {
         desc = "DAP: step_back",
       }),
+
+      map_lazy_key("<leader>da5", function()
+        require("dap").continue()
+        defer_notify("CONTINUE")
+      end, {
+        desc = "DAP: continue",
+      }),
     },
     dependencies = {
       {
