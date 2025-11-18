@@ -9,6 +9,7 @@ return {
   },
   keys = {
     utils.map_lazy_key("<Leader>vi", function()
+      vim.o.background = "dark"
       local count = vim.v.count
       utils.handle_cant_re_enter_normal_mode_from_terminal_mode(function()
         if count == 0 then
