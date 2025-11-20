@@ -274,12 +274,10 @@ return {
       )
       -- /END/ servers variable
 
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
-
       require("mason-tool-installer").setup({
-        ensure_installed = ensure_installed,
+        -- You can add other tools to the table that you want Mason to install for you, so that they are available
+        -- from within Neovim.
+        ensure_installed = vim.tbl_keys(servers or {}),
       })
 
       ---@diagnostic disable-next-line: missing-fields

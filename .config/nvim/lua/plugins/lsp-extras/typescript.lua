@@ -1,31 +1,17 @@
-local plugin_enabled = require("plugins/plugin_enabled")
-
-if not plugin_enabled.typescript_lsp() then
-  return {}
-end
-
 local utils = require("utils")
 
 local get_vue_typescript_plugin_path = function()
   local mason_registry = require("mason-registry")
 
   if not mason_registry.has_package("vue-language-server") then
-    vim.notify(
-      "[LSP] vue-language-server not installed in Mason",
-      vim.log.levels.WARN
-    )
+    vim.notify("[LSP] vue-language-server not installed in Mason", vim.log.levels.WARN)
     return ""
   end
 
-  local path = utils.mason_install_path
-    .. "/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin"
+  local path = utils.mason_install_path .. "/vue-language-server/node_modules/@vue/language-server"
 
   if vim.fn.glob(path) == "" then
-    vim.notify(
-      "[LSP] vue typescript plugin not installed in Mason. Does not exist "
-        .. path,
-      vim.log.levels.WARN
-    )
+    vim.notify("[LSP] vue typescript plugin not installed in Mason. Does not exist " .. path, vim.log.levels.WARN)
     return ""
   end
 
@@ -49,30 +35,20 @@ local config = {
       --]]
 
   -- If you want nvim-lspconfig managed tsserver:
-  -- ts_ls = {}, -- see below for actual configuration
+  -- ts_ls = {}, -- but vtsls claims it's better
 
-  --[[
-    NOTE: ts_ls with vue plugin alone seems to work for vue files, but `:FzfLua lsp_document_symbols` does not seem to work
-
-    vue_ls = { -- mason: vue-language-server
-      -- Hybrid mode setting (only manages vue's html and css). ts_ls will manage typescript/javascript.
-      -- filetypes = {
-      --   "vue",
-      -- },
-    },
-  ]]
-
-  ts_ls = { -- mason: typescript-language-server
-    init_options = {
-      plugins = {
-        {
-          name = "@vue/typescript-plugin",
-          -- *IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `volar `are of identical versions.
-          location = get_vue_typescript_plugin_path(),
-          languages = { -- ts_ls will manage typescript/javascript sections of vue file in volar hybrid mode
-            "vue",
-            "typescript",
-            "javascript",
+  vue_ls = {},
+  vtsls = {
+    settings = {
+      vtsls = {
+        tsserver = {
+          globalPlugins = {
+            {
+              name = "@vue/typescript-plugin",
+              location = get_vue_typescript_plugin_path(),
+              languages = { "vue" },
+              configNamespace = "typescript",
+            },
           },
         },
       },
@@ -82,7 +58,7 @@ local config = {
       "javascript",
       "javascriptreact",
       "typescriptreact",
-      "vue", -- volar hybrid mode
+      "vue",
     },
   },
 }
