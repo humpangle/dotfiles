@@ -90,9 +90,9 @@ return {
 
       opts.winopts = {
         fullscreen = true,
-        preview = {
-          hidden = "hidden", -- Start with preview hidden, toggle with ?
-        },
+        -- preview = {
+        --   hidden = "hidden", -- Start with preview hidden, toggle with ?
+        -- },
       }
 
       opts.git = {}

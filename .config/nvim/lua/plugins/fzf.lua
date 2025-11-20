@@ -81,7 +81,7 @@ vim.api.nvim_create_user_command("RgNf", function(opts)
       "--preview-window=right,60%,border-left,wrap,follow",
       "--bind=?:toggle-preview,alt-j:preview-down,alt-k:preview-up,alt-h:half-page-up,alt-l:half-page-down",
     }, " "),
-  }, "right:60%:hidden") -- start hidden; press ? to toggle
+  }, "right:60%") -- start hidden; press ? to toggle
 
   vim.fn["fzf#vim#grep"](cmd, 1, spec, opts.bang and 1 or 0)
 end, { bang = true, nargs = "*" })
