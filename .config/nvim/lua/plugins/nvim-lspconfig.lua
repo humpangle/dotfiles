@@ -1,3 +1,5 @@
+vim = vim
+
 -- NATIVE NEOVIM LSP
 
 local plugin_enabled = require("plugins/plugin_enabled")
