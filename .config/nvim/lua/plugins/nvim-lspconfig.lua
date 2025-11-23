@@ -298,6 +298,7 @@ return {
 
       vim.lsp.enable(to_enable)
       vscode_settings_loader[2]()
+      require("plugins.lsp.pytest-language-server")
     end,
   },
 
