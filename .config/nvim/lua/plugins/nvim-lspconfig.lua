@@ -10,6 +10,7 @@ local utils = require("utils")
 local fzf_lua_lsp_options = require("plugins.lsp.fzf_lua_lsp_options")
 local yamlls_config = require("plugins.lsp-extras.yaml_lsp")
 local neoformat_extensions = require("plugins.neoformat.neoformat-api").extensions
+local vscode_settings_loader = require("plugins.lsp-extras.vscode-settings-loader")["codesettings.nvim"]
 
 ---@param conditon string
 ---@param lsp string
@@ -42,28 +43,7 @@ end
 ]]
 
 return {
-  {
-    --[[
-        configure Neovim using JSON files (can have comments)
-        for settings to put in json file, check:
-        https://github.com/fannheyward/coc-pyright
-        https://raw.githubusercontent.com/microsoft/pyright/master/packages/vscode-pyright/package.json
-
-        Create at the root of project .neoconf.json (invoke :Neoconf local) and put (for example):
-        {
-          "lspconfig": {
-            "pyright": {
-              "python.analysis.diagnosticSeverityOverrides": {
-                "reportUnusedVariable": "none"
-              },
-              "python.analysis.typeCheckingMode": "off"
-            }
-          }
-        }
-    ]]
-
-    "folke/neoconf.nvim",
-  },
+  vscode_settings_loader[1],
   {
     -- Automatically install LSPs and related tools to stdpath for Neovim
     "williamboman/mason.nvim",
@@ -121,12 +101,6 @@ return {
       yamlls_config.yaml_companion_plugin_init(),
     },
     config = function()
-      -- It's important that you set up neoconf.nvim BEFORE nvim-lspconfig.
-      -- https://github.com/folke/neoconf.nvim?tab=readme-ov-file#-setup
-      require("neoconf").setup({
-        -- override any of the default settings here
-      })
-
       utils.map_key("n", "<leader>ls0", function()
         utils.create_fzf_key_maps(fzf_lua_lsp_options, {
           prompt = "LSP/Context",
@@ -211,7 +185,6 @@ return {
       --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
       local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-
       local lsp_extended_capabilities = lsp_capabilities
 
       -- Augment neovim LSP capabilities with those from blink.cmp.
@@ -308,7 +281,6 @@ return {
       }
 
       local to_enable = {}
-
       for server_name, server in pairs(servers) do
         server.capabilities = vim.tbl_deep_extend(
           "force",
@@ -325,6 +297,7 @@ return {
       end
 
       vim.lsp.enable(to_enable)
+      vscode_settings_loader[2]()
     end,
   },
 
