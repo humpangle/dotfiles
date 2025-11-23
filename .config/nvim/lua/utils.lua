@@ -604,11 +604,11 @@ end
 utils.split_buffer_by_number = function(arg)
   arg = tostring(arg)
 
-  if arg:match("1") then
+  if vim.endswith(arg, "1") then
     vim.cmd("split")
-  elseif arg:match("2") then
+  elseif vim.endswith(arg, "2") then
     vim.cmd("vsplit")
-  elseif arg:match("3") then
+  elseif vim.endswith(arg, "3") then
     vim.cmd("tab split")
   end
 end
