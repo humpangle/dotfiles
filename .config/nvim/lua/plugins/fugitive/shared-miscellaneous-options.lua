@@ -199,6 +199,11 @@ for _, branch_name in ipairs({ "main", "master", "develop" }) do
 end
 
 for _, register in ipairs({ "a", "+", "paste" }) do
+  local count = nil
+  if register == "paste" then
+    count = 7
+  end
+
   table.insert(m, {
     description = "Copy JIRA ticket from branch name to " .. register,
     action = function()
@@ -220,6 +225,7 @@ for _, register in ipairs({ "a", "+", "paste" }) do
         vim.notify("No JIRA ticket pattern found in branch: " .. git_head)
       end
     end,
+    count = count,
   })
 end
 
