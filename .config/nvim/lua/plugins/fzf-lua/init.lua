@@ -243,12 +243,6 @@ return {
       -- Find references(places where identifiers are used/referenced) for the word under your cursor.
       map_to_fzf_lua_or_telescope("grr", "lsp_references", "[G]oto [R]eferences")
 
-      -- THIS IS NOT WORKING - complains of not reading symbols most times
-      -- Jump to the definition of the word under your cursor.
-      --  This is where a variable was first declared, or where a function is defined, etc.
-      --  To jump back, press <C-t>.
-      -- map_to_fzf_lua_or_telescope("gd", "lsp_definitions", "[G]oto [D]efinition")
-
       --  To jump back, press <C-t>.
       map_key("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 
@@ -263,6 +257,22 @@ return {
         "[W]orkspace [S]ymbols",
         "lsp_dynamic_workspace_symbols"
       )
+
+      -- Jump to the definition of the word under your cursor.
+      -- THE fzf-lua mode MAY NOT WORK sometimes - complains of not reading symbols most times
+      --    To jump back, press <C-t>.
+      map_key("n", "gd", function()
+        local count = vim.v.count
+        if count >= 50 then
+          utils.split_buffer_by_number(count)
+          vim.lsp.buf.definition()
+        else
+          utils.split_buffer_by_number(count)
+          require("fzf-lua").lsp_definitions()
+        end
+      end, {
+        desc = "[G]oto [D]efinition",
+      })
     end,
   },
 }
