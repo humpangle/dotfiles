@@ -1,3 +1,4 @@
+vim = vim
 local utils = {}
 
 utils.TIMESTAMP = "%Y%m%d-%H%M%S"
