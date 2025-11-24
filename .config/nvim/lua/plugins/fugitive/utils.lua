@@ -15,13 +15,8 @@ function M.open_commit_under_cursor(split_cmd)
 end
 
 function M.get_git_commit(tree_ish)
-  local git_tree_ish_head_list = vim.fn.systemlist(
-    "( cd "
-      .. vim.fn.getcwd(0)
-      .. " &&  git rev-parse "
-      .. tree_ish
-      .. " --short )"
-  )
+  local git_tree_ish_head_list =
+    vim.fn.systemlist("( cd " .. vim.fn.getcwd(0) .. " &&  git rev-parse " .. tree_ish .. " --short )")
 
   if #git_tree_ish_head_list == 1 then
     return git_tree_ish_head_list[1]
