@@ -747,6 +747,19 @@
     ],
     "description": "Log to console with some debug info"
   },
+  "Print to console >>>>>": {
+    "prefix": [
+      "print_to_console >>>",
+      "log_to_console >>>"
+    ],
+    "body": [
+      "console.log(`$RELATIVE_FILEPATH:$TM_LINE_NUMBER`)",
+      "console.log('$1 $2 >>>>>>>>', ${1:code})$0"
+    ],
+    "description": [
+      "Print to console >>>>>"
+    ]
+  },
   "Print to console error": {
     "prefix": [
       "console_error_log",
