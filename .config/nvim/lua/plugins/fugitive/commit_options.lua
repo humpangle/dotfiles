@@ -6,9 +6,7 @@ local tab_split = function()
 end
 
 local get_git_current_branch = function()
-  local git_tree_ish_head_list = vim.fn.systemlist(
-    "( cd " .. vim.fn.getcwd(0) .. " &&  git branch --show-current)"
-  )
+  local git_tree_ish_head_list = vim.fn.systemlist("( cd " .. vim.fn.getcwd(0) .. " &&  git branch --show-current)")
 
   if #git_tree_ish_head_list == 1 then
     return git_tree_ish_head_list[1]
@@ -132,9 +130,7 @@ local m = {
   {
     description = "Git get commit cursor <cWORD>",
     action = function()
-      utils.write_to_command_mode(
-        "Git rev-parse " .. vim.fn.expand("<cWORD>")
-      )
+      utils.write_to_command_mode("Git rev-parse " .. vim.fn.expand("<cWORD>"))
     end,
   },
 }
