@@ -100,7 +100,7 @@
     "--profile",
     "black"
   ],
-  "python.defaultInterpreterPath": "/Users/kanmii/.asdf/shims/python",
+  // "python.defaultInterpreterPath": "/Users/kanmii/.asdf/shims/python",
   "python.analysis.autoImportCompletions": true,
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
@@ -124,8 +124,10 @@
   "cSpell.userWords": [
     "callmiy",
     "neovim",
+    "raynigon",
     "resolv",
     "stenote",
+    "thinkvision",
     "wavfile"
   ],
   "gopls": {
@@ -296,4 +298,6 @@
   ],
   // "workbench.activityBar.location": "hidden",
   // "window.menuBarVisibility": "compact"
+  "python.analysis.typeCheckingMode": "standard",
+  "codestream.serverUrl": "https://codestream-api-v2-us1.service.newrelic.com"
 }
