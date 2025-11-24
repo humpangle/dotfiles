@@ -49,12 +49,13 @@
   ],
   "vscode-neovim.neovimExecutablePaths.linux": "nvim",
   // "vscode-neovim.neovimExecutablePaths.darwin": "nvim",
-  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
-  // "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
+  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim-vscode/init.lua",
+  // "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim-vscode/init.lua",
   "vscode-neovim.logLevel": "debug", // Not MacOs?
   "vscode-neovim.revealCursorScrollLine": true,
   "vscode-neovim.logOutputToConsole": true,
   "vscode-neovim.logPath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\kanmii\\dotfiles\\.___scratch-vscode-neovim.log",
+  // "vscode-neovim.logPath": "~/dotfiles/.___scratch-vscode-neovim.log",
   // "vscode-neovim.neovimClean": true,
   "vscode-neovim.useWSL": true, // Set to true only on windows WSL
   "extensions.experimental.affinity": {
