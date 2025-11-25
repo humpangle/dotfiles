@@ -79,7 +79,7 @@ vim.api.nvim_create_user_command("RgNf", function(opts)
       [[--preview 'bash -lc "bat --style=numbers --color=always --plain --highlight-line {2} --line-range :500 {1} 2>/dev/null || sed -n \"1,500p\" {1}"']],
       -- Layout + bindings
       "--preview-window=right,60%,border-left,wrap,follow",
-      "--bind=?:toggle-preview,alt-j:preview-down,alt-k:preview-up,alt-h:half-page-up,alt-l:half-page-down",
+      "--bind=?:toggle-preview,alt-j:preview-down,alt-k:preview-up,alt-h:half-page-up,alt-l:half-page-down,ctrl-q:select-all+accept",
     }, " "),
   }, "right:60%") -- start hidden; press ? to toggle
 
