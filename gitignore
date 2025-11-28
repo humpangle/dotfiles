@@ -107,6 +107,7 @@ tags*
 **/.claude/**
 **/.claude
 **/.cursor
+**/.gemini
 **/CLAUDE.local.md
 **/AGENTS.md
 **/GEMINI.md
