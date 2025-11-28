@@ -19,3 +19,5 @@ Execute instructions @.claude/commandsx/py-dict-convert.md @alaya/api/scheduler/
 #=======================================================================================================================
 Execute instructions @.claude/commandsx/explain-code.md @alaya/api/scheduler/projections/jobs.py:63
 #=======================================================================================================================
+Execute instructions @.cursor/commandsx/sql-inline-columns.md @alaya/api/scheduler/projections/jobs.py:63
+#=======================================================================================================================
