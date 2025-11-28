@@ -1,0 +1,14 @@
+// https://github.com/atlassian/atlassian-mcp-server
+{
+  "mcpServers": {
+    "Atlassian": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.atlassian.com/v1/sse"
+      ],
+      "env": {}
+    }
+  }
+}
