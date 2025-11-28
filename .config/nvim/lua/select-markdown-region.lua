@@ -125,8 +125,9 @@ end
 local function create_kitty_tab_with_cwd()
   local nvim_cwd = vim.fn.getcwd()
 
+  -- Title is sparkles emoji ✨
   local create_kitty_tab_cmd =
-    string.format("kitty @ launch --type=tab --cwd='%s' --tab-title='X' --location=neighbor", nvim_cwd)
+    string.format("kitty @ launch --type=tab --cwd='%s' --tab-title='✨' --location=neighbor", nvim_cwd)
   local result = vim.fn.system(create_kitty_tab_cmd):gsub("%s+", "")
 
   if vim.v.shell_error == 0 then
@@ -149,7 +150,8 @@ local function create_tmux_window_with_cwd()
     return false
   end
 
-  local config_cmd = string.format("tmux rename-window -t '%s' 'X'", new_window_id)
+  -- Title is sparkles emoji ✨
+  local config_cmd = string.format("tmux rename-window -t '%s' '✨'", new_window_id)
   local result = vim.fn.system(config_cmd)
 
   if vim.v.shell_error == 0 then
