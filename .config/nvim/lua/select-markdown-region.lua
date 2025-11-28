@@ -1,6 +1,7 @@
 vim = vim
 local utils = require("utils")
 local map_key = utils.map_key
+local terminal_ai_tab_indicator = utils.get_os_env_or_nil("TERMINAL_AI_TAB_INDICATOR") or "X"
 
 local function configure_slime_for_tmux(count)
   -- Check if we're in a tmux session
@@ -125,9 +126,11 @@ end
 local function create_kitty_tab_with_cwd()
   local nvim_cwd = vim.fn.getcwd()
 
-  -- Title is sparkles emoji ✨
-  local create_kitty_tab_cmd =
-    string.format("kitty @ launch --type=tab --cwd='%s' --tab-title='✨' --location=neighbor", nvim_cwd)
+  local create_kitty_tab_cmd = string.format(
+    "kitty @ launch --type=tab --cwd='%s' --tab-title='%s' --location=neighbor",
+    nvim_cwd,
+    terminal_ai_tab_indicator
+  )
   local result = vim.fn.system(create_kitty_tab_cmd):gsub("%s+", "")
 
   if vim.v.shell_error == 0 then
@@ -150,8 +153,7 @@ local function create_tmux_window_with_cwd()
     return false
   end
 
-  -- Title is sparkles emoji ✨
-  local config_cmd = string.format("tmux rename-window -t '%s' '✨'", new_window_id)
+  local config_cmd = string.format("tmux rename-window -t '%s' '%s'", new_window_id, terminal_ai_tab_indicator)
   local result = vim.fn.system(config_cmd)
 
   if vim.v.shell_error == 0 then

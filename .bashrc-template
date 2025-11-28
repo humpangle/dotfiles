@@ -149,6 +149,8 @@ export GEMINI_API_KEY=
 # default is 2k tokens
 export OLLAMA_CONTEXT_LENGTH=8192
 export OLLAMA_API_BASE=http://127.0.0.1:11434
+export TERMINAL_AI_TAB_INDICATOR=X
+export TERMINAL_AI_TAB_INDICATOR='✨'
 # -----------------------------------------------------------------------------
 # /END/ AI AND GPTs
 # -----------------------------------------------------------------------------
